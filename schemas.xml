@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<locatingRules xmlns="http://thaiopensource.com/ns/locating-rules/1.0">
+  <uri resource="linalg.xml" uri="../gt-text-common/schemas/mathbook.rnc"/>
+  <uri resource="frontmatter.xml" uri="../gt-text-common/schemas/mathbook-chapter.rnc"/>
+  <uri resource="overview.xml" uri="../gt-text-common/schemas/mathbook-chapter.rnc"/>
+  <uri resource="rowreduction.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="vectors.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="matrixeq.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="solnsets.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="linindep.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="lintransform.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="matrixalg.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="matrixinv.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="subspaces.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="dimension.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="determinant-defn.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="determinant-compute.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="eigenvectors.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="charpoly.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="diagonalization.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="stochastic.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="cplx-nums.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="cplx-eigenvals.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="innerprod.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="orthosets.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="gramschmidt.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+  <uri resource="leastsquares.xml" uri="../gt-text-common/schemas/mathbook-section.rnc"/>
+</locatingRules>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the section entitled "GNU
+Free Documentation License"
+*********************************************************************-->
+
+<!-- USE XINCLUDE SWITCH ON XSLTPROC -->
+
+<mathbook xmlns:xi="http://www.w3.org/2001/XInclude" xml:lang="en-US">
+
+  <!-- ISBN, website, other metadata -->
+  <xi:include href="./bookinfo.xml" />
+
+  <book xml:id="index">
+    <title>Introduction to Linear Algebra</title>
+    <!-- <subtitle>Textbook for Math 1553 at the Georgia Institute of Technology</subtitle> -->
+
+    <!-- Title Page, Preface, etc. -->
+    <xi:include href="./frontmatter.xml" />
+
+    <!-- Chapters -->
+    <xi:include href="./overview.xml" />
+
+    <chapter xml:id="chap-linear-equations">
+      <title>Linear Equations</title>
+
+      <introduction>
+        <p>Lay's chapter 1</p>
+      </introduction>
+
+      <xi:include href="./rowreduction.xml" />
+      <xi:include href="./vectors.xml" />
+      <xi:include href="./matrixeq.xml" />
+      <xi:include href="./solnsets.xml" />
+      <xi:include href="./linindep.xml" />
+      <xi:include href="./lintransform.xml" />
+
+    </chapter>
+
+    <chapter xml:id="chap-matrices">
+      <title>Matrices and Subspaces</title>
+
+      <introduction>
+        <p>Lay's chapter 2</p>
+      </introduction>
+
+      <xi:include href="./matrixalg.xml" />
+      <xi:include href="./matrixinv.xml" />
+      <xi:include href="./subspaces.xml" />
+      <xi:include href="./dimension.xml" />
+
+    </chapter>
+
+    <chapter xml:id="chap-determinant">
+      <title>Determinants</title>
+
+      <introduction>
+        <p>Lay's chapter 3</p>
+      </introduction>
+
+      <xi:include href="./determinant-defn.xml" />
+      <xi:include href="./determinant-compute.xml" />
+
+    </chapter>
+
+    <chapter xml:id="chap-eigenvalues">
+      <title>Eigenvalues and Eigenvectors</title>
+
+      <introduction>
+        <p>Lay's chapter 5</p>
+      </introduction>
+
+      <xi:include href="./eigenvectors.xml" />
+      <xi:include href="./charpoly.xml" />
+      <xi:include href="./diagonalization.xml" />
+      <xi:include href="./stochastic.xml" />
+      <xi:include href="./cplx-nums.xml" />
+      <xi:include href="./cplx-eigenvals.xml" />
+
+    </chapter>
+
+    <chapter xml:id="chap-orthogonality">
+      <title>Inner Products and Orthogonality</title>
+
+      <introduction>
+        <p>Lay's chapter 6</p>
+      </introduction>
+
+      <xi:include href="./innerprod.xml" />
+      <xi:include href="./orthosets.xml" />
+      <xi:include href="./gramschmidt.xml" />
+      <xi:include href="./leastsquares.xml" />
+
+    </chapter>
+
+    <!-- GFDL, Hints, Notation -->
+    <xi:include href="./backmatter.xml" />
+
+  </book>
+
+</mathbook>

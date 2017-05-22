@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+*********************************************************************-->
+
+<frontmatter xml:id="index" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <titlepage>
+    <author>
+      <personname>by the Faculty of the School of Mathematics</personname>
+      <!-- <department>School of Mathematics</department> -->
+      <institution>Georgia Institute of Technology</institution>
+      <!-- <email>judsontw@sfasu.edu</email> -->
+    </author>
+
+    <date><today /></date>
+  </titlepage>
+
+  <colophon>
+    <!--
+    <edition>Annual Edition 2017</edition>
+
+    <website>
+      <name><c>math.gatech.edu</c></name>
+      <address>http://math.gatech.edu</address>
+    </website>
+    -->
+
+    <copyright>
+      <year>2017</year>
+      <holder>Georgia Institute of Technology</holder>
+      <minilicense>GFDL License</minilicense>
+      <shortlicense>Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.2 or any later version published by the Free Software Foundation; with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included in the appendix entitled <q>GNU Free Documentation License.</q>  All trademarks<trademark /> are the registered<registered /> marks of their respective owners.</shortlicense>
+    </copyright>
+
+  </colophon>
+
+  <!-- The following items must be placed in the desired/required order -->
+  <!-- This will be checked by a Document Type Definition eventually -->
+  <!-- Order: dedication, acknowledgements, forewords, prefaces -->
+
+  <!-- Each paragraph gets centered and has some vertical separatation -->
+  <!-- A line element may be used here with a single paragraph   -->
+  <dedication>
+    <p>Place a dedication here.</p>
+  </dedication>
+
+  <acknowledgement>
+    <p>Acknowledgments go here.</p>
+  </acknowledgement>
+
+  <preface>
+    <p>Preface goes here.</p>
+    <attribution>
+      <line>Attribution here.</line>
+    </attribution>
+  </preface>
+
+  <preface>
+    <title>Contributors to this textbook</title>
+
+    <contributors>
+      <contributor xml:id="dan">
+        <personname>Dan Margalit</personname>
+        <department>School of Mathematics</department>
+        <institution>Georgia Institute of Technology</institution>
+        <email>dmargalit7@math.gatech.edu</email>
+      </contributor>
+
+      <contributor xml:id="jdr">
+        <personname>Joe Rabinoff</personname>
+        <department>School of Mathematics</department>
+        <institution>Georgia Institute of Technology</institution>
+        <email>jrabinoff@math.gatech.edu</email>
+      </contributor>
+    </contributors>
+
+  </preface>
+
+</frontmatter>

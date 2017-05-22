@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+*********************************************************************-->
+
+<docinfo>
+
+  <brandlogo url="http://www.gatech.edu" source="images/gatech.gif" />
+
+  <!-- LaTeX macros for this book go here. -->
+  <macros>
+    \def\R{\mathbf R}
+  </macros>
+
+  <!-- tikz package and libraries for images -->
+  <latex-image-preamble>
+    \usepackage{tikz}
+    \usetikzlibrary{backgrounds}
+    \usetikzlibrary{arrows,matrix}
+    \usetikzlibrary{snakes}
+  </latex-image-preamble>
+
+</docinfo>

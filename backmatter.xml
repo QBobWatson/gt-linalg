@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+*********************************************************************-->
+
+<backmatter xml:id="backmatter" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Back Matter</title> <!-- mostly for HTML sectioning -->
+
+    <appendix>
+        <title>Notation</title>
+
+        <p>The following table defines the notation used in this book. Page numbers or references refer to the first appearance of each symbol.</p>
+
+        <notation-list />
+    </appendix>
+
+    <appendix>
+        <title>Hints and Solutions to Selected Exercises</title>
+        <solution-list />
+    </appendix>
+
+    <!-- GFDL License text -->
+    <xi:include href="./gfdl.xml" />
+
+    <!-- Index follows appendices, preceded only colophon -->
+    <index-part>
+        <index-list />
+    </index-part>
+
+    <colophon>
+        <p>This book was authored in MathBook XML.</p>
+    </colophon>
+
+</backmatter>
