@@ -14,4 +14,41 @@ the license is included in gfdl.xml.
 
   <p>Computing eigenvectors.</p>
 
+  <p><m>
+    \spaligndelims()
+    x = \spalignarray{lcr}{1 -2 3 ; 4 55 2^3; \frac {1 1}2 {1 3} {1{0}1}}
+    \spaligndelims[]
+  </m></p>
+
+  <p><m>
+    y = \spalignarray{lr}{\cos\theta{} \sin\theta; -\sin\theta , \cos\theta}
+  </m></p>
+
+  <p><m>
+    y = \mat{\cos\theta{} \sin\theta; -\sin\theta , \cos\theta}
+  </m></p>
+
+  <p><m>
+    y = \vec{12 13 \frac 23 4}
+  </m></p>
+
+  <p><m>
+    x = \amat[r]{1 -2 3 ; 4 55 2^3; \frac {1 1}2 {1 3} {1{0}1}}
+  </m></p>
+
+  <p><m>
+    x = \spalignaugmatn[c]{2}{1 -2 3 ; 4 55 2^3; \frac {1 1}2 {1 3} {1{0}1}}
+  </m></p>
+
+  <p><m>
+    x = \hmat*{1 2 3 4; 10 20 30 40}
+  </m></p>
+
+  <p><m>
+    \spalignsysdelims\{\}
+    \spalignsystabspace2pt
+    \syseq{2x \+ \. - 3z = 1;
+           \. \+ 4y + z = -4}
+  </m></p>
+
 </section>

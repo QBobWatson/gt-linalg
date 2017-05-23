@@ -11,6 +11,12 @@ Copyright 2017 Georgia Institute of Technology
   <!-- LaTeX macros for this book go here. -->
   <macros>
     \def\R{\mathbf R}
+    \spaligndelims[]
+    \let\vec=\spalignvector
+    \let\mat=\spalignmat
+    \let\amat=\spalignaugmat
+    \let\hmat=\spalignaugmathalf
+    \let\syseq=\spalignsys
   </macros>
 
   <!-- tikz package and libraries for images -->
