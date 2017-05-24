@@ -4,12 +4,86 @@
 
 <xsl:import href="../../lib/mathbook/xsl/mathbook-html.xsl" />
 
+<xsl:param name="html.css.extra">
+  static/css/mathbook-gt-add-on.css
+</xsl:param>
+
+<xsl:param name="toc.level" select="2" />
+
+<!-- Primary Navigation Panels -->
+<!-- ToC, Prev/Up/Next buttons  -->
+<xsl:template match="*" mode="primary-navigation">
+  <nav id="gt-navbar" class="navbar" style="">
+    <div class="navbar-top-buttons toolbar">
+      <div class="toolbar-buttons-left">
+        <!-- Toggle button -->
+        <xsl:element name="button">
+          <xsl:attribute name="class">
+            <xsl:text>toggle-button button toolbar-item</xsl:text>
+          </xsl:attribute>
+        </xsl:element>
+        <!-- A page either has an/the index as    -->
+        <!-- a child, and gets the "jump to" bar, -->
+        <!-- or it deserves an index button       -->
+        <xsl:choose>
+          <xsl:when test="index-list">
+            <div class="toolbar-item">
+              <xsl:apply-templates select="." mode="index-jump-nav" />
+            </div>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:apply-templates select="." mode="index-button" />
+          </xsl:otherwise>
+        </xsl:choose>
+      </div>
+      <div class="toolbar-buttons-right">
+        <!-- Each button gets an id for keypress recognition/action -->
+        <xsl:apply-templates select="." mode="previous-button">
+          <xsl:with-param name="id-label" select="'previousbutton'" />
+        </xsl:apply-templates>
+        <xsl:if test="$nav-upbutton='yes'">
+          <xsl:apply-templates select="." mode="up-button">
+            <xsl:with-param name="id-label" select="'upbutton'" />
+          </xsl:apply-templates>
+        </xsl:if>
+        <xsl:apply-templates select="." mode="next-button">
+          <xsl:with-param name="id-label" select="'nextbutton'" />
+        </xsl:apply-templates>
+      </div>
+    </div>
+    <div class="navbar-bottom-buttons toolbar">
+      <xsl:element name="button">
+        <xsl:attribute name="class">
+          <xsl:text>toggle-button button toolbar-item</xsl:text>
+        </xsl:attribute>
+      </xsl:element>
+      <xsl:apply-templates select="." mode="previous-button">
+        <xsl:with-param name="id-label" select="'previousbutton'" />
+      </xsl:apply-templates>
+      <xsl:if test="$nav-upbutton='yes'">
+        <xsl:apply-templates select="." mode="up-button">
+          <xsl:with-param name="id-label" select="'upbutton'" />
+        </xsl:apply-templates>
+      </xsl:if>
+      <xsl:apply-templates select="." mode="next-button">
+        <xsl:with-param name="id-label" select="'nextbutton'" />
+      </xsl:apply-templates>
+    </div>
+  </nav>
+</xsl:template>
+
+<!-- JDR: no sidebars anymore -->
+<xsl:template match="*" mode="sidebars">
+</xsl:template>
+
 <!-- Mathbook Javascript header -->
 <xsl:template name="mathbook-js">
     <!-- condition first on toc present? -->
+    <!--
     <script src="static/js/jquery.sticky.js" ></script>
     <script src="static/js/jquery.espy.min.js"></script>
     <script src="static/js/Mathbook.js"></script>
+    -->
 </xsl:template>
 
 <!-- CSS header -->
