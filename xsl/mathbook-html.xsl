@@ -10,18 +10,22 @@
 
 <xsl:param name="toc.level" select="2" />
 
-<!-- Primary Navigation Panels -->
+<!-- Primary Navigation -->
 <!-- ToC, Prev/Up/Next buttons  -->
 <xsl:template match="*" mode="primary-navigation">
-  <nav id="gt-navbar" class="navbar" style="">
+  <nav id="gt-navbar" class="navbar container" style="">
+    <div class="dropdown">
+      <div class="toc-border-container" id="toc">
+        <div class="toc-contents">
+          <xsl:apply-templates select="." mode="toc-items" />
+        </div>
+      </div>
+    </div>
     <div class="navbar-top-buttons toolbar">
       <div class="toolbar-buttons-left">
         <!-- Toggle button -->
-        <xsl:element name="button">
-          <xsl:attribute name="class">
-            <xsl:text>toggle-button button toolbar-item</xsl:text>
-          </xsl:attribute>
-        </xsl:element>
+        <a class="toggle-button button toolbar-item"
+           href="javascript:void(0)"></a>
         <!-- A page either has an/the index as    -->
         <!-- a child, and gets the "jump to" bar, -->
         <!-- or it deserves an index button       -->
@@ -52,11 +56,8 @@
       </div>
     </div>
     <div class="navbar-bottom-buttons toolbar">
-      <xsl:element name="button">
-        <xsl:attribute name="class">
-          <xsl:text>toggle-button button toolbar-item</xsl:text>
-        </xsl:attribute>
-      </xsl:element>
+      <a class="toggle-button button toolbar-item"
+         href="javascript:void(0)"></a>
       <xsl:apply-templates select="." mode="previous-button">
         <xsl:with-param name="id-label" select="'previousbutton'" />
       </xsl:apply-templates>
@@ -78,18 +79,15 @@
 
 <!-- Mathbook Javascript header -->
 <xsl:template name="mathbook-js">
-    <!-- condition first on toc present? -->
-    <!--
     <script src="static/js/jquery.sticky.js" ></script>
-    <script src="static/js/jquery.espy.min.js"></script>
-    <script src="static/js/Mathbook.js"></script>
-    -->
+    <script src="static/js/GTMathbook.js"></script>
 </xsl:template>
 
 <!-- CSS header -->
 <xsl:template name="css">
     <link href="static/css/mathbook-gt.css" rel="stylesheet" type="text/css" />
-    <link href="static/css/mathbook-add-on.css" rel="stylesheet" type="text/css" />
+    <link href="https://aimath.org/mathbook/mathbook-add-on.css"
+          rel="stylesheet" type="text/css" />
     <xsl:call-template name="external-css">
         <xsl:with-param name="css-list" select="normalize-space($html.css.extra)" />
     </xsl:call-template>

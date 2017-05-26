@@ -14,6 +14,16 @@ the license is included in gfdl.xml.
 
   <p>Computing eigenvectors.</p>
 
+  <theorem>
+    <title>Test theorem</title>
+    <statement>
+      <p>This is a test theorem.</p>
+    </statement>
+    <proof>
+      <p>This would be the proof.</p>
+    </proof>
+  </theorem>
+
   <p><m>
     \spaligndelims()
     x = \spalignarray{lcr}{1 -2 3 ; 4 55 2^3; \frac {1 1}2 {1 3} {1{0}1}}
