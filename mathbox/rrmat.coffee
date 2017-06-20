@@ -503,6 +503,9 @@ class RRMatrix
             # Fade out the flyer
             flyer.style.opacity =
                 Math.max(1 - (rowPos[0] - flyerPos)/@fontSize/5, 0)
+            if !@doMultEffect.finished && flyer.style.opacity < 0.05
+                @onNextFrame 1, () => @newState nextState, 'post'
+                @doMultEffect.finished = true
 
     rowMult: (rowNum, factor) ->
         startX = @matWidth/2 + @colSpacing + 10
@@ -536,6 +539,7 @@ class RRMatrix
             clock:     @positions[0].clock
             fadeIn:    0.3
             opacity:   (distance) => Math.min (distance/(@fontSize*2))**3, 1
+            finished:  false
             nextState: nextState
 
         pos1 = deepCopy @animState.positions
@@ -547,7 +551,6 @@ class RRMatrix
             script:
                 0: {props: {data: pos1}}
                 1.75: {props: {data: pos2}}
-        .on 'play.done', (e) => @newState nextState
 
     repEffect: () =>
         # Opacity effects for row replacement
