@@ -601,11 +601,12 @@ class RRMatrix
         # Set the text of rrepParenLeft, then run the rest in a couple of frames
         # when we can measure its width
         plus = if factor >= 0 then '+' else '-'
+        factor = Math.abs(factor)
         @animState.html[@numRows+2][0] =
             @domEl @domClass, {
                 className: 'rrep-factor ' + @_id('rrepFactor')
                 id: @_id 'rrepParenLeft'},
-                plus + texFraction(factor) + '\\times\\bigl('
+                plus + texFraction(factor) + '\\,\\bigl('
         @animState.html[@numRows+3][0] =
             @domEl @domClass, {
                 className: 'rrep-factor ' + @_id('rrepFactor')
