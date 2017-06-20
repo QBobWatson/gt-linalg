@@ -234,7 +234,7 @@ class RRMatrix
         script2[k] = {props: {opacity: v}} for k, v of script
         @play element, script: script2
 
-    onNextFrame: (after, callback, stage='pre') ->
+    onNextFrame: (after, callback, stage='post') ->
         # Execute 'callback' after 'after' frames
         @nextFrame ?= {}
         @nextFrame[stage] ?= {}
@@ -617,7 +617,7 @@ class RRMatrix
             nextState.matrix[targetRow][i] += factor * nextState.matrix[sourceRow][i]
         @htmlMatrix nextState.matrix, nextState.html
 
-        @onNextFrame 2, () =>
+        @onNextFrame 1, () =>
             # Initialize row replacement factor
             leftParen = document.getElementById(@_id 'rrepParenLeft')
             leftParenWidth = leftParen.getBoundingClientRect().width
