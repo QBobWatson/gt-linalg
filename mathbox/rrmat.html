@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MathBox - Matrix</title>
+  <script src="../build/mathbox-bundle.js"></script>
+  <link rel="stylesheet" href="../build/mathbox.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
+  <script src="rrmat.js"></script>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <style>
+  .baseline-detect {
+      display: inline-block;
+      height:  0px;
+  }
+  .bound-entry {
+      position: relative;
+      top:      0px;
+      display:  inline-block;
+  }
+  .mult-flyer {
+      color: blue;
+  }
+  .rrep-factor {
+      color: blue;
+  }
+  </style>
+</head>
+<body>
+    <div style="width: 800px; height: 300px; margin-top: 100px; border: 1px solid black; margin-left: auto; margin-right: auto;" id="mathbox"></div>
+    <script>
+    "use strict";
+
+    var ortho = 10000;
+    var width = 800;
+    var height = 300;
+
+    window.mathbox = mathBox({
+        element: document.getElementById("mathbox"),
+        size: { width: width, height: height },
+        plugins: ['core', 'controls'],
+        mathbox: {
+            warmup: 2,
+            splash: false,
+            inspect: false,
+        },
+        splash: {fancy: false, color: "blue"},
+        camera: {
+            near: ortho / 4,
+            far: ortho * 4,
+            lookAt: -width/4,
+        },
+        controls: {
+            // Orbit controls, i.e. Euler angles, with gimbal lock
+            klass: THREE.OrbitControls,
+
+            // Trackball controls, i.e. Free quaternion rotation
+            //klass: THREE.TrackballControls,
+        },
+    });
+    if (mathbox.fallback) throw "WebGL not supported"
+
+    var three = mathbox.three;
+    three.renderer.setClearColor(new THREE.Color(0xFFFFFF), 1.0);
+
+    // Place camera
+    var camera =
+        mathbox
+            .camera({
+                proxy: false,
+                position: [0, 0, ortho],
+                fov: Math.atan(height/ortho) * 360 / π,
+                lookAt: [width/4,0,0],
+            });
+
+    // 2D cartesian
+    var view =
+        mathbox
+            .cartesian({
+                range: [[-width/2, width/2], [-height/2, height/2], [-50,50]],
+                scale: [width, height, 100],
+            });
+
+    // Calibrate focus distance for units
+    mathbox.set('focus', ortho);
+
+    var rrmat = new RRMatrix(4, 4);
+    rrmat.animState.matrix = [[32/3, 141, 11, 15],
+                              [2, 3, 33/4, 919],
+                              [72/14, 115/11, 33, 91],
+                              [0, 1, 2, 3]];
+    rrmat.install(view);
+
+    </script>
+</body>
+</html>
