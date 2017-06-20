@@ -14,7 +14,7 @@ the license is included in gfdl.xml.
 
   <p>Computing eigenvectors.</p>
 
-  <theorem>
+  <theorem xml:id="test-theorem">
     <title>Test theorem</title>
     <statement>
       <p>This is a test theorem.</p>
@@ -60,5 +60,9 @@ the license is included in gfdl.xml.
     \syseq{2x \+ \. - 3z = 1;
            \. \+ 4y + z = -4}
   </m></p>
+
+  <p>
+    Click on Theorem <xref ref="test-theorem" />!
+  </p>
 
 </section>

@@ -14,4 +14,371 @@ the license is included in gfdl.xml.
 
   <p>The notion of linear independence; pictures.</p>
 
+  <exercises>
+    <title>Reading Questions</title>
+
+    <exercise>
+      <statement>
+        <p>
+          Let <m>S</m> be the set of three vectors below.<me>
+          S = \setof{ \vec{1 2 -1},\, \vec{3 -4 2},\, \vec{4 -2 1} }
+          </me>
+          Is <m>S</m> linearly independent or linearly dependent?  Explain why.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise>
+      <statement>
+        <p>
+          Let <m>S</m> be the set of three vectors below.<me>
+          S = \setof{ \vec{1 -1 0},\, \vec{3 2 2},\, \vec{4 3 -4} }
+          </me>
+          Is <m>S</m> linearly independent or linearly dependent?  Explain why.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise>
+      <statement>
+        <p>
+          Is the matrix below singular or nonsingular?  Explain your answer using only the final conclusion you reached in the previous question, along with one new theorem.<me>
+          \mat{1 3 4; -1 2 3; 0 2 -4}
+          </me>
+        </p>
+      </statement>
+    </exercise>
+  </exercises>
+
+  <exercises>
+    <title>Exercises</title>
+
+    <exercisegroup>
+      <introduction>
+        <p>Determine if the sets of vectors in the following exercises are linearly independent or linearly dependent.  When the set is linearly dependent, exhibit a nontrivial relation of linear dependence.</p>
+      </introduction>
+
+      <exercise xml:id="exercise-li-10">
+        <statement>
+          <p><m>
+            \setof{ \vec{1 -2 1},\, \vec{2 -1 3},\, \vec{1 5 0} }
+          </m></p>
+        </statement>
+        <solution xml:id="solution-li-10">
+          <p>With three vectors from <m>\R^3</m>, we can form a square matrix by making these three vectors the columns of a matrix.  We do so, and row-reduce to obtain<me>
+          \mat{\leading1 0 0; 0 \leading1 0; 0 0 \leading1},
+          </me>the <m>3\times 3</m> identity matrix.  So by Theorem <xref provisional="theorem-?"/> the original matrix is nonsingular and its columns are therefore a linearly independent set.</p>
+        </solution>
+      </exercise>
+
+      <exercise xml:id="exercise-li-11">
+        <statement>
+          <p><m>
+            \setof{ \vec{-1 2 4 2},\, \vec{3 3 -1 3},\, \vec{7 3 -6 4} }
+          </m></p>
+        </statement>
+        <solution xml:id="solution-li-11">
+          <p>Theorem <xref provisional="theorem-?"/> says we can answer this question by putting these vectors into a matrix as columns and row-reducing.  Doing this we obtain<me>
+          \mat{\leading1 0 0; 0 \leading1 0; 0 0 \leading1; 0 0 0}.
+          </me>  Since every column has a pivot, the theorem says the vectors are linearly independent.</p>
+        </solution>
+      </exercise>
+
+      <exercise xml:id="exercise-li-12">
+        <statement>
+          <p><m>
+            \setof{ \vec{-2 -1 -1},\, \vec{1 0 -1},\, \vec{3 3 6},\,
+            \vec{-5 -4 -6},\, \vec{4 4 7}}
+          </m></p>
+        </statement>
+        <solution xml:id="solution-li-12">
+          <p>This is a set of five vectors in <m>\R^3</m>.  Theorem <xref provisional="theorem-?"/> says the set is linearly dependent.  Boom.</p>
+        </solution>
+      </exercise>
+
+      <exercise xml:id="exercise-li-13">
+        <statement>
+          <p><m>
+            \setof{
+              \vec{1 -2 2 5 3},\,
+              \vec{3 3 1 2 -4},\,
+              \vec{2 1 2 -1 1},\,
+              \vec{1 0 1 2 2}}
+          </m></p>
+        </statement>
+        <solution xml:id="solution-li-13">
+          <p>Theorem <xref provisional="theorem-?"/> says we can answer this question by putting these vectors into a matrix as columns and row-reducing.  Doing this we obtain<me>
+          \mat{\leading1 0 0 0;
+              0 \leading1 0 0;
+              0 0 \leading1 0;
+              0 0 0 \leading1;
+              0 0 0 0}.
+          </me>Since every column has a pivot, the theorem says the vectors are linearly independent.</p>
+        </solution>
+      </exercise>
+
+      <exercise xml:id="exercise-li-14">
+        <statement>
+          <p><m>
+            \setof{
+              \vec{1 2 -1 0 1},\,
+              \vec{3 2 -1 2 2},\,
+              \vec{4 4 -2 2 3},\,
+              \vec{-1 2 -1 -2 0}
+            }
+          </m></p>
+        </statement>
+        <solution xml:id="solution-li-14">
+          <p>Theorem <xref provisional="theorem-?"/> says we can answer this question by putting these vectors into a matrix as columns and row-reducing.  Doing this we obtain<me>
+          \mat{\leading1 0 1 2;
+              0 \leading1 1 -1;
+              0 0 0 0;
+              0 0 0 0;
+              0 0 0 0}.
+          </me>Since the last two columns do not have a pivot, the theorem says the vectors are linearly dependent.</p>
+        </solution>
+      </exercise>
+
+      <exercise xml:id="exercise-li-15">
+        <statement>
+          <p><m>
+            \setof{\vec{2 1 3 -1 2},\, \vec{4 -2 1 3 2},\, \vec{10 -7 0 10 4}}
+          </m></p>
+        </statement>
+        <solution xml:id="solution-li-15">
+          <p>Theorem <xref provisional="theorem-?"/> says we can answer this question by putting these vectors into a matrix as columns and row-reducing.  Doing this we obtain<me>
+          \mat{\leading1 0 -1;
+              0 \leading1 3;
+              0 0 0;
+              0 0 0;
+              0 0 0}.
+          </me>Since the last two columns do not have a pivot, the theorem says the vectors are linearly dependent.</p>
+        </solution>
+      </exercise>
+
+    </exercisegroup>
+
+    <exercise xml:id="exercise-li-20">
+      <statement>
+        <p>
+          For the matrix <m>B</m> below, find a set <m>S</m> of linearly independent vectors that spans the null space of <m>B</m>.<me>
+          B = \mat{-3 1 -2 7; -1 2 1 4; 1 1 2 -1}
+          </me>
+        </p>
+      </statement>
+      <solution xml:id="solution-li-20">
+        <p>The requested set is described by Theorem <xref provisional="theorem-?"/>.  It is easiest to find by using the procedure of Example <xref provisional="example-?"/>.  Begin by row-reducing the matrix, viewing it as the coefficient matrix of a homogeneous system of equations.  We obtain
+        <me>
+          \mat{\leading1 0 1 -2; 0 \leading1 1 1; 0 0 0 0}.
+        </me>
+        The free variables are <m>x_3</m> and <m>x_4</m>, due to the locations of the non-pivot columns.  It follows from Theorem <xref provisional="theorem-?" /> that the parametric vector form of the solution set of the matrix equation <m>Bx=0</m> is
+        <me>\vec{x_1 x_2 x_3 x_4} = x_3\vec{-1 -1 1 0} + x_4\vec{2 -1 0 1}.</me>
+        The null space is exactly the solution set of <m>Bx=0</m>;
+        the constant vectors in the above expression span the null space, and they are linearly independent.  Thus we can take our answer to be
+        <me>
+          S = \setof{\vec{-1 -1 1 0},\, \vec{2 -1 0 1}}.
+        </me>
+        </p>
+      </solution>
+    </exercise>
+
+    <exercise xml:id="exercise-li-21">
+      <statement>
+        <p>
+          For the matrix <m>A</m> below, find a set <m>S</m> of linearly independent vectors that spans the null space of <m>A</m>.
+          <me>
+            B = \mat{-1 -2 2 1 5; 1 2 1 1 5; 3 6 1 2 7; 2 4 0 1 2}
+          </me>
+        </p>
+      </statement>
+      <solution xml:id="solution-li-21">
+        <p>
+          We want to find a linearly independent set <m>S</m> that spans the solution set of the homogeneous system <m>Ax=0</m>.    We begin by row-reducing the matrix, to obtain
+          <me>
+            \mat{\leading1 2 0 0 3; 0 0 \leading1 0 6; 0 0 0 \leading1 -4; 0 0 0 0 0}.
+          </me>
+          The free variables correspond to the second and fifth columns.  Using Theorem <xref provisional="theorem-?" />, the parametric vector form of the solution set of <m>Ax=0</m> is
+          <me>
+            \vec{x_1 x_2 x_3 x_4 x_5} = x_2\vec{-2 1 0 0 0} + x_5\vec{-3 0 -6 4 1}.
+          </me>
+          The constant vectors in the above expression span the null space, and they are linearly independent.  Thus we can take our answer to be
+        <me>
+          S = \setof{\vec{-2 1 0 0 0},\, \vec{-3 0 -6 4 1}}.
+        </me>
+        </p>
+      </solution>
+    </exercise>
+
+    <exercise xml:id="exercise-li-22">
+      <statement>
+        <p>
+          Find a set <m>T</m> of column vectors such that (1) the span of <m>T</m> is the null space of <m>B</m>, and (2) <m>T</m> is a linearly independent set.
+          <me>
+            B = \mat{2 1 1 1; -4 -3 1 -7; 1 1 -1 3}
+          </me>
+        </p>
+      </statement>
+      <solution xml:id="solution-li-22">
+        <p>The conclusion of Theorem <xref provisional="theorem-?"/> gives us everything this question asks for.  We need the reduced row-echelon form of the matrix in order to determine the number of vectors in <m>T</m>, and their entries.
+        <me>
+          \mat{2 1 1 1; -4 -3 1 -7; 1 1 -1 3} \rref
+          \mat{\leading1 0 2 -2; 0 \leading1 -3 5; 0 0 0 0}
+        </me>
+        The third and fourth columns are free, so we can apply Theorem <xref provisional="theorem-?"/> and take the set <m>T</m> to have the two vectors
+        <me>
+          T = \setof{\vec{-2 3 1 0},\,\vec{2 -5 0 1}}.
+        </me>
+        </p>
+      </solution>
+    </exercise>
+
+    <exercise xml:id="exercise-li-23">
+      <statement>
+        <p>
+          Find a set <m>S</m> that is linearly independent and spans the null space of the matrix <m>A</m> below.
+          <me>
+            A = \mat{2 3 3 1 4; 1 1 -1 -1 -3; 3 2 -8 -1 1}
+          </me>
+        </p>
+      </statement>
+      <solution xml:id="solution-li-23">
+        <p>
+          A direct application of Theorem <xref provisional="theorem-?"/> will provide the desired set.  We require the reduced row-echelon form of <m>A</m>:
+          <me>
+            \mat{2 3 3 1 4; 1 1 -1 -1 -3; 3 2 -8 -1 1} \rref
+            \mat{\leading1 0 -6 0 3; 0 \leading1 5 0 -2; 0 0 0 \leading1 4}
+          </me>
+          The third and fifth columns are free, so we can apply Theorem <xref provisional="theorem-?"/> and take the set <m>T</m> to have the two vectors
+          <me>
+            T = \setof{\vec{6 -5 1 0 0},\,\vec{-3 2 0 -4 1}}.
+          </me>
+        </p>
+      </solution>
+    </exercise>
+
+    <exercise xml:id="exercise-li-24">
+      <statement>
+        <p>
+          For the matrix <m>A</m> below, find a set of vectors <m>S</m> such that (1) <m>S</m> is linearly independent, and (2) the span of <m>S</m> equals the null space of <m>A</m>.
+          <me>
+            A = \mat{1 1 6 -8; 1 -2 0 1; -2 1 -6 7}
+          </me>
+        </p>
+      </statement>
+      <solution xml:id="solution-li-24">
+        <p>
+          Theorem <xref provisional="theorem-?" /> says that if we find the vector form of the solutions to the homogeneous system <m>Ax=0</m>, then the spanning vectors will have the desired properties.  We row-reduce <m>A</m>, viewing it as the augmented matrix of a homogeneous system with an invisible columns of zeros as the last column:
+          <me>
+            \mat{1 1 6 -8; 1 -2 0 1; -2 1 -6 7} \rref
+            \mat{\leading1 0 4 -5; 0 1 2 -3; 0 0 0 0}
+          </me>
+          Moving to the parametric vector form of the solutions (Theorem <xref provisional="theorem-?"/>), with free variables <m>x_3</m> and <m>x_4</m>, the solutions to the consistent system <m>Ax=0</m> (it is consistent: see <xref provisional="theorem-?"/>) can be expressed as
+          <me>
+            \vec{x_1 x_2 x_3 x_4} = x_3\vec{-4 -2 1 0} + x_4\vec{5 3 0 1}.
+          </me>
+          Thus we can take <m>S</m> to be
+          <me>
+            S = \setof{\vec{-4 -2 1 0},\, \vec{5 3 0 1}}.
+          </me>
+        </p>
+      </solution>
+    </exercise>
+
+    <exercise xml:id="exercise-li-30">
+      <statement>
+        <p>
+          Suppose that <m>S = \{v_1,v_2,v_3\}</m> is a set of three vectors in <m>\R^{873}</m>.  Prove that the set
+          <me>
+            T = \bigl\{2v_1+3v_2+v_3,\, v_1-v_2-2v_3,\, 2v_1+v_2-v_3\bigr\}
+          </me>
+          is linearly dependent.
+        </p>
+      </statement>
+      <solution xml:id="solution-li-30">
+        <p>
+          According to Definition <xref provisional="defn-?" />, we need to find scalars <m>a_1,a_2,a_3</m>, not all equal to zero, such that
+          <me>
+            a_1\bigl(2{v}_1+3{v}_2+{v}_3\bigr) +
+            a_2\bigl({v}_1-{v}_2-2{v}_3\bigr) +
+            a_3\bigl(2{v}_1+{v}_2-{v}_3\bigr) = 0.
+          </me>
+          We can rearrange this vector equation to
+          <me>
+            \bigl(2a_1+a_2+2a_3\bigr){v}_1+
+                    \bigl(3a_1-a_2+a_3\bigr){v}_2+
+                    \bigl(a_1-2a_2-a_3\bigr){v}_3
+                    = 0
+          </me>
+          We can certainly make this vector equation true if we can determine values for the <m>a</m>'s such that
+          <me>
+            \syseq{2a_1 + a_2 + a_3 = 0;
+                   3a_1 - a_2 + a_3 = 0;
+                   a_1 - 2a_2 - a_3 = 0\rlap.}
+          </me>
+          This is a homogeneous system of equations, and it has infinitely many solutions.  By the now familiar techniques, you can find one such solution to be <m>a_1=3</m>, <m>a_2=4</m>, <m>a_3=-5</m>, which you can (and should!) check in the original relation of linear dependence on <m>T</m> above.
+        </p>
+
+        <p>Note that simply writing down the three scalars, and demonstrating that they provide a nontrivial relation of linear dependence on <m>T</m>, could be considered an ironclad solution.  But it would not have been very informative for you if we had only done just that here.  Compare this solution very carefully with the solution to <xref ref="exercise-li-31" autoname="yes"/>.</p>
+      </solution>
+    </exercise>
+
+    <exercise xml:id="exercise-li-31">
+      <statement>
+        <p>
+          Suppose that <m>S = \{v_1,v_2,v_3\}</m> is a linearly independent set of three vectors in <m>\R^{873}</m>.  Prove that the set
+          <me>
+            T = \bigl\{2v_1+3v_2+v_3,\, v_1-v_2+2v_3,\, 2v_1+v_2-v_3\bigr\}
+          </me>
+          is linearly independent.
+        </p>
+      </statement>
+      <solution xml:id="solution-li-31">
+        <p>
+          According to Definition <xref provisional="defn-?" />, we need show that if <m>a_1,a_2,a_3</m> are any scalars satisfying
+          <me>
+            a_1\bigl(2{v}_1+3{v}_2+{v}_3\bigr) +
+            a_2\bigl({v}_1-{v}_2+2{v}_3\bigr) +
+            a_3\bigl(2{v}_1+{v}_2-{v}_3\bigr) = 0,
+          </me>
+          then necessarily <m>a_1=a_2=a_3=0</m>.
+          We can rearrange this vector equation to
+          <me>
+            \bigl(2a_1+a_2+2a_3\bigr){v}_1+
+                    \bigl(3a_1-a_2+a_3\bigr){v}_2+
+                    \bigl(a_1+2a_2-a_3\bigr){v}_3
+                    = 0.
+          </me>
+          Because the set <m>S=\setof{v,v_2,v_3}</m> was assumed to be linearly independent, by <xref provisional="definition-?"/> we <em>must</em> conclude that
+          <me>
+            \syseq{2a_1 + a_2 + a_3 = 0;
+                   3a_1 - a_2 + a_3 = 0;
+                   a_1 + 2a_2 - a_3 = 0\rlap.}
+          </me>
+          By the familiar methods, you can check that this homogeneous system of linear equations admits only the trivial solution <m>a_1=a_2=a_3=0</m>, as desired.
+        </p>
+
+        <p>Compare this solution very carefully with <xref ref="exercise-li-30" autoname="yes"/>, noting especially how this problem required (and used) the hypothesis that the original set be linearly independent, and how this solution feels more like a proof, while the previous problem could be solved with a fairly simple demonstration of any nontrivial relation of linear dependence.</p>
+      </solution>
+    </exercise>
+
+    <exercise xml:id="exercise-li-32">
+      <statement>
+        <p>
+          Let <m>W</m> be the span of the set of five vectors in <m>\R^3</m> given below.  Find a set <m>T</m> of three vectors in <m>W</m> such that <m>W=\Span T</m>.
+          <me>
+            W = \Span\setof{\vec{2 1 1},\,\vec{-1 -1 1},\,\vec{1 2 3},\,
+            \vec{3 1 3},\,\vec{0 1 -3}}.
+          </me>
+        </p>
+      </statement>
+      <solution xml:id="solution-li-32">
+        <p>
+          not copied/written yet.
+        </p>
+      </solution>
+    </exercise>
+
+
+  </exercises>
+
 </section>

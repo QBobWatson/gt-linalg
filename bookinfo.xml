@@ -8,6 +8,10 @@ Copyright 2017 Georgia Institute of Technology
 
   <brandlogo url="http://www.gatech.edu" source="images/gatech.gif" />
 
+  <latex-preamble>
+    <package>color</package>
+  </latex-preamble>
+
   <!-- LaTeX macros for this book go here. -->
   <macros>
     \def\R{\mathbf R}
@@ -17,6 +21,11 @@ Copyright 2017 Georgia Institute of Technology
     \let\amat=\spalignaugmat
     \let\hmat=\spalignaugmathalf
     \let\syseq=\spalignsys
+    \newcommand{\leading}[1]{\color{red}#1}
+    \newcommand{\setof}[1]{\left\{#1\right\}}
+    \def\Span{\operatorname{Span}}
+    \let\To=\longrightarrow
+    \def\rref{\;\overset{\text{rref}}\To\;}
   </macros>
 
   <!-- tikz package and libraries for images -->
@@ -26,5 +35,7 @@ Copyright 2017 Georgia Institute of Technology
     \usetikzlibrary{arrows,matrix}
     \usetikzlibrary{snakes}
   </latex-image-preamble>
+
+  <!-- TODO: Google custom search -->
 
 </docinfo>
