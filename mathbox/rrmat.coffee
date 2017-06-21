@@ -65,7 +65,9 @@ texFraction = (x, error=0.00001) ->
     [num, den] = approxFraction x, error
     if den == 1
         return num.toString()
-    return "\\frac{#{num}}{#{den}}"
+    minus = if num < 0 then '-' else ''
+    num = Math.abs num
+    return "#{minus}\\frac{#{num}}{#{den}}"
 
 
 # This class represents a single animation step
@@ -558,14 +560,6 @@ class RRMatrix
             nextState.swapLine = @swapLinePoints top, bot, nextState
             return nextState
 
-        transform2 = (oldState) =>
-            nextState = deepCopy oldState
-            [nextState.matrix[row1], nextState.matrix[row2]] =
-                [nextState.matrix[row2], nextState.matrix[row1]]
-            @htmlMatrix nextState.matrix, nextState.html
-            nextState.swapOpacity = 0.0
-            return nextState
-
         transition1 = (nextState, stepID) =>
             @swapLine.set 'data', nextState.swapLine
             script = {}
@@ -573,6 +567,14 @@ class RRMatrix
             script[fadeTime] = 1
             @fade @swapLineGeom, script
                 .on 'play.done', (e) => @newState nextState, stepID
+
+        transform2 = (oldState) =>
+            nextState = deepCopy oldState
+            [nextState.matrix[row1], nextState.matrix[row2]] =
+                [nextState.matrix[row2], nextState.matrix[row1]]
+            @htmlMatrix nextState.matrix, nextState.html
+            nextState.swapOpacity = 0.0
+            return nextState
 
         transition2 = (nextState, stepID) =>
             pos = deepCopy @animState.positions
@@ -677,20 +679,11 @@ class RRMatrix
             nextState.multOpacity = 1
             nextState.html[@numRows][0] =
                 @domEl @domClass, {id: @_id('multFlyer'), className: 'mult-flyer'},
-                    '\\times' + texFraction factor
+                    '\\times' + texFraction(factor)
 
             startX = nextState.matWidth/2 + @colSpacing + 10
             rowY = nextState.positions[rowNum][0][1]
             nextState.positions[@numRows][0] = [startX, rowY, 10]
-            nextState
-
-        transform2 = (oldState) =>
-            nextState = deepCopy oldState
-            nextState.matrix[rowNum] = (r * factor for r in nextState.matrix[rowNum])
-            @htmlMatrix nextState.matrix, nextState.html
-            nextState.multOpacity = 0
-            rowY = @animState.positions[rowNum][0][1]
-            nextState.positions[@numRows][0] = [-nextState.matWidth*2, rowY, 10]
             nextState
 
         transition1 = (nextState, stepID) =>
@@ -700,6 +693,15 @@ class RRMatrix
             @doMultEffect.stepID = stepID
             @positions.set 'data', nextState.positions
             @animState.html[@numRows][0] = nextState.html[@numRows][0]
+
+        transform2 = (oldState) =>
+            nextState = deepCopy oldState
+            nextState.matrix[rowNum] = (r * factor for r in nextState.matrix[rowNum])
+            @htmlMatrix nextState.matrix, nextState.html
+            nextState.multOpacity = 0
+            rowY = @animState.positions[rowNum][0][1]
+            nextState.positions[@numRows][0] = [-nextState.matWidth*2, rowY, 10]
+            nextState
 
         transition2 = (nextState, stepID) =>
             @doMultEffect = doMultEffect
@@ -720,20 +722,41 @@ class RRMatrix
         step2: step2
         chain: new Chain @, stepID, step1, step2
 
+    _measureWidth: (text) ->
+        span = document.getElementById 'width-measurer'
+        if !span
+            div = document.createElement 'div'
+            div.className = 'mathbox-outline-2 mathbox-label'
+            div.style.fontSize = '20px'
+            document.body.appendChild div
+            span = document.createElement 'span'
+            span.id = 'width-measurer'
+            span.className = "#{@name} bound-entry rrep-factor " + @_id('rrepFactor')
+            div.appendChild span
+        span.innerHTML = text
+        width = span.getBoundingClientRect().width
+        return width
+
     repEffect: () =>
         # Opacity effects for row replacement
         return unless @doRepEffect
         {start, clock, parenLeft, parenRight, row, flyer,
-            opacity, nextState, targetRow} = @doRepEffect
+            targetRow, opacity, nextState, stepID, stepNum} = @doRepEffect
+        return if stepNum > 2
         elapsed = clock.getTime().clock - start
-        if elapsed < 0.3
-            # First fade in the parentheses
-            parenLeft.style.opacity = elapsed / 0.3
-            parenRight.style.opacity = elapsed / 0.3
+        if stepNum == 1
+            if elapsed < 0.3
+                # Fade in the parentheses
+                parenLeft.style.opacity = elapsed / 0.3
+                parenRight.style.opacity = elapsed / 0.3
+            else if elapsed < 1.5
+                parenLeft.style.opacity = 1
+                parenRight.style.opacity = 1
+            else
+                @doRepEffect.stepNum = 3
+                @onNextFrame 1, () => @newState nextState, stepID
             return
-        if elapsed < 1.5
-            return
-        elapsed -= 1.5
+        # stepNum == 2
         if elapsed < 1.5
             # Decrease opacity of flyer and row as the former covers the latter
             right = row[@numCols-1].getBoundingClientRect().right
@@ -761,95 +784,126 @@ class RRMatrix
             for elt in row
                 elt.style.opacity = elapsed/0.3
             return
-        if !@doRepEffect.finished
-            @onNextFrame 1, () => @newState nextState, 'post'
-            @doRepEffect.finished = true
+        @onNextFrame 1, () => @newState nextState, stepID
+        @doRepEffect.stepNum = 3
 
-    rowRep: (sourceRow, factor, targetRow) ->
+    rowRep: (stepID, sourceRow, factor, targetRow) ->
         # Return an animation in two steps
         # The first step moves the row flyer into place
         # The second step does the row replacement
 
-        # Set the text of rrepParenLeft, then run the rest in a couple of frames
-        # when we can measure its width
-        plus = if factor >= 0 then '+' else '-'
-        factor = Math.abs(factor)
-        @animState.html[@numRows+2][0] =
-            @domEl @domClass, {
-                className: 'rrep-factor ' + @_id('rrepFactor')
-                id: @_id 'rrepParenLeft'},
-                plus + texFraction(factor) + '\\,\\bigl('
-        @animState.html[@numRows+3][0] =
-            @domEl @domClass, {
-                className: 'rrep-factor ' + @_id('rrepFactor')
-                id: @_id 'rrepParenRight'}, '\\bigr)'
+        plus = if factor >= 0 then '+' else ''
+        texString = plus + texFraction(factor) + '\\,\\bigl('
+        leftParenWidth = @_measureWidth katex.renderToString(texString)
+        padding = 7
 
-        nextState = deepCopy @animState
-        for i in [0...@numCols]
-            nextState.matrix[targetRow][i] += factor * nextState.matrix[sourceRow][i]
-        @htmlMatrix nextState.matrix, nextState.html
+        # Opacity effects
+        doRepEffect =
+            clock:      @positions[0].clock
+            parenLeft:  document.getElementById(@_id 'rrepParenLeft')
+            parenRight: document.getElementById(@_id 'rrepParenRight')
+            row:        document.getElementsByClassName("#{@name}-row-#{targetRow}")
+            flyer:      document.getElementsByClassName(@_id 'addFlyer')
+            targetRow:  targetRow
+            opacity:    (right) =>
+                return 0.5 if right < 0
+                Math.max(0.5, Math.min (right/(@fontSize)), 1)
 
-        @onNextFrame 1, () =>
+        transform1 = (oldState) =>
+            nextState = deepCopy @animState
+            nextState.html[@numRows+2][0] =
+                @domEl @domClass, {
+                    className: 'rrep-factor ' + @_id('rrepFactor')
+                    id: @_id 'rrepParenLeft'}, texString
+            nextState.html[@numRows+3][0] =
+                @domEl @domClass, {
+                    className: 'rrep-factor ' + @_id('rrepFactor')
+                    id: @_id 'rrepParenRight'}, '\\bigr)'
+
             # Initialize row replacement factor
-            leftParen = document.getElementById(@_id 'rrepParenLeft')
-            leftParenWidth = leftParen.getBoundingClientRect().width
-            rowY = @animState.positions[targetRow][0][1]
-            padding = 7
-            matWidth = @matWidth + padding*2
+            rowY = nextState.positions[targetRow][0][1]
+            matWidth = nextState.matWidth + padding*2
+            leftParenX = nextState.matWidth/2 + @colSpacing + 10
+            nextState.positions[@numRows+2][0][0] = leftParenX
+            nextState.positions[@numRows+2][0][1] = rowY
+            nextState.positions[@numRows+2][0][2] = 5
+            nextState.positions[@numRows+3][0][0] =
+                leftParenX + leftParenWidth + matWidth
+            nextState.positions[@numRows+3][0][1] = rowY
+            nextState.positions[@numRows+3][0][2] = 5
+
+            # Initialize row flyer
+            offsetX = nextState.matWidth + @colSpacing + 10 + leftParenWidth + padding
+            for i in [0...@numCols]
+                nextState.html[@numRows+1][i] =
+                    @domEl @domClass, {className: @_id 'addFlyer'},
+                        nextState.html[sourceRow][i].children
+                nextState.positions[@numRows+1][i] =
+                    deepCopy nextState.positions[sourceRow][i]
+                nextState.positions[@numRows+1][i][0] += offsetX
+                nextState.positions[@numRows+1][i][1] = rowY
+                nextState.positions[@numRows+1][i][2] = 10
+
+            nextState.rrepOpacity = 1
+            nextState.rrepParenOpacity = 1
+
+            nextState
+
+        transition1 = (nextState, stepID) =>
+            @animState.html = nextState.html
             for elt in document.getElementsByClassName @_id('rrepFactor')
                 # Put these to the right of the reference point
                 elt.parentElement.style.width = "0px"
                 elt.style.opacity = 0
-            leftParenX = @matWidth/2 + @colSpacing + 10
-            @animState.positions[@numRows+2][0][0] = leftParenX
-            @animState.positions[@numRows+2][0][1] = rowY
-            @animState.positions[@numRows+2][0][2] = 5
-            @animState.positions[@numRows+3][0][0] =
-                leftParenX + leftParenWidth + matWidth
-            @animState.positions[@numRows+3][0][1] = rowY
-            @animState.positions[@numRows+3][0][2] = 5
-
-            # Initialize row flyer
-            offsetX = @matWidth + @colSpacing + 10 + leftParenWidth + padding
-            pos2 = deepCopy @animState.positions
-            for i in [0...@numCols]
-                @animState.html[@numRows+1][i] =
-                    @domEl @domClass, {className: @_id 'addFlyer'},
-                        @animState.html[sourceRow][i].children
-                @animState.positions[@numRows+1][i] =
-                    @animState.positions[sourceRow][i]
-                pos2[@numRows+1][i][0] = @animState.positions[@numRows+1][i][0] + offsetX
-                pos2[@numRows+1][i][1] = rowY
-                pos2[@numRows+1][i][2] = 10
-
-            pos3 = deepCopy pos2
-            for i in [0...@numCols]
-                pos3[@numRows+1][i][0] -= offsetX
-            pos3[@numRows+2][0][0] -= offsetX
-            pos3[@numRows+3][0][0] -= offsetX
+            addFlyer = document.getElementsByClassName(@_id 'addFlyer')
+            elt.style.opacity = 1 for elt in addFlyer
+            @animState.positions[@numRows+1] = @animState.positions[sourceRow]
+            @animState.positions[@numRows+2][0] = nextState.positions[@numRows+2][0]
+            @animState.positions[@numRows+3][0] = nextState.positions[@numRows+3][0]
 
             @play @positions,
                 script:
                     0.0: {props: {data: @animState.positions}}
-                    1.5: {props: {data: pos2}}
-                    3.0: {props: {data: pos3}}
+                    1.5: {props: {data: nextState.positions}}
 
-            addFlyer = document.getElementsByClassName(@_id 'addFlyer')
-            elt.style.opacity = 1 for elt in addFlyer
+            @doRepEffect = doRepEffect
+            @doRepEffect.start = doRepEffect.clock.getTime().clock
+            @doRepEffect.nextState = nextState
+            @doRepEffect.stepID = stepID
+            @doRepEffect.stepNum = 1
 
-            # Opacity effects
-            @doRepEffect =
-                start:      @positions[0].clock.getTime().clock
-                clock:      @positions[0].clock
-                parenLeft:  document.getElementById(@_id 'rrepParenLeft')
-                parenRight: document.getElementById(@_id 'rrepParenRight')
-                row:        document.getElementsByClassName("#{@name}-row-#{targetRow}")
-                flyer:      addFlyer
-                nextState:  nextState
-                targetRow:  targetRow
-                finished:   false
-                opacity:    (right) =>
-                    return 0.5 if right < 0
-                    Math.max(0.5, Math.min (right/(@fontSize)), 1)
+        transform2 = (oldState) =>
+            nextState = deepCopy @animState
+            for i in [0...@numCols]
+                nextState.matrix[targetRow][i] +=
+                    factor * nextState.matrix[sourceRow][i]
+            @htmlMatrix nextState.matrix, nextState.html
+            offsetX = nextState.matWidth + @colSpacing + 10 + leftParenWidth + padding
+            for i in [0...@numCols]
+                nextState.positions[@numRows+1][i][0] -= offsetX
+            nextState.positions[@numRows+2][0][0] -= offsetX
+            nextState.positions[@numRows+3][0][0] -= offsetX
+            nextState.rrepOpacity = 0
+            nextState.rrepParenOpacity = 0
+            nextState
+
+        transition2 = (nextState, stepID) =>
+            @play @positions,
+                script:
+                    0.0: {props: {data: @animState.positions}}
+                    1.5: {props: {data: nextState.positions}}
+
+            @doRepEffect = doRepEffect
+            @doRepEffect.start = doRepEffect.clock.getTime().clock
+            @doRepEffect.nextState = nextState
+            @doRepEffect.stepID = stepID
+            @doRepEffect.stepNum = 2
+
+        step1 = new Step @, "#{stepID}-1", transform1, transition1
+        step2 = new Step @, "#{stepID}-2", transform2, transition2
+
+        step1: step1
+        step2: step2
+        chain: new Chain @, stepID, step1, step2
 
 window.RRMatrix = RRMatrix
