@@ -83,15 +83,16 @@ class Step
     go: () =>
         @nextState = @transform(@rrmat.animState)
         @transition @nextState, @stepID
-        @listener = () =>
+        @listener = listener = () =>
             @nextState = null
+            @rrmat.view.off "#{@rrmat.name}.#{@stepID}.done", listener
             console.log "Step #{@stepID} done"
-        @rrmat.view[0].on "#{@rrmat.name}.#{@stepID}.done", @listener
+        @rrmat.view.on "#{@rrmat.name}.#{@stepID}.done", @listener
 
     fastForward: () =>
         # Skip the rest of this step and reset animState to the next state
         return unless @nextState
-        @rrmat.view[0].off "#{@rrmat.name}.#{@stepID}.done", @listener
+        @rrmat.view.off "#{@rrmat.name}.#{@stepID}.done", @listener
         @rrmat.newState @nextState
         @nextState = null
 
@@ -107,15 +108,16 @@ class Chain extends Step
 
     goStep: (stepNum) =>
         step = @steps[stepNum]
-        @listener = () =>
+        @listener = listener = () =>
+            @rrmat.view.off "#{@rrmat.name}.#{step.stepID}.done", listener
             nextStep = @steps[stepNum+1]?
             if nextStep
                 @goStep stepNum+1
             else
                 @stepNum = -1
                 event = type: "#{@rrmat.name}.#{@stepID}.done"
-                @rrmat.view[0].triggerOnce event
-        @rrmat.view[0].on "#{@rrmat.name}.#{step.stepID}.done", @listener
+                @rrmat.view[0].trigger event
+        @rrmat.view.on "#{@rrmat.name}.#{step.stepID}.done", @listener
         @stepNum = stepNum
         step.go()
 
@@ -125,7 +127,7 @@ class Chain extends Step
     fastForward: () =>
         return unless @stepNum >= 0
         step = @steps[@stepNum]
-        @rrmat.view[0].off "#{@rrmat.name}.#{step.stepID}.done", @listener
+        @rrmat.view.off "#{@rrmat.name}.#{step.stepID}.done", @listener
         nextState = @rrmat.animState
         for i in [@stepNum...@steps.length]
             nextState = @steps[i].transform nextState
@@ -297,13 +299,13 @@ class RRMatrix
         play1?.on 'play.done', (e) =>
             play1.remove()
             @positions.set 'data', @animState.positions
-            @view[0].triggerOnce event if stepID
+            @view[0].trigger event if stepID
         play2?.on 'play.done', (e) =>
             play2.remove()
             @bracket.set 'data', @animState.bracket
             if !play1? && stepID
-                @view[0].triggerOnce event
-        @view[0].triggerOnce event if !play1? && !play2? && stepID
+                @view[0].trigger event
+        @view[0].trigger event if !play1? && !play2? && stepID
 
     play: (element, opts) ->
         # Thin wrapper around mathbox.play
