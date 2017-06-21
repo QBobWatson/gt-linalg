@@ -42,10 +42,10 @@
         plugins: ['core', 'controls'],
         mathbox: {
             warmup: 2,
-            splash: false,
+            splash: true,
             inspect: false,
         },
-        splash: {fancy: false, color: "blue"},
+        splash: {fancy: true, color: "blue"},
         camera: {
             near: ortho / 4,
             far: ortho * 4,
@@ -91,6 +91,7 @@
                               [72/14, 115/11, 33, 91],
                               [0, 1, 2, 3]];
     rrmat.install(view);
+    rrmat.view[0].on('rrmat.x.done', function(){console.log("x done")});
 
     </script>
 </body>

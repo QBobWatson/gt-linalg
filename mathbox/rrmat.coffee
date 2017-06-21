@@ -68,6 +68,69 @@ texFraction = (x, error=0.00001) ->
     return "\\frac{#{num}}{#{den}}"
 
 
+# This class represents a single animation step
+class Step
+    constructor: (@rrmat, @stepID, @transform, @transition) ->
+        # 'transform' is a function that takes the current animState (or the
+        # best guess for what that state will be in the future), and returns the
+        # new state after the transition happens (but before resizing the matrix
+        # elements).  'transition' is the function that actually animates the
+        # transition.
+        @nextState = null  # Set if and only if the effect is running
+
+    go: () =>
+        @nextState = @transform(@rrmat.animState)
+        @transition @nextState, @stepID
+        @listener = () =>
+            @nextState = null
+            console.log "Step #{@stepID} done"
+        @rrmat.view[0].on "#{@rrmat.name}.#{@stepID}.done", @listener
+
+    fastForward: () =>
+        # Skip the rest of this step and reset animState to the next state
+        return unless @nextState
+        @rrmat.view[0].off "#{@rrmat.name}.#{@stepID}.done", @listener
+        @rrmat.newState @nextState
+        @nextState = null
+
+# Chain several steps together
+class Chain extends Step
+    constructor: (rrmat, stepID, @steps...) ->
+        transform = (oldState) =>
+            oldState = step.transform oldState for step in @steps
+            oldState
+
+        super rrmat, stepID, transform, null
+        @stepNum = -1  # nonnegative if and only if the effect is running
+
+    goStep: (stepNum) =>
+        step = @steps[stepNum]
+        @listener = () =>
+            nextStep = @steps[stepNum+1]?
+            if nextStep
+                @goStep stepNum+1
+            else
+                @stepNum = -1
+                event = type: "#{@rrmat.name}.#{@stepID}.done"
+                @rrmat.view[0].triggerOnce event
+        @rrmat.view[0].on "#{@rrmat.name}.#{step.stepID}.done", @listener
+        @stepNum = stepNum
+        step.go()
+
+    go: () =>
+        @goStep 0
+
+    fastForward: () =>
+        return unless @stepNum >= 0
+        step = @steps[@stepNum]
+        @rrmat.view[0].off "#{@rrmat.name}.#{step.stepID}.done", @listener
+        nextState = @rrmat.animState
+        for i in [@stepNum...@steps.length]
+            nextState = @steps[i].transform nextState
+        @rrmat.newState nextState
+        @stepNum = -1
+
+
 # This class animates a row reduction sequnce on a matrix.
 class RRMatrix
 
@@ -113,11 +176,16 @@ class RRMatrix
             positions: []
             # These are the contents of the DOM entries, in the order described
             # above.
-            html: []
+            html: [] # Set in @install()
             # Matrix entries (as decimal numbers)
             matrix: []
+            # Matrix width
+            matWidth: 0
             # Bracket path
             bracket: []
+            # Swap line position and opacity
+            swapLine: []
+            swapOpacity: 0.0
             # Multiplication factor opacity
             multOpacity: 0.0
             # Row replacement factor opacity
@@ -128,14 +196,14 @@ class RRMatrix
         @animState.matrix =
             (Array.apply(null, Array @numCols).map Number.prototype.valueOf, 0 \
                 for [0...@numRows])
-        # @animState.html is set in install()
 
-        [positions, @animState.bracket, @matWidth] = @computePositions()
+        [positions, @animState.bracket, @animState.matWidth] = @computePositions()
         for j in [0..@numRows+3]
             @animState.positions[j] = []
             @animState.positions[j][i] = [1000,-1000,0] for i in [0...@numCols]
         @animState.positions =
             @_insertMatrixPositions positions, @animState.positions
+        @animState.swapLine = @swapLinePoints 100, -100
 
         mathbox.select('root')[0].clock.on 'clock.tick', @multEffect
         @doMultEffect = null
@@ -151,7 +219,8 @@ class RRMatrix
             for j in [0...@numCols] for k in [0,1]
         allPos
     _extractMatrixPositions: (allPos) ->
-        allPos[i] for i in [0...@numRows]
+        [allPos[i][j][0], allPos[i][j][1]] \
+            for j in [0...@numCols] for i in [0...@numRows]
 
     computePositions: () =>
         #console.log "recomputing matrix sizes..."
@@ -192,27 +261,47 @@ class RRMatrix
 
         return [positions, bracket, matWidth]
 
-    resize: () ->
-        [positions, bracket, @matWidth] = @computePositions()
+    resize: (stepID) =>
+        oldWidth = @animState.matWidth
+        [positions, bracket, @animState.matWidth] = @computePositions()
         if !arraysEqual positions, @_extractMatrixPositions @animState.positions
             @animState.positions =
                 @_insertMatrixPositions positions, @animState.positions
+            # Move stuff to the right or left if necessary
+            if oldWidth != @animState.matWidth
+                diff = @animState.matWidth - oldWidth
+                if @animState.swapOpacity > 0
+                    @animState.swapLine[i][0] += diff \
+                        for i in [0..@swapLineSamples]
+                if @animState.multOpacity > 0
+                    @animState.positions[@numRows][0][0] += diff
+                if @animState.rrepOpacity > 0
+                    @animState.positions[@numRows+1][i][0] += diff \
+                        for i in [0...@numCols]
+                if @animState.rrepParenOpacity > 0
+                    @animState.positions[@numRows+j][0][0] += diff \
+                        for j in [@numRows+2..@numRows+3]
             play1 = @play @positions,
                 script:
                     0:   {props: {data: Array.from @positions.get 'data'}}
                     0.2: {props: {data: @animState.positions}}
-            play1.on 'play.done', (e) =>
-                play1.remove()
-                @positions.set 'data', @animState.positions
         if !arraysEqual bracket, @animState.bracket
             @animState.bracket = bracket
             play2 = @play @bracket,
                 script:
                     0:   {props: {data: Array.from @bracket.get 'data'}}
                     0.2: {props: {data: bracket}}
-            play2.on 'play.done', (e) =>
-                play2.remove()
-                @bracket.set 'data', @animState.bracket
+        event = type: "#{@name}.#{stepID}.done"
+        play1?.on 'play.done', (e) =>
+            play1.remove()
+            @positions.set 'data', @animState.positions
+            @view[0].triggerOnce event if stepID
+        play2?.on 'play.done', (e) =>
+            play2.remove()
+            @bracket.set 'data', @animState.bracket
+            if !play1? && stepID
+                @view[0].triggerOnce event
+        @view[0].triggerOnce event if !play1? && !play2? && stepID
 
     play: (element, opts) ->
         # Thin wrapper around mathbox.play
@@ -225,14 +314,15 @@ class RRMatrix
         opts.to     ?= Math.max.apply null, (k for k of opts.script)
         play = @view.play opts
         # Don't auto-remove, as there may be other listeners for play.done
-        #play.on 'play.done', (e) -> play.remove(); console.log "Play done"
         play
 
     fade: (element, script) ->
         # Fade an element in or out
         script2 = {}
         script2[k] = {props: {opacity: v}} for k, v of script
-        @play element, script: script2
+        @play element,
+            ease:   'linear'
+            script: script2
 
     onNextFrame: (after, callback, stage='post') ->
         # Execute 'callback' after 'after' frames
@@ -247,17 +337,19 @@ class RRMatrix
                 delete @nextFrame[event.type][f]
                 callback()
 
-    newState: (nextState) =>
+    newState: (nextState, stepID) =>
         # Set all displayed elements to a new state
+        # Trigger an event when finished
         @animState = nextState
-        @htmlMatrix @animState.matrix, @animState.html
         # Stop/delete any animations
         mathbox.remove "play.#{@name}"
         @positions.set 'data', @animState.positions
         @bracket.set 'data', @animState.bracket
+        @swapLineGeom.set 'opacity', @animState.swapOpacity
+        @swapLine.set 'data', @animState.swapLine
+        # Clean up opacity effects
         @doMultEffect = null
         @doRepEffect = null
-        # Clean up opacity effects
         document.getElementById(@_id 'multFlyer').style.opacity =
             @animState.multOpacity
         for elt in document.getElementsByClassName @_id('rrepFactor')
@@ -266,7 +358,8 @@ class RRMatrix
             elt.style.opacity = @animState.rrepOpacity
         for elt in document.getElementsByClassName "#{@name}-matrix-entry"
             elt.style.opacity = 1
-        @resize()
+        # Give DOM elements a chance to update
+        @onNextFrame 1, () => @resize stepID
 
     htmlMatrix: (matrix, html) =>
         # Render matrix in html
@@ -339,6 +432,8 @@ class RRMatrix
             outline: 2
             size:    @fontSize
             classes: [@name]
+            id:      @_id 'dom'
+            opacity: 0  # Becomes visible when DOM elements are loaded
             attributes: style: height: "0px"
 
         # @view.matrix
@@ -368,6 +463,8 @@ class RRMatrix
             color:   "black"
             width:   2
             classes: [@name]
+            id:      @_id 'bracketLeft'
+            opacity: 0
         .transform
             scale:   [-1, 1, 1]
             classes: [@name]
@@ -375,6 +472,8 @@ class RRMatrix
             color:   "black"
             width:   2
             classes: [@name]
+            id:      @_id 'bracketRight'
+            opacity: 0
 
         # Swap-points arrow
         @swapLine = @view.array
@@ -382,16 +481,16 @@ class RRMatrix
             width:    @swapLineSamples + 1
             classes:  [@name]
             id:       @_id 'swapLine'
-            data:     @swapLinePoints(100,-100)[0]
+            data:     @animState.swapLine
 
         @swapLineGeom = @view.line
             color:   "green"
             width:   4
             start:   true
             end:     true
-            visible: false
-            id:       @_id 'swapLineGeom'
-            classes:  [@name]
+            opacity: 0.0
+            id:      @_id 'swapLineGeom'
+            classes: [@name]
 
         # This gets run once after the DOM elements are added
         observer = new MutationObserver (mutations, observer) =>
@@ -401,6 +500,10 @@ class RRMatrix
             if elts.length >= (@numRows + 4) * @numCols
                 @alignBaselines elts
                 @resize()
+                @onNextFrame 10, () =>
+                    @fade mathbox.select('#' + @_id('dom')), {0: 0, .3: 1}
+                    @fade mathbox.select('#' + @_id('bracketLeft')), {0: 0, .3: 1}
+                    @fade mathbox.select('#' + @_id('bracketRight')), {0: 0, .3: 1}
                 observer.disconnect()
         observer.observe document.getElementById('mathbox'),
                childList:     true
@@ -424,73 +527,109 @@ class RRMatrix
         for elt in elts
             elt.parentElement.style.top = -elt.offsetTop + "px"
 
-    swapLinePoints: (top, bot) ->
+    ######################################################################
+    # Transitions and helper functions
+    ######################################################################
+
+    swapLinePoints: (top, bot, animState=@animState) ->
         # Get points for the swap-arrows line
         samples = @swapLineSamples
         lineHeight = Math.abs(top - bot)
         center = (top + bot) / 2
-        points = ([Math.sin(π * i/samples) * @colSpacing * 3 + @matWidth/2 +
-                      @colSpacing + 2,
+        points = ([Math.sin(π * i/samples) * @colSpacing * 3 +
+                      animState.matWidth/2 + @colSpacing + 2,
                    Math.cos(π * i/samples) * lineHeight/2 + center] \
                   for i in [0..samples])
-        swapPoints = ([x,-y+2*center] for [x,y] in points)
-        return [points, swapPoints]
+        return points
 
-    rowSwap: (row1, row2) ->
-        nextState = deepCopy @animState
-        [nextState.matrix[row1], nextState.matrix[row2]] =
-            [nextState.matrix[row2], nextState.matrix[row1]]
-
-        # Put moving rows on top
-        for i in [row1, row2]
-            for j in [0...@numCols]
-                @animState.positions[i][j][2] = 10
-
-        # Transition
-        transPos = deepCopy @animState.positions
-        [transPos[row1], transPos[row2]] =
-            [transPos[row2], transPos[row1]]
+    rowSwap: (stepID, row1, row2) ->
+        # Return an animation in two steps.
+        # The first step fades in the swap arrow.
+        # The second step does the swap.
 
         fadeTime = 0.3
         swapTime = 1
 
-        play = @play @positions,
-            delay: fadeTime
-            pace:  swapTime
-            script:
-                0: {props: {data: @animState.positions}}
-                1: {props: {data: transPos}}
+        transform1 = (oldState) =>
+            nextState = deepCopy oldState
+            nextState.swapOpacity = 1.0
+            top = nextState.positions[row1][0][1] + @fontSize/3
+            bot = nextState.positions[row2][0][1] + @fontSize/3
+            nextState.swapLine = @swapLinePoints top, bot, nextState
+            return nextState
 
-        top = @animState.positions[row1][0][1] + @fontSize/3
-        bot = @animState.positions[row2][0][1] + @fontSize/3
-        [@animState.swapLine, transLine] = @swapLinePoints top, bot
-        @swapLine.set 'data', @animState.swapLine
-        @swapLineGeom.set 'visible', true
+        transform2 = (oldState) =>
+            nextState = deepCopy oldState
+            [nextState.matrix[row1], nextState.matrix[row2]] =
+                [nextState.matrix[row2], nextState.matrix[row1]]
+            @htmlMatrix nextState.matrix, nextState.html
+            nextState.swapOpacity = 0.0
+            return nextState
 
-        script = {}
-        script[0]                   = 0
-        script[fadeTime]            = 1
-        script[fadeTime+swapTime]   = 1
-        script[2*fadeTime+swapTime] = 0
-        @fade @swapLineGeom, script
-            .on 'play.done', (e) =>
-                @newState nextState
-                @swapLineGeom.set 'visible', false
+        transition1 = (nextState, stepID) =>
+            @swapLine.set 'data', nextState.swapLine
+            script = {}
+            script[0] = 0
+            script[fadeTime] = 1
+            @fade @swapLineGeom, script
+                .on 'play.done', (e) => @newState nextState, stepID
 
-        play = @play @swapLine,
-            delay: fadeTime
-            pace:  swapTime
-            script:
-                0: {props: {data: @animState.swapLine}}
-                1: {props: {data: transLine}}
+        transition2 = (nextState, stepID) =>
+            pos = deepCopy @animState.positions
+            [pos[row1], pos[row2]] = [pos[row2], pos[row1]]
+
+            # Put moving rows on top
+            # for i in [row1, row2]
+            #     for j in [0...@numCols]
+            #         @animState.positions[i][j][2] = 10
+
+            @play @positions,
+                pace: swapTime
+                script:
+                    0: {props: {data: @animState.positions}}
+                    1: {props: {data: pos}}
+
+            top = @animState.swapLine[0][1]
+            bot = @animState.swapLine[@animState.swapLine.length-1][1]
+            center = (top + bot) / 2
+            transLine = ([x,-y+2*center] for [x,y] in @animState.swapLine)
+
+            @play @swapLine,
+                pace: swapTime
+                script:
+                    0: {props: {data: @animState.swapLine}}
+                    1: {props: {data: transLine}}
+
+            script = {}
+            script[0] = 1
+            script[swapTime] = 1
+            script[swapTime+fadeTime] = 0
+            @fade @swapLineGeom, script
+                .on 'play.done', (e) => @newState nextState, stepID
+
+        step1 = new Step @, "#{stepID}-1", transform1, transition1
+        step2 = new Step @, "#{stepID}-2", transform2, transition2
+
+        step1: step1
+        step2: step2
+        chain: new Chain @, stepID, step1, step2
 
     multEffect: () =>
         # Fade numbers in and out when multiplying
         return unless @doMultEffect
-        {row, rowNum, flyer, start, clock,
-            rowPos, past, opacity, nextState} = @doMultEffect
+        {row, rowNum, rowPos, past, flyer, clock,
+            stepNum, stepID, opacity, start, nextState} = @doMultEffect
+        return if stepNum > 2
         elapsed = clock.getTime().clock - start
-        flyer.style.opacity = Math.min(elapsed/0.3, 1)
+        if stepNum == 1
+            if elapsed >= 0.3
+                flyer.style.opacity = 1
+                @doMultEffect.stepNum = 3
+                @onNextFrame 1, () => @newState nextState, stepID
+            else
+                flyer.style.opacity = elapsed/0.3
+            return
+        # stepNum == 2
         box = flyer.getBoundingClientRect()
         flyerPos = (box.left + box.right) / 2
         for elt, i in row
@@ -503,22 +642,16 @@ class RRMatrix
             # Fade out the flyer
             flyer.style.opacity =
                 Math.max(1 - (rowPos[0] - flyerPos)/@fontSize/5, 0)
-            if !@doMultEffect.finished && flyer.style.opacity < 0.05
-                @onNextFrame 1, () => @newState nextState, 'post'
-                @doMultEffect.finished = true
+            if flyer.style.opacity < 0.05
+                @onNextFrame 1, () => @newState nextState, stepID
+                @doMultEffect.stepNum = 3
 
-    rowMult: (rowNum, factor) ->
-        startX = @matWidth/2 + @colSpacing + 10
-        rowY = @animState.positions[rowNum][0][1]
-        @animState.html[@numRows][0] =
-            @domEl @domClass, {id: @_id('multFlyer'), className: 'mult-flyer'},
-                '\\times' + texFraction factor
-        nextState = deepCopy @animState
-        nextState.matrix[rowNum] = (r * factor for r in nextState.matrix[rowNum])
-        @htmlMatrix nextState.matrix, nextState.html
+    rowMult: (stepID, rowNum, factor) ->
+        # Return an animation in two steps
+        # The first step fades in the multiplication flyer
+        # The second step does the multiplication
 
         flyer = document.getElementById @_id('multFlyer')
-        flyer.style.opacity = 1
         # Put the flyer text to the right of the reference point
         flyer.parentElement.style.width = "0px"
         # Precomputations
@@ -529,28 +662,63 @@ class RRMatrix
             box = elt.getBoundingClientRect()
             pos.push (box.left + box.right) / 2
             past.push false
-        @doMultEffect =
+        doMultEffect =
             row:       row
             rowNum:    rowNum
             rowPos:    pos
             past:      past
             flyer:     flyer
-            start:     @positions[0].clock.getTime().clock
             clock:     @positions[0].clock
-            fadeIn:    0.3
+            stepNum:   1
             opacity:   (distance) => Math.min (distance/(@fontSize*2))**3, 1
-            finished:  false
-            nextState: nextState
 
-        pos1 = deepCopy @animState.positions
-        pos1[@numRows][0] = [startX, rowY, 10]
-        pos2 = deepCopy @animState.positions
-        pos2[@numRows][0] = [-@matWidth*2, rowY, 10]
-        @play @positions,
-            delay: 0.3
-            script:
-                0: {props: {data: pos1}}
-                1.75: {props: {data: pos2}}
+        transform1 = (oldState) =>
+            nextState = deepCopy oldState
+            nextState.multOpacity = 1
+            nextState.html[@numRows][0] =
+                @domEl @domClass, {id: @_id('multFlyer'), className: 'mult-flyer'},
+                    '\\times' + texFraction factor
+
+            startX = nextState.matWidth/2 + @colSpacing + 10
+            rowY = nextState.positions[rowNum][0][1]
+            nextState.positions[@numRows][0] = [startX, rowY, 10]
+            nextState
+
+        transform2 = (oldState) =>
+            nextState = deepCopy oldState
+            nextState.matrix[rowNum] = (r * factor for r in nextState.matrix[rowNum])
+            @htmlMatrix nextState.matrix, nextState.html
+            nextState.multOpacity = 0
+            rowY = @animState.positions[rowNum][0][1]
+            nextState.positions[@numRows][0] = [-nextState.matWidth*2, rowY, 10]
+            nextState
+
+        transition1 = (nextState, stepID) =>
+            @doMultEffect = doMultEffect
+            @doMultEffect.start = @positions[0].clock.getTime().clock
+            @doMultEffect.nextState = nextState
+            @doMultEffect.stepID = stepID
+            @positions.set 'data', nextState.positions
+            @animState.html[@numRows][0] = nextState.html[@numRows][0]
+
+        transition2 = (nextState, stepID) =>
+            @doMultEffect = doMultEffect
+            @doMultEffect.stepNum = 2
+            @doMultEffect.start = @positions[0].clock.getTime().clock
+            @doMultEffect.nextState = nextState
+            @doMultEffect.stepID = stepID
+
+            @play @positions,
+                script:
+                    0:    {props: {data: @animState.positions}}
+                    1.75: {props: {data: nextState.positions}}
+
+        step1 = new Step @, "#{stepID}-1", transform1, transition1
+        step2 = new Step @, "#{stepID}-2", transform2, transition2
+
+        step1: step1
+        step2: step2
+        chain: new Chain @, stepID, step1, step2
 
     repEffect: () =>
         # Opacity effects for row replacement
@@ -598,6 +766,10 @@ class RRMatrix
             @doRepEffect.finished = true
 
     rowRep: (sourceRow, factor, targetRow) ->
+        # Return an animation in two steps
+        # The first step moves the row flyer into place
+        # The second step does the row replacement
+
         # Set the text of rrepParenLeft, then run the rest in a couple of frames
         # when we can measure its width
         plus = if factor >= 0 then '+' else '-'
