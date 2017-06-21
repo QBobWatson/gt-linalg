@@ -100,6 +100,11 @@
     rrmat.install(view);
     rrmat.view[0].on('rrmat.x.done', function(){console.log("x done")});
 
+    var step1 = rrmat.rowMult(1, 0, 2).chain
+    var step2 = rrmat.rowSwap(2, 0, 3).chain
+    var step3 = rrmat.rowRep(3, 0, 1/2, 2).chain
+    var chain = rrmat.chain(4, step1, step2, step3)
+
     </script>
 </body>
 </html>

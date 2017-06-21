@@ -89,18 +89,25 @@ class Step
             console.log "Step #{@stepID} done"
         @rrmat.view.on "#{@rrmat.name}.#{@stepID}.done", @listener
 
+    cancel: () =>
+        # Stop animation, and return the next state
+        return unless @nextState
+        @rrmat.view.off "#{@rrmat.name}.#{@stepID}.done", @listener
+        ret = @nextState
+        @nextState = null
+        ret
+
     fastForward: () =>
         # Skip the rest of this step and reset animState to the next state
         return unless @nextState
-        @rrmat.view.off "#{@rrmat.name}.#{@stepID}.done", @listener
-        @rrmat.newState @nextState
-        @nextState = null
+        @rrmat.newState @cancel()
 
 # Chain several steps together
 class Chain extends Step
     constructor: (rrmat, stepID, @steps...) ->
         transform = (oldState) =>
-            oldState = step.transform oldState for step in @steps
+            for step in @steps
+                oldState = step.transform oldState
             oldState
 
         super rrmat, stepID, transform, null
@@ -124,15 +131,19 @@ class Chain extends Step
     go: () =>
         @goStep 0
 
-    fastForward: () =>
+    cancel: () =>
         return unless @stepNum >= 0
         step = @steps[@stepNum]
         @rrmat.view.off "#{@rrmat.name}.#{step.stepID}.done", @listener
-        nextState = @rrmat.animState
-        for i in [@stepNum...@steps.length]
+        nextState = step.cancel()
+        for i in [@stepNum+1...@steps.length]
             nextState = @steps[i].transform nextState
-        @rrmat.newState nextState
         @stepNum = -1
+        nextState
+
+    fastForward: () =>
+        return unless @stepNum >= 0
+        @rrmat.newState @cancel()
 
 
 # This class animates a row reduction sequnce on a matrix.
@@ -433,7 +444,7 @@ class RRMatrix
             offset:  [0,0]
             depth:   0
             zoom:    1
-            outline: 2
+            outline: 0
             size:    @fontSize
             classes: [@name]
             id:      @_id 'dom'
@@ -534,6 +545,11 @@ class RRMatrix
     ######################################################################
     # Transitions and helper functions
     ######################################################################
+
+    chain: (stepID, steps...) ->
+        ret = new Chain(@, stepID)
+        ret.steps = steps
+        ret
 
     swapLinePoints: (top, bot, animState=@animState) ->
         # Get points for the swap-arrows line
@@ -655,26 +671,27 @@ class RRMatrix
         # The first step fades in the multiplication flyer
         # The second step does the multiplication
 
-        flyer = document.getElementById @_id('multFlyer')
-        # Put the flyer text to the right of the reference point
-        flyer.parentElement.style.width = "0px"
-        # Precomputations
-        row = document.getElementsByClassName "#{@name}-row-#{rowNum}"
-        pos = []
-        past = []
-        for elt in row
-            box = elt.getBoundingClientRect()
-            pos.push (box.left + box.right) / 2
-            past.push false
+        precomputations = (doMultEffect) =>
+            row = document.getElementsByClassName "#{@name}-row-#{rowNum}"
+            flyer = document.getElementById @_id('multFlyer')
+            # Put the flyer text to the right of the reference point
+            flyer.parentElement.style.width = "0px"
+            pos = []
+            past = []
+            for elt in row
+                box = elt.getBoundingClientRect()
+                pos.push (box.left + box.right) / 2
+                past.push false
+            doMultEffect.row    = row
+            doMultEffect.flyer  = flyer
+            doMultEffect.rowPos = pos
+            doMultEffect.past   = past
+            doMultEffect.start  = doMultEffect.clock.getTime().clock
+
         doMultEffect =
-            row:       row
-            rowNum:    rowNum
-            rowPos:    pos
-            past:      past
-            flyer:     flyer
-            clock:     @positions[0].clock
-            stepNum:   1
-            opacity:   (distance) => Math.min (distance/(@fontSize*2))**3, 1
+                rowNum:    rowNum
+                clock:     @positions[0].clock
+                opacity:   (distance) => Math.min (distance/(@fontSize*2))**3, 1
 
         transform1 = (oldState) =>
             nextState = deepCopy oldState
@@ -690,9 +707,10 @@ class RRMatrix
 
         transition1 = (nextState, stepID) =>
             @doMultEffect = doMultEffect
-            @doMultEffect.start = @positions[0].clock.getTime().clock
+            precomputations @doMultEffect
             @doMultEffect.nextState = nextState
-            @doMultEffect.stepID = stepID
+            @doMultEffect.stepID    = stepID
+            @doMultEffect.stepNum   = 1
             @positions.set 'data', nextState.positions
             @animState.html[@numRows][0] = nextState.html[@numRows][0]
 
@@ -707,10 +725,10 @@ class RRMatrix
 
         transition2 = (nextState, stepID) =>
             @doMultEffect = doMultEffect
-            @doMultEffect.stepNum = 2
-            @doMultEffect.start = @positions[0].clock.getTime().clock
+            precomputations @doMultEffect
             @doMultEffect.nextState = nextState
-            @doMultEffect.stepID = stepID
+            @doMultEffect.stepID    = stepID
+            @doMultEffect.stepNum   = 2
 
             @play @positions,
                 script:
@@ -799,20 +817,24 @@ class RRMatrix
         leftParenWidth = @_measureWidth katex.renderToString(texString)
         padding = 7
 
+        precomputations = (doRepEffect) =>
+            doRepEffect.parenLeft  = document.getElementById(@_id 'rrepParenLeft')
+            doRepEffect.parenRight = document.getElementById(@_id 'rrepParenRight')
+            doRepEffect.row        = document.getElementsByClassName(
+                "#{@name}-row-#{targetRow}")
+            doRepEffect.flyer      = document.getElementsByClassName(@_id 'addFlyer')
+            doRepEffect.start      = doRepEffect.clock.getTime().clock
+
         # Opacity effects
         doRepEffect =
             clock:      @positions[0].clock
-            parenLeft:  document.getElementById(@_id 'rrepParenLeft')
-            parenRight: document.getElementById(@_id 'rrepParenRight')
-            row:        document.getElementsByClassName("#{@name}-row-#{targetRow}")
-            flyer:      document.getElementsByClassName(@_id 'addFlyer')
             targetRow:  targetRow
             opacity:    (right) =>
                 return 0.5 if right < 0
                 Math.max(0.5, Math.min (right/(@fontSize)), 1)
 
         transform1 = (oldState) =>
-            nextState = deepCopy @animState
+            nextState = deepCopy oldState
             nextState.html[@numRows+2][0] =
                 @domEl @domClass, {
                     className: 'rrep-factor ' + @_id('rrepFactor')
@@ -869,13 +891,13 @@ class RRMatrix
                     1.5: {props: {data: nextState.positions}}
 
             @doRepEffect = doRepEffect
-            @doRepEffect.start = doRepEffect.clock.getTime().clock
+            precomputations @doRepEffect
             @doRepEffect.nextState = nextState
             @doRepEffect.stepID = stepID
             @doRepEffect.stepNum = 1
 
         transform2 = (oldState) =>
-            nextState = deepCopy @animState
+            nextState = deepCopy oldState
             for i in [0...@numCols]
                 nextState.matrix[targetRow][i] +=
                     factor * nextState.matrix[sourceRow][i]
@@ -896,10 +918,10 @@ class RRMatrix
                     1.5: {props: {data: nextState.positions}}
 
             @doRepEffect = doRepEffect
-            @doRepEffect.start = doRepEffect.clock.getTime().clock
+            precomputations @doRepEffect
             @doRepEffect.nextState = nextState
-            @doRepEffect.stepID = stepID
-            @doRepEffect.stepNum = 2
+            @doRepEffect.stepID    = stepID
+            @doRepEffect.stepNum   = 2
 
         step1 = new Step @, "#{stepID}-1", transform1, transition1
         step2 = new Step @, "#{stepID}-2", transform2, transition2
