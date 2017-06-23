@@ -276,7 +276,7 @@ class RRMatrix
 
         @domClass = MathBox.DOM.createClass render:
             (el, props, children) =>
-                props.innerHTML = katex.renderToString(children)
+                props.innerHTML = children
                 props.innerHTML += '<span class="baseline-detect"></span>'
                 if props.i? and props.j?
                     props.id = "#{@name}-#{props.i}-#{props.j}"
@@ -351,7 +351,36 @@ class RRMatrix
         [allPos[i][j][0], allPos[i][j][1]] \
             for j in [0...@numCols] for i in [0...@numRows]
 
-    computePositions: () =>
+    _measureWidth: (text, fromElement) ->
+        span = document.getElementById 'width-measurer'
+        if !span
+            div = document.createElement 'div'
+            document.body.appendChild div
+            span = document.createElement 'span'
+            span.id = 'width-measurer'
+            div.appendChild span
+        div = span.parentElement
+        div.className = fromElement.parentElement.className
+        s = fromElement.parentElement.style
+        for i in [0...s.length]
+            div.style[s[i]] = s[s[i]]
+        div.style.position = 'absolute'
+        div.style.left = '0px'
+        div.style.top = '0px'
+        div.style.transform = ''
+        span.className = fromElement.className
+        s = fromElement.style
+        for i in [0...s.length]
+            span.style[s[i]] = s[s[i]]
+        span.style.position = 'absolute'
+        span.style.visibility = 'hidden'
+        span.style.height = span.style.width = 'auto'
+        span.style.whiteSpace = 'nowrap'
+        span.innerHTML = text
+        width = span.getBoundingClientRect().width
+        return width
+
+    computePositions: (animState) =>
         #console.log "recomputing matrix sizes..."
         positions = []
         bracket = []
@@ -361,9 +390,13 @@ class RRMatrix
         # Compute column widths
         for j in [0...@numCols]
             col = document.getElementsByClassName "#{@name}-col-#{j}"
-            max = @fontSize # default / minimum width
-            for elt in col
-                max = Math.max max, elt.getBoundingClientRect().width
+            max = 0
+            for elt, i in col
+                if animState?
+                    width = @_measureWidth animState.html[i][j].children, elt
+                else
+                    width = @fontSize # default width
+                max = Math.max max, width
             colWidths.push max
             matWidth += max
         matWidth += 3 * @colSpacing
@@ -392,7 +425,7 @@ class RRMatrix
 
     resize: (stepID) =>
         oldWidth = @animState.matWidth
-        [positions, bracket, @animState.matWidth] = @computePositions()
+        [positions, bracket, @animState.matWidth] = @computePositions @animState
         if !arraysEqual positions, @_extractMatrixPositions @animState.positions
             @animState.positions =
                 @_insertMatrixPositions positions, @animState.positions
@@ -431,6 +464,30 @@ class RRMatrix
             if !play1? and stepID
                 @view[0].trigger event
         @view[0].trigger event if !play1? and !play2? and stepID
+        @animState
+
+    newState: (nextState, stepID) =>
+        # Set all displayed elements to a new state; trigger an event when
+        # finished.
+        @animState = deepCopy nextState
+        # Stop/delete any animations
+        mathbox.remove "play.#{@name}"
+        @positions.set 'data', @animState.positions
+        @bracket.set 'data', @animState.bracket
+        @swapLineGeom.set 'opacity', @animState.swapOpacity
+        @swapLine.set 'data', @animState.swapLine
+        # Clean up opacity effects
+        @doMultEffect = null
+        @doRepEffect = null
+        document.getElementById(@_id 'multFlyer').style.opacity =
+            @animState.multOpacity
+        for elt in document.getElementsByClassName @_id('rrepFactor')
+            elt.style.opacity = @animState.rrepParenOpacity
+        for elt in document.getElementsByClassName @_id('addFlyer')
+            elt.style.opacity = @animState.rrepOpacity
+        for elt in document.getElementsByClassName "#{@name}-matrix-entry"
+            elt.style.opacity = 1
+        @resize stepID
 
     play: (element, opts) ->
         # Thin wrapper around mathbox.play
@@ -469,40 +526,14 @@ class RRMatrix
     onLoaded: (callback) ->
         @view?[0].on "#{@name}.loaded", callback
 
-    newState: (nextState, stepID) =>
-        # Set all displayed elements to a new state; trigger an event when
-        # finished.
-        # It is important that we do not deepCopy nextState here, since this
-        # object will be updated with resized positions in one frame.
-        @animState = nextState
-        # Stop/delete any animations
-        mathbox.remove "play.#{@name}"
-        @positions.set 'data', @animState.positions
-        @bracket.set 'data', @animState.bracket
-        @swapLineGeom.set 'opacity', @animState.swapOpacity
-        @swapLine.set 'data', @animState.swapLine
-        # Clean up opacity effects
-        @doMultEffect = null
-        @doRepEffect = null
-        document.getElementById(@_id 'multFlyer').style.opacity =
-            @animState.multOpacity
-        for elt in document.getElementsByClassName @_id('rrepFactor')
-            elt.style.opacity = @animState.rrepParenOpacity
-        for elt in document.getElementsByClassName @_id('addFlyer')
-            elt.style.opacity = @animState.rrepOpacity
-        for elt in document.getElementsByClassName "#{@name}-matrix-entry"
-            elt.style.opacity = 1
-        # Give DOM elements a chance to update
-        @onNextFrame 1, () => @resize stepID
-        @animState
-
     htmlMatrix: (matrix, html) =>
         # Render matrix in html
         htmlMat = []
         for i in [0...@numRows]
             row = []
             for j in [0...@numCols]
-                row.push(@domEl @domClass, {i: i, j: j}, texFraction matrix[i][j])
+                row.push(@domEl @domClass, {i: i, j: j},
+                    katex.renderToString(texFraction matrix[i][j]))
             html[i] = row
         html
 
@@ -822,7 +853,7 @@ class RRMatrix
             nextState.multOpacity = 1
             nextState.html[@numRows][0] =
                 @domEl @domClass, {id: @_id('multFlyer'), className: 'mult-flyer'},
-                    '\\times' + texFraction(factor)
+                    katex.renderToString('\\times' + texFraction(factor))
 
             startX = nextState.matWidth/2 + @colSpacing + 10
             rowY = nextState.positions[rowNum][0][1]
@@ -865,21 +896,6 @@ class RRMatrix
         step1: step1
         step2: step2
         chain: new Chain @, stepID, step1, step2
-
-    _measureWidth: (text) ->
-        span = document.getElementById 'width-measurer'
-        if !span
-            div = document.createElement 'div'
-            div.className = 'mathbox-outline-2 mathbox-label'
-            div.style.fontSize = '20px'
-            document.body.appendChild div
-            span = document.createElement 'span'
-            span.id = 'width-measurer'
-            span.className = "#{@name} bound-entry rrep-factor " + @_id('rrepFactor')
-            div.appendChild span
-        span.innerHTML = text
-        width = span.getBoundingClientRect().width
-        return width
 
     repEffect: () =>
         # Opacity effects for row replacement
@@ -935,10 +951,10 @@ class RRMatrix
         # Return an animation in two steps
         # The first step moves the row flyer into place
         # The second step does the row replacement
-
         plus = if factor >= 0 then '+' else ''
-        texString = plus + texFraction(factor) + '\\,\\bigl('
-        leftParenWidth = @_measureWidth katex.renderToString(texString)
+        texString = katex.renderToString(plus + texFraction(factor) + '\\,\\bigl(')
+        leftParenWidth = @_measureWidth texString,
+            document.getElementById(@_id 'rrepParenLeft')
         padding = 7
 
         precomputations = (doRepEffect) =>
@@ -966,7 +982,7 @@ class RRMatrix
             nextState.html[@numRows+3][0] =
                 @domEl @domClass, {
                     className: 'rrep-factor ' + @_id('rrepFactor')
-                    id: @_id 'rrepParenRight'}, '\\bigr)'
+                    id: @_id 'rrepParenRight'}, katex.renderToString('\\bigr)')
 
             # Initialize row replacement factor
             rowY = nextState.positions[targetRow][0][1]
