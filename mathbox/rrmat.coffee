@@ -2,6 +2,12 @@
 
 # TODO: Make this interactive!!!  The student can do their own row reduction.
 
+# TODO: Augmented matrices
+# TODO: Set speed
+# TODO: Chain interface in Slideshow
+# TODO: Steps for fading colors
+# TODO: Test not chaining
+
 deepCopy = (x) ->
     if x instanceof Array
         out = []
@@ -17,7 +23,7 @@ deepCopy = (x) ->
         return x
 
 arraysEqual = (a, b) ->
-    if a instanceof Array && b instanceof Array
+    if a instanceof Array and b instanceof Array
         if a.length != b.length
             return false
         for i in [0...a.length]
@@ -80,13 +86,17 @@ class Step
         # transition.
         @nextState = null  # Set if and only if the effect is running
 
+    onDone: (callback) ->
+        @rrmat.view.on "#{@rrmat.name}.#{@stepID}.done", callback
+
     go: () =>
-        @nextState = @transform(@rrmat.animState)
+        # Stop animations
+        mathbox.remove "play.#{@rrmat.name}"
+        @nextState = @transform @rrmat.animState
         @transition @nextState, @stepID
         @listener = listener = () =>
             @nextState = null
             @rrmat.view.off "#{@rrmat.name}.#{@stepID}.done", listener
-            console.log "Step #{@stepID} done"
         @rrmat.view.on "#{@rrmat.name}.#{@stepID}.done", @listener
 
     cancel: () =>
@@ -145,12 +155,116 @@ class Chain extends Step
         return unless @stepNum >= 0
         @rrmat.newState @cancel()
 
+# This class controls playing steps.  Note that the slideshow's step zero is the
+# initial state; it doesn't correspond to a Step.  This means that @states[i] is
+# the animation state before @steps[i] runs, and @states[@steps.length] is the
+# final state.  The @currentStepNum is an index into @states[] for the current
+# state, or, if an animation is playing, the previous state.  Setting the step
+# with @goToStep will jump straight to that step.
+class Slideshow
+    constructor: (@rrmat, @showID='slideshow') ->
+        @steps = []
+        @states = [deepCopy @rrmat.animState]
+        @currentStepNum = 0
+        @playing = false
+
+        @prevButton   = document.querySelector ".slideshow.#{@rrmat.name} .prev-button"
+        @reloadButton = document.querySelector ".slideshow.#{@rrmat.name} .reload-button"
+        @nextButton   = document.querySelector ".slideshow.#{@rrmat.name} .next-button"
+        @pageCounter  = document.querySelector ".slideshow.#{@rrmat.name} .pages"
+        @captions = document.querySelectorAll ".slideshow.#{@rrmat.name} .steps > .step"
+
+        @prevButton.onclick = () =>
+            return if @currentStepNum == 0 and !@playing
+            if @playing
+                @goToStep @currentStepNum
+            else
+                @goToStep @currentStepNum - 1
+        @nextButton.onclick = () =>
+            return if @currentStepNum == @steps.length
+            if @playing
+                @goToStep @currentStepNum + 1
+            else
+                @play()
+        @reloadButton.onclick = () =>
+            return if @currentStepNum == 0 and !@playing
+            if @playing
+                @goToStep @currentStepNum
+            else
+                @goToStep @currentStepNum - 1
+            @play()
+
+        @updateUI()
+
+    updateUI: (oldStepNum=-1) =>
+        if @currentStepNum == 0 and !@playing
+            @prevButton.classList.add 'inactive'
+            @reloadButton.classList.add 'inactive'
+        else
+            @prevButton.classList.remove 'inactive'
+            @reloadButton.classList.remove 'inactive'
+        if @currentStepNum == @steps.length
+            @nextButton.classList.add 'inactive'
+        else
+            @nextButton.classList.remove 'inactive'
+        if @currentStepNum != oldStepNum
+            if oldStepNum >= 0
+                @captions[oldStepNum].classList.add 'inactive'
+            @captions[@currentStepNum].classList.remove 'inactive'
+        @pageCounter?.innerHTML = "#{@currentStepNum+1} / #{@steps.length+1}"
+
+    play: () ->
+        return if @currentStepNum >= @steps.length
+        @playing = true
+        @steps[@currentStepNum].go()
+        @updateUI()
+
+    goToStep: (stepNum) =>
+        return if stepNum < 0 or stepNum > @steps.length
+        console.log "Active step: #{stepNum}"
+        oldStepNum = @currentStepNum
+        @currentStepNum = stepNum
+        if @currentStepNum > oldStepNum and @playing
+            @states[oldStepNum+1] = @steps[oldStepNum].fastForward()
+        else if @playing
+            @steps[oldStepNum].cancel()
+        @rrmat.newState @states[@currentStepNum]
+        @playing = false
+        @updateUI oldStepNum
+
+    addStep: (steps, keys) ->
+        for key in keys
+            @steps.push steps[key]
+            steps[key].slideshowNum = @steps.length
+            steps[key].onDone () =>
+                console.log "Step #{steps[key].stepID} done"
+                @playing = false
+                @currentStepNum += 1
+                @states[@currentStepNum] = deepCopy @rrmat.animState
+                @updateUI @currentStepNum - 1
+        @updateUI()
+        @
+
+    rowSwap: (row1, row2, keys=['chain']) ->
+        stepID = @showID + '-' + (@steps.length+1)
+        steps = @rrmat.rowSwap stepID, row1-1, row2-1
+        @addStep steps, keys
+
+    rowMult: (rowNum, factor, keys=['chain']) ->
+        stepID = @showID + '-' + (@steps.length+1)
+        steps = @rrmat.rowMult stepID, rowNum-1, factor
+        @addStep steps, keys
+
+    rowRep: (sourceRow, factor, targetRow, keys=['chain']) ->
+        stepID = @showID + '-' + (@steps.length+1)
+        steps = @rrmat.rowRep stepID, sourceRow-1, factor, targetRow-1
+        @addStep steps, keys
 
 # This class animates a row reduction sequnce on a matrix.
 class RRMatrix
 
     constructor: (@numRows, @numCols, opts) ->
-        {@name, @fontSize, @rowHeight, @rowSpacing, @colSpacing} = opts? || {}
+        {@name, @fontSize, @rowHeight, @rowSpacing, @colSpacing} = opts? or {}
 
         @name       ?= "rrmat"
         @fontSize   ?= 20
@@ -158,13 +272,13 @@ class RRMatrix
         @rowSpacing ?= @fontSize
         @colSpacing ?= @fontSize
 
-        @matHeight = @rowHeight * @numRows + @rowSpacing * (@numCols-1)
+        @matHeight = @rowHeight * @numRows + @rowSpacing * (@numRows-1)
 
         @domClass = MathBox.DOM.createClass render:
             (el, props, children) =>
                 props.innerHTML = katex.renderToString(children)
                 props.innerHTML += '<span class="baseline-detect"></span>'
-                if props.i? && props.j?
+                if props.i? and props.j?
                     props.id = "#{@name}-#{props.i}-#{props.j}"
                     props.className =
                         "#{@name}-col-#{props.j}" +
@@ -295,7 +409,7 @@ class RRMatrix
                         for i in [0...@numCols]
                 if @animState.rrepParenOpacity > 0
                     @animState.positions[@numRows+j][0][0] += diff \
-                        for j in [@numRows+2..@numRows+3]
+                        for j in [2..3]
             play1 = @play @positions,
                 script:
                     0:   {props: {data: Array.from @positions.get 'data'}}
@@ -314,9 +428,9 @@ class RRMatrix
         play2?.on 'play.done', (e) =>
             play2.remove()
             @bracket.set 'data', @animState.bracket
-            if !play1? && stepID
+            if !play1? and stepID
                 @view[0].trigger event
-        @view[0].trigger event if !play1? && !play2? && stepID
+        @view[0].trigger event if !play1? and !play2? and stepID
 
     play: (element, opts) ->
         # Thin wrapper around mathbox.play
@@ -352,9 +466,14 @@ class RRMatrix
                 delete @nextFrame[event.type][f]
                 callback()
 
+    onLoaded: (callback) ->
+        @view?[0].on "#{@name}.loaded", callback
+
     newState: (nextState, stepID) =>
-        # Set all displayed elements to a new state
-        # Trigger an event when finished
+        # Set all displayed elements to a new state; trigger an event when
+        # finished.
+        # It is important that we do not deepCopy nextState here, since this
+        # object will be updated with resized positions in one frame.
         @animState = nextState
         # Stop/delete any animations
         mathbox.remove "play.#{@name}"
@@ -375,6 +494,7 @@ class RRMatrix
             elt.style.opacity = 1
         # Give DOM elements a chance to update
         @onNextFrame 1, () => @resize stepID
+        @animState
 
     htmlMatrix: (matrix, html) =>
         # Render matrix in html
@@ -519,6 +639,7 @@ class RRMatrix
                     @fade mathbox.select('#' + @_id('dom')), {0: 0, .3: 1}
                     @fade mathbox.select('#' + @_id('bracketLeft')), {0: 0, .3: 1}
                     @fade mathbox.select('#' + @_id('bracketRight')), {0: 0, .3: 1}
+                    @view[0].trigger type: "#{@name}.loaded"
                 observer.disconnect()
         observer.observe document.getElementById('mathbox'),
                childList:     true
@@ -546,8 +667,11 @@ class RRMatrix
     # Transitions and helper functions
     ######################################################################
 
+    slideshow: (showID='slideshow') ->
+        new Slideshow @, showID
+
     chain: (stepID, steps...) ->
-        ret = new Chain(@, stepID)
+        ret = new Chain @, stepID
         ret.steps = steps
         ret
 
@@ -653,7 +777,7 @@ class RRMatrix
         box = flyer.getBoundingClientRect()
         flyerPos = (box.left + box.right) / 2
         for elt, i in row
-            if flyerPos < rowPos[i] && !past[i]
+            if flyerPos < rowPos[i] and !past[i]
                 # Change the number as the flyer flies past
                 past[i] = true
                 @animState.html[rowNum][i] = nextState.html[rowNum][i]

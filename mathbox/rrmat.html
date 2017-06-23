@@ -32,78 +32,301 @@
       width: auto;
       white-space: nowrap;
   }
+
+  .centered {
+      text-align: center;
+  }
+  .slideshow {
+      width: 800px;
+      margin-top: 16px;
+      margin-bottom: 16px;
+      display: inline-block;
+      font-family: sans-serif;
+  }
+  .controls {
+      display: inline-block;
+  }
+  .control-button {
+      border: none;
+      display: inline-block;
+      padding: 8px 0px;
+      vertical-align: middle;
+      position: relative;
+      width: 56px;
+      height: 56px;
+  }
+  .icon-arrow {
+      width: 48px;
+      height: 56px;
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      text-align: left;
+  }
+  .icon-arrow.inactive {
+      cursor: default;
+  }
+  .icon-arrow.prev-button {
+      transform: scale(-1,1);
+  }
+  .icon-arrow span {
+      float: left;
+  }
+  .icon-arrow span:nth-child(1) {
+      width: 25px;
+      height: 32px;
+      margin-right: -1px;
+      margin-top: 12px;
+      background: #99afbb;
+  }
+  .icon-arrow:hover span:nth-child(1) {
+      background: #57c4ff;
+  }
+  .icon-arrow.inactive span:nth-child(1) {
+      background: #d1dbe0;
+  }
+  .icon-arrow span:nth-child(2) {
+      border-left: 24px solid #99afbb;
+      border-bottom: 28px solid transparent;
+      border-top: 28px solid transparent;
+  }
+  .icon-arrow:hover span:nth-child(2) {
+      border-left: 24px solid #57c4ff;
+  }
+  .icon-arrow.inactive span:nth-child(2) {
+      border-left: 24px solid #d1dbe0;
+  }
+  .icon-repeat {
+      width: 48px;
+      height: 56px;
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+  }
+  .icon-repeat.inactive {
+      cursor: default;
+  }
+  .icon-repeat span {
+      position: absolute;
+  }
+  .icon-repeat span:nth-child(1) {
+      top: 10px;
+      left: 10px;
+      width: 21px;
+      height: 46px;
+      border-left: 0px solid #99afbb;
+      border-top: 11px solid #99afbb;
+      border-top-left-radius: 24px;
+      border-bottom-left-radius: 24px;
+  }
+  .icon-repeat:hover span:nth-child(1) {
+      border-left: 0px solid #57c4ff;
+      border-top: 11px solid #57c4ff;
+  }
+  .icon-repeat.inactive span:nth-child(1) {
+      border-left: 0px solid #d1dbe0;
+      border-top: 11px solid #d1dbe0;
+  }
+  .icon-repeat span:nth-child(2) {
+      bottom: 10px;
+      right: 10px;
+      width: 21px;
+      height: 46px;
+      border-right: 0px solid #99afbb;
+      border-bottom: 11px solid #99afbb;
+      border-bottom-right-radius: 24px;
+      border-top-right-radius: 24px;
+  }
+  .icon-repeat:hover span:nth-child(2) {
+      border-right: 0px solid #57c4ff;
+      border-bottom: 11px solid #57c4ff;
+  }
+  .icon-repeat.inactive span:nth-child(2) {
+      border-right: 0px solid #d1dbe0;
+      border-bottom: 11px solid #d1dbe0;
+  }
+  .icon-repeat span:nth-child(3) {
+      border-left: 13px solid #99afbb;
+      border-top: 11px solid transparent;
+      border-bottom: 11px solid transparent;
+      left: 30px;
+      top: 5px;
+  }
+  .icon-repeat:hover span:nth-child(3) {
+      border-left: 13px solid #57c4ff;
+  }
+  .icon-repeat.inactive span:nth-child(3) {
+      border-left: 13px solid #d1dbe0;
+  }
+  .icon-repeat span:nth-child(4) {
+      border-right: 13px solid #99afbb;
+      border-top: 11px solid transparent;
+      border-bottom: 11px solid transparent;
+      right: 30px;
+      bottom: 5px;
+  }
+  .icon-repeat:hover span:nth-child(4) {
+      border-right: 13px solid #57c4ff;
+  }
+  .icon-repeat.inactive span:nth-child(4) {
+      border-right: 13px solid #d1dbe0;
+  }
+  .pages {
+      display: inline-block;
+      text-align: center;
+      width: 100px;
+      color: #99afbb;
+  }
+  .steps {
+      display: inline-block;
+      float: right;
+      width: 70%;
+      text-align: left;
+      color: #353535;
+  }
+  .steps > .step.inactive {
+      display: none;
+  }
   </style>
 </head>
 <body>
+
     <div style="width: 800px; height: 300px; margin-top: 100px; border: 1px solid black; margin-left: auto; margin-right: auto;" id="mathbox"></div>
+    <div class="centered">
+        <div class="slideshow rrmat">
+            <div class="controls">
+                <span class="control-button">
+                    <span class="icon-arrow prev-button inactive">
+                        <span></span><span></span>
+                    </span>
+                </span>
+                <span class="control-button">
+                    <span class="icon-repeat reload-button inactive">
+                        <span></span><span></span><span></span><span></span>
+                    </span>
+                </span>
+                <span class="control-button" id="next-button">
+                    <span class="icon-arrow next-button">
+                        <span></span><span></span></span>
+                </span><br>
+                <span class="pages"></span>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    First swap rows 1 and 2.
+                </div>
+                <div class="step inactive">
+                    Divide row 1 by 2.
+                </div>
+                <div class="step inactive">
+                    Subtract 3 times row 1 from row 3.
+                </div>
+                <div class="step inactive">
+                    Swap rows 2 and 3.
+                </div>
+                <div class="step inactive">
+                    Divide row 2 by -5.
+                </div>
+                <div class="step inactive">
+                    Subract 2 times row 2 from row 1.
+                </div>
+                <div class="step inactive">
+                    Add 7 times row 2 to row 3.
+                </div>
+                <div class="step inactive">
+                    Divide row 3 by 10.
+                </div>
+                <div class="step inactive">
+                    Add row 3 to row 1.
+                </div>
+                <div class="step inactive">
+                    Subtract 2 times row 3 from row 2.
+                </div>
+                <div class="step inactive">
+                    We're all done!
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
     "use strict";
 
-    var ortho = 10000;
-    var width = 800;
-    var height = 300;
+    document.addEventListener("DOMContentLoaded", function(event) {
+        var ortho = 10000;
+        var width = 800;
+        var height = 300;
 
-    window.mathbox = mathBox({
-        element: document.getElementById("mathbox"),
-        size: { width: width, height: height },
-        plugins: ['core', 'controls'],
-        mathbox: {
-            warmup: 2,
-            splash: true,
-            inspect: false,
-        },
-        splash: {fancy: true, color: "blue"},
-        camera: {
-            near: ortho / 4,
-            far: ortho * 4,
-            lookAt: -width/4,
-        },
-        controls: {
-            // Orbit controls, i.e. Euler angles, with gimbal lock
-            klass: THREE.OrbitControls,
+        var mathbox = window.mathbox = mathBox({
+            element: document.getElementById("mathbox"),
+            size: { width: width, height: height },
+            plugins: ['core', 'controls'],
+            mathbox: {
+                warmup: 2,
+                splash: true,
+                inspect: false,
+            },
+            splash: {fancy: true, color: "blue"},
+            camera: {
+                near: ortho / 4,
+                far: ortho * 4,
+                lookAt: -width/4,
+            },
+            controls: {
+                // Orbit controls, i.e. Euler angles, with gimbal lock
+                klass: THREE.OrbitControls,
 
-            // Trackball controls, i.e. Free quaternion rotation
-            //klass: THREE.TrackballControls,
-        },
+                // Trackball controls, i.e. Free quaternion rotation
+                //klass: THREE.TrackballControls,
+            },
+        });
+        if (mathbox.fallback) throw "WebGL not supported"
+
+        var three = mathbox.three;
+        three.renderer.setClearColor(new THREE.Color(0xFFFFFF), 1.0);
+
+        // Place camera
+        var camera =
+            mathbox
+                .camera({
+                    proxy: false,
+                    position: [0, 0, ortho],
+                    fov: Math.atan(height/ortho) * 360 / π,
+                    lookAt: [width/4,0,0],
+                });
+
+        // 2D cartesian
+        var view =
+            mathbox
+                .cartesian({
+                    range: [[-width/2, width/2], [-height/2, height/2], [-50,50]],
+                    scale: [width, height, 100],
+                });
+
+        // Calibrate focus distance for units
+        mathbox.set('focus', ortho);
+
+        window.rrmat = new RRMatrix(3, 4, mathbox);
+        rrmat.animState.matrix = [[0, -7, -4,  2],
+                                  [2,  4,  6, 12],
+                                  [3,  1, -1, -2]];
+        rrmat.install(view);
+        rrmat.onLoaded(function(){
+            window.slideshow =
+                rrmat.slideshow()
+                     .rowSwap(1, 2)
+                     .rowMult(1, 1/2)
+                     .rowRep(1, -3, 3)
+                     .rowSwap(2, 3)
+                     .rowMult(2, -1/5)
+                     .rowRep(2, -2, 1)
+                     .rowRep(2, 7, 3)
+                     .rowMult(3, 1/10)
+                     .rowRep(3, 1, 1)
+                     .rowRep(3, -2, 2);
+        });
+
     });
-    if (mathbox.fallback) throw "WebGL not supported"
-
-    var three = mathbox.three;
-    three.renderer.setClearColor(new THREE.Color(0xFFFFFF), 1.0);
-
-    // Place camera
-    var camera =
-        mathbox
-            .camera({
-                proxy: false,
-                position: [0, 0, ortho],
-                fov: Math.atan(height/ortho) * 360 / π,
-                lookAt: [width/4,0,0],
-            });
-
-    // 2D cartesian
-    var view =
-        mathbox
-            .cartesian({
-                range: [[-width/2, width/2], [-height/2, height/2], [-50,50]],
-                scale: [width, height, 100],
-            });
-
-    // Calibrate focus distance for units
-    mathbox.set('focus', ortho);
-
-    var rrmat = new RRMatrix(4, 4);
-    rrmat.animState.matrix = [[32/3, 141, 11, 15],
-                              [2, 3, 33/4, 919],
-                              [72/14, 115/11, 33, 91],
-                              [0, 1, 2, 3]];
-    rrmat.install(view);
-    rrmat.view[0].on('rrmat.x.done', function(){console.log("x done")});
-
-    var step1 = rrmat.rowMult(1, 0, 2).chain
-    var step2 = rrmat.rowSwap(2, 0, 3).chain
-    var step3 = rrmat.rowRep(3, 0, 1/2, 2).chain
-    var chain = rrmat.chain(4, step1, step2, step3)
 
     </script>
 </body>
