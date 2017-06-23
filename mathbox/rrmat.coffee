@@ -2,11 +2,7 @@
 
 # TODO: Make this interactive!!!  The student can do their own row reduction.
 
-# TODO: Augmented matrices
-# TODO: Set speed
-# TODO: Chain interface in Slideshow
-# TODO: Steps for fading colors
-# TODO: Test not chaining
+# TODO: Steps for fading colors, opacity
 
 deepCopy = (x) ->
     if x instanceof Array
@@ -114,7 +110,7 @@ class Step
 
 # Chain several steps together
 class Chain extends Step
-    constructor: (rrmat, stepID, @steps...) ->
+    constructor: (rrmat, stepID, @steps) ->
         transform = (oldState) =>
             for step in @steps
                 oldState = step.transform oldState
@@ -234,8 +230,10 @@ class Slideshow
 
     addStep: (steps, keys) ->
         for key in keys
+            if @combining?
+                @combining.push steps[key]
+                continue
             @steps.push steps[key]
-            steps[key].slideshowNum = @steps.length
             steps[key].onDone () =>
                 console.log "Step #{steps[key].stepID} done"
                 @playing = false
@@ -245,34 +243,59 @@ class Slideshow
         @updateUI()
         @
 
-    rowSwap: (row1, row2, keys=['chain']) ->
-        stepID = @showID + '-' + (@steps.length+1)
-        steps = @rrmat.rowSwap stepID, row1-1, row2-1
+    # Combine several steps into a chain.  End with combined()
+    combine: () ->
+        @combining = []
+        @
+    combined: () ->
+        combining = @combining
+        delete @combining
+        stepID = @stepID()
+        @addStep {chain: new Chain @rrmat, stepID, combining}, ['chain']
+        @
+
+    stepID: () ->
+        if @combining?
+            return @showID + '-' + (@steps.length+1) + '-' + (@combining.length+1)
+        return @showID + '-' + (@steps.length+1)
+
+    rowSwap: (row1, row2, opts) ->
+        keys = opts?.key or ['chain']
+        steps = @rrmat.rowSwap @stepID(), row1-1, row2-1, opts
         @addStep steps, keys
 
-    rowMult: (rowNum, factor, keys=['chain']) ->
-        stepID = @showID + '-' + (@steps.length+1)
-        steps = @rrmat.rowMult stepID, rowNum-1, factor
+    rowMult: (rowNum, factor, opts) ->
+        keys = opts?.key or ['chain']
+        steps = @rrmat.rowMult @stepID(), rowNum-1, factor, opts
         @addStep steps, keys
 
-    rowRep: (sourceRow, factor, targetRow, keys=['chain']) ->
-        stepID = @showID + '-' + (@steps.length+1)
-        steps = @rrmat.rowRep stepID, sourceRow-1, factor, targetRow-1
+    rowRep: (sourceRow, factor, targetRow, opts) ->
+        keys = opts?.key or ['chain']
+        steps = @rrmat.rowRep @stepID(), sourceRow-1, factor, targetRow-1, opts
         @addStep steps, keys
+
+    unAugment: (opts) ->
+        step = @rrmat.unAugment @stepID(), opts
+        @addStep {step: step}, ['step']
+    reAugment: (opts) ->
+        step = @rrmat.reAugment @stepID(), opts
+        @addStep {step: step}, ['step']
 
 # This class animates a row reduction sequnce on a matrix.
 class RRMatrix
 
     constructor: (@numRows, @numCols, opts) ->
-        {@name, @fontSize, @rowHeight, @rowSpacing, @colSpacing} = opts? or {}
+        {@name, @fontSize, @rowHeight, @rowSpacing,
+            @colSpacing, @augmentCol, startAugmented} = opts or {}
 
         @name       ?= "rrmat"
         @fontSize   ?= 20
         @rowHeight  ?= @fontSize * 1.2
         @rowSpacing ?= @fontSize
         @colSpacing ?= @fontSize
-
         @matHeight = @rowHeight * @numRows + @rowSpacing * (@numRows-1)
+
+        startAugmented ?= @augmentCol?
 
         @domClass = MathBox.DOM.createClass render:
             (el, props, children) =>
@@ -320,13 +343,17 @@ class RRMatrix
             # Row replacement factor opacity
             rrepOpacity: 0.0
             rrepParenOpacity: 0.0
+            # Augmentation line: existence and position
+            doAugment: startAugmented
+            augment: []
 
         # Zero out the original matrix
         @animState.matrix =
             (Array.apply(null, Array @numCols).map Number.prototype.valueOf, 0 \
                 for [0...@numRows])
 
-        [positions, @animState.bracket, @animState.matWidth] = @computePositions()
+        [positions, @animState.bracket, @animState.augment, @animState.matWidth] =
+            @computePositions @animState
         for j in [0..@numRows+3]
             @animState.positions[j] = []
             @animState.positions[j][i] = [1000,-1000,0] for i in [0...@numCols]
@@ -384,15 +411,16 @@ class RRMatrix
         #console.log "recomputing matrix sizes..."
         positions = []
         bracket = []
+        augment = [[0,0],[0,0]]
         matWidth = 0
         colWidths = []
 
         # Compute column widths
         for j in [0...@numCols]
-            col = document.getElementsByClassName "#{@name}-col-#{j}"
             max = 0
-            for elt, i in col
-                if animState?
+            for i in [0...@numRows]
+                elt = document.getElementById "#{@name}-#{i}-#{j}"
+                if animState.html[i]?
                     width = @_measureWidth animState.html[i][j].children, elt
                 else
                     width = @fontSize # default width
@@ -400,6 +428,7 @@ class RRMatrix
             colWidths.push max
             matWidth += max
         matWidth += 3 * @colSpacing
+        matWidth += @colSpacing/2 if animState.doAugment
 
         # Compute entry positions
         y = -@matHeight / 2 + @rowHeight
@@ -411,6 +440,10 @@ class RRMatrix
                 rowPos.push [x,-y]
                 x += colWidths[j]/2
                 x += @colSpacing
+                if animState.doAugment and @augmentCol == j
+                    x -= @colSpacing/4
+                    augment = [[x, 0], [x, 0]]
+                    x += 3*@colSpacing/4
             y += @rowHeight + @rowSpacing
             positions.push rowPos
 
@@ -420,12 +453,15 @@ class RRMatrix
         y1 = @matHeight / 2
         y2 = -(@matHeight + @fontSize) / 2
         bracket = [[x1,y1], [x2,y1], [x2,y2], [x1,y2]]
+        augment[0][1] = y1
+        augment[1][1] = y2
 
-        return [positions, bracket, matWidth]
+        return [positions, bracket, augment, matWidth]
 
     resize: (stepID) =>
         oldWidth = @animState.matWidth
-        [positions, bracket, @animState.matWidth] = @computePositions @animState
+        [positions, bracket, augment, @animState.matWidth] =
+            @computePositions @animState
         if !arraysEqual positions, @_extractMatrixPositions @animState.positions
             @animState.positions =
                 @_insertMatrixPositions positions, @animState.positions
@@ -453,6 +489,17 @@ class RRMatrix
                 script:
                     0:   {props: {data: Array.from @bracket.get 'data'}}
                     0.2: {props: {data: bracket}}
+        # Only change the x-values of @animState.augment
+        if @animState.doAugment and
+            (augment[0][0] != @animState.augment[0][0] or
+             augment[1][0] != @animState.augment[1][0])
+            @animState.augment = deepCopy @animState.augment
+            @animState.augment[0][0] = augment[0][0]
+            @animState.augment[1][0] = augment[1][0]
+            play3 = @play @augment,
+                script:
+                    0:   {props: {data: Array.from @augment.get 'data'}}
+                    0.2: {props: {data: @animState.augment}}
         event = type: "#{@name}.#{stepID}.done"
         play1?.on 'play.done', (e) =>
             play1.remove()
@@ -463,7 +510,12 @@ class RRMatrix
             @bracket.set 'data', @animState.bracket
             if !play1? and stepID
                 @view[0].trigger event
-        @view[0].trigger event if !play1? and !play2? and stepID
+        play3?.on 'play.done', (e) =>
+            play3.remove()
+            @augment.set 'data', @animState.augment
+            if !play1? and !play2? and stepID
+                @view[0].trigger event
+        @view[0].trigger event if !play1? and !play2? and !play3? and stepID
         @animState
 
     newState: (nextState, stepID) =>
@@ -474,8 +526,9 @@ class RRMatrix
         mathbox.remove "play.#{@name}"
         @positions.set 'data', @animState.positions
         @bracket.set 'data', @animState.bracket
-        @swapLineGeom.set 'opacity', @animState.swapOpacity
+        @augment.set 'data', @animState.augment
         @swapLine.set 'data', @animState.swapLine
+        @swapLineGeom.set 'opacity', @animState.swapOpacity
         # Clean up opacity effects
         @doMultEffect = null
         @doRepEffect = null
@@ -641,6 +694,24 @@ class RRMatrix
             id:      @_id 'bracketRight'
             opacity: 0
 
+        # Augmentation line
+        if !@animState.doAugment
+            diff = @view.get('scale').y
+            @animState.augment[0][1] += diff
+            @animState.augment[1][1] += diff
+        @augment = @view.array
+            channels: 2
+            width:    2
+            classes:  [@name]
+            id:       @_id 'augment'
+            data:     @animState.augment
+        @augmentGeom = @view.line
+            color:   "black"
+            width:   1
+            classes: [@name]
+            id:      @_id 'augmentGeom'
+            opacity: 0
+
         # Swap-points arrow
         @swapLine = @view.array
             channels: 2
@@ -670,6 +741,7 @@ class RRMatrix
                     @fade mathbox.select('#' + @_id('dom')), {0: 0, .3: 1}
                     @fade mathbox.select('#' + @_id('bracketLeft')), {0: 0, .3: 1}
                     @fade mathbox.select('#' + @_id('bracketRight')), {0: 0, .3: 1}
+                    @fade mathbox.select('#' + @_id('augmentGeom')), {0: 0, .3: 1}
                     @view[0].trigger type: "#{@name}.loaded"
                 observer.disconnect()
         observer.observe document.getElementById('mathbox'),
@@ -702,8 +774,7 @@ class RRMatrix
         new Slideshow @, showID
 
     chain: (stepID, steps...) ->
-        ret = new Chain @, stepID
-        ret.steps = steps
+        ret = new Chain @, stepID, steps
         ret
 
     swapLinePoints: (top, bot, animState=@animState) ->
@@ -717,13 +788,14 @@ class RRMatrix
                   for i in [0..samples])
         return points
 
-    rowSwap: (stepID, row1, row2) ->
+    rowSwap: (stepID, row1, row2, opts) ->
         # Return an animation in two steps.
         # The first step fades in the swap arrow.
         # The second step does the swap.
 
-        fadeTime = 0.3
-        swapTime = 1
+        speed = opts?.speed or 1.0
+        fadeTime = 0.3/speed
+        swapTime = 1/speed
 
         transform1 = (oldState) =>
             nextState = deepCopy oldState
@@ -787,15 +859,16 @@ class RRMatrix
 
         step1: step1
         step2: step2
-        chain: new Chain @, stepID, step1, step2
+        chain: new Chain @, stepID, [step1, step2]
 
     multEffect: () =>
         # Fade numbers in and out when multiplying
         return unless @doMultEffect
-        {row, rowNum, rowPos, past, flyer, clock,
+        {row, rowNum, rowPos, past, flyer, clock, speed,
             stepNum, stepID, opacity, start, nextState} = @doMultEffect
         return if stepNum > 2
         elapsed = clock.getTime().clock - start
+        elapsed *= speed
         if stepNum == 1
             if elapsed >= 0.3
                 flyer.style.opacity = 1
@@ -821,10 +894,11 @@ class RRMatrix
                 @onNextFrame 1, () => @newState nextState, stepID
                 @doMultEffect.stepNum = 3
 
-    rowMult: (stepID, rowNum, factor) ->
+    rowMult: (stepID, rowNum, factor, opts) ->
         # Return an animation in two steps
         # The first step fades in the multiplication flyer
         # The second step does the multiplication
+        speed = opts?.speed or 1.0
 
         precomputations = (doMultEffect) =>
             row = document.getElementsByClassName "#{@name}-row-#{rowNum}"
@@ -844,9 +918,10 @@ class RRMatrix
             doMultEffect.start  = doMultEffect.clock.getTime().clock
 
         doMultEffect =
-                rowNum:    rowNum
-                clock:     @positions[0].clock
-                opacity:   (distance) => Math.min (distance/(@fontSize*2))**3, 1
+                rowNum:  rowNum
+                clock:   @positions[0].clock
+                opacity: (distance) => Math.min (distance/(@fontSize*2))**3, 1
+                speed:   speed
 
         transform1 = (oldState) =>
             nextState = deepCopy oldState
@@ -886,6 +961,7 @@ class RRMatrix
             @doMultEffect.stepNum   = 2
 
             @play @positions,
+                speed: speed
                 script:
                     0:    {props: {data: @animState.positions}}
                     1.75: {props: {data: nextState.positions}}
@@ -895,15 +971,16 @@ class RRMatrix
 
         step1: step1
         step2: step2
-        chain: new Chain @, stepID, step1, step2
+        chain: new Chain @, stepID, [step1, step2]
 
     repEffect: () =>
         # Opacity effects for row replacement
         return unless @doRepEffect
-        {start, clock, parenLeft, parenRight, row, flyer,
+        {start, clock, parenLeft, parenRight, row, flyer, speed,
             targetRow, opacity, nextState, stepID, stepNum} = @doRepEffect
         return if stepNum > 2
         elapsed = clock.getTime().clock - start
+        elapsed *= speed
         if stepNum == 1
             if elapsed < 0.3
                 # Fade in the parentheses
@@ -947,10 +1024,11 @@ class RRMatrix
         @onNextFrame 1, () => @newState nextState, stepID
         @doRepEffect.stepNum = 3
 
-    rowRep: (stepID, sourceRow, factor, targetRow) ->
+    rowRep: (stepID, sourceRow, factor, targetRow, opts) ->
         # Return an animation in two steps
         # The first step moves the row flyer into place
         # The second step does the row replacement
+        speed = opts?.speed or 1.0
         plus = if factor >= 0 then '+' else ''
         texString = katex.renderToString(plus + texFraction(factor) + '\\,\\bigl(')
         leftParenWidth = @_measureWidth texString,
@@ -967,9 +1045,10 @@ class RRMatrix
 
         # Opacity effects
         doRepEffect =
-            clock:      @positions[0].clock
-            targetRow:  targetRow
-            opacity:    (right) =>
+            clock:     @positions[0].clock
+            targetRow: targetRow
+            speed:     speed
+            opacity:   (right) =>
                 return 0.5 if right < 0
                 Math.max(0.5, Math.min (right/(@fontSize)), 1)
 
@@ -1026,6 +1105,7 @@ class RRMatrix
             @animState.positions[@numRows+3][0] = nextState.positions[@numRows+3][0]
 
             @play @positions,
+                speed: speed
                 script:
                     0.0: {props: {data: @animState.positions}}
                     1.5: {props: {data: nextState.positions}}
@@ -1053,6 +1133,7 @@ class RRMatrix
 
         transition2 = (nextState, stepID) =>
             @play @positions,
+                speed: speed
                 script:
                     0.0: {props: {data: @animState.positions}}
                     1.5: {props: {data: nextState.positions}}
@@ -1068,6 +1149,44 @@ class RRMatrix
 
         step1: step1
         step2: step2
-        chain: new Chain @, stepID, step1, step2
+        chain: new Chain @, stepID, [step1, step2]
+
+    _onoffAugment: (stepID, isOn, opts) ->
+        speed = opts?.speed or 1.0
+
+        transform = (oldState) =>
+            nextState = deepCopy oldState
+            nextState.doAugment = isOn
+            diff = @view.get('scale').y
+            diff *= -1 if isOn
+            nextState.augment[0][1] += diff
+            nextState.augment[1][1] += diff
+            return nextState
+
+        transition = (nextState, stepID) =>
+            if isOn
+                # First make room for the augment line
+                @animState.doAugment = true
+                @resize()
+                oldState = nextState
+                nextState = deepCopy @animState
+                nextState.augment = oldState.augment
+                nextState.augment[0][0] = @animState.augment[0][0]
+                nextState.augment[1][0] = @animState.augment[1][0]
+                nextState.doAugment = true
+            @play @augment,
+                speed: speed
+                delay: if isOn then 0.2 else 0
+                script:
+                    0:   {props: {data: @animState.augment}}
+                    0.5: {props: {data: nextState.augment}}
+            .on 'play.done', (e) => @newState nextState, stepID
+
+        new Step @, stepID, transform, transition
+
+    unAugment: (stepID, opts) ->
+        @_onoffAugment stepID, false, opts
+    reAugment: (stepID, opts) ->
+        @_onoffAugment stepID, true, opts
 
 window.RRMatrix = RRMatrix
