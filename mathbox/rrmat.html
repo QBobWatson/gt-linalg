@@ -176,15 +176,19 @@
       width: 70%;
       text-align: left;
       color: #353535;
+      height: 20px;  /* just needs to be > 0 */
+  }
+  .steps > .step {
+      height: 0px;
   }
   .steps > .step.inactive {
-      display: none;
+      visibility: hidden;
   }
   </style>
 </head>
 <body>
 
-    <div style="width: 800px; height: 300px; margin-top: 100px; border: 1px solid black; margin-left: auto; margin-right: auto;" id="mathbox"></div>
+    <div style="width: 800px; height: 300px; margin-top: 100px; border: 0px solid black; margin-left: auto; margin-right: auto;" id="mathbox"></div>
     <div class="centered">
         <div class="slideshow rrmat">
             <div class="controls">
@@ -206,44 +210,137 @@
             </div>
             <div class="steps">
                 <div class="step">
-                    First swap rows 1 and 2.
+                    Let's row reduce this matrix.
+                </div>
+                <div class="step inactive">
+                    These are the pivots in the first column.
+                </div>
+                <div class="step inactive">
+                    These are the pivots in the first column.
+                    We need to move one of them to the first row.
+                </div>
+                <div class="step inactive">
+                    Make this entry a 1 by dividing by 2.
                 </div>
                 <div class="step inactive">
                     Let's get rid of this distracting line.
                 </div>
-                <div class="step inactive">
-                    Divide row 1 by 2.
+                <div class="step inactive immediate">
+                    We kill this entry...
+                </div>
+                <div class="step inactive immediate">
+                    We kill this entry...
+                </div>
+                <div class="step inactive immediate">
+                    We kill this entry by subtracting 3 times the first row.
                 </div>
                 <div class="step inactive">
-                    Subtract 3 times row 1 from row 3.
+                    Now that the first column is clear except for the pivot in
+                    the first row, we can ignore the first row and the first
+                    column and concentrate on the rest of the matrix.
                 </div>
                 <div class="step inactive">
-                    Swap rows 2 and 3.
+                    Both of the remaining entries in the second column are pivots.
                 </div>
                 <div class="step inactive">
-                    Divide row 2 by -5.
+                    Both of the remaining entries in the second column are pivots.
                 </div>
                 <div class="step inactive">
-                    Subract 2 times row 2 from row 1.
+                    We'll use the bottom entry as our pivot...
                 </div>
                 <div class="step inactive">
-                    Add 7 times row 2 to row 3.
+                    We'll use the bottom entry as our pivot, so we have to switch columns.
                 </div>
                 <div class="step inactive">
-                    Divide row 3 by 10.
+                    We'll use the bottom entry as our pivot, so we have to switch columns.
                 </div>
                 <div class="step inactive">
-                    Add row 3 to row 1.
+                    Divide row 2 by -5 to make this pivat a 1.
                 </div>
                 <div class="step inactive">
-                    Subtract 2 times row 3 from row 2.
+                    Divide row 2 by -5 to make this pivat a 1.  (The other
+                    entries in this row are divisible by 5; that's why we used
+                    this row as the pivot row.)
                 </div>
                 <div class="step inactive">
-                    The matrix is in reduced row echelon form!  Let's put the
-                    augmentation back in.
+                    To kill this entry...
                 </div>
                 <div class="step inactive">
-                    We're all done!
+                    To kill this entry, we add 7 times row 2 to row 3.
+                </div>
+                <div class="step inactive">
+                    To kill this entry, we add 7 times row 2 to row 3.
+                </div>
+                <div class="step inactive">
+                    Now the second column (the part we care about) is clear
+                    except for the pivot in the pivot, so we can ignore the
+                    second column and second row.
+                </div>
+                <div class="step inactive">
+                    The first nonzero entry of the last row is a pivot.
+                </div>
+                <div class="step inactive">
+                    The first nonzero entry of the last row is a pivot.
+                </div>
+                <div class="step inactive">
+                    We divide by 10 to make it equal to 1.
+                </div>
+                <div class="step inactive">
+                    We divide by 10 to make it equal to 1.
+                </div>
+                <div class="step inactive">
+                    Notice that the matrix is now in <i>row echelon form</i>.
+                </div>
+                <div class="step inactive">
+                    Notice that the matrix is now in <i>row echelon form</i>.
+                </div>
+                <div class="step inactive">
+                    To put the matrix in <i>reduced</i> row echelon form, we
+                    need to clear the entries in <span style="color: blue;">blue</span>.
+                </div>
+                <div class="step inactive">
+                    To put the matrix in <i>reduced</i> row echelon form, we
+                    need to clear the entries in <span style="color: blue;">blue</span>.
+                </div>
+                <div class="step inactive">
+                    We do this by taking advantage of the pivots in each column
+                    and doing row replacement.
+                </div>
+                <div class="step inactive">
+                    We do this by taking advantage of the pivots in each column
+                    and doing row replacement.
+                </div>
+                <div class="step inactive">
+                    First we clear the second column...
+                </div>
+                <div class="step inactive">
+                    First we clear the second column by subtracting 2 times the
+                    second row from the first.
+                </div>
+                <div class="step inactive">
+                    First we clear the second column by subtracting 2 times the
+                    second row from the first.
+                </div>
+                <div class="step inactive">
+                    Now we clear the third column...
+                </div>
+                <div class="step inactive">
+                    Now we clear the third column in the same way.
+                </div>
+                <div class="step inactive">
+                    Now we clear the third column in the same way.
+                </div>
+                <div class="step inactive">
+                    The matrix is now in reduced row echelon form!
+                </div>
+                <div class="step inactive">
+                    The matrix is now in reduced row echelon form!
+                </div>
+                <div class="step inactive">
+                    Add back the divider...
+                </div>
+                <div class="step inactive">
+                    Add back the divider, and we're done!
                 </div>
             </div>
         </div>
@@ -307,25 +404,167 @@
         mathbox.set('focus', ortho);
 
         window.rrmat = new RRMatrix(3, 4, {augmentCol: 2, startAugmented: true});
-        rrmat.animState.matrix = [[0, -7, -4,  2],
-                                  [2,  4,  6, 12],
-                                  [3,  1, -1, -2]];
         rrmat.install(view);
+        rrmat.setMatrix([[0, -7, -4,  2],
+                         [2,  4,  6, 12],
+                         [3,  1, -1, -2]]);
+
+        var blink = function(color, entries) {
+            return [{color: color,
+                     entries: entries,
+                     time: 0.4},
+                    {color: [0,0,0],
+                     entries: entries,
+                     time: 0.4, delay: 0.4},
+                    {color: color,
+                     entries: entries,
+                     time: 0.4, delay: 0.8}]
+        }
+
         rrmat.onLoaded(function() {
             window.slideshow =
                 rrmat.slideshow()
+
+                     .combine()
+                     .nextCaption()
+                     .setColor(blink([1,0,0], [[1,0],[2,0]]))
+                     .combined()
+
+                     .combine()
+                     .setColor({color: [0,0,0],
+                                entries: [[2,0]],
+                                time: 0.2})
                      .rowSwap(1, 2)
-                     .unAugment()
+                     .combined()
+
                      .rowMult(1, 1/2)
+
+                     .combine()
+                     .unAugment()
+                     .nextCaption()
+                     .setColor(blink([0,0,1], [[2,0]]))
+                     .combined()
+
+                     .combine()
+                     .nextCaption()
                      .rowRep(1, -3, 3)
+                     .setColor({color: [0,0,0],
+                                entries: [[2,0]],
+                                time: 0.2})
+                     .combined()
+
+                     .combine()
+                     .setColor({color: [.7,.7,.7],
+                                entries: [[0,0],[0,1],[0,2],[0,3],[1,0],[2,0]],
+                                time: 0.5})
+                     .nextCaption()
+                     .setColor(blink([1,0,0], [[1,1],[2,1]]))
+                     .combined()
+
+                     .combine()
+                     .nextCaption()
+                     .setColor({color: [0,0,0],
+                                entries: [[1,1]],
+                                time: 1})
+                     .nextCaption()
                      .rowSwap(2, 3)
+                     .combined()
+
+                     .combine()
+                     .nextCaption()
                      .rowMult(2, -1/5)
-                     .rowRep(2, -2, 1)
+                     .combined()
+
+                     .combine()
+                     .nextCaption()
+                     .setColor(blink([0,0,1], [[2,1]]))
+                     .nextCaption()
                      .rowRep(2, 7, 3)
+                     .setColor({color: [0,0,0],
+                                entries: [[2,1]],
+                                time: 0.2})
+                     .nextCaption()
+                     .combined()
+
+                     .combine()
+                     .setColor({color: [.7,.7,.7],
+                                entries: [[1,1],[1,2],[1,3],[2,1]],
+                                time: 1})
+                     .nextCaption()
+                     .setColor(blink([1,0,0], [[2,2]]))
+                     .combined()
+
+                     .combine()
+                     .nextCaption()
                      .rowMult(3, 1/10)
-                     .rowRep(3, 1, 1)
-                     .rowRep(3, -2, 2)
-                     .reAugment();
+                     .combined()
+
+                     .combine()
+                     .nextCaption()
+                     .setColor([{color: [1,0,0],
+                                 entries: [[0,0],[1,1],[2,2]],
+                                 time: 1},
+                                {color: [0,0,0],
+                                 entries: [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3]],
+                                 time: 1}])
+                     .combined()
+
+                     .combine()
+                     .nextCaption()
+                     .setColor([{color: [0,0,0],
+                                 entries: [[0,0],[1,1],[2,2]],
+                                 time: 1},
+                                {color: [0,0,1],
+                                 entries: [[0,1],[0,2],[1,2]],
+                                 time: 1}])
+                     .combined()
+
+                     .combine()
+                     .nextCaption()
+                     .setColor({color: [1,0,0],
+                                entries: [[1,1],[2,2]],
+                                time: 1})
+                     .combined()
+
+                     .combine()
+                     .nextCaption()
+                     .setColor({color: [0,0,0],
+                                entries: [[0,2], [1,2], [2,2]],
+                                time: 1})
+                     .nextCaption()
+                     .rowRep(2, -2, 1)
+                     .combined()
+
+                     .combine()
+                     .nextCaption()
+                     .setColor([{color: [0,0,0],
+                                 entries: [[0,1],[1,1]],
+                                 time: 1},
+                                {color: [1,0,0],
+                                 entries: [[2,2]],
+                                 time: 1},
+                                {color: [0,0,1],
+                                 entries: [[0,2],[1,2]],
+                                 time: 1}])
+                     .nextCaption()
+                     .rowRep(3, -2, 2, {speed: 2})
+                     .rowRep(3, 1, 1, {speed: 2})
+                     .combined()
+
+                     .combine()
+                     .nextCaption()
+                     .setColor([{color: [0,0,0],
+                                 entries: [[1,0],[2,0],[2,1],[0,2],[1,2]],
+                                 time: 1},
+                                {color: [1,0,0],
+                                 entries: [[0,0],[1,1]],
+                                 time: 1}])
+                     .combined()
+
+                     .combine()
+                     .nextCaption()
+                     .reAugment()
+                     .combined()
         });
 
     });
