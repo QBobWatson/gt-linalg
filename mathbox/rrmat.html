@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
   <script src="rrmat.js"></script>
+  <script src="domready.js"></script>
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
   <style>
   .baseline-detect {
@@ -187,8 +188,7 @@
   </style>
 </head>
 <body>
-
-    <div style="width: 800px; height: 300px; margin-top: 100px; border: 0px solid black; margin-left: auto; margin-right: auto;" id="mathbox"></div>
+    <div style="width: 800px; height: 300px; margin-top: 0px; border: 0px solid black; margin-left: auto; margin-right: auto;" id="mathbox"></div>
     <div class="centered">
         <div class="slideshow rrmat">
             <div class="controls">
@@ -349,7 +349,55 @@
     <script>
     "use strict";
 
-    document.addEventListener("DOMContentLoaded", function(event) {
+    if(false) {
+        window.onload = function() {console.log("loaded");}
+
+        function txt(x) {return "<span class=\"katex\"><span class=\"katex-mathml\"><math><semantics><mrow><mo>+</mo><mn>1</mn><mspace width=\"0.16667em\"></mspace><mo fence=\"true\">(</mo></mrow><annotation encoding=\"application/x-tex\">+1\\,\\bigl(</annotation></semantics></math></span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"strut\" style=\"height:0.85em;\"></span><span class=\"strut bottom\" style=\"height:1.20001em;vertical-align:-0.35001em;\"></span><span class=\"base textstyle uncramped\"><span class=\"mord\">+</span><span class=\"mord mathrm\">" + x + "</span><span class=\"mord mspace thinspace\"></span><span class=\"mopen\"><span class=\"style-wrap reset-textstyle textstyle uncramped\"><span class=\"delimsizing size1\">(</span></span></span></span></span></span>";}
+
+        var div = document.createElement('div');
+        div.style.position  = 'absolute';
+        div.style.left      = '0px';
+        div.style.top       = '0px';
+        div.style.width     = '0px';
+        div.style.height    = '0px';
+        document.body.appendChild(div);
+        var span = document.createElement('span');
+        span.addEventListener('transitionend', function(event) {
+            console.log("transitionend");
+            console.log(span.getBoundingClientRect());
+        });
+        span.id = 'width-measurer';
+        span.style.whiteSpace  = 'nowrap';
+        span.style.padding     = '0px';
+        span.style.border      = 'none';
+        span.style.transition  = 'color 0.01s';
+        window.testSpan = span;
+        div.appendChild(span);
+        katex.render('+1(', span);
+
+        var test = function(n) {
+            // span.innerHTML = txt(n);
+            katex.render('+'+n+'(', span);
+            var i = 0;
+            function testFunc() {
+                var rect = span.getBoundingClientRect();
+                console.log(rect);
+                document.getElementById("mathbox").innerHTML += (rect.width+'<br>');
+                if(i++ < 5)
+                    window.requestAnimationFrame(testFunc);
+            }
+            testFunc();
+            var observer = new MutationObserver(function(mutations, observer) {
+                console.log(mutations);
+                console.log(span.getBoundingClientRect());
+                console.log(span.children[0].children[0].children[0].children[0].children[0]);
+            });
+            //observer.observe(span, {characterData: true, subtree: true, attributes: true, childList: true});
+        }
+    }
+
+
+    if(true) DomReady.ready(function() {
         var ortho = 10000;
         var width = 800;
         var height = 300;
@@ -438,6 +486,7 @@
                      .combine()
                      .nextCaption()
                      .setStyle(blink("red", [[1,0],[2,0]]))
+                     .rowMult(1, 1/2, {key: ['step1']})
                      .combined()
 
                      .combine()

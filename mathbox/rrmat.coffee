@@ -436,33 +436,30 @@ class RRMatrix
         [allPos[i][j][0], allPos[i][j][1]] \
             for j in [0...@numCols] for i in [0...@numRows]
 
-    _measureWidth: (text, fromElement) ->
+    _measureWidth: (html, fromElement) ->
         span = document.getElementById 'width-measurer'
         if !span
             div = document.createElement 'div'
+            div.style.position  = 'absolute'
+            div.style.left      = '0px'
+            div.style.top       = '0px'
+            div.style.width     = '0px'
+            div.style.height    = '0px'
             document.body.appendChild div
             span = document.createElement 'span'
             span.id = 'width-measurer'
+            span.style.whiteSpace  = 'nowrap'
+            span.style.padding     = '0px'
+            span.style.border      = 'none'
             div.appendChild span
         div = span.parentElement
-        div.className = fromElement.parentElement.className
-        s = fromElement.parentElement.style
-        for i in [0...s.length]
-            div.style[s[i]] = s[s[i]]
-        div.style.position  = 'absolute'
-        div.style.left      = '0px'
-        div.style.top       = '0px'
-        div.style.transform = ''
-        span.className = fromElement.className
-        s = fromElement.style
-        for i in [0...s.length]
-            span.style[s[i]] = s[s[i]]
-        span.style.position   = 'absolute'
-        span.style.visibility = 'hidden'
-        span.style.height     = span.style.width = 'auto'
-        span.style.whiteSpace = 'nowrap'
-        span.style.transform  = ''
-        span.innerHTML = text
+        style = document.defaultView.getComputedStyle fromElement
+        span.style.fontStyle   = style.getPropertyValue 'font-style'
+        span.style.fontVariant = style.getPropertyValue 'font-variant'
+        span.style.fontWeight  = style.getPropertyValue 'font-weight'
+        span.style.fontSize    = style.getPropertyValue 'font-size'
+        span.style.fontFamily  = style.getPropertyValue 'font-family'
+        span.innerHTML = html
         width = span.getBoundingClientRect().width
         return width
 
@@ -792,7 +789,7 @@ class RRMatrix
             # the row replacement factor opening and closing parens
             if elts.length >= (@numRows + 4) * @numCols
                 @alignBaselines elts
-                @resize()
+                @onNextFrame 9, () => @resize()
                 @onNextFrame 10, () =>
                     @fade mathbox.select('#' + @_id('dom')), {0: 0, .3: 1}
                     @fade mathbox.select('#' + @_id('bracketLeft')), {0: 0, .3: 1}
