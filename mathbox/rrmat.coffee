@@ -108,6 +108,7 @@ class Step
         return unless @nextState
         @rrmat.newState @cancel()
 
+
 # Chain several steps together
 class Chain extends Step
     constructor: (rrmat, stepID, @steps) ->
@@ -150,6 +151,7 @@ class Chain extends Step
     fastForward: () =>
         return unless @stepNum >= 0
         @rrmat.newState @cancel()
+
 
 # This class controls playing steps.  Note that the slideshow's step zero is the
 # initial state; it doesn't correspond to a Step.  This means that @states[i] is
@@ -314,14 +316,16 @@ class Slideshow
         step = @rrmat.reAugment @stepID(), opts
         @addStep {step: step}, opts
 
-    setColor: (transitions, opts) ->
+    setStyle: (transitions, opts) ->
         opts ?= {}
         opts.key = ['step']
-        step = @rrmat.setColor @stepID(), transitions, opts
+        step = @rrmat.setStyle @stepID(), transitions, opts
         @addStep {step: step}, opts
 
 # This class animates a row reduction sequnce on a matrix.
 class RRMatrix
+
+    transitions: ['color', 'transform']
 
     constructor: (@numRows, @numCols, opts) ->
         {@name, @fontSize, @rowHeight, @rowSpacing,
@@ -372,8 +376,8 @@ class RRMatrix
             # These are the contents of the DOM entries, in the order described
             # above.
             html: [] # Set in @install()
-            # Colors of matrix entries, as rgb triples from 0 to 1
-            colors: []
+            # Styles of matrix entries
+            styles: []
             # Matrix entries (as decimal numbers)
             matrix: []
             # Matrix width
@@ -396,11 +400,15 @@ class RRMatrix
         @animState.matrix =
             (Array.apply(null, Array @numCols).map Number.prototype.valueOf, 0 \
                 for [0...@numRows])
+        empty = {}
+        for prop in @transitions
+            empty[prop] = ''
+        empty.transition = ''
         for i in [0...@numRows]
             row = []
             for j in [0...@numCols]
-                row.push [0,0,0]
-            @animState.colors.push row
+                row.push deepCopy(empty)
+            @animState.styles.push row
 
         [positions, @animState.bracket, @animState.augment, @animState.matWidth] =
             @computePositions @animState
@@ -428,21 +436,6 @@ class RRMatrix
         [allPos[i][j][0], allPos[i][j][1]] \
             for j in [0...@numCols] for i in [0...@numRows]
 
-    _colorStr: (color) ->
-        c = (Math.min 255, Math.floor(cc*255) for cc in color)
-        return "rgb(#{c[0]}, #{c[1]}, #{c[2]})"
-    _setColor: (i, j, color, transition=0) ->
-        if transition > 0
-            transition = "color #{transition}s"
-        else
-            transition = ""
-        style =
-            color: @_colorStr color
-            transition: transition
-        elt = @domEl @domClass, {i: i, j: j, style: style},
-            @animState.html[i][j].children
-        @animState.html[i][j] = elt
-
     _measureWidth: (text, fromElement) ->
         span = document.getElementById 'width-measurer'
         if !span
@@ -456,18 +449,19 @@ class RRMatrix
         s = fromElement.parentElement.style
         for i in [0...s.length]
             div.style[s[i]] = s[s[i]]
-        div.style.position = 'absolute'
-        div.style.left = '0px'
-        div.style.top = '0px'
+        div.style.position  = 'absolute'
+        div.style.left      = '0px'
+        div.style.top       = '0px'
         div.style.transform = ''
         span.className = fromElement.className
         s = fromElement.style
         for i in [0...s.length]
             span.style[s[i]] = s[s[i]]
-        span.style.position = 'absolute'
+        span.style.position   = 'absolute'
         span.style.visibility = 'hidden'
-        span.style.height = span.style.width = 'auto'
+        span.style.height     = span.style.width = 'auto'
         span.style.whiteSpace = 'nowrap'
+        span.style.transform  = ''
         span.innerHTML = text
         width = span.getBoundingClientRect().width
         return width
@@ -594,7 +588,7 @@ class RRMatrix
         @augment.set 'data', @animState.augment
         @swapLine.set 'data', @animState.swapLine
         @swapLineGeom.set 'opacity', @animState.swapOpacity
-        # Color changes should be immediate
+        # Style changes should be immediate
         for elt in document.getElementsByClassName @_id('matrix-entry')
             elt.style.transition = ''
         # Clear timers
@@ -656,14 +650,13 @@ class RRMatrix
     onLoaded: (callback) ->
         @view?[0].on "#{@name}.loaded", callback
 
-    htmlMatrix: (matrix, colors, html) =>
+    htmlMatrix: (matrix, styles, html) =>
         # Render matrix in html
         htmlMat = []
         for i in [0...@numRows]
             row = []
             for j in [0...@numCols]
-                color = @_colorStr colors[i][j]
-                row.push(@domEl @domClass, {i: i, j: j, style: {color: color}},
+                row.push(@domEl @domClass, {i: i, j: j, style: styles[i][j]},
                     katex.renderToString(texFraction matrix[i][j]))
             html[i] = row
         html
@@ -685,7 +678,7 @@ class RRMatrix
 
         # This is the element factory.  No good way to get at this.
         @domEl = html[0].controller.dom.el
-        @htmlMatrix @animState.matrix, @animState.colors, @animState.html
+        @htmlMatrix @animState.matrix, @animState.styles, @animState.html
 
         # Multiply-by number flyer
         @animState.html[@numRows] = []
@@ -824,7 +817,7 @@ class RRMatrix
 
     setMatrix: (matrix) ->
         @animState.matrix = matrix
-        @htmlMatrix @animState.matrix, @animState.colors, @animState.html
+        @htmlMatrix @animState.matrix, @animState.styles, @animState.html
         @resize() if @loaded
 
     alignBaselines: (elts) =>
@@ -884,9 +877,9 @@ class RRMatrix
             nextState = deepCopy oldState
             [nextState.matrix[row1], nextState.matrix[row2]] =
                 [nextState.matrix[row2], nextState.matrix[row1]]
-            [nextState.colors[row1], nextState.colors[row2]] =
-                [nextState.colors[row2], nextState.colors[row1]]
-            @htmlMatrix nextState.matrix, nextState.colors, nextState.html
+            [nextState.styles[row1], nextState.styles[row2]] =
+                [nextState.styles[row2], nextState.styles[row1]]
+            @htmlMatrix nextState.matrix, nextState.styles, nextState.html
             nextState.swapOpacity = 0.0
             return nextState
 
@@ -1011,7 +1004,7 @@ class RRMatrix
         transform2 = (oldState) =>
             nextState = deepCopy oldState
             nextState.matrix[rowNum] = (r * factor for r in nextState.matrix[rowNum])
-            @htmlMatrix nextState.matrix, nextState.colors, nextState.html
+            @htmlMatrix nextState.matrix, nextState.styles, nextState.html
             nextState.multOpacity = 0
             rowY = @animState.positions[rowNum][0][1]
             nextState.positions[@numRows][0] = [-nextState.matWidth*2, rowY, 10]
@@ -1142,10 +1135,10 @@ class RRMatrix
             # Initialize row flyer
             offsetX = nextState.matWidth + @colSpacing + 10 + leftParenWidth + padding
             for i in [0...@numCols]
-                color = @_colorStr nextState.colors[sourceRow][i]
+                style = nextState.styles[sourceRow][i]
                 props =
                     className: @_id 'addFlyer'
-                    style: {color: color}
+                    style: style
                 nextState.html[@numRows+1][i] =
                     @domEl @domClass, props, nextState.html[sourceRow][i].children
                 nextState.positions[@numRows+1][i] =
@@ -1189,7 +1182,7 @@ class RRMatrix
             for i in [0...@numCols]
                 nextState.matrix[targetRow][i] +=
                     factor * nextState.matrix[sourceRow][i]
-            @htmlMatrix nextState.matrix, nextState.colors, nextState.html
+            @htmlMatrix nextState.matrix, nextState.styles, nextState.html
             offsetX = nextState.matWidth + @colSpacing + 10 + leftParenWidth + padding
             for i in [0...@numCols]
                 nextState.positions[@numRows+1][i][0] -= offsetX
@@ -1257,48 +1250,69 @@ class RRMatrix
     reAugment: (stepID, opts) ->
         @_onoffAugment stepID, true, opts
 
-    # 'transitions' is a list of color transitions.  Each transition is an
+    _setStyle: (i, j, trans) ->
+        if trans.duration
+            transition =
+                ("#{p} #{trans.duration}s #{trans.timing}" for p in trans.props)
+                .join(', ')
+        else
+            transition = ""
+        style = transition: transition
+        for prop in trans.props
+            style[prop] = trans[prop]
+        elt = @domEl @domClass, {i: i, j: j, style: style},
+            @animState.html[i][j].children
+        @animState.html[i][j] = elt
+
+    # 'transitions' is a list of style transitions.  Each transition is an
     # object with the following keys:
-    #   color:   the color to use, an RGB triple with values between 0 and 1
-    #   entries: a list of [i,j] matrix entries
-    #   time:    transition time, in seconds
-    #   delay:   delay time, in seconds (default 0)
-    setColor: (stepID, transitions, opts) ->
+    #   color, transformation, ...: specify the new property value
+    #   entries:  a list of [i,j] matrix entries
+    #   duration: transition time, in seconds
+    #   delay:    delay time, in seconds (default 0)
+    #   timing:   easing function (default 'ease')
+    setStyle: (stepID, transitions, opts) ->
         speed = opts?.speed or 1.0
         # Total time of the effect
         totalTime = 0
         if not (transitions instanceof Array)
             transitions = [transitions]
         for trans in transitions
-            trans.time  /= speed
+            trans.duration  /= speed
             trans.delay ?= 0.0
             trans.delay /= speed
-            totalTime = Math.max totalTime, trans.time + trans.delay
+            trans.timing ?= 'ease'
+            totalTime = Math.max totalTime, trans.duration + trans.delay
+
+            trans.props = []
+            for prop in @transitions
+                trans.props.push prop if trans[prop]?
 
         transform = (oldState) =>
             nextState = deepCopy oldState
-            # Compute final matrix entry colors
+            # Compute final matrix entry styles
             for i in [0...@numRows]
                 for j in [0...@numCols]
                     last = 0.0
-                    color = undefined
+                    style = {}
                     for trans in transitions
                         if trans.delay >= last
                             for ent in trans.entries
                                 if ent[0] == i and ent[1] == j
-                                    color = trans.color
+                                    for prop in trans.props
+                                        style[prop] = trans[prop]
                                     last = trans.delay
                                     break
-                    if color?
-                        nextState.colors[i][j] = color
-            @htmlMatrix nextState.matrix, nextState.colors, nextState.html
+                    for k, v of style
+                        nextState.styles[i][j][k] = v
+            @htmlMatrix nextState.matrix, nextState.styles, nextState.html
             return nextState
 
         transition = (nextState, stepID) =>
             for trans in transitions
                 callback = do (trans) => () =>
                     for entry in trans.entries
-                        @_setColor entry[0], entry[1], trans.color, trans.time
+                        @_setStyle entry[0], entry[1], trans
                     null
                 if trans.delay == 0
                     # Give colors a chance to reset
