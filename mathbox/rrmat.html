@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="build/mathbox.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
+  <script src="animstate.js"></script>
   <script src="rrmat.js"></script>
   <script src="domready.js"></script>
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
@@ -486,7 +487,7 @@
                      .combine()
                      .nextCaption()
                      .setStyle(blink("red", [[1,0],[2,0]]))
-                     .rowMult(1, 1/2, {key: ['step1']})
+                     //.rowMult(1, 1/2, {key: ['step1']})
                      .combined()
 
                      .combine()

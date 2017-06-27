@@ -2,7 +2,7 @@
 
 # TODO: Make this interactive!!!  The student can do their own row reduction.
 # TODO: Factor out animation, slideshow code as abstractions
-# TODO: Funny sizes on Safari, first load Firefox
+# TODO: Funny sizes on Safari
 
 deepCopy = (x) ->
     if x instanceof Array
@@ -340,23 +340,11 @@ class RRMatrix
 
         startAugmented ?= @augmentCol?
 
-        @domClass = MathBox.DOM.createClass render:
-            (el, props, children) =>
-                props.innerHTML = children
+        @domClass = MathBox.DOM.createClass \
+            render: (el, props, children) =>
+                props = deepCopy props
+                props.innerHTML  = children
                 props.innerHTML += '<span class="baseline-detect"></span>'
-                if props.i? and props.j?
-                    props.id = "#{@name}-#{props.i}-#{props.j}"
-                    props.className =
-                        "#{@name}-col-#{props.j}" +
-                        " #{@name}-row-#{props.i}" +
-                        " #{@name} bound-entry #{@name}-matrix-entry"
-                    delete props.i
-                    delete props.j
-                else
-                    klasses = if props.className? then props.className.split(/\s+/) else []
-                    klasses.push 'bound-entry' if not ('bound-entry' in klasses)
-                    klasses.push @name if not (@name in klasses)
-                    props.className = klasses.join(' ')
                 return el('span', props)
 
         @loaded = false
@@ -364,6 +352,13 @@ class RRMatrix
         @swapLineSamples = 30
         mathbox.three.on 'pre', @frame
         mathbox.three.on 'post', @frame
+
+        #positions = new Statum([])
+        #positions.copyVal = () -> deepCopy @value
+        #positions.install = (rrmat) -> rrmat.positions.set 'data', @value
+
+        #html = new Statum([])
+        #html.copyVal = () ->
 
         @animState =
             # All text element positions go hear.  This is because pixel
@@ -451,6 +446,7 @@ class RRMatrix
             span.style.whiteSpace  = 'nowrap'
             span.style.padding     = '0px'
             span.style.border      = 'none'
+            span.style.visibility  = 'hidden'
             div.appendChild span
         div = span.parentElement
         style = document.defaultView.getComputedStyle fromElement
@@ -477,7 +473,7 @@ class RRMatrix
             for i in [0...@numRows]
                 elt = document.getElementById "#{@name}-#{i}-#{j}"
                 if animState.html[i]?
-                    width = @_measureWidth animState.html[i][j].children, elt
+                    width = @_measureWidth animState.html[i][j].content, elt
                 else
                     width = @fontSize # default width
                 max = Math.max max, width
@@ -588,6 +584,13 @@ class RRMatrix
         # Style changes should be immediate
         for elt in document.getElementsByClassName @_id('matrix-entry')
             elt.style.transition = ''
+        # DOM elements get moved on post
+        @onNextFrame 1, () =>
+            for i in [0...@numRows]
+                for j in [0...@numCols]
+                    elt = document.getElementById "#{@name}-#{i}-#{j}"
+                    for k, v of @animState.styles[i][j]
+                        elt.style[k] = v
         # Clear timers
         clearTimeout timer for timer in @timers
         @timers = []
@@ -649,12 +652,15 @@ class RRMatrix
 
     htmlMatrix: (matrix, styles, html) =>
         # Render matrix in html
-        htmlMat = []
         for i in [0...@numRows]
             row = []
             for j in [0...@numCols]
-                row.push(@domEl @domClass, {i: i, j: j, style: styles[i][j]},
-                    katex.renderToString(texFraction matrix[i][j]))
+                row.push
+                    props:
+                        i: i
+                        j: j
+                        #style: styles[i][j]
+                    content: katex.renderToString(texFraction matrix[i][j])
             html[i] = row
         html
 
@@ -673,43 +679,64 @@ class RRMatrix
             classes: [@name]
             live:    true
 
-        # This is the element factory.  No good way to get at this.
-        @domEl = html[0].controller.dom.el
         @htmlMatrix @animState.matrix, @animState.styles, @animState.html
 
         # Multiply-by number flyer
         @animState.html[@numRows] = []
         @animState.html[@numRows][0] =
-            @domEl @domClass, {id: @_id('multFlyer'), className: 'mult-flyer'}, ''
+            props:
+                id: @_id('multFlyer')
+                className: 'mult-flyer'
+            content: ''
         # Nothing in the rest of the row
         for i in [1...@numCols]
-            @animState.html[@numRows][i] =
-                @domEl @domClass, {style: display: 'none'}, ''
+            @animState.html[@numRows][i] = props: {style: display: 'none'}, content: ''
 
         # Add row flyer
         @animState.html[@numRows+1] = []
         for i in [0...@numCols]
             @animState.html[@numRows+1][i] =
-                @domEl @domClass, {className: @_id 'addFlyer'}, ''
+                props: className: @_id 'addFlyer'
+                content: ''
         # Opening and closing parens for row replacement factor
         for j in [@numRows+2..@numRows+3]
             @animState.html[j] = []
             for i in [1...@numCols]
                 # Empty
-                @animState.html[j][i] =
-                    @domEl @domClass, {style: display: 'none'}, ''
+                @animState.html[j][i] = props: {style: display: 'none'}, content: ''
         @animState.html[@numRows+2][0] =
-            @domEl @domClass, {
+            props:
                 className: 'rrep-factor ' + @_id('rrepFactor')
-                id: @_id 'rrepParenLeft'}, ''
+                id: @_id 'rrepParenLeft'
+            content: ''
         @animState.html[@numRows+3][0] =
-            @domEl @domClass, {
+            props:
                 className: 'rrep-factor ' + @_id('rrepFactor')
-                id: @_id 'rrepParenRight'}, ''
+                id: @_id 'rrepParenRight'
+            content: ''
+        @htmlProps = []
+        for i in [0..@numRows+3]
+            row = []
+            for j in [0...@numCols]
+                props = row[j] = deepCopy @animState.html[i][j].props
+                if i < @numRows
+                    props.id = "#{@name}-#{i}-#{j}"
+                    props.className =
+                        "#{@name}-col-#{j}" +
+                        " #{@name}-row-#{i}" +
+                        " #{@name} bound-entry #{@name}-matrix-entry"
+                klasses = if props.className? \
+                    then props.className.split(/\s+/) else []
+                klasses.push 'bound-entry' if not ('bound-entry' in klasses)
+                klasses.push @name if not (@name in klasses)
+                props.className = klasses.join(' ')
+            @htmlProps.push row
 
         html.set
             # This is an expr so mathbox.inspect() isn't a million lines
-            expr: (emit, el, j, i) => emit(@animState.html[i][j])
+            expr: (emit, el, j, i) =>
+                emit(el @domClass, @htmlProps[i][j],
+                    @animState.html[i][j].content)
 
         @view.dom
             snap:    false
@@ -981,8 +1008,10 @@ class RRMatrix
             nextState = deepCopy oldState
             nextState.multOpacity = 1
             nextState.html[@numRows][0] =
-                @domEl @domClass, {id: @_id('multFlyer'), className: 'mult-flyer'},
-                    katex.renderToString('\\times' + texFraction(factor))
+                props:
+                    id: @_id('multFlyer')
+                    className: 'mult-flyer'
+                content: katex.renderToString('\\times' + texFraction(factor))
 
             startX = nextState.matWidth/2 + @colSpacing + 10
             rowY = nextState.positions[rowNum][0][1]
@@ -1109,13 +1138,15 @@ class RRMatrix
         transform1 = (oldState) =>
             nextState = deepCopy oldState
             nextState.html[@numRows+2][0] =
-                @domEl @domClass, {
+                props:
                     className: 'rrep-factor ' + @_id('rrepFactor')
-                    id: @_id 'rrepParenLeft'}, texString
+                    id: @_id 'rrepParenLeft'
+                content: texString
             nextState.html[@numRows+3][0] =
-                @domEl @domClass, {
+                props:
                     className: 'rrep-factor ' + @_id('rrepFactor')
-                    id: @_id 'rrepParenRight'}, katex.renderToString('\\bigr)')
+                    id: @_id 'rrepParenRight'
+                content: katex.renderToString('\\bigr)')
 
             # Initialize row replacement factor
             rowY = nextState.positions[targetRow][0][1]
@@ -1137,7 +1168,8 @@ class RRMatrix
                     className: @_id 'addFlyer'
                     style: style
                 nextState.html[@numRows+1][i] =
-                    @domEl @domClass, props, nextState.html[sourceRow][i].children
+                    props: props
+                    content: nextState.html[sourceRow][i].content
                 nextState.positions[@numRows+1][i] =
                     deepCopy nextState.positions[sourceRow][i]
                 nextState.positions[@numRows+1][i][0] += offsetX
@@ -1257,9 +1289,15 @@ class RRMatrix
         style = transition: transition
         for prop in trans.props
             style[prop] = trans[prop]
-        elt = @domEl @domClass, {i: i, j: j, style: style},
-            @animState.html[i][j].children
-        @animState.html[i][j] = elt
+        # @animState.html[i][j] =
+        #     props:
+        #         i: i
+        #         j: j
+        #         style: style
+        #     content: @animState.html[i][j].content
+        elt = document.getElementById "#{@name}-#{i}-#{j}"
+        for k, v of style
+            elt.style[k] = v
 
     # 'transitions' is a list of style transitions.  Each transition is an
     # object with the following keys:
