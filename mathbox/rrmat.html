@@ -172,7 +172,7 @@
       width: 100px;
       color: #99afbb;
   }
-  .steps {
+  .slides {
       display: inline-block;
       float: right;
       width: 70%;
@@ -180,10 +180,10 @@
       color: #353535;
       height: 20px;  /* just needs to be > 0 */
   }
-  .steps > .step {
+  .slides > .slide {
       height: 0px;
   }
-  .steps > .step.inactive {
+  .slides > .slide.inactive {
       visibility: hidden;
   }
   </style>
@@ -209,138 +209,138 @@
                 </span><br>
                 <span class="pages"></span>
             </div>
-            <div class="steps">
-                <div class="step">
+            <div class="slides">
+                <div class="slide">
                     Let's row reduce this matrix.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     These are the pivots in the first column.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     These are the pivots in the first column.
                     We need to move one of them to the first row.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     Make this entry a 1 by dividing by 2.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     Let's get rid of this distracting line.
                 </div>
-                <div class="step inactive immediate">
+                <div class="slide inactive immediate">
                     We kill this entry...
                 </div>
-                <div class="step inactive immediate">
+                <div class="slide inactive immediate">
                     We kill this entry...
                 </div>
-                <div class="step inactive immediate">
+                <div class="slide inactive immediate">
                     We kill this entry by subtracting 3 times the first row.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     Now that the first column is clear except for the pivot in
                     the first row, we can ignore the first row and the first
                     column and concentrate on the rest of the matrix.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     Both of the remaining entries in the second column are pivots.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     Both of the remaining entries in the second column are pivots.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     We'll use the bottom entry as our pivot...
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     We'll use the bottom entry as our pivot, so we have to switch columns.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     We'll use the bottom entry as our pivot, so we have to switch columns.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     Divide row 2 by -5 to make this pivat a 1.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     Divide row 2 by -5 to make this pivat a 1.  (The other
                     entries in this row are divisible by 5; that's why we used
                     this row as the pivot row.)
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     To kill this entry...
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     To kill this entry, we add 7 times row 2 to row 3.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     To kill this entry, we add 7 times row 2 to row 3.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     Now the second column (the part we care about) is clear
                     except for the pivot in the pivot, so we can ignore the
                     second column and second row.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     The first nonzero entry of the last row is a pivot.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     The first nonzero entry of the last row is a pivot.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     We divide by 10 to make it equal to 1.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     We divide by 10 to make it equal to 1.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     Notice that the matrix is now in <i>row echelon form</i>.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     Notice that the matrix is now in <i>row echelon form</i>.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     To put the matrix in <i>reduced</i> row echelon form, we
                     need to clear the entries in <span style="color: blue;">blue</span>.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     To put the matrix in <i>reduced</i> row echelon form, we
                     need to clear the entries in <span style="color: blue;">blue</span>.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     We do this by taking advantage of the pivots in each column
                     and doing row replacement.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     We do this by taking advantage of the pivots in each column
                     and doing row replacement.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     First we clear the second column...
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     First we clear the second column by subtracting 2 times the
                     second row from the first.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     First we clear the second column by subtracting 2 times the
                     second row from the first.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     Now we clear the third column...
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     Now we clear the third column in the same way.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     Now we clear the third column in the same way.
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     The matrix is now in reduced row echelon form!
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     The matrix is now in reduced row echelon form!
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     Add back the divider...
                 </div>
-                <div class="step inactive">
+                <div class="slide inactive">
                     Add back the divider, and we're done!
                 </div>
             </div>
@@ -458,7 +458,7 @@
                          [2,  4,  6, 12],
                          [3,  1, -1, -2]]);
 
-        var blink = function(color, entries, times) {
+        var blink = window.blink = function(color, entries, times) {
             if(!times) {times = 2;}
             var arr = [], last, delay = 0;
             for(var i = 0; i < times; ++i) {
@@ -480,14 +480,13 @@
             return arr;
         }
 
-        rrmat.onLoaded(function() {
+        if(false) rrmat.onLoaded(function() {
             window.slideshow =
                 rrmat.slideshow()
 
                      .combine()
                      .nextCaption()
                      .setStyle(blink("red", [[1,0],[2,0]]))
-                     //.rowMult(1, 1/2, {key: ['step1']})
                      .combined()
 
                      .combine()

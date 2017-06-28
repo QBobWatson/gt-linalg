@@ -4,7 +4,8 @@
 # TODO: Factor out animation, slideshow code as abstractions
 # TODO: Funny sizes on Safari
 # TODO: just-in-time width measuring with persistent measuring elements
-# TODO: AnimState, Animation, Step signals and triggers
+# TODO: AnimState, Animation, Slide signals and triggers
+# TODO: don't export so many globals
 
 deepCopy = (x) ->
     if x instanceof Array
@@ -83,124 +84,43 @@ texFraction = (x, error=0.00001) ->
     return "#{minus}\\frac{#{num}}{#{den}}"
 
 
-# This class represents a single animation step
-class Step
-    constructor: (@rrmat, @stepID, @transform, @transition) ->
-        # 'transform' is a function that takes the current state (or the
-        # best guess for what that state will be in the future), and returns the
-        # new state after the transition happens (but before resizing the matrix
-        # elements).  'transition' is the function that actually animates the
-        # transition.
-        @nextState = null  # Set if and only if the effect is running
-
-    onDone: (callback) ->
-        @rrmat.view.on "#{@rrmat.name}.#{@stepID}.done", callback
-
-    go: () =>
-        # Stop animations
-        mathbox.remove "play.#{@rrmat.name}"
-        @nextState = @transform @rrmat.state
-        @transition @nextState, @stepID
-        @listener = listener = () =>
-            @nextState = null
-            @rrmat.view.off "#{@rrmat.name}.#{@stepID}.done", listener
-        @rrmat.view.on "#{@rrmat.name}.#{@stepID}.done", @listener
-
-    cancel: () =>
-        # Stop animation, and return the next state
-        return unless @nextState
-        @rrmat.view.off "#{@rrmat.name}.#{@stepID}.done", @listener
-        ret = @nextState
-        @nextState = null
-        ret
-
-    fastForward: () =>
-        # Skip the rest of this step and reset state to the next state
-        return unless @nextState
-        @rrmat.newState @cancel()
-
-
-# Chain several steps together
-class Chain extends Step
-    constructor: (rrmat, stepID, @steps) ->
-        transform = (oldState) =>
-            for step in @steps
-                oldState = step.transform oldState
-            oldState
-
-        super rrmat, stepID, transform, null
-        @stepNum = -1  # nonnegative if and only if the effect is running
-
-    goStep: (stepNum) =>
-        step = @steps[stepNum]
-        @listener = listener = () =>
-            @rrmat.view.off "#{@rrmat.name}.#{step.stepID}.done", listener
-            nextStep = @steps[stepNum+1]?
-            if nextStep
-                @goStep stepNum+1
-            else
-                @stepNum = -1
-                event = type: "#{@rrmat.name}.#{@stepID}.done"
-                @rrmat.view[0].trigger event
-        @rrmat.view.on "#{@rrmat.name}.#{step.stepID}.done", @listener
-        @stepNum = stepNum
-        step.go()
-
-    go: () =>
-        @goStep 0
-
-    cancel: () =>
-        return unless @stepNum >= 0
-        step = @steps[@stepNum]
-        @rrmat.view.off "#{@rrmat.name}.#{step.stepID}.done", @listener
-        nextState = step.cancel()
-        for i in [@stepNum+1...@steps.length]
-            nextState = @steps[i].transform nextState
-        @stepNum = -1
-        nextState
-
-    fastForward: () =>
-        return unless @stepNum >= 0
-        @rrmat.newState @cancel()
-
-
-# This class controls playing steps.  Note that the slideshow's step zero is the
-# initial state; it doesn't correspond to a Step.  This means that @states[i] is
-# the animation state before @steps[i] runs, and @states[@steps.length] is the
-# final state.  The @currentStepNum is an index into @states[] for the current
-# state, or, if an animation is playing, the previous state.  Setting the step
-# with @goToStep will jump straight to that step.
+# This class controls playing slides.  Note that the slideshow's slide zero is the
+# initial state; it doesn't correspond to a Slide.  This means that @states[i] is
+# the animation state before @slides[i] runs, and @states[@slides.length] is the
+# final state.  The @currentSlideNum is an index into @states[] for the current
+# state, or, if an animation is playing, the previous state.  Setting the slide
+# with @goToSlide will jump straight to that slide.
 class Slideshow
     constructor: (@rrmat, @showID='slideshow') ->
-        @steps = []
+        @slides = []
         @states = [@rrmat.state.copy()]
-        @currentStepNum = 0
+        @currentSlideNum = 0
         @playing = false
 
         @prevButton   = document.querySelector ".slideshow.#{@rrmat.name} .prev-button"
         @reloadButton = document.querySelector ".slideshow.#{@rrmat.name} .reload-button"
         @nextButton   = document.querySelector ".slideshow.#{@rrmat.name} .next-button"
         @pageCounter  = document.querySelector ".slideshow.#{@rrmat.name} .pages"
-        @captions = document.querySelectorAll ".slideshow.#{@rrmat.name} .steps > .step"
+        @captions = document.querySelectorAll ".slideshow.#{@rrmat.name} .slides > .slide"
 
         @prevButton.onclick = () =>
-            return if @currentStepNum == 0 and !@playing
+            return if @currentSlideNum == 0 and !@playing
             if @playing
-                @goToStep @currentStepNum
+                @goToSlide @currentSlideNum
             else
-                @goToStep @currentStepNum - 1
+                @goToSlide @currentSlideNum - 1
         @nextButton.onclick = () =>
-            return if @currentStepNum == @steps.length
+            return if @currentSlideNum == @slides.length
             if @playing
-                @goToStep @currentStepNum + 1
+                @goToSlide @currentSlideNum + 1
             else
                 @play()
         @reloadButton.onclick = () =>
-            return if @currentStepNum == 0 and !@playing
+            return if @currentSlideNum == 0 and !@playing
             if @playing
-                @goToStep @currentStepNum
+                @goToSlide @currentSlideNum
             else
-                @goToStep @currentStepNum - 1
+                @goToSlide @currentSlideNum - 1
             @play()
 
         @updateUI()
@@ -211,65 +131,65 @@ class Slideshow
             if i != j and !@captions[i].classList.contains 'inactive'
                 @captions[i].classList.add 'inactive'
 
-    updateUI: (oldStepNum=-1) =>
-        if @currentStepNum == 0 and !@playing
+    updateUI: (oldSlideNum=-1) =>
+        if @currentSlideNum == 0 and !@playing
             @prevButton.classList.add 'inactive'
             @reloadButton.classList.add 'inactive'
         else
             @prevButton.classList.remove 'inactive'
             @reloadButton.classList.remove 'inactive'
-        if @currentStepNum == @steps.length
+        if @currentSlideNum == @slides.length
             @nextButton.classList.add 'inactive'
         else
             @nextButton.classList.remove 'inactive'
-        @pageCounter?.innerHTML = "#{@currentStepNum+1} / #{@steps.length+1}"
+        @pageCounter?.innerHTML = "#{@currentSlideNum+1} / #{@slides.length+1}"
 
     play: () ->
-        return if @currentStepNum >= @steps.length
+        return if @currentSlideNum >= @slides.length
         @playing = true
-        @steps[@currentStepNum].go()
+        @slides[@currentSlideNum].go()
         @updateUI()
 
-    goToStep: (stepNum) =>
-        return if stepNum < 0 or stepNum > @steps.length
-        #console.log "Active step: #{stepNum}"
-        oldStepNum = @currentStepNum
-        @currentStepNum = stepNum
-        if @currentStepNum > oldStepNum and @playing
-            @states[oldStepNum+1] = @steps[oldStepNum].fastForward()
-            @states[oldStepNum+1].captionNum++
+    goToSlide: (slideNum) =>
+        return if slideNum < 0 or slideNum > @slides.length
+        #console.log "Active slide: #{slideNum}"
+        oldSlideNum = @currentSlideNum
+        @currentSlideNum = slideNum
+        if @currentSlideNum > oldSlideNum and @playing
+            @states[oldSlideNum+1] = @slides[oldSlideNum].fastForward()
+            @states[oldSlideNum+1].captionNum++
         else if @playing
-            @steps[oldStepNum].cancel()
-        @rrmat.newState @states[@currentStepNum]
-        @updateCaptions @states[@currentStepNum].captionNum
+            @slides[oldSlideNum].cancel()
+        @rrmat.jumpState @states[@currentSlideNum]
+        @updateCaptions @states[@currentSlideNum].captionNum
         @playing = false
-        @updateUI oldStepNum
+        @updateUI oldSlideNum
 
-    addStep: (steps, opts) ->
+    addSlide: (slides, opts) ->
         keys = opts.key
         for key in keys
             if @combining?
-                @combining.push steps[key]
+                @combining.push slides[key]
                 continue
-            steps[key].opts = opts
-            @steps.push steps[key]
-            steps[key].onDone () =>
-                #console.log "Step #{steps[key].stepID} done"
+            slides[key].opts = opts
+            @slides.push slides[key]
+            slides[key].onDone () =>
+                #console.log "Slide #{slides[key].slideID} done"
                 @playing = false
-                @currentStepNum += 1
+                @currentSlideNum += 1
                 @rrmat.state.captionNum++
-                @states[@currentStepNum] = @rrmat.state.copy()
-                @updateUI @currentStepNum - 1
+                @states[@currentSlideNum] = @rrmat.state.copy()
+                @updateUI @currentSlideNum - 1
                 @updateCaptions @rrmat.state.captionNum
         @updateUI()
         @
 
-    stepID: () ->
+    slideID: () ->
         if @combining?
-            return @showID + '-' + (@steps.length+1) + '-' + (@combining.length+1)
-        return @showID + '-' + (@steps.length+1)
+            return @showID + '-' + (@slides.length+1) + '-' + (@combining.length+1)
+        return @showID + '-' + (@slides.length+1)
 
-    # Combine several steps into a chain.  End with combined()
+    # Combine several slides into a chain.  End with combined()
     combine: () ->
         @combining = []
         @
@@ -278,59 +198,59 @@ class Slideshow
         opts.key = ['chain']
         combining = @combining
         delete @combining
-        stepID = @stepID()
-        @addStep {chain: new Chain @rrmat, stepID, combining}, opts
+        slideID = @slideID()
+        @addSlide {chain: new SlideChain @rrmat, slideID, combining}, opts
         @
 
     nextCaption: (opts) ->
-        # Just run a no-op step
+        # Just run a no-op slide
         opts ?= {}
-        opts.key ?= ['step']
+        opts.key ?= ['slide']
         transform = (oldState) ->
             nextState = oldState.copy()
             nextState.captionNum++
             nextState
-        transition = (nextState, stepID) =>
+        transition = (nextState, slideID) =>
             @updateCaptions nextState.captionNum
-            @rrmat.newState nextState, stepID
-        step = new Step @rrmat, @stepID(), transform, transition
-        @addStep {step: step}, opts
+            @rrmat.jumpState nextState, slideID
+        slide = new Slide @rrmat, @slideID(), transform, transition
+        @addSlide {slide: slide}, opts
 
     rowSwap: (row1, row2, opts) ->
         opts ?= {}
         opts.key ?= ['chain']
-        steps = @rrmat.rowSwap @stepID(), row1-1, row2-1, opts
-        @addStep steps, opts
+        slides = @rrmat.rowSwap @slideID(), row1-1, row2-1, opts
+        @addSlide slides, opts
 
     rowMult: (rowNum, factor, opts) ->
         opts ?= {}
         opts.key ?= ['chain']
-        steps = @rrmat.rowMult @stepID(), rowNum-1, factor, opts
-        @addStep steps, opts
+        slides = @rrmat.rowMult @slideID(), rowNum-1, factor, opts
+        @addSlide slides, opts
 
     rowRep: (sourceRow, factor, targetRow, opts) ->
         opts ?= {}
         opts.key ?= ['chain']
         keys = opts?.key or ['chain']
-        steps = @rrmat.rowRep @stepID(), sourceRow-1, factor, targetRow-1, opts
-        @addStep steps, opts
+        slides = @rrmat.rowRep @slideID(), sourceRow-1, factor, targetRow-1, opts
+        @addSlide slides, opts
 
     unAugment: (opts) ->
         opts ?= {}
-        opts.key = ['step']
-        step = @rrmat.unAugment @stepID(), opts
-        @addStep {step: step}, opts
+        opts.key = ['slide']
+        slide = @rrmat.unAugment @slideID(), opts
+        @addSlide {slide: slide}, opts
     reAugment: (opts) ->
         opts ?= {}
-        opts.key = ['step']
-        step = @rrmat.reAugment @stepID(), opts
-        @addStep {step: step}, opts
+        opts.key = ['slide']
+        slide = @rrmat.reAugment @slideID(), opts
+        @addSlide {slide: slide}, opts
 
     setStyle: (transitions, opts) ->
         opts ?= {}
-        opts.key = ['step']
-        step = @rrmat.setStyle @stepID(), transitions, opts
-        @addStep {step: step}, opts
+        opts.key = ['slide']
+        slide = @rrmat.setStyle @slideID(), transitions, opts
+        @addSlide {slide: slide}, opts
 
 
 # This class animates a row reduction sequnce on a matrix.
@@ -339,10 +259,10 @@ class RRMatrix extends AnimState
     styleKeys: ['color', 'opacity', 'transform']
 
     constructor: (@numRows, @numCols, opts) ->
-        {@name, @fontSize, @rowHeight, @rowSpacing,
+        {name, @fontSize, @rowHeight, @rowSpacing,
             @colSpacing, @augmentCol, startAugmented} = opts or {}
 
-        @name       ?= "rrmat"
+        name       ?= "rrmat"
         @fontSize   ?= 20
         @rowHeight  ?= @fontSize * 1.2
         @rowSpacing ?= @fontSize
@@ -372,10 +292,6 @@ class RRMatrix extends AnimState
         mathbox.three.on 'pre', @frame
         mathbox.three.on 'post', @frame
         @clock = mathbox.select('root')[0].clock
-        @clock.on 'clock.tick', @multEffect
-        @doMultEffect = null
-        @clock.on 'clock.tick', @repEffect
-        @doRepEffect = null
 
         ######################################################################
         # Animation state
@@ -479,7 +395,7 @@ class RRMatrix extends AnimState
             key: 'captionNum'
             val: 0
 
-        super state
+        super name, state
 
     _id: (element) => "#{@name}-#{element}"
 
@@ -558,101 +474,23 @@ class RRMatrix extends AnimState
         # Augment path
         state.augment[0][1] = y1
         state.augment[1][1] = y2
-        if @augmentCol? and (not state.doAugment or @addingAugment)
+        if @augmentCol? and not state.doAugment
             diff = @view.get('scale').y
             state.augment[0][1] += diff
             state.augment[1][1] += diff
 
         state
 
-    resize: (stepID) =>
-        nextState = @computePositions @state
-        @state.matWidth = nextState.matWidth
-
-        equal = true
-        for i in [0...@numRows]
-            for j in [0...@numCols]
-                for k in [0...1]
-                    if nextState.positions[i][j][k] != @state.positions[i][j][k]
-                        equal = false
-                    break if not equal
-                break if not equal
-            break if not equal
-        if not equal
-            play1 = @play @positions,
-                script:
-                    0:   props: data: @state.positions
-                    0.2: props: data: nextState.positions
-            @state.positions = nextState.copyVal 'positions'
-
-        if !arraysEqual nextState.bracket, @state.bracket
-            play2 = @play @bracket,
-                script:
-                    0:   props: data: @state.bracket
-                    0.2: props: data: nextState.bracket
-            @state.bracket = nextState.copyVal 'bracket'
-
-        if @augmentCol? and not arraysEqual nextState.augment, @state.augment
-            play3 = @play @augment,
-                script:
-                    0:   props: data: @state.augment
-                    0.2: props: data: nextState.augment
-            @state.augment = nextState.copyVal 'augment'
-
-        event = type: "#{@name}.#{stepID}.done"
-        play1?.on 'play.done', (e) =>
-            play1.remove()
-            @state.installVal 'positions'
-            @view[0].trigger event if stepID
-        play2?.on 'play.done', (e) =>
-            play2.remove()
-            @state.installVal 'bracket'
-            if !play1? and stepID
-                @view[0].trigger event
-        play3?.on 'play.done', (e) =>
-            play3.remove()
-            @state.installVal 'augment'
-            if !play1? and !play2? and stepID
-                @view[0].trigger event
-        @view[0].trigger event if !play1? and !play2? and !play3? and stepID
-        @state
-
-    newState: (nextState, stepID) =>
-        # Stop/delete any animations
-        mathbox.remove "play.#{@name}"
+    jumpState: (nextState, slideID) =>
         super nextState
         # Clear timers
         clearTimeout timer for timer in @timers
         @timers = []
-        # Clean up opacity effects
-        @doMultEffect = null
-        @doRepEffect = null
+        # TODO: make this an animation
         mathbox.select('#' + @_id('dom')).set('opacity', 1)
         mathbox.select('#' + @_id('bracketLeft')).set('opacity', 1)
         mathbox.select('#' + @_id('bracketRight')).set('opacity', 1)
         mathbox.select('#' + @_id('augmentGeom')).set('opacity', 1)
-        @resize stepID
-
-    play: (element, opts) ->
-        # Thin wrapper around mathbox.play
-        return unless @view?
-        id = "#{@name}-play-#{element[0].id}"
-        mathbox.remove "#" + id
-        opts.target  = element
-        opts.id      = id
-        opts.classes = [@name]
-        opts.to     ?= Math.max.apply null, (k for k of opts.script)
-        play = @view.play opts
-        # Don't auto-remove, as there may be other listeners for play.done
-        play
-
-    fade: (element, script) ->
-        # Fade an element in or out
-        script2 = {}
-        script2[k] = {props: {opacity: v}} for k, v of script
-        @play element,
-            ease:   'linear'
-            script: script2
 
     onNextFrame: (after, callback, stage='post') ->
         # Execute 'callback' after 'after' frames
@@ -806,12 +644,16 @@ class RRMatrix extends AnimState
             @rrepParenLeftElt  = document.getElementById(@_id 'rrepParenLeft')
             @rrepParenRightElt = document.getElementById(@_id 'rrepParenRight')
 
-        @onNextFrame 9, () => @resize()
+        @onNextFrame 9, () => @resize().start()
         @onNextFrame 10, () =>
-            @fade mathbox.select('#' + @_id('dom')), {0: 0, .3: 1}
-            @fade mathbox.select('#' + @_id('bracketLeft')), {0: 0, .3: 1}
-            @fade mathbox.select('#' + @_id('bracketRight')), {0: 0, .3: 1}
-            @fade mathbox.select('#' + @_id('augmentGeom')), {0: 0, .3: 1}
+            new FadeAnimation mathbox.select('#' + @_id('dom')), {0: 0, .3: 1}
+                .start()
+            new FadeAnimation mathbox.select('#' + @_id('bracketLeft')), {0: 0, .3: 1}
+                .start()
+            new FadeAnimation mathbox.select('#' + @_id('bracketRight')), {0: 0, .3: 1}
+                .start()
+            new FadeAnimation mathbox.select('#' + @_id('augmentGeom')), {0: 0, .3: 1}
+                .start()
             @loaded = true
             @view[0].trigger type: "#{@name}.loaded"
 
@@ -828,7 +670,7 @@ class RRMatrix extends AnimState
     setMatrix: (matrix) ->
         @state.matrix = matrix
         @htmlMatrix @state.matrix, @state.html
-        @resize() if @loaded
+        @resize().start() if @loaded
 
     alignBaselines: (elts) =>
         # Align baselines with the reference points (javascript hack)
@@ -840,14 +682,57 @@ class RRMatrix extends AnimState
     # Transitions and helper functions
     ######################################################################
 
+    resize: (nextState) =>
+        # Return an animation that resizes the matrix from its current size to
+        # its natural size
+        nextState ?= @computePositions @state
+        @state.matWidth = nextState.matWidth
+
+        equal = true
+        anims = []
+        for i in [0...@numRows]
+            for j in [0...@numCols]
+                for k in [0...1]
+                    if nextState.positions[i][j][k] != @state.positions[i][j][k]
+                        equal = false
+                    break if not equal
+                break if not equal
+            break if not equal
+        if not equal
+            play1 = new MathboxAnimation @positions,
+                script:
+                    0:   props: data: @state.positions
+                    0.2: props: data: nextState.positions
+            anims.push play1
+            @state.positions = nextState.copyVal 'positions'
+
+        if !arraysEqual nextState.bracket, @state.bracket
+            play2 = new MathboxAnimation @bracket,
+                script:
+                    0:   props: data: @state.bracket
+                    0.2: props: data: nextState.bracket
+            anims.push play2
+            @state.bracket = nextState.copyVal 'bracket'
+
+        if @augmentCol? and not arraysEqual nextState.augment, @state.augment
+            play3 = new MathboxAnimation @augment,
+                script:
+                    0:   props: data: @state.augment
+                    0.2: props: data: nextState.augment
+            anims.push play3
+            @state.augment = nextState.copyVal 'augment'
+
+        return new SimultAnimations anims if anims.length
+        return new NullAnimation
+
     slideshow: (showID='slideshow') ->
         new Slideshow @, showID
 
-    chain: (stepID, steps...) ->
-        ret = new Chain @, stepID, steps
+    chain: (slideID, slides...) ->
+        ret = new SlideChain slideID, slides
         ret
 
-    swapLinePoints: (top, bot, state) ->
+    _swapLinePoints: (top, bot, state) ->
         # Get points for the swap-arrows line
         samples = @swapLineSamples
         lineHeight = Math.abs(top - bot)
@@ -858,405 +743,485 @@ class RRMatrix extends AnimState
                   for i in [0..samples])
         return points
 
-    rowSwap: (stepID, row1, row2, opts) ->
-        # Return an animation in two steps.
-        # The first step fades in the swap arrow.
-        # The second step does the swap.
+    rowSwap: (slideID, row1, row2, opts) ->
+        # Return an animation in two slides.
+        # The first slide fades in the swap arrow.
+        # The second slide does the swap.
 
         speed = opts?.speed or 1.0
         fadeTime = 0.3/speed
         swapTime = 1/speed
+        rrmat = @
 
-        transform1 = (oldState) =>
-            nextState = oldState.copy()
-            nextState.swapOpacity = 1.0
-            top = nextState.positions[row1][0][1] + @fontSize/3
-            bot = nextState.positions[row2][0][1] + @fontSize/3
-            nextState.swapLine = @swapLinePoints top, bot, nextState
-            return nextState
+        class Slide1 extends Slide
+            start: () ->
+                @_nextState = @transform rrmat.state
+                @_nextState.installVal 'swapLine'
+                script = {}
+                script[0] = 0
+                script[fadeTime] = 1
+                play = new FadeAnimation rrmat.swapLineGeom, script
+                @anims.push play
+                play.on 'done', () =>
+                    rrmat.state = @_nextState
+                    @done()
+                play.start()
+                super
 
-        transition1 = (nextState, stepID) =>
-            nextState.installVal 'swapLine'
-            script = {}
-            script[0] = 0
-            script[fadeTime] = 1
-            @fade @swapLineGeom, script
-                .on 'play.done', (e) => @newState nextState, stepID
+            transform: (oldState) ->
+                nextState = oldState.copy()
+                nextState.swapOpacity = 1.0
+                top = nextState.positions[row1][0][1] + rrmat.fontSize/3
+                bot = nextState.positions[row2][0][1] + rrmat.fontSize/3
+                nextState.swapLine = rrmat._swapLinePoints top, bot, nextState
+                nextState
 
-        transform2 = (oldState) =>
-            nextState = oldState.copy()
-            [nextState.matrix[row1], nextState.matrix[row2]] =
-                [nextState.matrix[row2], nextState.matrix[row1]]
-            [nextState.styles[row1], nextState.styles[row2]] =
-                [nextState.styles[row2], nextState.styles[row1]]
-            [nextState.html[row1], nextState.html[row2]] =
-                [nextState.html[row2], nextState.html[row1]]
-            nextState.swapOpacity = 0.0
-            return nextState
+            fastForward: () -> @_nextState.copy()
 
-        transition2 = (nextState, stepID) =>
-            pos = deepCopy @state.positions
-            [pos[row1], pos[row2]] = [pos[row2], pos[row1]]
+        class Slide2 extends Slide
+            start: () ->
+                @_nextState = @transform rrmat.state
+                pos = deepCopy rrmat.state.positions
+                [pos[row1], pos[row2]] = [pos[row2], pos[row1]]
 
-            @play @positions,
-                pace: swapTime
-                script:
-                    0: props: data: @state.positions
-                    1: props: data: pos
+                play1 = new MathboxAnimation rrmat.positions,
+                    pace: swapTime
+                    script:
+                        0: props: data: rrmat.state.positions
+                        1: props: data: pos
 
-            top = @state.swapLine[0][1]
-            bot = @state.swapLine[@swapLineSamples][1]
-            center = (top + bot) / 2
-            transLine = ([x,-y+2*center] for [x,y] in @state.swapLine)
+                top = rrmat.state.swapLine[0][1]
+                bot = rrmat.state.swapLine[rrmat.swapLineSamples][1]
+                center = (top + bot) / 2
+                transLine = ([x,-y+2*center] for [x,y] in rrmat.state.swapLine)
 
-            @play @swapLine,
-                pace: swapTime
-                script:
-                    0: props: data: @state.swapLine
-                    1: props: data: transLine
+                play2 = new MathboxAnimation rrmat.swapLine,
+                    pace: swapTime
+                    script:
+                        0: props: data: rrmat.state.swapLine
+                        1: props: data: transLine
 
-            script = {}
-            script[0] = 1
-            script[swapTime] = 1
-            script[swapTime+fadeTime] = 0
-            @fade @swapLineGeom, script
-                .on 'play.done', (e) => @newState nextState, stepID
+                script = {}
+                script[0] = 1
+                script[swapTime] = 1
+                script[swapTime+fadeTime] = 0
+                play3 = new FadeAnimation rrmat.swapLineGeom, script
 
-        step1 = new Step @, "#{stepID}-1", transform1, transition1
-        step2 = new Step @, "#{stepID}-2", transform2, transition2
+                anim = new SimultAnimations [play1, play2, play3]
+                @anims.push anim
+                anim.on 'done', () =>
+                    rrmat.state = @_nextState
+                    rrmat.state.installVal 'positions'
+                    rrmat.state.installVal 'html'
+                    rrmat.state.installVal 'styles'
+                    @done()
+                anim.start()
+                super
 
-        step1: step1
-        step2: step2
-        chain: new Chain @, stepID, [step1, step2]
+            transform: (oldState) ->
+                nextState = oldState.copy()
+                [nextState.matrix[row1], nextState.matrix[row2]] =
+                    [nextState.matrix[row2], nextState.matrix[row1]]
+                [nextState.styles[row1], nextState.styles[row2]] =
+                    [nextState.styles[row2], nextState.styles[row1]]
+                [nextState.html[row1], nextState.html[row2]] =
+                    [nextState.html[row2], nextState.html[row1]]
+                nextState.swapOpacity = 0.0
+                nextState
 
-    multEffect: () =>
-        # Fade numbers in and out when multiplying
-        return unless @doMultEffect
-        {rowNum, rowPos, past, clock, speed,
-            stepNum, stepID, opacity, start, nextState} = @doMultEffect
-        return if stepNum > 2
-        row = @matrixElts[rowNum]
-        elapsed = clock.getTime().clock - start
-        elapsed *= speed
-        if stepNum == 1
-            if elapsed >= 0.3
-                @multFlyerElt.style.opacity = 1
-                @doMultEffect.stepNum = 3
-                @onNextFrame 1, () => @newState nextState, stepID
-            else
-                @multFlyerElt.style.opacity = elapsed/0.3
-            return
-        # stepNum == 2
-        box = @multFlyerElt.getBoundingClientRect()
-        flyerPos = (box.left + box.right) / 2
-        for elt, i in row
-            if flyerPos < rowPos[i] and !past[i]
-                # Change the number as the flyer flies past
-                past[i] = true
-                @state.html[rowNum][i] = nextState.html[rowNum][i]
-            elt.style.opacity = opacity(Math.abs(flyerPos - rowPos[i]))
-        if past[0]
-            # Fade out the flyer
-            @multFlyerElt.style.opacity =
-                Math.max(1 - (rowPos[0] - flyerPos)/@fontSize/5, 0)
-            if @multFlyerElt.style.opacity < 0.05
-                @onNextFrame 1, () => @newState nextState, stepID
-                @doMultEffect.stepNum = 3
+            fastForward: () -> @_nextState.copy()
 
-    rowMult: (stepID, rowNum, factor, opts) ->
-        # Return an animation in two steps
-        # The first step fades in the multiplication flyer
-        # The second step does the multiplication
+        slide1 = new Slide1 "#{slideID}-1"
+        slide2 = new Slide2 "#{slideID}-2"
+
+        slide1: slide1
+        slide2: slide2
+        chain: new SlideChain slideID, [slide1, slide2]
+
+    rowMult: (slideID, rowNum, factor, opts) ->
+        # Return an animation in two slides
+        # The first slide fades in the multiplication flyer
+        # The second slide does the multiplication
         speed = opts?.speed or 1.0
+        flidx = @numRows
+        rrmat = @
 
-        precomputations = (doMultEffect) =>
-            # Put the flyer text to the right of the reference point
-            @multFlyerElt.parentElement.style.width = "0px"
-            pos = []
-            past = []
-            for elt in @matrixElts[rowNum]
-                box = elt.getBoundingClientRect()
-                pos.push (box.left + box.right) / 2
-                past.push false
-            doMultEffect.rowPos = pos
-            doMultEffect.past   = past
-            doMultEffect.start  = doMultEffect.clock.getTime().clock
+        class Slide1 extends Slide
+            start: () ->
+                @_nextState = @transform rrmat.state
+                @_nextState.installVal 'positions'
+                rrmat.state.html[flidx][0] = @_nextState.html[flidx][0]
 
-        doMultEffect =
-                rowNum:  rowNum
-                clock:   @positions[0].clock
-                opacity: (distance) => Math.min (distance/(@fontSize*2))**3, 1
-                speed:   speed
+                rrmat.multFlyerElt.parentElement.style.width = "0px"
+                anim = new TimedAnimation rrmat.positions[0].clock,
+                    (elapsed) ->
+                        elapsed *= speed
+                        if elapsed >= 0.3
+                            rrmat.multFlyerElt.style.opacity = 1
+                            @done()
+                        else
+                            rrmat.multFlyerElt.style.opacity = elapsed/0.3
+                @anims.push anim
+                anim.on 'done', () =>
+                    rrmat.state = @_nextState
+                    @done()
+                anim.start()
+                super
 
-        transform1 = (oldState) =>
-            nextState = oldState.copy()
-            nextState.styles[@numRows][0].opacity = 1
-            nextState.html[@numRows][0] =
-                katex.renderToString('\\times' + texFraction(factor))
-            startX = nextState.matWidth/2 + @colSpacing + 10
-            rowY = nextState.positions[rowNum][0][1]
-            nextState.positions[@numRows][0] = [startX, rowY, 10]
-            nextState
+            transform: (oldState) ->
+                nextState = oldState.copy()
+                nextState.styles[flidx][0].opacity = 1
+                nextState.html[flidx][0] =
+                    katex.renderToString('\\times' + texFraction(factor))
+                startX = nextState.matWidth/2 + rrmat.colSpacing + 10
+                rowY = nextState.positions[rowNum][0][1]
+                nextState.positions[flidx][0] = [startX, rowY, 10]
+                nextState
 
-        transition1 = (nextState, stepID) =>
-            @doMultEffect = doMultEffect
-            precomputations @doMultEffect
-            @doMultEffect.nextState = nextState
-            @doMultEffect.stepID    = stepID
-            @doMultEffect.stepNum   = 1
-            nextState.installVal 'positions'
-            @state.html[@numRows][0] = nextState.html[@numRows][0]
+            fastForward: () -> @_nextState.copy()
 
-        transform2 = (oldState) =>
-            nextState = oldState.copy()
-            nextState.matrix[rowNum] = (r * factor for r in nextState.matrix[rowNum])
-            @htmlMatrix nextState.matrix, nextState.html
-            nextState.styles[@numRows][0].opacity = 0
-            rowY = @state.positions[rowNum][0][1]
-            nextState.positions[@numRows][0] = [-nextState.matWidth*2, rowY, 10]
-            nextState
+        class Slide2 extends Slide
+            start: () ->
+                nextState = @_nextState = @transform rrmat.state, false
+                pos = []
+                past = []
+                row = rrmat.matrixElts[rowNum]
+                for elt in row
+                    box = elt.getBoundingClientRect()
+                    pos.push (box.left + box.right) / 2
+                    past.push false
+                opacity = (distance) => Math.min (distance/(rrmat.fontSize*2))**3, 1
 
-        transition2 = (nextState, stepID) =>
-            @doMultEffect = doMultEffect
-            precomputations @doMultEffect
-            @doMultEffect.nextState = nextState
-            @doMultEffect.stepID    = stepID
-            @doMultEffect.stepNum   = 2
+                anim = new TimedAnimation rrmat.positions[0].clock,
+                    (elapsed) ->
+                        elapsed *= speed
+                        box = rrmat.multFlyerElt.getBoundingClientRect()
+                        flyerPos = (box.left + box.right) / 2
+                        for elt, i in row
+                            if flyerPos < pos[i] and !past[i]
+                                # Change the number as the flyer flies past
+                                past[i] = true
+                                rrmat.state.html[rowNum][i] = nextState.html[rowNum][i]
+                            elt.style.opacity = opacity(Math.abs(flyerPos - pos[i]))
+                        if past[0]
+                            # Fade out the flyer
+                            rrmat.multFlyerElt.style.opacity =
+                                Math.max(1 - (pos[0] - flyerPos)/rrmat.fontSize/5, 0)
+                            if rrmat.multFlyerElt.style.opacity < 0.05
+                                rrmat.multFlyerElt.style.opacity = 0
+                                @done()
 
-            @play @positions,
-                speed: speed
-                script:
-                    0:    props: data: @state.positions
-                    1.75: props: data: nextState.positions
+                play = new MathboxAnimation rrmat.positions,
+                    speed: speed
+                    script:
+                        0:    props: data: rrmat.state.positions
+                        1.75: props: data: @_nextState.positions
 
-        step1 = new Step @, "#{stepID}-1", transform1, transition1
-        step2 = new Step @, "#{stepID}-2", transform2, transition2
+                anim.on 'done', () =>
+                    rrmat.state = @_nextState
+                    @stopAll()
+                    resize = rrmat.resize()
+                    @anims.push resize
+                    resize.on 'done', () => @done()
+                    resize.start()
 
-        step1: step1
-        step2: step2
-        chain: new Chain @, stepID, [step1, step2]
+                play.start()
+                anim.start()
+                @anims.push play
+                @anims.push anim
+                super
 
-    repEffect: () =>
-        # Opacity effects for row replacement
-        return unless @doRepEffect
-        {start, clock, speed,
-            targetRow, opacity, nextState, stepID, stepNum} = @doRepEffect
-        return if stepNum > 2
-        elapsed = clock.getTime().clock - start
-        elapsed *= speed
-        row = @matrixElts[targetRow]
-        if stepNum == 1
-            if elapsed < 0.3
-                # Fade in the parentheses
-                @rrepParenLeftElt.style.opacity = elapsed / 0.3
-                @rrepParenRightElt.style.opacity = elapsed / 0.3
-            else if elapsed < 1.5
-                @rrepParenLeftElt.style.opacity = 1
-                @rrepParenRightElt.style.opacity = 1
-            else
-                @doRepEffect.stepNum = 3
-                @onNextFrame 1, () => @newState nextState, stepID
-            return
-        # stepNum == 2
-        if elapsed < 1.5
-            # Decrease opacity of flyer and row as the former covers the latter
-            right = row[@numCols-1].getBoundingClientRect().right
-            for elt in @addFlyerElts
-                pos = elt.getBoundingClientRect().left
-                elt.style.opacity = opacity(pos - right)
-            left = @rrepParenLeftElt.getBoundingClientRect().left
-            for elt in row
-                pos = elt.getBoundingClientRect().right
-                elt.style.opacity = opacity(left - pos)
-            return
-        elapsed -= 1.5
-        if elapsed < 0.3
-            for elt in @addFlyerElts
-                elt.style.opacity = 0.5 - elapsed/(2*0.3)
-            for elt in row
-                elt.style.opacity = 0.5 - elapsed/(2*0.3)
-            @rrepParenLeftElt.style.opacity = 1 - elapsed/0.3
-            @rrepParenRightElt.style.opacity = 1 - elapsed/0.3
-            return
-        for elt in @addFlyerElts
-            elt.style.opacity = 0
-        @rrepParenLeftElt.style.opacity = 0
-        @rrepParenRightElt.style.opacity = 0
-        elapsed -= 0.3
-        if elapsed < 0.3
-            for i in [0...@numCols]
-                @state.html[targetRow][i] = nextState.html[targetRow][i]
-            for elt in row
-                elt.style.opacity = elapsed/0.3
-            return
-        @doRepEffect.stepNum = 3
-        @onNextFrame 1, () => @newState nextState, stepID
+            transform: (oldState, computePos=true) ->
+                nextState = oldState.copy()
+                nextState.matrix[rowNum] =
+                    (r * factor for r in nextState.matrix[rowNum])
+                rrmat.htmlMatrix nextState.matrix, nextState.html
+                nextState.styles[flidx][0].opacity = 0
+                rowY = rrmat.state.positions[rowNum][0][1]
+                nextState.positions[flidx][0] =
+                    [-nextState.matWidth*2, rowY, 10]
+                if computePos
+                    return rrmat.computePositions nextState
+                nextState
 
-    rowRep: (stepID, sourceRow, factor, targetRow, opts) ->
-        # Return an animation in two steps
-        # The first step moves the row flyer into place
-        # The second step does the row replacement
+            fastForward: () -> rrmat.computePositions @_nextState
+
+        slide1 = new Slide1 "#{slideID}-1"
+        slide2 = new Slide2 "#{slideID}-2"
+
+        slide1: slide1
+        slide2: slide2
+        chain: new SlideChain slideID, [slide1, slide2]
+
+    rowRep: (slideID, sourceRow, factor, targetRow, opts) ->
+        # Return an animation in two slides
+        # The first slide moves the row flyer into place
+        # The second slide does the row replacement
         speed = opts?.speed or 1.0
         plus = if factor >= 0 then '+' else ''
         texString = katex.renderToString(plus + texFraction(factor) + '\\,\\bigl(')
-        leftParenWidth = @_measureWidth texString, @rrepParenLeftElt
         padding = 7
+        flidx = @numRows + 1
+        lpidx = @numRows + 2
+        rpidx = @numRows + 3
+        rrmat = @
 
-        precomputations = (doRepEffect) =>
-            doRepEffect.start = doRepEffect.clock.getTime().clock
+        class Slide1 extends Slide
+            start: () ->
+                nextState = @_nextState = @transform rrmat.state
+                rrmat.state.html = nextState.html
+                tmpState = nextState.copy()
+                tmpState.styles[lpidx][0].opacity = 0
+                tmpState.styles[rpidx][0].opacity = 0
+                tmpState.installVal 'styles'
+                for elt in [rrmat.rrepParenLeftElt, rrmat.rrepParenRightElt]
+                    # Put these to the right of the reference point
+                    elt.parentElement.style.width = "0px"
+                rrmat.state.positions[flidx]    = rrmat.state.positions[sourceRow]
+                rrmat.state.positions[lpidx][0] = nextState.positions[lpidx][0]
+                rrmat.state.positions[rpidx][0] = nextState.positions[rpidx][0]
 
-        # Opacity effects
-        doRepEffect =
-            clock:     @positions[0].clock
-            targetRow: targetRow
-            speed:     speed
-            opacity:   (right) =>
-                return 0.5 if right < 0
-                Math.max(0.5, Math.min (right/(@fontSize)), 1)
+                play = new MathboxAnimation rrmat.positions,
+                    speed: speed
+                    script:
+                        0.0: props: data: rrmat.state.positions
+                        1.5: props: data: nextState.positions
+                @anims.push play
 
-        transform1 = (oldState) =>
-            nextState = oldState.copy()
-            nextState.html[@numRows+2][0] = texString
-            nextState.html[@numRows+3][0] = katex.renderToString('\\bigr)')
+                anim = new TimedAnimation rrmat.positions[0].clock,
+                    (elapsed) ->
+                        elapsed *= speed
+                        if elapsed < 0.3
+                            # Fade in the parentheses
+                            rrmat.rrepParenLeftElt.style.opacity = elapsed / 0.3
+                            rrmat.rrepParenRightElt.style.opacity = elapsed / 0.3
+                        else if elapsed < 1.5
+                            rrmat.rrepParenLeftElt.style.opacity = 1
+                            rrmat.rrepParenRightElt.style.opacity = 1
+                        else
+                            @done()
+                @anims.push anim
+                anim.on 'done', () =>
+                    rrmat.state = @_nextState
+                    @done()
 
-            # Initialize row replacement factor
-            rowY = nextState.positions[targetRow][0][1]
-            matWidth = nextState.matWidth + padding*2
-            leftParenX = nextState.matWidth/2 + @colSpacing + 10
-            nextState.positions[@numRows+2][0][0] = leftParenX
-            nextState.positions[@numRows+2][0][1] = rowY
-            nextState.positions[@numRows+2][0][2] = 5
-            nextState.positions[@numRows+3][0][0] =
-                leftParenX + leftParenWidth + matWidth
-            nextState.positions[@numRows+3][0][1] = rowY
-            nextState.positions[@numRows+3][0][2] = 5
-            nextState.styles[@numRows+2][0].opacity = 1
-            nextState.styles[@numRows+3][0].opacity = 1
+                play.start()
+                anim.start()
+                super
 
-            # Initialize row flyer
-            offsetX = nextState.matWidth + @colSpacing + 10 + leftParenWidth + padding
-            nextState.styles[@numRows+1]    = deepCopy nextState.styles[sourceRow]
-            nextState.html[@numRows+1]      = deepCopy nextState.html[sourceRow]
-            nextState.positions[@numRows+1] = deepCopy nextState.positions[sourceRow]
-            for i in [0...@numCols]
-                nextState.styles[@numRows+1][i].opacity = 1
-                nextState.positions[@numRows+1][i][0] += offsetX
-                nextState.positions[@numRows+1][i][1] = rowY
-                nextState.positions[@numRows+1][i][2] = 10
+            transform: (oldState) ->
+                nextState = oldState.copy()
+                nextState.html[lpidx][0] = texString
+                nextState.html[rpidx][0] = katex.renderToString('\\bigr)')
 
-            nextState
+                # Initialize row replacement factor
+                leftParenWidth =
+                    rrmat._measureWidth texString, rrmat.rrepParenLeftElt
+                rowY = nextState.positions[targetRow][0][1]
+                matWidth = nextState.matWidth + padding*2
+                leftParenX = nextState.matWidth/2 + rrmat.colSpacing + 10
+                nextState.positions[lpidx][0][0] = leftParenX
+                nextState.positions[lpidx][0][1] = rowY
+                nextState.positions[lpidx][0][2] = 5
+                nextState.positions[rpidx][0][0] =
+                    leftParenX + leftParenWidth + matWidth
+                nextState.positions[rpidx][0][1] = rowY
+                nextState.positions[rpidx][0][2] = 5
+                nextState.styles[lpidx][0].opacity = 1
+                nextState.styles[rpidx][0].opacity = 1
 
-        transition1 = (nextState, stepID) =>
-            @state.html = nextState.html
-            tmpState = nextState.copy()
-            tmpState.styles[@numRows+2][0].opacity = 0
-            tmpState.styles[@numRows+3][0].opacity = 0
-            tmpState.installVal 'styles'
-            for elt in [@rrepParenLeftElt, @rrepParenRightElt]
-                # Put these to the right of the reference point
-                elt.parentElement.style.width = "0px"
-            @state.positions[@numRows+1]    = @state.positions[sourceRow]
-            @state.positions[@numRows+2][0] = nextState.positions[@numRows+2][0]
-            @state.positions[@numRows+3][0] = nextState.positions[@numRows+3][0]
+                # Initialize row flyer
+                offsetX = nextState.matWidth + rrmat.colSpacing +
+                    10 + leftParenWidth + padding
+                nextState.styles[flidx]    = deepCopy nextState.styles[sourceRow]
+                nextState.html[flidx]      = deepCopy nextState.html[sourceRow]
+                nextState.positions[flidx] = deepCopy nextState.positions[sourceRow]
+                for i in [0...rrmat.numCols]
+                    nextState.styles[flidx][i].opacity = 1
+                    nextState.positions[flidx][i][0] += offsetX
+                    nextState.positions[flidx][i][1] = rowY
+                    nextState.positions[flidx][i][2] = 10
 
-            @play @positions,
-                speed: speed
-                script:
-                    0.0: props: data: @state.positions
-                    1.5: props: data: nextState.positions
+                nextState
 
-            @doRepEffect = doRepEffect
-            precomputations @doRepEffect
-            @doRepEffect.nextState = nextState
-            @doRepEffect.stepID    = stepID
-            @doRepEffect.stepNum   = 1
-            @repEffect()
+            fastForward: () -> @_nextState.copy()
 
-        transform2 = (oldState) =>
-            nextState = oldState.copy()
-            for i in [0...@numCols]
-                nextState.matrix[targetRow][i] +=
-                    factor * nextState.matrix[sourceRow][i]
-            @htmlMatrix nextState.matrix, nextState.html
-            offsetX = nextState.matWidth + @colSpacing + 10 + leftParenWidth + padding
-            for i in [0...@numCols]
-                nextState.styles[@numRows+1][i].opacity = 0
-                nextState.positions[@numRows+1][i][0] -= offsetX
-            nextState.positions[@numRows+2][0][0] -= offsetX
-            nextState.positions[@numRows+3][0][0] -= offsetX
-            nextState.styles[@numRows+2][0].opacity = 0
-            nextState.styles[@numRows+3][0].opacity = 0
-            nextState
+        row = @matrixElts[targetRow]
+        opacity = (right) ->
+            return 0.5 if right < 0
+            Math.max(0.5, Math.min (right/(rrmat.fontSize)), 1)
 
-        transition2 = (nextState, stepID) =>
-            @play @positions,
-                speed: speed
-                script:
-                    0.0: props: data: @state.positions
-                    1.5: props: data: nextState.positions
+        class Slide2 extends Slide
+            start: () ->
+                nextState = @_nextState = @transform rrmat.state, false
+                play = new MathboxAnimation rrmat.positions,
+                    speed: speed
+                    script:
+                        0.0: props: data: rrmat.state.positions
+                        1.5: props: data: nextState.positions
+                @anims.push play
 
-            @doRepEffect = doRepEffect
-            precomputations @doRepEffect
-            @doRepEffect.nextState = nextState
-            @doRepEffect.stepID    = stepID
-            @doRepEffect.stepNum   = 2
+                anim = new TimedAnimation rrmat.positions[0].clock,
+                    (elapsed) ->
+                        elapsed *= speed
+                        if elapsed < 1.5
+                            # Decrease opacity of flyer and row as the former
+                            # covers the latter
+                            right = row[rrmat.numCols-1].getBoundingClientRect().right
+                            for elt in rrmat.addFlyerElts
+                                pos = elt.getBoundingClientRect().left
+                                elt.style.opacity = opacity(pos - right)
+                            left = rrmat.rrepParenLeftElt.getBoundingClientRect().left
+                            for elt in row
+                                pos = elt.getBoundingClientRect().right
+                                elt.style.opacity = opacity(left - pos)
+                            return
+                        elapsed -= 1.5
+                        if elapsed < 0.3
+                            # Fade out flyer and matrix row
+                            for elt in rrmat.addFlyerElts
+                                elt.style.opacity = 0.5 - elapsed/(2*0.3)
+                            for elt in row
+                                elt.style.opacity = 0.5 - elapsed/(2*0.3)
+                            rrmat.rrepParenLeftElt.style.opacity = 1 - elapsed/0.3
+                            rrmat.rrepParenRightElt.style.opacity = 1 - elapsed/0.3
+                            return
+                        for elt in rrmat.addFlyerElts
+                            elt.style.opacity = 0
+                        rrmat.rrepParenLeftElt.style.opacity = 0
+                        rrmat.rrepParenRightElt.style.opacity = 0
+                        elapsed -= 0.3
+                        if elapsed < 0.3
+                            # Fade in new matrix row
+                            for i in [0...rrmat.numCols]
+                                rrmat.state.html[targetRow][i] =
+                                    nextState.html[targetRow][i]
+                            for elt in row
+                                elt.style.opacity = elapsed/0.3
+                            return
+                        # All done
+                        for elt in row
+                            elt.style.opacity = 1
+                        @done()
+                @anims.push anim
 
-        step1 = new Step @, "#{stepID}-1", transform1, transition1
-        step2 = new Step @, "#{stepID}-2", transform2, transition2
+                anim.on 'done', () =>
+                    rrmat.state = @_nextState
+                    @stopAll()
+                    resize = rrmat.resize()
+                    @anims.push resize
+                    resize.on 'done', () => @done()
+                    resize.start()
 
-        step1: step1
-        step2: step2
-        chain: new Chain @, stepID, [step1, step2]
+                anim.start()
+                play.start()
+                super
 
-    _onoffAugment: (stepID, isOn, opts) ->
+            transform: (oldState, computePos=true) ->
+                nextState = oldState.copy()
+                for i in [0...rrmat.numCols]
+                    nextState.matrix[targetRow][i] +=
+                        factor * nextState.matrix[sourceRow][i]
+                rrmat.htmlMatrix nextState.matrix, nextState.html
+                leftParenWidth =
+                    rrmat._measureWidth texString, rrmat.rrepParenLeftElt
+                offsetX = nextState.matWidth + rrmat.colSpacing +
+                    10 + leftParenWidth + padding
+                for i in [0...rrmat.numCols]
+                    nextState.styles[flidx][i].opacity = 0
+                    nextState.positions[flidx][i][0] -= offsetX
+                nextState.positions[lpidx][0][0] -= offsetX
+                nextState.positions[rpidx][0][0] -= offsetX
+                nextState.styles[lpidx][0].opacity = 0
+                nextState.styles[rpidx][0].opacity = 0
+                if computePos
+                    return rrmat.computePositions nextState
+                nextState
+
+            fastForward: () -> rrmat.computePositions @_nextState
+
+        slide1 = new Slide1 "#{slideID}-1"
+        slide2 = new Slide2 "#{slideID}-2"
+
+        slide1: slide1
+        slide2: slide2
+        chain: new SlideChain slideID, [slide1, slide2]
+
+    unAugment: (slideID, opts) ->
         speed = opts?.speed or 1.0
+        rrmat = @
 
-        transform = (oldState) =>
-            nextState = oldState.copy()
-            nextState.doAugment = isOn
-            if isOn
-                nextState = @computePositions nextState
-            else
-                diff = @view.get('scale').y
+        class AugSlide extends Slide
+            start: () ->
+                nextState = @_nextState = @transform rrmat.state, false
+                play = new MathboxAnimation rrmat.augment,
+                    speed: speed
+                    script:
+                        0:   props: data: rrmat.state.augment
+                        0.5: props: data: nextState.augment
+                @anims.push play
+                play.on 'done', () =>
+                    rrmat.state = @_nextState
+                    @stopAll()
+                    resize = rrmat.resize()
+                    @anims.push resize
+                    resize.on 'done', () => @done()
+                    resize.start()
+                play.start()
+                super
+
+            transform: (oldState, computePos=true) ->
+                nextState = oldState.copy()
+                nextState.doAugment = false
+                diff = rrmat.view.get('scale').y
                 nextState.augment[0][1] += diff
                 nextState.augment[1][1] += diff
-            return nextState
+                if computePos
+                    return rrmat.computePositions nextState
+                nextState
 
-        transition = (nextState, stepID) =>
-            if isOn
-                # First make room for the augment line
-                @state.doAugment = true
-                @addingAugment = true
-                @resize()
-                @addingAugment = false
-            @play @augment,
-                speed: speed
-                delay: if isOn then 0.2 else 0
-                script:
-                    0:   props: data: @state.augment
-                    0.5: props: data: nextState.augment
-            .on 'play.done', (e) => @newState nextState, stepID
+            fastForward: () -> rrmat.computePositions @_nextState
 
-        new Step @, stepID, transform, transition
+        new AugSlide slideID
 
-    unAugment: (stepID, opts) ->
-        @_onoffAugment stepID, false, opts
-    reAugment: (stepID, opts) ->
-        @_onoffAugment stepID, true, opts
+    reAugment: (slideID, opts) ->
+        speed = opts?.speed or 1.0
+        rrmat = @
 
-    _setStyle: (i, j, trans) ->
-        if trans.duration
-            transition =
-                ("#{p} #{trans.duration}s #{trans.timing}" for p in trans.props)
-                .join(', ')
-        else
-            transition = ""
-        style = transition: transition
-        for prop in trans.props
-            style[prop] = trans[prop]
-        elt = @matrixElts[i][j]
-        for k, v of style
-            elt.style[k] = v
+        class AugSlide extends Slide
+            start: () ->
+                nextState = @_nextState = @transform rrmat.state
+                tmpState = nextState.copy()
+                diff = rrmat.view.get('scale').y
+                tmpState.augment[0][1] += diff
+                tmpState.augment[1][1] += diff
+                resize = rrmat.resize tmpState
+                @anims.push resize
+                play = new MathboxAnimation rrmat.augment,
+                    speed: speed
+                    script:
+                        0:   props: data: tmpState.augment
+                        0.5: props: data: nextState.augment
+                resize.on 'done', () =>
+                    @anims = [play]
+                    play.start()
+                play.on 'done', () =>
+                    @anims = []
+                    rrmat.state = @_nextState
+                    @done()
+                resize.start()
+                super
+
+            transform: (oldState) ->
+                nextState = oldState.copy()
+                nextState.doAugment = true
+                nextState = rrmat.computePositions nextState
+                nextState
+
+            fastForward: () -> @_nextState.copy()
+
+        new AugSlide slideID
+
 
     # 'transitions' is a list of style transitions.  Each transition is an
     # object with the following keys:
@@ -1265,7 +1230,7 @@ class RRMatrix extends AnimState
     #   duration: transition time, in seconds
     #   delay:    delay time, in seconds (default 0)
     #   timing:   easing function (default 'ease')
-    setStyle: (stepID, transitions, opts) ->
+    setStyle: (slideID, transitions, opts) ->
         speed = opts?.speed or 1.0
         # Total time of the effect
         totalTime = 0
@@ -1280,43 +1245,62 @@ class RRMatrix extends AnimState
             trans.props = []
             for prop in @styleKeys
                 trans.props.push prop if trans[prop]?
+        rrmat = @
 
-        transform = (oldState) =>
-            nextState = oldState.copy()
-            # Compute final matrix entry styles
-            for i in [0...@numRows]
-                for j in [0...@numCols]
-                    last = 0.0
-                    style = {}
-                    for trans in transitions
-                        if trans.delay >= last
-                            for ent in trans.entries
-                                if ent[0] == i and ent[1] == j
-                                    for prop in trans.props
-                                        style[prop] = trans[prop]
-                                    last = trans.delay
-                                    break
-                    for k, v of style
-                        nextState.styles[i][j][k] = v
-            nextState
+        _setStyle = (i, j, trans) ->
+            if trans.duration
+                transition =
+                    ("#{p} #{trans.duration}s #{trans.timing}" for p in trans.props)
+                    .join(', ')
+            else
+                transition = ""
+            style = transition: transition
+            for prop in trans.props
+                style[prop] = trans[prop]
+            elt = rrmat.matrixElts[i][j]
+            for k, v of style
+                elt.style[k] = v
 
-        transition = (nextState, stepID) =>
-            for trans in transitions
-                callback = do (trans) => () =>
-                    for entry in trans.entries
-                        @_setStyle entry[0], entry[1], trans
-                    null
-                if trans.delay == 0
-                    # Give colors a chance to reset
-                    @onNextFrame 1, callback
-                else
-                    timer = setTimeout callback, trans.delay*1000
-                    @timers.push timer
-            callback = () =>
-                @newState nextState, stepID
-            timeout = setTimeout callback, totalTime*1000
-            @timers.push timeout
+        class StyleSlide extends Slide
+            start: () ->
+                @_nextState = @transform rrmat.state
+                for trans in transitions
+                    callback = do (trans) => () =>
+                        for entry in trans.entries
+                            _setStyle entry[0], entry[1], trans
+                        null
+                    if trans.delay == 0
+                        # Give colors a chance to reset
+                        rrmat.onNextFrame 1, callback
+                    else
+                        timer = setTimeout callback, trans.delay*1000
+                        rrmat.timers.push timer
+                callback = () =>
+                    rrmat.state = @_nextState
+                    @done
+                timeout = setTimeout callback, totalTime*1000
+                rrmat.timers.push timeout
+                super
 
-        new Step @, stepID, transform, transition
+            transform: (oldState) =>
+                nextState = oldState.copy()
+                # Compute final matrix entry styles
+                for i in [0...rrmat.numRows]
+                    for j in [0...rrmat.numCols]
+                        last = 0.0
+                        style = {}
+                        for trans in transitions
+                            if trans.delay >= last
+                                for ent in trans.entries
+                                    if ent[0] == i and ent[1] == j
+                                        for prop in trans.props
+                                            style[prop] = trans[prop]
+                                        last = trans.delay
+                                        break
+                        for k, v of style
+                            nextState.styles[i][j][k] = v
+                nextState
+
+        new StyleSlide slideID
 
 window.RRMatrix = RRMatrix
