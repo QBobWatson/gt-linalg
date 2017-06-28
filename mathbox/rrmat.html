@@ -452,13 +452,12 @@
         // Calibrate focus distance for units
         mathbox.set('focus', ortho);
 
-        window.rrmat = new RRMatrix(3, 4, {augmentCol: 2, startAugmented: true});
-        rrmat.install(view);
+        window.rrmat = new RRMatrix(3, 4, view, {augmentCol: 2, startAugmented: true});
         rrmat.setMatrix([[0, -7, -4,  2],
                          [2,  4,  6, 12],
                          [3,  1, -1, -2]]);
 
-        var blink = window.blink = function(color, entries, times) {
+        function blink(color, entries, times) {
             if(!times) {times = 2;}
             var arr = [], last, delay = 0;
             for(var i = 0; i < times; ++i) {
@@ -479,156 +478,154 @@
             delete last.color;
             return arr;
         }
+        window.blink = blink;
 
-        if(false) rrmat.onLoaded(function() {
-            window.slideshow =
-                rrmat.slideshow()
+        window.slideshow =
+            rrmat.slideshow()
 
-                     .combine()
-                     .nextCaption()
-                     .setStyle(blink("red", [[1,0],[2,0]]))
-                     .combined()
+                 .combine()
+                 .nextCaption()
+                 .setStyle(blink("red", [[1,0],[2,0]]))
+                 .combined()
 
-                     .combine()
-                     .setStyle({color: "black",
-                                entries: [[2,0]],
-                                duration: 0.2})
-                     .rowSwap(1, 2)
-                     .combined()
+                 .combine()
+                 .setStyle({color: "black",
+                            entries: [[2,0]],
+                            duration: 0.2})
+                 .rowSwap(0, 1)
+                 .combined()
 
-                     .combine()
-                     .setStyle(blink("red", [[0,0]], 1))
-                     .rowMult(1, 1/2)
-                     .combined()
+                 .combine()
+                 .setStyle(blink("red", [[0,0]], 1))
+                 .rowMult(0, 1/2)
+                 .combined()
 
-                     .combine()
-                     .unAugment()
-                     .nextCaption()
-                     .setStyle(blink("blue", [[2,0]], 1))
-                     .combined()
+                 .combine()
+                 .unAugment()
+                 .nextCaption()
+                 .setStyle(blink("blue", [[2,0]], 1))
+                 .combined()
 
-                     .combine()
-                     .nextCaption()
-                     .rowRep(1, -3, 3)
-                     .setStyle({color: "black",
-                                entries: [[2,0]],
-                                duration: 0.2})
-                     .combined()
+                 .combine()
+                 .nextCaption()
+                 .rowRep(0, -3, 2)
+                 .setStyle({color: "black",
+                            entries: [[2,0]],
+                            duration: 0.2})
+                 .combined()
 
-                     .combine()
-                     .setStyle({color: "rgb(200,200,200)",
-                                entries: [[0,0],[0,1],[0,2],[0,3],[1,0],[2,0]],
-                                duration: 0.5})
-                     .nextCaption()
-                     .setStyle(blink("red", [[1,1],[2,1]]))
-                     .combined()
+                 .combine()
+                 .setStyle({color: "rgb(200,200,200)",
+                            entries: [[0,0],[0,1],[0,2],[0,3],[1,0],[2,0]],
+                            duration: 0.5})
+                 .nextCaption()
+                 .setStyle(blink("red", [[1,1],[2,1]]))
+                 .combined()
 
-                     .combine()
-                     .nextCaption()
-                     .setStyle({color: "black",
-                                entries: [[1,1]],
-                                duration: 1})
-                     .nextCaption()
-                     .rowSwap(2, 3)
-                     .combined()
+                 .combine()
+                 .nextCaption()
+                 .setStyle({color: "black",
+                            entries: [[1,1]],
+                            duration: 1})
+                 .nextCaption()
+                 .rowSwap(1, 2)
+                 .combined()
 
-                     .combine()
-                     .nextCaption()
-                     .rowMult(2, -1/5)
-                     .combined()
+                 .combine()
+                 .nextCaption()
+                 .rowMult(1, -1/5)
+                 .combined()
 
-                     .combine()
-                     .nextCaption()
-                     .setStyle(blink("blue", [[2,1]], 1))
-                     .nextCaption()
-                     .rowRep(2, 7, 3)
-                     .setStyle({color: "black",
-                                entries: [[2,1]],
-                                duration: 0.2})
-                     .nextCaption()
-                     .combined()
+                 .combine()
+                 .nextCaption()
+                 .setStyle(blink("blue", [[2,1]], 1))
+                 .nextCaption()
+                 .rowRep(1, 7, 2)
+                 .setStyle({color: "black",
+                            entries: [[2,1]],
+                            duration: 0.2})
+                 .nextCaption()
+                 .combined()
 
-                     .combine()
-                     .setStyle({color: "rgb(200,200,200)",
-                                entries: [[1,1],[1,2],[1,3],[2,1]],
-                                duration: 1})
-                     .nextCaption()
-                     .setStyle(blink("red", [[2,2]]))
-                     .combined()
+                 .combine()
+                 .setStyle({color: "rgb(200,200,200)",
+                            entries: [[1,1],[1,2],[1,3],[2,1]],
+                            duration: 1})
+                 .nextCaption()
+                 .setStyle(blink("red", [[2,2]]))
+                 .combined()
 
-                     .combine()
-                     .nextCaption()
-                     .rowMult(3, 1/10)
-                     .combined()
+                 .combine()
+                 .nextCaption()
+                 .rowMult(2, 1/10)
+                 .combined()
 
-                     .combine()
-                     .nextCaption()
-                     .setStyle([{color: "red",
-                                 entries: [[0,0],[1,1],[2,2]],
-                                 duration: 1},
-                                {color: "black",
-                                 entries: [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3]],
-                                 duration: 1}])
-                     .combined()
+                 .combine()
+                 .nextCaption()
+                 .setStyle([{color: "red",
+                             entries: [[0,0],[1,1],[2,2]],
+                             duration: 1},
+                            {color: "black",
+                             entries: [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3]],
+                             duration: 1}])
+                 .combined()
 
-                     .combine()
-                     .nextCaption()
-                     .setStyle([{color: "black",
-                                 entries: [[0,0],[1,1],[2,2]],
-                                 duration: 1}]
-                         .concat(blink("blue", [[0,1],[0,2],[1,2]], 1)))
-                     .combined()
+                 .combine()
+                 .nextCaption()
+                 .setStyle([{color: "black",
+                             entries: [[0,0],[1,1],[2,2]],
+                             duration: 1}]
+                     .concat(blink("blue", [[0,1],[0,2],[1,2]], 1)))
+                 .combined()
 
-                     .combine()
-                     .nextCaption()
-                     .setStyle(blink("red", [[1,1],[2,2]]))
-                     .combined()
+                 .combine()
+                 .nextCaption()
+                 .setStyle(blink("red", [[1,1],[2,2]]))
+                 .combined()
 
-                     .combine()
-                     .nextCaption()
-                     .setStyle([{color: "black",
-                                 entries: [[0,2], [1,2], [2,2]],
-                                 duration: 1}]
-                         .concat(blink("red", [[1,1]], 1))
-                         .concat(blink("blue", [[0,1]], 1)))
-                     .nextCaption()
-                     .rowRep(2, -2, 1)
-                     .combined()
+                 .combine()
+                 .nextCaption()
+                 .setStyle([{color: "black",
+                             entries: [[0,2], [1,2], [2,2]],
+                             duration: 1}]
+                     .concat(blink("red", [[1,1]], 1))
+                     .concat(blink("blue", [[0,1]], 1)))
+                 .nextCaption()
+                 .rowRep(1, -2, 0)
+                 .combined()
 
-                     .combine()
-                     .nextCaption()
-                     .setStyle([{color: "black",
-                                 entries: [[0,1],[1,1]],
-                                 duration: 1}]
-                         .concat(blink("red", [[2,2]], 1))
-                         .concat(blink("blue", [[0,2],[1,2]], 1)))
-                     .nextCaption()
-                     .rowRep(3, -2, 2, {speed: 2})
-                     .rowRep(3, 1, 1, {speed: 2})
-                     .combined()
+                 .combine()
+                 .nextCaption()
+                 .setStyle([{color: "black",
+                             entries: [[0,1],[1,1]],
+                             duration: 1}]
+                     .concat(blink("red", [[2,2]], 1))
+                     .concat(blink("blue", [[0,2],[1,2]], 1)))
+                 .nextCaption()
+                 .rowRep(2, -2, 1, {speed: 2})
+                 .rowRep(2,  1, 0, {speed: 2})
+                 .combined()
 
-                     .combine()
-                     .nextCaption()
-                     .setStyle([{color: "black",
-                                 entries: [[1,0],[2,0],[2,1],[0,2],[1,2]],
-                                 duration: 1},
-                                {color: "red",
-                                 entries: [[0,0],[1,1]],
-                                 duration: 1}])
-                     .combined()
+                 .combine()
+                 .nextCaption()
+                 .setStyle([{color: "black",
+                             entries: [[1,0],[2,0],[2,1],[0,2],[1,2]],
+                             duration: 1},
+                            {color: "red",
+                             entries: [[0,0],[1,1]],
+                             duration: 1}])
+                 .combined()
 
-                     .combine()
-                     .nextCaption()
-                     .reAugment()
-                     .setStyle({transform: "rotate(360deg)",
-                                entries: [[0,0],[0,1],[0,2],[0,3],
-                                          [1,0],[1,1],[1,2],[1,3],
-                                          [2,0],[2,1],[2,2],[2,3]],
-                                duration: 1.5,
-                                timing: 'linear'})
-                     .combined()
-        });
-
+                 .combine()
+                 .nextCaption()
+                 .reAugment()
+                 .setStyle({transform: "rotate(360deg)",
+                            entries: [[0,0],[0,1],[0,2],[0,3],
+                                      [1,0],[1,1],[1,2],[1,3],
+                                      [2,0],[2,1],[2,2],[2,3]],
+                            duration: 1.5,
+                            timing: 'linear'})
+                 .combined()
     });
 
     </script>
