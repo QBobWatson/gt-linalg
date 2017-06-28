@@ -5,7 +5,6 @@
 # TODO: don't export so many globals
 # TODO: just-in-time width measuring with persistent measuring elements
 # TODO: use CSS animations in setStyle; don't use timers
-# TODO: factor out other generally useful code from RRMatrix
 
 deepCopy = (x) ->
     if x instanceof Array
@@ -143,7 +142,6 @@ class RRMatrix extends Controller
                 props.innerHTML += '<span class="baseline-detect"></span>'
                 return el('span', props)
 
-        @loaded = false
         @timers = []
         @swapLineSamples = 30
 
@@ -153,10 +151,6 @@ class RRMatrix extends Controller
         @addFlyerElts      = []
         @rrepParenLeftElt  = undefined
         @rrepParenRightElt = undefined
-
-        mathbox.three.on 'pre', @frame
-        mathbox.three.on 'post', @frame
-        @clock = mathbox.select('root')[0].clock
 
         ######################################################################
         # Animation state
@@ -261,9 +255,9 @@ class RRMatrix extends Controller
             val: 0
 
         super name, state
-        @install()
+        @createMathbox()
 
-    install: () ->
+    createMathbox: () ->
         @positions = @view.matrix
             data:     @state.positions,
             width:    @numCols
@@ -310,7 +304,7 @@ class RRMatrix extends Controller
         html.set expr: (emit, el, j, i) =>
                 emit(el @domClass, htmlProps[i][j], @state.html[i][j])
 
-        @view.dom
+        dom = @view.dom
             snap:    false
             offset:  [0,0]
             depth:   0
@@ -329,16 +323,16 @@ class RRMatrix extends Controller
             classes:  [@name]
             id:       @_id 'bracket'
             data:     @state.bracket
-        @view.line
+        bracketLeft = @view.line
             color:   "black"
             width:   2
             classes: [@name]
             id:      @_id 'bracketLeft'
             opacity: 0
-        .transform
+        tform = bracketLeft.transform
             scale:   [-1, 1, 1]
             classes: [@name]
-        .line
+        bracketRight = tform.line
             color:   "black"
             width:   2
             classes: [@name]
@@ -391,16 +385,24 @@ class RRMatrix extends Controller
             @rrepParenLeftElt  = document.getElementById(@_id 'rrepParenLeft')
             @rrepParenRightElt = document.getElementById(@_id 'rrepParenRight')
 
-        @onNextFrame 9, () => @resize().start()
+        @onNextFrame 9, () =>
+            resize = @resize()
+            @anims.push resize
+            resize.on 'stopped', () => @state.install()
+            resize.start()
         @onNextFrame 10, () =>
-            new FadeAnimation mathbox.select('#' + @_id('dom')), {0: 0, .3: 1}
-                .start()
-            new FadeAnimation mathbox.select('#' + @_id('bracketLeft')), {0: 0, .3: 1}
-                .start()
-            new FadeAnimation mathbox.select('#' + @_id('bracketRight')), {0: 0, .3: 1}
-                .start()
-            new FadeAnimation mathbox.select('#' + @_id('augmentGeom')), {0: 0, .3: 1}
-                .start()
+            scr = {0: 0, .3: 1}
+            anim1 = new FadeAnimation dom,           scr
+            anim2 = new FadeAnimation bracketLeft,   scr
+            anim3 = new FadeAnimation bracketRight,  scr
+            anim4 = new FadeAnimation @augmentGeom,  scr
+            anim = new SimultAnimations [anim1, anim2, anim3, anim4]
+            @anims.push anim
+            anim.on 'stopped', () =>
+                for elt in [dom, bracketLeft, bracketRight, @augmentGeom]
+                    elt.set 'opacity', 1
+                null
+            anim.start()
             @loaded = true
             @view[0].trigger type: "#{@name}.loaded"
 
@@ -500,29 +502,10 @@ class RRMatrix extends Controller
 
     jumpState: (nextState) =>
         super nextState
+        # TODO: get rid of timers
         # Clear timers
         clearTimeout timer for timer in @timers
         @timers = []
-        # TODO: make this an animation
-        mathbox.select('#' + @_id('dom')).set('opacity', 1)
-        mathbox.select('#' + @_id('bracketLeft')).set('opacity', 1)
-        mathbox.select('#' + @_id('bracketRight')).set('opacity', 1)
-        mathbox.select('#' + @_id('augmentGeom')).set('opacity', 1)
-
-    onNextFrame: (after, callback, stage='post') ->
-        # Execute 'callback' after 'after' frames
-        @nextFrame ?= {}
-        @nextFrame[stage] ?= {}
-        time = mathbox.three.Time.frames + (after-1)
-        @nextFrame[stage][time] ?= []
-        @nextFrame[stage][time].push(callback)
-    frame: (event) =>
-        return unless @nextFrame?[event.type]?
-        frames = mathbox.three.Time.frames
-        for f, callbacks of @nextFrame[event.type]
-            if f < frames
-                delete @nextFrame[event.type][f]
-                callback() for callback in callbacks
 
     htmlMatrix: (matrix, html) =>
         # Render matrix in html
@@ -533,7 +516,11 @@ class RRMatrix extends Controller
     setMatrix: (matrix) ->
         @state.matrix = matrix
         @htmlMatrix @state.matrix, @state.html
-        @resize().start() if @loaded
+        if @loaded
+            resize = @resize()
+            @anims.push resize
+            resize.on 'stopped', () => @state.install()
+            resize.start
 
     alignBaselines: (elts) =>
         # Align baselines with the reference points (javascript hack)
@@ -590,17 +577,6 @@ class RRMatrix extends Controller
 
     slideshow: () -> new RRSlideshow @
 
-    _swapLinePoints: (top, bot, state) ->
-        # Get points for the swap-arrows line
-        samples = @swapLineSamples
-        lineHeight = Math.abs(top - bot)
-        center = (top + bot) / 2
-        points = ([Math.sin(π * i/samples) * @colSpacing * 3 +
-                      state.matWidth/2 + @colSpacing + 2,
-                   Math.cos(π * i/samples) * lineHeight/2 + center] \
-                  for i in [0..samples])
-        return points
-
     rowSwap: (row1, row2, opts) ->
         # Return an animation in two slides.
         # The first slide fades in the swap arrow.
@@ -610,6 +586,17 @@ class RRMatrix extends Controller
         fadeTime = 0.3/speed
         swapTime = 1/speed
         rrmat = @
+
+        _swapLinePoints = (top, bot, state) =>
+            # Get points for the swap-arrows line
+            samples = @swapLineSamples
+            lineHeight = Math.abs(top - bot)
+            center = (top + bot) / 2
+            points = ([Math.sin(π * i/samples) * @colSpacing * 3 +
+                          state.matWidth/2 + @colSpacing + 2,
+                       Math.cos(π * i/samples) * lineHeight/2 + center] \
+                      for i in [0..samples])
+            return points
 
         class Slide1 extends Slide
             start: () ->
@@ -631,7 +618,7 @@ class RRMatrix extends Controller
                 nextState.swapOpacity = 1.0
                 top = nextState.positions[row1][0][1] + rrmat.fontSize/3
                 bot = nextState.positions[row2][0][1] + rrmat.fontSize/3
-                nextState.swapLine = rrmat._swapLinePoints top, bot, nextState
+                nextState.swapLine = _swapLinePoints top, bot, nextState
                 nextState
 
             fastForward: () -> @_nextState.copy()

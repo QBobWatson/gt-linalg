@@ -2,10 +2,13 @@
 
 # Poor man's trigger / callback mix-in
 addEvents = (cls) ->
-    cls.prototype.on = (type, callback) ->
+    cls.prototype.on = (types, callback) ->
+        if not (types instanceof Array)
+            types = [types]
         @_listeners ?= {}
-        @_listeners[type] ?= []
-        @_listeners[type].push callback
+        for type in types
+            @_listeners[type] ?= []
+            @_listeners[type].push callback
         @
     cls.prototype.off = (type, callback) ->
         idx = @_listeners?[type]?.indexOf callback
@@ -65,12 +68,33 @@ class State
 #   2. Running animations and keeping track of them.
 class Controller
     constructor: (@name, @state) ->
-        @animations = []
+        @anims = []
+        @loaded = false
+        mathbox.three.on 'pre', @frame
+        mathbox.three.on 'post', @frame
+        @clock = mathbox.select('root')[0].clock
 
     jumpState: (nextState) ->
-        anim.stop() for anim in @animations.slice()
+        anim.stop() for anim in @anims
+        @anims = []
         @state = nextState.copy()
         @state.install()
+
+    frame: (event) =>
+        return unless @nextFrame?[event.type]?
+        frames = mathbox.three.Time.frames
+        for f, callbacks of @nextFrame[event.type]
+            if f < frames
+                delete @nextFrame[event.type][f]
+                callback() for callback in callbacks
+
+    onNextFrame: (after, callback, stage='post') ->
+        # Execute 'callback' after 'after' frames
+        @nextFrame ?= {}
+        @nextFrame[stage] ?= {}
+        time = mathbox.three.Time.frames + (after-1)
+        @nextFrame[stage][time] ?= []
+        @nextFrame[stage][time].push(callback)
 
 
 # This class represents a single animation.
@@ -84,6 +108,7 @@ class Animation
 
     stop: () ->
         @running = false
+        @trigger type: 'stopped'
         @
 
     done: () ->
@@ -95,8 +120,9 @@ addEvents Animation
 
 
 class NullAnimation extends Animation
-    start: () -> @done()
-    stop: () ->
+    start: () ->
+        super
+        @done()
 
 
 class SimultAnimations extends Animation
@@ -263,12 +289,14 @@ class Slideshow
 
         @prevButton.onclick = () =>
             return if @currentSlideNum == 0 and !@playing
+            return if !@controller.loaded
             if @playing
                 @goToSlide @currentSlideNum
             else
                 @goToSlide @currentSlideNum - 1
         @nextButton.onclick = () =>
             return if @currentSlideNum == @slides.length
+            return if !@controller.loaded
             if @playing
                 @goToSlide @currentSlideNum + 1
             else
@@ -276,6 +304,7 @@ class Slideshow
                 @play()
         @reloadButton.onclick = () =>
             return if @currentSlideNum == 0 and !@playing
+            return if !@controller.loaded
             if @playing
                 @goToSlide @currentSlideNum
             else
