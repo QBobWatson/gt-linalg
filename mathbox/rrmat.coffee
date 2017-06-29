@@ -3,7 +3,6 @@
 # Compile with:
 #    cat animstate.coffee rrmat.coffee | coffee --compile --stdio > rrmat.js
 
-# TODO: Make this interactive!!!  The student can do their own row reduction.
 # TODO: Funny sizes on Safari
 # TODO: just-in-time width measuring with persistent measuring elements
 # TODO: use CSS animations in setStyle; don't use timers
@@ -260,8 +259,9 @@ class RRMatrix extends Controller
             copy:    deepCopy
             install: (rrmat, val) => @augment.set 'data', val
         state.addVal
-            key: 'doAugment'
-            val: startAugmented
+            key:     'doAugment'
+            val:     startAugmented
+            install: (rrmat, val) => @augmentGeom.set 'visible', val
 
         # For slideshows.
         state.addVal
@@ -366,6 +366,7 @@ class RRMatrix extends Controller
             classes: [@name]
             id:      @_id 'augmentGeom'
             opacity: 0
+            visible: @state.doAugment
 
         # Swap-points arrow
         @swapLine = @view.array
@@ -486,7 +487,7 @@ class RRMatrix extends Controller
                 max = Math.max max, width
             colWidths.push max
             state.matWidth += max
-        state.matWidth += 3 * @colSpacing
+        state.matWidth += (@numCols - 1) * @colSpacing
         state.matWidth += @colSpacing/2 if state.doAugment
 
         # Compute entry positions
@@ -1035,6 +1036,7 @@ class RRMatrix extends Controller
                 play.on 'done', () =>
                     rrmat.state = @_nextState
                     @stopAll()
+                    rrmat.state.installVal 'doAugment'
                     resize = rrmat.resize()
                     @anims.push resize
                     resize.on 'done', () => @done()
@@ -1065,6 +1067,7 @@ class RRMatrix extends Controller
             start: () ->
                 nextState = @_nextState = @transform rrmat.state
                 tmpState = nextState.copy()
+                nextState.installVal 'doAugment'
                 diff = rrmat.view.get('scale').y
                 tmpState.augment[0][1] += diff
                 tmpState.augment[1][1] += diff

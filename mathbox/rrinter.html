@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MathBox - Matrix</title>
+  <script src="build/mathbox-bundle.js"></script>
+  <link rel="stylesheet" href="build/mathbox.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
+  <script src="rrmat.js"></script>
+  <link rel="stylesheet" href="rrmat.css">
+  <link rel="stylesheet" href="slideshow.css">
+  <script src="domready.js"></script>
+  <script src="expreval.js"></script>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+</head>
+<body>
+    <div style="width: 800px; height: 300px; margin-top: 0px; border: 0px solid black; margin-left: auto; margin-right: auto;" id="mathbox"></div>
+    <div class="centered">
+        <div class="slideshow rrmat">
+            <div class="controls">
+                <span class="control-button">
+                    <span class="icon-arrow prev-button inactive">
+                        <span></span><span></span>
+                    </span>
+                </span>
+                <span class="control-button">
+                    <span class="icon-repeat reload-button inactive">
+                        <span></span><span></span><span></span><span></span>
+                    </span>
+                </span>
+                <span class="control-button" id="next-button">
+                    <span class="icon-arrow next-button">
+                        <span></span><span></span></span>
+                </span><br>
+                <span class="pages"></span>
+            </div><br>
+            <div class="row-ops">
+                <span class="ops-label row-swap">
+                    <button>Swap rows</button>
+                </span><span class="ops-control row-swap">
+                    <span class="row-selector"></span> and
+                    <span class="row-selector"></span>
+                </span>
+                <span class="ops-label row-mult">
+                    <button>Multiply row</button>
+                </span><span class="ops-control row-mult">
+                    <span class="row-selector"></span> by
+                    <input type="text">
+                </span>
+                <span class="ops-label row-rrep">
+                    <button>Row replacement</button>
+                </span><span class="ops-control row-rrep">
+                    <span>Add</span><input type="text"> times
+                    <span class="row-selector"></span>
+                    to
+                    <span class="row-selector"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    "use strict";
+
+    // Parse query string
+    var urlParams;
+    (window.onpopstate = function () {
+        var match,
+            pl     = /\+/g,  // Regex for replacing addition symbol with a space
+            search = /([^&=]+)=?([^&]*)/g,
+            decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+            query  = window.location.search.substring(1);
+
+        urlParams = {};
+        while (match = search.exec(query))
+            urlParams[decode(match[1])] = decode(match[2]);
+    })();
+
+    // Get matrix entries
+    var ev = exprEval.Parser.evaluate;
+    var mat = [];
+    var rows = urlParams.mat.split(';');
+    var maxRow = 0;
+    var i, j;
+    for(i = 0; i < rows.length; ++i) {
+        var entries = rows[i].split(',');
+        var row = [];
+        for(j = 0; j < entries.length; ++j) {
+            try { row.push(ev(entries[j])); }
+            catch(err) { row.push(0); }
+            maxRow = Math.max(maxRow, j+1);
+        }
+        mat.push(row);
+    }
+    // Make sure the rows all have the same size
+    for(i = 0; i < mat.length; ++i) {
+        for(j = mat[i].length; j < maxRow; ++j)
+            mat[i].push(0);
+    }
+
+    DomReady.ready(function() {
+        var i, j;
+
+        // TODO:
+        //  * Detect when in (reduced) row echelon form
+        //  * History matrices
+        //  * History in URI
+        //  * Link from rrmat.html
+        //  * Beautify
+
+        //////////////////////////////////////////////////////////////////////
+        // Setup row reduction controls
+
+        // Add row selectors
+        var selectors = document.querySelectorAll(".slideshow .row-selector");
+        for(i = 0; i < selectors.length; ++i) {
+            var selector = selectors[i];
+            var select = (function(selector) {
+                return function(ev) {
+                    var elt = ev.target;
+                    for(var i = 0; i < selector.children.length; ++i) {
+                        var child = selector.children[i];
+                        if(elt == child)
+                            child.classList.add('selected');
+                        else
+                            child.classList.remove('selected');
+                    }
+                }
+            })(selector);
+
+            // Enable mutually exclusive selection
+            for(j = 0; j < mat.length; ++j) {
+                var elt = document.createElement('span');
+                elt.className = 'row-button';
+                elt.innerText = (j+1).toString();
+                elt.onclick = select;
+                selector.appendChild(elt);
+            }
+        }
+
+        // Return the selected row
+        function getRow(selector) {
+            for(var i = 0; i < selector.children.length; ++i) {
+                if(selector.children[i].classList.contains('selected'))
+                    return i;
+            }
+            return null;
+        }
+
+        // Find UI elements
+        var swapBtn    = document.querySelector(".ops-label.row-swap button");
+        var multBtn    = document.querySelector(".ops-label.row-mult button");
+        var rrepBtn    = document.querySelector(".ops-label.row-rrep button");
+        var swapRow1, swapRow2;
+        [swapRow1, swapRow2] = document.querySelectorAll(
+            ".ops-control.row-swap .row-selector");
+        var swapRow2   = document.querySelector(
+            ".ops-control.row-swap .row-selector:nth-child(2)");
+        var multRow    = document.querySelector(".ops-control.row-mult .row-selector");
+        var multFactor = document.querySelector(".ops-control.row-mult input");
+        var rrepFactor = document.querySelector(".ops-control.row-rrep input");
+        var rrepRow1, rrepRow2;
+        [rrepRow1, rrepRow2] = document.querySelectorAll(
+            ".ops-control.row-rrep .row-selector");
+
+        function addSlide(slide) {
+            if(slideshow.playing)
+                slideshow.nextSlide();
+            var current = slideshow.currentSlideNum;
+            var len = slideshow.slides.length;
+            for(var i = current + 1; i <= len; ++i)
+                slideshow.removeSlide(current);
+            slideshow.addSlide(slide);
+            slideshow.nextSlide();
+        }
+
+        swapBtn.onclick = function() {
+            var row1 = getRow(swapRow1);
+            var row2 = getRow(swapRow2);
+            if(row1 == null || row2 == null || row1 == row2)
+                return;
+            addSlide(rrmat.rowSwap(row1, row2).chain);
+        }
+
+        multBtn.onclick = function() {
+            var row = getRow(multRow);
+            var factor = parseFloat(multFactor.value);
+            if(row == null || isNaN(factor))
+                return;
+            addSlide(rrmat.rowMult(row, factor).chain);
+        }
+
+        rrepBtn.onclick = function () {
+            var row1 = getRow(rrepRow1);
+            var row2 = getRow(rrepRow2);
+            var factor = parseFloat(rrepFactor.value);
+            if(row1 == null || row2 == null || row1 == row2 || isNaN(factor))
+                return;
+            addSlide(rrmat.rowRep(row1, factor, row2).chain);
+        }
+
+
+        //////////////////////////////////////////////////////////////////////
+        // Setup Mathbox
+        var ortho = 10000;
+        var width = 800;
+        var height = 300;
+
+        var mathbox = window.mathbox = mathBox({
+            element: document.getElementById("mathbox"),
+            size: { width: width, height: height },
+            plugins: ['core'],
+            mathbox: {
+                warmup: 2,
+                splash: true,
+                inspect: false,
+            },
+            splash: {fancy: true, color: "blue"},
+            camera: {
+                near: ortho / 4,
+                far: ortho * 4,
+                lookAt: -width/4,
+            },
+        });
+        if (mathbox.fallback) throw "WebGL not supported"
+
+        var three = mathbox.three;
+        three.renderer.setClearColor(new THREE.Color(0xFFFFFF), 1.0);
+
+        // Place camera
+        var camera =
+            mathbox
+                .camera({
+                    proxy: false,
+                    position: [0, 0, ortho],
+                    fov: Math.atan(height/ortho) * 360 / π,
+                    lookAt: [width/4,0,0],
+                });
+
+        // 2D cartesian
+        var view =
+            mathbox
+                .cartesian({
+                    range: [[-width/2, width/2], [-height/2, height/2], [-50,50]],
+                    scale: [width, height, 100],
+                });
+
+        // Calibrate focus distance for units
+        mathbox.set('focus', ortho);
+
+        window.rrmat = new RRMatrix(mat.length, mat[0].length, view, mathbox);
+        rrmat.setMatrix(mat);
+
+        window.slideshow = rrmat.slideshow();
+    });
+
+    </script>
+</body>
+</html>

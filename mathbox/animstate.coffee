@@ -369,34 +369,41 @@ class Slideshow
         @pageCounter  = document.querySelector "#{cls} .pages"
         @captions  = document.querySelectorAll "#{cls} .slides > .slide"
 
-        @prevButton.onclick = () =>
-            return if @currentSlideNum == 0 and !@playing
-            return if !@controller.loaded
-            if @playing
-                @goToSlide @currentSlideNum
-            else
-                @goToSlide @currentSlideNum - 1
-        @nextButton.onclick = () =>
-            return if @currentSlideNum == @slides.length
-            return if !@controller.loaded
-            if @playing
-                @goToSlide @currentSlideNum + 1
-            else
-                # Just-in-time update the initial state
-                @states[0] = @controller.state.copy() if @currentSlideNum == 0
-                @play()
-        @reloadButton.onclick = () =>
-            return if @currentSlideNum == 0 and !@playing
-            return if !@controller.loaded
-            if @playing
-                @goToSlide @currentSlideNum
-            else
-                @goToSlide @currentSlideNum - 1
-            @play()
+        @prevButton.onclick   = () => @prevSlide()
+        @nextButton.onclick   = () => @nextSlide()
+        @reloadButton.onclick = () => @reloadSlide()
 
         @updateUI()
 
+    prevSlide: () ->
+        return if @currentSlideNum == 0 and !@playing
+        return if !@controller.loaded
+        if @playing
+            @goToSlide @currentSlideNum
+        else
+            @goToSlide @currentSlideNum - 1
+
+    nextSlide: () ->
+        return if @currentSlideNum == @slides.length
+        return if !@controller.loaded
+        if @playing
+            @goToSlide @currentSlideNum + 1
+        else
+            # Just-in-time update the initial state
+            @states[0] = @controller.state.copy() if @currentSlideNum == 0
+            @play()
+
+    reloadSlide: () ->
+        return if @currentSlideNum == 0 and !@playing
+        return if !@controller.loaded
+        if @playing
+            @goToSlide @currentSlideNum
+        else
+            @goToSlide @currentSlideNum - 1
+        @play()
+
     updateCaption: (j) ->
+        return unless @captions.length
         @captions[j].classList.remove 'inactive'
         for caption, i in @captions
             if i != j and !@captions[i].classList.contains 'inactive'
@@ -453,6 +460,16 @@ class Slideshow
             @updateCaption @controller.state.captionNum
         @updateUI()
         @
+
+    removeSlide: (index) ->
+        [slide] = @slides.splice index, 1
+        @states.splice index+1, 1
+        if @currentSlideNum == index
+            newSlide = if index <= @slides.length then index else index-1
+            @goToSlide newSlide
+        else if @currentSlideNum > index
+            @currentSlideNum--
+            @updateUI()
 
     # Combine several slides into a chain.  End with combined()
     combine: () ->
