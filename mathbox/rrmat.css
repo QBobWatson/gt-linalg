@@ -18,3 +18,44 @@
 .rrep-factor {
   color: blue;
 }
+
+div.history {
+    border-top: 1px solid #aaaaaa;
+    font-size: 20px;
+    padding: 20px;
+    text-align: left;
+}
+
+div.history div {
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+div.history div.arrow {
+  background-color: #d1dbe0;
+  height: 26px;
+  line-height: 26px;
+  position: relative;
+  color: black;
+  font-size: 15px;
+  display: inline-block;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  padding-left:  1em;
+  padding-right: 1em;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+div.history div.arrow:after {
+  color: #d1dbe0;
+  border-left: 13px solid;
+  border-top: 13px solid transparent;
+  border-bottom: 13px solid transparent;
+  display: inline-block;
+  content: '';
+  position: absolute;
+  right: -13px;
+}
+

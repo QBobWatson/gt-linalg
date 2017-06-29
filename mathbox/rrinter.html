@@ -90,6 +90,8 @@
                 </span>
             </div>
         </div>
+        <div class="history">
+        </div>
     </div>
 
     <script>
@@ -110,7 +112,10 @@
     })();
 
     // Get matrix entries
-    var ev = exprEval.Parser.evaluate;
+    function ev(expr) {
+        try { return exprEval.Parser.evaluate(expr); }
+        catch(err) { return 0; }
+    }
     var mat = [];
     var rows = urlParams.mat.split(';');
     var maxRow = 0;
@@ -119,8 +124,7 @@
         var entries = rows[i].split(',');
         var row = [];
         for(j = 0; j < entries.length; ++j) {
-            try { row.push(ev(entries[j])); }
-            catch(err) { row.push(0); }
+            row.push(ev(entries[j]));
             maxRow = Math.max(maxRow, j+1);
         }
         mat.push(row);
@@ -135,13 +139,13 @@
         var i, j;
 
         // TODO:
+        //  * Enter new matrix
         //  * Detect when in (reduced) row echelon form
-        //  * History matrices
         //  * History in URI
         //  * Link from rrmat.html
 
         //////////////////////////////////////////////////////////////////////
-        // Setup row reduction controls
+        // Row reduction controls
 
         // Add row selectors
         var selectors = document.querySelectorAll(".slideshow .row-selector");
@@ -200,9 +204,17 @@
                 slideshow.nextSlide();
             var current = slideshow.currentSlideNum;
             var len = slideshow.slides.length;
-            for(var i = current + 1; i <= len; ++i)
+            for(var i = current + 1; i <= len; ++i) {
                 slideshow.removeSlide(current);
+                popMatrix();
+            }
             slideshow.addSlide(slide);
+            var state = slideshow.states[current];
+            function callback() {
+                addMatrix(slide.transform(state).matrix, slide.texOp, slide.shortOp);
+                slide.off(['done', 'stopped'], callback);
+            };
+            slide.on(['done', 'stopped'], callback);
             slideshow.nextSlide();
         }
 
@@ -216,8 +228,8 @@
 
         multBtn.onclick = function() {
             var row = getRow(multRow);
-            var factor = parseFloat(multFactor.value);
-            if(row == null || isNaN(factor))
+            var factor = ev(multFactor.value);
+            if(row == null || isNaN(factor) || factor == 0)
                 return;
             addSlide(rrmat.rowMult(row, factor).chain);
         }
@@ -225,7 +237,7 @@
         rrepBtn.onclick = function () {
             var row1 = getRow(rrepRow1);
             var row2 = getRow(rrepRow2);
-            var factor = parseFloat(rrepFactor.value);
+            var factor = ev(rrepFactor.value);
             if(row1 == null || row2 == null || row1 == row2 || isNaN(factor))
                 return;
             addSlide(rrmat.rowRep(row1, factor, row2).chain);
@@ -233,7 +245,48 @@
 
 
         //////////////////////////////////////////////////////////////////////
+        // Matrix history
+
+        // Render a matrix to an element
+        function renderMatrix(mat, elt) {
+            var i, j;
+            var latex = '\\begin{bmatrix}';
+            var rows = [];
+            for(i = 0; i < mat.length; ++i) {
+                var entries = [];
+                for(j = 0; j < mat[0].length; ++j)
+                    entries.push(RRMatrix.texFraction(mat[i][j]));
+                rows.push(entries.join('&'));
+            }
+            latex += rows.join('\\\\');
+            latex += '\\end{bmatrix}';
+            katex.render(latex, elt);
+        }
+
+        var historyElt = document.querySelector("div.history");
+
+        function addMatrix(mat, texOp, shortOp) {
+            var child = document.createElement('div');
+            historyElt.appendChild(child);
+            //historyElt.appendChild(document.createTextNode(" "));
+            renderMatrix(mat, child);
+            if(texOp) {
+                var arrow = document.createElement('div');
+                arrow.className = 'arrow';
+                katex.render(texOp, arrow);
+                child.insertBefore(arrow, child.firstChild);
+            }
+        }
+
+        function popMatrix() {
+            historyElt.lastChild.remove();
+        }
+
+        addMatrix(mat);
+
+        //////////////////////////////////////////////////////////////////////
         // Setup Mathbox
+
         var ortho = 10000;
         var width = 800;
         var height = 300;

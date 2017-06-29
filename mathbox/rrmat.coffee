@@ -6,6 +6,7 @@
 # TODO: Funny sizes on Safari
 # TODO: just-in-time width measuring with persistent measuring elements
 # TODO: use CSS animations in setStyle; don't use timers
+# TODO: default speed
 
 deepCopy = (x) ->
     if x instanceof Array
@@ -703,10 +704,15 @@ class RRMatrix extends Controller
 
         slide1 = new Slide1()
         slide2 = new Slide2()
+        chain = new SlideChain [slide1, slide2]
+
+        # Suitable for use in a URL
+        chain.shortOp = "s#{row1}:#{row2}"
+        chain.texOp = "R_{#{row1+1}} \\leftrightarrow R_{#{row2+1}}"
 
         slide1: slide1
         slide2: slide2
-        chain: new SlideChain [slide1, slide2]
+        chain: chain
 
     rowMult: (rowNum, factor, opts) ->
         # Return an animation in two slides
@@ -788,13 +794,17 @@ class RRMatrix extends Controller
                         0:    props: data: rrmat.state.positions
                         1.75: props: data: @_nextState.positions
 
-                anim.on 'done', () =>
+                callback = () =>
                     rrmat.state = @_nextState
                     @stopAll()
+                    rrmat.multFlyerElt.style.opacity = 0
                     resize = rrmat.resize()
                     @anims.push resize
                     resize.on 'done', () => @done()
                     resize.start()
+
+                anim.on 'done', callback
+                play.on 'done', callback
 
                 play.start()
                 anim.start()
@@ -819,10 +829,15 @@ class RRMatrix extends Controller
 
         slide1 = new Slide1()
         slide2 = new Slide2()
+        chain  = new SlideChain [slide1, slide2]
+
+        # Suitable for use in a URL
+        chain.shortOp = "m#{rowNum}:#{factor}"
+        chain.texOp = "R_{#{rowNum+1}} = " + texFraction(factor) + "R_{#{rowNum+1}}"
 
         slide1: slide1
         slide2: slide2
-        chain: new SlideChain [slide1, slide2]
+        chain: chain
 
     rowRep: (sourceRow, factor, targetRow, opts) ->
         # Return an animation in two slides
@@ -1014,10 +1029,17 @@ class RRMatrix extends Controller
 
         slide1 = new Slide1()
         slide2 = new Slide2()
+        chain = new SlideChain [slide1, slide2]
+
+        # Suitable for use in a URL
+        plus = if factor < 0 then '' else '+'
+        chain.shortOp = "r#{sourceRow}:#{factor}:#{targetRow}"
+        chain.texOp = "R_{#{targetRow+1}} = R_{#{targetRow+1}} #{plus}" +
+            texFraction(factor) + "R_{#{sourceRow+1}}"
 
         slide1: slide1
         slide2: slide2
-        chain: new SlideChain [slide1, slide2]
+        chain: chain
 
     unAugment: (opts) ->
         # Remove the augmentation line.
@@ -1183,4 +1205,5 @@ class RRMatrix extends Controller
 
         new StyleSlide()
 
+RRMatrix.texFraction = texFraction
 window.RRMatrix = RRMatrix

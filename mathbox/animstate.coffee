@@ -46,10 +46,13 @@ addEvents = (cls) ->
             @_listeners[type] ?= []
             @_listeners[type].push callback
         @
-    cls.prototype.off = (type, callback) ->
-        idx = @_listeners?[type]?.indexOf callback
-        if idx? and idx >= 0
-            @_listeners[type].splice idx, 1
+    cls.prototype.off = (types, callback) ->
+        if not (types instanceof Array)
+            types = [types]
+        for type in types
+            idx = @_listeners?[type]?.indexOf callback
+            if idx? and idx >= 0
+                @_listeners[type].splice idx, 1
         @
     cls.prototype.trigger = (event) ->
         type = event.type
