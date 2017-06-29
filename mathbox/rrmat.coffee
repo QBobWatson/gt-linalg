@@ -2,7 +2,8 @@
 
 # TODO: Make this interactive!!!  The student can do their own row reduction.
 # TODO: Funny sizes on Safari
-# TODO: don't export so many globals
+# TODO: Don't export so many globals
+# TODO: rrmat.css
 # TODO: just-in-time width measuring with persistent measuring elements
 # TODO: use CSS animations in setStyle; don't use timers
 
@@ -31,6 +32,7 @@ arraysEqual = (a, b) ->
     else
         return a == b
 
+# Make a two-dimensional array, with entries initialized to 'val'
 makeArray = (rows, cols, val) ->
     ret = []
     for i in [0...rows]
@@ -40,8 +42,8 @@ makeArray = (rows, cols, val) ->
         ret.push row
     ret
 
-# Find best fractional approximation by walking the Stern-Brocot tree
-# https://stackoverflow.com/a/5128558
+# Find best fractional approximation to a decimal by walking the Stern-Brocot
+# tree.  See https://stackoverflow.com/a/5128558
 approxFraction = (x, error) ->
     n = Math.floor x
     x -= n
@@ -73,7 +75,7 @@ approxFraction = (x, error) ->
         else
             return [n * middle_d + middle_n, middle_d]
 
-# Turn decimals that want to be fractions into fractions
+# Turn decimals that want to be fractions into fractions rendered in LaTeX.
 texFraction = (x, error=0.00001) ->
     [num, den] = approxFraction x, error
     if den == 1
@@ -83,6 +85,9 @@ texFraction = (x, error=0.00001) ->
     return "#{minus}\\frac{#{num}}{#{den}}"
 
 
+# Slideshow that can attach slides from RRMatrix.
+# For slides with multiple steps (rowSwap, rowMult, rowRep), the steps can be
+# added individually or chained, depending on opts.keys.
 class RRSlideshow extends Slideshow
     rowSwap: (row1, row2, opts={}) ->
         keys = opts.keys ? ['chain']
@@ -117,16 +122,20 @@ class RRSlideshow extends Slideshow
         @
 
 
-# This class animates a row reduction sequnce on a matrix.
+# This class controls an animated matrix of numbers.  It produces slides that
+# animate the steps of a row reduction sequence.
 class RRMatrix extends Controller
 
+    # These are the style properties that can be transformed using setStyle().
+    # Add new keys here to control those too.
     styleKeys: ['color', 'opacity', 'transform']
 
-    constructor: (@numRows, @numCols, @view, opts) ->
+    constructor: (@numRows, @numCols, @view, mathbox, opts) ->
         {name, @fontSize, @rowHeight, @rowSpacing,
             @colSpacing, @augmentCol, startAugmented} = opts or {}
 
-        name       ?= "rrmat"
+        # General options
+        name        ?= "rrmat"
         @fontSize   ?= 20
         @rowHeight  ?= @fontSize * 1.2
         @rowSpacing ?= @fontSize
@@ -142,10 +151,12 @@ class RRMatrix extends Controller
                 props.innerHTML += '<span class="baseline-detect"></span>'
                 return el('span', props)
 
+        # Running timers (TODO: get rid of these)
         @timers = []
+        # Number of points to use when drawing the row swap line with arrows
         @swapLineSamples = 30
 
-        # Gets set on install
+        # These get to the bound DOM elements when they are created.
         @matrixElts        = []
         @multFlyerElt      = undefined
         @addFlyerElts      = []
@@ -153,16 +164,17 @@ class RRMatrix extends Controller
         @rrepParenRightElt = undefined
 
         ######################################################################
-        # Animation state
+        # Animation State
         ######################################################################
 
         state = new State @
 
-        # All text element positions go here.  This is because pixel position
-        # readback is slow (gl.readPixels is slow).  They are stored as follows:
+        # All text element positions go here.  They are not stored separately
+        # because pixel position readback is slow (gl.readPixels is slow).  They
+        # are stored as follows:
         #          0  matrix
-        #        ...    entry
-        #  numRows-1    positions
+        #        ...    ...entry
+        #  numRows-1    ...positions
         #    numRows  multiplication flyer position (first entry)
         #  numRows+1  row replacement row positions
         #  numRows+2  left row replacement paren (first entry)
@@ -175,8 +187,8 @@ class RRMatrix extends Controller
         state.positions[@numRows+i][j] = [1000,-1000,0] \
             for i in [0..3] for j in [0...@numCols]
 
-        # The matrix width.  Not manipulated directly; just saved from the
-        # calculation of the positions.
+        # The matrix width.  Not manipulated directly; just saved in
+        # @computePositions().
         state.addVal key: 'matWidth', val: 0.0
 
         # The html content of the text elements.  Organized as in 'positions'
@@ -215,20 +227,21 @@ class RRMatrix extends Controller
             for j in [0...@numCols]
                 state.styles[@numRows+i][j].opacity = 0
 
-        # The matrix entries
+        # The matrix entries.  Not directly displayed on-screen; use
+        # @htmlMatrix() to update @state.html.
         state.addVal
             key:  'matrix'
             val:  makeArray @numRows, @rumCols, 0
             copy: deepCopy
 
-        # The matrix bracket line
+        # The matrix bracket line.
         state.addVal
             key:     'bracket'
             val:     makeArray 4, 2, 0
             copy:    deepCopy
             install: (rrmat, val) => @bracket.set 'data', val
 
-        # The arrow for row swaps
+        # The arrow for row swaps.
         state.addVal
             key:     'swapLine'
             val:     makeArray @swapLineSamples+1, 2, 0
@@ -239,7 +252,7 @@ class RRMatrix extends Controller
             val:     0.0
             install: (rrmat, val) => @swapLineGeom.set 'opacity', val
 
-        # The augmentation line
+        # The augmentation line.
         state.addVal
             key:     'augment'
             val:     [[0,0],[0,0]]
@@ -249,15 +262,17 @@ class RRMatrix extends Controller
             key: 'doAugment'
             val: startAugmented
 
-        # For slideshows
+        # For slideshows.
         state.addVal
             key: 'captionNum'
             val: 0
 
-        super name, state
+        super name, state, mathbox
         @createMathbox()
 
     createMathbox: () ->
+        # Create the on-screen elements.
+
         @positions = @view.matrix
             data:     @state.positions,
             width:    @numCols
@@ -265,12 +280,6 @@ class RRMatrix extends Controller
             channels: 3
             classes:  [@name]
             id:       @_id 'positions'
-
-        html = @view.html
-            width:   @numCols
-            height:  @numRows+4
-            classes: [@name]
-            live:    true
 
         @htmlMatrix @state.matrix, @state.html
 
@@ -299,9 +308,13 @@ class RRMatrix extends Controller
                 htmlProps[i][j] =
                     style: display: 'none'
                     className: @name
-        @test = htmlProps
 
-        html.set expr: (emit, el, j, i) =>
+        html = @view.html
+            width:   @numCols
+            height:  @numRows+4
+            classes: [@name]
+            live:    true
+            expr:    (emit, el, j, i) =>
                 emit(el @domClass, htmlProps[i][j], @state.html[i][j])
 
         dom = @view.dom
@@ -370,8 +383,8 @@ class RRMatrix extends Controller
             id:      @_id 'swapLineGeom'
             classes: [@name]
 
-        # This gets run once after the DOM elements are added
         @onNextFrame 1, () =>
+            # This gets run after the DOM elements are added
             @alignBaselines()
             # Save all bound elements
             for i in [0...@numRows]
@@ -385,11 +398,14 @@ class RRMatrix extends Controller
             @rrepParenLeftElt  = document.getElementById(@_id 'rrepParenLeft')
             @rrepParenRightElt = document.getElementById(@_id 'rrepParenRight')
 
+        # Give browsers (Safari...) time to warm up its element renderer before
+        # using @_measureWidth.
         @onNextFrame 9, () =>
             resize = @resize()
             @anims.push resize
             resize.on 'stopped', () => @state.install()
             resize.start()
+        # Fade in the matrix
         @onNextFrame 10, () =>
             scr = {0: 0, .3: 1}
             anim1 = new FadeAnimation dom,           scr
@@ -406,19 +422,24 @@ class RRMatrix extends Controller
             @loaded = true
             @view[0].trigger type: "#{@name}.loaded"
 
-        # This runs on DOM element updates
+        # This runs on DOM element updates to re-align baselines.
         observer = new MutationObserver (mutations) =>
             for mutation in mutations
-                continue unless mutation.target.classList.contains 'bound-entry'
                 @alignBaselines mutation.target.getElementsByClassName 'baseline-detect'
-        observer.observe document.getElementById('mathbox'),
-               childList:     true
-               subtree:       true
+        @onNextFrame 1, () =>
+            for elt in document.querySelectorAll ".#{@name}.bound-entry"
+                observer.observe elt,
+                    childList: true
+                    subtree:   true
+                    characterData: true
         @
 
+    # Unique ID for element names
     _id: (element) => "#{@name}-#{element}"
 
     _measureWidth: (html, fromElement) ->
+        # Measure the width of rendered 'html', using the font properties in
+        # fromElement.
         if !@measurer?
             div = document.createElement 'div'
             div.style.position  = 'absolute'
@@ -450,7 +471,7 @@ class RRMatrix extends Controller
 
     computePositions: (state) =>
         # Compute positions of DOM elements, brackets, augment line, matrix
-        # width
+        # width, as they would be in 'state'
         state = state.copy()
         state.matWidth = 0
         colWidths = []
@@ -490,6 +511,7 @@ class RRMatrix extends Controller
         y1 = @matHeight / 2
         y2 = -(@matHeight + @fontSize) / 2
         state.bracket = [[x1,y1], [x2,y1], [x2,y2], [x1,y2]]
+
         # Augment path
         state.augment[0][1] = y1
         state.augment[1][1] = y2
@@ -503,12 +525,11 @@ class RRMatrix extends Controller
     jumpState: (nextState) =>
         super nextState
         # TODO: get rid of timers
-        # Clear timers
         clearTimeout timer for timer in @timers
         @timers = []
 
     htmlMatrix: (matrix, html) =>
-        # Render matrix in html
+        # Render katex html from matrix entries
         html[i][j] = katex.renderToString(texFraction matrix[i][j]) \
             for i in [0...@numRows] for j in [0...@numCols]
         html
@@ -523,7 +544,9 @@ class RRMatrix extends Controller
             resize.start
 
     alignBaselines: (elts) =>
-        # Align baselines with the reference points (javascript hack)
+        # Align baselines with the reference points of the DOM elements
+        # (javascript hack).  There seems to be no CSS way to set the absolute
+        # position of a DOM element using its base line.
         elts ?= document.querySelectorAll ".#{@name} > .baseline-detect"
         for elt in elts
             elt.parentElement.style.top = -elt.offsetTop + "px"
@@ -534,7 +557,7 @@ class RRMatrix extends Controller
 
     resize: (nextState) =>
         # Return an animation that resizes the matrix from its current size to
-        # its natural size
+        # its natural size.  This updates @state immediately.
         nextState ?= @computePositions @state
         @state.matWidth = nextState.matWidth
 
@@ -573,7 +596,7 @@ class RRMatrix extends Controller
             @state.augment = nextState.copyVal 'augment'
 
         return new SimultAnimations anims if anims.length
-        return new NullAnimation
+        return new NullAnimation()
 
     slideshow: () -> new RRSlideshow @
 
@@ -687,6 +710,7 @@ class RRMatrix extends Controller
         # Return an animation in two slides
         # The first slide fades in the multiplication flyer
         # The second slide does the multiplication
+
         speed = opts?.speed or 1.0
         flidx = @numRows
         rrmat = @
@@ -802,6 +826,7 @@ class RRMatrix extends Controller
         # Return an animation in two slides
         # The first slide moves the row flyer into place
         # The second slide does the row replacement
+
         speed = opts?.speed or 1.0
         plus = if factor >= 0 then '+' else ''
         texString = katex.renderToString(plus + texFraction(factor) + '\\,\\bigl(')
@@ -993,6 +1018,7 @@ class RRMatrix extends Controller
         chain: new SlideChain [slide1, slide2]
 
     unAugment: (opts) ->
+        # Remove the augmentation line.
         speed = opts?.speed or 1.0
         rrmat = @
 
@@ -1030,6 +1056,7 @@ class RRMatrix extends Controller
         new AugSlide()
 
     reAugment: (opts) ->
+        # Add the augmentation line back.
         speed = opts?.speed or 1.0
         rrmat = @
 
@@ -1067,11 +1094,12 @@ class RRMatrix extends Controller
 
         new AugSlide()
 
-
+    # Set the style of a number of matrix elements.
+    #
     # 'transitions' is a list of style transitions.  Each transition is an
     # object with the following keys:
-    #   color, opacity, transformation, ...: specify the new property value
-    #   entries:  a list of [i,j] matrix entries
+    #   color, opacity, transformation, ...: specify the new property values
+    #   entries:  a list of [i,j] matrix entries to apply the values.
     #   duration: transition time, in seconds
     #   delay:    delay time, in seconds (default 0)
     #   timing:   easing function (default 'ease')

@@ -452,7 +452,8 @@
         // Calibrate focus distance for units
         mathbox.set('focus', ortho);
 
-        window.rrmat = new RRMatrix(3, 4, view, {augmentCol: 2, startAugmented: true});
+        window.rrmat = new RRMatrix(3, 4, view, mathbox,
+                                    {augmentCol: 2, startAugmented: true});
         rrmat.setMatrix([[0, -7, -4,  2],
                          [2,  4,  6, 12],
                          [3,  1, -1, -2]]);

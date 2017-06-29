@@ -1,6 +1,42 @@
 "use strict"
 
-# Poor man's trigger / callback mix-in
+# This module contains utility classes for animations and slideshows.  The goal
+# is to keep track of the state of all on-screen objects, being able to jump
+# from one state to another (fast-forward and rewinding of slides) and to
+# transition smoothly between states.
+#
+# This module contains the following primary classes:
+#
+# + Controller:
+#   This class controls the current state of what's being displayed.  It is
+#   responsible for keeping track of the on-screen objects, and updating them
+#   with a new State.  It contains some utility functions to this end.
+#
+# + State:
+#   This class contains the state for a Controller.  It is an Object, with
+#   values associated to keys.  Each value knows how to duplicate itself and how
+#   to install itself into (i.e. apply its value to) the associated object of a
+#   Controller.
+#
+# + Animation:
+#   An Animation object can start() itself, can be stop()ped, and knows when it
+#   is done().  It emits a signal on stop() and on done().  The animation
+#   controls the on-screen objects in a Controller.
+#
+# + Slide:
+#   A Slide is an Animation that takes a Controller from one State to another.
+#   It typically runs several child Animation instances.  A Slide knows how to
+#   transform() a State to the State after the slide would have run.  It can
+#   also fastForward() while running to return the state after the slide would
+#   have been done().  This allows for just-in-time calculations (e.g. widths of
+#   elements) when fast-forwarded in a Slideshow.
+#
+# + Slideshow:
+#   A Slideshow controls playing and navigating a sequence of Slide instances.
+#   It hooks into controls defined in the DOM.  It implements a convenient API
+#   for defining a sequence of slides.
+
+# Poor man's listen / trigger mix-in
 addEvents = (cls) ->
     cls.prototype.on = (types, callback) ->
         if not (types instanceof Array)
@@ -27,62 +63,78 @@ addEvents = (cls) ->
         @
 
 
-# Class that holds state.  Knows how to copy and install itself.
+# Class that holds the state of the on-screen elements of a Controller.  It
+# knows how to copy itself and how to install itself, i.e. how to apply itself
+# to the associated on-screen elements.
 class State
-    constructor: (@anim) ->
+    constructor: (@controller) ->
         @keys        = []
         @_copyVal    = {}
         @_installVal = {}
 
     addVal: (opts) ->
+        # Add a key/value pair to the State
         key     = opts.key
         val     = opts.val     ? undefined
         copy    = opts.copy    ? (val)  -> val
-        install = opts.install ? (anim, val) ->
+        install = opts.install ? (controller, val) ->
         @keys.push key
         @[key] = val
         @_copyVal[key] = copy
         @_installVal[key] = install
 
     copy: () ->
-        ret = new State(@anim)
+        ret = new State(@controller)
         for k in @keys
             ret.addVal
                 key:     k
+                val:     @_copyVal[k] @[k]
                 copy:    @_copyVal[k]
                 install: @_installVal[k]
-            ret[k] = @_copyVal[k] @[k]
         ret
-
-    install: () ->
-        @installVal k for k in @keys
 
     copyVal: (key) ->
         @_copyVal[key] @[key]
     installVal: (key) ->
-        @_installVal[key] @anim, @[key]
+        @_installVal[key] @controller, @[key]
+    install: () ->
+        @installVal k for k in @keys
 
 
-# Class for stateful animations.  This class is responsible for two things:
-#   1. Instantly setting to a given state.
-#   2. Running animations and keeping track of them.
+# Class that controls the state of the on-screen elements.  It contains the
+# instance variable @state, a State instance which it must define in the
+# constructor.  It must also create or locate the associated on-screen elemnets
+# when instantiated.
+#
+# This class can jumpState() to an arbitrary new State.  This generally just
+# involves install()ing the new State.  At this point, @state accurately
+# reflects the state of the on-screen elements.  When an Animation or a Slide is
+# playing, the @state object is in transition; its relation to the on-screen
+# elements is undefined.  When a Slide is done(), the @state again reflects the
+# state of the on-screen elements.
+
 class Controller
-    constructor: (@name, @state) ->
+    constructor: (@name, @state, @mathbox) ->
+        # Array of currently playing animations.  This exists for convenience;
+        # anything here will be stop()ped when jumpState() is called.
         @anims = []
+        # This should be set to 'true' when a Slideshow can start playing.
         @loaded = false
-        mathbox.three.on 'pre', @frame
-        mathbox.three.on 'post', @frame
-        @clock = mathbox.select('root')[0].clock
+        @mathbox.three.on 'pre', @frame
+        @mathbox.three.on 'post', @frame
+        @clock = @mathbox.select('root')[0].clock
 
     jumpState: (nextState) ->
+        # Apply a nextState to the on-screen elements.
         anim.stop() for anim in @anims
         @anims = []
         @state = nextState.copy()
         @state.install()
 
     frame: (event) =>
+        # Exeucute a callback after a specified number of frames.
         return unless @nextFrame?[event.type]?
-        frames = mathbox.three.Time.frames
+        frames = @mathbox.three.Time.frames
         for f, callbacks of @nextFrame[event.type]
             if f < frames
                 delete @nextFrame[event.type][f]
@@ -92,12 +144,16 @@ class Controller
         # Execute 'callback' after 'after' frames
         @nextFrame ?= {}
         @nextFrame[stage] ?= {}
-        time = mathbox.three.Time.frames + (after-1)
+        time = @mathbox.three.Time.frames + (after-1)
         @nextFrame[stage][time] ?= []
         @nextFrame[stage][time].push(callback)
 
 
-# This class represents a single animation.
+# This class represents a single animation.  It knows how to start()
+# itself, how to stop() itself, and when it is done().  It knows when it is
+# @running, and it emits signals when start()ed and stop()ped.
+#
+# The stop() method should do nothing if @running is false.
 class Animation
     constructor: () ->
         @running = false
@@ -107,6 +163,7 @@ class Animation
         @
 
     stop: () ->
+        return unless @running
         @running = false
         @trigger type: 'stopped'
         @
@@ -119,20 +176,23 @@ class Animation
 addEvents Animation
 
 
+# Do nothing
 class NullAnimation extends Animation
     start: () ->
         super
         @done()
 
 
+# Run several simultaneous child Animations.  start() starts them all; stop()
+# stops them all; done() runs when the last one finishes.
 class SimultAnimations extends Animation
     constructor: (@children) ->
+        for child in @children
+            child.on 'done', () => @done()
         super
 
     start: () ->
-        for child in @children
-            child.on 'done', () => @done()
-            child.start()
+        child.start() for child in @children
         super
 
     stop: () ->
@@ -145,7 +205,10 @@ class SimultAnimations extends Animation
         super
 
 
-# Animation that is controlled by a Mathbox clock
+# Animation that is controlled by a Mathbox clock.  The @animate instance
+# variable is a function that is run on every clock tick.  It is passed the
+# elapsed time since it was started, and 'this' is bound to the TimedAnimation
+# object.  This function is responsible for calling done().
 class TimedAnimation extends Animation
     constructor: (@clock, @animate) ->
         super
@@ -166,11 +229,11 @@ class TimedAnimation extends Animation
         @clock.off 'clock.tick', @callback
         super
 
-# Thin wrapper around mathbox.play
+# Thin wrapper around the mathbox API's play() method
 class MathboxAnimation extends Animation
     constructor: (element, @opts) ->
-        @opts.target  = element
-        @opts.to     ?= Math.max.apply null, (k for k of @opts.script)
+        @opts.target = element
+        @opts.to ?= Math.max.apply null, (k for k of @opts.script)
         super
     start: () ->
         @_play = @opts.target.play @opts
@@ -185,6 +248,7 @@ class MathboxAnimation extends Animation
         super
 
 
+# A MathboxAnimation that only controls the 'opacity' property
 class FadeAnimation extends MathboxAnimation
     constructor: (element, script) ->
         # Fade an element in or out
@@ -195,12 +259,27 @@ class FadeAnimation extends MathboxAnimation
         super element, opts
 
 
-
-# This class represents a single animation slide.  It is responsible for
-# computing the state when finished.
+# This class represents an animation slide.  Its main purpose is to transition a
+# Controller from one well-defined State to another.  It contains the following
+# methods, in addition to those in Animation:
+#
+# + transform:
+#   This takes a State, and returns what the new State would be after this Slide
+#   is done()
+#
+# + fastForward:
+#   This is only applied when the Slide is @running.  It also returns what the
+#   new State would be after the Slide is done().  This allows for just-in-time
+#   computations, for instance of DOM element widths.
+#
+# The start() method starts with the current state of the Controller.  Note that
+# start() and/or done() should actually update the Controller's state.  It is up
+# to the caller to previde a reference to the Controller (e.g. in a closure).
+#
 class Slide extends Animation
     constructor: () ->
-        # Currently running animations
+        # Array of currently running animations.  This is here for convenience;
+        # all animations in this list will be stop()ped on stop() and done().
         @anims = []
         super
 
@@ -216,15 +295,12 @@ class Slide extends Animation
         @stopAll()
         super
 
-    # Reimplement these in subclasses / instances.
-    #   'transform' transforms the state from an old state
-    #   'fastForward' is only called when @running is true.  It yields the state
-    #       after play() finishes.
+    # Reimplement these in subclasses.
     transform: (oldState) -> oldState.copy()
     fastForward: () ->
 
 
-# Chain several slides together
+# Chain several slides together as one slide.
 class SlideChain extends Slide
     constructor: (@slides) ->
         @slideNum = -1
@@ -253,6 +329,7 @@ class SlideChain extends Slide
         @
 
     stop: () =>
+        return unless @slideNum >= 0
         slide = @slides[@slideNum]
         slide.stop()
         @slideNum = -1
@@ -267,12 +344,17 @@ class SlideChain extends Slide
         nextState
 
 
-# This class controls playing slides.  Note that the slideshow's slide zero is the
-# initial state; it doesn't correspond to a Slide.  This means that @states[i] is
-# the animation state before @slides[i] runs, and @states[@slides.length] is the
-# final state.  The @currentSlideNum is an index into @states[] for the current
-# state, or, if an animation is playing, the previous state.  Setting the slide
-# with @goToSlide will jump straight to that slide.
+# This class controls playing and navigating a sequence of Slide instances.  It
+# hooks into predefined DOM elements for user controls (prev, next, reload) and
+# caption desplay.
+#
+# Note that the Slideshow's state zero is the initial State; it doesn't
+# correspond to a Slide.  This means that @states[i] is the Controller's State
+# before @slides[i] runs, and @states[@slides.length] is the final State.  The
+# @currentSlideNum is an index into @states[] for the current State, or, if a
+# Slide is playing, the State before it started.  Setting the slide with
+# @goToSlide will jump straight to that State.
+#
 class Slideshow
     constructor: (@controller) ->
         @slides = []
@@ -300,6 +382,7 @@ class Slideshow
             if @playing
                 @goToSlide @currentSlideNum + 1
             else
+                # Just-in-time update the initial state
                 @states[0] = @controller.state.copy() if @currentSlideNum == 0
                 @play()
         @reloadButton.onclick = () =>
@@ -313,7 +396,7 @@ class Slideshow
 
         @updateUI()
 
-    updateCaptions: (j) ->
+    updateCaption: (j) ->
         @captions[j].classList.remove 'inactive'
         for caption, i in @captions
             if i != j and !@captions[i].classList.contains 'inactive'
@@ -340,7 +423,6 @@ class Slideshow
 
     goToSlide: (slideNum) =>
         return if slideNum < 0 or slideNum > @slides.length
-        #console.log "Active slide: #{slideNum}"
         oldSlideNum = @currentSlideNum
         @currentSlideNum = slideNum
         if @currentSlideNum > oldSlideNum and @playing
@@ -350,9 +432,12 @@ class Slideshow
         else if @playing
             @slides[oldSlideNum].stop()
         @controller.jumpState @states[@currentSlideNum]
-        @updateCaptions @states[@currentSlideNum].captionNum
+        @updateCaption @states[@currentSlideNum].captionNum
         @playing = false
         @updateUI oldSlideNum
+
+    ###################################################################
+    # API for creating the slideshow
 
     addSlide: (slide) ->
         if @combining?
@@ -365,7 +450,7 @@ class Slideshow
             @controller.state.captionNum++
             @states[@currentSlideNum] = @controller.state.copy()
             @updateUI @currentSlideNum - 1
-            @updateCaptions @controller.state.captionNum
+            @updateCaption @controller.state.captionNum
         @updateUI()
         @
 
@@ -379,11 +464,12 @@ class Slideshow
         @addSlide (new SlideChain combining)
         @
 
+    # This class updates the caption without playing any animations.
     class CaptionSlide extends Slide
         constructor: (@sshow) -> super
         start: () ->
             @_nextState = @transform @sshow.controller.state
-            @sshow.updateCaptions @_nextState.captionNum
+            @sshow.updateCaption @_nextState.captionNum
             @sshow.controller.state = @_nextState
             super
             @done()
@@ -393,6 +479,7 @@ class Slideshow
             nextState
         fastForward: () -> @_nextState.copy()
 
+    # Increment the caption number without playing any animations
     nextCaption: (opts) ->
         @addSlide(new CaptionSlide @)
 
