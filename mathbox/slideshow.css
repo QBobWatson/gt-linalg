@@ -1,0 +1,194 @@
+/* Styles used by slideshow controls */
+
+.centered {
+  text-align: center;
+}
+
+.slideshow {
+  width: 800px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  display: inline-block;
+  font-family: sans-serif;
+}
+
+.slideshow .controls {
+  display: inline-block;
+}
+
+.slideshow .control-button {
+  border: none;
+  display: inline-block;
+  padding: 8px 0px;
+  vertical-align: middle;
+  position: relative;
+  width: 56px;
+  height: 56px;
+}
+
+.slideshow .pages {
+  display: inline-block;
+  text-align: center;
+  width: 100px;
+  color: #99afbb;
+}
+
+.slideshow .slides {
+  display: inline-block;
+  float: right;
+  width: 70%;
+  text-align: left;
+  color: #353535;
+  height: 20px;  /* just needs to be > 0 */
+}
+
+.slideshow .slides > .slide {
+  height: 0px;
+}
+
+.slideshow .slides > .slide.inactive {
+  visibility: hidden;
+}
+
+/* CSS arrows swiped from acko.net */
+.slideshow .icon-arrow {
+  width: 48px;
+  height: 56px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  text-align: left;
+}
+
+.slideshow .icon-arrow.inactive {
+  cursor: default;
+}
+
+.slideshow .icon-arrow.prev-button {
+  transform: scale(-1,1);
+}
+
+.slideshow .icon-arrow span {
+  float: left;
+}
+
+.slideshow .icon-arrow span:nth-child(1) {
+  width: 25px;
+  height: 32px;
+  margin-right: -1px;
+  margin-top: 12px;
+  background: #99afbb;
+}
+
+.slideshow .icon-arrow:hover span:nth-child(1) {
+  background: #57c4ff;
+}
+
+.slideshow .icon-arrow.inactive span:nth-child(1) {
+  background: #d1dbe0;
+}
+
+.slideshow .icon-arrow span:nth-child(2) {
+  border-left: 24px solid #99afbb;
+  border-bottom: 28px solid transparent;
+  border-top: 28px solid transparent;
+}
+
+.slideshow .icon-arrow:hover span:nth-child(2) {
+  border-left: 24px solid #57c4ff;
+}
+
+.slideshow .icon-arrow.inactive span:nth-child(2) {
+  border-left: 24px solid #d1dbe0;
+}
+
+.slideshow .icon-repeat {
+  width: 48px;
+  height: 56px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.slideshow .icon-repeat.inactive {
+  cursor: default;
+}
+
+.slideshow .icon-repeat span {
+  position: absolute;
+}
+
+.slideshow .icon-repeat span:nth-child(1) {
+  top: 10px;
+  left: 10px;
+  width: 21px;
+  height: 46px;
+  border-left: 0px solid #99afbb;
+  border-top: 11px solid #99afbb;
+  border-top-left-radius: 24px;
+  border-bottom-left-radius: 24px;
+}
+
+.slideshow .icon-repeat:hover span:nth-child(1) {
+  border-left: 0px solid #57c4ff;
+  border-top: 11px solid #57c4ff;
+}
+
+.slideshow .icon-repeat.inactive span:nth-child(1) {
+  border-left: 0px solid #d1dbe0;
+  border-top: 11px solid #d1dbe0;
+}
+
+.slideshow .icon-repeat span:nth-child(2) {
+  bottom: 10px;
+  right: 10px;
+  width: 21px;
+  height: 46px;
+  border-right: 0px solid #99afbb;
+  border-bottom: 11px solid #99afbb;
+  border-bottom-right-radius: 24px;
+  border-top-right-radius: 24px;
+}
+
+.slideshow .icon-repeat:hover span:nth-child(2) {
+  border-right: 0px solid #57c4ff;
+  border-bottom: 11px solid #57c4ff;
+}
+
+.slideshow .icon-repeat.inactive span:nth-child(2) {
+  border-right: 0px solid #d1dbe0;
+  border-bottom: 11px solid #d1dbe0;
+}
+
+.slideshow .icon-repeat span:nth-child(3) {
+  border-left: 13px solid #99afbb;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+  left: 30px;
+  top: 5px;
+}
+
+.slideshow .icon-repeat:hover span:nth-child(3) {
+  border-left: 13px solid #57c4ff;
+}
+
+.slideshow .icon-repeat.inactive span:nth-child(3) {
+  border-left: 13px solid #d1dbe0;
+}
+
+.slideshow .icon-repeat span:nth-child(4) {
+  border-right: 13px solid #99afbb;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+  right: 30px;
+  bottom: 5px;
+}
+
+.slideshow .icon-repeat:hover span:nth-child(4) {
+  border-right: 13px solid #57c4ff;
+}
+
+.slideshow .icon-repeat.inactive span:nth-child(4) {
+  border-right: 13px solid #d1dbe0;
+}
+

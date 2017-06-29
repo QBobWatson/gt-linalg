@@ -1,0 +1,20 @@
+/* Styles used by rrmat.coffee */
+
+.baseline-detect {
+  display: inline-block;
+  height:  0px;
+}
+
+.bound-entry {
+  position: relative;
+  top:      0px;
+  display:  inline-block;
+}
+
+.mult-flyer {
+  color: blue;
+}
+
+.rrep-factor {
+  color: blue;
+}

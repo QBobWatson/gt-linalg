@@ -1,9 +1,10 @@
 "use strict"
 
+# Compile with:
+#    cat animstate.coffee rrmat.coffee | coffee --compile --stdio > rrmat.js
+
 # TODO: Make this interactive!!!  The student can do their own row reduction.
 # TODO: Funny sizes on Safari
-# TODO: Don't export so many globals
-# TODO: rrmat.css
 # TODO: just-in-time width measuring with persistent measuring elements
 # TODO: use CSS animations in setStyle; don't use timers
 

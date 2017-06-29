@@ -484,14 +484,3 @@ class Slideshow
         @addSlide(new CaptionSlide @)
 
 
-window.State = State
-window.Controller = Controller
-window.Animation = Animation
-window.SimultAnimations = SimultAnimations
-window.NullAnimation = NullAnimation
-window.TimedAnimation = TimedAnimation
-window.MathboxAnimation = MathboxAnimation
-window.FadeAnimation = FadeAnimation
-window.Slide = Slide
-window.SlideChain = SlideChain
-window.Slideshow = Slideshow
