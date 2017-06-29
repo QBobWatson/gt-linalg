@@ -151,6 +151,8 @@ class Controller
         @nextFrame[stage][time] ?= []
         @nextFrame[stage][time].push(callback)
 
+addEvents Controller
+
 
 # This class represents a single animation.  It knows how to start()
 # itself, how to stop() itself, and when it is done().  It knows when it is
@@ -435,16 +437,24 @@ class Slideshow
         return if slideNum < 0 or slideNum > @slides.length
         oldSlideNum = @currentSlideNum
         @currentSlideNum = slideNum
-        if @currentSlideNum > oldSlideNum and @playing
-            @states[oldSlideNum+1] = @slides[oldSlideNum].fastForward()
-            @states[oldSlideNum+1].captionNum++
+        if @currentSlideNum > oldSlideNum
+            if @playing
+                @states[oldSlideNum+1] = @slides[oldSlideNum].fastForward()
+                @states[oldSlideNum+1].captionNum++
+                start = oldSlideNum+1
+            else
+                start = oldSlideNum
             @slides[oldSlideNum].stop()
+            for i in [start...@currentSlideNum]
+                @states[i+1] = @slides[i].transform @states[i]
         else if @playing
             @slides[oldSlideNum].stop()
         @controller.jumpState @states[@currentSlideNum]
         @updateCaption @states[@currentSlideNum].captionNum
         @playing = false
         @updateUI oldSlideNum
+        if oldSlideNum != @currentSlideNum
+            @trigger type: 'slide.new', stateNum: @currentSlideNum
 
     ###################################################################
     # API for creating the slideshow
@@ -461,6 +471,7 @@ class Slideshow
             @states[@currentSlideNum] = @controller.state.copy()
             @updateUI @currentSlideNum - 1
             @updateCaption @controller.state.captionNum
+            @trigger type: 'slide.new', stateNum: @currentSlideNum
         @updateUI()
         @
 
@@ -473,6 +484,15 @@ class Slideshow
         else if @currentSlideNum > index
             @currentSlideNum--
             @updateUI()
+
+    reset: () ->
+        # Remove all slides
+        @nextSlide() if @playing
+        @slides = []
+        @states = [@controller.state.copy()]
+        @currentSlideNum = 0
+        @playing = false
+        @updateUI()
 
     # Combine several slides into a chain.  End with combined()
     combine: () ->
@@ -504,3 +524,4 @@ class Slideshow
         @addSlide(new CaptionSlide @)
 
 
+addEvents Slideshow

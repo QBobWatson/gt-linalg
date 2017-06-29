@@ -99,6 +99,7 @@
 
     // Parse query string
     var urlParams;
+    var urlCallback = function() {};
     (window.onpopstate = function () {
         var match,
             pl     = /\+/g,  // Regex for replacing addition symbol with a space
@@ -109,31 +110,218 @@
         urlParams = {};
         while (match = search.exec(query))
             urlParams[decode(match[1])] = decode(match[2]);
+        urlCallback();
     })();
 
-    // Get matrix entries
+
     function ev(expr) {
         try { return exprEval.Parser.evaluate(expr); }
         catch(err) { return 0; }
     }
-    var mat = [];
-    var rows = urlParams.mat.split(';');
-    var maxRow = 0;
-    var i, j;
-    for(i = 0; i < rows.length; ++i) {
-        var entries = rows[i].split(',');
-        var row = [];
-        for(j = 0; j < entries.length; ++j) {
-            row.push(ev(entries[j]));
-            maxRow = Math.max(maxRow, j+1);
+
+    // Parse a matrix from a string in the URI
+    function parseMatrix(str) {
+        var rows = str.split(';');
+        var maxRow = 0;
+        var i, j;
+        var mat = [];
+        for(i = 0; i < rows.length; ++i) {
+            var entries = rows[i].split(',');
+            var row = [];
+            for(j = 0; j < entries.length; ++j) {
+                // Encode "/" as ":" for brevity
+                row.push(ev(entries[j].replace(":","/")));
+                maxRow = Math.max(maxRow, j+1);
+            }
+            mat.push(row);
         }
-        mat.push(row);
+        // Make sure the rows all have the same size
+        for(i = 0; i < mat.length; ++i) {
+            for(j = mat[i].length; j < maxRow; ++j)
+                mat[i].push(0);
+        }
+        return mat;
     }
-    // Make sure the rows all have the same size
-    for(i = 0; i < mat.length; ++i) {
-        for(j = mat[i].length; j < maxRow; ++j)
-            mat[i].push(0);
+
+    // Create a slide from a shortOp
+    function parseSlide(str) {
+        var type = str[0];
+        var vals = str.slice(1).split(":");
+        if(str[0] == "s") {
+            var row1, row2;
+            [row1, row2] = vals;
+            row1 = parseInt(row1);
+            row2 = parseInt(row2);
+            return rrmat.rowSwap(row1, row2).chain;
+        }
+        if(str[0] == "m") {
+            var rowNum, num, den;
+            [rowNum, num, den] = vals;
+            rowNum = parseInt(rowNum);
+            num = parseInt(num);
+            if(!den) den = 1;
+            return rrmat.rowMult(rowNum, num/den).chain;
+        }
+        if(str[0] == "r") {
+            var sourceRow, num, den, targetRow;
+            [sourceRow, num, den, targetRow] = vals;
+            if(!targetRow) {
+                targetRow = den;
+                den = 1;
+            }
+            sourceRow = parseInt(sourceRow);
+            num = parseInt(num);
+            den = parseInt(den);
+            targetRow = parseInt(targetRow);
+            return rrmat.rowRep(sourceRow, num/den, targetRow).chain;
+        }
     }
+
+
+    // Update the state of the slideshow from urlParams
+    function updateState() {
+        var mat = parseMatrix(urlParams.mat);
+
+        if(!RRMatrix.arraysEqual(mat, slideshow.states[0].matrix)) {
+            // Start over
+            rrmat.setMatrix(mat);
+            slideshow.reset();
+            historyElt.innerHTML = "";
+            addMatrix(mat);
+            return;
+        }
+
+        var cur = parseInt(urlParams.cur);
+        if(isNaN(cur)) cur = 0;
+
+        // Delete row operations starting from the first one that doesn't match.
+        var i;
+        var ops = urlParams.ops;
+        var same = true;
+        if(ops) ops = ops.split(",");
+        else ops = [];
+        var state = slideshow.states[0];
+        for(i = 0; i < ops.length; ++i) {
+            if(same) {
+                if(i >= slideshow.slides.length ||
+                   ops[i] != slideshow.slides[i].shortOp) {
+                    same = false;
+                    clearAfter(i);
+                }
+            }
+            var slide;
+            if(same)
+                slide = slideshow.slides[i];
+            else {
+                slide = parseSlide(ops[i]);
+                slideshow.addSlide(slide);
+            }
+            state = slide.transform(state);
+            if(!same)
+                addMatrix(state.matrix, slide.texOp);
+        }
+        if(same && ops.length < slideshow.slides.length)
+            clearAfter(ops.length);
+
+        updatingState = true;
+        slideshow.goToSlide(cur);
+        updatingState = false;
+    }
+
+    // URL-encode the current state
+    function encodeState() {
+        var i, j;
+        var mat = slideshow.states[0].matrix;
+        var rows = [];
+        // Encode matrix
+        for(i = 0; i < mat.length; ++i) {
+            var row = [];
+            for(j = 0; j < mat[0].length; ++j) {
+                var entry = mat[i][j];
+                var num, den;
+                [num, den] = RRMatrix.approxFraction(entry);
+                row.push(num + (den != 1 ? ":" + den : ""));
+            }
+            rows.push(row.join(","));
+        }
+        var encMat = rows.join(";");
+        // Encode operations
+        var ops = [];
+        for(i = 0; i < slideshow.slides.length; ++i)
+            ops.push(slideshow.slides[i].shortOp);
+        var encOps = ops.join(",");
+        return "mat=" + encMat + "&ops=" + encOps +
+               "&cur=" + slideshow.currentSlideNum;
+    }
+
+    // Return the selected row
+    function getRow(selector) {
+        for(var i = 0; i < selector.children.length; ++i) {
+            if(selector.children[i].classList.contains('selected'))
+                return i;
+        }
+        return null;
+    }
+
+    //////////////////////////////////////////////////////////////////////
+    // Matrix history
+
+    // Render a matrix to an element
+    function renderMatrix(mat, elt) {
+        var i, j;
+        var latex = '\\begin{bmatrix}';
+        var rows = [];
+        for(i = 0; i < mat.length; ++i) {
+            var entries = [];
+            for(j = 0; j < mat[0].length; ++j)
+                entries.push(RRMatrix.texFraction(mat[i][j]));
+            rows.push(entries.join('&'));
+        }
+        latex += rows.join('\\\\');
+        latex += '\\end{bmatrix}';
+        katex.render(latex, elt);
+    }
+
+    var historyElt = document.querySelector("div.history");
+
+    function addMatrix(mat, texOp) {
+        var child = document.createElement('div');
+        historyElt.appendChild(child);
+        renderMatrix(mat, child);
+        if(texOp) {
+            var arrow = document.createElement('div');
+            arrow.className = 'arrow';
+            katex.render(texOp, arrow);
+            child.insertBefore(arrow, child.firstChild);
+        }
+    }
+
+    function popMatrix() {
+        historyElt.lastChild.remove();
+    }
+
+    function clearAfter(slideNum) {
+        var len = slideshow.slides.length;
+        for(var i = slideNum + 1; i <= len; ++i) {
+            slideshow.removeSlide(slideNum);
+            popMatrix();
+        }
+    }
+
+    function addSlide(slide) {
+        if(slideshow.playing)
+            slideshow.nextSlide();
+        var current = slideshow.currentSlideNum;
+        clearAfter(current);
+        slideshow.addSlide(slide);
+        slideshow.nextSlide();
+    }
+
+    // Global variables
+    var mat = parseMatrix(urlParams.mat);
+    var pageTitle = document.querySelector('title').innerText;
+    var updatingState = false;
+
 
     DomReady.ready(function() {
         var i, j;
@@ -141,7 +329,6 @@
         // TODO:
         //  * Enter new matrix
         //  * Detect when in (reduced) row echelon form
-        //  * History in URI
         //  * Link from rrmat.html
 
         //////////////////////////////////////////////////////////////////////
@@ -174,15 +361,6 @@
             }
         }
 
-        // Return the selected row
-        function getRow(selector) {
-            for(var i = 0; i < selector.children.length; ++i) {
-                if(selector.children[i].classList.contains('selected'))
-                    return i;
-            }
-            return null;
-        }
-
         // Find UI elements
         var swapBtn    = document.querySelector(".ops-label.row-swap button");
         var multBtn    = document.querySelector(".ops-label.row-mult button");
@@ -190,33 +368,12 @@
         var swapRow1, swapRow2;
         [swapRow1, swapRow2] = document.querySelectorAll(
             ".ops-control.row-swap .row-selector");
-        var swapRow2   = document.querySelector(
-            ".ops-control.row-swap .row-selector:nth-child(2)");
         var multRow    = document.querySelector(".ops-control.row-mult .row-selector");
         var multFactor = document.querySelector(".ops-control.row-mult input");
         var rrepFactor = document.querySelector(".ops-control.row-rrep input");
         var rrepRow1, rrepRow2;
         [rrepRow1, rrepRow2] = document.querySelectorAll(
             ".ops-control.row-rrep .row-selector");
-
-        function addSlide(slide) {
-            if(slideshow.playing)
-                slideshow.nextSlide();
-            var current = slideshow.currentSlideNum;
-            var len = slideshow.slides.length;
-            for(var i = current + 1; i <= len; ++i) {
-                slideshow.removeSlide(current);
-                popMatrix();
-            }
-            slideshow.addSlide(slide);
-            var state = slideshow.states[current];
-            function callback() {
-                addMatrix(slide.transform(state).matrix, slide.texOp, slide.shortOp);
-                slide.off(['done', 'stopped'], callback);
-            };
-            slide.on(['done', 'stopped'], callback);
-            slideshow.nextSlide();
-        }
 
         swapBtn.onclick = function() {
             var row1 = getRow(swapRow1);
@@ -241,45 +398,6 @@
             if(row1 == null || row2 == null || row1 == row2 || isNaN(factor))
                 return;
             addSlide(rrmat.rowRep(row1, factor, row2).chain);
-        }
-
-
-        //////////////////////////////////////////////////////////////////////
-        // Matrix history
-
-        // Render a matrix to an element
-        function renderMatrix(mat, elt) {
-            var i, j;
-            var latex = '\\begin{bmatrix}';
-            var rows = [];
-            for(i = 0; i < mat.length; ++i) {
-                var entries = [];
-                for(j = 0; j < mat[0].length; ++j)
-                    entries.push(RRMatrix.texFraction(mat[i][j]));
-                rows.push(entries.join('&'));
-            }
-            latex += rows.join('\\\\');
-            latex += '\\end{bmatrix}';
-            katex.render(latex, elt);
-        }
-
-        var historyElt = document.querySelector("div.history");
-
-        function addMatrix(mat, texOp, shortOp) {
-            var child = document.createElement('div');
-            historyElt.appendChild(child);
-            //historyElt.appendChild(document.createTextNode(" "));
-            renderMatrix(mat, child);
-            if(texOp) {
-                var arrow = document.createElement('div');
-                arrow.className = 'arrow';
-                katex.render(texOp, arrow);
-                child.insertBefore(arrow, child.firstChild);
-            }
-        }
-
-        function popMatrix() {
-            historyElt.lastChild.remove();
         }
 
         addMatrix(mat);
@@ -336,7 +454,33 @@
         window.rrmat = new RRMatrix(mat.length, mat[0].length, view, mathbox);
         rrmat.setMatrix(mat);
 
-        window.slideshow = rrmat.slideshow();
+        var callback = function() {
+            window.slideshow = rrmat.slideshow();
+            // Update the URI and the state of the matrix history when
+            // navigating slides.
+            slideshow.on('slide.new', function() {
+                if(updatingState)
+                    return
+                history.pushState({}, pageTitle, '?' + encodeState());
+                var current = slideshow.currentSlideNum;
+                var matrices = historyElt.children;
+                var i;
+                var len = matrices.length;
+                if(current >= len) {
+                    for(i = len; i <= current; ++i)
+                        addMatrix(slideshow.states[i].matrix,
+                                  slideshow.slides[i-1].texOp);
+                }
+            });
+
+            urlCallback = updateState;
+            updateState();
+        };
+
+        if(rrmat.loaded)
+            callback();
+        else
+            rrmat.on('loaded', callback);
     });
 
     </script>

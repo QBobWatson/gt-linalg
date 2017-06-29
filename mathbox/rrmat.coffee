@@ -45,7 +45,7 @@ makeArray = (rows, cols, val) ->
 
 # Find best fractional approximation to a decimal by walking the Stern-Brocot
 # tree.  See https://stackoverflow.com/a/5128558
-approxFraction = (x, error) ->
+approxFraction = (x, error=.00001) ->
     n = Math.floor x
     x -= n
     if x < error
@@ -423,7 +423,7 @@ class RRMatrix extends Controller
                 null
             anim.start()
             @loaded = true
-            @view[0].trigger type: "#{@name}.loaded"
+            @trigger type: 'loaded'
 
         # This runs on DOM element updates to re-align baselines.
         observer = new MutationObserver (mutations) =>
@@ -832,7 +832,9 @@ class RRMatrix extends Controller
         chain  = new SlideChain [slide1, slide2]
 
         # Suitable for use in a URL
-        chain.shortOp = "m#{rowNum}:#{factor}"
+        [num, den] = approxFraction factor
+        chain.shortOp = "m#{rowNum}:#{num}"
+        chain.shortOp += ":#{den}" if den != 1
         chain.texOp = "R_{#{rowNum+1}} = " + texFraction(factor) + "R_{#{rowNum+1}}"
 
         slide1: slide1
@@ -1033,7 +1035,10 @@ class RRMatrix extends Controller
 
         # Suitable for use in a URL
         plus = if factor < 0 then '' else '+'
-        chain.shortOp = "r#{sourceRow}:#{factor}:#{targetRow}"
+        [num, den] = approxFraction factor
+        chain.shortOp = "r#{sourceRow}:#{num}"
+        chain.shortOp += ":#{den}" if den != 1
+        chain.shortOp += ":#{targetRow}"
         chain.texOp = "R_{#{targetRow+1}} = R_{#{targetRow+1}} #{plus}" +
             texFraction(factor) + "R_{#{sourceRow+1}}"
 
@@ -1206,4 +1211,6 @@ class RRMatrix extends Controller
         new StyleSlide()
 
 RRMatrix.texFraction = texFraction
+RRMatrix.approxFraction = approxFraction
+RRMatrix.arraysEqual = arraysEqual
 window.RRMatrix = RRMatrix

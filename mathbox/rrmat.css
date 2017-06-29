@@ -22,7 +22,9 @@
 div.history {
     border-top: 1px solid #aaaaaa;
     font-size: 20px;
+    margin-top: 10px;
     padding: 20px;
+    padding-top: 30px;
     text-align: left;
 }
 
