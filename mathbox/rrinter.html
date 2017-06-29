@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>MathBox - Matrix</title>
+  <title>Interactive Row Reduction</title>
   <script src="build/mathbox-bundle.js"></script>
   <link rel="stylesheet" href="build/mathbox.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
@@ -13,9 +13,41 @@
   <script src="domready.js"></script>
   <script src="expreval.js"></script>
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <style>
+  body {
+      background: #dddddd;
+      text-align: center;
+      min-height: 100vh;
+      margin: 0;
+  }
+  div.page {
+      background: #ffffff;
+      width: 800px;
+      border-left: 1px solid #aaaaaa;
+      border-right: 1px solid #aaaaaa;
+      display: inline-block;
+      min-height: 100vh;
+      font-family: sans-serif;
+  }
+
+  div.page h1 {
+      padding-bottom: 10px;
+  }
+
+  #mathbox {
+      width: 100%;
+      height: 300px;
+      margin: 0;
+      border: 0;
+      border-top: 1px solid #aaaaaa;
+      border-bottom: 1px solid #aaaaaa;
+  }
+  </style>
 </head>
 <body>
-    <div style="width: 800px; height: 300px; margin-top: 0px; border: 0px solid black; margin-left: auto; margin-right: auto;" id="mathbox"></div>
+    <div class="page">
+    <h1>Interactive Row Operations</h1>
+    <div id="mathbox"></div>
     <div class="centered">
         <div class="slideshow rrmat">
             <div class="controls">
@@ -107,7 +139,6 @@
         //  * History matrices
         //  * History in URI
         //  * Link from rrmat.html
-        //  * Beautify
 
         //////////////////////////////////////////////////////////////////////
         // Setup row reduction controls
@@ -256,5 +287,6 @@
     });
 
     </script>
+    </div>
 </body>
 </html>
