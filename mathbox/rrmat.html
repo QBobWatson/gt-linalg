@@ -12,9 +12,34 @@
   <link rel="stylesheet" href="slideshow.css">
   <script src="domready.js"></script>
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <style>
+  body {
+      text-align: center;
+      margin: 0;
+  }
+
+  #mathbox {
+      width: 800px;
+      height: 300px;
+      margin: 0;
+      border: 0;
+      position: relative;
+      display: inline-block;
+  }
+
+  .centered {
+      width: 800px;
+      display: inline-block;
+  }
+
+  .my-turn {
+      width: 30%;
+      text-align: center;
+  }
+  </style>
 </head>
 <body>
-    <div style="width: 800px; height: 300px; margin-top: 0px; border: 0px solid black; margin-left: auto; margin-right: auto;" id="mathbox"></div>
+    <div id="mathbox"></div>
     <div class="centered">
         <div class="slideshow rrmat">
             <div class="controls">
@@ -170,6 +195,11 @@
                 </div>
             </div>
         </div>
+        <div class="my-turn">
+            <button class="slideshow-button">
+                Let me take it from here.
+            </button>
+        </div>
     </div>
 
     <script>
@@ -183,7 +213,7 @@
         var mathbox = window.mathbox = mathBox({
             element: document.getElementById("mathbox"),
             size: { width: width, height: height },
-            plugins: ['core', 'controls'],
+            plugins: ['core'],
             mathbox: {
                 warmup: 2,
                 splash: true,
@@ -195,37 +225,24 @@
                 far: ortho * 4,
                 lookAt: -width/4,
             },
-            controls: {
-                // Orbit controls, i.e. Euler angles, with gimbal lock
-                klass: THREE.OrbitControls,
-
-                // Trackball controls, i.e. Free quaternion rotation
-                //klass: THREE.TrackballControls,
-            },
         });
         if (mathbox.fallback) throw "WebGL not supported"
-
         var three = mathbox.three;
         three.renderer.setClearColor(new THREE.Color(0xFFFFFF), 1.0);
-
         // Place camera
-        var camera =
-            mathbox
-                .camera({
-                    proxy: false,
-                    position: [0, 0, ortho],
-                    fov: Math.atan(height/ortho) * 360 / π,
-                    lookAt: [width/4,0,0],
-                });
-
+        var camera = mathbox
+            .camera({
+                proxy: false,
+                position: [0, 0, ortho],
+                fov: Math.atan(height/ortho) * 360 / π,
+                lookAt: [width/4,0,0],
+            });
         // 2D cartesian
-        var view =
-            mathbox
-                .cartesian({
-                    range: [[-width/2, width/2], [-height/2, height/2], [-50,50]],
-                    scale: [width, height, 100],
-                });
-
+        var view = mathbox
+            .cartesian({
+                range: [[-width/2, width/2], [-height/2, height/2], [-50,50]],
+                scale: [width, height, 100],
+            });
         // Calibrate focus distance for units
         mathbox.set('focus', ortho);
 
@@ -404,6 +421,46 @@
                             duration: 1.5,
                             timing: 'linear'})
                  .combined()
+
+
+        document.querySelector(".my-turn button").onclick = function() {
+            // Encode matrix
+            var mat = slideshow.states[0].matrix;
+            var i, j, rows = [];
+            for(i = 0; i < mat.length; ++i) {
+                var row = [];
+                for(j = 0; j < mat[0].length; ++j) {
+                    var entry = mat[i][j];
+                    var num, den;
+                    [num, den] = RRMatrix.approxFraction(entry);
+                    row.push(num + (den != 1 ? "%2F" + den : ""));
+                }
+                rows.push(row.join(","));
+            }
+            var matval = rows.join(":");
+            // Encode row operations
+            // Traverse slide tree recursively
+            var getOps = function(slide) {
+                if(slide.slides) {
+                    // Has children slides
+                    var ret = [];
+                    for(var i = 0; i < slide.slides.length; ++i)
+                        ret = ret.concat(getOps(slide.slides[i]));
+                    return ret
+                }
+                // No children slides
+                if(slide.data.shortOp)
+                    return [slide.data.shortOp];
+                return [];
+            }
+            var ops = [];
+            for(i = 0; i < slideshow.currentSlideNum; ++i)
+                ops = ops.concat(getOps(slideshow.slides[i]));
+            var opsval = ops.join(",");
+
+            window.open("rrinter.html?mat=" + matval + "&ops="
+                      + opsval + "&cur=" + ops.length);
+        }
     });
 
     </script>

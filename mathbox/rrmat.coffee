@@ -6,7 +6,7 @@
 # TODO: Funny sizes on Safari
 # TODO: just-in-time width measuring with persistent measuring elements
 # TODO: use CSS animations in setStyle; don't use timers
-# TODO: default speed
+# TODO: cleanup html
 
 deepCopy = (x) ->
     if x instanceof Array
@@ -598,6 +598,7 @@ class RRMatrix extends Controller
             break if col == null
             for i in [0...row]
                 return false if state.matrix[i][col] != 0
+            return false if state.matrix[row][col] != 1
         return true
 
     ######################################################################

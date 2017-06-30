@@ -431,7 +431,7 @@
         var i, j;
 
         // TODO:
-        //  * Link from rrmat.html
+        //  * Default speed
         //  * Move to .js
 
         //////////////////////////////////////////////////////////////////////
@@ -483,6 +483,8 @@
         var useMatBtn = document.querySelector(".newmat div > button");
         var refDiv = document.querySelector(".row-ref");
         var rrefDiv = document.querySelector(".row-rref");
+
+        newMatrix.value = matToTextarea(mat);
 
         swapBtn.onclick = function() {
             var row1 = getRow(swapRow1);
@@ -552,34 +554,27 @@
             },
         });
         if (mathbox.fallback) throw "WebGL not supported"
-
         var three = mathbox.three;
         three.renderer.setClearColor(new THREE.Color(0xFFFFFF), 1.0);
-
         // Place camera
-        var camera =
-            mathbox
-                .camera({
-                    proxy: false,
-                    position: [0, 0, ortho],
-                    fov: Math.atan(height/ortho) * 360 / π,
-                    lookAt: [width/4,0,0],
-                });
-
+        var camera = mathbox
+            .camera({
+                proxy: false,
+                position: [0, 0, ortho],
+                fov: Math.atan(height/ortho) * 360 / π,
+                lookAt: [width/4,0,0],
+            });
         // 2D cartesian
-        var view =
-            mathbox
-                .cartesian({
-                    range: [[-width/2, width/2], [-height/2, height/2], [-50,50]],
-                    scale: [width, height, 100],
-                });
-
+        var view = mathbox
+            .cartesian({
+                range: [[-width/2, width/2], [-height/2, height/2], [-50,50]],
+                scale: [width, height, 100],
+            });
         // Calibrate focus distance for units
         mathbox.set('focus', ortho);
 
         window.rrmat = new RRMatrix(mat.length, mat[0].length, view, mathbox);
         rrmat.setMatrix(mat);
-        newMatrix.value = matToTextarea(mat);
 
         // Highlight pivots initially
         var slide = rrmat.highlightPivots();
