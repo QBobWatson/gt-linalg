@@ -412,7 +412,7 @@
     }
 
     function addSlide(slide) {
-        if(slide.data.type != "rowSwap")  // Doesn't change pivots
+        if(slide.data.type == "rowRep")  // Swap and mult don't change pivots
             slideshow.combine()
                      .addSlide(slide)
                      .highlightPivots()
@@ -431,8 +431,8 @@
         var i, j;
 
         // TODO:
-        //  * Default speed
         //  * Move to .js
+        //  * Test on other browsers
 
         //////////////////////////////////////////////////////////////////////
         // Row reduction controls
@@ -573,7 +573,8 @@
         // Calibrate focus distance for units
         mathbox.set('focus', ortho);
 
-        window.rrmat = new RRMatrix(mat.length, mat[0].length, view, mathbox);
+        window.rrmat = new RRMatrix(mat.length, mat[0].length, view, mathbox,
+                                    {defSpeed: 1.5});
         rrmat.setMatrix(mat);
 
         // Highlight pivots initially

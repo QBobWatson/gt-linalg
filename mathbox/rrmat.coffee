@@ -135,7 +135,7 @@ class RRMatrix extends Controller
     styleKeys: ['color', 'opacity', 'transform']
 
     constructor: (@numRows, @numCols, @view, mathbox, opts) ->
-        {name, @fontSize, @rowHeight, @rowSpacing,
+        {name, @fontSize, @rowHeight, @rowSpacing, @defSpeed,
             @colSpacing, @augmentCol, startAugmented} = opts or {}
 
         # General options
@@ -146,6 +146,7 @@ class RRMatrix extends Controller
         @colSpacing ?= @fontSize
         @matHeight = @rowHeight * @numRows + @rowSpacing * (@numRows-1)
         startAugmented ?= @augmentCol?
+        @defSpeed   ?= 1.0
 
         # VDOM element constructor
         @domClass = MathBox.DOM.createClass \
@@ -655,7 +656,7 @@ class RRMatrix extends Controller
         # The first slide fades in the swap arrow.
         # The second slide does the swap.
 
-        speed = opts?.speed or 1.0
+        speed = opts?.speed or @defSpeed
         fadeTime = 0.3/speed
         swapTime = 1/speed
         rrmat = @
@@ -767,7 +768,7 @@ class RRMatrix extends Controller
         # The first slide fades in the multiplication flyer
         # The second slide does the multiplication
 
-        speed = opts?.speed or 1.0
+        speed = opts?.speed or @defSpeed
         flidx = @numRows
         rrmat = @
 
@@ -896,7 +897,7 @@ class RRMatrix extends Controller
         # The first slide moves the row flyer into place
         # The second slide does the row replacement
 
-        speed = opts?.speed or 1.0
+        speed = opts?.speed or @defSpeed
         plus = if factor >= 0 then '+' else ''
         texString = katex.renderToString(plus + texFraction(factor) + '\\,\\bigl(')
         padding = 7
@@ -1099,7 +1100,7 @@ class RRMatrix extends Controller
 
     unAugment: (opts) ->
         # Remove the augmentation line.
-        speed = opts?.speed or 1.0
+        speed = opts?.speed or @defSpeed
         rrmat = @
 
         class AugSlide extends Slide
@@ -1140,7 +1141,7 @@ class RRMatrix extends Controller
 
     reAugment: (opts) ->
         # Add the augmentation line back.
-        speed = opts?.speed or 1.0
+        speed = opts?.speed or @defSpeed
         rrmat = @
 
         class AugSlide extends Slide
@@ -1191,8 +1192,8 @@ class RRMatrix extends Controller
     #   timing:   easing function (default 'ease')
 
     class StyleSlide extends Slide
-        constructor: (@transitions, opts) ->
-            @speed = opts?.speed or 1.0
+        constructor: (@transitions, @rrmat, opts) ->
+            @speed = opts?.speed or @rrmat.defSpeed
             # Total time of the effect
             @transitions = @_initTransitions @transitions
             super
@@ -1209,7 +1210,7 @@ class RRMatrix extends Controller
                 trans.timing ?= 'ease'
                 @totalTime = Math.max @totalTime, trans.duration + trans.delay
                 trans.props = []
-                for prop in RRMatrix.prototype.styleKeys
+                for prop in @rrmat.styleKeys
                     trans.props.push prop if trans[prop]?
             transitions
 
@@ -1269,7 +1270,7 @@ class RRMatrix extends Controller
         fastForward: () -> @_nextState.copy()
 
     setStyle: (transitions, opts) ->
-        slide = new StyleSlide transitions, opts
+        slide = new StyleSlide transitions, @, opts
         slide.data.type = "setStyle"
         slide
 
@@ -1284,7 +1285,7 @@ class RRMatrix extends Controller
 
         class PivotSlide extends StyleSlide
             constructor: () ->
-                super [], opts
+                super [], rrmat, opts
 
             transform: (oldState) ->
                 nextState = oldState.copy()
