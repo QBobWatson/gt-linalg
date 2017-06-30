@@ -484,8 +484,8 @@ class Slideshow
     removeSlide: (index) ->
         [slide] = @slides.splice index, 1
         @states.splice index+1, 1
-        if @currentSlideNum == index
-            newSlide = if index <= @slides.length then index else index-1
+        if @currentSlideNum == index+1
+            newSlide = if index < @slides.length then index+1 else index
             @goToSlide newSlide
         else if @currentSlideNum > index
             @currentSlideNum--

@@ -8,8 +8,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
   <script src="rrmat.js"></script>
+  <script src="rrinter.js"></script>
   <link rel="stylesheet" href="rrmat.css">
   <link rel="stylesheet" href="slideshow.css">
+  <link rel="stylesheet" href="rrinter.css">
   <script src="domready.js"></script>
   <script src="expreval.js"></script>
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
@@ -20,20 +22,6 @@
       min-height: 100vh;
       margin: 0;
   }
-  div.page {
-      background: #ffffff;
-      width: 800px;
-      border-left: 1px solid #aaaaaa;
-      border-right: 1px solid #aaaaaa;
-      display: inline-block;
-      min-height: 100vh;
-      font-family: sans-serif;
-  }
-
-  div.page h1 {
-      padding-bottom: 10px;
-  }
-
   #mathbox {
       width: 100%;
       height: 300px;
@@ -43,75 +31,11 @@
       border-bottom: 1px solid #aaaaaa;
       position: relative;
   }
-
-  .row-ref, .row-rref {
-      position: absolute;
-      left: 50%;
-      transform: translate(-50%);
-      top: 5px;
-      font-size: 120%;
-      font-weight: bold;
-      padding: 0.3em;
-      padding-left: 1em;
-      padding-right: 1em;
-      background: rgba(0,0,0,0.05);
-      opacity: 1.0;
-      transition: opacity .5s;
-  }
-
-  .row-ref {
-      color: Orange;
-  }
-
-  .row-rref {
-      color: green;
-  }
-
-  .row-ref.inactive, .row-rref.inactive {
-      visibility: hidden;
-      opacity: 0.0
-  }
-
-  .newmat-button {
-      display: inline-block;
-      vertical-align: top;
-      margin-top: 20px;
-      margin-left: 3em;
-      font-size: 120%;
-  }
-
-  .newmat {
-      /* transition: max-height 1s linear, border-bottom 1s step-end; */
-      /* max-height: 0px;
-         overflow: hidden;
-         border: 0; */
-      border-bottom: 1px solid #aaaaaa;
-      display: none;
-  }
-
-  .newmat.active {
-      /* transition: max-height 1s linear, border-bottom 1s step-start; */
-      /* max-height: 300px; */
-      /* border-bottom-width: 1px; */
-      display: block;
-  }
-
-  .newmat div {
-      padding: 30px;
-  }
-
-  .newmat div > span {
-      text-align: left;
-      display: inline-block;
-      max-width: 50%;
-      margin-bottom: 1em;
-  }
-
   </style>
 </head>
 <body>
     <div class="page">
-    <h1>Interactive Row Operations</h1>
+    <h1>Interactive Row Reduction</h1>
     <div id="mathbox">
         <div class="row-ref inactive">
             Matrix is in <i>row echelon form</i>.
@@ -128,7 +52,7 @@
                 for the matrix entries.
             </span><br>
             <textarea rows="5" cols="30"></textarea><br>
-            <button class="slideshow-button">Use this matrix</button>
+            <button class="ops-button">Use this matrix</button>
         </div>
     </div>
     <div class="centered">
@@ -151,24 +75,24 @@
                 <span class="pages"></span>
             </div>
             <div class="newmat-button">
-                <button class="slideshow-button">Enter a new matrix</button>
+                <button class="ops-button">Enter a new matrix</button>
             </div>
             <br>
             <div class="row-ops">
                 <span class="ops-label row-swap">
-                    <button class="slideshow-button">Swap rows</button>
+                    <button class="ops-button">Swap rows</button>
                 </span><span class="ops-control row-swap">
                     <span class="row-selector"></span> and
                     <span class="row-selector"></span>
                 </span>
                 <span class="ops-label row-mult">
-                    <button class="slideshow-button">Multiply row</button>
+                    <button class="ops-button">Multiply row</button>
                 </span><span class="ops-control row-mult">
                     <span class="row-selector"></span> by
                     <input type="text">
                 </span>
                 <span class="ops-label row-rrep">
-                    <button class="slideshow-button">Row replacement</button>
+                    <button class="ops-button">Row replacement</button>
                 </span><span class="ops-control row-rrep">
                     <span>Add</span><input type="text"> times
                     <span class="row-selector"></span>
@@ -184,354 +108,13 @@
     <script>
     "use strict";
 
-    // Parse query string
-    var urlParams;
-    var urlCallback = function() {};
-    (window.onpopstate = function () {
-        var match,
-            pl     = /\+/g,  // Regex for replacing addition symbol with a space
-            search = /([^&=]+)=?([^&]*)/g,
-            decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
-            query  = window.location.search.substring(1);
-
-        urlParams = {};
-        while (match = search.exec(query))
-            urlParams[decode(match[1])] = decode(match[2]);
-        urlCallback();
-    })();
-
-
-    function evExpr(expr) {
-        try { return exprEval.Parser.evaluate(expr); }
-        catch(err) { return 0; }
-    }
-
-    // Parse a matrix from a string in the URI
-    function parseMatrix(str) {
-        var rows = str.split(':');
-        var maxRow = 0;
-        var i, j;
-        var mat = [];
-        for(i = 0; i < rows.length; ++i) {
-            var entries = rows[i].split(',');
-            var row = [];
-            for(j = 0; j < entries.length; ++j) {
-                row.push(evExpr(entries[j]));
-                maxRow = Math.max(maxRow, j+1);
-            }
-            mat.push(row);
-        }
-        // Make sure the rows all have the same size
-        for(i = 0; i < mat.length; ++i) {
-            for(j = mat[i].length; j < maxRow; ++j)
-                mat[i].push(0);
-        }
-        return mat;
-    }
-
-    // Create a slide from a shortOp
-    function parseSlide(str) {
-        var type = str[0];
-        var vals = str.slice(1).split(":");
-        var parseFrac = function(s) {
-            return evExpr(s.replace(".","/"));
-        }
-        if(str[0] == "s") {
-            var row1, row2;
-            [row1, row2] = vals;
-            row1 = parseInt(row1);
-            row2 = parseInt(row2);
-            return rrmat.rowSwap(row1, row2).chain;
-        }
-        if(str[0] == "m") {
-            var rowNum, factor, num, den;
-            [rowNum, factor] = vals;
-            rowNum = parseInt(rowNum);
-            factor = parseFrac(factor);
-            return rrmat.rowMult(rowNum, factor).chain;
-        }
-        if(str[0] == "r") {
-            var sourceRow, factor, targetRow;
-            [sourceRow, factor, targetRow] = vals;
-            sourceRow = parseInt(sourceRow);
-            factor = parseFrac(factor);
-            targetRow = parseInt(targetRow);
-            return rrmat.rowRep(sourceRow, factor, targetRow).chain;
-        }
-    }
-
-    // Update the state of the slideshow from urlParams
-    function updateState() {
-        // Changing the matrix on the fly is not supported
-        var mat = parseMatrix(urlParams.mat);
-
-        var cur = parseInt(urlParams.cur);
-        if(isNaN(cur)) cur = 0;
-
-        // Delete row operations starting from the first one that doesn't match.
-        var i;
-        var ops = urlParams.ops;
-        var same = true;
-        if(ops) ops = ops.split(",");
-        else ops = [];
-        var state = slideshow.states[0];
-        for(i = 0; i < ops.length; ++i) {
-            if(same) {
-                if(i >= slideshow.slides.length ||
-                   ops[i] != slideshow.slides[i].data.shortOp) {
-                    same = false;
-                    clearAfter(i);
-                }
-            }
-            var slide;
-            if(same)
-                slide = slideshow.slides[i];
-            else {
-                slide = parseSlide(ops[i]);
-                addSlide(slide);
-            }
-            state = slide.transform(state);
-            if(!same)
-                addMatrix(state.matrix, slide.data.texOp);
-        }
-        if(same && ops.length < slideshow.slides.length)
-            clearAfter(ops.length);
-
-        updatingState = true;
-        slideshow.goToSlide(cur);
-        updatingState = false;
-    }
-
-    // URL-encode the current state
-    function encodeState() {
-        var i, j;
-        var mat = slideshow.states[0].matrix;
-        var rows = [];
-        // Encode matrix
-        for(i = 0; i < mat.length; ++i) {
-            var row = [];
-            for(j = 0; j < mat[0].length; ++j) {
-                var entry = mat[i][j];
-                var num, den;
-                [num, den] = RRMatrix.approxFraction(entry);
-                row.push(num + (den != 1 ? "%2F" + den : ""));
-            }
-            rows.push(row.join(","));
-        }
-        var encMat = rows.join(":");
-        // Encode operations
-        var ops = [];
-        for(i = 0; i < slideshow.slides.length; ++i)
-            ops.push(slideshow.slides[i].data.shortOp);
-        var encOps = ops.join(",");
-        return "mat=" + encMat + "&ops=" + encOps +
-               "&cur=" + slideshow.currentSlideNum;
-    }
-
-    function matToTextarea(mat) {
-        var i, j;
-        var rows = [];
-        for(i = 0; i < mat.length; ++i) {
-            var row = [], text;
-            for(j = 0; j < mat[i].length; ++j) {
-                var entry = mat[i][j];
-                var num, den;
-                [num, den] = RRMatrix.approxFraction(entry);
-                text = num.toString();
-                if(den != 1)
-                    text += "/" + den.toString();
-                row.push(text)
-            }
-            rows.push(row.join(", "));
-        }
-        return rows.join("\n");
-    }
-
-    // Return the selected row
-    function getRow(selector) {
-        for(var i = 0; i < selector.children.length; ++i) {
-            if(selector.children[i].classList.contains('selected'))
-                return i;
-        }
-        return null;
-    }
-
-    //////////////////////////////////////////////////////////////////////
-    // Matrix history
-
-    // Render a matrix to an element
-    function renderMatrix(mat, elt) {
-        var i, j;
-        var latex = '\\begin{bmatrix}';
-        var rows = [];
-        for(i = 0; i < mat.length; ++i) {
-            var entries = [];
-            for(j = 0; j < mat[0].length; ++j)
-                entries.push(RRMatrix.texFraction(mat[i][j]));
-            rows.push(entries.join('&'));
-        }
-        latex += rows.join('\\\\');
-        latex += '\\end{bmatrix}';
-        katex.render(latex, elt);
-    }
-
-    var historyElt = document.querySelector("div.history");
-
-    function addMatrix(mat, texOp) {
-        var child = document.createElement('div');
-        historyElt.appendChild(child);
-        renderMatrix(mat, child);
-        if(texOp) {
-            var arrow = document.createElement('div');
-            arrow.className = 'arrow';
-            katex.render(texOp, arrow);
-            child.insertBefore(arrow, child.firstChild);
-        }
-    }
-
-    function popMatrix() {
-        historyElt.lastChild.remove();
-    }
-
-    function clearAfter(slideNum) {
-        var len = slideshow.slides.length;
-        for(var i = slideNum + 1; i <= len; ++i) {
-            slideshow.removeSlide(slideNum);
-            popMatrix();
-        }
-    }
-
-    // This is called when a new slide is created by the UI
-    function newSlide(slide) {
-        if(slideshow.playing)
-            slideshow.nextSlide();
-        var current = slideshow.currentSlideNum;
-        clearAfter(current);
-        addSlide(slide);
-        slideshow.nextSlide();
-    }
-
-    function addSlide(slide) {
-        if(slide.data.type == "rowRep")  // Swap and mult don't change pivots
-            slideshow.combine()
-                     .addSlide(slide)
-                     .highlightPivots()
-                     .combined();
-        else
-            slideshow.addSlide(slide)
-    }
-
-    // Global variables
-    var mat = parseMatrix(urlParams.mat);
-    var pageTitle = document.querySelector('title').innerText;
-    var updatingState = false;
-
-
     DomReady.ready(function() {
-        var i, j;
 
         // TODO:
-        //  * Move to .js
         //  * Test on other browsers
 
-        //////////////////////////////////////////////////////////////////////
-        // Row reduction controls
-
-        // Add row selectors
-        var selectors = document.querySelectorAll(".slideshow .row-selector");
-        for(i = 0; i < selectors.length; ++i) {
-            var selector = selectors[i];
-            var select = (function(selector) {
-                return function(ev) {
-                    var elt = ev.target;
-                    for(var i = 0; i < selector.children.length; ++i) {
-                        var child = selector.children[i];
-                        if(elt == child)
-                            child.classList.add('selected');
-                        else
-                            child.classList.remove('selected');
-                    }
-                }
-            })(selector);
-
-            // Enable mutually exclusive selection
-            for(j = 0; j < mat.length; ++j) {
-                var elt = document.createElement('span');
-                elt.className = 'row-button';
-                elt.innerText = (j+1).toString();
-                elt.onclick = select;
-                selector.appendChild(elt);
-            }
-        }
-
-        // Find UI elements
-        var swapBtn    = document.querySelector(".ops-label.row-swap button");
-        var multBtn    = document.querySelector(".ops-label.row-mult button");
-        var rrepBtn    = document.querySelector(".ops-label.row-rrep button");
-        var swapRow1, swapRow2;
-        [swapRow1, swapRow2] = document.querySelectorAll(
-            ".ops-control.row-swap .row-selector");
-        var multRow    = document.querySelector(".ops-control.row-mult .row-selector");
-        var multFactor = document.querySelector(".ops-control.row-mult input");
-        var rrepFactor = document.querySelector(".ops-control.row-rrep input");
-        var rrepRow1, rrepRow2;
-        [rrepRow1, rrepRow2] = document.querySelectorAll(
-            ".ops-control.row-rrep .row-selector");
-        var newMatBtn = document.querySelector(".newmat-button button");
-        var newMatDiv = document.querySelector("div.newmat");
-        var newMatrix = document.querySelector(".newmat textarea");
-        var useMatBtn = document.querySelector(".newmat div > button");
-        var refDiv = document.querySelector(".row-ref");
-        var rrefDiv = document.querySelector(".row-rref");
-
-        newMatrix.value = matToTextarea(mat);
-
-        swapBtn.onclick = function() {
-            var row1 = getRow(swapRow1);
-            var row2 = getRow(swapRow2);
-            if(row1 == null || row2 == null || row1 == row2)
-                return;
-            newSlide(rrmat.rowSwap(row1, row2).chain);
-        }
-
-        multBtn.onclick = function() {
-            var row = getRow(multRow);
-            var factor = evExpr(multFactor.value);
-            if(row == null || isNaN(factor) || factor == 0)
-                return;
-            newSlide(rrmat.rowMult(row, factor).chain);
-        }
-
-        rrepBtn.onclick = function () {
-            var row1 = getRow(rrepRow1);
-            var row2 = getRow(rrepRow2);
-            var factor = evExpr(rrepFactor.value);
-            if(row1 == null || row2 == null || row1 == row2 || isNaN(factor))
-                return;
-            newSlide(rrmat.rowRep(row1, factor, row2).chain);
-        }
-
-        newMatBtn.onclick = function() {
-            if(newMatDiv.classList.contains('active'))
-                newMatDiv.classList.remove('active');
-            else
-                newMatDiv.classList.add('active');
-        }
-
-        useMatBtn.onclick = function() {
-            var val = newMatrix
-                .value
-                .replace(/\n/g, ":")
-                .replace(/\s/g, "")
-                .replace(/:+$/, "");
-            val = encodeURIComponent(val).replace(/%(?:2C|3A)/g, unescape);
-            window.location.href = "?mat=" + val;
-        }
-
-        addMatrix(mat);
-
-        //////////////////////////////////////////////////////////////////////
-        // Setup Mathbox
+        // Install interactive code
+        var mat = RRInter.install();
 
         var ortho = 10000;
         var width = 800;
@@ -573,51 +156,23 @@
         // Calibrate focus distance for units
         mathbox.set('focus', ortho);
 
-        window.rrmat = new RRMatrix(mat.length, mat[0].length, view, mathbox,
-                                    {defSpeed: 1.5});
+        window.rrmat = new RRMatrix(
+            mat.length, mat[0].length, view, mathbox, {defSpeed: 1.5});
         rrmat.setMatrix(mat);
 
         // Highlight pivots initially
         var slide = rrmat.highlightPivots();
         rrmat.state = slide.transform(rrmat.state);
 
-        var callback = function() {
+        var onLoaded = function() {
             window.slideshow = rrmat.slideshow();
-            // Update the URI and the state of the matrix history when
-            // navigating slides.
-            slideshow.on('slide.new', function() {
-                if(rrmat.isRREF()) {
-                    refDiv.classList.add('inactive');
-                    rrefDiv.classList.remove('inactive');
-                } else if(rrmat.isREF()) {
-                    refDiv.classList.remove('inactive');
-                    rrefDiv.classList.add('inactive');
-                } else {
-                    refDiv.classList.add('inactive');
-                    rrefDiv.classList.add('inactive');
-                }
-                if(updatingState)
-                    return
-                history.pushState({}, pageTitle, '?' + encodeState());
-                var current = slideshow.currentSlideNum;
-                var matrices = historyElt.children;
-                var i;
-                var len = matrices.length;
-                if(current >= len) {
-                    for(i = len; i <= current; ++i)
-                        addMatrix(slideshow.states[i].matrix,
-                                  slideshow.slides[i-1].data.texOp);
-                }
-            });
-
-            urlCallback = updateState;
-            updateState();
+            RRInter.finalize();
         };
 
         if(rrmat.loaded)
-            callback();
+            onLoaded();
         else
-            rrmat.on('loaded', callback);
+            rrmat.on('loaded', onLoaded);
     });
 
     </script>
