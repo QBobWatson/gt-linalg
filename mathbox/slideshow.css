@@ -209,7 +209,7 @@
   line-height: 30px;
 }
 
-.slideshow .ops-label > button {
+.slideshow-button {
   line-height: 30px;
   background: #f0f3f5;
   border: 1px solid black;
@@ -223,11 +223,11 @@
   vertical-align: top;
 }
 
-.slideshow .ops-label > button:hover {
+.slideshow-button:hover {
   background: #d1dbe0;
 }
 
-.slideshow .ops-label > button:active {
+.slideshow-button:active {
   background: #c2cfd6;
 }
 

@@ -72,6 +72,41 @@
       opacity: 0.0
   }
 
+  .newmat-button {
+      display: inline-block;
+      vertical-align: top;
+      margin-top: 20px;
+      margin-left: 3em;
+      font-size: 120%;
+  }
+
+  .newmat {
+      /* transition: max-height 1s linear, border-bottom 1s step-end; */
+      /* max-height: 0px;
+         overflow: hidden;
+         border: 0; */
+      border-bottom: 1px solid #aaaaaa;
+      display: none;
+  }
+
+  .newmat.active {
+      /* transition: max-height 1s linear, border-bottom 1s step-start; */
+      /* max-height: 300px; */
+      /* border-bottom-width: 1px; */
+      display: block;
+  }
+
+  .newmat div {
+      padding: 30px;
+  }
+
+  .newmat div > span {
+      text-align: left;
+      display: inline-block;
+      max-width: 50%;
+      margin-bottom: 1em;
+  }
+
   </style>
 </head>
 <body>
@@ -83,6 +118,17 @@
         </div>
         <div class="row-rref inactive">
             Matrix is in <i>reduced row echelon form</i>.
+        </div>
+    </div>
+    <div class="newmat">
+        <div>
+            <span>
+                Enter a new matrix here.  Put one row on each line, and separate
+                columns by commas.  You can use simple mathematical expressions
+                for the matrix entries.
+            </span><br>
+            <textarea rows="5" cols="30"></textarea><br>
+            <button class="slideshow-button">Use this matrix</button>
         </div>
     </div>
     <div class="centered">
@@ -103,22 +149,26 @@
                         <span></span><span></span></span>
                 </span><br>
                 <span class="pages"></span>
-            </div><br>
+            </div>
+            <div class="newmat-button">
+                <button class="slideshow-button">Enter a new matrix</button>
+            </div>
+            <br>
             <div class="row-ops">
                 <span class="ops-label row-swap">
-                    <button>Swap rows</button>
+                    <button class="slideshow-button">Swap rows</button>
                 </span><span class="ops-control row-swap">
                     <span class="row-selector"></span> and
                     <span class="row-selector"></span>
                 </span>
                 <span class="ops-label row-mult">
-                    <button>Multiply row</button>
+                    <button class="slideshow-button">Multiply row</button>
                 </span><span class="ops-control row-mult">
                     <span class="row-selector"></span> by
                     <input type="text">
                 </span>
                 <span class="ops-label row-rrep">
-                    <button>Row replacement</button>
+                    <button class="slideshow-button">Row replacement</button>
                 </span><span class="ops-control row-rrep">
                     <span>Add</span><input type="text"> times
                     <span class="row-selector"></span>
@@ -278,6 +328,25 @@
                "&cur=" + slideshow.currentSlideNum;
     }
 
+    function matToTextarea(mat) {
+        var i, j;
+        var rows = [];
+        for(i = 0; i < mat.length; ++i) {
+            var row = [], text;
+            for(j = 0; j < mat[i].length; ++j) {
+                var entry = mat[i][j];
+                var num, den;
+                [num, den] = RRMatrix.approxFraction(entry);
+                text = num.toString();
+                if(den != 1)
+                    text += "/" + den.toString();
+                row.push(text)
+            }
+            rows.push(row.join(", "));
+        }
+        return rows.join("\n");
+    }
+
     // Return the selected row
     function getRow(selector) {
         for(var i = 0; i < selector.children.length; ++i) {
@@ -362,9 +431,8 @@
         var i, j;
 
         // TODO:
-        //  * Enter new matrix
-        //  * Move to .js
         //  * Link from rrmat.html
+        //  * Move to .js
 
         //////////////////////////////////////////////////////////////////////
         // Row reduction controls
@@ -409,6 +477,12 @@
         var rrepRow1, rrepRow2;
         [rrepRow1, rrepRow2] = document.querySelectorAll(
             ".ops-control.row-rrep .row-selector");
+        var newMatBtn = document.querySelector(".newmat-button button");
+        var newMatDiv = document.querySelector("div.newmat");
+        var newMatrix = document.querySelector(".newmat textarea");
+        var useMatBtn = document.querySelector(".newmat div > button");
+        var refDiv = document.querySelector(".row-ref");
+        var rrefDiv = document.querySelector(".row-rref");
 
         swapBtn.onclick = function() {
             var row1 = getRow(swapRow1);
@@ -433,6 +507,23 @@
             if(row1 == null || row2 == null || row1 == row2 || isNaN(factor))
                 return;
             newSlide(rrmat.rowRep(row1, factor, row2).chain);
+        }
+
+        newMatBtn.onclick = function() {
+            if(newMatDiv.classList.contains('active'))
+                newMatDiv.classList.remove('active');
+            else
+                newMatDiv.classList.add('active');
+        }
+
+        useMatBtn.onclick = function() {
+            var val = newMatrix
+                .value
+                .replace(/\n/g, ":")
+                .replace(/\s/g, "")
+                .replace(/:+$/, "");
+            val = encodeURIComponent(val).replace(/%(?:2C|3A)/g, unescape);
+            window.location.href = "?mat=" + val;
         }
 
         addMatrix(mat);
@@ -488,12 +579,11 @@
 
         window.rrmat = new RRMatrix(mat.length, mat[0].length, view, mathbox);
         rrmat.setMatrix(mat);
+        newMatrix.value = matToTextarea(mat);
 
         // Highlight pivots initially
         var slide = rrmat.highlightPivots();
         rrmat.state = slide.transform(rrmat.state);
-        var refDiv = document.querySelector(".row-ref");
-        var rrefDiv = document.querySelector(".row-rref");
 
         var callback = function() {
             window.slideshow = rrmat.slideshow();
