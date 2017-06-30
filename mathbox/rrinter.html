@@ -41,13 +41,50 @@
       border: 0;
       border-top: 1px solid #aaaaaa;
       border-bottom: 1px solid #aaaaaa;
+      position: relative;
   }
+
+  .row-ref, .row-rref {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%);
+      top: 5px;
+      font-size: 120%;
+      font-weight: bold;
+      padding: 0.3em;
+      padding-left: 1em;
+      padding-right: 1em;
+      background: rgba(0,0,0,0.05);
+      opacity: 1.0;
+      transition: opacity .5s;
+  }
+
+  .row-ref {
+      color: Orange;
+  }
+
+  .row-rref {
+      color: green;
+  }
+
+  .row-ref.inactive, .row-rref.inactive {
+      visibility: hidden;
+      opacity: 0.0
+  }
+
   </style>
 </head>
 <body>
     <div class="page">
     <h1>Interactive Row Operations</h1>
-    <div id="mathbox"></div>
+    <div id="mathbox">
+        <div class="row-ref inactive">
+            Matrix is in <i>row echelon form</i>.
+        </div>
+        <div class="row-rref inactive">
+            Matrix is in <i>reduced row echelon form</i>.
+        </div>
+    </div>
     <div class="centered">
         <div class="slideshow rrmat">
             <div class="controls">
@@ -326,7 +363,6 @@
 
         // TODO:
         //  * Enter new matrix
-        //  * Detect when in (reduced) row echelon form
         //  * Move to .js
         //  * Link from rrmat.html
 
@@ -456,12 +492,24 @@
         // Highlight pivots initially
         var slide = rrmat.highlightPivots();
         rrmat.state = slide.transform(rrmat.state);
+        var refDiv = document.querySelector(".row-ref");
+        var rrefDiv = document.querySelector(".row-rref");
 
         var callback = function() {
             window.slideshow = rrmat.slideshow();
             // Update the URI and the state of the matrix history when
             // navigating slides.
             slideshow.on('slide.new', function() {
+                if(rrmat.isRREF()) {
+                    refDiv.classList.add('inactive');
+                    rrefDiv.classList.remove('inactive');
+                } else if(rrmat.isREF()) {
+                    refDiv.classList.remove('inactive');
+                    rrefDiv.classList.add('inactive');
+                } else {
+                    refDiv.classList.add('inactive');
+                    rrefDiv.classList.add('inactive');
+                }
                 if(updatingState)
                     return
                 history.pushState({}, pageTitle, '?' + encodeState());
