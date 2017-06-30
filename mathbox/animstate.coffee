@@ -280,12 +280,14 @@ class FadeAnimation extends MathboxAnimation
 # The start() method starts with the current state of the Controller.  Note that
 # start() and/or done() should actually update the Controller's state.  It is up
 # to the caller to previde a reference to the Controller (e.g. in a closure).
-#
+
 class Slide extends Animation
     constructor: () ->
         # Array of currently running animations.  This is here for convenience;
         # all animations in this list will be stop()ped on stop() and done().
         @anims = []
+        # Auxiliary data for use by the caller
+        @data = {}
         super
 
     stopAll: () ->
@@ -308,6 +310,7 @@ class Slide extends Animation
 # Chain several slides together as one slide.
 class SlideChain extends Slide
     constructor: (@slides) ->
+        super
         @slideNum = -1
         callback = () =>
             if @slideNum+1 < @slides.length
@@ -316,7 +319,10 @@ class SlideChain extends Slide
                 @slideNum = -1
                 @done()
         slide.on 'done', callback for slide in @slides
-        super
+        # Propagate user data
+        for slide in @slides
+            for k, v of slide.data
+                @data[k] = v
 
     transform: (oldState) ->
         for slide in @slides
@@ -521,7 +527,9 @@ class Slideshow
 
     # Increment the caption number without playing any animations
     nextCaption: (opts) ->
-        @addSlide(new CaptionSlide @)
+        slide = new CaptionSlide @
+        slide.data.type = "nextCaption"
+        @addSlide slide
 
 
 addEvents Slideshow

@@ -244,7 +244,7 @@
 
 .slideshow .ops-control input {
   line-height: 30px;
-  width: 30px;
+  width: 3em;
   margin-left: 10px;
   margin-right: 10px;
   padding-left: 10px;
@@ -263,7 +263,7 @@
 .slideshow .row-selector .row-button {
   background: #f0f3f5;
   border: 1px solid black;
-  width: 30px;
+  width: 40px;
   line-height: 30px;
   display: inline-block;
   text-align: center;

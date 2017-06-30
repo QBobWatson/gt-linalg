@@ -121,6 +121,9 @@ class RRSlideshow extends Slideshow
     setStyle: (transitions, opts) ->
         @addSlide(@controller.setStyle transitions, opts)
         @
+    highlightPivots: (opts) ->
+        @addSlide(@controller.highlightPivots opts)
+        @
 
 
 # This class controls an animated matrix of numbers.  It produces slides that
@@ -554,6 +557,49 @@ class RRMatrix extends Controller
         for elt in elts
             elt.parentElement.style.top = -elt.offsetTop + "px"
 
+    getPivots: (state=@state) ->
+        pivots = []
+        for row, i in state.matrix
+            for ent, j in row
+                if ent != 0
+                    pivots.push j
+                    break
+            if pivots.length <= i
+                pivots.push null  # zero row
+        pivots
+
+    isREF: (state=@state) ->
+        pivots = @getPivots state
+        # Check zero rows at bottom
+        sawZero = false
+        for col in pivots
+            if col == null
+                sawZero = true
+            else
+                return false if sawZero
+        # Check ascending order of pivot columns
+        last = -1
+        for col in pivots
+            break if col == null
+            return false if col <= last
+            last = col
+        # Check zero entries under pivots
+        for col, row in pivots
+            break if col == null
+            for i in [row+1...@numRows]
+                return false if state.matrix[i][col] != 0
+        return true
+
+    isRREF: (state=@state) ->
+        return false unless @isREF state
+        pivots = @getPivots state
+        # Check zero entries above pivots
+        for col, row in pivots
+            break if col == null
+            for i in [0...row]
+                return false if state.matrix[i][col] != 0
+        return true
+
     ######################################################################
     # Transitions and helper functions
     ######################################################################
@@ -704,15 +750,16 @@ class RRMatrix extends Controller
 
         slide1 = new Slide1()
         slide2 = new Slide2()
-        chain = new SlideChain [slide1, slide2]
+
+        slide1.data.type = slide2.data.type = "rowSwap"
 
         # Suitable for use in a URL
-        chain.shortOp = "s#{row1}:#{row2}"
-        chain.texOp = "R_{#{row1+1}} \\leftrightarrow R_{#{row2+1}}"
+        slide2.data.shortOp = "s#{row1}:#{row2}"
+        slide2.data.texOp = "R_{#{row1+1}} \\leftrightarrow R_{#{row2+1}}"
 
         slide1: slide1
         slide2: slide2
-        chain: chain
+        chain: new SlideChain [slide1, slide2]
 
     rowMult: (rowNum, factor, opts) ->
         # Return an animation in two slides
@@ -829,17 +876,19 @@ class RRMatrix extends Controller
 
         slide1 = new Slide1()
         slide2 = new Slide2()
-        chain  = new SlideChain [slide1, slide2]
+
+        slide1.data.type = slide2.data.type = "rowMult"
 
         # Suitable for use in a URL
         [num, den] = approxFraction factor
-        chain.shortOp = "m#{rowNum}:#{num}"
-        chain.shortOp += ":#{den}" if den != 1
-        chain.texOp = "R_{#{rowNum+1}} = " + texFraction(factor) + "R_{#{rowNum+1}}"
+        slide2.data.shortOp = "m#{rowNum}:#{num}"
+        slide2.data.shortOp += ".#{den}" if den != 1
+        slide2.data.texOp = "R_{#{rowNum+1}} = " +
+            texFraction(factor) + "R_{#{rowNum+1}}"
 
         slide1: slide1
         slide2: slide2
-        chain: chain
+        chain: new SlideChain [slide1, slide2]
 
     rowRep: (sourceRow, factor, targetRow, opts) ->
         # Return an animation in two slides
@@ -1031,20 +1080,21 @@ class RRMatrix extends Controller
 
         slide1 = new Slide1()
         slide2 = new Slide2()
-        chain = new SlideChain [slide1, slide2]
+
+        slide1.data.type = slide2.data.type = "rowRep"
 
         # Suitable for use in a URL
         plus = if factor < 0 then '' else '+'
         [num, den] = approxFraction factor
-        chain.shortOp = "r#{sourceRow}:#{num}"
-        chain.shortOp += ":#{den}" if den != 1
-        chain.shortOp += ":#{targetRow}"
-        chain.texOp = "R_{#{targetRow+1}} = R_{#{targetRow+1}} #{plus}" +
+        slide2.data.shortOp = "r#{sourceRow}:#{num}"
+        slide2.data.shortOp += ".#{den}" if den != 1
+        slide2.data.shortOp += ":#{targetRow}"
+        slide2.data.texOp = "R_{#{targetRow+1}} = R_{#{targetRow+1}} #{plus}" +
             texFraction(factor) + "R_{#{sourceRow+1}}"
 
         slide1: slide1
         slide2: slide2
-        chain: chain
+        chain: new SlideChain [slide1, slide2]
 
     unAugment: (opts) ->
         # Remove the augmentation line.
@@ -1083,7 +1133,9 @@ class RRMatrix extends Controller
 
             fastForward: () -> rrmat.computePositions @_nextState
 
-        new AugSlide()
+        slide = new AugSlide()
+        slide.data.type = "unAugment"
+        slide
 
     reAugment: (opts) ->
         # Add the augmentation line back.
@@ -1123,7 +1175,9 @@ class RRMatrix extends Controller
 
             fastForward: () -> @_nextState.copy()
 
-        new AugSlide()
+        slide = new AugSlide()
+        slide.data.type = "reAugment"
+        slide
 
     # Set the style of a number of matrix elements.
     #
@@ -1134,25 +1188,31 @@ class RRMatrix extends Controller
     #   duration: transition time, in seconds
     #   delay:    delay time, in seconds (default 0)
     #   timing:   easing function (default 'ease')
-    setStyle: (transitions, opts) ->
-        speed = opts?.speed or 1.0
-        # Total time of the effect
-        totalTime = 0
-        if not (transitions instanceof Array)
-            transitions = [transitions]
-        for trans in transitions
-            trans.duration ?= 0.0
-            trans.duration /= speed
-            trans.delay ?= 0.0
-            trans.delay /= speed
-            trans.timing ?= 'ease'
-            totalTime = Math.max totalTime, trans.duration + trans.delay
-            trans.props = []
-            for prop in @styleKeys
-                trans.props.push prop if trans[prop]?
-        rrmat = @
 
-        _setStyle = (i, j, trans) ->
+    class StyleSlide extends Slide
+        constructor: (@transitions, opts) ->
+            @speed = opts?.speed or 1.0
+            # Total time of the effect
+            @transitions = @_initTransitions @transitions
+            super
+
+        _initTransitions: (transitions) ->
+            @totalTime = 0
+            if not (transitions instanceof Array)
+                transitions = [transitions]
+            for trans in transitions
+                trans.duration ?= 0.0
+                trans.duration /= @speed
+                trans.delay ?= 0.0
+                trans.delay /= @speed
+                trans.timing ?= 'ease'
+                @totalTime = Math.max @totalTime, trans.duration + trans.delay
+                trans.props = []
+                for prop in RRMatrix.prototype.styleKeys
+                    trans.props.push prop if trans[prop]?
+            transitions
+
+        _setStyle: (i, j, trans) ->
             if trans.duration
                 transition =
                     ("#{p} #{trans.duration}s #{trans.timing}" \
@@ -1166,49 +1226,96 @@ class RRMatrix extends Controller
             for k, v of style
                 elt.style[k] = v
 
-        class StyleSlide extends Slide
-            start: () ->
-                @_nextState = @transform rrmat.state
-                for trans in transitions
-                    callback = do (trans) => () =>
-                        for entry in trans.entries
-                            _setStyle entry[0], entry[1], trans
-                        null
-                    if trans.delay == 0
-                        # Give colors a chance to reset
-                        rrmat.onNextFrame 1, callback
-                    else
-                        timer = setTimeout callback, trans.delay*1000
-                        rrmat.timers.push timer
-                callback = () =>
-                    rrmat.state = @_nextState
-                    @done()
-                timeout = setTimeout callback, totalTime*1000
-                rrmat.timers.push timeout
-                super
+        start: () ->
+            @_nextState = @transform rrmat.state
+            for trans in @transitions
+                callback = do (trans) => () =>
+                    for entry in trans.entries
+                        @_setStyle entry[0], entry[1], trans
+                    null
+                if trans.delay == 0
+                    # Give colors a chance to reset
+                    rrmat.onNextFrame 1, callback
+                else
+                    timer = setTimeout callback, trans.delay*1000
+                    rrmat.timers.push timer
+            callback = () =>
+                rrmat.state = @_nextState
+                @done()
+            timeout = setTimeout callback, @totalTime*1000
+            rrmat.timers.push timeout
+            super
 
-            transform: (oldState) =>
+        transform: (oldState) =>
+            nextState = oldState.copy()
+            # Compute final matrix entry styles
+            for i in [0...rrmat.numRows]
+                for j in [0...rrmat.numCols]
+                    last = 0.0
+                    style = {}
+                    for trans in @transitions
+                        if trans.delay >= last
+                            for ent in trans.entries
+                                if ent[0] == i and ent[1] == j
+                                    for prop in trans.props
+                                        style[prop] = trans[prop]
+                                    last = trans.delay
+                                    break
+                    for k, v of style
+                        nextState.styles[i][j][k] = v
+            nextState
+
+        fastForward: () -> @_nextState.copy()
+
+    setStyle: (transitions, opts) ->
+        slide = new StyleSlide transitions, opts
+        slide.data.type = "setStyle"
+        slide
+
+    # Automatically highlight pivots
+    highlightPivots: (opts) ->
+        color = opts?.color or "red"
+        if opts?.duration?
+            duration = opts.duration
+        else
+            duration = 0.3
+        rrmat = @
+
+        class PivotSlide extends StyleSlide
+            constructor: () ->
+                super [], opts
+
+            transform: (oldState) ->
                 nextState = oldState.copy()
-                # Compute final matrix entry styles
+                pivots = rrmat.getPivots nextState
+                entries = []
+                for col, row in pivots
+                    continue if col == null
+                    entries.push [row, col]
+                transition1 =
+                    color:    color
+                    duration: duration
+                    entries:  entries
+                entries2 = []
                 for i in [0...rrmat.numRows]
                     for j in [0...rrmat.numCols]
-                        last = 0.0
-                        style = {}
-                        for trans in transitions
-                            if trans.delay >= last
-                                for ent in trans.entries
-                                    if ent[0] == i and ent[1] == j
-                                        for prop in trans.props
-                                            style[prop] = trans[prop]
-                                        last = trans.delay
-                                        break
-                        for k, v of style
-                            nextState.styles[i][j][k] = v
-                nextState
+                        isPivot = false
+                        for ent in entries
+                            if ent[0] == i and ent[1] == j
+                                isPivot = true
+                                break
+                        entries2.push [i,j] unless isPivot
+                transition2 =
+                    color:    "black"
+                    duration: duration
+                    entries:  entries2
+                @transitions = @_initTransitions [transition1, transition2]
+                super nextState
 
-            fastForward: () -> @_nextState.copy()
+        slide = new PivotSlide()
+        slide.data.type = "highlightPivots"
+        slide
 
-        new StyleSlide()
 
 RRMatrix.texFraction = texFraction
 RRMatrix.approxFraction = approxFraction
