@@ -95,6 +95,7 @@ decodeQS = () ->
         ops = []
     state = slideshow.states[0]
     same = true
+    # Prevent the goToSlide callback from adding a history entry
     updatingState = true
     for op, i in ops
         if same
@@ -112,7 +113,6 @@ decodeQS = () ->
     # ops is shorter than slideshow.slides
     if same and ops.length < slideshow.slides.length
         clearAfter ops.length
-    # Prevent the goToSlide callback from adding a history entry
     slideshow.goToSlide cur
     updatingState = false
     updateRREF()
@@ -175,14 +175,60 @@ clearAfter = (slideNum) ->
 
 # This just adds a slide to the slideshow
 addSlide = (slide) ->
+    slides = [slide]
     if slide.data.type == 'rowRep'
-        # Need to re-highlight the pivots in this case
-        slideshow.combine()
-            .addSlide(slide)
-            .highlightPivots()
-            .combined()
-    else
+        slides.push rrmat.highlightPivots()
+    if rrmat.isRREF slide.transform slideshow.getState slideshow.slides.length
+        slide.on 'done', updateRREF
+        # Make a fun animation
+        blink = (col, delay) ->
+            bigger =
+                transform: "scale(2,2)"
+                entries:   ([i, col] for i in [0...rrmat.numRows])
+                duration:  0.4
+                delay:     delay
+                timing:    'linear'
+            smaller =
+                transform: ""
+                entries:   ([i, col] for i in [0...rrmat.numRows])
+                duration:  0.4
+                delay:     delay + 0.4
+                timing:    'linear'
+            [bigger, smaller]
+        shake = (delay) ->
+            entries = [].concat.apply [],
+                ([i,j] for i in [0...rrmat.numRows] for j in [0...rrmat.numCols])
+            left =
+                transform: "rotate(-20deg)"
+                entries:   entries
+                duration:  .1
+                delay:     delay
+                timing:    'linear'
+            right =
+                transform: "rotate(20deg)"
+                entries:   entries
+                duration:  .2
+                delay:     delay + .1
+                timing:    'linear'
+            center =
+                transform: ""
+                entries:   entries
+                duration:  .1
+                delay:     delay + .3
+                timing:    'linear'
+            [left, right, center]
+        anim = [].concat.apply [],
+            (blink col, col * 0.2 for col in [0...rrmat.numCols])
+        anim = anim.concat.apply anim,
+            (blink col, (rrmat.numCols - col - 1) * 0.2 + rrmat.numCols * 0.4 - 0.2 \
+             for col in [rrmat.numCols-1..0])
+        anim = anim.concat.apply anim,
+            (shake i*.4 + rrmat.numCols * 0.8 - 0.2 for i in [0...5])
+        slides.push rrmat.setStyle anim
+    if slides.length == 1
         slideshow.addSlide slide
+    else
+        slideshow.addSlide rrmat.chain slides
 
 # This is called when a new slide is created by the UI
 newSlide = (slide) ->

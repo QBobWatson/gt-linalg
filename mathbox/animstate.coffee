@@ -439,6 +439,12 @@ class Slideshow
         @slides[@currentSlideNum].start()
         @updateUI()
 
+    getState: (slideNum) ->
+        state = @states[0]
+        for i in [0...slideNum]
+            state = @slides[i].transform state
+        state
+
     goToSlide: (slideNum) =>
         return if slideNum < 0 or slideNum > @slides.length
         oldSlideNum = @currentSlideNum

@@ -650,6 +650,7 @@ class RRMatrix extends Controller
         return new NullAnimation()
 
     slideshow: () -> new RRSlideshow @
+    chain: (slides) -> new SlideChain slides
 
     rowSwap: (row1, row2, opts) ->
         # Return an animation in two slides.
