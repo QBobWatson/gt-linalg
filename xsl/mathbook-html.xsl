@@ -2,7 +2,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-<xsl:import href="../../lib/mathbook/xsl/mathbook-html.xsl" />
+<xsl:import href="../../mathbook/xsl/mathbook-html.xsl" />
 
 <xsl:param name="html.css.extra">
   static/css/mathbook-gt-add-on.css

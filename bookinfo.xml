@@ -6,7 +6,7 @@ Copyright 2017 Georgia Institute of Technology
 
 <docinfo>
 
-  <brandlogo url="http://www.gatech.edu" source="images/gatech.gif" />
+  <brandlogo url="http://www.gatech.edu" source="static/images/gatech.gif" />
 
   <latex-preamble>
     <package>color</package>
