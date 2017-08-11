@@ -35,11 +35,11 @@ how to sign your commits.  Run these commands:
 
 You need to join the `math-online-textbooks` group on the campus GitHub site.  I
 can't give you access to the group until you've signed onto GitHub for the first
-time.  To do so, navigate to (https://github.gatech.edu/); send me an email when
+time.  To do so, navigate to https://github.gatech.edu/; send me an email when
 you've signed on.
 
 Once you have access, the GitHub group can be found here:
-(https://github.gatech.edu/math-online-textbooks)
+https://github.gatech.edu/math-online-textbooks
 
 
 ## Setting up an SSH key
@@ -70,8 +70,8 @@ Host github.gatech.edu
 
 4) In your GitHub account settings page
 (https://github.gatech.edu/settings/keys), click the "New SSH Key" button.  Call
-it whatever you want, then paste the contents of `~/.ssh/id_rsa.pub` into the
-"Key" field.
+the key whatever you want, then paste the contents of `~/.ssh/id_rsa.pub`
+into the "Key" field.
 
 Now if you type `ssh github.gatech.edu`, it should give you a message like,
 ```
@@ -83,13 +83,13 @@ This means you're successfully authenticated.
 
 ## Setting up an SSH key if you want to work from home
 
-Unfortunately, you can't connect directly to `github.gatech.edu` from outside
-the campus network.  If you have a VPN set up, you can use that to connect.
+Unfortunately, you can't ssh directly to `github.gatech.edu` from outside the
+campus network.  If you have a VPN set up, you can use that to connect.
 Otherwise, here's a workaround that uses an ssh tunnel through the math ssh
 server.
 
-First `ssh ssh.math.gatech.edu`, then complete steps (1)-(4) above *from the ssh
-shell*.
+First `ssh you@ssh.math.gatech.edu`, then complete steps (1)-(4) above *from the
+ssh shell*.
 
 5) Still from the ssh shell, run `cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys`.  This will let you use the same key to login to ssh.math.gatech.edu.
 
@@ -109,7 +109,7 @@ Host gatech
 Host github.gatech.edu
      User         git
      IdentityFile ~/.ssh/id_rsa
-    ProxyCommand ssh -q gatech nc github.gatech.edu 22
+     ProxyCommand ssh -q gatech nc github.gatech.edu 22
 ```
 
 Now typing `ssh github.gatech.edu` should give you the same message as above.
@@ -137,12 +137,12 @@ I've created a build script that should do everything for you.  Change to your
 project directory (for instance, `~/projects/textbooksGT`), then into the
 `gt-linalg` directory.  Type `./build.sh`.  If everything goes well, then the
 book will appear in `~/projects/textbooksGT/build`.  Open
-``~/projects/textbooksGT/index.html` in a browser.
+`~/projects/textbooksGT/index.html` in a browser.
 
 
 ## Push a commit
 
-Make a test edit to one of the files in `gt-linalg`.  Here is the procedure for synchronizing your repository with the remote:
+Make a test edit to one of the files in `gt-linalg`.  Here is the general procedure for synchronizing your repository with the remote:
 
 1) Run `git fetch origin`.  This pulls any changes from the server that have happened since you started editing and stores them.
 
@@ -161,30 +161,35 @@ Fast-forward
 
 6) Run `git push origin`.  This sends your changes to the server.
 
+Now when you navigate to
+https://github.gatech.edu/math-online-textbooks/gt-linalg/, you should see your
+changes.
+
 
 ## Editing XML
 
-It will probably save you itme in the long run to obtain and learn to use a good XML editor.  Beezer recommends [XML Copy Editor](http://xml-copy-editor.sourceforge.net/).
+It will probably save you time in the long run to obtain and learn to use a good XML editor.  Beezer recommends [XML Copy Editor](http://xml-copy-editor.sourceforge.net/).
 
 One advantage of a smart XML editor is that it knows what tags are allowed
 where.  I've adapted Beezer's XML schema files for this purpose; they are
 contained in `gt-text-common/schemas`.  Use `mathbook-chapter.rnc` for editing a
-chapter, `mathbook-section.rnc` for a section, etc.
+chapter, `mathbook-section.rnc` for a section, etc.  You'll have to figure out
+how to tell your editor to use those schemas.
 
 
 ## Resources
 
 * Beezer's documentation on Mathbook XML:
-    (https://mathbook.pugetsound.edu/)
+    https://mathbook.pugetsound.edu/
 * Author's guide:
-    (http://mathbook.pugetsound.edu/doc/author-guide/html/)
+    http://mathbook.pugetsound.edu/doc/author-guide/html/
 * Intro to git:
-    (http://mathbook.pugetsound.edu/gfa/html/)
+    http://mathbook.pugetsound.edu/gfa/html/
 * FCLA source:
-    (https://github.com/rbeezer/fcla)
+    https://github.com/rbeezer/fcla
 
 * Math 1553 materials can be found here:
-    (http://course-repos.math.gatech.edu/)
+    http://course-repos.math.gatech.edu/
 * Here's a direct link to my slides:
-    (http://course-repos.math.gatech.edu/math1553/slides/allslides-web.pdf)
+    http://course-repos.math.gatech.edu/math1553/slides/allslides-web.pdf
 
