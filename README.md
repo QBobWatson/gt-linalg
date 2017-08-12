@@ -172,9 +172,16 @@ It will probably save you time in the long run to obtain and learn to use a good
 
 One advantage of a smart XML editor is that it knows what tags are allowed
 where.  I've adapted Beezer's XML schema files for this purpose; they are
-contained in `gt-text-common/schemas`.  Use `mathbook-chapter.rnc` for editing a
-chapter, `mathbook-section.rnc` for a section, etc.  You'll have to figure out
-how to tell your editor to use those schemas.
+contained in `gt-text-common/schemas`.  Use `pretext.rnc`, `pretext.rng`, or
+`pretext.xsd`, in that order of preference, depending on what kind of schema
+your editor supports.  You'll have to figure out how to tell your editor to use
+those schemas.
+
+I use Emacs's `nxml-mode`, which came pre-installed with my Emacs distribution.
+I don't think it's worth learning to use Emacs just to edit xml.  If you already
+use Emacs, then be sure to open the xml files in `nxml-mode`; it should
+automatically read the appropriate schema file from the file `schemas.xml`,
+which I've included in the repository.
 
 
 ## Resources

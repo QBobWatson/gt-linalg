@@ -96,6 +96,7 @@ along with MathBook XML.  If not, see <http://www.gnu.org/licenses/>.
 
         <p>You may copy and distribute a Modified Version of the Document under the conditions of sections 2 and 3 above, provided that you release the Modified Version under precisely this License, with the Modified Version filling the role of the Document, thus licensing distribution and modification of the Modified Version to whoever possesses a copy of it. In addition, you must do these things in the Modified Version:</p>
 
+        <p>
         <ol label="A.">
             <li><p>Use in the Title Page (and on the covers, if any) a title distinct from that of the Document, and from those of previous versions (which should, if there were any, be listed in the History section of the Document). You may use the same title as a previous version if the original publisher of that version gives permission.</p></li>
 
@@ -126,7 +127,7 @@ along with MathBook XML.  If not, see <http://www.gnu.org/licenses/>.
             <li><p>Do not retitle any existing section to be Entitled <q>Endorsements</q> or to conflict in title with any Invariant Section.</p></li>
 
             <li><p>Preserve any Warranty Disclaimers.</p></li>
-        </ol>
+        </ol></p>
 
         <p>If the Modified Version includes new front-matter sections or appendices that qualify as Secondary Sections and contain no material copied from the Document, you may at your option designate some or all of these sections as invariant. To do this, add their titles to the list of Invariant Sections in the Modified Version's license notice. These titles must be distinct from any other section titles.</p>
 
