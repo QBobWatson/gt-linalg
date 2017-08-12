@@ -24,9 +24,9 @@ Copyright 2017 Georgia Institute of Technology
     <xi:include href="./gfdl.xml" />
 
     <!-- Index follows appendices, preceded only colophon -->
-    <index-part>
+    <index>
         <index-list />
-    </index-part>
+    </index>
 
     <colophon>
         <p>This book was authored in MathBook XML.</p>

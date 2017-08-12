@@ -20,7 +20,7 @@ the license is included in gfdl.xml.
 
             <theorem xml:id="theorem-integers-division_algorithm">
                 <title>Division Algorithm</title>
-                <index><main>Division algorithm</main><sub>for integers</sub></index>
+                <idx><h>Division algorithm</h><h>for integers</h></idx>
                 <statement>
                     <p>Let <m>a</m> and <m>b</m> be integers, with <m>b \gt 0</m>.  Then there exist unique integers <m>q</m> and <m>r</m> such that
                         <me>a = bq + r</me>
@@ -41,7 +41,7 @@ the license is included in gfdl.xml.
                 </proof>
             </theorem>
 
-            <p>Let <m>a</m> and <m>b</m> be integers.  If <m>b = ak</m> for some integer <m>k</m>, we write <m>a \mid b</m>.  An integer <m>d</m> is called a <term>common divisor</term> of <m>a</m> and <m>b</m> if <m>d \mid a</m> and <m>d \mid b</m>.  The <term>greatest common divisor</term><index><main>Greatest common divisor</main><sub>of two integers</sub></index> of integers <m>a</m> and <m>b</m> is a positive integer <m>d</m> such that <m>d</m> is a common divisor  of <m>a</m> and <m>b</m> and if <m>d'</m> is any other common divisor of <m>a</m> and <m>b</m>, then <m>d' \mid d</m>. <notation><usage>a \mid b</usage><description><m>a</m> divides <m>b</m></description></notation><notation><usage>\gcd(a, b)</usage><description>greatest common divisor of <m>a</m> and <m>b</m></description></notation>  We write <m>d = \gcd(a, b)</m>; for example, <m>\gcd( 24, 36) = 12</m> and <m>\gcd(120, 102) = 6</m>.  We say that two integers <m>a</m> and <m>b</m> are <term>relatively prime</term> if <m>\gcd( a, b ) = 1</m>.</p>
+            <p>Let <m>a</m> and <m>b</m> be integers.  If <m>b = ak</m> for some integer <m>k</m>, we write <m>a \mid b</m>.  An integer <m>d</m> is called a <term>common divisor</term> of <m>a</m> and <m>b</m> if <m>d \mid a</m> and <m>d \mid b</m>.  The <term>greatest common divisor</term><idx><h>Greatest common divisor</h><h>of two integers</h></idx> of integers <m>a</m> and <m>b</m> is a positive integer <m>d</m> such that <m>d</m> is a common divisor  of <m>a</m> and <m>b</m> and if <m>d'</m> is any other common divisor of <m>a</m> and <m>b</m>, then <m>d' \mid d</m>. <notation><usage>a \mid b</usage><description><m>a</m> divides <m>b</m></description></notation><notation><usage>\gcd(a, b)</usage><description>greatest common divisor of <m>a</m> and <m>b</m></description></notation>  We write <m>d = \gcd(a, b)</m>; for example, <m>\gcd( 24, 36) = 12</m> and <m>\gcd(120, 102) = 6</m>.  We say that two integers <m>a</m> and <m>b</m> are <term>relatively prime</term> if <m>\gcd( a, b ) = 1</m>.</p>
 
             <theorem xml:id="theorem-integers-gcd">
                 <statement>
@@ -80,7 +80,7 @@ the license is included in gfdl.xml.
         <subsection>
             <title>The Euclidean Algorithm</title>
 
-            <p>Among other things, Theorem<nbsp /><xref ref="theorem-integers-gcd" /> allows us to compute the greatest common divisor of two integers.</p>
+            <p>Among other things, <xref ref="theorem-integers-gcd" /> allows us to compute the greatest common divisor of two integers.</p>
 
             <example xml:id="example-integers-gcd">
                 <p>Let us compute the greatest common divisor of <m>945</m> and <m>2415</m>.  First observe that<md>
@@ -121,14 +121,14 @@ the license is included in gfdl.xml.
                 <mrow>&amp; = ra + sb.</mrow>
             </md></p>
 
-            <p>The algorithm that we have just used to find the greatest common divisor <m>d</m> of two integers <m>a</m> and <m>b</m> and to write <m>d</m> as the linear combination of <m>a</m> and <m>b</m> is known as the <term>Euclidean algorithm</term><index><main>Euclidean algorithm</main></index><index><main>Algorithm</main><sub>Euclidean</sub></index>.</p>
+            <p>The algorithm that we have just used to find the greatest common divisor <m>d</m> of two integers <m>a</m> and <m>b</m> and to write <m>d</m> as the linear combination of <m>a</m> and <m>b</m> is known as the <term>Euclidean algorithm</term><idx><h>Euclidean algorithm</h></idx><idx><h>Algorithm</h><h>Euclidean</h></idx>.</p>
 
         </subsection>
 
         <subsection>
             <title>Prime Numbers</title>
 
-            <p>Let <m>p</m> be an integer such that <m>p \gt 1</m>.  We say that <m>p</m> is a <term>prime number</term><index><main>Prime integer</main></index>, or simply <m>p</m> is <term>prime</term>, if the only positive numbers that divide <m>p</m> are 1 and <m>p</m> itself.  An integer <m>n \gt 1</m> that is not prime is said to be <term>composite</term><index><main>Composite integer</main></index>.</p>
+            <p>Let <m>p</m> be an integer such that <m>p \gt 1</m>.  We say that <m>p</m> is a <term>prime number</term><idx><h>Prime integer</h></idx>, or simply <m>p</m> is <term>prime</term>, if the only positive numbers that divide <m>p</m> are 1 and <m>p</m> itself.  An integer <m>n \gt 1</m> that is not prime is said to be <term>composite</term><idx><h>Composite integer</h></idx>.</p>
 
             <lemma xml:id="theorem-integers-prime-divisor">
                 <title>Euclid</title>
@@ -157,7 +157,7 @@ the license is included in gfdl.xml.
 
             <theorem xml:id="theorem-fund-theorem-arithmetic">
                 <title>Fundamental Theorem of Arithmetic</title>
-                <index><main>Fundamental Theorem</main><sub>of Arithmetic</sub></index>
+                <idx><h>Fundamental Theorem</h><h>of Arithmetic</h></idx>
                 <statement>
                     <p>Let <m>n</m> be an integer such that <m>n \gt 1</m>. Then
                         <me>n = p_1 p_2 \cdots p_k,</me>
@@ -168,7 +168,7 @@ the license is included in gfdl.xml.
                 <proof>
                     <p><em>Uniqueness.</em>  To show uniqueness we will use induction on <m>n</m>. The theorem is certainly true for <m>n = 2</m> since in this case <m>n</m> is prime.  Now assume that the result holds for all integers <m>m</m> such that <m>1 \leq m \lt n</m>, and
                         <me>n = p_1 p_2 \cdots p_k = q_1 q_2 \cdots q_l,</me>
-                    where <m>p_1 \leq p_2 \leq \cdots \leq p_k</m> and <m>q_1 \leq q_2 \leq \cdots \leq q_l</m>. By Lemma<nbsp /><xref ref="theorem-integers-prime-divisor" />, <m>p_1  \mid  q_i</m> for some <m>i = 1, \ldots, l</m> and <m>q_1  \mid  p_j</m> for some <m>j = 1, \ldots, k</m>.  Since all of the <m>p_i</m>'s and <m>q_i</m>'s are prime, <m>p_1 = q_i</m> and  <m>q_1 = p_j</m>. Hence, <m>p_1 = q_1</m> since <m>p_1 \leq p_j = q_1 \leq q_i = p_1</m>.  By the induction hypothesis,
+                    where <m>p_1 \leq p_2 \leq \cdots \leq p_k</m> and <m>q_1 \leq q_2 \leq \cdots \leq q_l</m>. By <xref ref="theorem-integers-prime-divisor" />, <m>p_1  \mid  q_i</m> for some <m>i = 1, \ldots, l</m> and <m>q_1  \mid  p_j</m> for some <m>j = 1, \ldots, k</m>.  Since all of the <m>p_i</m>'s and <m>q_i</m>'s are prime, <m>p_1 = q_i</m> and  <m>q_1 = p_j</m>. Hence, <m>p_1 = q_1</m> since <m>p_1 \leq p_j = q_1 \leq q_i = p_1</m>.  By the induction hypothesis,
                         <me>n' = p_2 \cdots p_k = q_2 \cdots q_l</me>
                     has a unique factorization.  Hence, <m>k = l</m> and <m>q_i = p_i</m> for <m>i = 1, \ldots, k</m>.</p>
 

@@ -67,7 +67,7 @@ the license is included in gfdl.xml.
         <solution xml:id="solution-li-10">
           <p>With three vectors from <m>\R^3</m>, we can form a square matrix by making these three vectors the columns of a matrix.  We do so, and row-reduce to obtain<me>
           \mat{\leading1 0 0; 0 \leading1 0; 0 0 \leading1},
-          </me>the <m>3\times 3</m> identity matrix.  So by Theorem <xref provisional="theorem-?"/> the original matrix is nonsingular and its columns are therefore a linearly independent set.</p>
+          </me>the <m>3\times 3</m> identity matrix.  So by <xref provisional="theorem-?"/> the original matrix is nonsingular and its columns are therefore a linearly independent set.</p>
         </solution>
       </exercise>
 
@@ -78,7 +78,7 @@ the license is included in gfdl.xml.
           </m></p>
         </statement>
         <solution xml:id="solution-li-11">
-          <p>Theorem <xref provisional="theorem-?"/> says we can answer this question by putting these vectors into a matrix as columns and row-reducing.  Doing this we obtain<me>
+          <p><xref provisional="theorem-?"/> says we can answer this question by putting these vectors into a matrix as columns and row-reducing.  Doing this we obtain<me>
           \mat{\leading1 0 0; 0 \leading1 0; 0 0 \leading1; 0 0 0}.
           </me>  Since every column has a pivot, the theorem says the vectors are linearly independent.</p>
         </solution>
@@ -92,7 +92,7 @@ the license is included in gfdl.xml.
           </m></p>
         </statement>
         <solution xml:id="solution-li-12">
-          <p>This is a set of five vectors in <m>\R^3</m>.  Theorem <xref provisional="theorem-?"/> says the set is linearly dependent.  Boom.</p>
+          <p>This is a set of five vectors in <m>\R^3</m>.  <xref provisional="theorem-?"/> says the set is linearly dependent.  Boom.</p>
         </solution>
       </exercise>
 
@@ -107,7 +107,7 @@ the license is included in gfdl.xml.
           </m></p>
         </statement>
         <solution xml:id="solution-li-13">
-          <p>Theorem <xref provisional="theorem-?"/> says we can answer this question by putting these vectors into a matrix as columns and row-reducing.  Doing this we obtain<me>
+          <p><xref provisional="theorem-?"/> says we can answer this question by putting these vectors into a matrix as columns and row-reducing.  Doing this we obtain<me>
           \mat{\leading1 0 0 0;
               0 \leading1 0 0;
               0 0 \leading1 0;
@@ -129,7 +129,7 @@ the license is included in gfdl.xml.
           </m></p>
         </statement>
         <solution xml:id="solution-li-14">
-          <p>Theorem <xref provisional="theorem-?"/> says we can answer this question by putting these vectors into a matrix as columns and row-reducing.  Doing this we obtain<me>
+          <p><xref provisional="theorem-?"/> says we can answer this question by putting these vectors into a matrix as columns and row-reducing.  Doing this we obtain<me>
           \mat{\leading1 0 1 2;
               0 \leading1 1 -1;
               0 0 0 0;
@@ -146,7 +146,7 @@ the license is included in gfdl.xml.
           </m></p>
         </statement>
         <solution xml:id="solution-li-15">
-          <p>Theorem <xref provisional="theorem-?"/> says we can answer this question by putting these vectors into a matrix as columns and row-reducing.  Doing this we obtain<me>
+          <p><xref provisional="theorem-?"/> says we can answer this question by putting these vectors into a matrix as columns and row-reducing.  Doing this we obtain<me>
           \mat{\leading1 0 -1;
               0 \leading1 3;
               0 0 0;
@@ -167,11 +167,11 @@ the license is included in gfdl.xml.
         </p>
       </statement>
       <solution xml:id="solution-li-20">
-        <p>The requested set is described by Theorem <xref provisional="theorem-?"/>.  It is easiest to find by using the procedure of Example <xref provisional="example-?"/>.  Begin by row-reducing the matrix, viewing it as the coefficient matrix of a homogeneous system of equations.  We obtain
+        <p>The requested set is described by <xref provisional="theorem-?"/>.  It is easiest to find by using the procedure of Example <xref provisional="example-?"/>.  Begin by row-reducing the matrix, viewing it as the coefficient matrix of a homogeneous system of equations.  We obtain
         <me>
           \mat{\leading1 0 1 -2; 0 \leading1 1 1; 0 0 0 0}.
         </me>
-        The free variables are <m>x_3</m> and <m>x_4</m>, due to the locations of the non-pivot columns.  It follows from Theorem <xref provisional="theorem-?" /> that the parametric vector form of the solution set of the matrix equation <m>Bx=0</m> is
+        The free variables are <m>x_3</m> and <m>x_4</m>, due to the locations of the non-pivot columns.  It follows from <xref provisional="theorem-?" /> that the parametric vector form of the solution set of the matrix equation <m>Bx=0</m> is
         <me>\vec{x_1 x_2 x_3 x_4} = x_3\vec{-1 -1 1 0} + x_4\vec{2 -1 0 1}.</me>
         The null space is exactly the solution set of <m>Bx=0</m>;
         the constant vectors in the above expression span the null space, and they are linearly independent.  Thus we can take our answer to be
@@ -197,7 +197,7 @@ the license is included in gfdl.xml.
           <me>
             \mat{\leading1 2 0 0 3; 0 0 \leading1 0 6; 0 0 0 \leading1 -4; 0 0 0 0 0}.
           </me>
-          The free variables correspond to the second and fifth columns.  Using Theorem <xref provisional="theorem-?" />, the parametric vector form of the solution set of <m>Ax=0</m> is
+          The free variables correspond to the second and fifth columns.  Using <xref provisional="theorem-?" />, the parametric vector form of the solution set of <m>Ax=0</m> is
           <me>
             \vec{x_1 x_2 x_3 x_4 x_5} = x_2\vec{-2 1 0 0 0} + x_5\vec{-3 0 -6 4 1}.
           </me>
@@ -219,12 +219,12 @@ the license is included in gfdl.xml.
         </p>
       </statement>
       <solution xml:id="solution-li-22">
-        <p>The conclusion of Theorem <xref provisional="theorem-?"/> gives us everything this question asks for.  We need the reduced row-echelon form of the matrix in order to determine the number of vectors in <m>T</m>, and their entries.
+        <p>The conclusion of <xref provisional="theorem-?"/> gives us everything this question asks for.  We need the reduced row-echelon form of the matrix in order to determine the number of vectors in <m>T</m>, and their entries.
         <me>
           \mat{2 1 1 1; -4 -3 1 -7; 1 1 -1 3} \rref
           \mat{\leading1 0 2 -2; 0 \leading1 -3 5; 0 0 0 0}
         </me>
-        The third and fourth columns are free, so we can apply Theorem <xref provisional="theorem-?"/> and take the set <m>T</m> to have the two vectors
+        The third and fourth columns are free, so we can apply <xref provisional="theorem-?"/> and take the set <m>T</m> to have the two vectors
         <me>
           T = \setof{\vec{-2 3 1 0},\,\vec{2 -5 0 1}}.
         </me>
@@ -243,12 +243,12 @@ the license is included in gfdl.xml.
       </statement>
       <solution xml:id="solution-li-23">
         <p>
-          A direct application of Theorem <xref provisional="theorem-?"/> will provide the desired set.  We require the reduced row-echelon form of <m>A</m>:
+          A direct application of <xref provisional="theorem-?"/> will provide the desired set.  We require the reduced row-echelon form of <m>A</m>:
           <me>
             \mat{2 3 3 1 4; 1 1 -1 -1 -3; 3 2 -8 -1 1} \rref
             \mat{\leading1 0 -6 0 3; 0 \leading1 5 0 -2; 0 0 0 \leading1 4}
           </me>
-          The third and fifth columns are free, so we can apply Theorem <xref provisional="theorem-?"/> and take the set <m>T</m> to have the two vectors
+          The third and fifth columns are free, so we can apply <xref provisional="theorem-?"/> and take the set <m>T</m> to have the two vectors
           <me>
             T = \setof{\vec{6 -5 1 0 0},\,\vec{-3 2 0 -4 1}}.
           </me>
@@ -267,12 +267,12 @@ the license is included in gfdl.xml.
       </statement>
       <solution xml:id="solution-li-24">
         <p>
-          Theorem <xref provisional="theorem-?" /> says that if we find the vector form of the solutions to the homogeneous system <m>Ax=0</m>, then the spanning vectors will have the desired properties.  We row-reduce <m>A</m>, viewing it as the augmented matrix of a homogeneous system with an invisible columns of zeros as the last column:
+          <xref provisional="theorem-?" /> says that if we find the vector form of the solutions to the homogeneous system <m>Ax=0</m>, then the spanning vectors will have the desired properties.  We row-reduce <m>A</m>, viewing it as the augmented matrix of a homogeneous system with an invisible columns of zeros as the last column:
           <me>
             \mat{1 1 6 -8; 1 -2 0 1; -2 1 -6 7} \rref
             \mat{\leading1 0 4 -5; 0 1 2 -3; 0 0 0 0}
           </me>
-          Moving to the parametric vector form of the solutions (Theorem <xref provisional="theorem-?"/>), with free variables <m>x_3</m> and <m>x_4</m>, the solutions to the consistent system <m>Ax=0</m> (it is consistent: see <xref provisional="theorem-?"/>) can be expressed as
+          Moving to the parametric vector form of the solutions (<xref provisional="theorem-?"/>), with free variables <m>x_3</m> and <m>x_4</m>, the solutions to the consistent system <m>Ax=0</m> (it is consistent: see <xref provisional="theorem-?"/>) can be expressed as
           <me>
             \vec{x_1 x_2 x_3 x_4} = x_3\vec{-4 -2 1 0} + x_4\vec{5 3 0 1}.
           </me>
@@ -318,7 +318,7 @@ the license is included in gfdl.xml.
           This is a homogeneous system of equations, and it has infinitely many solutions.  By the now familiar techniques, you can find one such solution to be <m>a_1=3</m>, <m>a_2=4</m>, <m>a_3=-5</m>, which you can (and should!) check in the original relation of linear dependence on <m>T</m> above.
         </p>
 
-        <p>Note that simply writing down the three scalars, and demonstrating that they provide a nontrivial relation of linear dependence on <m>T</m>, could be considered an ironclad solution.  But it would not have been very informative for you if we had only done just that here.  Compare this solution very carefully with the solution to <xref ref="exercise-li-31" autoname="yes"/>.</p>
+        <p>Note that simply writing down the three scalars, and demonstrating that they provide a nontrivial relation of linear dependence on <m>T</m>, could be considered an ironclad solution.  But it would not have been very informative for you if we had only done just that here.  Compare this solution very carefully with the solution to <xref ref="exercise-li-31" text="type-global"/>.</p>
       </solution>
     </exercise>
 
@@ -357,7 +357,7 @@ the license is included in gfdl.xml.
           By the familiar methods, you can check that this homogeneous system of linear equations admits only the trivial solution <m>a_1=a_2=a_3=0</m>, as desired.
         </p>
 
-        <p>Compare this solution very carefully with <xref ref="exercise-li-30" autoname="yes"/>, noting especially how this problem required (and used) the hypothesis that the original set be linearly independent, and how this solution feels more like a proof, while the previous problem could be solved with a fairly simple demonstration of any nontrivial relation of linear dependence.</p>
+        <p>Compare this solution very carefully with <xref ref="exercise-li-30" text="type-global"/>, noting especially how this problem required (and used) the hypothesis that the original set be linearly independent, and how this solution feels more like a proof, while the previous problem could be solved with a fairly simple demonstration of any nontrivial relation of linear dependence.</p>
       </solution>
     </exercise>
 
