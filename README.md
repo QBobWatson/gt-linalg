@@ -5,7 +5,7 @@ Throughout this guide, I'm assuming you're using a UNIX-like system (e.g., a
 Mac), and that you have basic familiarity with the command shell.  All of the
 interaction is done through the shell.
 
-Overview:
+Overview: 
 * Install prerequisites
 * Sign up for GitHub
 * Create an SSH key
