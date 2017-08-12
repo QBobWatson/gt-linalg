@@ -5,9 +5,8 @@ die() {
     exit 1
 }
 
-realpath=$(realpath "$0")
-compile_dir=$(dirname $realpath)
-base_dir=$(realpath "$compile_dir/..")
+compile_dir=$(dirname "$0")
+base_dir="$compile_dir/.."
 build_dir="$base_dir/build"
 static_dir="$build_dir/static"
 
