@@ -24,6 +24,8 @@ evExpr = (expr) ->
 
 # Parse a matrix out of a URL-encoded matrix
 parseMatrix = (str) ->
+    if not str
+        return null
     inRows = str.split ':'
     maxRow = 0
     mat = []
@@ -37,6 +39,8 @@ parseMatrix = (str) ->
     # Make sure the rows have the same size
     for row in mat
         row.push 0 for [row.length...maxRow]
+    if mat.length == 0 or maxRow == 0
+        return null
     mat
 
 # Create a slide from a shortOp (from a URL)
@@ -310,6 +314,21 @@ install = () ->
     rrefDiv    = document.querySelector '.row-rref'
     selectors  = document.querySelectorAll '.slideshow .row-selector'
 
+    # Reload the page with a new matrix
+    useMatBtn.onclick = () ->
+        val = newMatrix.value
+            .replace(/\n/g, ":")
+            .replace(/\s/g, "")
+            .replace(/:+$/, "")
+        val = encodeURIComponent(val).replace /%(?:2C|3A)/g, unescape
+        window.location.href = "?mat=" + val
+
+    if not startMatrix
+        newMatDiv.classList.add 'active'
+        document.getElementById("rrmat-ui").style.display = 'none'
+        document.getElementById("mathbox").style.display = 'none'
+        return
+
     # Add and attach row selector buttons
     for selector in selectors
         # This function enables mutually exclusive selection
@@ -358,15 +377,6 @@ install = () ->
             newMatDiv.classList.remove 'active'
         else
             newMatDiv.classList.add 'active'
-
-    # Reload the page with a new matrix
-    useMatBtn.onclick = () ->
-        val = newMatrix.value
-            .replace(/\n/g, ":")
-            .replace(/\s/g, "")
-            .replace(/:+$/, "")
-        val = encodeURIComponent(val).replace /%(?:2C|3A)/g, unescape
-        window.location.href = "?mat=" + val
 
     # Add initial matrix
     addMatrixToHistory startMatrix

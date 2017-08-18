@@ -55,7 +55,7 @@
             <button class="ops-button">Use this matrix</button>
         </div>
     </div>
-    <div class="centered">
+    <div class="centered" id="rrmat-ui">
         <div class="slideshow rrmat">
             <div class="controls">
                 <span class="control-button">
@@ -115,6 +115,8 @@
 
         // Install interactive code
         var mat = RRInter.install();
+        if(!mat)
+            return;
 
         var ortho = 10000;
         var width = 800;
