@@ -28,8 +28,15 @@ Free Documentation License"
     <!-- Chapters -->
     <xi:include href="./overview.xml" />
 
+	<chapter xml:id="chap-lines-planes">
+		<title> Lines, Planes, and Euclidean space</title>	  
+		 <xi:include href="./LinesPlanes.xml" />
+	</chapter>
+
+
     <chapter xml:id="chap-linear-equations">
       <title>Linear Equations</title>
+
 
       <introduction>
         <p>Lay's chapter 1</p>

@@ -142,7 +142,9 @@ book will appear in `~/projects/textbooksGT/build`.  Open
 
 ## Push a commit
 
-Make a test edit to one of the files in `gt-linalg`.  Here is the general procedure for synchronizing your repository with the remote:
+After making changes to the xml files, first build the site on your computer using the above instructions.  Assuming there are no errors, you now want to update the version on the GitHub repository.
+
+Here is the general procedure for synchronizing your repository with the remote:
 
 1) Run `git fetch origin`.  This pulls any changes from the server that have happened since you started editing and stores them.
 

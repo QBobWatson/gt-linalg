@@ -74,6 +74,12 @@ Copyright 2017 Georgia Institute of Technology
         <institution>Georgia Institute of Technology</institution>
         <email>jrabinoff@math.gatech.edu</email>
       </contributor>
+ <contributor xml:id="jdr">
+        <personname>Larry Rolen</personname>
+        <department>School of Mathematics</department>
+        <institution>Georgia Institute of Technology</institution>
+        <email>	larry.rolen@math.gatech.edu</email>
+      </contributor>
     </contributors>
 
   </preface>
