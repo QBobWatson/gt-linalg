@@ -59,140 +59,8 @@
                 </span><br>
                 <span class="pages"></span>
             </div>
-            <div class="slides">
-                <div class="slide">
-                    Let's row reduce this matrix.
-                </div>
-                <div class="slide inactive">
-                    These are the pivots in the first column.
-                </div>
-                <div class="slide inactive">
-                    These are the pivots in the first column.
-                    We need to move one of them to the first row.
-                </div>
-                <div class="slide inactive">
-                    Make this entry a 1 by dividing by 2.
-                </div>
-                <div class="slide inactive">
-                    Let's get rid of this distracting line.
-                </div>
-                <div class="slide inactive immediate">
-                    We kill this entry...
-                </div>
-                <div class="slide inactive immediate">
-                    We kill this entry...
-                </div>
-                <div class="slide inactive immediate">
-                    We kill this entry by subtracting 3 times the first row.
-                </div>
-                <div class="slide inactive">
-                    Now that the first column is clear except for the pivot in
-                    the first row, we can ignore the first row and the first
-                    column and concentrate on the rest of the matrix.
-                </div>
-                <div class="slide inactive">
-                    Both of the remaining entries in the second column are pivots.
-                </div>
-                <div class="slide inactive">
-                    Both of the remaining entries in the second column are pivots.
-                </div>
-                <div class="slide inactive">
-                    We'll use the bottom entry as our pivot...
-                </div>
-                <div class="slide inactive">
-                    We'll use the bottom entry as our pivot, so we have to switch columns.
-                </div>
-                <div class="slide inactive">
-                    We'll use the bottom entry as our pivot, so we have to switch columns.
-                </div>
-                <div class="slide inactive">
-                    Divide row 2 by -5 to make this pivat a 1.
-                </div>
-                <div class="slide inactive">
-                    Divide row 2 by -5 to make this pivat a 1.  (The other
-                    entries in this row are divisible by 5; that's why we used
-                    this row as the pivot row.)
-                </div>
-                <div class="slide inactive">
-                    To kill this entry...
-                </div>
-                <div class="slide inactive">
-                    To kill this entry, we add 7 times row 2 to row 3.
-                </div>
-                <div class="slide inactive">
-                    To kill this entry, we add 7 times row 2 to row 3.
-                </div>
-                <div class="slide inactive">
-                    Now the second column (the part we care about) is clear
-                    except for the pivot in the pivot, so we can ignore the
-                    second column and second row.
-                </div>
-                <div class="slide inactive">
-                    The first nonzero entry of the last row is a pivot.
-                </div>
-                <div class="slide inactive">
-                    The first nonzero entry of the last row is a pivot.
-                </div>
-                <div class="slide inactive">
-                    We divide by 10 to make it equal to 1.
-                </div>
-                <div class="slide inactive">
-                    We divide by 10 to make it equal to 1.
-                </div>
-                <div class="slide inactive">
-                    Notice that the matrix is now in <i>row echelon form</i>.
-                </div>
-                <div class="slide inactive">
-                    Notice that the matrix is now in <i>row echelon form</i>.
-                </div>
-                <div class="slide inactive">
-                    To put the matrix in <i>reduced</i> row echelon form, we
-                    need to clear the entries in <span style="color: blue;">blue</span>.
-                </div>
-                <div class="slide inactive">
-                    To put the matrix in <i>reduced</i> row echelon form, we
-                    need to clear the entries in <span style="color: blue;">blue</span>.
-                </div>
-                <div class="slide inactive">
-                    We do this by taking advantage of the pivots in each column
-                    and doing row replacement.
-                </div>
-                <div class="slide inactive">
-                    We do this by taking advantage of the pivots in each column
-                    and doing row replacement.
-                </div>
-                <div class="slide inactive">
-                    First we clear the second column...
-                </div>
-                <div class="slide inactive">
-                    First we clear the second column by subtracting 2 times the
-                    second row from the first.
-                </div>
-                <div class="slide inactive">
-                    First we clear the second column by subtracting 2 times the
-                    second row from the first.
-                </div>
-                <div class="slide inactive">
-                    Now we clear the third column...
-                </div>
-                <div class="slide inactive">
-                    Now we clear the third column in the same way.
-                </div>
-                <div class="slide inactive">
-                    Now we clear the third column in the same way.
-                </div>
-                <div class="slide inactive">
-                    The matrix is now in reduced row echelon form!
-                </div>
-                <div class="slide inactive">
-                    The matrix is now in reduced row echelon form!
-                </div>
-                <div class="slide inactive">
-                    Add back the divider...
-                </div>
-                <div class="slide inactive">
-                    Add back the divider, and we're done!
-                </div>
+            <div class="caption">
+                Let's row reduce this matrix.
             </div>
         </div>
         <div class="my-turn">
@@ -278,149 +146,152 @@
         window.slideshow =
             rrmat.slideshow()
 
-                 .combine()
-                 .nextCaption()
+                 .caption("These are the pivots in the first column.")
                  .setStyle(blink("red", [[1,0],[2,0]]))
-                 .combined()
+                 .caption("These are the pivots in the first column."
+                        + " We need to move one of them to the first row.")
+                 .break()
 
-                 .combine()
                  .setStyle({color: "black",
                             entries: [[2,0]],
                             duration: 0.2})
                  .rowSwap(0, 1)
-                 .combined()
+                 .break()
 
-                 .combine()
+                 .caption("Make this entry a 1 by dividing by 2.")
                  .setStyle(blink("red", [[0,0]], 1))
                  .rowMult(0, 1/2)
-                 .combined()
+                 .break()
 
-                 .combine()
+                 .caption("Let's get rid of this distracting line.")
                  .unAugment()
-                 .nextCaption()
-                 .setStyle(blink("blue", [[2,0]], 1))
-                 .combined()
+                 .break()
 
-                 .combine()
-                 .nextCaption()
+                 .caption("We kill this entry...")
+                 .setStyle(blink("blue", [[2,0]], 1))
+                 .caption("We kill this entry by subtracting 3 times the first row.")
                  .rowRep(0, -3, 2)
                  .setStyle({color: "black",
                             entries: [[2,0]],
                             duration: 0.2})
-                 .combined()
+                 .break()
 
-                 .combine()
+                 .caption("Now that the first column is clear except for the pivot in"
+                        + " the first row, we can ignore the first row and the first"
+                        + " column and concentrate on the rest of the matrix.")
                  .setStyle({color: "rgb(200,200,200)",
                             entries: [[0,0],[0,1],[0,2],[0,3],[1,0],[2,0]],
                             duration: 0.5})
-                 .nextCaption()
-                 .setStyle(blink("red", [[1,1],[2,1]]))
-                 .combined()
+                 .break()
 
-                 .combine()
-                 .nextCaption()
+                 .caption("Both of the remaining entries in the second column are pivots.")
+                 .setStyle(blink("red", [[1,1],[2,1]]))
+                 .break()
+
+                 .caption("We'll use the bottom entry as our pivot...")
                  .setStyle({color: "black",
                             entries: [[1,1]],
                             duration: 1})
-                 .nextCaption()
+                 .caption("We'll use the bottom entry as our pivot, so we have to switch columns.")
                  .rowSwap(1, 2)
-                 .combined()
+                 .break()
 
-                 .combine()
-                 .nextCaption()
+                 .caption("Divide row 2 by -5 to make this pivat a 1.")
                  .rowMult(1, -1/5)
-                 .combined()
+                 .caption("Divide row 2 by -5 to make this pivat a 1."
+                        + " (The other entries in this row are divisible by 5; that's why we"
+                        + " used this row as the pivot row.)")
+                 .break()
 
-                 .combine()
-                 .nextCaption()
+                 .caption("To kill this entry...")
                  .setStyle(blink("blue", [[2,1]], 1))
-                 .nextCaption()
+                 .caption("To kill this entry, we add 7 times row 2 to row 3.")
                  .rowRep(1, 7, 2)
                  .setStyle({color: "black",
                             entries: [[2,1]],
                             duration: 0.2})
-                 .nextCaption()
-                 .combined()
+                 .break()
 
-                 .combine()
+                 .caption("Now the second column (the part we care about) is clear"
+                        + " except for the pivot in the pivot, so we can ignore the"
+                        + " second column and second row.")
                  .setStyle({color: "rgb(200,200,200)",
                             entries: [[1,1],[1,2],[1,3],[2,1]],
                             duration: 1})
-                 .nextCaption()
+                 .break()
+
+                 .caption("The first nonzero entry of the last row is a pivot.")
                  .setStyle(blink("red", [[2,2]]))
-                 .combined()
+                 .break()
 
-                 .combine()
-                 .nextCaption()
+                 .caption("We divide by 10 to make it equal to 1.")
                  .rowMult(2, 1/10)
-                 .combined()
+                 .break()
 
-                 .combine()
-                 .nextCaption()
+                 .caption("Notice that the matrix is now in <i>row echelon form</i>.")
                  .setStyle([{color: "red",
                              entries: [[0,0],[1,1],[2,2]],
                              duration: 1},
                             {color: "black",
                              entries: [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3]],
                              duration: 1}])
-                 .combined()
+                 .break()
 
-                 .combine()
-                 .nextCaption()
+                 .caption("To put the matrix in <i>reduced</i> row echelon form, we"
+                        + " need to clear the entries in"
+                        + " <span style=\"color: blue;\">blue</span>.")
                  .setStyle([{color: "black",
                              entries: [[0,0],[1,1],[2,2]],
                              duration: 1}]
                      .concat(blink("blue", [[0,1],[0,2],[1,2]], 1)))
-                 .combined()
+                 .break()
 
-                 .combine()
-                 .nextCaption()
+                 .caption("We do this by taking advantage of the pivots in each column"
+                        + " and doing row replacement.")
                  .setStyle(blink("red", [[1,1],[2,2]]))
-                 .combined()
+                 .break()
 
-                 .combine()
-                 .nextCaption()
+                 .caption("First we clear the second column...")
                  .setStyle([{color: "black",
                              entries: [[0,2], [1,2], [2,2]],
                              duration: 1}]
                      .concat(blink("red", [[1,1]], 1))
                      .concat(blink("blue", [[0,1]], 1)))
-                 .nextCaption()
+                 .caption("First we clear the second column by subtracting 2 times the"
+                        + " second row from the first.")
                  .rowRep(1, -2, 0)
-                 .combined()
+                 .break()
 
-                 .combine()
-                 .nextCaption()
+                 .caption("Now we clear the third column...")
                  .setStyle([{color: "black",
                              entries: [[0,1],[1,1]],
                              duration: 1}]
                      .concat(blink("red", [[2,2]], 1))
                      .concat(blink("blue", [[0,2],[1,2]], 1)))
-                 .nextCaption()
+                 .caption("Now we clear the third column in the same way.")
                  .rowRep(2, -2, 1, {speed: 2})
                  .rowRep(2,  1, 0, {speed: 2})
-                 .combined()
+                 .break()
 
-                 .combine()
-                 .nextCaption()
+                 .caption("The matrix is now in reduced row echelon form!")
                  .setStyle([{color: "black",
                              entries: [[1,0],[2,0],[2,1],[0,2],[1,2]],
                              duration: 1},
                             {color: "red",
                              entries: [[0,0],[1,1]],
                              duration: 1}])
-                 .combined()
+                 .break()
 
-                 .combine()
-                 .nextCaption()
+                 .caption("Add back the divider...")
                  .reAugment()
+                 .caption("Add back the divider, and we're done!")
                  .setStyle({transform: "rotate(360deg)",
                             entries: [[0,0],[0,1],[0,2],[0,3],
                                       [1,0],[1,1],[1,2],[1,3],
                                       [2,0],[2,1],[2,2],[2,3]],
                             duration: 1.5,
                             timing: 'linear'})
-                 .combined()
+                 .break()
 
 
         document.querySelector(".my-turn button").onclick = function() {

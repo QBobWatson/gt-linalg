@@ -372,13 +372,15 @@ class Slideshow
         @states = [@controller.state.copy()]
         @currentSlideNum = 0
         @playing = false
+        @combining = []
 
         cls = ".slideshow.#{@controller.name}"
         @prevButton   = document.querySelector "#{cls} .prev-button"
         @reloadButton = document.querySelector "#{cls} .reload-button"
         @nextButton   = document.querySelector "#{cls} .next-button"
         @pageCounter  = document.querySelector "#{cls} .pages"
-        @captions  = document.querySelectorAll "#{cls} .slides > .slide"
+        @captionDiv   = document.querySelector "#{cls} .caption"
+        @states[0].caption = @controller.state.caption = @captionDiv?.innerHTML;
 
         @prevButton.onclick   = () => @prevSlide()
         @nextButton.onclick   = () => @nextSlide()
@@ -413,12 +415,8 @@ class Slideshow
             @goToSlide @currentSlideNum - 1
         @play()
 
-    updateCaption: (j) ->
-        return unless @captions.length
-        @captions[j].classList.remove 'inactive'
-        for caption, i in @captions
-            if i != j and !@captions[i].classList.contains 'inactive'
-                @captions[i].classList.add 'inactive'
+    updateCaption: (text) ->
+        @captionDiv?.innerHTML = text
 
     updateUI: (oldSlideNum=-1) =>
         if @currentSlideNum == 0 and !@playing
@@ -452,7 +450,6 @@ class Slideshow
         if @currentSlideNum > oldSlideNum
             if @playing
                 @states[oldSlideNum+1] = @slides[oldSlideNum].fastForward()
-                @states[oldSlideNum+1].captionNum++
                 start = oldSlideNum+1
             else
                 start = oldSlideNum
@@ -462,7 +459,7 @@ class Slideshow
         else if @playing
             @slides[oldSlideNum].stop()
         @controller.jumpState @states[@currentSlideNum]
-        @updateCaption @states[@currentSlideNum].captionNum
+        @updateCaption @states[@currentSlideNum].caption
         @playing = false
         @updateUI oldSlideNum
         if oldSlideNum != @currentSlideNum
@@ -472,19 +469,7 @@ class Slideshow
     # API for creating the slideshow
 
     addSlide: (slide) ->
-        if @combining?
-            @combining.push slide
-            return @
-        @slides.push slide
-        slide.on 'done', () =>
-            @playing = false
-            @currentSlideNum += 1
-            @controller.state.captionNum++
-            @states[@currentSlideNum] = @controller.state.copy()
-            @updateUI @currentSlideNum - 1
-            @updateCaption @controller.state.captionNum
-            @trigger type: 'slide.new', stateNum: @currentSlideNum
-        @updateUI()
+        @combining.push slide
         @
 
     removeSlide: (index) ->
@@ -497,44 +482,40 @@ class Slideshow
             @currentSlideNum--
             @updateUI()
 
-    reset: () ->
-        # Remove all slides
-        @nextSlide() if @playing
-        @slides = []
-        @states = [@controller.state.copy()]
-        @currentSlideNum = 0
-        @playing = false
-        @updateUI()
-
-    # Combine several slides into a chain.  End with combined()
-    combine: () ->
-        @combining = []
-        @
-    combined: (opts) ->
+    break: () ->
         combining = @combining
-        delete @combining
-        @addSlide (new SlideChain combining)
+        @combining = []
+        slide = new SlideChain combining
+        @slides.push slide
+        slide.on 'done', () =>
+            @playing = false
+            @currentSlideNum += 1
+            @states[@currentSlideNum] = @controller.state.copy()
+            @updateUI @currentSlideNum - 1
+            @updateCaption @controller.state.caption
+            @trigger type: 'slide.new', stateNum: @currentSlideNum
+        @updateUI()
         @
 
-    # This class updates the caption without playing any animations.
+    # This class changes the caption without playing any animations.
     class CaptionSlide extends Slide
-        constructor: (@sshow) -> super
+        constructor: (@sshow, @caption) -> super
         start: () ->
             @_nextState = @transform @sshow.controller.state
-            @sshow.updateCaption @_nextState.captionNum
+            @sshow.updateCaption @caption
             @sshow.controller.state = @_nextState
             super
             @done()
         transform: (oldState) ->
             nextState = oldState.copy()
-            nextState.captionNum++
+            nextState.caption = @caption
             nextState
         fastForward: () -> @_nextState.copy()
 
-    # Increment the caption number without playing any animations
-    nextCaption: (opts) ->
-        slide = new CaptionSlide @
-        slide.data.type = "nextCaption"
+    # Insert a caption
+    caption: (text) ->
+        slide = new CaptionSlide @, text
+        slide.data.type = "caption"
         @addSlide slide
 
 

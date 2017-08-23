@@ -229,10 +229,8 @@ addSlide = (slide) ->
         anim = anim.concat.apply anim,
             (shake i*.4 + rrmat.numCols * 0.8 - 0.2 for i in [0...5])
         slides.push rrmat.setStyle anim
-    if slides.length == 1
-        slideshow.addSlide slide
-    else
-        slideshow.addSlide rrmat.chain slides
+    slideshow.addSlide s for s in slides
+    slideshow.break()
 
 # This is called when a new slide is created by the UI
 newSlide = (slide) ->

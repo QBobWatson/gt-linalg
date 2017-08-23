@@ -270,8 +270,8 @@ class RRMatrix extends Controller
 
         # For slideshows.
         state.addVal
-            key: 'captionNum'
-            val: 0
+            key: 'caption'
+            val: ''
 
         super name, state, mathbox
         @createMathbox()

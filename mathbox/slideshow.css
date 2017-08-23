@@ -33,21 +33,13 @@
   color: #99afbb;
 }
 
-.slideshow .slides {
+.slideshow .caption {
   display: inline-block;
   float: right;
   width: 70%;
   text-align: left;
   color: #353535;
   height: 20px;  /* just needs to be > 0 */
-}
-
-.slideshow .slides > .slide {
-  height: 0px;
-}
-
-.slideshow .slides > .slide.inactive {
-  visibility: hidden;
 }
 
 /* CSS arrows swiped from acko.net */
