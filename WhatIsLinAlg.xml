@@ -12,6 +12,48 @@ the license is included in gfdl.xml.
 <section xml:id="section-WhatIsLinAlg">
   <title>What is linear algebra?</title>
 
-  <p>To get started in our study of linear algebra, we need to Euclidean space <m>\mathbb R^n</m></p>
+  <p>
+  Before jumping into the main material of the course, we first ask the basic question: what <i> is </i> (note: why can't I get italics or bold to work here?)  linear algebra?
+  </p>
+
+ <p> 
+ There are two main answers to this question which we would like to offer now. In particular, we can describe what the study of linear algebra is all about by 
+saying what the "objects" it studies are, and by what the applications of the main results are. 
+ </p>
+
+
+<theorem xml:id="LinAlgMainThm">
+                <statement>
+ All of mathematics is calculus and linear algebra.                
+</statement>
+            </theorem>
+(How do I put quotes around a theorem?)
+
+<p></p>
+
+<proof>
+</proof>
+Linear algebra is the study of "flat" things; for example, lines (as implied by the name) and planes. If everything in the world were flat, and if objects always moved in a straight line at a constant speed, then geometry and physics would just be linear algebra. Of course, real life is curvy, and sometimes moving objects do change directions or speed. However, like the Earth looks flat to us, everything curved locally looks flat. Using calculus, we can approximate curvy things by flat things (using linear approximation), which are then in the domain of linear algebra.
+
+(How do I modify the proof environment to have quotes around it? Also, if I put the body of the "proof" into the proof environment, it doesn't appear). 
+
+<p></p>
+<remark>
+</remark>
+The remainder of this chapter will introduce you to the main objects of lienar algebra, lines, planes, Euclidean space, and vectors, in a more formal way with many more examples. 
+(Note: This remark doesn't work when its in the remark environment either.)
+
+<p></p>
+<i> Sample application:</i> 
+(Italics doesn't work here either)
+You may not all remember it, but a long time ago there were several dozen competing search engines, all of which were terrible. One day, linear algebra was used to invent the page-rank algorithm, which made Google possible. The idea only uses basic linear algebra facts we will learn this semester. 
+
+<p></p>
+As we move through the course, we will see several other "real world" applications, including techniques developed by people at Georgia Tech.
+
+
+
+
+
 
 </section>
