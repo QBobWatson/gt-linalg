@@ -30,7 +30,10 @@ Free Documentation License"
 
 	<chapter xml:id="chap-lines-planes">
 		<title> Lines, Planes, and Euclidean space</title>	  
-		 <xi:include href="./LinesPlanes.xml" />
+	        <xi:include href="./WhatIsLinAlg.xml" />	
+                <xi:include href="./EuclideanSpace.xml" />
+                <xi:include href="./GeometryRnDotProd.xml" />
+                <xi:include href="./LinesPlanes.xml" />
 	</chapter>
 
 

@@ -9,7 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="section-lines">
+<section xml:id="section-EuclideanSpace">
   <title>Euclidean Space</title>
 
   <p>To get started in our study of linear algebra, we need to Euclidean space <m>\mathbb R^n</m></p>
