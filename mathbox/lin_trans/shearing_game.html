@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>Shearing game</title>
   <script src="../build/mathbox-bundle.js"></script>
-  <!-- <script src="math.js" type="text/javascript"></script> <!-- matrix multiplications --> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
   <link rel="stylesheet" href="../build/mathbox.css">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
 </head>
@@ -14,17 +14,29 @@
       <section>
 	<h2>Controls</h2>
 	<ul>
-	  <li>&larr; : shear left</li>
-	  <li>&rarr; : shear right</li>
-	  <li>&darr; : shear down</li>
-	  <li>&uarr; : shear up</li>
+	  <li>&larr; : shear left by <span id="left_matrix"></span> </li>
+	  <li>&rarr; : shear right by <span id="right_matrix"></span></li>
+	  <li>&darr; : shear down by <span id="down_matrix"></span></li>
+	  <li>&uarr; : shear up by <span id="up_matrix"></span></li>
 	</ul>
       </section>
       <section>
-	<h2>Objective</h2>
-	<p>Transform the parallelogram to a square.</p>
+	  <h2>Objective</h2>
+	  <p>Transform the parallelogram to a square.</p>
       </section>
     </header>
+
+    <!-- rendering matrices -->
+    <script>
+     var left = document.getElementById("left_matrix");
+     katex.render('\\begin{bmatrix} 1 & -1 \\\\ 0 & 1 \\\\ \\end{bmatrix}', left);
+     var left = document.getElementById("right_matrix");
+     katex.render('\\begin{bmatrix} 1 & 1 \\\\ 0 & 1 \\\\ \\end{bmatrix}', left);
+     var left = document.getElementById("up_matrix");
+     katex.render('\\begin{bmatrix} 1 & 0 \\\\ 1 & 1 \\\\ \\end{bmatrix}', left);
+     var left = document.getElementById("down_matrix");
+     katex.render('\\begin{bmatrix} 1 & 0 \\\\ -1 & 1 \\\\ \\end{bmatrix}', left);
+    </script>
 
     <script>
      var mathbox = mathBox({
