@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Shearing game</title>
+  <script src="../build/mathbox-bundle.js"></script>
+  <!-- <script src="math.js" type="text/javascript"></script> <!-- matrix multiplications --> -->
+  <link rel="stylesheet" href="../build/mathbox.css">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+</head>
+<body>
+    <header>
+      <h1>Shearing game</h1>
+      <section>
+	<h2>Controls</h2>
+	<ul>
+	  <li>&larr; : shear left</li>
+	  <li>&rarr; : shear right</li>
+	  <li>&darr; : shear down</li>
+	  <li>&uarr; : shear up</li>
+	</ul>
+      </section>
+      <section>
+	<h2>Objective</h2>
+	<p>Transform the parallelogram to a square.</p>
+      </section>
+    </header>
+
+    <script>
+     var mathbox = mathBox({
+	 plugins: ['core', 'controls', 'cursor', 'mathbox'],
+	 controls: {
+             // Orbit controls, i.e. Euler angles, with gimbal lock
+             klass: THREE.OrbitControls,
+
+             // Trackball controls, i.e. Free quaternion rotation
+             //klass: THREE.TrackballControls,
+	 },
+     });
+     if (mathbox.fallback) throw "WebGL not supported"
+
+     /* Makes the background white */
+     var three = mathbox.three;
+     three.renderer.setClearColor(new THREE.Color(0xFFFFFF), 1.0);
+
+
+     // Place camera
+     var camera =
+	 mathbox
+	     .camera({
+		 proxy: false,
+		 position: [0, 0, 3],
+	     });
+
+     // 2D cartesian
+     var view =
+	 mathbox
+	     .cartesian({
+		 range: [[-1, 1], [-1, 1]],
+		 scale: [1, 1],
+	     });
+
+
+     // Calibrate focus distance for units
+     mathbox.set('focus', 3);
+
+
+     // The initial matrix
+     var mat = [[2, 1], [1, 1]]
+
+
+
+     // Creating data for a moving grid.
+     var n = 20;
+     view.area({
+	 id: "grid",
+	 axes: [1, 2],
+	 width: n,
+	 height: n,
+	 channels: 2,
+	 expr: function (emit, x, y, i, j, time) {
+	     emit(mat[0][0]*x + mat[0][1]*y, mat[1][0]*x + mat[1][1]*y);
+	 },
+     });
+
+     view.surface({
+	 /* shaded: true,*/
+	 points: '<',
+	 fill: false,
+	 lineX: true,
+	 lineY: true,
+	 /* width: 2,*/
+	 color: "purple",
+     });
+
+     function is_identity(m) {
+	 return m[0][0] == 1 && m[1][1] == 1 && m[0][1] == 0 && m[1][0] == 0;
+     };
+
+     function fixes_square(m) {
+	 return m[0][0] == 1 && m[1][1] == 1 && m[0][1] == 0 && m[1][0] == 0 ||
+		m[0][0] == -1 && m[1][1] == -1 && m[0][1] == 0 && m[1][0] == 0 ||
+		m[0][0] == 0 && m[1][1] == 0 && m[0][1] == 1 && m[1][0] == -1 ||
+		m[0][0] == 0 && m[1][1] == 0 && m[0][1] == -1 && m[1][0] == 1;
+     }
+
+
+     document.onkeydown = function(e) {
+	 var code = e.keyCode;
+
+	 if (code == 37) { // LEFT ARROW
+	     // shearing to the left, multiply by [[1, -1], [0, 1]] on the left
+	     mat[0][0] -= mat[1][0];
+	     mat[0][1] -= mat[1][1];
+	 }
+	 else if (code == 39) { // RIGHT ARROW
+	     // shearing to the right, multiply by [[1, 1], [0, 1]] on the left
+	     mat[0][0] += mat[1][0];
+	     mat[0][1] += mat[1][1];
+	 }
+	 else if (code == 40) { // DOWN ARROW
+	     // shearing down, multiply by [[1, 0], [-1, 1]] on the left
+	     mat[1][0] -= mat[0][0];
+	     mat[1][1] -= mat[0][1];
+	 }
+	 else if (code == 38) { // UP ARROW
+	     // shearing up, multiply by [[1, 0], [1, 1]] on the left
+	     mat[1][0] += mat[0][0];
+	     mat[1][1] += mat[0][1];
+	 }
+
+     };
+
+     document.onkeyup = function() {
+	 if (fixes_square(mat)) {
+	     alert('You won!');
+	 }
+     };
+    </script>
+</body>
+</html>
