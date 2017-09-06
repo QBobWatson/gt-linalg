@@ -1,0 +1,20 @@
+
+
+1). A picture of a vector in R^3, drawn as an arrow, with dashed lines 
+showing projections down to the x,y, z axes. 
+
+2). A drag and drop vector in R^2 which has boxes displaying the angle and 
+length of vector interactively. 
+
+3). An example where there are three boxes, for R, G, and B which are RGB 
+colors, where they can input 3 integers from 0,...,255. When they enter 
+these three numbers, I had in mind that it would show a disk with the 
+corresponding color, and also show the corresponding vector in R^3, drawn 
+as an arrow. Or maybe you could have some kind of animation which follows 
+some path in R^3, and there is a shaded disk or box whose color changes 
+according to the corresponding RGB coordinates. 
+
+
+- Start with a picture which is transformed by a linear transformation. Give a
+few linear transformations to the students. They need to find the sequence that
+transforms the picture to the undistorted shape.
