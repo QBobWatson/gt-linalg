@@ -6,6 +6,7 @@
   <script src="../build/mathbox-bundle.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
+  <script src="matrices.js"></script>
   <link rel="stylesheet" href="../build/mathbox.css">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
 </head>
@@ -30,13 +31,13 @@
     <!-- rendering matrices -->
     <script>
      var left = document.getElementById("left_matrix");
-     katex.render('\\begin{bmatrix} 1 & -1 \\\\ 0 & 1 \\end{bmatrix}', left);
-     var left = document.getElementById("right_matrix");
-     katex.render('\\begin{bmatrix} 1 & 1 \\\\ 0 & 1 \\end{bmatrix}', left);
-     var left = document.getElementById("up_matrix");
-     katex.render('\\begin{bmatrix} 1 & 0 \\\\ 1 & 1 \\end{bmatrix}', left);
-     var left = document.getElementById("down_matrix");
-     katex.render('\\begin{bmatrix} 1 & 0 \\\\ -1 & 1 \\end{bmatrix}', left);
+     var right = document.getElementById("right_matrix");
+     var up = document.getElementById("up_matrix");
+     var down = document.getElementById("down_matrix");
+     shear_left.katex(left);
+     shear_right.katex(right);
+     shear_down.katex(down);
+     shear_up.katex(up);
     </script>
 
     <script>
@@ -79,8 +80,7 @@
 
 
      // The initial matrix
-     var mat = [[2, 1], [1, 1]];
-
+     var mat = new Matrix([[2, 1], [1, 1]]);
 
 
      // Creating data for a moving grid.
@@ -92,7 +92,8 @@
 	 height: n,
 	 channels: 2,
 	 expr: function (emit, x, y, i, j, time) {
-	     emit(mat[0][0]*x + mat[0][1]*y, mat[1][0]*x + mat[1][1]*y);
+	     var vec = mat.multiply_vec(x,y);
+	     emit(vec[0], vec[1]);
 	 },
      });
 
@@ -106,18 +107,6 @@
 	 color: "purple",
      });
 
-     function is_identity(m) {
-	 return m[0][0] == 1 && m[1][1] == 1 && m[0][1] == 0 && m[1][0] == 0;
-     };
-
-     function fixes_square(m) {
-	 return m[0][0] == 1 && m[1][1] == 1 && m[0][1] == 0 && m[1][0] == 0 ||
-		m[0][0] == -1 && m[1][1] == -1 && m[0][1] == 0 && m[1][0] == 0 ||
-		m[0][0] == 0 && m[1][1] == 0 && m[0][1] == 1 && m[1][0] == -1 ||
-		m[0][0] == 0 && m[1][1] == 0 && m[0][1] == -1 && m[1][0] == 1;
-     }
-
-
 
      /* Applying transformations on keypresses. */
      document.onkeydown = function(e) {
@@ -125,35 +114,29 @@
 
 	 if (code == 37) { // LEFT ARROW
 	     // shearing to the left, multiply by [[1, -1], [0, 1]] on the left
-	     mat[0][0] -= mat[1][0];
-	     mat[0][1] -= mat[1][1];
+	     mat = mul(shear_left, mat)
 	 }
 	 else if (code == 39) { // RIGHT ARROW
 	     // shearing to the right, multiply by [[1, 1], [0, 1]] on the left
-	     mat[0][0] += mat[1][0];
-	     mat[0][1] += mat[1][1];
+	     mat = mul(shear_right, mat)
 	 }
 	 else if (code == 40) { // DOWN ARROW
 	     // shearing down, multiply by [[1, 0], [-1, 1]] on the left
-	     mat[1][0] -= mat[0][0];
-	     mat[1][1] -= mat[0][1];
+	     mat = mul(shear_down, mat)
 	 }
 	 else if (code == 38) { // UP ARROW
 	     // shearing up, multiply by [[1, 0], [1, 1]] on the left
-	     mat[1][0] += mat[0][0];
-	     mat[1][1] += mat[0][1];
+	     mat = mul(shear_up, mat)
 	 }
 
      };
 
      document.onkeyup = function() {
-	 if (fixes_square(mat)) {
+	 if (mat.fixes_square()) {
 	     alert('You won!');
 	 }
      };
 
-
-     /* window.setinterval(,10);*/
     </script>
 </body>
 </html>
