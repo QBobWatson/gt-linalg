@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>Shearing game</title>
   <script src="../build/mathbox-bundle.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
   <link rel="stylesheet" href="../build/mathbox.css">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
@@ -29,13 +30,13 @@
     <!-- rendering matrices -->
     <script>
      var left = document.getElementById("left_matrix");
-     katex.render('\\begin{bmatrix} 1 & -1 \\\\ 0 & 1 \\\\ \\end{bmatrix}', left);
+     katex.render('\\begin{bmatrix} 1 & -1 \\\\ 0 & 1 \\end{bmatrix}', left);
      var left = document.getElementById("right_matrix");
-     katex.render('\\begin{bmatrix} 1 & 1 \\\\ 0 & 1 \\\\ \\end{bmatrix}', left);
+     katex.render('\\begin{bmatrix} 1 & 1 \\\\ 0 & 1 \\end{bmatrix}', left);
      var left = document.getElementById("up_matrix");
-     katex.render('\\begin{bmatrix} 1 & 0 \\\\ 1 & 1 \\\\ \\end{bmatrix}', left);
+     katex.render('\\begin{bmatrix} 1 & 0 \\\\ 1 & 1 \\end{bmatrix}', left);
      var left = document.getElementById("down_matrix");
-     katex.render('\\begin{bmatrix} 1 & 0 \\\\ -1 & 1 \\\\ \\end{bmatrix}', left);
+     katex.render('\\begin{bmatrix} 1 & 0 \\\\ -1 & 1 \\end{bmatrix}', left);
     </script>
 
     <script>
@@ -78,7 +79,7 @@
 
 
      // The initial matrix
-     var mat = [[2, 1], [1, 1]]
+     var mat = [[2, 1], [1, 1]];
 
 
 
@@ -117,6 +118,8 @@
      }
 
 
+
+     /* Applying transformations on keypresses. */
      document.onkeydown = function(e) {
 	 var code = e.keyCode;
 
@@ -148,6 +151,9 @@
 	     alert('You won!');
 	 }
      };
+
+
+     /* window.setinterval(,10);*/
     </script>
 </body>
 </html>
