@@ -75,10 +75,10 @@
      var right = document.getElementById("right_matrix");
      var up = document.getElementById("up_matrix");
      var down = document.getElementById("down_matrix");
-     const shear_left = Matrix.shear(-1, 'horizontal');
-     const shear_right = Matrix.shear(11, 'horizontal');
-     const shear_up = Matrix.shear(1, 'vertical');
-     const shear_down = Matrix.shear(-1, 'vertical');
+     const shear_left = Matrix.shear(-1, 'H');
+     const shear_right = Matrix.shear(1, 'H');
+     const shear_up = Matrix.shear(1, 'V');
+     const shear_down = Matrix.shear(-1, 'V');
 
      shear_left.katex(left);
      shear_right.katex(right);
