@@ -7,21 +7,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
   <script src="matrices.js"></script>
+  <script src="matrix_game.js"></script>
   <link rel="stylesheet" href="../build/mathbox.css">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
 </head>
 <body>
-    <header>
-      <h1>Shearing game</h1>
-      <section>
-	<h2>Controls</h2>
-	<dl id="controls" >
-	</dl>
-      </section>
-      <section>
-	  <h2>Objective</h2>
-	  <p>Transform the parallelogram to a square.</p>
-      </section>
+    <header id="header" >
     </header>
 
 
@@ -64,35 +55,25 @@
      mathbox.set('focus', 3);
 
 
-     // The initial matrix
-     var mat = new Matrix([[2, 1], [1, 1]]);
+     var game = new MatrixGame(
+	 matrices = [Matrix.shear(-1, 'H'),
+		     Matrix.shear(1, 'H'),
+		     Matrix.shear(1, 'V'),
+		     Matrix.shear(-1, 'V')],
+	 start_matrix = new Matrix([[2, 1], [1, 1]]),
+	 win_condition = function (matrix) {return matrix.is_identity();},
+	 objective = 'Transform the parallelogram to the square with vertices ' +
+		     '(0,0), (1,0), (0,1), (1,1).',
+	 title = 'Shearing game'
+     )
 
-     // Initialize available ransformations
-     var transformations = [
-	 Matrix.shear(-1, 'H'),
-	 Matrix.shear(1, 'H'),
-	 Matrix.shear(1, 'V'),
-	 Matrix.shear(-1, 'V')
-     ];
+     document.onkeydown = game.keydown_action.bind(game);
+     document.onkeyup = game.keyup_action.bind(game);
 
-     // Generating HTML list describing the controls
-     var controls = document.getElementById("controls");
-     for(var i = 0; i < transformations.length; i++) {
-	 var tr = transformations[i];
 
-	 var dt = document.createElement('dt');
-	 dt.innerHTML = `${tr.keycode}`;
-	 controls.appendChild(dt);
-
-	 var dd = document.createElement('dd');
-	 var span1 = document.createElement('span');
-	 span1.innerHTML = tr.description + '. Matrix: ';
-	 var span2 = document.createElement('span');
-	 tr.katex(span2);
-	 dd.appendChild(span1);
-	 dd.appendChild(span2);
-	 controls.appendChild(dd);
-     }
+     var header = document.getElementById('header');
+     console.log(game.game_description_html());
+     header.innerHTML = game.game_description_html()
 
      // Creating data grid.
      var n = 20;
@@ -103,7 +84,7 @@
 	 height: n,
 	 channels: 2,
 	 expr: function (emit, x, y, i, j, time) {
-	     var vec = mat.multiply_vec(x,y);
+	     var vec = game.current_matrix.multiply_vec(x,y);
 	     emit(vec[0], vec[1]);
 	 },
      });
@@ -119,24 +100,6 @@
      });
 
      // TODO: draw origin.
-
-     /* Applying transformations on keypresses. */
-     document.onkeydown = function(e) {
-	 var code = e.keyCode;
-
-	 for(var i = 0; i < transformations.length; i++) {
-	     var tr = transformations[i];
-	     if (code == tr.keycode) {
-		 mat = mul(tr, mat);
-	     }
-	 }
-     };
-
-     document.onkeyup = function() {
-	 if (mat.is_identity()) {
-	     alert('You won!');
-	 }
-     };
     </script>
 
 </body>
