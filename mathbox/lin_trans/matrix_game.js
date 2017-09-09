@@ -31,18 +31,19 @@ class MatrixGame {
 
 	var html = `<h1>${this.title}</h1>
 	<section>
-	    <dl>
+	    <dl class="dl-horizontal">
 		<dt>Controls</dt>
 		<dd>
-		    <dl id="controls">`;
+                    <table class="table">
+                        <tbody>`;
 
 	for(var i = 0; i < this.matrices.length; i++) {
 	    var tr = this.matrices[i];
 
-	    html += `<dt>${tr.key_html}</dt><dd>${tr.description}. Matrix: ${tr.katex()}.`;
+	    html += `<tr class="hovered"><td>${tr.key_html}</td><td>${tr.description}</td><td>${tr.katex()}</td></tr>`;
 	}
 
-	html += ` </dl>
+	html += `</tbody> </table>
 		</dd>
 		<dt>Objective</dt>
 		<dd>${this.objective}</dd>
