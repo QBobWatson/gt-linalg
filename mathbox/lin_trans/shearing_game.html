@@ -15,12 +15,8 @@
       <h1>Shearing game</h1>
       <section>
 	<h2>Controls</h2>
-	<ul>
-	  <li>&larr; : shear left by <span id="left_matrix"></span> </li>
-	  <li>&rarr; : shear right by <span id="right_matrix"></span></li>
-	  <li>&darr; : shear down by <span id="down_matrix"></span></li>
-	  <li>&uarr; : shear up by <span id="up_matrix"></span></li>
-	</ul>
+	<dl id="controls" >
+	</dl>
       </section>
       <section>
 	  <h2>Objective</h2>
@@ -59,7 +55,7 @@
      var view =
 	 mathbox
 	     .cartesian({
-		 range: [[-1, 1], [-1, 1]],
+		 range: [[0, 1], [0, 1]],
 		 scale: [1, 1],
 	     });
 
@@ -71,21 +67,34 @@
      // The initial matrix
      var mat = new Matrix([[2, 1], [1, 1]]);
 
-     var left = document.getElementById("left_matrix");
-     var right = document.getElementById("right_matrix");
-     var up = document.getElementById("up_matrix");
-     var down = document.getElementById("down_matrix");
-     const shear_left = Matrix.shear(-1, 'H');
-     const shear_right = Matrix.shear(1, 'H');
-     const shear_up = Matrix.shear(1, 'V');
-     const shear_down = Matrix.shear(-1, 'V');
+     // Initialize available ransformations
+     var transformations = [
+	 Matrix.shear(-1, 'H'),
+	 Matrix.shear(1, 'H'),
+	 Matrix.shear(1, 'V'),
+	 Matrix.shear(-1, 'V')
+     ];
 
-     shear_left.katex(left);
-     shear_right.katex(right);
-     shear_down.katex(down);
-     shear_up.katex(up);
+     // Generating HTML list describing the controls
+     var controls = document.getElementById("controls");
+     for(var i = 0; i < transformations.length; i++) {
+	 var tr = transformations[i];
 
-     // Creating data for a moving grid.
+	 var dt = document.createElement('dt');
+	 dt.innerHTML = `${tr.keycode}`;
+	 controls.appendChild(dt);
+
+	 var dd = document.createElement('dd');
+	 var span1 = document.createElement('span');
+	 span1.innerHTML = tr.description + '. Matrix: ';
+	 var span2 = document.createElement('span');
+	 tr.katex(span2);
+	 dd.appendChild(span1);
+	 dd.appendChild(span2);
+	 controls.appendChild(dd);
+     }
+
+     // Creating data grid.
      var n = 20;
      view.area({
 	 id: "grid",
@@ -109,32 +118,22 @@
 	 color: "purple",
      });
 
+     // TODO: draw origin.
 
      /* Applying transformations on keypresses. */
      document.onkeydown = function(e) {
 	 var code = e.keyCode;
 
-	 if (code == 37) { // LEFT ARROW
-	     // shearing to the left, multiply by [[1, -1], [0, 1]] on the left
-	     mat = mul(shear_left, mat)
+	 for(var i = 0; i < transformations.length; i++) {
+	     var tr = transformations[i];
+	     if (code == tr.keycode) {
+		 mat = mul(tr, mat);
+	     }
 	 }
-	 else if (code == 39) { // RIGHT ARROW
-	     // shearing to the right, multiply by [[1, 1], [0, 1]] on the left
-	     mat = mul(shear_right, mat)
-	 }
-	 else if (code == 40) { // DOWN ARROW
-	     // shearing down, multiply by [[1, 0], [-1, 1]] on the left
-	     mat = mul(shear_down, mat)
-	 }
-	 else if (code == 38) { // UP ARROW
-	     // shearing up, multiply by [[1, 0], [1, 1]] on the left
-	     mat = mul(shear_up, mat)
-	 }
-
      };
 
      document.onkeyup = function() {
-	 if (mat.fixes_square()) {
+	 if (mat.is_identity()) {
 	     alert('You won!');
 	 }
      };
