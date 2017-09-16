@@ -9,9 +9,10 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="section-determinant-rowops">
-  <title>Determinants: Row operations </title>
+<section xml:id="section-determinant-cramer">
+  <title>Determinants: Cramer's Rule and Inverses</title>
 
-  <p>Row operations and examples.</p>
+  <p>Derivation and examples of Cramer's rule and computation of some exmaples of inverses.</p>
 
 </section>
+

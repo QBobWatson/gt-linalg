@@ -72,11 +72,23 @@ Free Documentation License"
       <title>Determinants</title>
 
       <introduction>
-        <p>Lay's chapter 3</p>
+        <p>In this chapter, you will learn about one of most handy auxiliary tools in linear algebra-- the <em>determinant. As we have seen, one of the main goals of linear algebra is to solve systems of linear equations. The key insight which unleashes the power of linear algebra begins as the "bookkeeping" observation that the data of a system of linear equations is encoded in the single matrix equation form <m>Ax=b</m> for vectors <m>x</m> and <m>b</m> and an appropriately sized matrix <m>A</m>.
+		As you would solve this equation for <m>x</m> if <m>A, x, b</m> were real numbers, you want to try to "divide" by <m>A</m>. When these are real numbers (which can be thought of as <m>1\times1</m> matrices), this is always possible except when the number <m>A</m> is <m>0</m>. In the more general matrix equation case, most, but not all, matrices are invertible. 
+		
+		In such a case, i.e., when there is an inverse <m>A^{-1}</m>, the equation <m>Ax=b</m> always has exactly one solution <m>x</m> for any given <m>b</m>. Explicitly, it is <m>x=A^{-1}b</m>. So, if we know that this inverse exists, then after the (possibly computationally tedious) task of computing the inverse one time, we can solve <em>every</em> equation <m>Ax=b</m> by performing a relatively quick matrix multiplication. 
+		
+		This motivates two main quesitons: when is a matrix invertible, and when is it unique? If a matrix <m>A</m> is invertible, then we know it must be a square matrix. For example... thus, 
+	</em>
+	
+	</p>
       </introduction>
 
-      <xi:include href="./determinant-defn.xml" />
-      <xi:include href="./determinant-compute.xml" />
+      <xi:include href="./determinant-cofactors.xml" />
+	  <xi:include href="./determinant-rowops.xml" />
+      <xi:include href="./determinant-fundamental_property.xml" />
+	  <xi:include href="./determinant-cramer.xml" />
+	  <xi:include href="./determinant-volumes.xml" />
+	  <xi:include href="./determinant-rabbit_hole.xml" />
 
     </chapter>
 
