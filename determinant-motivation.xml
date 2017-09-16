@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<section xml:id="section-determinant-motivation">
+  <title>Determinants: Motivation and First Examples </title>
+
+<p></p>
+As we have seen, one of the main goals of linear algebra is to solve systems of linear equations. The key insight which unleashes the power of linear algebra begins with the "bookkeeping" observation that the data of a system of linear equations is encoded in the single matrix equation of the form <m>Ax=b</m> for vectors <m>x</m> and <m>b</m> and an appropriately sized matrix <m>A</m>.
+<p></p>
+As you would solve this equation for <m>x</m> if <m>A, x, b</m> were real numbers, you want to try to "divide" by <m>A</m>. When these are real numbers (which can be thought of as <m>1\times1</m> matrices), this is always possible, except when the number <m>A</m> is <m>0</m>. In the more general matrix equation case, most, but not all, matrices are <em>invertible.</em> 
+<p></p>
+In such a case, i.e., when there is an inverse <m>A^{-1}</m>, the equation <m>Ax=b</m> always has exactly one solution <m>x</m> for any given <m>b</m>. Explicitly, it is <m>x=A^{-1}b</m>. So, if we know that this inverse exists, then after the (possibly computationally tedious) task of computing the inverse one time, we can solve <em>every</em> equation <m>Ax=b</m> by performing a relatively quick matrix multiplication For those interested in computer science, the time to run the row-reduction method for computing matrix inverses grows cubically (like <m>n^3</m> for <m>n\times n</m> matrices) in the dimensions of the matrix, while multiplying <m>A^{-1}</m> by the vector  <m>b</m> only takes about <m>n^2</m> units of time. So, for example, if you wanted to solve the equation <m>Ax=b</m> for many vectors <m>b</m> and for a fixed <m>1000\times1000</m> matrix <m>A</m>, computing the products <m>A^{-1}b</m> is about <m>1000</m> times faster than solving the equation directly, so if we "precompute" the slower operation of taking the inverse one time, we get a time-savings factor of <m>1000</m> on all future computations. 
+<p></p>
+This discussion motivates two main quesitons: when is a matrix invertible, and when is it unique? If a matrix <m>A</m> is invertible, then we have seen that it must be a square matrix, i.e., it must have the same number of rows and columns. In particular, we have seen that if a matrix <m>A</m> is not square, then there are vectors <m>b</m> for which <m>Ax=b</m> either has no solutions or infinitely many solutions. 
+<p></p>
+Thus, the only case when a matrix has any hope of being invertible is when it is square. It will turn out for every square matrix of any size that there is a number associated to it, called the <em>determinant,</em> which vanishes if and only if the matrix isn't invertible. That is, we will define a procedure which takes any square matrix and spits out a number which detects invertibility. In the case of <m>1\times1</m> matrices, we know that a real number <m>a</m> is invertible exactly when <m>a\neq0</m>. It is thus reasonable to define the determinant of the matrix <m>(a)</m> to simply be <m>a</m> itself. That is, for any real number <m>a</m>, we set
+ $$\det((a))=a.$$
+ <p></p>
+		In the case of <m>2\times2</m> matrices, this happens to be the number <m>ad-bc</m>. This is reasonable, since if we apply row reduction, this number shows up in the denominator of the inverse. Specifically, if <m>a\neq0</m>, and if we set <m>D=ad-bc</m>, then
+		we can reduce
+		$$
+		\begin{pmatrix}
+		a &amp; b &amp; | &amp;  1 &amp; 0
+		\\
+		c &amp; d &amp; | &amp; 0 &amp; 1
+		\end{pmatrix}
+		\rightarrow
+		\begin{pmatrix}
+		1 &amp; \frac ba &amp; | &amp; \frac 1a &amp; 0
+		\\
+		c &amp; d &amp; | &amp; 0 &amp; 1
+		\end{pmatrix}
+		\rightarrow
+		\begin{pmatrix}
+		1 &amp; \frac ba &amp; | &amp; \frac 1a&amp; 0
+		\\
+		0 &amp; \frac{ad-bc}{a} &amp; | &amp; -\frac ca &amp; 1
+		\end{pmatrix}
+		,
+		$$
+		which then becomes
+		$$
+		\begin{pmatrix}
+		1 &amp; \frac ba &amp; | &amp; \frac 1a&amp; 0
+		\\
+		0 &amp; 1 &amp; | &amp; -\frac cD &amp; \frac aD
+		\end{pmatrix}
+		\rightarrow
+		\begin{pmatrix}
+		1 &amp; 0 &amp; | &amp;  \frac dD&amp; -\frac bD
+		\\
+		0 &amp; 1 &amp; | &amp; -\frac cD &amp; \frac aD
+		\end{pmatrix}
+		.
+		$$
+		Thus, we recover the very handy formula 
+		$$
+		\begin{pmatrix}
+		a &amp; b
+		\\
+		c &amp; d
+		\end{pmatrix}^{-1}
+		=\frac{1}{ad-bc}
+		\begin{pmatrix}
+		d &amp; -b
+		\\
+		-c &amp; a
+		\end{pmatrix}
+		.
+		$$
+		This calculation can be repeated for <m>a=0</m>, in which case one find precisely the same answer, provided that <m>bc\neq0</m>. 
+		Thus, we see that if we define 
+		$$
+		\det\begin{pmatrix}
+		a &amp; b
+		\\
+		c &amp; d
+		\end{pmatrix}
+		=ad-bc
+		,
+		$$
+		then this factor shows up naturally in the direct row reduction calculation above, and we find, for <m>A=\left(\begin{smallmatrix}a&amp; b\\ c&amp; d\end{smallmatrix}\right)</m>,
+		$$
+		\det(A)
+		=0
+		\text{ if and only if}
+		A
+		\ \text{is invertible.}
+		$$
+		<p></p>
+		
+		For general <m>n</m>, we will define a number, <m>\det(A)</m>, assigned to each <m>n\times n</m> matrix <m>A</m>. As we shall see, the determinant can be though about or computed in several difference ways. The main point will be that the following fact will be true:
+		<p></p>
+		<em> Fact.</em>
+		<p></p> The matrix <m>A</m> is invertible precisely when <m>\det(A)\neq0</m>. 
+		<p></p>
+		As we shall see once we get going, determinants are actually an instance of something you already know about: volume. 
+		To connect this problem to geometry, note that a matrix is really the same data as a set of vectors, namely its rows.
+		Each row can thus be thought of as a vector in <m>\mathbb R^n</m>, and so a square matrix is essentially the same thing as an ordered collection of <m>n</m> many vecotrs in <m>\mathbb R^n</m>. 
+		<p></p>
+		For example, if <m>A</m> is a <m>2\times2</m> matrix whose rows are non-zero vectors <m>v</m> and <m>w</m>, then we know that the matrix is invertible exactly when <m>v</m> and <m>w</m> are linearly independent, which happens exactly when they don't lie on the same line (neither is a scalar multiple of the other). If we draw the parallelogram determined by <m>v</m> and <m>w</m>, namely, which has vertices at <m>0</m>,<m>v</m>, <m>w</m>, and <m>v+w</m>, as drawn below,
+		<figure xml:id="PicPar2Vec">
+		                    <caption>The parallelgram determined by two vectors <m>v</m> and <m>w</m> in <m>\mathbb R^2</m></caption>
+		                    <image width="30%" source="images/PicPar2Vec.jpg"/>
+		                </figure>
+						we can see that the area of this parallelogram is non-zero exactly when the corresponding matrix is invertible (i.e., when the parallelogram is really a parallelogram and not confined to a line).
+						
+						<p></p>
+						As another example, consider the case of a <m>3\times3</m> matrix. Then this matrix corresponds to a set of three vectors in <m>\mathbb R^3</m>, which define a parallelepiped. For example, see the figure below.
+						<figure xml:id="PicPar3Vec">
+						                    <caption>The parallelepiped determined by three vectors <m>u</m>, <m>v</m>, and <m>w</m> in 
+											<m>\mathbb R^3</m></caption>
+						                    <image width="30%" source="images/PicPar3Vec.jpg"/>
+						                </figure>
+						It is not hard to image that the volume of this parallelepiped is zero exactly when it is "squashed," i.e., in the <em>degnerate</em> case when it actually lies in a plane. But these three vectors lie in a plane exactly when they do not span <m>\mathbb R^3</m>, which is exactly when the corresponding matrix is not invertible. Thus, one may expect that this volume is related to the determinant. We will see that this is true, and make this more precise once we learn a little bit more about determinants. 
+						
+		
+  
+
+</section>
