@@ -97,9 +97,9 @@ Thus, the only case when a matrix has any hope of being invertible is when it is
 		$$
 		<p></p>
 		
-		For general <m>n</m>, we will define a number, <m>\det(A)</m>, assigned to each <m>n\times n</m> matrix <m>A</m>. As we shall see, the determinant can be though about or computed in several difference ways. The main point will be that the following fact will be true:
+		For general <m>n</m>, we will define a number, <m>\det(A)</m>, assigned to each <m>n\times n</m> matrix <m>A</m>. As we shall see, the determinant can be though about or computed in several different ways. The main point will be that the following fact will be true:
 		<p></p>
-		<em> Fact.</em>
+		<term> Fact.</term>
 		<p></p> The matrix <m>A</m> is invertible precisely when <m>\det(A)\neq0</m>. 
 		<p></p>
 		As we shall see once we get going, determinants are actually an instance of something you already know about: volume. 
@@ -109,18 +109,18 @@ Thus, the only case when a matrix has any hope of being invertible is when it is
 		For example, if <m>A</m> is a <m>2\times2</m> matrix whose rows are non-zero vectors <m>v</m> and <m>w</m>, then we know that the matrix is invertible exactly when <m>v</m> and <m>w</m> are linearly independent, which happens exactly when they don't lie on the same line (neither is a scalar multiple of the other). If we draw the parallelogram determined by <m>v</m> and <m>w</m>, namely, which has vertices at <m>0</m>,<m>v</m>, <m>w</m>, and <m>v+w</m>, as drawn below,
 		<figure xml:id="PicPar2Vec">
 		                    <caption>The parallelgram determined by two vectors <m>v</m> and <m>w</m> in <m>\mathbb R^2</m></caption>
-		                    <image width="30%" source="images/PicPar2Vec.jpg"/>
+		                    <image width="30%" source="images/PicPar2Vec.jpg" />
 		                </figure>
 						we can see that the area of this parallelogram is non-zero exactly when the corresponding matrix is invertible (i.e., when the parallelogram is really a parallelogram and not confined to a line).
 						
 						<p></p>
 						As another example, consider the case of a <m>3\times3</m> matrix. Then this matrix corresponds to a set of three vectors in <m>\mathbb R^3</m>, which define a parallelepiped. For example, see the figure below.
 						<figure xml:id="PicPar3Vec">
-						                    <caption>The parallelepiped determined by three vectors <m>u</m>, <m>v</m>, and <m>w</m> in 
+						                    <caption>The parallelepiped determined by three vectors in 
 											<m>\mathbb R^3</m></caption>
 						                    <image width="30%" source="images/PicPar3Vec.jpg"/>
 						                </figure>
-						It is not hard to image that the volume of this parallelepiped is zero exactly when it is "squashed," i.e., in the <em>degnerate</em> case when it actually lies in a plane. But these three vectors lie in a plane exactly when they do not span <m>\mathbb R^3</m>, which is exactly when the corresponding matrix is not invertible. Thus, one may expect that this volume is related to the determinant. We will see that this is true, and make this more precise once we learn a little bit more about determinants. 
+						It is not hard to imagine that the volume of this parallelepiped is zero exactly when it is "squashed," i.e., in the <em>degnerate</em> case when it actually lies in a plane. But these three vectors lie in a plane exactly when they do not span <m>\mathbb R^3</m>, which is exactly when the corresponding matrix is not invertible. Thus, one may expect that this volume is related to the determinant. We will see that this is true, and make this more precise once we learn a little bit more about determinants. 
 						
 		
   

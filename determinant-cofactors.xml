@@ -12,6 +12,226 @@ the license is included in gfdl.xml.
 <section xml:id="section-determinant-cofactors">
   <title>Determinants: Cofactor expansions</title>
 
-  <p>Explanation of cofactor expansions and first examples of computations.</p>
+  <p></p>
+  We begin by describing one way of defining determinants. This definition may seem strange, and we will have to wait to see where it comes from and why it is connected to invertibility and volumes. However, it is convenient for calculations and will be enough to kick off our study of the determinant. 
+  <p></p>
+  We will build up this <em>cofactor expansion</em> from the ground up. Namely, this procedure will say how to compute the determinant for <m>n\times n</m> matrices, <em>assuming</em> we already know how to do so for <m>(n-1)\times(n-1)</m> matrices. To begin, we require determinants for <m>1\times1</m> matrices. As discussed in the last section, there is only one reasonable definition of determinant in this case, which is simply
+  $$
+  \det((a))=a
+  .
+  $$
+  To give determinant in general, we need a new definition, and some convenient notation.
+  <definition xml:id="Minor-Cofactors-Defn">  
+	  <statement>
+	  Given an <m>n\times n</m> matrix <m>A</m>, the <m>(i,j)</m>-th <term>minor,</term> denoted <m>A^{ij}</m>, is the determinant of the <m>(n-1)\times (n-1)</m> matrix obtained from <m>A</m> by deleting the <m>i</m>-th row and the <m>j</m>-th column. Similarly, the <m>(i,j)</m>-th <term>cofactor </term>  <m>\ C^{ij}</m> is defined in terms of the minor by
+	  $$
+	  C^{ij}=(-1)^{i+j}A^{ij}
+	  .
+	  $$
+  </statement>
+  </definition>
+  <example xml:id="FirstMinorCofactorEx">
+	  <statement>
+		  For 
+		  $$
+		  A=
+		  \begin{pmatrix}
+		  1 &amp; 2 &amp; 3
+		  \\
+		  4 &amp; 5 &amp; 6
+		  \\
+		  7 &amp; 8 &amp; 9
+		  \end{pmatrix}
+		  ,
+		  $$
+		  we have 
+		  $$
+		  A^{23}=\det\begin{pmatrix}
+		  1 &amp; 2 \\
+		  7 &amp; 8
+		  \end{pmatrix}
+		  =8-14=-6.
+		  $$
+		  We also find <m>C^{23}=(-1)^{2+3}(-6)=6.</m>
+  </statement>
+  </example>
+  By using thes cofactors we can give a very convenient way to compute determinants. 
+  We first explain the method, then try several examples, and then discuss its proof.
+  <p></p><term>Algorithm (Laplace expansion)</term>
+  To compute the determinant of a square matrix, do the following.
+  <ol>
+	  <li>
+	  	Choose any row or column of <m>A</m>.
+	  </li>
+	  <li> For each element <m>A_{ij}</m> of this row or column, compute the associated cofactor <m>C^{ij}</m>.</li>
+	  <li>
+		  Multiply each cofactor by the associated matrix entry <m>A_{ij}</m>. 
+	  </li>
+	  <li>
+		<term> Result: </term>  The sum of these products is <m>\det(A)</m>.
+	  </li>
+  </ol>
+  <p></p>
+  <example>
+	  <statement>
+  We find the determinant of 
+  $$
+  A=
+  \begin{pmatrix}
+  2 &amp; 1 &amp; 3
+  \\
+  -1 &amp; 2 &amp; 1
+  \\
+  -2 &amp; 2 &amp; 3
+  \end{pmatrix}
+  .
+  $$
+  We make the arbitrary choice to expand along the first row. We compute the minors as
+  $$
+  M^{11}=\det\begin{pmatrix} 2&amp;1 \\ 2&amp;3 \end{pmatrix},\quad\quad M^{12}=\det\begin{pmatrix} -1&amp;1 \\ -2 &amp;3 \end{pmatrix},\quad\quad M^{13}=\det\begin{pmatrix} -1&amp;2 \\ -2&amp;2 \end{pmatrix}.
+  $$
+  Computing these <m>2\times 2</m> determinants, we have
+  $$
+  M^{11}=4,\quad\quad M^{12}=-1,\quad\quad M^{13}=2.
+  $$
+  By inserting signs, we find that the cofactors are 
+  $$
+  C^{11}=M^{11}=4,\quad\quad C^{12}=-M^{12}=1,\quad\quad C^{13}=M^{13}=2.
+  $$
+  Thus, 
+  $$
+  \det A=A_{11}C^{11}+A_{12}C^{12}+A_{13}C^{13}
+  =2(4)+(1)+3(2)=15.
+  $$
+</statement>
+</example>
+With this method, much larger determinants are also easy to compute, especially when there are lots of zeros in a row or column. Generally speaking, it is a good idea when computing an example to try to expand along a row or column with as many zeros as possible, or at least with the smallest entries possible.
+<example>
+	<statement>
+We find the determinant of 
+$$
+A=
+\begin{pmatrix}
+2 &amp; 5 &amp; -3 &amp; -2\\
+-2 &amp; -3 &amp; 2 &amp; -5\\
+1&amp; 3 &amp; -2 &amp; 0\\
+-1 &amp; 6 &amp; 4 &amp; 0
+\end{pmatrix}
+.
+$$
+We expand along the last column to find 
+$$
+\det A=2\det
+\begin{pmatrix}
+ -2&amp;-3 &amp;2 \\
+1 &amp;3 &amp;-2 \\
+ -1&amp;6 &amp;4 
+\end{pmatrix}
+-5
+\det
+\begin{pmatrix}
+ 2&amp;5 &amp;-3 \\
+1 &amp;3 &amp;-2 \\
+ -1&amp;6 &amp;4 
+\end{pmatrix}
+$$
+We can find these two determinants by expanding them as well. For example, expanding along the first column on the first one, we find that 
+\begin{align*}
+&amp;
+\det \begin{pmatrix}
+ -2&amp;-3 &amp;2 \\
+1 &amp;3 &amp;-2 \\
+ -1&amp;6 &amp;4 
+\end{pmatrix}
+\\
+&amp;
+=
+-2
+\det
+\begin{pmatrix}
+ 3&amp;-2 
+ \\
+ 6&amp;4
+\end{pmatrix}
+-\det
+\begin{pmatrix}
+-3 &amp;2 
+ \\
+ 6&amp;4
+\end{pmatrix}
+-\det
+\begin{pmatrix}
+-3 &amp;2 
+ \\
+ 3&amp;-2
+\end{pmatrix}
+\\
+&amp;
+=
+-2
+(24)
+-(-24)
+-0=-48+24+0=-24.
+\end{align*}
+Similarly, by expanding the second <m>3\times 3</m> matrix along the first column, we find that 
+\begin{align*}
+&amp;
+\begin{pmatrix}
+ 2&amp;5 &amp;-3 \\
+1 &amp;3 &amp;-2 \\
+ -1&amp;6 &amp;4 
+\end{pmatrix}
+=
+2
+\det
+\begin{pmatrix}
+ 3&amp;-2 
+ \\
+ 6&amp;4
+\end{pmatrix}
+-\det
+\begin{pmatrix}
+5 &amp;-3
+ \\
+ 6&amp;4
+\end{pmatrix}
+-\det
+\begin{pmatrix}
+5 &amp;-3
+ \\
+ 3&amp;-2
+\end{pmatrix}
+\\
+&amp;
+=
+2(24)
+-(38)
+-(-1)
+=
+11.
+\end{align*}
+Thus, we find that
+$$
+\det A=
+2(-24)-5(11)=-103.
+$$
+</statement>
+</example>
+<p></p>
+As we shall see, there are severl other formulas for determinants. In general, somewhat like integration, finding determinants of large matrices efficiently, or finding closed formulas for determinants of infinite families of matrices is a bit of an art form. Many techniques exist, including one very handy one by Charles Dodgson (aka Lewis Carroll, of Alice in Wonderland fame). 
+<p></p>
+Several key questions remain:
+<ol>
+	<li>
+		Where do these formulas come from?
+	</li>
+	<li>
+		How do we know that these numbers give the same answer <em>regardless</em> of which row or column we choose (that is, this method gives <m>2n</m> different expressions for the same number attached to an <m>n\times n</m> matrix, which we claim are always all equal).
+	</li>
+	<li>
+	What is the meaning of this strange number?	
+	</li>
+</ol>
+
 
 </section>
