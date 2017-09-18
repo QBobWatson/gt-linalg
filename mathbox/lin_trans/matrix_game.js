@@ -40,7 +40,7 @@ class MatrixGame {
 	for(var i = 0; i < this.matrices.length; i++) {
 	    var tr = this.matrices[i];
 
-	    html += `<tr class="hovered"><td>${tr.key_html}</td><td>${tr.description}</td><td>${tr.katex()}</td></tr>`;
+	    html += `<tr><td>${tr.key_html}</td><td>${tr.description}</td><td>${tr.katex()}</td></tr>`;
 	}
 
 	html += `</tbody> </table>
