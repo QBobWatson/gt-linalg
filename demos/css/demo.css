@@ -1,0 +1,28 @@
+.overlay-text {
+  position: absolute;
+  left:     10px;
+  top:      10px;
+  color:    white;
+  opacity:  1.0;
+}
+
+.overlay-text p {
+  margin-top:    0px;
+  margin-bottom: 10px;
+}
+
+.overlay-popup {
+  position:  absolute;
+  left:      50%;
+  top:       100%;
+  transform: translate(-50%, -100%);
+  color:     white;
+  background-color: black;
+  border:    solid 1px rgb(200, 200, 200);
+  padding:   30px;
+  opacity:   .9;
+}
+
+body {
+  width: 100%;
+}
