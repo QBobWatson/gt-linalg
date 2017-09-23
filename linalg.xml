@@ -72,7 +72,7 @@ Free Documentation License"
       <title>Determinants</title>
 
       <introduction>
-        <p>In this chapter, you will learn about one of most handy auxiliary tools in linear algebra-- the <em>determinant.</em> Roughly speaking, this is numerical procedure assigning a number to any <em>square</em> matrix. As we shall see, this number "detects" invertibility, and can also be used to directly solve systems of linear equations in nice situations.
+        <p>In this chapter, you will learn about one of most handy tools in linear algebra-- the <em>determinant.</em> Roughly speaking, this is numerical procedure assigning a number to any <em>square</em> matrix. As we shall see, this number "detects" invertibility, and can also be used to directly solve systems of linear equations in nice situations.
 	
 	</p>
       </introduction>
@@ -82,7 +82,6 @@ Free Documentation License"
       <xi:include href="./determinant-fundamental_property.xml" />
 	  <xi:include href="./determinant-cramer.xml" />
 	  <xi:include href="./determinant-volumes.xml" />
-	  <xi:include href="./determinant-rabbit_hole.xml" />
 
     </chapter>
 

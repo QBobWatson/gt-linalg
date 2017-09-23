@@ -13,115 +13,77 @@ the license is included in gfdl.xml.
   <title>Determinants: Motivation and First Examples </title>
 
 <p></p>
-As we have seen, one of the main goals of linear algebra is to solve systems of linear equations. The key insight which unleashes the power of linear algebra begins with the "bookkeeping" observation that the data of a system of linear equations is encoded in the single matrix equation of the form <m>Ax=b</m> for vectors <m>x</m> and <m>b</m> and an appropriately sized matrix <m>A</m>.
+We begin by recalling three primary goals of this course:
+<ol>
+	<li> Solving systems of linear equations, a.k.a. solving the matrix equation <m>Ax=b</m> (we've studied this problem in detail).</li>
+		<li>Solving the matrix equation <m>Ax=\lambda x</m>, where <m>\lambda</m> is a number (the eigenvalue problem). We are currently studying this problem.</li>
+		<li> "Almost solving" the matrix equation <m>Ax=b</m> (we will study this problem).</li>
+</ol>
+As we have seen that solving matrix equations <m>Ax=b</m> are much easier if we can find an inverse matrix <m>A^{-1}</m>, it is natural to ask for a numerical procedure to quickly test invertibility of matrices. It turns out that there is a very nice answer to this question, which is provided by the theory of <em>determinants</em>. 
 <p></p>
-As you would solve this equation for <m>x</m> if <m>A, x, b</m> were real numbers, you want to try to "divide" by <m>A</m>. When these are real numbers (which can be thought of as <m>1\times1</m> matrices), this is always possible, except when the number <m>A</m> is <m>0</m>. In the more general matrix equation case, most, but not all, matrices are <em>invertible.</em> 
+Given any <em>square </em> <m>\ n\times n</m> matrix <m>A</m> (there is no such thing as a determinant for a non-square matrix!), the <term>determinant</term> of <m>A</m> is a number, called <m>\det A</m>. We will see several ways to describe this number. 
+
 <p></p>
-In such a case, i.e., when there is an inverse <m>A^{-1}</m>, the equation <m>Ax=b</m> always has exactly one solution <m>x</m> for any given <m>b</m>. Explicitly, it is <m>x=A^{-1}b</m>. So, if we know that this inverse exists, then after the (possibly computationally tedious) task of computing the inverse one time, we can solve <em>every</em> equation <m>Ax=b</m> by performing a relatively quick matrix multiplication For those interested in computer science, the time to run the row-reduction method for computing matrix inverses grows cubically (like <m>n^3</m> for <m>n\times n</m> matrices) in the dimensions of the matrix, while multiplying <m>A^{-1}</m> by the vector  <m>b</m> only takes about <m>n^2</m> units of time. So, for example, if you wanted to solve the equation <m>Ax=b</m> for many vectors <m>b</m> and for a fixed <m>1000\times1000</m> matrix <m>A</m>, computing the products <m>A^{-1}b</m> is about <m>1000</m> times faster than solving the equation directly, so if we "precompute" the slower operation of taking the inverse one time, we get a time-savings factor of <m>1000</m> on all future computations. 
+In fact, determinants are actually an instance of something you already know about: volume. Specifically, the <m>n</m> many columns of a square <m>n\times n</m> matrix <m>A</m> are all <m>n</m>-dimensional vectors. 
+These <m>n</m> vectors determine a parallelepiped in <m>\mathbb R^n</m>, which we will call the <em>parallelepiped for <m>A</m>.</em>
+For example, if <m>A</m> is a <m>2\times2</m> matrix whose columns are non-zero vectors <m>v</m> and <m>w</m>, that is, if <m>A=\spalignmat{v; w}</m>, then we have the parallelogram determined by <m>v</m> and <m>w</m>:
+<figure xml:id="PicPar2Vec">
+                    <caption>The parallelgram determined by two vectors <m>v</m> and <m>w</m> in <m>\mathbb R^2</m></caption>
+                    <image width="30%" source="images/PicPar2Vec.jpg" />
+                </figure>
+				<term>NOTE: Images aren't loading properly for some reason, although I believe they're in the right folder.</term>
+				Similarly, if <m>A</m> is a <m>3\times3</m> matrix, then we obtain three vectors in <m>\mathbb R^3</m>, which define a parallelepiped:
+				<figure xml:id="PicPar3Vec">
+				                    <caption>The parallelepiped determined by three vectors in 
+									<m>\mathbb R^3</m></caption>
+				                    <image width="30%" source="images/PicPar3Vec.jpg"/>
+				                </figure>
+								
 <p></p>
-This discussion motivates two main quesitons: when is a matrix invertible, and when is it unique? If a matrix <m>A</m> is invertible, then we have seen that it must be a square matrix, i.e., it must have the same number of rows and columns. In particular, we have seen that if a matrix <m>A</m> is not square, then there are vectors <m>b</m> for which <m>Ax=b</m> either has no solutions or infinitely many solutions. 
+<term>Key Obversvation:</term> 
+The matrix <m>A</m> is invertible if and only if the parallelepiped for <m>A</m> has non-zero volume, i.e., if and only if the parallelepiped is not "flat". 
+
 <p></p>
-Thus, the only case when a matrix has any hope of being invertible is when it is square. It will turn out for every square matrix of any size that there is a number associated to it, called the <em>determinant,</em> which vanishes if and only if the matrix isn't invertible. That is, we will define a procedure which takes any square matrix and spits out a number which detects invertibility. In the case of <m>1\times1</m> matrices, we know that a real number <m>a</m> is invertible exactly when <m>a\neq0</m>. It is thus reasonable to define the determinant of the matrix <m>(a)</m> to simply be <m>a</m> itself. That is, for any real number <m>a</m>, we set
- $$\det((a))=a.$$
+This is not too hard to believe, especially in low-dimensional cases. 
+For example, if <m>A</m> is a <m>2\times2</m> matrix whose columns are non-zero vectors <m>v</m> and <m>w</m>, then we know that the matrix is invertible exactly when <m>v</m> and <m>w</m> are linearly independent, which happens exactly when they don't lie on the same line (neither is a scalar multiple of the other). But this occurs exactly when the parallelogram for <m>A</m> in <xref ref="PicPar2Vec"/> isn't "squashed."
+<p></p>
+We shall later see that the determinant of <m>A</m> is a number associated to <m>A</m> 
+whose absolute value <em>is</em> the volume of the parallelepiped for <m>A</m>.
+
+<p></p>
+Before jumping into general formulas for and the definition of the determinant, we consider a few examples. If <m>n=1</m>, then 
+we know that a real number <m>a</m> is invertible (i.e., <m>1/a</m> makes sense) exactly when <m>a\neq0</m>. It is thus reasonable to define the determinant of the matrix <m>\spalignmat{a}</m> to simply be <m>a</m> itself. That is, for any real number <m>a</m>, we have
+ $$\det\spalignmat{a}=a.$$
+ In this case, we can also think of <m>1</m>-dimensional "volume" as length, and the "parallelepiped for <m>A</m>" is just the vector <m>a</m> in <m>\mathbb R^1</m>.
  <p></p>
-		In the case of <m>2\times2</m> matrices, this happens to be the number <m>ad-bc</m>. This is reasonable, since if we apply row reduction, this number shows up in the denominator of the inverse. Specifically, if <m>a\neq0</m>, and if we set <m>D=ad-bc</m>, then
-		we can reduce
+		In the case of a <m>2\times2</m> matrix <m> A=\spalignmat{a,b; c,d}</m>, the explicit formula is 
 		$$
-		\begin{pmatrix}
-		a &amp; b &amp; | &amp;  1 &amp; 0
-		\\
-		c &amp; d &amp; | &amp; 0 &amp; 1
-		\end{pmatrix}
-		\rightarrow
-		\begin{pmatrix}
-		1 &amp; \frac ba &amp; | &amp; \frac 1a &amp; 0
-		\\
-		c &amp; d &amp; | &amp; 0 &amp; 1
-		\end{pmatrix}
-		\rightarrow
-		\begin{pmatrix}
-		1 &amp; \frac ba &amp; | &amp; \frac 1a&amp; 0
-		\\
-		0 &amp; \frac{ad-bc}{a} &amp; | &amp; -\frac ca &amp; 1
-		\end{pmatrix}
-		,
-		$$
-		which then becomes
-		$$
-		\begin{pmatrix}
-		1 &amp; \frac ba &amp; | &amp; \frac 1a&amp; 0
-		\\
-		0 &amp; 1 &amp; | &amp; -\frac cD &amp; \frac aD
-		\end{pmatrix}
-		\rightarrow
-		\begin{pmatrix}
-		1 &amp; 0 &amp; | &amp;  \frac dD&amp; -\frac bD
-		\\
-		0 &amp; 1 &amp; | &amp; -\frac cD &amp; \frac aD
-		\end{pmatrix}
-		.
-		$$
-		Thus, we recover the very handy formula 
-		$$
-		\begin{pmatrix}
-		a &amp; b
-		\\
-		c &amp; d
-		\end{pmatrix}^{-1}
-		=\frac{1}{ad-bc}
-		\begin{pmatrix}
-		d &amp; -b
-		\\
-		-c &amp; a
-		\end{pmatrix}
-		.
-		$$
-		This calculation can be repeated for <m>a=0</m>, in which case one find precisely the same answer, provided that <m>bc\neq0</m>. 
-		Thus, we see that if we define 
-		$$
-		\det\begin{pmatrix}
-		a &amp; b
-		\\
-		c &amp; d
-		\end{pmatrix}
-		=ad-bc
-		,
-		$$
-		then this factor shows up naturally in the direct row reduction calculation above, and we find, for <m>A=\left(\begin{smallmatrix}a&amp; b\\ c&amp; d\end{smallmatrix}\right)</m>,
-		$$
-		\det(A)
-		=0
-		\text{ if and only if}
-		A
-		\ \text{is invertible.}
-		$$
+		\det A
+		=ad-bc.
+		$$ 
+		It may seem that this formula has little to do with volume. However, it is a fun geometry problem to show that the parallelogram for <m>A</m> in <xref ref="PicPar2Vec"/> has area <m>|ad-bc|</m> (first think about the case when the first column of <m>A</m> lies on the <m>x</m>-axis). As another fun problem, one can perform row reduction directly on <m>A</m> to find that the reduced row echelon form of <m>A</m> is the identity matrix <m>I_2</m> exactly when <m>ad-bc\neq0</m> (although we omit the calculation here).
 		<p></p>
+		When <m>n=3</m>, the formula for the determinant is a little stranger:
+		$$
+		\begin{split}
+		&amp;
+		\det\spalignmat{a_{11},a_{12},a_{13}; a_{21},a_{22},a_{23},a_{31},a_{32},a_{33}}
+		\\
+		&amp;
+		\quad\quad
+		=
+		a_{11}a_{22}a_{33}+a_{12}a_{23}a_{31}+a_{13}a_{21}a_{32}
+		-a_{13}a_{22}a_{31}-a_{11}a_{23}a_{32}-a_{12}a_{21}a_{33}
+		.
+		\end{split}
+		$$
+		This formula looks too complicated to memorize outright. Fortunately, there is a useful mnemonic device for this formula, known as the <em>Rule of Sarrus</em>. This works by drawing a bigger matrix by recopying down the first two columns to the right of the matrix, and by drawing a series of upwards and downwards slashes as follows:
+		<term>NOTE: Figure out how to color text (usual html command doesn't work) and how to draw the matrices with slashes.</term>
+		Then, we multiply all the entries on each slash together, and add the products of the downward ones, and subtract the products of the upwards ones. For example, 
+		<term> NOTE: Insert example with numbers once I figure out how to draw the picture with slashes above.</term>
 		
-		For general <m>n</m>, we will define a number, <m>\det(A)</m>, assigned to each <m>n\times n</m> matrix <m>A</m>. As we shall see, the determinant can be though about or computed in several different ways. The main point will be that the following fact will be true:
 		<p></p>
-		<term> Fact.</term>
-		<p></p> The matrix <m>A</m> is invertible precisely when <m>\det(A)\neq0</m>. 
-		<p></p>
-		As we shall see once we get going, determinants are actually an instance of something you already know about: volume. 
-		To connect this problem to geometry, note that a matrix is really the same data as a set of vectors, namely its rows.
-		Each row can thus be thought of as a vector in <m>\mathbb R^n</m>, and so a square matrix is essentially the same thing as an ordered collection of <m>n</m> many vecotrs in <m>\mathbb R^n</m>. 
-		<p></p>
-		For example, if <m>A</m> is a <m>2\times2</m> matrix whose rows are non-zero vectors <m>v</m> and <m>w</m>, then we know that the matrix is invertible exactly when <m>v</m> and <m>w</m> are linearly independent, which happens exactly when they don't lie on the same line (neither is a scalar multiple of the other). If we draw the parallelogram determined by <m>v</m> and <m>w</m>, namely, which has vertices at <m>0</m>,<m>v</m>, <m>w</m>, and <m>v+w</m>, as drawn below,
-		<figure xml:id="PicPar2Vec">
-		                    <caption>The parallelgram determined by two vectors <m>v</m> and <m>w</m> in <m>\mathbb R^2</m></caption>
-		                    <image width="30%" source="images/PicPar2Vec.jpg" />
-		                </figure>
-						we can see that the area of this parallelogram is non-zero exactly when the corresponding matrix is invertible (i.e., when the parallelogram is really a parallelogram and not confined to a line).
-						
-						<p></p>
-						As another example, consider the case of a <m>3\times3</m> matrix. Then this matrix corresponds to a set of three vectors in <m>\mathbb R^3</m>, which define a parallelepiped. For example, see the figure below.
-						<figure xml:id="PicPar3Vec">
-						                    <caption>The parallelepiped determined by three vectors in 
-											<m>\mathbb R^3</m></caption>
-						                    <image width="30%" source="images/PicPar3Vec.jpg"/>
-						                </figure>
-						It is not hard to imagine that the volume of this parallelepiped is zero exactly when it is "squashed," i.e., in the <em>degnerate</em> case when it actually lies in a plane. But these three vectors lie in a plane exactly when they do not span <m>\mathbb R^3</m>, which is exactly when the corresponding matrix is not invertible. Thus, one may expect that this volume is related to the determinant. We will see that this is true, and make this more precise once we learn a little bit more about determinants. 
-						
+		Beyond <m>n=3</m>, the formula for the determinant gets more complicated. In the subsequent sections, we will give several different ways for computing the determinant, we will apply them to give a general formula for the inverse of a matrix, and we will see how they can be thought of as stretch factors for linear transformations. That’s a lot to do, so let’s get going!
 		
   
 
