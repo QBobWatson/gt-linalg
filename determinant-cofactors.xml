@@ -23,6 +23,7 @@ the license is included in gfdl.xml.
   .
   $$
   To give our general formula, we first need to give a little notation.
+  <p></p>
   <definition xml:id="Minor-Cofactors-Defn">  
 	  <statement>
 	  Suppose that <m>A</m> is an <m>n\times n</m> matrix <m>A</m>. 
@@ -41,6 +42,7 @@ the license is included in gfdl.xml.
   \spalignmat{+,-,+,-; -,+,-,+; +,-,+,-; -,+,-,+}
   $$
   is the sign in the definition of <m>C_{ij}</m>. 
+  <p></p>
   <example xml:id="FirstMinorCofactorEx">
 	  <statement>
 		  For 
@@ -76,19 +78,37 @@ the license is included in gfdl.xml.
 		<term> Result: </term>  The sum of these products is <m>\det A</m>. 
 	  </li>
   </ol>
-   <example xml:id="Gen2By2CofactorEx">
-	   <statement>
-		   Let's try this out for a general <m>2\times2</m> matrix <m>A=\spalignmat{a,b;c,d}</m>. Choosing the first row of <m>A</m> in Step 1 of the cofactor expansion algorithm (when we do this, we also say that we are <em>expanding the determinant along the first row</em>), we find that
+  <p></p>
+  In formulas, this says that if we pick row <m>i</m> to "expand along," then the cofactor expansion formula is
+  $$
+  \det A=\sum_{j=1}^n a_{ij}C_{ij}
+  ,
+  $$
+  where in the sum the number <m>i</m> is fixed. Similarly, if we pick column <m>j</m> to expand along, then we obtain a formula
+  $$
+  \det A=\sum_{i=1}^n a_{ij}C_{ij}
+  .
+  $$
+  Note that this gives <m>2n</m> seemingly-different formulas, which all give the same number! We will why this is true later, and simply assume this for now.
+  <p></p>
+  		   Let's try this out for a general <m>2\times2</m> matrix <m>A=\spalignmat{a,b;c,d}</m>. Choosing the first row of <m>A</m> in Step 1 of the cofactor expansion algorithm (when we do this, we also say that we are <em>expanding the determinant along the first row</em>), we find that
 		   $$
 		   \det A=aC_{11}+bC_{12}=aA_{11}-bA_{12}.
 		   $$
-		   Now <m>A_{11}</m> is the determinant of the matrix obtained by deleting the first row and the first column of <m>A</m>. <term>NOTE: Figure out how to draw a picture with these slashes here.</term> This matrix is just the single-entry matrix <m>\spalignmat{d}</m>. Similarly, <m>A_{12}</m> is the determinant of <m>\spalignmat{c}</m>. As we have seen that the determinant of a <m>1\times1</m> matrix is just the number inside of it, the cofactor expansion in this case recovers the formula
+		   Now <m>A_{11}</m> is the determinant of the matrix obtained by deleting the first row and the first column of <m>A</m>
+		   as in the following picture:
+		   <p></p>
+   		<image source="Example22Cofactor.jpeg" width="50%">
+   		</image>
+		<p></p>
+		   
+		   
+		   This matrix is just the single-entry matrix <m>\spalignmat{d}</m>. Similarly, <m>A_{12}</m> is the determinant of <m>\spalignmat{c}</m>. As we have seen that the determinant of a <m>1\times1</m> matrix is just the number inside of it, the cofactor expansion in this case recovers the formula
 		   $$
 		   \det A=ad-bc
 		   $$
 		   from before.
-	   </statement>
-   </example>
+
   
    Let's try the same thing on a slightly larger example.
   <p></p>
@@ -120,6 +140,7 @@ the license is included in gfdl.xml.
 </statement>
 </example>
 With this method, much larger determinants are also easy to compute, especially when there are lots of zeros in a row or column. Generally speaking, it is a good idea when computing an example to try to expand along a row or column with as many zeros as possible, or at least with the smallest entries possible.
+<p></p>
 <example>
 	<statement>
 We find the determinant of 
@@ -199,7 +220,7 @@ Although this technique works reasonably quickly in most small examples, several
 		How do we know that these numbers give the same answer <em>regardless</em> of which row or column we choose (that is, this method gives <m>2n</m> different expressions for the same number attached to an <m>n\times n</m> matrix, which we claim are always all equal).
 	</li>
 	<li>
-	What is the real meaning of the determinant?
+	Why does this number have to do with invertibility?
 	</li>
 </ol>
 

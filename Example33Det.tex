@@ -1,0 +1,28 @@
+\documentclass{article}
+\usepackage{tikz}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\usetikzlibrary{matrix}
+
+
+\begin{document}
+
+\begin{tikzpicture}
+
+\matrix (A) [matrix of math nodes] 
+{ 1 & 3 & 5 & 1& 3 \\
+  2 & 0 & -1 & 2 & 0 \\
+  4 & -3 & 1  & 4 & -3 \\
+};
+
+ \draw [color=blue] (A-1-1.north west) to (A-3-3.south east) ;
+ \draw [color=blue] (A-1-2.north west)  to (A-3-4.south east) ;
+  \draw [color=blue] (A-1-3.north west)  to (A-3-5.south east) ;
+ \draw [color=red]  (A-3-1.south west)  to (A-1-3.north east);
+  \draw [color=red]  (A-3-2.south west) to (A-1-4.north east);
+   \draw [color=red]  (A-3-3.south west)  to (A-1-5.north east);
+
+\end{tikzpicture}
+
+
+\end{document}

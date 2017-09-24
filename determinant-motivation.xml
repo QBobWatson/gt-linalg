@@ -14,6 +14,7 @@ the license is included in gfdl.xml.
 
 <p></p>
 We begin by recalling three primary goals of this course:
+<p></p>
 <ol>
 	<li> Solving systems of linear equations, a.k.a. solving the matrix equation <m>Ax=b</m> (we've studied this problem in detail).</li>
 		<li>Solving the matrix equation <m>Ax=\lambda x</m>, where <m>\lambda</m> is a number (the eigenvalue problem). We are currently studying this problem.</li>
@@ -78,9 +79,36 @@ we know that a real number <m>a</m> is invertible (i.e., <m>1/a</m> makes sense)
 		\end{split}
 		$$
 		This formula looks too complicated to memorize outright. Fortunately, there is a useful mnemonic device for this formula, known as the <em>Rule of Sarrus</em>. This works by drawing a bigger matrix by recopying down the first two columns to the right of the matrix, and by drawing a series of upwards and downwards slashes as follows:
-		<term>NOTE: Figure out how to color text (usual html command doesn't work) and how to draw the matrices with slashes.</term>
-		Then, we multiply all the entries on each slash together, and add the products of the downward ones, and subtract the products of the upwards ones. For example, 
-		<term> NOTE: Insert example with numbers once I figure out how to draw the picture with slashes above.</term>
+		<p></p>
+
+		<image source="images/RuleSarrus.jpeg" width="50%">
+		    <description>A useful trick for finding <m>3\times3</m> determinants</description>
+		</image>
+		
+		<p></p>
+		
+		Then, we multiply all the entries on each slash together, and add the products of the downward ones, and subtract the products of the upwards ones. For example, to find the determinant of <m>A=\spalignmat{1, 3, 5; 2, 0, -1;, 4, -3, 1}</m>, we draw the picture 
+		<p></p>
+		<image source="Example33Det.jpeg" width="50%">
+			</image>
+			<p></p>
+			and find that the determinant of <m>A</m> is 
+			$$
+			\begin{aligned}
+			&amp;
+			1\cdot0\cdot1+3\cdot(-1)\cdot4+5\cdot2\cdot(-3)-4\cdot0\cdot5-(-3)\cdot(-1)\cdot1-\cdot(1)\cdot2\cdot3
+			\\
+			&amp;
+			\quad
+			=
+			0-12-30-0-3-6
+			=
+			-51
+			.
+			\end{aligned}
+			$$
+		
+		
 		
 		<p></p>
 		Beyond <m>n=3</m>, the formula for the determinant gets more complicated. In the subsequent sections, we will give several different ways for computing the determinant, we will apply them to give a general formula for the inverse of a matrix, and we will see how they can be thought of as stretch factors for linear transformations. That’s a lot to do, so let’s get going!
