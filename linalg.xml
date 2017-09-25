@@ -29,11 +29,11 @@ Free Documentation License"
     <xi:include href="./overview.xml" />
 
 	<chapter xml:id="chap-lines-planes">
-		<title> Lines, Planes, and Euclidean space</title>	  
-	        <xi:include href="./WhatIsLinAlg.xml" />	
-                <xi:include href="./EuclideanSpace.xml" />
-                <xi:include href="./GeometryRnDotProd.xml" />
-                <xi:include href="./LinesPlanes.xml" />
+		<title> Lines, Planes, and Euclidean space</title>
+	        <xi:include href="./what-is-lin-alg.xml" />
+                <xi:include href="./euclidean-space.xml" />
+                <xi:include href="./geometry-Rn-dot-prod.xml" />
+                <xi:include href="./lines.xml" />
 	</chapter>
 
 
@@ -73,7 +73,7 @@ Free Documentation License"
 
       <introduction>
         <p>In this chapter, you will learn about one of most handy tools in linear algebra-- the <em>determinant.</em> Roughly speaking, this is numerical procedure assigning a number to any <em>square</em> matrix. As we shall see, this number "detects" invertibility, and can also be used to directly solve systems of linear equations in nice situations.
-	
+
 	</p>
       </introduction>
       <xi:include href="./determinant-motivation.xml" />
