@@ -10,6 +10,15 @@ base_dir="$compile_dir/.."
 build_dir="$base_dir/build"
 static_dir="$build_dir/static"
 
+echo "Checking xml..."
+cd "$compile_dir"
+xmllint --xinclude --noout --relaxng "$base_dir/gt-text-common/schemas/pretext.rng" \
+        linalg.xml
+if [[ $? == 3 || $? == 4 ]]; then
+    echo "Input is not valid MathBook XML; exiting"
+    exit 1
+fi
+
 echo "Cleaning up previous build..."
 rm -rf "$build_dir"
 mkdir -p "$build_dir"
@@ -27,7 +36,6 @@ cp "$base_dir/mathbook-assets/stylesheets/fonts/ionicons/fonts/"* "$static_dir/f
 cp "$compile_dir/images/"* "$static_dir/images"
 
 echo "Building html..."
-cd "$compile_dir"
 xsltproc -o "$build_dir/" --xinclude \
          "$compile_dir/xsl/mathbook-html.xsl" linalg.xml \
          || die "xsltproc failed!"
