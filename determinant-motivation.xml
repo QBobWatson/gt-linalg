@@ -30,14 +30,13 @@ These <m>n</m> vectors determine a parallelepiped in <m>\mathbb R^n</m>, which w
 For example, if <m>A</m> is a <m>2\times2</m> matrix whose columns are non-zero vectors <m>v</m> and <m>w</m>, that is, if <m>A=\spalignmat{v; w}</m>, then we have the parallelogram determined by <m>v</m> and <m>w</m>:
 <figure xml:id="PicPar2Vec">
                     <caption>The parallelgram determined by two vectors <m>v</m> and <m>w</m> in <m>\mathbb R^2</m></caption>
-                    <image width="30%" source="images/PicPar2Vec.jpg" />
+                    <image width="30%" source="static/images/PicPar2Vec.jpg" />
                 </figure>
-				<term>NOTE: Images aren't loading properly for some reason, although I believe they're in the right folder.</term>
 				Similarly, if <m>A</m> is a <m>3\times3</m> matrix, then we obtain three vectors in <m>\mathbb R^3</m>, which define a parallelepiped:
 				<figure xml:id="PicPar3Vec">
 				                    <caption>The parallelepiped determined by three vectors in 
 									<m>\mathbb R^3</m></caption>
-				                    <image width="30%" source="images/PicPar3Vec.jpg"/>
+				                    <image width="30%" source="static/images/PicPar3Vec.jpg"/>
 				                </figure>
 								
 <p></p>
@@ -81,7 +80,7 @@ we know that a real number <m>a</m> is invertible (i.e., <m>1/a</m> makes sense)
 		This formula looks too complicated to memorize outright. Fortunately, there is a useful mnemonic device for this formula, known as the <em>Rule of Sarrus</em>. This works by drawing a bigger matrix by recopying down the first two columns to the right of the matrix, and by drawing a series of upwards and downwards slashes as follows:
 		<p></p>
 
-		<image source="images/RuleSarrus.jpeg" width="50%">
+		<image source="static/images/RuleSarrus.jpg" width="50%">
 		    <description>A useful trick for finding <m>3\times3</m> determinants</description>
 		</image>
 		
@@ -89,7 +88,7 @@ we know that a real number <m>a</m> is invertible (i.e., <m>1/a</m> makes sense)
 		
 		Then, we multiply all the entries on each slash together, and add the products of the downward ones, and subtract the products of the upwards ones. For example, to find the determinant of <m>A=\spalignmat{1, 3, 5; 2, 0, -1;, 4, -3, 1}</m>, we draw the picture 
 		<p></p>
-		<image source="Example33Det.jpeg" width="50%">
+		<image source="static/images/Example33Det.jpg" width="50%">
 			</image>
 			<p></p>
 			and find that the determinant of <m>A</m> is 
