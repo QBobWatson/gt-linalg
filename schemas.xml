@@ -2,6 +2,7 @@
 <!-- JDR: This file tells Emacs's nxml-mode where the schema files are.
      It does not get compiled by Mathbook XML. -->
 <locatingRules xmlns="http://thaiopensource.com/ns/locating-rules/1.0">
+  <uri resource="determinant-cofactors.xml" uri="../gt-text-common/schemas/pretext.rnc"/>
   <uri resource="backmatter.xml" uri="../gt-text-common/schemas/pretext.rnc"/>
   <uri resource="bookinfo.xml" uri="../gt-text-common/schemas/pretext.rnc"/>
   <uri resource="charpoly.xml" uri="../gt-text-common/schemas/pretext.rnc"/>

@@ -12,59 +12,64 @@ the license is included in gfdl.xml.
 <section xml:id="section-determinant-cofactors">
   <title>Determinants: Cofactor expansions</title>
 
-  <p></p>
-  We begin by describing one formula for determinants. This definition may seem strange, and we will have to wait to see where it comes from and ho it is connected to invertibility and volumes. However, it is convenient for calculations and will be enough to kick off our study of the determinant. 
-  <p></p>
-  We will build up this <em>cofactor expansion</em> from the ground up in a recursive procedure. Namely, this method will say how to compute the determinant for <m>n\times n</m> matrices, <em>assuming</em> we already know how to do so for <m>(n-1)\times(n-1)</m> matrices. 
-  
-  <p></p> Let's start at the beginning. First, we require determinants for <m>1\times1</m> matrices. As discussed in the last section, the natural definition of the determinant in this case, which is correct one, is 
+  <p>
+    We begin by describing one formula for determinants. This definition may seem strange, and we will have to wait to see where it comes from and ho it is connected to invertibility and volumes. However, it is convenient for calculations and will be enough to kick off our study of the determinant.
+  </p>
+
+  <p>We will build up this <em>cofactor expansion</em> from the ground up in a recursive procedure. Namely, this method will say how to compute the determinant for <m>n\times n</m> matrices, <em>assuming</em> we already know how to do so for <m>(n-1)\times(n-1)</m> matrices.
+  </p>
+
+  <p>Let's start at the beginning. First, we require determinants for <m>1\times1</m> matrices. As discussed in the last section, the natural definition of the determinant in this case, which is correct one, is
   $$
   \det(a)=a
   .
   $$
   To give our general formula, we first need to give a little notation.
-  <p></p>
-  <definition xml:id="Minor-Cofactors-Defn">  
-	  <statement>
-	  Suppose that <m>A</m> is an <m>n\times n</m> matrix <m>A</m>. 
-	  
-	  <p></p> The <m>(i,j)</m>-th <term>minor,</term> denoted <m>A_{ij}</m>, is the determinant of the <m>(n-1)\times (n-1)</m> matrix obtained from <m>A</m> by deleting the <m>i</m>-th row and the <m>j</m>-th column. 
-	  <p></p>
-	  The <m>(i,j)</m>-th <term>cofactor </term>  <m>\ C_{ij}</m> is defined in terms of the minor by
+  </p>
+
+  <definition xml:id="Minor-Cofactors-Defn">
+    <statement>
+      <p>Suppose that <m>A</m> is an <m>n\times n</m> matrix <m>A</m>.
+      </p>
+
+      <p>The <m>(i,j)</m>-th <term>minor,</term> denoted <m>A_{ij}</m>, is the determinant of the <m>(n-1)\times (n-1)</m> matrix obtained from <m>A</m> by deleting the <m>i</m>-th row and the <m>j</m>-th column.</p>
+
+      <p>The <m>(i,j)</m>-th <term>cofactor </term>  <m>\ C_{ij}</m> is defined in terms of the minor by
 	  $$
 	  C_{ij}=(-1)^{i+j}A_{ij}
 	  .
 	  $$
-  </statement>
+      </p>
+    </statement>
   </definition>
+
+  <p>
   Note that the signs of the cofactors follow a "checkerboard pattern". Namely, the pattern of plus and minus signs in the <m>(i,j)</m>-th entry of the matrix
   $$
   \spalignmat{+,-,+,-; -,+,-,+; +,-,+,-; -,+,-,+}
   $$
-  is the sign in the definition of <m>C_{ij}</m>. 
-  <p></p>
+  is the sign in the definition of <m>C_{ij}</m>.
+  </p>
+
   <example xml:id="FirstMinorCofactorEx">
-	  <statement>
-		  For 
-		  $$
-		  A=
-		 \spalignmat{1,2,3;4,5,6;7,8,9}
-		  ,
-		  $$
-		  we have 
-		  $$
-		  A_{23}=\det
-		  \spalignmat{1,2;7,8}
-		  =8-14=-6.
-		  $$
-		  We also find <m>C_{23}=(-1)^{2+3}(-6)=6.</m>
-  </statement>
+    <statement>
+      <p>
+	For
+	$$
+	A= \spalignmat{1,2,3;4,5,6;7,8,9},
+	$$
+	we have
+	$$A_{23}=\det \spalignmat{1,2;7,8} =8-14=-6.$$
+	We also find <m>C_{23}=(-1)^{2+3}(-6)=6.</m>
+      </p>
+    </statement>
   </example>
-  
-  
-  Using <xref ref="Minor-Cofactors-Defn"/>, we can describe our procedure for computing determinants as follows.
-  
-  <p></p><term>Algorithm (Cofactor/Laplace expansion)</term>
+
+  <p>
+    Using <xref ref="Minor-Cofactors-Defn"/>, we can describe our procedure for computing determinants as follows.
+  </p>
+
+  <term>Algorithm (Cofactor/Laplace expansion)</term>
   To compute the determinant of a square matrix, do the following.
   <ol>
 	  <li>
@@ -72,10 +77,10 @@ the license is included in gfdl.xml.
 	  </li>
 	  <li> For each element <m>a_{ij}</m> of this row or column, compute the associated cofactor <m>C_{ij}</m>.</li>
 	  <li>
-		  Multiply each cofactor by the associated matrix entry <m>a_{ij}</m>. 
+		  Multiply each cofactor by the associated matrix entry <m>a_{ij}</m>.
 	  </li>
 	  <li>
-		<term> Result: </term>  The sum of these products is <m>\det A</m>. 
+		<term> Result: </term>  The sum of these products is <m>\det A</m>.
 	  </li>
   </ol>
   <p></p>
@@ -101,20 +106,20 @@ the license is included in gfdl.xml.
    		<image source="Example22Cofactor.jpeg" width="50%">
    		</image>
 		<p></p>
-		   
-		   
+
+
 		   This matrix is just the single-entry matrix <m>\spalignmat{d}</m>. Similarly, <m>A_{12}</m> is the determinant of <m>\spalignmat{c}</m>. As we have seen that the determinant of a <m>1\times1</m> matrix is just the number inside of it, the cofactor expansion in this case recovers the formula
 		   $$
 		   \det A=ad-bc
 		   $$
 		   from before.
 
-  
+
    Let's try the same thing on a slightly larger example.
   <p></p>
   <example>
 	  <statement>
-  We find the determinant of 
+  We find the determinant of
   $$
   A=
 \spalignmat{2,1,3;-1,2,1;-2,2,3}
@@ -128,11 +133,11 @@ the license is included in gfdl.xml.
   $$
   A_{11}=4,\quad\quad A_{12}=-1,\quad\quad A_{13}=2.
   $$
-  By inserting signs, we find that the cofactors are 
+  By inserting signs, we find that the cofactors are
   $$
   C_{11}=A_{11}=4,\quad\quad C_{12}=-A_{12}=1,\quad\quad C_{13}=A_{13}=2.
   $$
-  Thus, 
+  Thus,
   $$
   \det A=a_{11}C_{11}+a_{12}C_{12}+a_{13}C_{13}
   =2(4)+(1)+3(2)=15.
@@ -143,13 +148,13 @@ With this method, much larger determinants are also easy to compute, especially 
 <p></p>
 <example>
 	<statement>
-We find the determinant of 
+We find the determinant of
 $$
 A=
 \spalignmat{2,5,-3,-2;-2,-3,2,-5;1,3,-2,0;-1,6,4,0}
 .
 $$
-We expand along the last column to find 
+We expand along the last column to find
 $$
 \det A=2\det
 \spalignmat{-2,-3,2;1,3,-2;-1,6,4}
@@ -158,10 +163,10 @@ $$
 \spalignmat{2,5,-3;1,3,-2;-1,6,4}
 .
 $$
-We can find these two determinants by expanding them as well. For example, expanding along the first column on the first one, we find that 
+We can find these two determinants by expanding them as well. For example, expanding along the first column on the first one, we find that
 \begin{align*}
 &amp;
-\det 
+\det
 \spalignmat{-2,-3,2;1,3,-2;-1,6,4}
 \\
 &amp;
@@ -181,7 +186,7 @@ We can find these two determinants by expanding them as well. For example, expan
 -(-24)
 -0=-48+24+0=-24.
 \end{align*}
-Similarly, by expanding the second <m>3\times 3</m> matrix along the first column, we find that 
+Similarly, by expanding the second <m>3\times 3</m> matrix along the first column, we find that
 \begin{align*}
 &amp;
 \spalignmat{2,5,-3;1,3,-2;-1,6,4}
