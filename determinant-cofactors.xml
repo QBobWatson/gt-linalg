@@ -29,10 +29,10 @@ the license is included in gfdl.xml.
       <p>Suppose that <m>A</m> is an <m>n\times n</m> matrix <m>A</m>.
       </p>
 
-      <p>The <m>(i,j)</m>-th <term>minor,</term> denoted <m>A_{ij}</m>, is the determinant of the <m>(n-1)\times (n-1)</m> matrix obtained from <m>A</m> by deleting the <m>i</m>-th row and the <m>j</m>-th column.</p>
+      <p>The <m>(i,j)</m>-th <term>minor,</term> denoted <m>A_{ij}</m>, is the <m>(n-1)\times (n-1)</m> matrix obtained from <m>A</m> by deleting the <m>i</m>-th row and the <m>j</m>-th column.</p>
 
       <p>The <m>(i,j)</m>-th <term>cofactor </term>  <m>\ C_{ij}</m> is defined in terms of the minor by
-      <me>C_{ij}=(-1)^{i+j}A_{ij}.</me>
+      <me>C_{ij}=(-1)^{i+j}\det A_{ij}.</me>
       </p>
     </statement>
   </definition>
@@ -49,7 +49,7 @@ the license is included in gfdl.xml.
 	For
 	<me>A= \mat{1 2 3;4 5 6;7 8 9},</me>
 	we have
-	<me>A_{23}=\det \mat{1 2;7 8} =8-14=-6.</me>
+	<me>A_{23}=\mat{1 2;7 8}\qquad \det A_{23} =8-14=-6.</me>
 	We also find <m>C_{23}=(-1)^{2+3}(-6)=6.</m>
       </p>
     </statement>
@@ -169,11 +169,11 @@ the license is included in gfdl.xml.
       <p>We find the determinant of
       <me>A= \mat{2 1 3;-1 2 1;-2 2 3}.</me>
       We make the somewhat arbitrary choice to expand along the first row. We compute the minors as
-      <me>A_{11} = \det\mat{2 1;2 3} \quad\quad A_{12}=\det\mat{-1 1;2 3} \quad\quad A_{13}=\det\mat{-1 2;-2 2}.</me>
+      <me> A_{11} = \mat{2 1;2 3} \quad\quad A_{12}=\mat{-1 1;2 3} \quad\quad  A_{13}=\mat{-1 2;-2 2}.</me>
       Computing these <m>2\times 2</m> determinants, we have
-      <me>A_{11}=4,\quad\quad A_{12}=-1,\quad\quad A_{13}=2.</me>
+      <me>\det A_{11}=4,\quad\quad \det A_{12}=-1,\quad\quad \det A_{13}=2.</me>
       By inserting signs, we find that the cofactors are
-      <me>C_{11}=A_{11}=4,\quad\quad C_{12}=-A_{12}=1,\quad\quad C_{13}=A_{13}=2.</me>
+      <me>C_{11}=\det A_{11}=4,\quad\quad C_{12}=-\det A_{12}=1,\quad\quad C_{13}=\det A_{13}=2.</me>
       Thus,
       <me>\det A=a_{11}C_{11}+a_{12}C_{12}+a_{13}C_{13} =2(4)+(1)+3(2)=15.</me>
     </p>
