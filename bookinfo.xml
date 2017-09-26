@@ -37,6 +37,9 @@ Copyright 2017 Georgia Institute of Technology
     \usetikzlibrary{backgrounds}
     \usetikzlibrary{arrows,matrix}
     \usetikzlibrary{snakes}
+    \usetikzlibrary{matrix}
+    \usepackage{jdr-tikz}
+    \usepackage{spalign}
   </latex-image-preamble>
 
   <!-- TODO: Google custom search -->

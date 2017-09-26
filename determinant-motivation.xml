@@ -99,7 +99,31 @@ the license is included in gfdl.xml.
 
   <figure>
     <caption>A useful trick for finding <m>3\times3</m> determinants</caption>
-    <image source="static/images/RuleSarrus.jpg" width="50%">
+    <image width="50%">
+      <latex-image-code><![CDATA[
+\begin{tikzpicture}[baseline=(A.center), ampersand replacement=\&]
+\tikzset{node style ge/.style={circle}}
+  \tikzset{BarreStyle/.style =   {opacity=.4,line width=4 mm,line cap=round,color=#1}}
+    \tikzset{SignePlus/.style =   {above left,,opacity=1,circle,fill=#1!50}}
+    \tikzset{SigneMoins/.style =   {below left,,opacity=1,circle,fill=#1!50}}
+% les matrices
+\matrix (A) [matrix of math nodes, nodes = {node style ge},,column sep=0 mm]
+{ a_{11} \& a_{12} \& a_{13} \& a_{11} \& a_{12} \\
+  a_{21} \& a_{22} \& a_{23} \& a_{21} \& a_{22} \\
+  a_{31} \& a_{32} \& a_{33}  \& a_{31} \& a_{32} \\
+};
+
+ \draw [BarreStyle=blue] (A-1-1.north west) node[SignePlus=blue] {$+$} to (A-3-3.south east) ;
+ \draw [BarreStyle=blue] (A-1-2.north west) node[SignePlus=blue] {$+$} to (A-3-4.south east) ;
+  \draw [BarreStyle=blue] (A-1-3.north west) node[SignePlus=blue] {$+$} to (A-3-5.south east) ;
+ \draw [BarreStyle=red]  (A-3-1.south west) node[SigneMoins=red] {$-$} to (A-1-3.north east);
+  \draw [BarreStyle=red]  (A-3-2.south west) node[SigneMoins=red] {$-$} to (A-1-4.north east);
+   \draw [BarreStyle=red]  (A-3-3.south west) node[SigneMoins=red] {$-$} to (A-1-5.north east);
+   \node[draw,text width=5cm] at (0,-3) {\tiny{(Modified from TikZ example of  Alain Matthes, CC BY 2.5)}};
+
+\end{tikzpicture}
+      ]]>
+      </latex-image-code>
     </image>
   </figure>
 
@@ -109,7 +133,26 @@ the license is included in gfdl.xml.
 
   <figure>
     <caption>The <m>3\times3</m> determinant trick for the matrix <m>A</m></caption>
-    <image source="static/images/Example33Det.jpg" width="50%">
+    <image width="50%">
+      <latex-image-code><![CDATA[
+\begin{tikzpicture}[ampersand replacement=\&]
+
+\matrix (A) [matrix of math nodes]
+{ 1 \& 3 \& 5 \& 1\& 3 \\
+  2 \& 0 \& -1 \& 2 \& 0 \\
+  4 \& -3 \& 1  \& 4 \& -3 \\
+};
+
+ \draw [color=blue] (A-1-1.north west) to (A-3-3.south east) ;
+ \draw [color=blue] (A-1-2.north west)  to (A-3-4.south east) ;
+  \draw [color=blue] (A-1-3.north west)  to (A-3-5.south east) ;
+ \draw [color=red]  (A-3-1.south west)  to (A-1-3.north east);
+  \draw [color=red]  (A-3-2.south west) to (A-1-4.north east);
+   \draw [color=red]  (A-3-3.south west)  to (A-1-5.north east);
+
+\end{tikzpicture}
+      ]]>
+      </latex-image-code>
     </image>
   </figure>
 

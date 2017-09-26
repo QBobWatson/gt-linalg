@@ -12,7 +12,7 @@ static_dir="$build_dir/static"
 
 echo "Checking xml..."
 cd "$compile_dir"
-xmllint --xinclude --noout --relaxng "$base_dir/gt-text-common/schemas/pretext.rng" \
+xmllint --xinclude --noout --relaxng "$base_dir/mathbook/schema/pretext.rng" \
         linalg.xml
 if [[ $? == 3 || $? == 4 ]]; then
     echo "Input is not valid MathBook XML; exiting"
@@ -34,6 +34,7 @@ cp "$base_dir/gt-text-common/js/"*.js "$static_dir/js"
 cp "$base_dir/mathbook-assets/stylesheets/"*.css "$static_dir/css"
 cp "$base_dir/mathbook-assets/stylesheets/fonts/ionicons/fonts/"* "$static_dir/fonts"
 cp "$compile_dir/images/"* "$static_dir/images"
+ln -s "$static_dir/images" "$build_dir/images"
 
 echo "Building html..."
 xsltproc -o "$build_dir/" --xinclude \

@@ -1,0 +1,243 @@
+
+%----------------------------------------------------------------------
+%-- Identification
+%----------------------------------------------------------------------
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{jdr-tikz}[2016/10/02
+  Joe Rabinoff's TikZ macros]
+
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,decorations,decorations.pathmorphing}
+\usetikzlibrary{calc,arrows.meta,quotes}
+
+
+%----------------------------------------------------------------------
+%-- Put nodes before and after to-paths
+%----------------------------------------------------------------------
+
+% This facility lets you place a node before or after a to-path.  This is
+% useful, for example, for placing a label of a vector *after* the end of the
+% vector.  Placement is always with respect to a *straight* line from the source
+% to the target coordinates; tangent vectors of curvy lines are not taken into
+% account.
+
+% Usage:
+
+% This places the node text $x$ 1mm after the line from (1,1) to (b):
+%    \path (1,1) to node[after line] {$x$} (b);
+
+% This places the node text $x$ 3pt before the line from (1,1) to (b):
+%    \path (1,1) to node[before line=3pt] {$x$} (b);
+
+% This places the node text $x$ after the line from (1,1) to (b), at a
+% distance of 0.1 times the line length.
+%    \path (1,1) to node[after line=.1] {$x$} (b);
+
+\makeatletter
+\tikzset{
+  % Figure out the angle of the line; use this to place the node's anchor.
+  calc to line angle/.code={%
+    \bgroup%
+    % This is just to convert the TikZ coordinates \tikztostart and \tikztoend
+    % (the latter of which might be a node name or something) to PGF points.
+    \def\savea##1{\def\pgf@tempa{##1}}%
+    \def\saveb##1{\def\pgf@tempb{##1}}%
+    \tikz@scan@one@point\savea(\tikztostart)\relax%
+    \tikz@scan@one@point\saveb(\tikztotarget)\relax%
+    \pgfmathanglebetweenpoints{\pgf@tempb}{\pgf@tempa}%
+    \pgfmathtruncatemacro{\to@lineangle}{\pgfmathresult}%
+    \xdef\to@lineangle{\to@lineangle}%
+    \egroup%
+  },
+  after line/.style={
+    pos=, % disable automatically setting pos
+    at={($(\tikztostart)!#1!(\tikztotarget)+(\tikztotarget)-(\tikztostart)$)},
+    calc to line angle,
+    anchor=\to@lineangle
+  },
+  after line/.default=1mm,
+  before line/.style={
+    pos=, % disable automatically setting pos
+    at={($(\tikztotarget)!#1!(\tikztostart)+(\tikztostart)-(\tikztotarget)$)},
+    calc to line angle,
+    anchor=\to@lineangle+180
+  },
+  before line/.default=1mm,
+}
+\makeatother
+
+
+%----------------------------------------------------------------------
+%-- 3D coordinate transforms
+%----------------------------------------------------------------------
+\makeatletter
+
+\tikzset{
+  % myxyz defines the (projection of the) locations of the unit coordinate
+  % vectors.
+  myxyz/.style={x={(1cm,0cm)}, y={(-.8cm,-.5cm)}, z={(0cm,1cm)}},
+  resetxy/.style={x={(1cm,0cm)}, y={(0cm,1cm)}},
+}
+
+% Apply coordinate transformation so that (1cm,0cm) is mapped to
+% (xyz cs:x=1,y=0,z=#1) and (0cm,1cm) is mapped to (xyz cs:x=0,y=1,z=#1)
+\newcommand\transformxy[1][0]{%
+    \pgfpointxyz100%
+    \pgfmathsetmacro\xx{\pgf@x/1cm}\pgfmathsetmacro\xy{\pgf@y/1cm}%
+    \pgfpointxyz010%
+    \pgfmathsetmacro\yx{\pgf@x/1cm}\pgfmathsetmacro\yy{\pgf@y/1cm}%
+    \pgftransformcm\xx\xy\yx\yy{\pgfpointxyz00{#1}}%
+}
+
+% Apply coordinate transformation so that (1cm,0cm) is mapped to
+% (xyz cs:x=1,y=#1,z=0) and (0cm,1cm) is mapped to (xyz cs:x=0,y=#1,z=1)
+\newcommand\transformxz[1][0]{%
+    \pgfpointxyz100%
+    \pgfmathsetmacro\xx{\pgf@x/1cm}\pgfmathsetmacro\xy{\pgf@y/1cm}%
+    \pgfpointxyz001%
+    \pgfmathsetmacro\yx{\pgf@x/1cm}\pgfmathsetmacro\yy{\pgf@y/1cm}%
+    \pgftransformcm\xx\xy\yx\yy{\pgfpointxyz0{#1}0}%
+}
+
+% Apply coordinate transformation so that (1cm,0cm) is mapped to
+% (xyz cs:x=#1,y=1,z=0) and (0cm,1cm) is mapped to (xyz cs:x=#1,y=0,z=1)
+\newcommand\transformyz[1][0]{%
+    \pgfpointxyz010%
+    \pgfmathsetmacro\xx{\pgf@x/1cm}\pgfmathsetmacro\xy{\pgf@y/1cm}%
+    \pgfpointxyz001%
+    \pgfmathsetmacro\yx{\pgf@x/1cm}\pgfmathsetmacro\yy{\pgf@y/1cm}%
+    \pgftransformcm\xx\xy\yx\yy{\pgfpointxyz{#1}00}%
+}
+
+\tikzset{
+    transformxy only/.code={\transformxy[#1]},
+    transformxy only/.default=0,
+    transformxz only/.code={\transformxz[#1]},
+    transformxz only/.default=0,
+    transformyz only/.code={\transformyz[#1]},
+    transformyz only/.default=0,
+    transformxy/.style={transformxy only=#1, resetxy},
+    transformxy/.default=0,
+    transformxz/.style={transformxz only=#1, resetxy},
+    transformxz/.default=0,
+    transformyz/.style={transformyz only=#1, resetxy},
+    transformyz/.default=0,
+}
+
+
+% Project onto coordinate planes
+\def\projxy@(#1,#2,#3){(#1,#2,0)}
+\def\projxy{\expandafter\projxy@}
+\def\projxz@(#1,#2,#3){(#1,0,#3)}
+\def\projxz{\expandafter\projxz@}
+\def\projyz@(#1,#2,#3){(0,#2,#3)}
+\def\projyz{\expandafter\projyz@}
+
+\makeatother
+
+%----------------------------------------------------------------------
+%-- Squiggly arrow with optional label
+%----------------------------------------------------------------------
+
+\makeatletter
+\def\longsquiggly{\def\squigglydraw{%
+  \draw[->,decorate] (arrow.south west) -- (arrow.south east);}%
+  \@longsquiggly}
+\def\rlongsquiggly{\def\squigglydraw{%
+  \draw[->,decorate] (arrow.south east) -- (arrow.south west);}%
+  \@longsquiggly}
+
+\newcommand\@longsquiggly[1][]{%
+\begin{tikzpicture}%
+    [baseline=-.8ex,%
+     decoration={snake, amplitude=.4mm,%
+       segment length=1mm, post length=1mm}]%
+  \node[anchor=south, inner ysep=0pt, outer sep=0pt] (arrow)%
+     {\setbox0=\hbox{#1}\dimen0=\dp0\advance\dimen0 by 1.5mm%
+      \if\relax\detokenize{#1}\relax\hphantom{mm}\else\raise\dimen0\hbox{#1}\fi};%
+  \squigglydraw
+\end{tikzpicture}%
+}
+\makeatother
+
+%----------------------------------------------------------------------
+%-- Pics
+%----------------------------------------------------------------------
+
+\tikzset{
+  % right angle
+  pics/right angle/.style args={#1--#2--#3} {
+    code = {
+      \path[pic actions, very thin]
+        let \p1=($#2!\rightanglelen!#1$), \p2=($#2!\rightanglelen!#3$) in
+          (\p1) -- ($(\p1) + (\p2) - #2$) -- (\p2);
+    }
+  },
+  right angle len/.store in=\rightanglelen,
+  right angle len=2mm,
+}
+
+%----------------------------------------------------------------------
+%-- Points
+%----------------------------------------------------------------------
+
+\tikzstyle{point} = [circle, fill=black, inner sep=0pt,
+                     minimum size=1mm, anchor=center]
+
+\makeatletter
+% \point is shorthand for \node[point], except it doesn't need an empty {} at
+% the end, and it allows for overlay specifications.  Usage:
+%   \point<3-> [red] (A) at (1,2);
+\def\point#1;{\@ifnextchar<{\point@overlay}{\point@nooverlay}#1;}
+\def\point@overlay<#1>#2;{\point@{#2}{<#1>}}
+\def\point@nooverlay#1;{\point@{#1}{}}
+\def\point@#1#2{\node#2[point]#1{};}
+\makeatother
+
+%----------------------------------------------------------------------
+%-- Misc
+%----------------------------------------------------------------------
+
+\tikzset{
+  % Set styles for all kinds of nodes at once
+  all nodes/.style={
+    every node/.style={#1},
+    every label/.style={every node},
+    every pin/.style={every node}
+  },
+  %
+  shorten/.style={shorten >=#1, shorten <=#1},
+  grid lines/.style={help lines, black!30},
+}
+
+%----------------------------------------------------------------------
+%-- Sequence of colors
+%----------------------------------------------------------------------
+
+% These should be easily distinguishable and easy to see against a light
+% background.
+
+\definecolor{seq-red}{rgb}{0.8941,0.1020,0.1098}
+\definecolor{seq-blue}{rgb}{0.2157,0.4941,0.7216}
+\definecolor{seq-green}{rgb}{0.3020,0.6863,0.2902}
+\definecolor{seq-violet}{rgb}{0.5961,0.3059,0.6392}
+\definecolor{seq-orange}{rgb}{1.0000,0.4980,0.0000}
+\definecolor{seq-yellow}{rgb}{0.7000 0.7000 0.0000}
+\definecolor{seq-brown}{rgb}{0.6510,0.3373,0.1569}
+\definecolor{seq-pink}{rgb}{0.9686,0.5059,0.7490}
+
+\colorlet{seq1}{seq-red}
+\colorlet{seq2}{seq-blue}
+\colorlet{seq3}{seq-green}
+\colorlet{seq4}{seq-violet}
+\colorlet{seq5}{seq-orange}
+\colorlet{seq6}{seq-yellow}
+\colorlet{seq7}{seq-brown}
+\colorlet{seq8}{seq-pink}
+
+% Other colors
+\definecolor{light gray}{HTML}{BBBBBB}
+\definecolor{steel}{HTML}{646D7E}
+
+\endinput

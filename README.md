@@ -120,7 +120,7 @@ Now typing `ssh github.gatech.edu` should give you the same message as above.
 First decide where you want to put all the files.  I have my files in
 `~/projects/textbooksGT`.  Change to that directory and run:
 ```
-> git clone https://github.com/rbeezer/mathbook.git
+> git clone -b gt git@github.gatech.edu:math-online-textbooks/mathbook.git
 > git clone -b gt git@github.gatech.edu:math-online-textbooks/mathbook-assets.git
 > git clone git@github.gatech.edu:math-online-textbooks/gt-text-common.git
 > git clone git@github.gatech.edu:math-online-textbooks/gt-linalg.git

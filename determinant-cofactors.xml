@@ -95,7 +95,25 @@ the license is included in gfdl.xml.
 
   <figure>
     <caption></caption>
-    <image source="static/images/Example22Cofactor.jpg" width="25%">
+    <image width="30%">
+      <latex-image-code><![CDATA[
+\begin{tikzpicture}[ampersand replacement=\&]
+
+ every left delimiter/.style={xshift=2em},
+    every right delimiter/.style={xshift=-.75em},
+
+
+\matrix(A)[matrix of math nodes, left delimiter=\lbrack,,right delimiter=\rbrack] 
+{ a \& b \\
+  c \& d\\
+};
+
+ \draw[color=red] (A-1-1.north) to (A-2-1.south) ;
+\draw[color=red] (A-1-1.west) to (A-1-2.east) ;
+
+\end{tikzpicture}
+      ]]>
+      </latex-image-code>
     </image>
   </figure>
 
