@@ -114,10 +114,10 @@ the license is included in gfdl.xml.
   \node at (c.west) [anchor=east] {$A_{21} = {}$};
   \node at (c.east) [anchor=west] (a12) {${} = \mat b$};
 
-  \node at (a12.east) [anchor=west, xshift=2em] (A22) {$A_{12} = {}$};
-  \matrix (d) at (A22.east) [my math matrix, anchor=west] {
+  \matrix (d) at (b.south west) [my math matrix, anchor=north west, yshift=-1em] {
     a \& b \\ c \& d \\
     };
+  \node at (d.west) [anchor=east] (A22) {$A_{22} = {}$};
   \node at (d.east) [anchor=west] {${} = \mat a$};
 
   \begin{scope}[every node/.style={
