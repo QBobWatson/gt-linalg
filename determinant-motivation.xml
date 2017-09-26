@@ -99,7 +99,7 @@ the license is included in gfdl.xml.
 
   <figure>
     <caption>A useful trick for finding <m>3\times3</m> determinants</caption>
-    <image source="static/images/RuleSarrus.jpeg" width="50%">
+    <image source="static/images/RuleSarrus.jpg" width="50%">
     </image>
   </figure>
 
@@ -108,8 +108,8 @@ the license is included in gfdl.xml.
   </p>
 
   <figure>
-    <caption></caption>
-    <image source="static/images/Example33Det.jpeg" width="50%">
+    <caption>The <m>3\times3</m> determinant trick for the matrix <m>A</m></caption>
+    <image source="static/images/Example33Det.jpg" width="50%">
     </image>
   </figure>
 
