@@ -28,6 +28,25 @@ Copyright 2017 Georgia Institute of Technology
     \definecolor{ColorEx2}{rgb}{1,1,0}
     \let\To=\longrightarrow
     \def\rref{\;\overset{\text{rref}}\To\;}
+
+    \definecolor{seq-red}{rgb}{0.8941,0.1020,0.1098}
+    \definecolor{seq-blue}{rgb}{0.2157,0.4941,0.7216}
+    \definecolor{seq-green}{rgb}{0.3020,0.6863,0.2902}
+    \definecolor{seq-violet}{rgb}{0.5961,0.3059,0.6392}
+    \definecolor{seq-orange}{rgb}{1.0000,0.4980,0.0000}
+    \definecolor{seq-yellow}{rgb}{0.7000,0.7000,0.0000}
+    \definecolor{seq-brown}{rgb}{0.6510,0.3373,0.1569}
+    \definecolor{seq-pink}{rgb}{0.9686,0.5059,0.7490}
+
+    \definecolor{seq1}{rgb}{0.8941,0.1020,0.1098}
+    \definecolor{seq2}{rgb}{0.2157,0.4941,0.7216}
+    \definecolor{seq3}{rgb}{0.3020,0.6863,0.2902}
+    \definecolor{seq4}{rgb}{0.5961,0.3059,0.6392}
+    \definecolor{seq5}{rgb}{1.0000,0.4980,0.0000}
+    \definecolor{seq6}{rgb}{0.7000,0.7000,0.0000}
+    \definecolor{seq7}{rgb}{0.6510,0.3373,0.1569}
+    \definecolor{seq8}{rgb}{0.9686,0.5059,0.7490}
+    
   </macros>
 
   <!-- tikz package and libraries for images -->

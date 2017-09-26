@@ -13,15 +13,15 @@ the license is included in gfdl.xml.
   <title>Determinants: Cofactor expansions</title>
 
   <p>
-    We begin by describing one formula for determinants. This definition may seem strange, and we will have to wait to see where it comes from and ho it is connected to invertibility and volumes. However, it is convenient for calculations and will be enough to kick off our study of the determinant.
+    We begin by describing one formula for determinants. This definition may seem strange, and we will have to wait to see where it comes from and how it is connected to invertibility and volumes. However, it is convenient for calculations and will be enough to kick off our study of the determinant.
   </p>
 
   <p>We will build up this <em>cofactor expansion</em> from the ground up in a recursive procedure. Namely, this method will say how to compute the determinant for <m>n\times n</m> matrices, <em>assuming</em> we already know how to do so for <m>(n-1)\times(n-1)</m> matrices.
   </p>
 
   <p>Let's start at the beginning. First, we require determinants for <m>1\times1</m> matrices. As discussed in the last section, the natural definition of the determinant in this case, which is correct one, is
-  <me>\det(a)=a.</me>
-  To give our general formula, we first need to give a little notation.
+  <me>\det\mat a=a.</me>
+  To give our general formula, we first need to introduce a little notation.
   </p>
 
   <definition xml:id="Minor-Cofactors-Defn">
@@ -39,7 +39,8 @@ the license is included in gfdl.xml.
 
   <p>
   Note that the signs of the cofactors follow a "checkerboard pattern". Namely, the pattern of plus and minus signs in the <m>(i,j)</m>-th entry of the matrix
-  <me>\mat{+ - + -; - + - +; + - + -; - + - +}</me>
+  <me>\def\a{\textcolor{seq-green}{\pmb{+}}} \def\b{\textcolor{seq-blue}{\pmb{-}}}
+\mat{\a,\b,\a,\b ; \b,\a,\b,\a ; \a,\b,\a,\b; \b,\a,\b,\a}</me>
   is the sign in the definition of <m>C_{ij}</m>.
   </p>
 
@@ -49,9 +50,36 @@ the license is included in gfdl.xml.
 	For
 	<me>A= \mat{1 2 3;4 5 6;7 8 9},</me>
 	we have
-	<me>A_{23}=\mat{1 2;7 8}\qquad \det A_{23} =8-14=-6.</me>
-	We also find <m>C_{23}=(-1)^{2+3}(-6)=6.</m>
       </p>
+      <figure>
+        <caption>A minor of the matrix <m>A</m></caption>
+        <image width="100%">
+          <latex-image-code><![CDATA[
+          \begin{tikzpicture}
+
+          \node at (0, 0) [anchor=east] {$A_{23} = {}\;$};
+          \matrix (a) at (0, 0) [my math matrix, anchor=west] {
+            1 \& 2 \& 3 \\ 4 \& 5 \& 6 \\ 7 \& 8 \& 9 \\
+          };
+          \node at (a.east) [anchor=west] (a23) {$\;{} = \mat{1 2 ; 7 8}$};
+
+          \node at (a23.east) [anchor=west, xshift=1em]
+             {$C_{23} = (-1)^{2+3}\det\mat{1 2; 7 8} = (-1)(-6) = 6$};
+
+          \begin{scope}[every node/.style={
+                seq-green, draw, thick, circle, inner sep=1pt, opacity=1},
+              decoration={zigzag,segment length=1.5mm}, seq-red, thick, opacity=.7,
+              line join=round]
+            \node[fit=(a-2-3)] {};
+            \draw[decorate] (a-2-1.west) -- (a-2-3.east);
+            \draw[decorate] (a-1-3.north) -- (a-3-3.south);
+          \end{scope}
+
+          \end{tikzpicture}
+          ]]>
+          </latex-image-code>
+        </image>
+      </figure>
     </statement>
   </example>
 

@@ -134,13 +134,13 @@ the license is included in gfdl.xml.
     <image width="100%">
       <latex-image-code><![CDATA[
       \begin{tikzpicture}
-      \matrix (a) [matrix of math nodes, anchor=east] {
+      \matrix (a) [matrix of math nodes, anchor=south east] {
       a_{11} \& a_{12} \& a_{13} \& a_{14} \& a_{15} \\
       \llap{$+\quad$}a_{21} \& a_{22} \& a_{23} \& a_{24} \& a_{25} \\
       a_{21} \& a_{22} \& a_{23} \& a_{24} \& a_{25} \\
       };
 
-      \matrix (b) [matrix of math nodes, anchor=west, xshift=1cm] {
+      \matrix (b) [matrix of math nodes, anchor=south west, xshift=1.5em] {
       a_{11} \& a_{12} \& a_{13} \& a_{14} \& a_{15} \\
       \llap{$-\quad$}a_{21} \& a_{22} \& a_{23} \& a_{24} \& a_{25} \\
       a_{21} \& a_{22} \& a_{23} \& a_{24} \& a_{25} \\
@@ -154,6 +154,11 @@ the license is included in gfdl.xml.
         \draw[seq-blue]  (b-1-4.north east) -- (b-3-2.south west);
         \draw[seq-blue]  (b-1-5.north east) -- (b-3-3.south west);
       \end{scope}
+
+      \node at (0, -1em)
+        {$\color{seq-green}a_{11}a_{22}a_{33}+a_{12}a_{23}a_{31}+a_{13}a_{21}a_{32}
+          \color{seq-blue}-a_{13}a_{22}a_{31}-a_{11}a_{23}a_{32}-a_{12}a_{21}a_{33}$};
+
       \end{tikzpicture}
       ]]>
       </latex-image-code>
@@ -166,7 +171,7 @@ the license is included in gfdl.xml.
 
   <figure>
     <caption>The <m>3\times3</m> determinant trick for the matrix <m>A</m></caption>
-    <image width="50%">
+    <image width="35%">
       <latex-image-code><![CDATA[
       \begin{tikzpicture}
         \matrix (a) [matrix of math nodes, nodes={minimum width=2em}]
@@ -193,10 +198,10 @@ the license is included in gfdl.xml.
   and find that the determinant of <m>A</m> is
   <me>
   \begin{aligned}
-  &amp; 1\cdot0\cdot1+3\cdot(-1)\cdot4+5\cdot2\cdot(-3)-4\cdot0\cdot5-(-3)\cdot(-1)\cdot1-\cdot(1)\cdot2\cdot3
+  &amp; \textcolor{seq-green}{1\cdot0\cdot1+3\cdot(-1)\cdot4+5\cdot2\cdot(-3)}
+  \textcolor{seq-blue}{-4\cdot0\cdot5-(-3)\cdot(-1)\cdot1-\cdot(1)\cdot2\cdot3}
   \\
-  &amp;
-  \quad = 0-12-30-0-3-6 = -51.
+  &amp; \quad = 0-12-30-0-3-6 = -51.
   \end{aligned}
   </me>
   </p>
