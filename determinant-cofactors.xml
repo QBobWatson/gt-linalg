@@ -72,7 +72,7 @@ the license is included in gfdl.xml.
 	  Multiply each cofactor by the associated matrix entry <m>a_{ij}</m>.
 	</li>
 	<li>
-	  <term> Result: </term>  The sum of these products is <m>\det A</m>.
+	  <alert>Result:</alert>  The sum of these products is <m>\det A</m>.
 	</li>
       </ol>
     </p>

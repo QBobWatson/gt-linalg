@@ -10,7 +10,6 @@ Copyright 2017 Georgia Institute of Technology
 
   <latex-preamble>
     <package>color</package>
-    <package>spalign</package>
   </latex-preamble>
 
   <!-- LaTeX macros for this book go here. -->
