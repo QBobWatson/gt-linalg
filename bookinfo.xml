@@ -10,6 +10,7 @@ Copyright 2017 Georgia Institute of Technology
 
   <latex-preamble>
     <package>color</package>
+    <package>spalign</package>
   </latex-preamble>
 
   <!-- LaTeX macros for this book go here. -->
@@ -23,10 +24,9 @@ Copyright 2017 Georgia Institute of Technology
     \let\syseq=\spalignsys
     \newcommand{\leading}[1]{\color{red}#1}
     \newcommand{\setof}[1]{\left\{#1\right\}}
-	\newtheorem*{thmquotes}{"Theorem"}
     \def\Span{\operatorname{Span}}
-	\definecolor{ColorEx1}{rgb}{0.2,1,0.1}	
-	\definecolor{ColorEx2}{rgb}{1,1,0}	
+    \definecolor{ColorEx1}{rgb}{0.2,1,0.1}
+    \definecolor{ColorEx2}{rgb}{1,1,0}
     \let\To=\longrightarrow
     \def\rref{\;\overset{\text{rref}}\To\;}
   </macros>
