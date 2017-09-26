@@ -19,7 +19,7 @@ the license is included in gfdl.xml.
   </introduction>
 
   <subsection>
-    <title>Vectors and <m>\mathbb R^n</m></title>
+    <title>Vectors and <m>\R^n</m></title>
 
     <p>The heroes of this course are important objects called <term>vectors</term>. These have several incarnations, but one way to think about them is that they are just collections of numbers. Specifically, if <m>n=1,2,3,...</m> is a positive whole number, then an <m>n</m>-vector is an <em> ordered </em> list of <m> n </m> numbers. There are a few options for how we may display this data, and usually we will do so by writing this list of numbers vertically and putting parentheses around them. For example, if <m>n=3</m>, then a <m>3</m>-vector is a list of three numbers in order. For example, it could be the list of the numbers <m>7,-5,\pi</m>.
     We would then denote this vector, calling it <m>v</m>, by
@@ -55,7 +55,7 @@ the license is included in gfdl.xml.
     For example, when <m>n=3</m>, the vector
     <me>v = \vec{7 -5 \pi}</me>
     can be represented visually by the arrow pointing from the origin in <m>3</m>-dimensional space to the point with <m>(x,y,z)</m> coordinates <m>(7,-5,-\pi)</m>. (DRAW PICTURE HERE).
-    In this way of thinking about vectors, which is especially prominent in physics and engineering, vectors have important geometric quantities associated to them: direction and magnitude (we will return to these concepts when we discuss the geometry of <m>\mathbb R^n</m> in the next subsection). (LINK THIS SUBSECTION.) Direction is just what it sounds like; the way the arrow points, and magnitude is just the length of the arrow.
+    In this way of thinking about vectors, which is especially prominent in physics and engineering, vectors have important geometric quantities associated to them: direction and magnitude (we will return to these concepts when we discuss the geometry of <m>\R^n</m> in the next subsection). (LINK THIS SUBSECTION.) Direction is just what it sounds like; the way the arrow points, and magnitude is just the length of the arrow.
     (GIVE THEM A TOOL WHERE THEY CAN DRAG A 2-D VECTOR AROUNDA AND AN APPLET TELLS THEM THE ANGLE AND THE LENGTH)
     </p>
   </subsection>
@@ -96,7 +96,7 @@ the license is included in gfdl.xml.
   <subsection>
 	<title>Notation for and definition of Euclidean space</title>
 
-        <p>Finally, we have a short word on notation. To save space, we sometimes use a few mathematical symbols to denote common situations. For now, we just require the notation <m> \mathbb R^n</m>, read "R-n," which denotes the set of all <m>n</m>-dimensional vectors, and which we call the <m>n</m>-<term>dimensional Euclidean space</term>. In thinking of the set of <em>all</em> vectors of a given dimension, we are already suggesting that they may "interact" with one another, and we shall shortly see that there are algebraic ways to combine multiple vectors to obtain new vectors, just like you can add, multiple, and subtract ordinary numbers.
+        <p>Finally, we have a short word on notation. To save space, we sometimes use a few mathematical symbols to denote common situations. For now, we just require the notation <m> \R^n</m>, read "R-n," which denotes the set of all <m>n</m>-dimensional vectors, and which we call the <m>n</m>-<term>dimensional Euclidean space</term>. In thinking of the set of <em>all</em> vectors of a given dimension, we are already suggesting that they may "interact" with one another, and we shall shortly see that there are algebraic ways to combine multiple vectors to obtain new vectors, just like you can add, multiple, and subtract ordinary numbers.
         </p>
   </subsection>
 

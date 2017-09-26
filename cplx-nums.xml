@@ -30,7 +30,7 @@ the license is included in gfdl.xml.
                     <p>This is a perfect example of the existence-and-uniqueness type of proof.  We must first prove that the numbers <m>q</m> and <m>r</m> actually  exist. Then we must show that if  <m>q'</m> and <m>r'</m> are two other such numbers, then <m>q = q'</m> and <m>r = r'</m>.</p>
 
                     <p><em>Existence of <m>q</m> and <m>r</m>.</em> Let
-                        <me>S = \{ a - bk : k \in {\mathbb Z} \text{ and } a - bk \geq 0 \}.</me>
+                        <me>S = \{ a - bk : k \in {\mathbf Z} \text{ and } a - bk \geq 0 \}.</me>
                     If <m>0 \in S</m>, then <m>b</m> divides <m>a</m>, and  we can let <m>q = a/b</m> and <m>r = 0</m>.  If <m>0 \notin S</m>, we can use the Well-Ordering Principle.  We must first show that <m>S</m> is nonempty.  If <m>a \gt 0</m>, then <m>a - b \cdot 0 \in S</m>. If <m>a \lt 0</m>, then <m>a - b(2a) = a(1 - 2b) \in S</m>.  In either case <m>S \neq \emptyset</m>.  By the Well-Ordering Principle, <m>S</m> must have a smallest member, say <m>r = a - bq</m>. Therefore, <m>a = bq + r</m>, <m>r \geq 0</m>. We now show that <m>r \lt b</m>. Suppose that <m>r \gt b</m>. Then
                         <me>a - b(q + 1)= a - bq - b = r - b \gt 0.</me>
                     In this case we would have <m>a - b(q + 1)</m> in the set <m>S</m>. But then <m>a - b(q + 1) \lt a - bq</m>, which would contradict the fact that <m>r = a - bq</m> is the smallest member  of <m>S</m>. So <m>r \leq b</m>.  Since <m>0 \notin S</m>, <m>r \neq b</m> and so <m>r \lt b</m>.</p>
@@ -51,7 +51,7 @@ the license is included in gfdl.xml.
                 </statement>
                 <proof>
                     <p>Let
-                        <me>S = \{ am + bn : m, n \in {\mathbb Z} \text{ and } am + bn \gt 0 \}.</me>
+                        <me>S = \{ am + bn : m, n \in {\mathbf Z} \text{ and } am + bn \gt 0 \}.</me>
                     Clearly, the set <m>S</m> is nonempty; hence, by the Well-Ordering Principle <m>S</m> must have a smallest member, say <m>d = ar + bs</m>.  We claim that <m>d = \gcd( a, b)</m>.  Write <m>a = dq + r'</m> where <m>0 \leq r' \lt d</m>. If <m>r' \gt 0</m>, then<md>
                         <!-- r changed to r' - TWJ 1/31/2011 -->
                         <mrow>r'&amp; = a - dq</mrow>

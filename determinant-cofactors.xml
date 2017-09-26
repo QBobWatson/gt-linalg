@@ -83,33 +83,63 @@ the license is included in gfdl.xml.
     <me>\det A=\sum_{j=1}^n a_{ij}C_{ij},</me>
     where in the sum the number <m>i</m> is fixed. Similarly, if we pick column <m>j</m> to expand along, then we obtain a formula
     <me>\det A=\sum_{i=1}^n a_{ij}C_{ij}.</me>
-    Note that this gives <m>2n</m> seemingly-different formulas, which all give the same number! We will why this is true later, and simply assume this for now.
+    Note that this gives <m>2n</m> seemingly-different formulas, which all give the same number! We will see why this is true later, and simply assume this for now.
   </p>
 
   <p>
-    Let's try this out for a general <m>2\times2</m> matrix <m>A=\spalignmat{a,b;c,d}</m>. Choosing the first row of <m>A</m> in Step 1 of the cofactor expansion algorithm (when we do this, we also say that we are <em>expanding the determinant along the first row</em>), we find that
-    <me>\det A=aC_{11}+bC_{12}=aA_{11}-bA_{12}.</me>
-    Now <m>A_{11}</m> is the determinant of the matrix obtained by deleting the first row and the first column of <m>A</m>
-    as in the following picture:
+    Let's try this out for a general <m>2\times2</m> matrix <m>A=\mat{a b;c d}</m>.     The minors are computed in the following picture:
   </p>
 
   <figure>
-    <caption></caption>
-    <image width="30%">
+    <caption>The minors of a <m>2\times 2</m> matrix</caption>
+    <image width="75%">
       <latex-image-code><![CDATA[
-\begin{tikzpicture}[ampersand replacement=\&]
+\begin{tikzpicture}
 
- every left delimiter/.style={xshift=2em},
-    every right delimiter/.style={xshift=-.75em},
+  \node at (0, 0) [anchor=east] {$A_{11} = {}$};
+  \matrix (a) at (0, 0) [my math matrix, anchor=west] {
+    a \& b \\ c \& d \\
+    };
+  \node at (a.east) [anchor=west] (a22) {${} = \mat d$};
 
+  \node at (a22.east) [anchor=west, xshift=2em] (A12) {$A_{12} = {}$};
+  \matrix (b) at (A12.east) [my math matrix, anchor=west] {
+    a \& b \\ c \& d \\
+    };
+  \node at (b.east) [anchor=west] {${} = \mat c$};
 
-\matrix(A)[matrix of math nodes, left delimiter=\lbrack,,right delimiter=\rbrack] 
-{ a \& b \\
-  c \& d\\
-};
+  \matrix (c) at (a.south west) [my math matrix, anchor=north west, yshift=-1em] {
+    a \& b \\ c \& d \\
+    };
+  \node at (c.west) [anchor=east] {$A_{21} = {}$};
+  \node at (c.east) [anchor=west] (a12) {${} = \mat b$};
 
- \draw[color=red] (A-1-1.north) to (A-2-1.south) ;
-\draw[color=red] (A-1-1.west) to (A-1-2.east) ;
+  \node at (a12.east) [anchor=west, xshift=2em] (A22) {$A_{12} = {}$};
+  \matrix (d) at (A22.east) [my math matrix, anchor=west] {
+    a \& b \\ c \& d \\
+    };
+  \node at (d.east) [anchor=west] {${} = \mat a$};
+
+  \begin{scope}[every node/.style={
+          seq-green, draw, thick, circle, inner sep=1pt, opacity=1},
+      decoration={zigzag,segment length=1.5mm}, seq-red, thick, opacity=.7,
+      line join=round]
+    \node[fit=(a-1-1)] {};
+    \draw[decorate] (a-1-1.west) -- (a-1-2.east);
+    \draw[decorate] (a-1-1.north) -- (a-2-1.south);
+
+    \node[fit=(b-1-2)] {};
+    \draw[decorate] (b-1-1.west) -- (b-1-2.east);
+    \draw[decorate] (b-1-2.north) -- (b-2-2.south);
+
+    \node[fit=(c-2-1)] {};
+    \draw[decorate] (c-2-1.west) -- (c-2-2.east);
+    \draw[decorate] (c-2-1.south) -- (c-1-1.north);
+
+    \node[fit=(d-2-2)] {};
+    \draw[decorate] (d-2-1.west) -- (d-2-2.east);
+    \draw[decorate] (d-1-2.north) -- (d-2-2.south);
+  \end{scope}
 
 \end{tikzpicture}
       ]]>
@@ -118,9 +148,16 @@ the license is included in gfdl.xml.
   </figure>
 
   <p>
-    This matrix is just the single-entry matrix <m>\spalignmat{d}</m>. Similarly, <m>A_{12}</m> is the determinant of <m>\spalignmat{c}</m>. As we have seen that the determinant of a <m>1\times1</m> matrix is just the number inside of it, the cofactor expansion in this case recovers the formula
-    <me>\det A=ad-bc</me>
-    from before.
+    They are all just single-entry matrices. As we have seen that the determinant of a <m>1\times1</m> matrix is just the number inside of it, the cofactors are therefore
+    <md>
+      <mrow>C_{11} &amp;= {+\det A_{11} = d} &amp;
+      C_{12} &amp;= {-\det A_{12} = -c}</mrow>
+      <mrow>C_{21} &amp;= {-\det A_{21} = -b} &amp;
+      C_{22} &amp;= {+\det A_{22} = a}</mrow>
+    </md>
+    Choosing the first row of <m>A</m> in Step 1 of the cofactor expansion algorithm (when we do this, we also say that we are <em>expanding the determinant along the first row</em>), we find that
+    <me>\det A=aC_{11}+bC_{12} = ad - bc,</me>
+    which is the same formula as before.
   </p>
 
   <p>

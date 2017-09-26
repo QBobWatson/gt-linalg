@@ -31,23 +31,56 @@ the license is included in gfdl.xml.
   </p>
 
   <p>In fact, determinants are actually an instance of something you already know about: volume. Specifically, the <m>n</m> many columns of a square <m>n\times n</m> matrix <m>A</m> are all <m>n</m>-dimensional vectors.
-  These <m>n</m> vectors determine a parallelepiped in <m>\mathbb R^n</m>, which we will call the <em>parallelepiped for <m>A</m>.</em>
+  These <m>n</m> vectors determine a parallelepiped in <m>\R^n</m>, which we will call the <em>parallelepiped for <m>A</m>.</em>
   For example, if <m>A</m> is a <m>2\times2</m> matrix whose columns are non-zero vectors <m>v</m> and <m>w</m>, that is, if <m>A=\spalignmat{v; w}</m>, then we have the parallelogram determined by <m>v</m> and <m>w</m>:
   </p>
 
   <figure xml:id="PicPar2Vec">
-    <caption>The parallelgram determined by two vectors <m>v</m> and <m>w</m> in <m>\mathbb R^2</m></caption>
-    <image width="30%" source="static/images/PicPar2Vec.jpg" />
+    <caption>The parallelgram determined by two vectors <m>v_1</m> and <m>v_2</m> in <m>\R^2</m></caption>
+    <image width="30%">
+      <latex-image-code><![CDATA[
+\begin{tikzpicture}[thin border nodes]
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (1,2) -- (3,3) -- (2,1) -- cycle;
+  \draw[vector] (0,0) -- node[auto]{$v_1$} (1,2);
+  \draw[vector] (0,0) -- node[auto,swap]{$v_2$} (2,1);
+  \node at (1.5,1.5) {$P$};
+\end{tikzpicture}
+      ]]>
+      </latex-image-code>
+    </image>
   </figure>
 
   <p>
-    Similarly, if <m>A</m> is a <m>3\times3</m> matrix, then we obtain three vectors in <m>\mathbb R^3</m>, which define a parallelepiped:
+    Similarly, if <m>A</m> is a <m>3\times3</m> matrix, then we obtain three vectors in <m>\R^3</m>, which define a parallelepiped:
   </p>
 
   <figure xml:id="PicPar3Vec">
     <caption>The parallelepiped determined by three vectors in
-    <m>\mathbb R^3</m></caption>
-    <image width="30%" source="static/images/PicPar3Vec.jpg"/>
+    <m>\R^3</m></caption>
+    <image width="30%">
+      <latex-image-code><![CDATA[
+\begin{tikzpicture}[thin border nodes, myxyz, scale=1.8]
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- (0,-1,0) -- (1,-.8,0) -- (1,.2,0) -- cycle;
+  \filldraw[fill=seq-orange, opacity=.2, shift={(0,-1,0)}, very thin]
+    (0,0,0) -- (1,.2,0) -- (1.3,.2,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0,0) -- (1,.2,0) -- (1.3,.2,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={(1,.2,0)}, very thin]
+    (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={(.3,0,1)}, very thin]
+    (0,0,0) -- (0,-1,0) -- (1,-.8,0) -- (1,.2,0) -- cycle;
+  \draw[vector] (0,0,0) -- node[auto,swap] {$v_1$} (1,.2,0);
+  \draw[vector, opacity=.4] (0,0,0) -- node[auto,swap] {$v_2$} (0,-1,0);
+  \draw[vector] (0,0,0) -- node[auto] {$v_3$} (.3,0,1);
+  \node at (1.2,0,1.2) {$P$};
+\end{tikzpicture}
+      ]]>
+      </latex-image-code>
+    </image>
   </figure>
 
   <paragraphs>
@@ -71,7 +104,7 @@ the license is included in gfdl.xml.
     Before jumping into general formulas for and the definition of the determinant, we consider a few examples. If <m>n=1</m>, then
     we know that a real number <m>a</m> is invertible (i.e., <m>1/a</m> makes sense) exactly when <m>a\neq0</m>. It is thus reasonable to define the determinant of the matrix <m>\spalignmat{a}</m> to simply be <m>a</m> itself. That is, for any real number <m>a</m>, we have
     <me>\det\mat{a}=a.</me>
-    In this case, we can also think of <m>1</m>-dimensional "volume" as length, and the "parallelepiped for <m>A</m>" is just the vector <m>a</m> in <m>\mathbb R^1</m>.
+    In this case, we can also think of <m>1</m>-dimensional "volume" as length, and the "parallelepiped for <m>A</m>" is just the vector <m>a</m> in <m>\R^1</m>.
   </p>
 
   <p>
@@ -90,8 +123,7 @@ the license is included in gfdl.xml.
   \quad\quad
   =
   a_{11}a_{22}a_{33}+a_{12}a_{23}a_{31}+a_{13}a_{21}a_{32}
-  -a_{13}a_{22}a_{31}-a_{11}a_{23}a_{32}-a_{12}a_{21}a_{33}
-  .
+  -a_{13}a_{22}a_{31}-a_{11}a_{23}a_{32}-a_{12}a_{21}a_{33}.
   \end{split}
   </me>
   This formula looks too complicated to memorize outright. Fortunately, there is a useful mnemonic device for this formula, known as the <em>Rule of Sarrus</em>. This works by drawing a bigger matrix by recopying down the first two columns to the right of the matrix, and by drawing a series of upwards and downwards slashes as follows:
@@ -99,29 +131,30 @@ the license is included in gfdl.xml.
 
   <figure>
     <caption>A useful trick for finding <m>3\times3</m> determinants</caption>
-    <image width="50%">
+    <image width="100%">
       <latex-image-code><![CDATA[
-\begin{tikzpicture}[baseline=(A.center), ampersand replacement=\&]
-\tikzset{node style ge/.style={circle}}
-  \tikzset{BarreStyle/.style =   {opacity=.4,line width=4 mm,line cap=round,color=#1}}
-    \tikzset{SignePlus/.style =   {above left,,opacity=1,circle,fill=#1!50}}
-    \tikzset{SigneMoins/.style =   {below left,,opacity=1,circle,fill=#1!50}}
-% les matrices
-\matrix (A) [matrix of math nodes, nodes = {node style ge},,column sep=0 mm]
-{ a_{11} \& a_{12} \& a_{13} \& a_{11} \& a_{12} \\
-  a_{21} \& a_{22} \& a_{23} \& a_{21} \& a_{22} \\
-  a_{31} \& a_{32} \& a_{33}  \& a_{31} \& a_{32} \\
-};
+      \begin{tikzpicture}
+      \matrix (a) [matrix of math nodes, anchor=east] {
+      a_{11} \& a_{12} \& a_{13} \& a_{14} \& a_{15} \\
+      \llap{$+\quad$}a_{21} \& a_{22} \& a_{23} \& a_{24} \& a_{25} \\
+      a_{21} \& a_{22} \& a_{23} \& a_{24} \& a_{25} \\
+      };
 
- \draw [BarreStyle=blue] (A-1-1.north west) node[SignePlus=blue] {$+$} to (A-3-3.south east) ;
- \draw [BarreStyle=blue] (A-1-2.north west) node[SignePlus=blue] {$+$} to (A-3-4.south east) ;
-  \draw [BarreStyle=blue] (A-1-3.north west) node[SignePlus=blue] {$+$} to (A-3-5.south east) ;
- \draw [BarreStyle=red]  (A-3-1.south west) node[SigneMoins=red] {$-$} to (A-1-3.north east);
-  \draw [BarreStyle=red]  (A-3-2.south west) node[SigneMoins=red] {$-$} to (A-1-4.north east);
-   \draw [BarreStyle=red]  (A-3-3.south west) node[SigneMoins=red] {$-$} to (A-1-5.north east);
-   \node[draw,text width=5cm] at (0,-3) {\tiny{(Modified from TikZ example of  Alain Matthes, CC BY 2.5)}};
+      \matrix (b) [matrix of math nodes, anchor=west, xshift=1cm] {
+      a_{11} \& a_{12} \& a_{13} \& a_{14} \& a_{15} \\
+      \llap{$-\quad$}a_{21} \& a_{22} \& a_{23} \& a_{24} \& a_{25} \\
+      a_{21} \& a_{22} \& a_{23} \& a_{24} \& a_{25} \\
+      };
 
-\end{tikzpicture}
+      \begin{scope}[very thick, opacity=.75]
+        \draw[seq-green] (a-1-1.north west) -- (a-3-3.south east);
+        \draw[seq-green] (a-1-2.north west) -- (a-3-4.south east);
+        \draw[seq-green] (a-1-3.north west) -- (a-3-5.south east);
+        \draw[seq-blue]  (b-1-3.north east) -- (b-3-1.south west);
+        \draw[seq-blue]  (b-1-4.north east) -- (b-3-2.south west);
+        \draw[seq-blue]  (b-1-5.north east) -- (b-3-3.south west);
+      \end{scope}
+      \end{tikzpicture}
       ]]>
       </latex-image-code>
     </image>
@@ -135,22 +168,22 @@ the license is included in gfdl.xml.
     <caption>The <m>3\times3</m> determinant trick for the matrix <m>A</m></caption>
     <image width="50%">
       <latex-image-code><![CDATA[
-\begin{tikzpicture}[ampersand replacement=\&]
+      \begin{tikzpicture}
+        \matrix (a) [matrix of math nodes, nodes={minimum width=2em}]
+        { 1 \& 3 \& 5 \& 1\& 3 \\
+          2 \& 0 \& -1 \& 2 \& 0 \\
+          4 \& -3 \& 1  \& 4 \& -3 \\
+        };
 
-\matrix (A) [matrix of math nodes]
-{ 1 \& 3 \& 5 \& 1\& 3 \\
-  2 \& 0 \& -1 \& 2 \& 0 \\
-  4 \& -3 \& 1  \& 4 \& -3 \\
-};
-
- \draw [color=blue] (A-1-1.north west) to (A-3-3.south east) ;
- \draw [color=blue] (A-1-2.north west)  to (A-3-4.south east) ;
-  \draw [color=blue] (A-1-3.north west)  to (A-3-5.south east) ;
- \draw [color=red]  (A-3-1.south west)  to (A-1-3.north east);
-  \draw [color=red]  (A-3-2.south west) to (A-1-4.north east);
-   \draw [color=red]  (A-3-3.south west)  to (A-1-5.north east);
-
-\end{tikzpicture}
+      \begin{scope}[very thick, opacity=.75]
+        \draw[seq-green] (a-1-1.north west) -- (a-3-3.south east);
+        \draw[seq-green] (a-1-2.north west) -- (a-3-4.south east);
+        \draw[seq-green] (a-1-3.north west) -- (a-3-5.south east);
+        \draw[seq-blue]  (a-1-3.north east) -- (a-3-1.south west);
+        \draw[seq-blue]  (a-1-4.north east) -- (a-3-2.south west);
+        \draw[seq-blue]  (a-1-5.north east) -- (a-3-3.south west);
+      \end{scope}
+      \end{tikzpicture}
       ]]>
       </latex-image-code>
     </image>
