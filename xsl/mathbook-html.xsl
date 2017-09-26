@@ -9,6 +9,7 @@
 </xsl:param>
 
 <xsl:param name="toc.level" select="2" />
+<!-- <xsl:param name="html.knowl.example" select="'no'" /> -->
 
 <!-- Primary Navigation -->
 <!-- ToC, Prev/Up/Next buttons  -->

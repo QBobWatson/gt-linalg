@@ -56,7 +56,7 @@ Copyright 2017 Georgia Institute of Technology
         every matrix/.style={ampersand replacement=\&amp;},
         my math matrix/.style={matrix of math nodes,
             left delimiter={[}, right delimiter={]},
-            inner sep=0pt, inner ysep=2pt, row sep=.3333em, column sep=.6666em,
+            inner sep=0pt, inner ysep=2pt, row sep=.4em, column sep=.6666em,
             nodes={inner sep=0}},
     }
 
