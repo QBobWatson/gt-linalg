@@ -5,8 +5,9 @@ die() {
     exit 1
 }
 
-compile_dir=$(dirname "$0")
+compile_dir="$(cd "$(dirname "$0")"; pwd)"
 base_dir="$compile_dir/.."
+base_dir="$(cd "$base_dir"; pwd)"
 build_dir="$base_dir/build"
 static_dir="$build_dir/static"
 
