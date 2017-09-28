@@ -1,53 +1,53 @@
 
 ** Larry's ideas
 
-1). A picture of a vector in R^3, drawn as an arrow, with dashed lines
-showing projections down to the x,y, z axes. (This already exists, right?)
+   1. A drag and drop vector in R^2 which has boxes displaying the angle and
+      length of vector interactively.
+   2. An example where there are three boxes, for R, G, and B which are RGB
+      colors, where they can input 3 integers from 0,...,255. When they enter
+      these three numbers, I had in mind that it would show a disk with the
+      corresponding color, and also show the corresponding vector in R^3, drawn
+      as an arrow. Or may be you could have some kind of animation which
+      follows some path in R^3, and there is a shaded disk or box whose color
+      changes according to the corresponding RGB coordinates.
+   3. A demo for cofactor expansions similar to the row reducer demo.
 
-2). A drag and drop vector in R^2 which has boxes displaying the angle and
-length of vector interactively.
 
-3). An example where there are three boxes, for R, G, and B which are RGB
-colors, where they can input 3 integers from 0,...,255. When they enter
-these three numbers, I had in mind that it would show a disk with the
-corresponding color, and also show the corresponding vector in R^3, drawn
-as an arrow. Or maybe you could have some kind of animation which follows
-some path in R^3, and there is a shaded disk or box whose color changes
-according to the corresponding RGB coordinates.
+** Dan's color problem
 
-4) A demo for cofactor expansions similar to the row reducer demo.
+   Illustrate mixing of colors by linear combinations of vectors.
 
 ** Linear transformation games
 
-Start with a picture which is transformed by a linear transformation. Give a
-few linear transformations to the students. They need to find the sequence that
-transforms the picture to the undistorted shape. Or challenge students to write
-a rotation as a product of shears.
+   Start with a picture which is transformed by a linear transformation. Give a
+   few linear transformations to the students. They need to find the sequence
+   that transforms the picture to the undistorted shape. Or challenge students
+   to write a rotation as a product of shears.
 
-Questions: discrete motions using the keyboard or continuous motion using
-sliders? Maybe show the current matrix on the side?
+   Questions: discrete motions using the keyboard or continuous motion using
+   sliders? Maybe show the current matrix on the side?
 
-Maybe challenge students to these in a minimal number of steps. In a more
-advanced level, students would pick the linear transformations they are allows
-to use in the game. If they pick fewer of them, that makes the game more
-difficult, so maybe the step count would start at a negative number.
+   Maybe challenge students to these in a minimal number of steps. In a more
+   advanced level, students would pick the linear transformations they are
+   allows to use in the game. If they pick fewer of them, that makes the game
+   more difficult, so maybe the step count would start at a negative number.
 
 ** Snake game
 
-A parallalogram is floating in a rectangle by a linear transformation. The goal
-is to keep the parallelogram within bounds by shears by pressing the arrow
-keys. Next level: there is food you can pick up that makes something more
-difficult (enlarges the parallelogram, or increases the speed)
+   A parallalogram is floating in a rectangle by a linear transformation. The
+   goal is to keep the parallelogram within bounds by shears by pressing the
+   arrow keys. Next level: there is food you can pick up that makes something
+   more difficult (enlarges the parallelogram, or increases the speed)
 
 ** Project 415x
 
-Jenya Sapir and Cary Malkiewich are working on this linear algebra game with
-undergraduates: https://github.com/project415x/project415x.github.io. I
-(Balazs) talked to Jenya, and she was interested in hearing what we do and
-sharing what they do. Their goals are somewhat different from ours: they are
-writing some game that even 5-year olds can play with and where linear algebra
-concepts show up. There is a story to it, also art and visuals.
+   Jenya Sapir and Cary Malkiewich are working on this linear algebra game with
+   undergraduates: https://github.com/project415x/project415x.github.io. I
+   (Balazs) talked to Jenya, and she was interested in hearing what we do and
+   sharing what they do. Their goals are somewhat different from ours: they are
+   writing some game that even 5-year olds can play with and where linear
+   algebra concepts show up. There is a story to it, also art and visuals.
 
-One game idea Jenya mentioned involved a robot with an arm moving boxes around,
-where there is a linear transformation between the contollers and the
-directions the robot's arm is moving.
+   One game idea Jenya mentioned involved a robot with an arm moving boxes
+   around, where there is a linear transformation between the contollers and
+   the directions the robot's arm is moving.
