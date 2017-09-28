@@ -61,6 +61,7 @@ Copyright 2017 Georgia Institute of Technology
     \usetikzlibrary{calc,arrows.meta,quotes}
     \usepackage{jdr-tikz}
     \usepackage{spalign}
+    \usepackage{mathjax}
 
     \tikzset{
         whitebg/.style={fill=white},
@@ -81,6 +82,11 @@ Copyright 2017 Georgia Institute of Technology
     \tikzset{
         vector/.style={thick, -{Stealth[length=1.5mm]}},
         thick vector/.style={very thick, -Stealth},
+    }
+
+    \pgfkeysdefnargs{/mathjax font size}{2}{\fontsize{#1}{#2}\selectfont}
+    \tikzset{
+        every picture/.style={/mathjax font size={13pt}{15.8pt}},
     }
 
 \makeatletter

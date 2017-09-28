@@ -6,4 +6,5 @@ mbx="$base_dir/mathbook/script/mbx"
 
 cd "$compile_dir"
 TEXINPUTS=".:$compile_dir/style:"; export TEXINPUTS
+TEXMFHOME="$compile_dir/style/texmf-var"; export TEXMFHOME
 exec $mbx -c latex-image -f svg -d images linalg.xml

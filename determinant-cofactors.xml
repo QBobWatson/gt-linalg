@@ -39,7 +39,7 @@ the license is included in gfdl.xml.
 
   <p>
   Note that the signs of the cofactors follow a "checkerboard pattern". Namely, the pattern of plus and minus signs in the <m>(i,j)</m>-th entry of the matrix
-  <me>\def\a{\textcolor{seq-green}{\pmb{+}}} \def\b{\textcolor{seq-blue}{\pmb{-}}}
+  <me>\def\a{\textcolor{seq-green}{+}} \def\b{\textcolor{seq-blue}{-}}
 \mat{\a,\b,\a,\b ; \b,\a,\b,\a ; \a,\b,\a,\b; \b,\a,\b,\a}</me>
   is the sign in the definition of <m>C_{ij}</m>.
   </p>

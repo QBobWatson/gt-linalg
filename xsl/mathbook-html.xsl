@@ -124,7 +124,6 @@
             <xsl:text>auto</xsl:text>
         </xsl:otherwise>
     </xsl:choose>
-
 </xsl:template>
 
 <xsl:param name="extra.mathjax">

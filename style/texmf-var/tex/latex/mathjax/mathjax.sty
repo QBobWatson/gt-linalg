@@ -1,0 +1,177 @@
+%Use MathJax's fonts
+\ProvidesPackage{mathjax}
+
+\newif\ifmathjax@osf
+\newif\ifmathjax@slgreek
+\DeclareOption{osf}{\mathjax@osftrue}
+\DeclareOption{slgreek}{\mathjax@slgreektrue}
+\ProcessOptions\relax
+
+\usepackage[T1]{fontenc}
+\DeclareFontFamily{T1}{MathJax}{}
+\DeclareFontShape{T1}{MathJax}{m}{n}{ <-> mathjaxr }{}
+\DeclareFontShape{T1}{MathJax}{m}{it}{ <-> mathjaxi }{}
+\DeclareFontShape{T1}{MathJax}{bx}{n}{ <-> mathjaxb }{}
+
+\DeclareFontFamily{T1}{MathJaxUpGreek}{}
+\DeclareFontShape{T1}{MathJaxUpGreek}{m}{n}{ <-> mathjaxug }{}
+
+\DeclareFontFamily{T1}{MathJaxCal}{}
+\DeclareFontShape{T1}{MathJaxCal}{m}{n}{ <-> mathjaxcal }{}
+
+\DeclareFontFamily{OML}{MathJaxMath}{}
+\DeclareFontShape{OML}{MathJaxMath}{m}{it}{ <-> mathjaxmi }{\skewchar\font="3D}
+\DeclareFontShape{OML}{MathJaxMath}{b}{it}{ <-> mathjaxbi }{\skewchar\font="3D}
+
+\renewcommand{\rmdefault}{MathJax}
+
+%See for example /usr/share/texlive/texmf-dist/tex/latex/psnfss/mathpazo.sty
+\DeclareSymbolFont{operators}{T1}{MathJax}{m}{n}
+\DeclareSymbolFont{letters}{OML}{MathJaxMath}{m}{it}
+\SetSymbolFont{letters}{bold}{OML}{MathJaxMath}{b}{it}
+\DeclareMathAlphabet{\mathbold}{OML}{MathJaxMath}{b}{it}
+\DeclareSymbolFont{cal}{T1}{MathJaxCal}{m}{n}
+\DeclareMathAlphabet{\mathcal}{T1}{MathJaxCal}{m}{n}
+
+%upright greek
+\DeclareSymbolFont{upgreek}{T1}{MathJaxUpGreek}{m}{n}
+\DeclareMathSymbol{\upalpha}		{\mathalpha}{upgreek}{"0B}
+\DeclareMathSymbol{\upbeta}			{\mathalpha}{upgreek}{"0C}
+\DeclareMathSymbol{\upgamma}		{\mathalpha}{upgreek}{"0D}
+\DeclareMathSymbol{\updelta}		{\mathalpha}{upgreek}{"0E}
+\DeclareMathSymbol{\upepsilon}		{\mathalpha}{upgreek}{"0F}
+\DeclareMathSymbol{\upzeta}			{\mathalpha}{upgreek}{"10}
+\DeclareMathSymbol{\upeta}			{\mathalpha}{upgreek}{"11}
+\DeclareMathSymbol{\uptheta}		{\mathalpha}{upgreek}{"12}
+\DeclareMathSymbol{\upiota}			{\mathalpha}{upgreek}{"13}
+\DeclareMathSymbol{\upkappa}		{\mathalpha}{upgreek}{"14}
+\DeclareMathSymbol{\uplambda}		{\mathalpha}{upgreek}{"15}
+\DeclareMathSymbol{\upmu}			{\mathalpha}{upgreek}{"16}
+\DeclareMathSymbol{\upnu}			{\mathalpha}{upgreek}{"17}
+\DeclareMathSymbol{\upxi}			{\mathalpha}{upgreek}{"18}
+\DeclareMathSymbol{\uppi}			{\mathalpha}{upgreek}{"19}
+\DeclareMathSymbol{\uprho}			{\mathalpha}{upgreek}{"1A}
+\DeclareMathSymbol{\upsigma}		{\mathalpha}{upgreek}{"1B}
+\DeclareMathSymbol{\uptau}			{\mathalpha}{upgreek}{"1C}
+\DeclareMathSymbol{\upupsilon}		{\mathalpha}{upgreek}{"1D}
+\DeclareMathSymbol{\upphi}			{\mathalpha}{upgreek}{"1E}
+\DeclareMathSymbol{\upchi}			{\mathalpha}{upgreek}{"1F}
+\DeclareMathSymbol{\uppsi}			{\mathalpha}{upgreek}{"20}
+\DeclareMathSymbol{\upomega}		{\mathalpha}{upgreek}{"21}
+\DeclareMathSymbol{\upvarepsilon}	{\mathalpha}{upgreek}{"22}
+\DeclareMathSymbol{\upvartheta}		{\mathalpha}{upgreek}{"23}
+\DeclareMathSymbol{\upvarpi}		{\mathalpha}{upgreek}{"24}
+\DeclareMathSymbol{\upvarrho}		{\mathalpha}{upgreek}{"25}
+\DeclareMathSymbol{\upvarsigma}		{\mathalpha}{upgreek}{"26}
+\DeclareMathSymbol{\upvarphi}		{\mathalpha}{upgreek}{"27}
+\DeclareMathSymbol{\upGamma}	{\mathalpha}{operators}{"00}
+\DeclareMathSymbol{\upDelta}	{\mathalpha}{operators}{"01}
+\DeclareMathSymbol{\upTheta}	{\mathalpha}{operators}{"02}
+\DeclareMathSymbol{\upLambda}	{\mathalpha}{operators}{"03}
+\DeclareMathSymbol{\upXi}		{\mathalpha}{operators}{"04}
+\DeclareMathSymbol{\upPi}		{\mathalpha}{operators}{"05}
+\DeclareMathSymbol{\upSigma}	{\mathalpha}{operators}{"06}
+\DeclareMathSymbol{\upUpsilon}	{\mathalpha}{operators}{"07}
+\DeclareMathSymbol{\upPhi}		{\mathalpha}{operators}{"08}
+\DeclareMathSymbol{\upPsi}		{\mathalpha}{operators}{"09}
+\DeclareMathSymbol{\upOmega}	{\mathalpha}{operators}{"0A}
+
+\DeclareMathSymbol{.}\mathord{operators}{"2E}
+\DeclareMathSymbol{,}\mathpunct{operators}{"2C}
+\DeclareMathSymbol{\star}\mathrel{operators}{"10}
+\DeclareMathSymbol{\partial}\mathalpha{operators}{"11}
+\DeclareMathSymbol{\ell}\mathalpha{operators}{"13}
+\DeclareMathSymbol{\wp}\mathalpha{operators}{"14}
+\DeclareMathSymbol{<}\mathrel{operators}{"3C}
+\DeclareMathSymbol{>}\mathrel{operators}{"3E}
+
+\DeclareMathAccent{\ddot}{\mathalpha}{operators}{"C8}
+\DeclareMathAccent{\tilde}{\mathalpha}{operators}{"C4}
+\DeclareMathAccent{\dot}{\mathalpha}{operators}{"C7}
+\DeclareMathAccent{\check}{\mathalpha}{operators}{"CF}
+\DeclareMathAccent{\acute}{\mathalpha}{operators}{"C2}
+\DeclareMathAccent{\grave}{\mathalpha}{operators}{"C1}
+\DeclareMathAccent{\breve}{\mathalpha}{operators}{"C6}
+\DeclareMathAccent{\vec}{\mathalpha}{operators}{"12}
+\DeclareMathAccent{\bar}{\mathalpha}{operators}{"C5}
+
+%The following definitions are necessary for mathbold to work on greek letters
+\DeclareMathSymbol{\alpha}{\mathalpha}{letters}{11}
+\DeclareMathSymbol{\beta}{\mathalpha}{letters}{12}
+\DeclareMathSymbol{\gamma}{\mathalpha}{letters}{13}
+\DeclareMathSymbol{\delta}{\mathalpha}{letters}{14}
+\DeclareMathSymbol{\epsilon}{\mathalpha}{letters}{15}
+\DeclareMathSymbol{\zeta}{\mathalpha}{letters}{16}
+\DeclareMathSymbol{\eta}{\mathalpha}{letters}{17}
+\DeclareMathSymbol{\theta}{\mathalpha}{letters}{18}
+\DeclareMathSymbol{\iota}{\mathalpha}{letters}{19}
+\DeclareMathSymbol{\kappa}{\mathalpha}{letters}{20}
+\DeclareMathSymbol{\lambda}{\mathalpha}{letters}{21}
+\DeclareMathSymbol{\mu}{\mathalpha}{letters}{22}
+\DeclareMathSymbol{\nu}{\mathalpha}{letters}{23}
+\DeclareMathSymbol{\xi}{\mathalpha}{letters}{24}
+\DeclareMathSymbol{\pi}{\mathalpha}{letters}{25}
+\DeclareMathSymbol{\rho}{\mathalpha}{letters}{26}
+\DeclareMathSymbol{\sigma}{\mathalpha}{letters}{27}
+\DeclareMathSymbol{\tau}{\mathalpha}{letters}{28}
+\DeclareMathSymbol{\upsilon}{\mathalpha}{letters}{29}
+\DeclareMathSymbol{\phi}{\mathalpha}{letters}{30}
+\DeclareMathSymbol{\chi}{\mathalpha}{letters}{31}
+\DeclareMathSymbol{\psi}{\mathalpha}{letters}{32}
+\DeclareMathSymbol{\omega}{\mathalpha}{letters}{33}
+\DeclareMathSymbol{\varepsilon}{\mathalpha}{letters}{34}
+\DeclareMathSymbol{\vartheta}{\mathalpha}{letters}{35}
+\DeclareMathSymbol{\varpi}{\mathalpha}{letters}{36}
+\DeclareMathSymbol{\varphi}{\mathalpha}{letters}{39}
+\DeclareMathSymbol{\varrho}{\mathalpha}{letters}{37}
+\DeclareMathSymbol{\varsigma}{\mathalpha}{letters}{38}
+
+\ifmathjax@slgreek
+\DeclareMathSymbol{\Gamma}	{\mathalpha}{letters}{"00}
+\DeclareMathSymbol{\Delta}	{\mathalpha}{letters}{"01}
+\DeclareMathSymbol{\Theta}	{\mathalpha}{letters}{"02}
+\DeclareMathSymbol{\Lambda}	{\mathalpha}{letters}{"03}
+\DeclareMathSymbol{\Xi}		{\mathalpha}{letters}{"04}
+\DeclareMathSymbol{\Pi}		{\mathalpha}{letters}{"05}
+\DeclareMathSymbol{\Sigma}	{\mathalpha}{letters}{"06}
+\DeclareMathSymbol{\Upsilon}{\mathalpha}{letters}{"07}
+\DeclareMathSymbol{\Phi}	{\mathalpha}{letters}{"08}
+\DeclareMathSymbol{\Psi}	{\mathalpha}{letters}{"09}
+\DeclareMathSymbol{\Omega}	{\mathalpha}{letters}{"0A}
+\else
+\DeclareMathSymbol{\Gamma}	{\mathalpha}{operators}{"00}
+\DeclareMathSymbol{\Delta}	{\mathalpha}{operators}{"01}
+\DeclareMathSymbol{\Theta}	{\mathalpha}{operators}{"02}
+\DeclareMathSymbol{\Lambda}	{\mathalpha}{operators}{"03}
+\DeclareMathSymbol{\Xi}		{\mathalpha}{operators}{"04}
+\DeclareMathSymbol{\Pi}		{\mathalpha}{operators}{"05}
+\DeclareMathSymbol{\Sigma}	{\mathalpha}{operators}{"06}
+\DeclareMathSymbol{\Upsilon}{\mathalpha}{operators}{"07}
+\DeclareMathSymbol{\Phi}	{\mathalpha}{operators}{"08}
+\DeclareMathSymbol{\Psi}	{\mathalpha}{operators}{"09}
+\DeclareMathSymbol{\Omega}	{\mathalpha}{operators}{"0A}
+\fi
+
+\ifmathjax@osf
+\DeclareMathSymbol{0}\mathalpha{cal}{`0}
+\DeclareMathSymbol{1}\mathalpha{cal}{`1}
+\DeclareMathSymbol{2}\mathalpha{cal}{`2}
+\DeclareMathSymbol{3}\mathalpha{cal}{`3}
+\DeclareMathSymbol{4}\mathalpha{cal}{`4}
+\DeclareMathSymbol{5}\mathalpha{cal}{`5}
+\DeclareMathSymbol{6}\mathalpha{cal}{`6}
+\DeclareMathSymbol{7}\mathalpha{cal}{`7}
+\DeclareMathSymbol{8}\mathalpha{cal}{`8}
+\DeclareMathSymbol{9}\mathalpha{cal}{`9}
+\else
+\DeclareMathSymbol{0}\mathalpha{operators}{`0}
+\DeclareMathSymbol{1}\mathalpha{operators}{`1}
+\DeclareMathSymbol{2}\mathalpha{operators}{`2}
+\DeclareMathSymbol{3}\mathalpha{operators}{`3}
+\DeclareMathSymbol{4}\mathalpha{operators}{`4}
+\DeclareMathSymbol{5}\mathalpha{operators}{`5}
+\DeclareMathSymbol{6}\mathalpha{operators}{`6}
+\DeclareMathSymbol{7}\mathalpha{operators}{`7}
+\DeclareMathSymbol{8}\mathalpha{operators}{`8}
+\DeclareMathSymbol{9}\mathalpha{operators}{`9}
+\fi
