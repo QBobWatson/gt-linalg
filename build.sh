@@ -35,6 +35,7 @@ cp "$base_dir/gt-text-common/js/"*.js "$static_dir/js"
 cp "$base_dir/mathbook-assets/stylesheets/"*.css "$static_dir/css"
 cp "$base_dir/mathbook-assets/stylesheets/fonts/ionicons/fonts/"* "$static_dir/fonts"
 cp "$compile_dir/images/"* "$static_dir/images"
+cp -r "$compile_dir/demos" "$build_dir/demos"
 ln -s "static/images" "$build_dir/images"
 
 echo "Building html..."

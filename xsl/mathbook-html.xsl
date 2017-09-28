@@ -126,6 +126,62 @@
     </xsl:choose>
 </xsl:template>
 
+<!-- JDR: mathbox support -->
+
+<xsl:template match="mathbox" mode="panel-html-box">
+    <xsl:apply-templates select="." />
+</xsl:template>
+
+<xsl:template match="mathbox">
+    <xsl:variable name="height">
+      <xsl:choose>
+        <xsl:when test="@height">
+          <xsl:value-of select="@height"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>300px</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:element name="div">
+        <xsl:attribute name="id">
+            <xsl:apply-templates select="." mode="internal-id" />
+        </xsl:attribute>
+        <xsl:attribute name="class">
+            <xsl:text>mathbox</xsl:text>
+        </xsl:attribute>
+        <xsl:attribute name="style">
+            <xsl:text>height:</xsl:text>
+            <xsl:value-of select="$height" />
+            <xsl:text>;</xsl:text>
+        </xsl:attribute>
+
+        <xsl:element name="iframe">
+          <xsl:attribute name="src">
+            <xsl:value-of select="@source"/>
+          </xsl:attribute>
+        </xsl:element>
+    </xsl:element>
+
+    <xsl:element name="div">
+      <xsl:attribute name="class">
+        <xsl:text>mathbox-link</xsl:text>
+      </xsl:attribute>
+      <xsl:element name="a">
+        <xsl:attribute name="href">
+          <xsl:value-of select="@source"/>
+        </xsl:attribute>
+        <xsl:attribute name="target">
+          <xsl:text>_blank</xsl:text>
+        </xsl:attribute>
+        <xsl:text>Click to view in a new window</xsl:text>
+      </xsl:element>
+    </xsl:element>
+</xsl:template>
+
+
+
 <xsl:param name="extra.mathjax">
   <xsl:text>MathJax.Ajax.config.path["Extra"] = "static/js";&#xa;</xsl:text>
   <xsl:text>MathJax.Hub.Config({&#xa;</xsl:text>

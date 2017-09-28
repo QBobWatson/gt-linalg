@@ -12,6 +12,11 @@ the license is included in gfdl.xml.
 <section xml:id="section-determinant-cofactors">
   <title>Determinants: Cofactor expansions</title>
 
+  <figure>
+    <caption>Orthogonal complements</caption>
+    <mathbox source="demos/orthogonal-complements.html" height="500px" />
+  </figure>
+
   <p>
     We begin by describing one formula for determinants. This definition may seem strange, and we will have to wait to see where it comes from and how it is connected to invertibility and volumes. However, it is convenient for calculations and will be enough to kick off our study of the determinant.
   </p>
