@@ -46,7 +46,7 @@ Copyright 2017 Georgia Institute of Technology
     \definecolor{seq6}{rgb}{0.7000,0.7000,0.0000}
     \definecolor{seq7}{rgb}{0.6510,0.3373,0.1569}
     \definecolor{seq8}{rgb}{0.9686,0.5059,0.7490}
-    
+
   </macros>
 
   <!-- tikz package and libraries for images -->
@@ -69,11 +69,10 @@ Copyright 2017 Georgia Institute of Technology
         thin border/.default=1pt,
         thin border nodes/.style={every node/.append style={thin border=#1}},
         thin border nodes/.default=1pt,
-        all nodes={font=\small},
         every pin edge/.style={&lt;-,thin},
         node is bbox/.style={inner sep=0pt, outer sep=0pt, line width=0pt},
         every matrix/.style={ampersand replacement=\&amp;},
-        my math matrix/.style={matrix of math nodes,
+        math matrix/.style={matrix of math nodes,
             left delimiter={[}, right delimiter={]},
             inner sep=0pt, inner ysep=2pt, row sep=.4em, column sep=.6666em,
             nodes={inner sep=0}},

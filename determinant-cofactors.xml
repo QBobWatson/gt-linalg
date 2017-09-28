@@ -51,14 +51,12 @@ the license is included in gfdl.xml.
 	<me>A= \mat{1 2 3;4 5 6;7 8 9},</me>
 	we have
       </p>
-      <figure>
-        <caption>A minor of the matrix <m>A</m></caption>
-        <image width="100%">
+      <sidebyside>
+        <image>
           <latex-image-code><![CDATA[
-          \begin{tikzpicture}
-
+          \begin{tikzpicture}[all nodes={}]
           \node at (0, 0) [anchor=east] {$A_{23} = {}\;$};
-          \matrix (a) at (0, 0) [my math matrix, anchor=west] {
+          \matrix (a) at (0, 0) [math matrix, anchor=west] {
             1 \& 2 \& 3 \\ 4 \& 5 \& 6 \\ 7 \& 8 \& 9 \\
           };
           \node at (a.east) [anchor=west] (a23) {$\;{} = \mat{1 2 ; 7 8}$};
@@ -79,7 +77,7 @@ the license is included in gfdl.xml.
           ]]>
           </latex-image-code>
         </image>
-      </figure>
+      </sidebyside>
     </statement>
   </example>
 
@@ -115,34 +113,33 @@ the license is included in gfdl.xml.
   </p>
 
   <p>
-    Let's try this out for a general <m>2\times2</m> matrix <m>A=\mat{a b;c d}</m>.     The minors are computed in the following picture:
+    Let's try this out for a general <m>2\times2</m> matrix <m>A=\mat{a b;c d}</m>.     The minors are computed as follows:
   </p>
 
-  <figure>
-    <caption>The minors of a <m>2\times 2</m> matrix</caption>
-    <image width="75%">
+  <sidebyside>
+    <image>
       <latex-image-code><![CDATA[
-\begin{tikzpicture}
+\begin{tikzpicture}[all nodes={}]
 
   \node at (0, 0) [anchor=east] {$A_{11} = {}\;$};
-  \matrix (a) at (0, 0) [my math matrix, anchor=west] {
+  \matrix (a) at (0, 0) [math matrix, anchor=west] {
     a \& b \\ c \& d \\
     };
   \node at (a.east) [anchor=west] (a22) {$\;{} = \mat d$};
 
   \node at (a22.east) [anchor=west, xshift=2em] (A12) {$A_{12} = {}\;$};
-  \matrix (b) at (A12.east) [my math matrix, anchor=west] {
+  \matrix (b) at (A12.east) [math matrix, anchor=west] {
     a \& b \\ c \& d \\
     };
   \node at (b.east) [anchor=west] {$\;{} = \mat c$};
 
-  \matrix (c) at (a.south west) [my math matrix, anchor=north west, yshift=-1em] {
+  \matrix (c) at (a.south west) [math matrix, anchor=north west, yshift=-1em] {
     a \& b \\ c \& d \\
     };
   \node at (c.west) [anchor=east] {$A_{21} = {}\;$};
   \node at (c.east) [anchor=west] (a12) {$\;{} = \mat b$};
 
-  \matrix (d) at (b.south west) [my math matrix, anchor=north west, yshift=-1em] {
+  \matrix (d) at (b.south west) [math matrix, anchor=north west, yshift=-1em] {
     a \& b \\ c \& d \\
     };
   \node at (d.west) [anchor=east] (A22) {$A_{22} = {}\;$};
@@ -173,7 +170,7 @@ the license is included in gfdl.xml.
       ]]>
       </latex-image-code>
     </image>
-  </figure>
+  </sidebyside>
 
   <p>
     They are all just single-entry matrices. As we have seen that the determinant of a <m>1\times1</m> matrix is just the number inside of it, the cofactors are therefore
@@ -196,16 +193,15 @@ the license is included in gfdl.xml.
     <statement>
       <p>We find the determinant of
       <me>A = \mat{a_{11} a_{12} a_{13}; a_{21} a_{22} a_{23}; a_{31} a_{32} a_{33}}</me>
-      by expanding along the first row.  The minors and cofactors are computed in the following picture:
+      by expanding along the first row.  The minors and cofactors are computed as follows:
       </p>
-      <figure>
-        <caption>Some minors and cofactors of a <m>3\times 3</m> matrix</caption>
-        <image width="90%">
+      <sidebyside>
+        <image>
           <latex-image-code><![CDATA[
           \begin{tikzpicture}
 
           \node at (0, 0) [anchor=east] (A11) {$A_{11} = {}\;$};
-          \matrix (a) at (0, 0) [my math matrix, anchor=west] {
+          \matrix (a) at (0, 0) [math matrix, anchor=west] {
             a_{11} \& a_{12} \& a_{13} \\
             a_{21} \& a_{22} \& a_{23} \\
             a_{31} \& a_{32} \& a_{33} \\
@@ -215,7 +211,7 @@ the license is included in gfdl.xml.
           \node at (a11.east) [anchor=west, xshift=1em] (C11)
              {$C_{11} = +\det\mat{a_{22} a_{23}; a_{32} a_{33}}$};
 
-          \matrix (b) at (a.south west) [my math matrix, anchor=north west,
+          \matrix (b) at (a.south west) [math matrix, anchor=north west,
               yshift=-.5em] {
             a_{11} \& a_{12} \& a_{13} \\
             a_{21} \& a_{22} \& a_{23} \\
@@ -227,7 +223,7 @@ the license is included in gfdl.xml.
           \node at (C11.west |- a12.east) [anchor=west] (C12)
              {$C_{12} = -\det\mat{a_{21} a_{23}; a_{31} a_{33}}$};
 
-          \matrix (c) at (b.south west) [my math matrix, anchor=north west,
+          \matrix (c) at (b.south west) [math matrix, anchor=north west,
               yshift=-.5em] {
             a_{11} \& a_{12} \& a_{13} \\
             a_{21} \& a_{22} \& a_{23} \\
@@ -260,7 +256,7 @@ the license is included in gfdl.xml.
           ]]>
           </latex-image-code>
         </image>
-      </figure>
+      </sidebyside>
 
       <p>
         The determinant is:

@@ -95,6 +95,38 @@
 </xsl:template>
 
 
+<!-- JDR: allow images with natural width, including in sidebyside panels -->
+<xsl:template match="image|video|jsxgraph" mode="get-width-percentage">
+    <xsl:choose>
+         <!-- check for @width on the image itself -->
+         <!-- a good place to check author input   -->
+        <xsl:when test="@width">
+            <xsl:variable name="normalized-width" select="normalize-space(@width)" />
+            <xsl:choose>
+                <xsl:when test="not(substring($normalized-width, string-length($normalized-width)) = '%')">
+                    <xsl:message>MBX:ERROR:   a "width" attribute should be given as a percentage (such as "40%", not as "<xsl:value-of select="$normalized-width" />"</xsl:message>
+                    <xsl:apply-templates select="." mode="location-report" />
+                    <!-- replace by 100% -->
+                    <xsl:text>100%</xsl:text>
+                </xsl:when>
+                <!-- test for stray spaces? -->
+                <xsl:otherwise>
+                    <xsl:value-of select="$normalized-width" />
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:when>
+        <!-- perhaps an author-specific default width for images -->
+        <xsl:when test="self::image and $docinfo/defaults/image-width">
+            <xsl:value-of select="normalize-space($docinfo/defaults/image-width)" />
+        </xsl:when>
+        <!-- what else to do? Author will figure it out if too extreme -->
+        <xsl:otherwise>
+            <xsl:text>auto</xsl:text>
+        </xsl:otherwise>
+    </xsl:choose>
+
+</xsl:template>
+
 <xsl:param name="extra.mathjax">
   <xsl:text>MathJax.Ajax.config.path["Extra"] = "static/js";&#xa;</xsl:text>
   <xsl:text>MathJax.Hub.Config({&#xa;</xsl:text>
