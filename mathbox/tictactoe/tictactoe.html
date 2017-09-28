@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Matrix Tic Tac Toe</title>
+    <link rel="stylesheet" href="tictactoe.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    </style>
+  </head>
+
+  <body>
+    <h1>Matrix Tie Tac Toe</h1>
+    <div id="controls">
+      <table>
+	<tr>
+	  <td>Rows</td>
+	  <td>
+	    <select name="rows">
+	      <option value="1">1</option>
+	      <option value="2">2</option>
+	      <option value="3">3</option>
+	      <option value="4">4</option>
+	      <option value="5">5</option>
+	    </select>
+	  </td>
+	</tr>
+	<tr>
+	  <td>Columns</td>
+	  <td>
+	    <select name="columns">
+	      <option value="1">1</option>
+	      <option value="2">2</option>
+	      <option value="3">3</option>
+	      <option value="4">4</option>
+	      <option value="5">5</option>
+	    </select>
+	  </td>
+	</tr>
+	<tr>
+	  <td>Win condition</td>
+	  <td>
+	    <select name="rows">
+	      <option value="determinant">Player 0 wins if the determinant is zero,
+		Player 1 wins it it is nonzero</option>
+	      <option value="determinant_reversed">Player 1 wins if the determinant is zero,
+		Player 0 wins it it is nonzero</option>
+	    </select>
+	  </td>
+	</tr>
+      </table>
+    </div>
+
+    <div>
+      <button type="button">Start Game</button>
+    </div>
+    <div id="board-wrapper">
+      <table id="board">
+      </table>
+    </div>
+
+  </body>
+</html>
