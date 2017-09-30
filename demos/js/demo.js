@@ -53,7 +53,12 @@ window.Demo = function(opts, func) {
         self.cameraAPI = mathbox.camera(cameraOpts);
         self.camera = self.cameraAPI[0].controller.camera;
         // Calibrate focus distance for units
-        mathbox.set('focus', focusDist);
+        //mathbox.set('focus', focusDist);
+        self.canvas = document.querySelector('canvas');
+        mathbox.bind('focus', function() {
+            return focusDist
+                * Math.min(self.canvas.clientWidth, self.canvas.clientHeight) / 1000;
+        });
 
         // 3D cartesian
         var view = self.view = mathbox
