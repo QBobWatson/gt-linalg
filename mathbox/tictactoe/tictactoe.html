@@ -16,7 +16,7 @@
 	<tr>
 	  <td>Rows</td>
 	  <td>
-	    <select name="rows">
+	    <select name="row-selector" id="row-selector" >
 	      <option value="1">1</option>
 	      <option value="2">2</option>
 	      <option value="3">3</option>
@@ -28,7 +28,7 @@
 	<tr>
 	  <td>Columns</td>
 	  <td>
-	    <select name="columns">
+	    <select name="column-selector" id="column-selector" >
 	      <option value="1">1</option>
 	      <option value="2">2</option>
 	      <option value="3">3</option>
@@ -40,7 +40,7 @@
 	<tr>
 	  <td>Win condition</td>
 	  <td>
-	    <select name="rows">
+	    <select name="win-selector">
 	      <option value="determinant">Player 0 wins if the determinant is zero,
 		Player 1 wins it it is nonzero</option>
 	      <option value="determinant_reversed">Player 1 wins if the determinant is zero,
@@ -52,7 +52,7 @@
     </div>
 
     <div>
-      <button type="button">Start Game</button>
+      <button type="button" onclick="start_game()" >Start Game</button>
     </div>
     <div id="board-wrapper">
       <table id="board">
