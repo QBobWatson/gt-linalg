@@ -12,7 +12,7 @@ the license is included in gfdl.xml.
 <section xml:id="section-lin-indep">
   <title>Linear Independence</title>
 
-  <p>The notion of linear independence; pictures.</p>
+  <p>Linear independence.  Equivalent criteria.  Free variables and linear dependence.  Using <m>\R^p</m> to label spans.</p>
 
   <exercises>
     <title>Reading Questions</title>

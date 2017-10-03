@@ -9,9 +9,11 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="section-lines">
-  <title>Euclidean Space</title>
+<section xml:id="section-matrix-trans">
+  <title>Matrix Transformations</title>
 
-  <p>To get started in our study of linear algebra, we need to Euclidean space <m>\R^n</m></p>
+  <p>
+    Matrix transformations: thinking of <m>Ax=b</m> as a function, pictures.
+  </p>
 
 </section>

@@ -9,9 +9,9 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="section-lin-transform">
-  <title>Linear Transformations</title>
+<section xml:id="section-rank-nullity">
+  <title>Rank and Nullity</title>
 
-  <p>Linear transformations; relationship to matrix transformations.</p>
+  <p>Rank and Nullity.</p>
 
 </section>

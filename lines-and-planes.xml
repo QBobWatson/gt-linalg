@@ -9,11 +9,11 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="section-soln-sets">
-  <title>Solution Sets</title>
+<section xml:id="section-lines-planes">
+  <title>Lines and Planes</title>
 
   <p>
-    Solution sets.  Parametric vector form.  Distinction between the solution set and the column span.
+    What is <m>\R^n</m>.  Using elements of <m>\R^n</m> to label points of geometric objects.
   </p>
 
 </section>

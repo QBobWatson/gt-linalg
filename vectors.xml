@@ -12,8 +12,8 @@ the license is included in gfdl.xml.
 <section xml:id="section-vectors">
   <title>Vectors in <m>\R^n</m></title>
 
-  <p>Vectors, vector algebra, parallelogram law.</p>
-
-  <p>Test edit.</p>
+  <p>
+    Vectors: algebra and geometry.  Linear combinations and span.  How to draw pictures of everything in the first chapter.
+  </p>
 
 </section>

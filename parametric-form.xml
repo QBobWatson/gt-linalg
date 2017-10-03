@@ -9,11 +9,11 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="section-soln-sets">
-  <title>Solution Sets</title>
+<section xml:id="section-parametric-form">
+  <title>Parametric Form</title>
 
   <p>
-    Solution sets.  Parametric vector form.  Distinction between the solution set and the column span.
+    Parametric form of the solution set.  Parameterized subsets of <m>\R^n</m>.  Number of solutions to a system of equations.
   </p>
 
 </section>

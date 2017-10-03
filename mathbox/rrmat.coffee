@@ -1,6 +1,6 @@
 "use strict"
 
-# Compile with:
+# Compile with
 #    cat animstate.coffee rrmat.coffee | coffee --compile --stdio > rrmat.js
 
 # TODO: Funny sizes on Safari
@@ -562,7 +562,7 @@ class RRMatrix extends Controller
         pivots = []
         for row, i in state.matrix
             for ent, j in row
-                if ent != 0
+                if Math.abs(ent) > .00001
                     pivots.push j
                     break
             if pivots.length <= i

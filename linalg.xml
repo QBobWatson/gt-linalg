@@ -28,44 +28,31 @@ Free Documentation License"
     <!-- Chapters -->
     <xi:include href="./overview.xml" />
 
-	<chapter xml:id="chap-lines-planes">
-		<title> Lines, Planes, and Euclidean space</title>
-	        <xi:include href="./what-is-lin-alg.xml" />
-                <xi:include href="./euclidean-space.xml" />
-                <xi:include href="./geometry-Rn-dot-prod.xml" />
-                <xi:include href="./lines.xml" />
-	</chapter>
+    <chapter xml:id="chap-algebra">
+      <title>Systems of Linear Equations: Algebra</title>
+      <xi:include href="./lines-and-planes.xml" />
+      <xi:include href="./systems-eqns.xml" />
+      <xi:include href="./row-reduction.xml" />
+      <xi:include href="./parametric-form.xml" />
+    </chapter>
 
-
-    <chapter xml:id="chap-linear-equations">
-      <title>Linear Equations</title>
-
-
-      <introduction>
-        <p>Lay's chapter 1</p>
-      </introduction>
-
-      <xi:include href="./rowreduction.xml" />
+    <chapter xml:id="chap-geometry">
+      <title>Systems of Linear Equations: Geometry</title>
       <xi:include href="./vectors.xml" />
       <xi:include href="./matrixeq.xml" />
       <xi:include href="./solnsets.xml" />
       <xi:include href="./linindep.xml" />
-      <xi:include href="./lintransform.xml" />
-
+      <xi:include href="./subspaces.xml" />
+      <xi:include href="./dimension.xml" />
+      <xi:include href="./rank-nullity.xml" />
     </chapter>
 
     <chapter xml:id="chap-matrices">
-      <title>Matrices and Subspaces</title>
-
-      <introduction>
-        <p>Lay's chapter 2</p>
-      </introduction>
-
-      <xi:include href="./matrixalg.xml" />
-      <xi:include href="./matrixinv.xml" />
-      <xi:include href="./subspaces.xml" />
-      <xi:include href="./dimension.xml" />
-
+      <title>Linear Transformations and Matrix Algebra</title>
+      <xi:include href="./matrix-trans.xml" />
+      <xi:include href="./linear-trans.xml" />
+      <xi:include href="./matrix-mult.xml" />
+      <xi:include href="./matrix-inv.xml" />
     </chapter>
 
     <chapter xml:id="chap-determinant">

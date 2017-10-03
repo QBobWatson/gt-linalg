@@ -12,6 +12,8 @@ the license is included in gfdl.xml.
 <section xml:id="section-matrix-eq">
   <title>Matrix Equations</title>
 
-  <p>Turn systems of linear equations into matrix equations.</p>
+  <p>
+    Matrix equations.  Column span.  Four equivalent ways to write a system of equations.
+  </p>
 
 </section>

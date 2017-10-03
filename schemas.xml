@@ -26,7 +26,9 @@
   <uri resource="lintransform.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="matrixalg.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="matrixeq.xml" uri="../mathbook/schema/pretext.rnc"/>
-  <uri resource="matrixinv.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="matrix-inv.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="matrix-mult.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="matrix-trans.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="orthosets.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="overview.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="rowreduction.xml" uri="../mathbook/schema/pretext.rnc"/>
@@ -34,4 +36,10 @@
   <uri resource="stochastic.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="subspaces.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="vectors.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="linear-trans.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="lines-and-planes.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="parametric-form.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="rank-nullity.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="row-reduction.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="systems-eqns.xml" uri="../mathbook/schema/pretext.rnc"/>
 </locatingRules>

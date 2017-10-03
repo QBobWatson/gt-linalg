@@ -9,9 +9,11 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="section-rowreduction">
+<section xml:id="section-row-reduction">
   <title>Row Reduction</title>
 
-  <p>Row reduction procedure.</p>
+  <p>
+    Augmented matrices.  Row echelon forms.  Row reduction.
+  </p>
 
 </section>
