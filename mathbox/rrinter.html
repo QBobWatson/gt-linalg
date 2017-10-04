@@ -158,8 +158,15 @@
         // Calibrate focus distance for units
         mathbox.set('focus', ortho);
 
+        var augment = parseInt(RRInter.urlParams.augment);
+        if(isNaN(augment))
+            augment = undefined;
+
         window.rrmat = new RRMatrix(
-            mat.length, mat[0].length, view, mathbox, {defSpeed: 1.5});
+            mat.length, mat[0].length, view, mathbox, {
+                defSpeed:   1.5,
+                augmentCol: augment,
+            });
         rrmat.setMatrix(mat);
 
         // Highlight pivots initially

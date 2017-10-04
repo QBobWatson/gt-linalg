@@ -76,7 +76,10 @@ encodeQS = () ->
     encMat = outRows.join ':'
     # Encode row ops
     encOps = (slide.data.shortOp for slide in slideshow.slides).join ','
-    "mat=#{encMat}&ops=#{encOps}&cur=#{slideshow.currentSlideNum}"
+    ret = "mat=#{encMat}&ops=#{encOps}&cur=#{slideshow.currentSlideNum}"
+    if urlParams.augment
+        ret += "&augment=" + urlParams.augment
+    ret
 
 # Update the matrix, slideshow, and current slide from a query string
 updatingState = false
@@ -137,7 +140,16 @@ matToTextarea = (mat) ->
 
 # Render a matrix to an element, using katex
 renderMatrix = (mat, elt) ->
-    latex = '\\begin{bmatrix}'
+    latex = '\\left[\\begin{array}'
+    augment = parseInt(urlParams.augment)
+    latex += '{'
+    if isNaN(augment)
+        latex += 'c' for i in [0...mat[0].length]
+    else
+        latex += 'c' for i in [0..augment]
+        latex += '|'
+        latex += 'c' for i in [augment...mat[0].length]
+    latex += '}'
     outRows = []
     for row in mat
         outRow = []
@@ -145,7 +157,7 @@ renderMatrix = (mat, elt) ->
             outRow.push RRMatrix.texFraction ent
         outRows.push outRow.join '&'
     latex += outRows.join '\\\\'
-    latex += '\\end{bmatrix}'
+    latex += '\\end{array}\\right]'
     katex.render latex, elt
 
 # Add a matrix to the matrix history area
@@ -390,3 +402,4 @@ finalize = () ->
 window.RRInter = {}
 window.RRInter.install = install
 window.RRInter.finalize = finalize
+window.RRInter.urlParams = urlParams
