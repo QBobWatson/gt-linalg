@@ -87,7 +87,7 @@
 <!-- CSS header -->
 <xsl:template name="css">
     <link href="static/css/mathbook-gt.css" rel="stylesheet" type="text/css" />
-    <link href="https://aimath.org/mathbook/mathbook-add-on.css"
+    <link href="static/css/mathbook-add-on.css"
           rel="stylesheet" type="text/css" />
     <xsl:call-template name="external-css">
         <xsl:with-param name="css-list" select="normalize-space($html.css.extra)" />

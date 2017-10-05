@@ -31,6 +31,7 @@ mkdir -p "$static_dir/images"
 
 echo "Copying static files..."
 cp "$base_dir/gt-text-common/css/"*.css "$static_dir/css"
+cp "$base_dir/mathbook/css/mathbook-add-on.css" "$static_dir/css"
 cp "$base_dir/gt-text-common/js/"*.js "$static_dir/js"
 cp "$base_dir/mathbook-assets/stylesheets/"*.css "$static_dir/css"
 cp "$base_dir/mathbook-assets/stylesheets/fonts/ionicons/fonts/"* "$static_dir/fonts"

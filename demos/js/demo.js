@@ -238,7 +238,7 @@ window.Demo.prototype = {
 
         var vectorSize   = (opts.vectorSize   === undefined) ? 5  : opts.vectorSize;
         var vectorWidth  = (opts.vectorWidth  === undefined) ? 5  : opts.vectorWidth;
-        var labelOutline = (opts.labelOutline === undefined) ? 0  : opts.labelOutline;
+        var labelOutline = (opts.labelOutline === undefined) ? 2  : opts.labelOutline;
         var labelSize    = (opts.labelSize    === undefined) ? 15 : opts.labelSize;
         var zeroSize     = (opts.zeroSize     === undefined) ? 20 : opts.zeroSize;
         var labelOffset = opts.labelOffset || [0, 25];
@@ -291,6 +291,7 @@ window.Demo.prototype = {
                     outline: labelOutline,
                     colors:  "#" + prefix + "colors",
                     color:   "white",
+                    background: "black",
                     offset:  labelOffset,
                     size:    labelSize,
                 });

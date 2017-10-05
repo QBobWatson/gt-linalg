@@ -30,7 +30,6 @@ Free Documentation License"
 
     <chapter xml:id="chap-algebra">
       <title>Systems of Linear Equations: Algebra</title>
-      <xi:include href="./lines-and-planes.xml" />
       <xi:include href="./systems-eqns.xml" />
       <xi:include href="./row-reduction.xml" />
       <xi:include href="./parametric-form.xml" />
