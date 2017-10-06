@@ -1,5 +1,10 @@
 <?xml version='1.0'?>
 
+<!DOCTYPE xsl:stylesheet [
+    <!ENTITY % entities SYSTEM "../../mathbook/xsl/entities.ent">
+    %entities;
+]>
+
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <xsl:import href="../../mathbook/xsl/mathbook-html.xsl" />
@@ -180,7 +185,68 @@
     </xsl:element>
 </xsl:template>
 
+<!-- JDR: simpler numbering of some elements -->
+<xsl:template match="*" mode="heading-simple-number">
+    <h5 class="heading">
+        <span class="type">
+            <xsl:apply-templates select="." mode="type-name" />
+        </span>
+        <xsl:variable name="the-number">
+            <xsl:apply-templates select="." mode="serial-number" />
+        </xsl:variable>
+        <xsl:if test="not($the-number='')">
+            <span class="codenumber">
+                <xsl:value-of select="$the-number" />
+            </span>
+        </xsl:if>
+        <xsl:if test="title">
+            <span class="title">
+                <xsl:apply-templates select="." mode="title-full" />
+            </span>
+        </xsl:if>
+    </h5>
+</xsl:template>
 
+<xsl:template match="&DEFINITION-LIKE;|&REMARK-LIKE;" mode="heading-birth">
+    <xsl:apply-templates select="." mode="heading-simple-number" />
+</xsl:template>
+
+<xsl:template match="&EXAMPLE-LIKE;|&PROJECT-LIKE;|list" mode="heading-birth">
+    <xsl:apply-templates select="." mode="heading-simple-number" />
+</xsl:template>
+
+<xsl:template match="&THEOREM-LIKE;|&AXIOM-LIKE;" mode="heading-birth">
+    <xsl:apply-templates select="." mode="heading-simple-number" />
+</xsl:template>
+
+<xsl:template match="exercise" mode="heading-birth">
+    <xsl:apply-templates select="." mode="heading-simple-number" />
+</xsl:template>
+
+<xsl:template match="caption">
+    <xsl:param name="width" />
+    <xsl:param name="margins" />
+    <figcaption>
+        <!-- $width and $margins are sentinels for -->
+        <!-- sidebyside width control attributes   -->
+        <xsl:if test="$width or $margins">
+            <xsl:call-template name="sbs-caption-attributes">
+                <xsl:with-param name="width" select="$width" />
+                <xsl:with-param name="margins" select="$margins" />
+            </xsl:call-template>
+        </xsl:if>
+        <span class="heading">
+            <xsl:apply-templates select="parent::*" mode="type-name"/>
+        </span>
+        <span class="codenumber">
+            <xsl:apply-templates select="parent::*" mode="serial-number"/>
+        </span>
+        <xsl:apply-templates />
+    </figcaption>
+</xsl:template>
+
+<!-- JDR: mathbook gives no way to customize this at all.  Hence we have to
+     copy/paste this whole thing every time it's changed upstream. -->
 
 <xsl:param name="extra.mathjax">
   <xsl:text>MathJax.Ajax.config.path["Extra"] = "static/js";&#xa;</xsl:text>
@@ -189,8 +255,6 @@
   <xsl:text>});&#xa;</xsl:text>
 </xsl:param>
 
-<!-- JDR: mathbook gives no way to customize this at all.  Hence we have to
-     copy/paste this whole thing every time it's changed upstream. -->
 <xsl:template name="mathjax">
     <!-- mathjax configuration -->
     <xsl:element name="script">
