@@ -561,8 +561,7 @@ the license is included in gfdl.xml.
       </p>
     </example>
 
-    <p><alert>Important:</alert> The process of doing row operations to a matrix does not change the solution
-    set of the corresponding linear equations!</p>
+    <important><p>The process of doing row operations to a matrix does not change the solution set of the corresponding linear equations!</p></important>
 
     <p>Indeed, the whole point of doing these operations is to solve the equations using the elimination method.</p>
 
