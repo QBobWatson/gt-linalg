@@ -15,9 +15,8 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Understand the definition of <m>\R^n</m>, and how to use <m>\R^n</m> to label points.</li>
-      <li>Draw a picture of the solution set of a system of equations in two or three variables.</li>
       <li>Use augmented matrices to solve systems of equations.</li>
-      <li>Vocabulary words: <term>consistent</term> and <term>inconsistent</term>.</li>
+      <li>Vocabulary words: <term>consistent</term>, <term>inconsistent</term>, <term>solution set</term>.</li>
     </ol>
   </objectives>
 
@@ -56,6 +55,27 @@ the license is included in gfdl.xml.
       </sidebyside>
     </example>
 
+    <definition>
+      <statement>
+        <p>For our purposes, a <term>line</term> is a ray that is <em>straight</em> and <em>infinite</em> in both directions.</p>
+        <sidebyside>
+          <image>
+            <latex-image-code><![CDATA[
+  \begin{tikzpicture}[scale=1]
+    \draw[grid lines] (-2,-2) grid (2,2);
+    \draw[->] (-2,0) -- (2,0);
+    \draw[->] (0,-2) -- (0,2);
+    \draw[{Stealth}-{Stealth}, seq1, thick] (-1,2) -- (2,-1);
+  \end{tikzpicture}
+            ]]>
+            </latex-image-code>
+          </image>
+        </sidebyside>
+      </statement>
+    </definition>
+
+    <p>The number line <m>\R=\R^1</m> is an example of a line, but <em>a line is not the same as <m>\R^1</m></em>.  We will see later how to use the elements of <m>\R^1</m> to label the points on a line.</p>
+
     <example>
       <p>When <m>n=2</m>, we can think of <m>\R^2</m> as the <m>xy</m>-plane.  We can do so because every point on the plane can be represented by an ordered pair of real numebrs, namely, its <m>x</m>- and <m>y</m>-coordinates.</p>
       <sidebyside>
@@ -75,6 +95,34 @@ the license is included in gfdl.xml.
       </sidebyside>
       <p>Note that we use the elements of <m>\R^2</m> to <em>label</em> the points of the plane, but <m>\R^2</m> is not defined to be the plane.</p>
     </example>
+
+    <definition>
+      <statement>
+        <p>A <term>plane</term> is a flat sheet that is infinite in all directions.</p>
+        <sidebyside>
+          <image>
+            <latex-image-code><![CDATA[
+  \begin{tikzpicture}[scale=.75, myxyz]
+    \clip[resetxy] (-5, -3) rectangle (5, 4);
+    \draw[densely dotted] (0,0,0) -- (1,0,0);
+    \draw[densely dotted] (0,0,0) -- (0,1,0);
+    \draw[densely dotted] (0,0,0) -- (0,0,1);
+    \begin{scope}[x={(-1,0,1)}, y={(0,-1,.5)}, transformxy=1]
+      \fill[help lines, seq1!50, fill opacity=.7] (-3, -3) rectangle (2.5, 2.5);
+      \draw[help lines, seq1!50] (-3, -3) grid (2.5, 2.5);
+    \end{scope}
+    \draw[->] (1,0,0) -- (3,0,0) node[right] {$x$};
+    \draw[->] (0,1,0) -- (0,3,0) node[below left] {$y$};
+    \draw[->] (0,0,1) -- (0,0,3) node[above] {$z$};
+  \end{tikzpicture}
+            ]]>
+            </latex-image-code>
+          </image>
+        </sidebyside>
+      </statement>
+    </definition>
+
+    <p>The plane <m>\R^2</m> is an example of a plane, but <em>a plane is not the same as <m>\R^2</m></em>.  We will see later how to use the elements of <m>\R^2</m> to label the points on a line.</p>
 
     <example>
       <p>When <m>n=3</m>, we can think of <m>\R^3</m> as the <em>space</em> we (appear to) live in.  We can do so because every point in space can be represented by an ordered triple of real numebrs, namely, its <m>x</m>-, <m>y</m>-, and <m>z</m>-coordinates.</p>
@@ -212,166 +260,36 @@ the license is included in gfdl.xml.
 
 
   <subsection>
-    <title>Solutions of Linear Equations: Pictures</title>
-
-    <p>In this subsection, we consider some simple systems of linear equations, and we draw their solutions.</p>
-
-    <paragraphs>
-      <title>One Linear Equation</title>
-
-      <p>Consider the equation <m>x+y=1</m>.  The <term>solution set</term> is the set of all pairs <m>(x,y)</m> that satisfy this equation.  Rewriting, this is the same as all solutions to <m>y = 1-x</m>.  This is a line in the plane.</p>
-      <sidebyside>
-        <image>
-          <latex-image-code><![CDATA[
-  \begin{tikzpicture}[scale=1]
-    \draw[grid lines] (-2,-2) grid (2,2);
-    \draw[->] (-2,0) -- (2,0);
-    \draw[->] (0,-2) -- (0,2);
-    \draw[{Stealth}-{Stealth}, seq1, thick] (-1,2) -- (2,-1);
-  \end{tikzpicture}
-            ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
-      <p>The equation <m>x+y=1</m> (or <m>y=1-x</m>) is called the <term>implicit equation</term> of the line.  Any point on the line has the form <m>(x,y) = (t,\,1-t)</m> for some real number <m>t</m>.  This is called the <term>parametric form</term> of the line; in this case, <m>t</m> is the <term>parameter</term>.</p>
-      <sidebyside>
-        <image>
-          <latex-image-code><![CDATA[
-  \begin{tikzpicture}[scale=1, every label/.style={thin border}]
-    \draw[grid lines] (-3,-3) grid (3,3);
-    \draw[->] (-3,0) -- (3,0);
-    \draw[->] (0,-3) -- (0,3);
-    \draw[{Stealth}-{Stealth}, seq1, thick] (-2,3) -- (3,-2);
-    \pause
-    \point["$t=0$" above right] at (0,1);
-    \pause
-    \point["$t=1$" above right] at (1,0);
-    \pause
-    \point["$t=-1$" below left] at (-1,2);
-  \end{tikzpicture}
-            ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
-
-      <remark><p>For our purposes, a <term>line</term> is a ray that is <em>straight</em> and <em>infinite</em> in both directions.</p></remark>
-
-      <p>Now consider the equation <m>x+y+z=1</m>.  The set of all solutions <m>(x,y,z)</m> of this implicit equation form a plane in space.  Any point on this plane has the form <m>(x,y,z) = (t,\,w,\,1-t-w)</m> for some values <m>t,w</m> in <m>\R</m>.  This is the parametric form of the plane; in this case, <m>t</m> and <m>w</m> are the parameters.</p>
-      <figure>
-        <caption>As <m>t</m> and <m>w</m> vary, the parametric equation <m>(x,y,z)=(t,\,w,\,1-t-w)</m> sweeps out the plane defined by the implicit equation <m>x+y+z=1</m>.</caption>
-        <mathbox source="demos/plane.html" height="300px" />
-      </figure>
-
-      <remark><p>A <term>plane</term> is a flat sheet that is infinite in all directions.</p></remark>
-
-      <p>What happens when there are more than three variables?  We will see that <m>x+y+z+w=1</m> defines a "3-plane" in <m>\R^4</m>. In general, a nonzero linear equation in <m>n</m> variables defines an "<m>(n-1)</m>-space" in <m>\R^n</m>.
-      </p>
-
-    </paragraphs>
-
-    <paragraphs>
-      <title>Multiple linear equations</title>
-
-      <p>Consider the pair of equations
-      <me>\begin{split}
-      \color{seq-red}x - 3y &amp;\color{seq-red}{}= -3 \\
-      \color{seq-blue} 2x + y &amp;\color{seq-blue}{}= 8\color{black}.
-      \end{split}
-      </me>
-      The <term>solution set</term> of these equations is the set of all pairs <m>(x,y)</m> that make <em>both</em> of the equations true.  Each equation defines a line in <m>\R^2</m>, so the solution set of the system of equations is the unique point where the two lines intersect.
-      </p>
-
-      <sidebyside>
-        <image>
-          <latex-image-code><![CDATA[
-  \begin{tikzpicture}[scale=.2]
-    \draw[grid lines] (-20,-20) rectangle (20,20);
-    \clip (-20,-20) rectangle (20,20);
-    \draw[->] (-20,0) -- (20,0);
-    \draw[->] (0,-20) -- (0,20);
-    \draw[seq1, thick] (-20,-20/3+1) -- (20,20/3+1);
-    \draw[seq2, thick] (-20,40+8) -- (20,-40+8);
-    \point at (3,2);
-  \end{tikzpicture}
-            ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
-
-      <p>The equations
-      <me>\begin{split}
-      \color{seq-red}x - 3y &amp;\color{seq-red}{}= -3 \\
-      \color{seq-blue}x - 3y &amp;\color{seq-blue}{}= 3
-      \end{split}
-      </me>
-      define <em>parallel</em> lines.  It follows that it is impossible to solve both equations simultaneously.
-      </p>
-      <sidebyside>
-        <image>
-          <latex-image-code><![CDATA[
-  \begin{tikzpicture}[scale=.2]
-    \draw[grid lines] (-20,-20) rectangle (20,20);
-    \clip (-20,-20) rectangle (20,20);
-    \draw[->] (-20,0) -- (20,0);
-    \draw[->] (0,-20) -- (0,20);
-    \draw[seq1, thick] (-20,-20/3+1) -- (20,20/3+1);
-    \draw[seq2, thick] (-20,-20/3-1) -- (20,20/3-1);
-  \end{tikzpicture}
-            ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
-
-      <definition>
-        <statement>
-          <p>A system of equations is called <term>inconsistent</term> if it has no solutions.  It is called <term>consistent</term> otherwise.</p>
-        </statement>
-      </definition>
-
-      <p>The equations
-      <me>\begin{split}
-      \color{seq-red}x - 3y &amp;\color{seq-red}{}= -3 \\
-      \color{seq-blue}2x - 6y &amp;\color{seq-blue}{}= -6
-      \end{split}
-      </me>
-      define the <em>same</em> line.  In other words, any solution to one equation is also a solution to the other, so the solution set is a line.  In particular, the solution set is <em>infinite</em>.
-      </p>
-      <sidebyside>
-        <image>
-          <latex-image-code><![CDATA[
-  \begin{tikzpicture}[scale=.2]
-    \draw[grid lines] (-20,-20) rectangle (20,20);
-    \clip (-20,-20) rectangle (20,20);
-    \draw[->] (-20,0) -- (20,0);
-    \draw[->] (0,-20) -- (0,20);
-    \draw[seq2, double=seq1!50, double distance=1pt, very thick] (-20,-20/3+1) -- (20,20/3+1);
-  \end{tikzpicture}
-            ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
-
-      <p>The equations
-      <me>\begin{split}
-      \color{seq-red}x + y + z &amp;\color{seq-red}{}= 1 \\
-      \color{seq-green}x - z &amp;\color{seq-green}{}= 0
-      \end{split}
-      </me>
-      both define planes in <m>\R^3</m>.  Their intersection is a <em>line</em>.
-      </p>
-      <figure>
-        <caption>Two planes intersecting in <m>\R^3</m>.</caption>
-        <mathbox source="demos/planes.html" height="300px" />
-      </figure>
-    </paragraphs>
-
-  </subsection>
-
-  <subsection>
     <title>Solving Systems of Equations</title>
 
-    <p>
-      Now we come to the question of how to systematically <em>solve</em> a system of linear equations.  This is the kind of problem we will discuss for the first half of the course.  As a running example, we will consider the system
+    <p>During the first half of the course, we will be primarily concerned with understanding the solutions to linear equations.</p>
+
+    <definition>
+      <statement>
+        <p>An equation in the unknowns <m>x,y,z,\ldots</m> is called <term>linear</term> if both sides of the equation are a sum of (constant) multiples of <m>x,y,z,\ldots</m>, plus an optional constant.</p>
+      </statement>
+    </definition>
+
+    <p>For instance,
+    <me>
+      \begin{split}
+      3x + 4y &amp;= 2z \\
+      -x - z &amp;= 100
+      \end{split}
+    </me>
+    are linear equations, but
+    <me>
+      \begin{split}
+      3x + yz &amp;= 3 \\
+      \sin(x) - \cos(y) &amp;= 2
+      \end{split}
+    </me>
+    are not.</p>
+
+    <p>We will usually move the unknowns to the left side of the equation, and move the constants to the right.
+    </p>
+
+    <p>A <term>system</term> of linear equations is a collection of several linear equations, like
       <men xml:id="systems-eqns-example">
         \syseq{x + 2y + 3z = 6;
         2x - 3y + 2z = 14;
@@ -492,7 +410,7 @@ the license is included in gfdl.xml.
     </paragraphs>
 
     <paragraphs><title>Augmented Matrices and Row Operations</title>
-    <p>Solving equations by elimination requires writing the variables <m>x,y,z</m> and the equals sign <m>=</m> over and over again, merely as placeholders: all that is changing in the equations is the <em>numbers</em>.  We can make our life easier by extracting only the numbers, and putting them in a box:
+    <p>Solving equations by elimination requires writing the variables <m>x,y,z</m> and the equals sign <m>=</m> over and over again, merely as placeholders: all that is changing in the equations is the coefficient <em>numbers</em>.  We can make our life easier by extracting only the numbers, and putting them in a box:
     <me>
       \syseq{x + 2y + 3z = 6;
       2x - 3y + 2z = 14;
@@ -643,12 +561,10 @@ the license is included in gfdl.xml.
       </p>
     </example>
 
-    <remark>
-      <p>The process of doing row operations to a matrix does not change the solution
-      set of the corresponding linear equations!</p>
+    <p><alert>Important:</alert> The process of doing row operations to a matrix does not change the solution
+    set of the corresponding linear equations!</p>
 
-      <p>Indeed, the whole point of doing these operations is to solve the equations using the elimination method.</p>
-    </remark>
+    <p>Indeed, the whole point of doing these operations is to solve the equations using the elimination method.</p>
 
     <definition>
       <statement>
