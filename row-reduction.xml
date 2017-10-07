@@ -517,7 +517,7 @@ the license is included in gfdl.xml.
       <p>An augmented matrix corresponds to an inconsistent system of equations if and only if the last column (i.e., the augmented column) is a <em>pivot column</em>.</p>
     </observation>
 
-    <p>In other words, the reduced matrix looks like this:
+    <p>In other words, the row reduced matrix of an inconsistent system looks like this:
     <me>\amat{
     1  0  \star,  \star,  \color{red}0 ;
     0  1  \star,  \star,  \color{red}0 ;
