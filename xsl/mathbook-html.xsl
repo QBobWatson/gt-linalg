@@ -99,6 +99,37 @@
     </xsl:call-template>
 </xsl:template>
 
+<!-- JDR: start ordered list at a different nmuber -->
+<xsl:template match="ol">
+    <xsl:param name="b-original" select="true()" />
+    <xsl:element name="{local-name(.)}">
+        <!-- label original -->
+        <xsl:if test="$b-original">
+            <xsl:attribute name="id">
+                <xsl:apply-templates select="." mode="internal-id" />
+            </xsl:attribute>
+        </xsl:if>
+        <xsl:if test="@cols">
+            <xsl:attribute name="class">
+                <!-- HTML-specific, but in mathbook-common.xsl -->
+                <xsl:apply-templates select="." mode="number-cols-CSS-class" />
+            </xsl:attribute>
+        </xsl:if>
+        <xsl:if test="@start">
+            <xsl:attribute name="start">
+                <xsl:value-of select="@start" />
+            </xsl:attribute>
+        </xsl:if>
+        <xsl:attribute name="style">
+            <xsl:text>list-style-type: </xsl:text>
+                <xsl:apply-templates select="." mode="html-list-label" />
+            <xsl:text>;</xsl:text>
+        </xsl:attribute>
+        <xsl:apply-templates select="li">
+            <xsl:with-param name="b-original" select="$b-original" />
+        </xsl:apply-templates>
+    </xsl:element>
+</xsl:template>
 
 <!-- JDR: allow images with natural width, including in sidebyside panels -->
 <xsl:template match="image|video|jsxgraph" mode="get-width-percentage">

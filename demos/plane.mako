@@ -14,18 +14,18 @@ new Demo({
         up:       [0, 1, 0]
     },
     caption: katex.renderToString("x + y + z = 1")
-        + "<br>" + katex.renderToString("(x,\\,y,\\,z) = (t,\\,w,\\,1-t-w)"),
+        + "<br>" + katex.renderToString("(x,\\,y,\\,z) = (1-y-z,\\,y,\\,z)"),
 }, function() {
 
     // gui
     var Params = function() {
-        this.t = 0.0;
-        this.w = 0.0;
+        this.y = 0.0;
+        this.z = 0.0;
     };
     var params = new Params();
     var gui = new dat.GUI();
-    gui.add(params, 't', -10, 10).step(0.1);
-    gui.add(params, 'w', -10, 10).step(0.1);
+    gui.add(params, 'y', -10, 10).step(0.1);
+    gui.add(params, 'z', -10, 10).step(0.1);
 
     // Plane
     this.view
@@ -36,7 +36,7 @@ new Demo({
             height:   21,
             expr: function (emit, i, j) {
                 i -= 10;  j -= 10;
-                emit(i, j, 1-i-j);
+                emit(1-i-j, i, j);
             }
         })
         .surface({
@@ -58,7 +58,7 @@ new Demo({
             channels: 3,
             width:    1,
             expr:     function(emit) {
-                emit(params.t, params.w, 1 - params.t - params.w)
+                emit(1 - params.y - params.z, params.y, params.z);
             }
         })
         .point({
@@ -74,7 +74,8 @@ new Demo({
             }
         })
         .label({
-            outline: 0,
+            outline: 2,
+            background: "black",
             color:   "white",
             offset:  [0,20],
             size:    20,

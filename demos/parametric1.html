@@ -12,7 +12,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-  <title>A Plane</title>
+  <title>Parametric Form</title>
 
       <link rel="stylesheet" href="mathbox/mathbox.css">
       <link rel="stylesheet"
@@ -50,27 +50,22 @@
 
 
 new Demo({
-    camera: {
-        proxy:     true,
-        position: [-1.5, 1.5, -3],
-        lookAt:   [0, 0, 0],
-        up:       [0, 1, 0]
-    },
-    caption: katex.renderToString("x + y + z = 1")
-        + "<br>" + katex.renderToString("(x,\\,y,\\,z) = (1-y-z,\\,y,\\,z)"),
+    viewRange: [[-10, 10], [-10, 10], [-3, 3]],
+    caption: katex.renderToString("\\color{red}{2x + \\phantom{2}y + 12z = 1}")
+        + "<br>" + katex.renderToString(
+            "\\color{green}{\\phantom{2}x + 2y + \\phantom{1}9z = -1}")
+        + "<br>" + katex.renderToString(
+            "\\color{yellow}{(x,y,z) = (1-5z,\\,{-1}-2z,z)}"),
 }, function() {
-
     // gui
     var Params = function() {
-        this.y = 0.0;
         this.z = 0.0;
     };
     var params = new Params();
     var gui = new dat.GUI();
-    gui.add(params, 'y', -10, 10).step(0.1);
-    gui.add(params, 'z', -10, 10).step(0.1);
+    gui.add(params, 'z', -9/5, 11/5).step(0.1);
 
-    // Plane
+    // Plane 1
     this.view
         .matrix({
             channels: 3,
@@ -79,7 +74,7 @@ new Demo({
             height:   21,
             expr: function (emit, i, j) {
                 i -= 10;  j -= 10;
-                emit(1-i-j, i, j);
+                emit(i, j, (1-2*i-j)/12);
             }
         })
         .surface({
@@ -96,16 +91,57 @@ new Demo({
             opacity: 0.5,
             stroke:  "solid",
         })
+    // Plane 2
+        .matrix({
+            channels: 3,
+            live:     false,
+            width:    21,
+            height:   21,
+            expr: function (emit, i, j) {
+                i -= 10;  j -= 10;
+                emit(i, j, (-1-i-2*j)/9);
+            }
+        })
+        .surface({
+            color:   "rgb(0,128,0)",
+            opacity: 0.75,
+            stroke:  "solid",
+            lineX:   true,
+            lineY:   true,
+            width:   3,
+            fill:    false,
+        })
+        .surface({
+            color:   "rgb(0,128,0)",
+            opacity: 0.5,
+            stroke:  "solid",
+        })
+
+    // Intersection
+        .array({
+            channels: 3,
+            live:     false,
+            width:    2,
+            data:     [[10, 13/5, -9/5], [-10, -27/5, 11/5]],
+        })
+        .line({
+            color:   "rgb(200,200,0)",
+            opacity: 1.0,
+            stroke:  "solid",
+            width:   4,
+            zIndex:  2
+        })
+
     // Parameterized point
         .array({
             channels: 3,
             width:    1,
             expr:     function(emit) {
-                emit(1 - params.y - params.z, params.y, params.z);
+                emit(1-5*params.z, -1-2*params.z, params.z)
             }
         })
         .point({
-            color:  "rgb(0,200,0)",
+            color:  "rgb(200,200,200)",
             size:   15,
             zIndex: 2,
         })
@@ -117,16 +153,15 @@ new Demo({
             }
         })
         .label({
-            outline: 2,
-            background: "black",
+            outline: 0,
             color:   "white",
             offset:  [0,20],
             size:    20,
             zIndex:  2
         })
     ;
-
 });
+
 
 
         });

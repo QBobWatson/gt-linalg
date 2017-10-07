@@ -62,6 +62,10 @@ Copyright 2017 Georgia Institute of Technology
     \usepackage{jdr-tikz}
     \usepackage{spalign}
     \usepackage{mathjax}
+    \usepackage{geometry}
+    \geometry{paperwidth=300mm, paperheight=300mm,
+      layoutwidth=300mm, layoutheight=300mm,
+      textwidth=300mm, textheight=300mm, ignoreall}
 
     \tikzset{
         whitebg/.style={fill=white},

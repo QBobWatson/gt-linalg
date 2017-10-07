@@ -12,8 +12,711 @@ the license is included in gfdl.xml.
 <section xml:id="section-row-reduction">
   <title>Row Reduction</title>
 
-  <p>
-    Augmented matrices.  Row echelon forms.  Row reduction.
-  </p>
+  <objectives>
+    <ol>
+      <li>Solve systems of linear equations using the row reduction algorithm.</li>
+      <li>Write the solution set of a system of linear equations in parametric form.</li>
+      <li>Understand the three possibilities for the number of solutions.</li>
+      <li>Vocabulary words: <term>pivot</term>, <term>(reduced) row echelon form</term>, <term>free variable</term>, <term>parametric form</term>.</li>
+    </ol>
+  </objectives>
+
+  <subsection xml:id="subsection-echelon-forms">
+    <title>Echelon forms</title>
+
+    <p>In <xref ref="section-systems-eqns"/> we saw how to translate a system of linear equations into an augmented matrix.  We want to find an <em>algorithm</em> for "solving" such an augmented matrix.  First we must decide what it means for an augmented matrix to be "solved".</p>
+
+    <definition>
+      <statement>
+        <p>A matrix is in <term>row echelon form</term> if:
+        <ol>
+          <li>All zero rows are at the bottom.</li>
+          <li>Each leading nonzero entry of a row is to the <em>right</em> of the
+          leading entry of the row above.</li>
+          <li>Below a leading entry of a row, all entries are zero.</li>
+        </ol>
+        </p>
+      </statement>
+    </definition>
+
+    <p>Here is a picture of a matrix in row echelon form:
+    <me>
+\mat{
+\color{red}\boxed\star,  \star,  \star,  \star,  \star ;
+0  \color{red}\boxed\star,  \star,  \star,  \star ;
+0  0  0  \color{red}\boxed\star, \star ;
+0 0 0 0 0}\qquad
+\begin{aligned}
+  \star &amp;= \text{any number} \\
+  \color{red}\boxed\star &amp;= \text{any nonzero number}
+\end{aligned}
+    </me>
+    </p>
+
+    <definition>
+      <statement>
+        <p>A <term>pivot</term> is the first nonzero entry of a row of a matrix.</p>
+      </statement>
+    </definition>
+
+    <definition>
+      <statement>
+        <p>A matrix is in <term>reduced row echelon form</term> if it is in row echelon form, and in addition:
+        <ol start="4">
+          <li>The pivot in each nonzero row is equal to <m>1</m>.</li>
+          <li>Each pivot is the only nonzero entry in its column.</li>
+        </ol>
+        </p>
+      </statement>
+    </definition>
+
+    <p>Here is a picture of a matrix in reduced row echelon form:
+    <me>
+\mat{
+\color{red}1   0   \star,   0   \star ;
+0   \color{red}1   \star , 0   \star ;
+0   0   0   \color{red}1   \star ;
+0 0 0 0 0
+} \qquad
+\begin{aligned}
+  \star &amp;= \text{any number} \\
+  \color{red}1 &amp;= \text{pivot}
+\end{aligned}
+    </me>
+    </p>
+
+    <example>
+      <p>The following matrices are in reduced row echelon form:
+      <me>\mat{0 0 0; 0 0 0} \qquad \mat{0 1 0 0}\qquad\mat{0 1 8 0}\qquad
+      \amat{1 17 0; 0 0 1}.</me>
+      The following matrix is in row echelon form but not reduced row echelon form:
+      <me>\mat{2 0; 0 1}.</me>
+      The following matrix is not in echelon form:
+      <me>\vec{0 1 0 0}.</me>
+      </p>
+    </example>
+
+    <note>
+      <p>When deciding if an augmented matrix is in (reduced) row echelon form, there is nothing special about the augmented column(s).  Just ignore the vertical line.</p>
+    </note>
+
+    <p>If an augmented matrix is in reduced row echelon form, the corresponding linear system is vied as <em>solved</em>.  We will see below why this is the case, and we will show that any matrix can be put into reduced row echelon form using only the elementary row operations.</p>
+
+  </subsection>
+
+  <subsection>
+    <title>The row reduction algorithm</title>
+
+    <theorem>
+      <statement>
+        <p>Every matrix is row equivalent to one and only one matrix in reduced row echelon form.</p>
+      </statement>
+    </theorem>
+
+    <p>We will give an algorithm, called <term>row reduction</term> or <term>Gaussian elimination</term>, which demonstrates that every matrix is row equivalent to <em>at least one</em> matrix in reduced row echelon form.</p>
+
+    <remark>
+      <p>The uniqueness statement is interesting<mdash/>it means that, nomatter <em>how</em> you row reduce, you <em>always</em> get the same matrix in reduced row echelon form.</p>
+    </remark>
+
+    <p>This assumes, of course, that you only do the three legal row operations, and you don't make any arithmetic errors.</p>
+
+    <p>We will not prove uniqueness, but maybe you can!</p>
+
+    <algorithm>
+      <title>Row Reduction</title>
+      <statement>
+        <p>
+          <ul label="">
+            <li><alert>Step 1a:</alert>
+            Swap the 1st row with a lower one so a leftmost nonzero entry is
+  in 1st row (if necessary).</li>
+            <li><alert>Step 1b:</alert>
+            Scale 1st row so that its leading entry is equal to 1.</li>
+            <li><alert>Step 1c:</alert>
+            Use row replacement so all entries below this 1 are 0.</li>
+            <li><alert>Step 2a:</alert>
+            Swap the 2nd row with a lower one so that the leftmost nonzero entry is in 2nd row.</li>
+            <li><alert>Step 2b:</alert>
+            Scale 2nd row so that its leading entry is equal to 1.</li>
+            <li><alert>Step 2c:</alert>
+            Use row replacement so all entries below this 1 are 0.</li>
+            <li><alert>Step 3a:</alert>
+            Swap the 3rd row with a lower one so that the leftmost nonzero entry is in 3rd row.</li>
+            <li>etc.</li>
+            <li><alert>Last Step:</alert>
+            Use row replacement to clear all entries above the pivots, starting with the last pivot.</li>
+          </ul>
+        </p>
+      </statement>
+    </algorithm>
+
+    <example xml:id="row-reduction-eg1">
+      <p>Let's row reduce this matrix:
+      <me>\amat{
+      0   -7   -4   2 ;
+      2   4   6   12 ;
+      3   1   -1   -2
+      }.</me>
+      </p>
+      <sidebyside>
+        <image>
+          <latex-image-code>
+            <![CDATA[
+\begin{tikzpicture}
+  \tikzset{
+    my matrix/.style={
+      matrix, math matrix, every node/.append style={anchor=east, minimum width=1.5em}},
+    blue box/.style={
+      draw,thick,rounded corners,blue!50,fit=#1,inner xsep=0pt}
+    };
+
+  \path node[my matrix] (m1) {
+    0 \& -7 \& -4 \&[.2em] 2  \\
+    2 \&  4 \&  6 \& 12 \\
+    3 \&  1 \& -1 \& -2 \\
+  } (m1.east) ++(3.5cm,0) node[my matrix, anchor=west] (m2) {
+    |[red]| 2 \&  4 \&  6 \&[.2em] 12 \\
+    0 \& -7 \& -4 \& 2  \\
+    3 \&  1 \& -1 \& -2 \\
+  } ++(0,-2.4cm) node[my matrix, anchor=west] (m3) {
+    |[red]| 1 \&  2 \&  3 \&[.2em] 6 \\
+    0 \& -7 \& -4 \& 2  \\
+    3 \&  1 \& -1 \& -2 \\
+  } ++(0,-2.9cm) node[my matrix, anchor=west] (m4) {
+    1 \&  2 \&  3 \&[.2em] 6 \\
+    0 \& -7 \& -4 \& 2  \\
+    |[red]|0 \&  -5 \& -10 \&[.2em] -20 \\
+  } ++(0,-2cm) node[my matrix, anchor=west,
+        row 1/.style={color=light gray},
+        column 1/.style={color=light gray}] (m5) {
+    1 \&  2 \&  3 \&[.2em] 6 \\
+    0 \&  -5 \& -10 \& -20 \\
+    0 \& -7 \& -4 \& 2  \\
+  } ++(0,-2.8cm) node[my matrix, anchor=west,
+        row 1/.style={color=light gray},
+        column 1/.style={color=light gray}] (m6) {
+    1 \&  2 \&  3 \&[.2em] 6 \\
+    0 \& |[red]| 1 \&  2 \& 4 \\
+    0 \& -7 \& -4 \& 2  \\
+  } ++(0,-2.8cm) node[my matrix, anchor=west,
+        row 1/.style={color=light gray},
+        row 2/.style={color=light gray},
+        column 1/.style={color=light gray},
+        column 2/.style={color=light gray}] (m7) {
+    1 \&  2 \&  3 \&[.2em] 6 \\
+    0 \& 1 \&  2 \& 4 \\
+    0 \& 0 \& 10 \& 30  \\
+  } ++(0,-2.8cm) node[my matrix, anchor=west] (m8) {
+    1 \&  2 \&  3 \&[.2em] 6 \\
+    0 \& 1 \&  2 \& 4 \\
+    0 \& 0 \& |[red]|1 \& 3  \\
+  } ++(0,-2.8cm) node[my matrix, anchor=west] (m9) {
+    1 \&  2 \&  3 \&[.2em] 6 \\
+    0 \& 1 \& |[red]|0 \& -2 \\
+    0 \& 0 \& 1 \& 3  \\
+  } ++(0,-2cm) node[my matrix, anchor=west] (m10) {
+    1 \&  2 \& |[red]|0 \&[.2em] -3 \\
+    0 \& 1 \& 0 \& -2 \\
+    0 \& 0 \& 1 \& 3  \\
+  } ++(0,-2.8cm) node[my matrix, anchor=west] (m11) {
+    1 \&  |[red]|0 \& 0 \&[.2em] 1 \\
+    0 \& 1 \& 0 \& -2 \\
+    0 \& 0 \& 1 \& 3  \\
+  }
+  ;
+
+  \def\rowop #1 $#2${
+    \node[left=1em of #1.west, anchor=south east] (op#1) {$#2$};
+    \draw[->, decorate, decoration={snake, amplitude=.4mm,%
+          segment length=1mm, post length=1mm}] (op#1.south west) -- (op#1.south east)
+  }
+
+  \rowop m2  $R_1 \longleftrightarrow R_2$;
+  \rowop m3  $R_1 = R_1 \div 2$;
+  \rowop m4  $R_3 = R_3 - 3R_1$;
+  \rowop m5  $R_2 \longleftrightarrow R_3$;
+  \rowop m6  $R_2 = R_2 \div -5$;
+  \rowop m7  $R_3 = R_3 + 7R_2$;
+  \rowop m8  $R_3 = R_3 \div 10$;
+  \rowop m9  $R_2 = R_2 - 2R_3$;
+  \rowop m10 $R_1 = R_1 - 3R_3$;
+  \rowop m11 $R_1 = R_1 - 2R_2$;
+
+  \foreach \i in {1,...,11} {
+    \draw ([xshift=0.5em]m\i-1-3.north east-|m\i-3-3.south east) -|
+          ([xshift=0.5em]m\i-3-3.south east);
+  }
+
+  \node [blue box=(m1-1-1)] (bm1-1-1) {};
+  \node [blue!50, below=1.5mm of m1-3-1, anchor=north west, xshift=-1.3cm, align=left]
+    (expl1) {Step 1a: Row swap\\to make this nonzero.};
+  \draw[->, blue!50, rounded corners]
+    let \p1=($(expl1.north west) + (5mm,0)$) in
+    (\p1) |- (bm1-1-1.west);
+
+  \node [blue box=(m2-1-1)] (bm2-1-1) {};
+  \node [blue!50, below=1.5mm of m2-3-1, anchor=north west, xshift=-1.3cm] (expl2)
+    {Step 1b: Scale to make this $1$.};
+  \draw[->, blue!50, rounded corners]
+    let \p1=($(expl2.north west) + (5mm,0)$) in
+      (\p1) |- (bm2-1-1.west);
+
+  \node [blue box=(m3-3-1)] (bm3-3-1) {};
+  \node [blue!50, below=1.5mm of m3-3-1, anchor=north west, xshift=-1.3cm, align=left]
+    (expl3) {Step 1c: Subtract a multiple of\\
+      ~the first row to clear this.};
+  \draw[->, blue!50, rounded corners]
+    let \p1=($(expl3.north west) + (5mm,0)$) in
+      (\p1) |- (bm3-3-1.west);
+
+  \node [blue!50, left=4cm of m4.west, anchor=east, align=left]
+    {Optional: swap rows $2$\\
+     and $3$ to make Step 2b\\
+     easier next.};
+
+  \node [blue box=(m5-2-2)] (bm5-2-2) {};
+  \node [blue!50, below=1.5mm of m5-3-1, anchor=north west, xshift=-1.3cm, align=left]
+    (expl4) {Step 2a: This is already nonzero.\\
+             Step 2b: Scale to make this $1$.};
+  \draw[->, blue!50, rounded corners]
+    let \p1=($(expl4.north west) + (5mm,0)$) in
+      (\p1) |- (bm5-2-2.west);
+
+  \node [blue!50, left=4cm of m6.west, anchor=east, align=left]
+    {Note how Step 2b\\doesn't create fractions.};
+
+  \node [blue box=(m6-3-2)] (bm6-3-2) {};
+  \node [blue!50, below=1.5mm of m6-3-1, anchor=north west, xshift=-1.3cm, align=left]
+    (expl5)
+    {Step 2c: Add $7$ times\\
+      ~the second row to clear this.};
+  \draw[->, blue!50, rounded corners]
+    let \p1=($(expl5.north west) + (5mm,0)$) in
+      (\p1) |- (bm6-3-2.west);
+
+  \node [blue box=(m7-3-3)] (bm7-3-3) {};
+  \node [blue!50, below=1.5mm of m7-3-1, anchor=north west, xshift=-1.3cm, align=left]
+    (expl6) {Step 3a: This is already nonzero.\\
+             Step 3b: Scale to make this $1$.};
+  \draw[->, blue!50, rounded corners]
+    let \p1=($(expl6.north west) + (5mm,0)$) in
+      (\p1) |- (bm7-3-3.west);
+
+  \node [blue box=(m8-1-3) (m8-2-3)] (bm8-3) {};
+  \node [blue!50, below=1.5mm of m8-3-1, anchor=north west, xshift=-1.3cm, align=left]
+    (expl7) {Last step: add multiples of\\
+             the third row to clear these.};
+  \draw[->, blue!50, rounded corners]
+    let \p1=($(expl7.north west) + (5mm,0)$) in
+      (\p1) |- (bm8-3.west);
+
+  \node [blue box=(m10-1-2)] (bm10-1-2) {};
+  \node [blue!50, below=1.5mm of m10-3-1, anchor=north west, xshift=-1.3cm, align=left]
+    (expl8) {Last step: add $-2$ times\\
+             the third row to clear this.};
+  \draw[->, blue!50, rounded corners]
+    let \p1=($(expl8.north west) + (5mm,0)$) in
+      (\p1) |- (bm10-1-2.west);
+
+\end{tikzpicture}
+            ]]>
+          </latex-image-code>
+        </image>
+      </sidebyside>
+      <p>The reduced row echelon form of the matrix is
+      <me>\amat{1 0 0 1; 0 1 0 -2; 0 0 1 3}
+      \quad\xrightarrow{\text{translates to}}\quad
+      \syseq{x \+ \. \+ \. = 1;
+      \. \+ y \+ \. = -2;
+      \. \+ \. \+ z = 3\rlap.}
+      </me>
+      The reduced row echelon form of the matrix tells us that the only solution is <m>(x,y,z) = (1,-2,3).</m>
+      </p>
+      <figure>
+        <caption>Animated slideshow of the row reduction in <xref ref="row-reduction-eg1"/>.</caption>
+        <mathbox source="demos/rowred2.html" height="500px"/>
+      </figure>
+    </example>
+
+    <p>Here is the row reduction algorithm, summarized in pictures.</p>
+
+    <sidebyside>
+      <image>
+        <latex-image-code>
+          <![CDATA[
+\begin{tikzpicture}
+  \tikzset{
+    my matrix/.style={
+      matrix, math matrix, anchor=west, row sep=.5em,
+          every node/.append style={minimum width=1em, minimum height=.666em}},
+    blue box/.style={
+      draw,thick,rounded corners,blue!50,fit=#1,inner xsep=1pt}
+  };
+
+  \path node[my matrix] (m1) {
+    \star \& \star \& \star \& \star \\
+    \star \& \star \& \star \& \star \\
+    \star \& \star \& \star \& \star \\
+    \star \& \star \& \star \& \star \\
+  } (m1.west) ++(4.5cm,0) node[my matrix] (m2) {
+    1 \& \star \& \star \& \star \\
+    \star \& \star \& \star \& \star \\
+    \star \& \star \& \star \& \star \\
+    \star \& \star \& \star \& \star \\
+  } (m2.west) ++(4.5cm,0) node[my matrix] (m3) {
+    1 \& \star \& \star \& \star \\
+    0 \& 1 \& \star \& \star \\
+    0 \& \star \& \star \& \star \\
+    0 \& \star \& \star \& \star \\
+  } (m1.west) ++(0,-3.5cm) node[my matrix] (m4) {
+    1 \& \star \& \star \& \star \\
+    0 \& 1 \& \star \& \star \\
+    0 \& \star \& \star \& \star \\
+    0 \& \star \& \star \& \star \\
+  } (m2.west) ++(0,-3.5cm) node[my matrix] (m5) {
+    1 \& \star \& \star \& \star \\
+    0 \& 1 \& \star \& \star \\
+    0 \& 0 \& 0 \& \star \\
+    0 \& 0 \& 0 \& \star \\
+  } (m3.west) ++(0,-3.5cm) node[my matrix] (m6) {
+    1 \& \star \& \star \& \star \\
+    0 \& 1 \& \star \& \star \\
+    0 \& 0 \& 0 \& \star \\
+    0 \& 0 \& 0 \& \star \\
+  } (m4.west) ++(0,-3.5cm) node[my matrix] (m7) {
+    1 \& \star \& \star \& \star \\
+    0 \& 1 \& \star \& \star \\
+    0 \& 0 \& 0 \& 1 \\
+    0 \& 0 \& 0 \& \star \\
+  } (m5.west) ++(0,-3.5cm) node[my matrix] (m8) {
+    1 \& \star \& \star \& \star \\
+    0 \& 1 \& \star \& \star \\
+    0 \& 0 \& 0 \& 1 \\
+    0 \& 0 \& 0 \& 0 \\
+  } (m6.west) ++(0,-3.5cm) node[my matrix] (m9) {
+    1 \& \star \& \star \& \star \\
+    0 \& 1 \& \star \& \star \\
+    0 \& 0 \& 0 \& 1 \\
+    0 \& 0 \& 0 \& 0 \\
+  } (m7.west) ++(0,-3.5cm) node[my matrix] (m10) {
+    1 \& \star \& \star \& 0 \\
+    0 \& 1 \& \star \& 0 \\
+    0 \& 0 \& 0 \& 1 \\
+    0 \& 0 \& 0 \& 0 \\
+  } (m8.west) ++(0,-3.5cm) node[my matrix] (m11) {
+    1 \& 0 \& \star \& 0 \\
+    0 \& 1 \& \star \& 0 \\
+    0 \& 0 \& 0 \& 1 \\
+    0 \& 0 \& 0 \& 0 \\
+  }
+  ;
+
+  \node [blue box=(m1-1-1)] (bm1-1-1) {};
+  \node [blue!50, above=1mm of m1-1-1, anchor=south west, xshift=-1cm, align=left]
+    (expl1) {Get a $1$ here};
+
+  \node [blue box=(m2-1-1)] (bm2-1-1) {};
+  \node [blue!50, above=1mm of m2-1-1, anchor=south west, xshift=-5mm, align=left]
+    (expl2) {Clear down};
+  \draw[->, blue!50, very thick, opacity=.5] (bm2-1-1.south) -- (m2-4-1.south);
+
+  \node [blue box=(m3-2-2)] (bm3-2-2) {};
+  \node [blue!50, above=1mm of m3-1-2, anchor=south, xshift=-.65mm, align=center]
+    (expl3) {Get a $1$ here};
+  \draw[->, blue!50, rounded corners=.5mm]
+      (expl3.215) |- (bm3-2-2.west);
+
+  \node [blue box=(m4-2-2)] (bm4-2-2) {};
+  \node [blue!50, above=1mm of m4-1-1, anchor=south west, xshift=-5mm, align=left]
+    (expl4) {Clear down};
+  \draw[->, blue!50, very thick, opacity=.5] (bm4-2-2.south) -- (m4-4-2.south);
+
+  \node [blue box=(m5-3-3) (m5-4-3)] (bm5-2) {};
+  \node [blue!50, above=1mm of m5-1-3, anchor=south, xshift=-.55mm, align=center]
+    (expl6) {(maybe these are already zero)};
+  \draw[->, blue!50, rounded corners=.5mm]
+      (expl6.215) |- (bm5-2.west);
+
+  \node [blue box=(m6-3-4)] (bm6-3-4) {};
+  \node [blue!50, above=1mm of m6-1-4, anchor=south, xshift=-5mm, align=center]
+    (expl7) {Get a $1$ here};
+  \draw[->, blue!50, rounded corners=.5mm]
+      (expl7.215) |- (bm6-3-4.west);
+
+  \node [blue box=(m7-3-4)] (bm7-3-4) {};
+  \node [blue!50, above=1mm of m7-1-4, anchor=south, xshift=-5mm, align=left]
+    (expl8) {Clear down};
+  \draw[->, blue!50, very thick, opacity=.5] (bm7-3-4.south) -- (m7-4-4.south);
+
+  \node [blue!50, above=1mm of m8-1-2.north east, anchor=south, align=center, xshift=1mm]
+    (expl9) {Matrix is in REF};
+
+  \node [blue box=(m9-3-4)] (bm9-3-4) {};
+  \node [blue!50, above=1mm of m9-1-4, anchor=south, xshift=-5mm, align=left]
+    (expl10) {Clear up};
+  \draw[->, blue!50, very thick, opacity=.5] (bm9-3-4.north) -- (m9-1-4.north);
+
+  \node [blue box=(m10-2-2)] (bm10-2-2) {};
+  \node [blue!50, above=1mm of m10-1-2, anchor=south, xshift=-2mm, align=left]
+    (expl11) {Clear up};
+  \draw[->, blue!50, very thick, opacity=.5] (bm10-2-2.north) -- (m10-1-2.north);
+
+  \node [blue!50, above=1mm of m11-1-2.north east, anchor=south, align=center, xshift=1mm]
+    (expl9) {Matrix is in RREF};
+
+
+  \node [blue!50, below=2cm of m9-4-2.south east, anchor=north, align=center, xshift=1mm]
+    (expl9) {\large Profit?};
+
+\end{tikzpicture}
+          ]]>
+        </latex-image-code>
+      </image>
+    </sidebyside>
+
+    <example xml:id="row-reduction-eg-inconsistent">
+      <p>Let's solve the linear system
+      <me>
+        \syseq{2x + 10y = -1; 3x + 15y = 2}
+        \def\r{\color{red}}
+      </me>
+      using row reduction.
+      <md>
+        <mrow>
+          \amat{ 2 {10} {-1} ;3 {15} 2}
+          \quad\xrightarrow{R_1=R_1\div 2}\quad
+          &amp;\amat{\r1 5 {-\frac 12}; 3 {15} 2}
+          &amp;&amp;\color{blue}\text{(Step 1b)}
+        </mrow>
+        <mrow>
+          {}\quad\xrightarrow{R_2=R_2-3R_1}\quad
+          &amp;\amat{1 5 {-\frac 12}; \r0 0 \frac72}
+          &amp;&amp;\color{blue}\text{(Step 1c)}
+        </mrow>
+        <mrow>
+          {}\quad\xrightarrow{R_2=R_2\times\frac 27}\quad
+          &amp;\amat{1 5 {-\frac 12}; 0 0 \r1}
+          &amp;&amp;\color{blue}\text{(Step 2b)}
+        </mrow>
+        <mrow>
+          {}\quad\xrightarrow{R_1=R_1+\frac 12R_2}\quad
+          &amp;\amat{1 5 \r0; 0 0 1}
+          &amp;&amp;\color{blue}\text{(Step 2c)}
+        </mrow>
+      </md>
+      This row reduced matrix corresponds to the <em>inconsistent</em> system
+      <me>
+        \syseq{x + 5y = 0; \. \+ 0 = 1\rlap.}
+      </me>
+      </p>
+
+    </example>
+
+    <observation>
+      <p>An augmented matrix corresponds to an inconsistent system of equations if and only if the last column (i.e., the augmented column) is a <em>pivot column</em>.</p>
+    </observation>
+
+    <p>In other words, the reduced matrix looks like this:
+    <me>\amat{
+    1  0  \star,  \star,  \color{red}0 ;
+    0  1  \star,  \star,  \color{red}0 ;
+    0  0  0  0  \color{red}1
+    }
+    </me>
+    </p>
+
+  </subsection>
+
+  <subsection>
+    <title>Free variables</title>
+
+    <p>There is one more possibility for the row reduced form of a matrix.</p>
+
+    <example xml:id="row-reduction-eg-free">
+      <p>Let's solve the linear system
+      <me>
+        \syseq{2x + y + 12z = 1; x + 2y + 9z = -1}
+        \def\r{\color{red}}
+      </me>
+      using row reduction.
+      <md>
+        <mrow>
+          \amat{2 1 12 1; 1 2 9 -1}
+          \quad\xrightarrow{R_1 \longleftrightarrow R_2}\quad
+          &amp;\amat{\r1 2 9 -1; 2 1 12 1}
+          &amp;&amp;\color{blue}\text{(Optional)}
+        </mrow>
+        <mrow>
+          {}\quad\xrightarrow{R_2=R_2-2R_1}\quad
+          &amp;\amat{1 2 9 -1; \r0 -3 -6 3}
+          &amp;&amp;\color{blue}\text{(Step 1c)}
+        </mrow>
+        <mrow>
+          {}\quad\xrightarrow{R_2=R_2\div -3}\quad
+          &amp;\amat{1 2 9 -1; 0 \r1 2 -1}
+          &amp;&amp;\color{blue}\text{(Step 2b)}
+        </mrow>
+        <mrow>
+          {}\quad\xrightarrow{R_1=R_1-2R_2}\quad
+          &amp;\amat{0 \r0 5 1; 0 1 2 -1}
+          &amp;&amp;\color{blue}\text{(Step 2c)}
+        </mrow>
+      </md>
+      This row reduced matrix corresponds to the linear system
+      <me>
+        \syseq{x + 5z = 1; y + 2z = -1\rlap.}
+      </me>
+      In what sense is the system solved?  We rewrite as
+      <me>
+        \syseq{x = 1 - 5z; y = -1 - 2z\rlap.}
+      </me>
+      For any value of <m>z</m>, there is exactly one value of <m>x</m> and <m>y</m> that make the equations true.  But we are free to choose <em>any</em> value of <m>z</m>.
+      </p>
+
+      <p>We have found all solutions: it is the set of all values <m>x,y,z</m>, where
+      <me>
+        \syseq{x = 1 - 5z; y = -1 - 2z} \qquad \text{$z$ any real number.}
+      </me>
+      For instance, setting <m>z=0</m> gives the solution <m>(x,y,z)=(1,-1,0)</m>, and setting <m>z=1</m> gives the solution <m>(x,y,z)=(-4,-3,1)</m>.
+      </p>
+      <figure>
+        <caption>A picture of the solution set (the yellow line) of the linear system in <xref ref="row-reduction-eg-free"/>.  There is a unique solution for every value of <m>z</m>; move the slider to change <m>z</m>.</caption>
+        <mathbox source="demos/parametric1.html" height="350px"/>
+      </figure>
+    </example>
+
+    <definition>
+      <statement>
+        <p>Consider a <em>consistent</em> system of equations in the variables <m>x_1,x_2,\ldots,x_n</m>.  Let <m>A</m> be a row echelon form of the augmented matrix for this system.</p>
+        <p>We say that <m>x_i</m> is a <term>free variable</term> if its corresponding column in <m>A</m> does <em>not</em> contain a pivot.</p>
+      </statement>
+    </definition>
+
+    <p>In <xref ref="row-reduction-eg-free"/>, the variable <m>\color{red}z</m> was free because the reduced row echelon form matrix was
+    <me>\def\r{\color{red}}
+      \amat{0 0 \r5 1; 0 1 \r2 -1}.
+    </me>
+    In the matrix
+    <me>\amat{
+    1  \color{seq-red}\star,  0  \color{seq-blue}\star,  \star ;
+    0  \color{seq-red}0   1  \color{seq-blue}\star,  \star
+    },
+    </me>
+    the free variables are <m>\color{seq-red}x_2</m> and <m>\color{seq-blue}x_4</m>.  (The augmented column is not free because it does not correspond to a variable.)
+    </p>
+
+    <definition>
+      <statement>
+        <p>The <term>parametric form</term> for the solution set of a consistent system of linear equations is obtained as follows.
+        <ol>
+          <li>Write the system as an augmented matrix.</li>
+          <li>Row reduce to reduced row echelon form.</li>
+          <li>Write the corresponding (solved) system of linear equations.</li>
+          <li><em>Move all free variables to the right hand side of the equations.</em></li>
+        </ol>
+        </p>
+      </statement>
+    </definition>
+
+    <p>Moving the free variables to the right hand side of the equations amounts to solving for the non-free variables (the ones that come from columns with pivots) in terms of the free variables.  One can think of the free variables as being <em>independent</em> variables, and the non-free variables being <em>dependent</em>.
+    </p>
+
+    <remark>
+      <p>The solution set of the system of linear equations
+      <me>
+        \syseq{2x + y + 12z = 1; x + 2y + 9z = -1}
+      </me>
+      is a line in <m>\R^3</m>, as we saw in <xref ref="row-reduction-eg-free"/>.  These equations are called the <term>implicit equations</term> for the line: the line is defined <em>implicitly</em> as the simultaneous solutions to those two equations.
+      </p>
+      <p>The parametric form
+      <me>
+        (x,\,y,\,z) = (1-5z,\,-1-2z,\,z) \qquad \text{$z$ any real number}
+      </me>
+      is called a <term>parameterized equation</term> for the same line.  It is an expression that produces all points of the line in terms of one parameter, <m>z</m>.
+      </p>
+      <p>One should think of a system of equations as being an implicit equation for its solution set, and of the parametric form as being the parameterized equation for the same set.  The parameteric form is much more explicit: it gives a concrete recipe for producing <em>all</em> solutions.
+      </p>
+    </remark>
+
+    <important>
+      <p>
+        <ol>
+          <li>You can chose <em>any value</em> for the free variables in a (consistent) linear system.</li>
+          <li>Free variables come from the <em>columns without pivots</em> in a matrix in row echelon form.</li>
+        </ol>
+      </p>
+    </important>
+
+    <example>
+      <p>
+        Suppose that the reduced row echelon form of the matrix for a linear system in four variables <m>x_1,x_2,x_3,x_4</m> is
+        <me>\amat{
+        1 \color{seq-red}0 0 \color{seq-blue}3 2 ;
+        0 \color{seq-red}0 1 \color{seq-blue}4 -1
+        }.</me>
+        The free variables are <m>\color{seq-red}x_2</m> and <m>\color{seq-blue}x_4</m>: they are the ones whose columns are <em>not</em> pivot columns.
+      </p>
+
+      <p>This translates into the system of equations
+      <me>
+        \syseq{x_1 \+ \. \+ \. + 3x_4 = 2;
+        \.  \+ \. \+ x_3 + 4x_4 = -1}
+        \quad\xrightarrow{\text{parametric form}}\quad
+        \syseq{x_1 = 2 - 3x_4; x_3 = -1 - 4x_4\rlap.}
+      </me>
+      What happened to <m>x_2</m>?  It is a free variable, but no other variable depends on it.  The general solution to the system is
+      <me>(x_1,\,x_2,\,x_3,\,x_4) = (2-3x_4,\,x_2,\,-1-4x_4,\,x_4),</me>
+      for any values of <m>x_2</m> and <m>x_4</m>.  For instance, <m>(2,0,-1,0)</m> is a solution (with <m>x_2=x_4=0</m>), and <m>(5,1,3,-1)</m> is a solution (with <m>x_2=1, x_4=-1</m>).
+      </p>
+    </example>
+
+    <example>
+      <p>The system of one linear equation
+      <me>x + y + z = 1</me>
+      comes from the matrix
+      <me>\amat{1 1 1 1},</me>
+      which is already in reduced row echelon form.  The free variables are <m>y</m> and <m>z</m>.  The parametric form for the general solution is
+      <me>(x,\,y,\,z) = (1 - y - z,\,y,\,z)</me>
+      for any values of <m>y</m> and <m>z</m>.  This is the parametric equation for a plane in <m>\R^3</m>.
+      </p>
+      <figure>
+        <caption>A plane described by two parameters <m>y</m> and <m>z</m>.  Any point on the plane is obtained by substituting suitable values for <m>y</m> and <m>z</m>.</caption>
+        <mathbox source="demos/plane.html" height="300px"/>
+      </figure>
+    </example>
+
+  </subsection>
+
+  <subsection>
+    <title>Number of solutions</title>
+
+    <p>There are <em>three possibilities</em> for the reduced row echelon form of the augmented matrix of a linear system.
+    <ol>
+      <li><alert>The last column is a pivot column.</alert>
+      In this case, the system is <em>inconsistent</em>.  There are zero solutions, i.e., the solution set is empty.  For example,
+      <me>
+        \def\r{\color{red}}
+        \amat{1 0 \r0; 0 1 \r0; 0 0 \r1}
+      </me>
+      </li>
+      <li><alert>Every column except the last column is a pivot column.</alert>
+      In this case, the system has a <em>unique</em> solution.  For example,
+      <me>
+        \amat{1 0 0 a; 0 1 0 b; 0 0 1 c}
+      </me>
+      tells us that the unique solution is <m>(x,y,z)=(a,b,c)</m>.
+      </li>
+      <li><alert>The last column is not a pivot column, and some other column is not a pivot column either.</alert>
+      In this case, the system has <em>infinitely many</em> solutions, corresponding to the infinitely many possible values of the free variable(s).  For example, in the system
+      <me>
+        \amat{1 \color{seq-red}-2 0  \color{seq-blue}3 1;
+        0 \color{seq-red}0, 0  \color{seq-blue}4 -1},
+      </me>
+      any values for <m>\color{seq-red}x_2</m> and <m>\color{seq-blue}x_4</m> yield a solution to the system of equations.
+      </li>
+    </ol>
+    </p>
+  </subsection>
 
 </section>
