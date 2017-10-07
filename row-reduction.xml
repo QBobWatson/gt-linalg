@@ -100,7 +100,7 @@ the license is included in gfdl.xml.
       <p>When deciding if an augmented matrix is in (reduced) row echelon form, there is nothing special about the augmented column(s).  Just ignore the vertical line.</p>
     </note>
 
-    <p>If an augmented matrix is in reduced row echelon form, the corresponding linear system is vied as <em>solved</em>.  We will see below why this is the case, and we will show that any matrix can be put into reduced row echelon form using only the elementary row operations.</p>
+    <p>If an augmented matrix is in reduced row echelon form, the corresponding linear system is viwed as <em>solved</em>.  We will see below why this is the case, and we will show that any matrix can be put into reduced row echelon form using only the elementary row operations.</p>
 
   </subsection>
 
@@ -116,7 +116,7 @@ the license is included in gfdl.xml.
     <p>We will give an algorithm, called <term>row reduction</term> or <term>Gaussian elimination</term>, which demonstrates that every matrix is row equivalent to <em>at least one</em> matrix in reduced row echelon form.</p>
 
     <remark>
-      <p>The uniqueness statement is interesting<mdash/>it means that, nomatter <em>how</em> you row reduce, you <em>always</em> get the same matrix in reduced row echelon form.</p>
+      <p>The uniqueness statement is interesting<mdash/>it means that, no matter <em>how</em> you row reduce, you <em>always</em> get the same matrix in reduced row echelon form.</p>
     </remark>
 
     <p>This assumes, of course, that you only do the three legal row operations, and you don't make any arithmetic errors.</p>
