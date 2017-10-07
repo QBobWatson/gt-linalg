@@ -12,8 +12,204 @@ the license is included in gfdl.xml.
 <section xml:id="section-parametric-form">
   <title>Parametric Form</title>
 
-  <p>
-    Parametric form of the solution set.  Parameterized subsets of <m>\R^n</m>.  Number of solutions to a system of equations.
-  </p>
+  <objectives>
+    <ol>
+      <li>Write the solution set of a system of linear equations in parametric form.</li>
+      <li>Understand the three possibilities for the number of solutions.</li>
+      <li>Vocabulary words: <term>free variable</term>, <term>parametric form</term>.</li>
+    </ol>
+  </objectives>
+
+  <subsection>
+    <title>Free variables</title>
+
+    <p>There is one possibility for the row reduced form of a matrix that we did not see in <xref ref="section-row-reduction"/>.</p>
+
+    <example xml:id="row-reduction-eg-free">
+      <p>Let's solve the linear system
+      <me>
+        \syseq{2x + y + 12z = 1; x + 2y + 9z = -1}
+        \def\r{\color{red}}
+      </me>
+      using row reduction.
+      <md>
+        <mrow>
+          \amat{2 1 12 1; 1 2 9 -1}
+          \quad\xrightarrow{R_1 \longleftrightarrow R_2}\quad
+          &amp;\amat{\r1 2 9 -1; 2 1 12 1}
+          &amp;&amp;\color{blue}\text{(Optional)}
+        </mrow>
+        <mrow>
+          {}\quad\xrightarrow{R_2=R_2-2R_1}\quad
+          &amp;\amat{1 2 9 -1; \r0 -3 -6 3}
+          &amp;&amp;\color{blue}\text{(Step 1c)}
+        </mrow>
+        <mrow>
+          {}\quad\xrightarrow{R_2=R_2\div -3}\quad
+          &amp;\amat{1 2 9 -1; 0 \r1 2 -1}
+          &amp;&amp;\color{blue}\text{(Step 2b)}
+        </mrow>
+        <mrow>
+          {}\quad\xrightarrow{R_1=R_1-2R_2}\quad
+          &amp;\amat{1 \r0 5 1; 0 1 2 -1}
+          &amp;&amp;\color{blue}\text{(Step 2c)}
+        </mrow>
+      </md>
+      This row reduced matrix corresponds to the linear system
+      <me>
+        \syseq{x + 5z = 1; y + 2z = -1\rlap.}
+      </me>
+      In what sense is the system solved?  We rewrite as
+      <me>
+        \syseq{x = 1 - 5z; y = -1 - 2z\rlap.}
+      </me>
+      For any value of <m>z</m>, there is exactly one value of <m>x</m> and <m>y</m> that make the equations true.  But we are free to choose <em>any</em> value of <m>z</m>.
+      </p>
+
+      <p>We have found all solutions: it is the set of all values <m>x,y,z</m>, where
+      <me>
+        \syseq{x = 1 - 5z; y = -1 - 2z} \qquad \text{$z$ any real number.}
+      </me>
+      For instance, setting <m>z=0</m> gives the solution <m>(x,y,z)=(1,-1,0)</m>, and setting <m>z=1</m> gives the solution <m>(x,y,z)=(-4,-3,1)</m>.
+      </p>
+      <figure>
+        <caption>A picture of the solution set (the yellow line) of the linear system in <xref ref="row-reduction-eg-free"/>.  There is a unique solution for every value of <m>z</m>; move the slider to change <m>z</m>.</caption>
+        <mathbox source="demos/parametric1.html" height="350px"/>
+      </figure>
+    </example>
+
+    <definition>
+      <statement>
+        <p>Consider a <em>consistent</em> system of equations in the variables <m>x_1,x_2,\ldots,x_n</m>.  Let <m>A</m> be a row echelon form of the augmented matrix for this system.</p>
+        <p>We say that <m>x_i</m> is a <term>free variable</term> if its corresponding column in <m>A</m> does <em>not</em> contain a pivot.</p>
+      </statement>
+    </definition>
+
+    <p>In <xref ref="row-reduction-eg-free"/>, the variable <m>\color{red}z</m> was free because the reduced row echelon form matrix was
+    <me>\def\r{\color{red}}
+      \amat{1 0 \r5 1; 0 1 \r2 -1}.
+    </me>
+    In the matrix
+    <me>\amat{
+    1  \color{seq-red}\star,  0  \color{seq-blue}\star,  \star ;
+    0  \color{seq-red}0   1  \color{seq-blue}\star,  \star
+    },
+    </me>
+    the free variables are <m>\color{seq-red}x_2</m> and <m>\color{seq-blue}x_4</m>.  (The augmented column is not free because it does not correspond to a variable.)
+    </p>
+
+    <definition>
+      <statement>
+        <p>The <term>parametric form</term> for the solution set of a consistent system of linear equations is obtained as follows.
+        <ol>
+          <li>Write the system as an augmented matrix.</li>
+          <li>Row reduce to reduced row echelon form.</li>
+          <li>Write the corresponding (solved) system of linear equations.</li>
+          <li><em>Move all free variables to the right hand side of the equations.</em></li>
+        </ol>
+        </p>
+      </statement>
+    </definition>
+
+    <p>Moving the free variables to the right hand side of the equations amounts to solving for the non-free variables (the ones that come from columns with pivots) in terms of the free variables.  One can think of the free variables as being <em>independent</em> variables, and the non-free variables being <em>dependent</em>.
+    </p>
+
+    <remark>
+      <p>The solution set of the system of linear equations
+      <me>
+        \syseq{2x + y + 12z = 1; x + 2y + 9z = -1}
+      </me>
+      is a line in <m>\R^3</m>, as we saw in <xref ref="row-reduction-eg-free"/>.  These equations are called the <term>implicit equations</term> for the line: the line is defined <em>implicitly</em> as the simultaneous solutions to those two equations.
+      </p>
+      <p>The parametric form
+      <me>
+        (x,\,y,\,z) = (1-5z,\,-1-2z,\,z) \qquad \text{$z$ any real number}
+      </me>
+      is called a <term>parameterized equation</term> for the same line.  It is an expression that produces all points of the line in terms of one parameter, <m>z</m>.
+      </p>
+      <p>One should think of a system of equations as being an implicit equation for its solution set, and of the parametric form as being the parameterized equation for the same set.  The parameteric form is much more explicit: it gives a concrete recipe for producing <em>all</em> solutions.
+      </p>
+    </remark>
+
+    <important>
+      <p>
+        <ol>
+          <li>You can chose <em>any value</em> for the free variables in a (consistent) linear system.</li>
+          <li>Free variables come from the <em>columns without pivots</em> in a matrix in row echelon form.</li>
+        </ol>
+      </p>
+    </important>
+
+    <example>
+      <p>
+        Suppose that the reduced row echelon form of the matrix for a linear system in four variables <m>x_1,x_2,x_3,x_4</m> is
+        <me>\amat{
+        1 \color{seq-red}0 0 \color{seq-blue}3 2 ;
+        0 \color{seq-red}0 1 \color{seq-blue}4 -1
+        }.</me>
+        The free variables are <m>\color{seq-red}x_2</m> and <m>\color{seq-blue}x_4</m>: they are the ones whose columns are <em>not</em> pivot columns.
+      </p>
+
+      <p>This translates into the system of equations
+      <me>
+        \syseq{x_1 \+ \. \+ \. + 3x_4 = 2;
+        \.  \+ \. \+ x_3 + 4x_4 = -1}
+        \quad\xrightarrow{\text{parametric form}}\quad
+        \syseq{x_1 = 2 - 3x_4; x_3 = -1 - 4x_4\rlap.}
+      </me>
+      What happened to <m>x_2</m>?  It is a free variable, but no other variable depends on it.  The general solution to the system is
+      <me>(x_1,\,x_2,\,x_3,\,x_4) = (2-3x_4,\,x_2,\,-1-4x_4,\,x_4),</me>
+      for any values of <m>x_2</m> and <m>x_4</m>.  For instance, <m>(2,0,-1,0)</m> is a solution (with <m>x_2=x_4=0</m>), and <m>(5,1,3,-1)</m> is a solution (with <m>x_2=1, x_4=-1</m>).
+      </p>
+    </example>
+
+    <example>
+      <p>The system of one linear equation
+      <me>x + y + z = 1</me>
+      comes from the matrix
+      <me>\amat{1 1 1 1},</me>
+      which is already in reduced row echelon form.  The free variables are <m>y</m> and <m>z</m>.  The parametric form for the general solution is
+      <me>(x,\,y,\,z) = (1 - y - z,\,y,\,z)</me>
+      for any values of <m>y</m> and <m>z</m>.  This is the parametric equation for a plane in <m>\R^3</m>.
+      </p>
+      <figure>
+        <caption>A plane described by two parameters <m>y</m> and <m>z</m>.  Any point on the plane is obtained by substituting suitable values for <m>y</m> and <m>z</m>.</caption>
+        <mathbox source="demos/plane.html" height="350px"/>
+      </figure>
+    </example>
+
+  </subsection>
+
+  <subsection>
+    <title>Number of solutions</title>
+
+    <p>There are <em>three possibilities</em> for the reduced row echelon form of the augmented matrix of a linear system.
+    <ol>
+      <li><alert>The last column is a pivot column.</alert>
+      In this case, the system is <em>inconsistent</em>.  There are zero solutions, i.e., the solution set is empty.  For example, the matrix
+      <me>
+        \def\r{\color{red}}
+        \amat{1 0 \r0; 0 1 \r0; 0 0 \r1}
+      </me>
+      comes from a linear system with no solutions.
+      </li>
+      <li><alert>Every column except the last column is a pivot column.</alert>
+      In this case, the system has a <em>unique</em> solution.  For example, the matrix
+      <me>
+        \amat{1 0 0 a; 0 1 0 b; 0 0 1 c}
+      </me>
+      tells us that the unique solution is <m>(x,y,z)=(a,b,c)</m>.
+      </li>
+      <li><alert>The last column is not a pivot column, and some other column is not a pivot column either.</alert>
+      In this case, the system has <em>infinitely many</em> solutions, corresponding to the infinitely many possible values of the free variable(s).  For example, in the system corresponding to the matrix
+      <me>
+        \amat{1 \color{seq-red}-2 0  \color{seq-blue}3 1;
+        0 \color{seq-red}0, 0  \color{seq-blue}4 -1},
+      </me>
+      any values for <m>\color{seq-red}x_2</m> and <m>\color{seq-blue}x_4</m> yield a solution to the system of equations.
+      </li>
+    </ol>
+    </p>
+  </subsection>
 
 </section>
