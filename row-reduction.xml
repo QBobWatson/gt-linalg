@@ -124,7 +124,7 @@ the license is included in gfdl.xml.
     <p>We will not prove uniqueness, but maybe you can!</p>
 
     <algorithm>
-      <title>Row Reduction</title>
+      <title>(Row Reduction)</title>
       <statement>
         <p>
           <ul label="">
