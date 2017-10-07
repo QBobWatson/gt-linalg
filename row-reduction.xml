@@ -595,7 +595,7 @@ the license is included in gfdl.xml.
 
     <p>In <xref ref="row-reduction-eg-free"/>, the variable <m>\color{red}z</m> was free because the reduced row echelon form matrix was
     <me>\def\r{\color{red}}
-      \amat{0 0 \r5 1; 0 1 \r2 -1}.
+      \amat{1 0 \r5 1; 0 1 \r2 -1}.
     </me>
     In the matrix
     <me>\amat{
