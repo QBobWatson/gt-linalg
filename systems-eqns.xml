@@ -107,7 +107,7 @@ the license is included in gfdl.xml.
     \draw[densely dotted] (0,0,0) -- (1,0,0);
     \draw[densely dotted] (0,0,0) -- (0,1,0);
     \draw[densely dotted] (0,0,0) -- (0,0,1);
-    \begin{scope}[x={(-1,0,1)}, y={(0,-1,.5)}, transformxy=1]
+    \begin{scope}[x={(-1,0,.3)}, y={(0,-1,.3)}, transformxy=1]
       \fill[help lines, seq1!50, fill opacity=.7] (-3, -3) rectangle (2.5, 2.5);
       \draw[help lines, seq1!50] (-3, -3) grid (2.5, 2.5);
     \end{scope}

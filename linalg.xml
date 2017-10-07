@@ -30,6 +30,9 @@ Free Documentation License"
 
     <chapter xml:id="chap-algebra">
       <title>Systems of Linear Equations: Algebra</title>
+      <introduction><p>
+        In this chapter you will learn a procedure, called <term>row reduction</term>, for finding all solutions to a system of linear equations.  You will see how to express the solutions in <term>parametric form</term>.
+      </p></introduction>
       <xi:include href="./systems-eqns.xml" />
       <xi:include href="./row-reduction.xml" />
       <xi:include href="./parametric-form.xml" />
