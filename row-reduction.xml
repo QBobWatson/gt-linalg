@@ -559,7 +559,7 @@ the license is included in gfdl.xml.
         </mrow>
         <mrow>
           {}\quad\xrightarrow{R_1=R_1-2R_2}\quad
-          &amp;\amat{0 \r0 5 1; 0 1 2 -1}
+          &amp;\amat{1 \r0 5 1; 0 1 2 -1}
           &amp;&amp;\color{blue}\text{(Step 2c)}
         </mrow>
       </md>
