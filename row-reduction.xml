@@ -521,9 +521,10 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
-    <observation>
+    <paragraphs class="remark-like">
+      <title>The Row Echelon Form of an Inconsistent System</title>
       <p>An augmented matrix corresponds to an inconsistent system of equations if and only if the last column (i.e., the augmented column) is a <em>pivot column</em>.</p>
-    </observation>
+    </paragraphs>
 
     <p>In other words, the row reduced matrix of an inconsistent system looks like this:
     <me>\amat{

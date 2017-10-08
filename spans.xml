@@ -65,10 +65,11 @@ the license is included in gfdl.xml.
       <mathbox source="demos/lincombo.html?v1=1,2,6&amp;v2=-1,-2,-1&amp;w=8,16,3&amp;range=20&amp;camera=-3,1.5,-.5" height="500px"/>
     </figure>
 
-    <important>
+    <paragraphs class="remark-like">
+      <title>A Picture of a Consistent System</title>
       <p>We saw in <xref ref="vectors-example-consistent"/> that the system of equations <xref ref="vectors-system-consistent"/> is consistent.  Equivalently, this means that the vector equation <xref ref="vectors-vec-eqn-consistent"/> has a solution.  Therefore, <xref ref="vectors-figure-consistent"/> is a <em>picture of a consistent system of equations</em>.  Compare <xref ref="vectors-fig-inconsistent"/> below.
       </p>
-    </important>
+    </paragraphs>
 
     <p>In order to actually solve the vector equation
     <me>x\textcolor{seq-red}{\vec{1 2 6}}
@@ -91,7 +92,6 @@ the license is included in gfdl.xml.
       </p>
     </paragraphs>
 
-    <note>
     <p>Now we have (at least) <em>two</em> equivalent ways of thinking about systems of equations:
     <ol>
       <li>Augmented matrices.</li>
@@ -99,7 +99,6 @@ the license is included in gfdl.xml.
     </ol>
     The second is more geometric in nature: it lends itself to drawing pictures.
     </p>
-    </note>
 
   </subsection>
 
@@ -124,16 +123,18 @@ the license is included in gfdl.xml.
     <p><xref ref="vectors-defn-span"/> is the first of several <em>essential definitions</em> that we will see in this course.  They are essential in that they form the essence of the subject of linear algebra: learning linear algebra means (in part) learning these definitions.  All of the definitions are important, but it is essential that you learn and understand the definitions marked as such.
     </p>
 
-    <note>
+    <paragraphs class="remark-like">
+      <title>Set Builder Notation</title>
       <p>The notation
       <me>\bigl\{x_1v_1 + x_2v_2 + \cdots + x_pv_p \mid x_1,x_2,\ldots,x_p \text{ in }\R\bigr\}</me>
       reads as: "the set of all things of the form <m>x_1v_1 + x_2v_2 + \cdots + x_pv_p</m> such that <m>x_1,x_2,\ldots,x_p</m> are in <m>\R</m>."  The vertical line is "such that"; everything to the left of it is "the set of all things of this form", and everything to the right is the condition that those things must satisfy to be in the set.  Specifying a set in this way is called <term>set builder notation</term>.
       </p>
 
       <p>All mathematical notation is only shorthand: any sequence of symbols must translate into a usual sentence.</p>
-    </note>
+    </paragraphs>
 
-    <important>
+    <paragraphs class="remark-like">
+      <title>Three characterizations of consistency</title>
       <p>Now we have three equivalent ways of making the same statement:
       <ol>
         <li>A vector <m>b</m> is in the span of <m>v_1,v_2,\ldots,v_p</m>.</li>
@@ -147,7 +148,7 @@ the license is included in gfdl.xml.
         </li>
       </ol>
       </p>
-    </important>
+    </paragraphs>
 
     <p><term>Equivalent</term> means that, for any given list of vectors <m>v_1,v_2,\ldots,v_p,\,b</m>, either all three statements are true, or all three statements are false.</p>
 

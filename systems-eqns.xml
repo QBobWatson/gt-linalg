@@ -40,6 +40,7 @@ the license is included in gfdl.xml.
     <p>In other words, <m>\R^n</m> is just the set of all (ordered) lists of <m>n</m> real numbers.  We will draw pictures of <m>\R^n</m> in a moment, but keep in mind that <em>this is the definition</em>.  For example, <m>(0, \frac 32, -\pi)</m> is an element of <m>\R^3</m>.</p>
 
     <example>
+      <title>The number line</title>
       <p>When <m>n=1</m>, we just get <m>\R</m> back: <m>\R^1=\R</m>.  Geometrically, this is the number line.</p>
       <sidebyside>
         <image>
@@ -56,6 +57,7 @@ the license is included in gfdl.xml.
     </example>
 
     <definition>
+      <title>(Lines)</title>
       <statement>
         <p>For our purposes, a <term>line</term> is a ray that is <em>straight</em> and <em>infinite</em> in both directions.</p>
         <sidebyside>
@@ -77,6 +79,7 @@ the license is included in gfdl.xml.
     <p>The number line <m>\R=\R^1</m> is an example of a line, but <em>a line is not the same as <m>\R^1</m></em>.  We will see later how to use the elements of <m>\R^1</m> to label the points on a line.</p>
 
     <example>
+      <title>The plane</title>
       <p>When <m>n=2</m>, we can think of <m>\R^2</m> as the <m>xy</m>-plane.  We can do so because every point on the plane can be represented by an ordered pair of real numebrs, namely, its <m>x</m>- and <m>y</m>-coordinates.</p>
       <sidebyside>
         <image>
@@ -97,6 +100,7 @@ the license is included in gfdl.xml.
     </example>
 
     <definition>
+      <title>(Planes)</title>
       <statement>
         <p>A <term>plane</term> is a flat sheet that is infinite in all directions.</p>
         <sidebyside>
@@ -125,6 +129,7 @@ the license is included in gfdl.xml.
     <p>The <m>xy</m>-plane <m>\R^2</m> is an example of a plane, but <em>a plane is not the same as <m>\R^2</m></em>.  We will see later how to use the elements of <m>\R^2</m> to label the points on a line.</p>
 
     <example>
+      <title>3-Space</title>
       <p>When <m>n=3</m>, we can think of <m>\R^3</m> as the <em>space</em> we (appear to) live in.  We can do so because every point in space can be represented by an ordered triple of real numebrs, namely, its <m>x</m>-, <m>y</m>-, and <m>z</m>-coordinates.</p>
       <sidebyside>
         <image>
@@ -153,6 +158,7 @@ the license is included in gfdl.xml.
     </example>
 
     <example>
+      <title>Color Space</title>
       <p>All colors you can see can be described by three quantities: the amount of red, green, and blue light in that color.  (Humans are <url href="https://en.wikipedia.org/wiki/Trichromacy">trichromatic</url>.)  So we can also think of <m>\R^3</m> as the space of all <em>colors</em>.</p>
       <sidebyside>
         <image>
@@ -584,6 +590,7 @@ the license is included in gfdl.xml.
     <p>So the linear equations of row-equivalent matrices have the <em>same solution set</em>.</p>
 
     <example>
+      <title>An Inconsistent System</title>
       <statement>
       <p>
         Solve the following system of equations using row operations:
