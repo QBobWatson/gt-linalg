@@ -16,6 +16,7 @@ Copyright 2017 Georgia Institute of Technology
   <macros>
     \def\R{\mathbf R}
     \spaligndelims[]
+    \let\oldvec=\vec
     \let\vec=\spalignvector
     \let\mat=\spalignmat
     \let\amat=\spalignaugmat
@@ -69,7 +70,9 @@ Copyright 2017 Georgia Institute of Technology
 
     \tikzset{
         whitebg/.style={fill=white},
-        whitebg nodes/.style={every node/.append style=whitebg},
+        whitebg nodes/.style={every node/.append style=whitebg,
+            every label/.append style=whitebg,
+            every pin/.append style=whitebg},
         thin border/.style={inner sep=#1, outer sep=0pt},
         thin border/.default=1pt,
         thin border nodes/.style={every node/.append style={thin border=#1}},
@@ -84,8 +87,10 @@ Copyright 2017 Georgia Institute of Technology
     }
 
     \tikzset{
-        vector/.style={thick, -{Stealth[length=1.5mm]}},
+        vector/.style={very thick, -{Stealth[length=3mm]}},
         thick vector/.style={very thick, -Stealth},
+        point/.style={circle, fill=black, inner sep=0pt,
+                      minimum size=2mm, anchor=center},
     }
 
     \pgfkeysdefnargs{/mathjax font size}{2}{\fontsize{#1}{#2}\selectfont}

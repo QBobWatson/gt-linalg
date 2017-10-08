@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<section xml:id="section-spans">
+  <title>Spans</title>
+
+  <objectives>
+    <ol>
+      <li>Understand the equivalence between a system of linear equations and a vector equation.</li>
+      <li>Learn the definition of <m>\Span\{x_1,x_2,\ldots,x_p\}</m>, and how to draw pictures of spans.</li>
+      <li>Vocabulary word: <term>vector equation</term>.</li>
+      <li>Essential vocabulary word: <term>span</term>.</li>
+    </ol>
+  </objectives>
+
+  <subsection>
+    <title>Vector Equations</title>
+
+    <p>An equation involving vectors with <m>n</m> coordinates is the same as <m>n</m> equations involving only numbers.  For example, the equation
+    <men xml:id="vectors-vec-eqn-consistent">x\vec{1 2 6} + y \vec{-1 -2 -1} = \vec{8 16 3}</men>
+    simplifies to
+    <me>\vec{ x 2x 6x} + \vec{-y -2y -y} = \vec{8 16 3}
+\qquad\text{or}\qquad
+\spalignsysdelims()\syseq{ x - y; 2x - 2y; 6x - y} = \vec{8 16 3}.
+    </me>
+    For two vectors to be equal, all of their coordinates must be equal, so this is just the system of linear equations
+    <men xml:id="vectors-system-consistent">\spalignsysdelims\{.\syseq{x - y = 8; 2x - 2y = 16; 6x - y = 3\rlap.}</men>
+    </p>
+
+    <definition>
+      <statement>
+        <p>A <term>vector equation</term> is an equation involving a linear combination of vectors with possibly unknown coefficients.</p>
+      </statement>
+    </definition>
+
+    <example xml:id="vectors-example-consistent">
+      <p>Is <m>\vec{ 8 16 3}</m> a linear combination of <m>\vec{1 2 6}</m> and <m>\vec{-1 -2 -1}</m>?
+      </p>
+
+      <p><alert>This means:</alert> can we solve the equation
+      <me>x\vec{1 2 6} + y \vec{-1 -2 -1} = \vec{8 16 3}</me>
+      in the unknowns <m>x,y</m>?  This vector equation translates into the system of linear equations
+      <me>\syseq{x - y = 8; 2x - 2y = 16; 6x - y = 3\rlap.}</me>
+      We form an augmented matrix and row reduce:
+      <me>\amat{1 -1 8; 2 -2 16; 6 -1 3}
+      \quad\xrightarrow{\text{RREF}}\quad
+      \amat{1 0 -1; 0 1 -9; 0 0 0}.
+      </me>
+      Thus the equation is consistent, and the solution is <m>x=-1</m> and <m>y=-9</m>.  We conclude that  <m>\vec{ 8 16 3}</m> is indeed a linear combination of <m>\vec{1 2 6}</m> and <m>\vec{-1 -2 -1}</m>, with coefficients <m>-1</m> and <m>-9</m>:
+      <me>-\vec{1 2 6} -9\vec{-1 -2 -1} = \vec{8 16 3}.
+      </me>
+      </p>
+    </example>
+
+    <figure xml:id="vectors-figure-consistent">
+      <caption>A picture of the vector equation <xref ref="vectors-vec-eqn-consistent"/>.  Try to solve the equation geometrically by moving the sliders.</caption>
+      <mathbox source="demos/lincombo.html?v1=1,2,6&amp;v2=-1,-2,-1&amp;w=8,16,3&amp;range=20&amp;camera=-3,1.5,-.5" height="500px"/>
+    </figure>
+
+    <important>
+      <p>We saw in <xref ref="vectors-example-consistent"/> that the system of equations <xref ref="vectors-system-consistent"/> is consistent.  Equivalently, this means that the vector equation <xref ref="vectors-vec-eqn-consistent"/> has a solution.  Therefore, <xref ref="vectors-figure-consistent"/> is a <em>picture of a consistent system of equations</em>.  Compare <xref ref="vectors-fig-inconsistent"/> below.
+      </p>
+    </important>
+
+    <p>In order to actually solve the vector equation
+    <me>x\textcolor{seq-red}{\vec{1 2 6}}
+    + y \textcolor{seq-green}{\vec{-1 -2 -1}}
+    = \textcolor{seq-blue}{\vec{8 16 3}},</me>
+    one has to solve the system of linear equations
+    <me>\spalignsysdelims\{.\syseq{x - y = 8; 2x - 2y = 16; 6x - y = 3\rlap.}</me>
+    This means forming the augmented matrix
+    <me>\def\r{\color{seq-red}}\def\g{\color{seq-green}}\def\b{\color{seq-blue}}
+    \amat{\r1 \g-1 \b8; \r2 \g-2 \b16; \r6 \g-1 \b3}</me>
+    and row reducing.  Note that <em>the columns of the augmented matrix are the vectors from the original vector equation</em>, so it is not actually necessary to write the system of equations: one can go directly from the vector equation to the augmented matrix by "smooshing the vectors together".
+    </p>
+
+    <p>In general, the vector equation
+    <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = b</me>
+    where <m>v_1,v_2,\ldots,v_p,\,b</m> are vectors in <m>\R^n</m> and <m>x_1,x_2,\ldots,x_p</m> are unknown scalars, has the same solution set as the linear system with augmented matrix
+    <me>\amat[c]{| | ,{} , | |; v_1 v_2 \cdots, v_p b; | | ,{} , | |}</me>
+    whose columns are the <m>v_i</m>'s and the <m>b</m>'s.
+    </p>
+
+    <remark>
+    <p>Now we have (at least) <em>two</em> equivalent ways of thinking about systems of equations:
+    <ol>
+      <li>Augmented matrices.</li>
+      <li>Linear combinations of vectors (vector equations).</li>
+    </ol>
+    The second is more geometric in nature: it lends itself to drawing pictures.
+    </p>
+    </remark>
+
+  </subsection>
+
+  <subsection>
+    <title>Spans</title>
+
+    <p>It will be important to know what are <em>all</em> linear combinations of a set of vectors <m>v_1,v_2,\ldots,v_p</m> in <m>\R^n</m>.  In other words, we would like to understand the set of all vectors <m>b</m> in <m>\R^n</m> such that the vector equation (in the unknowns <m>x_1,x_2,\ldots,x_p</m>)
+    <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = b</me>
+    has a solution (i.e. is consistent).
+    </p>
+
+    <essential xml:id="vectors-defn-span">
+      <statement>
+        <p>Let <m>v_1,v_2,\ldots,v_p</m> be vectors in <m>\R^n</m>.  The <term>span</term> of <m>v_1,v_2,\ldots,v_p</m> is the collection of all linear combinations of <m>v_1,v_2,\ldots,v_p</m>, and is denoted <m>\Span\{v_1,v_2,\ldots,v_p\}</m>.  In symbols:
+        <me>\Span\{v_1,v_2,\ldots,v_p\} =
+        \bigl\{x_1v_1 + x_2v_2 + \cdots + x_pv_p \mid x_1,x_2,\ldots,x_p \text{ in }\R\bigr\}</me>
+        We also say that <m>\Span\{v_1,v_2,\ldots,v_p\}</m> is the subset <term>spanned by</term> or <term>generated by</term> the vectors <m>v_1,v_2,\ldots,v_p</m>.
+        </p>
+      </statement>
+    </essential>
+
+    <p><xref ref="vectors-defn-span"/> is the first of several <em>essential definitions</em> that we will see in this course.  They are essential in that they form the essence of the subject of linear algebra: learning linear algebra means (in part) learning these definitions.  All of the definitions are important, but it is essential that you learn and understand the definitions marked as such.
+    </p>
+
+    <note>
+      <p>The notation
+      <me>\bigl\{x_1v_1 + x_2v_2 + \cdots + x_pv_p \mid x_1,x_2,\ldots,x_p \text{ in }\R\bigr\}</me>
+      reads as: "the set of all things of the form <m>x_1v_1 + x_2v_2 + \cdots + x_pv_p</m> such that <m>x_1,x_2,\ldots,x_p</m> are in <m>\R</m>."  The vertical line is "such that"; everything to the left of it is "the set of all things of this form", and everything to the right is the condition that those things must satisfy to be in the set.  Specifying a set in this way is called <term>set builder notation</term>.
+      </p>
+
+      <p>All mathematical notation is only shorthand: any sequence of symbols must translate into a usual sentence.</p>
+    </note>
+
+    <important>
+      <p>Now we have three equivalent ways of making the same statement:
+      <ol>
+        <li>A vector <m>b</m> is in the span of <m>v_1,v_2,\ldots,v_p</m>.</li>
+        <li>The vector equation
+        <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = b</me>
+        has a solution.
+        </li>
+        <li>The linear system with augmented matrix
+        <me>\amat[c]{| | ,{} , | |; v_1 v_2 \cdots, v_p b; | | ,{} , | |}</me>
+        is consistent.
+        </li>
+      </ol>
+      </p>
+    </important>
+
+    <p><term>Equivalent</term> means that, for any given list of vectors <m>v_1,v_2,\ldots,v_p,\,b</m>, either all three statements are true, or all three statements are false.</p>
+
+    <figure xml:id="vectors-fig-inconsistent">
+      <caption>This is a picture of an <em>inconsistent</em> linear system: the vector <m>w</m> on the right-hand side of the equation <m>x_1v_1 + x_2v_2 = w</m> is not in the span of <m>v_1,v_2</m>.  Convince yourself of this by trying to solve the equation
+      <m>x_1v_1 + x_2v_2 = w</m>
+      by moving the sliders, and by row reduction.  Compare <xref ref="vectors-figure-consistent"/>.</caption>
+      <mathbox source="demos/lincombo.html?v1=1,2,6&amp;v2=-1,-2,-1&amp;w=2,-2,0&amp;range=8&amp;camera=-3,1.5,-.5" height="500px"/>
+    </figure>
+
+    <paragraphs>
+      <title>Pictures of Spans</title>
+
+      <p>Drawing a picture of <m>\Span\{v_1,v_2,\ldots,v_p\}</m> is the same as drawing a picture of all linear combinations of <m>v_1,v_2,\ldots,v_p</m>.</p>
+      <figure>
+        <caption>Pictures of spans in <m>\R^2</m>.</caption>
+        <image>
+          <latex-image-code>
+            <![CDATA[
+\begin{tikzpicture}[thin border nodes]
+\begin{scope}
+  \draw[grid lines] (-3,-2) grid (4, 3);
+  \path[clip] (-3,-2) rectangle (4, 3);
+  \draw[thin, seq4] ($-2*(2,1)$) -- ($2*(2,1)$);
+  \node[seq4,whitebg] at (0,2) {$\Span\{v\}$};
+  \draw[vector, seq1] (0,0) to["$v$"] (2,1);
+  \point at (0,0);
+\end{scope}
+
+\begin{scope}[xshift=8cm]
+  \draw[grid lines] (-3,-2) grid (4, 3);
+  \fill[seq4!30, nearly transparent] (-3,-2) rectangle (4,3);
+  \node[seq4] at (.5,2.5) {$\Span\{v,w\}$};
+  \draw[vector, seq1] (0,-1) to["$v$"] (1,1);
+  \draw[vector, seq2] (0,-1) to["\strut$w$"'] (1,-1);
+  \point at (0,-1);
+\end{scope}
+
+\begin{scope}[xshift=4cm, yshift=-7cm]
+  \draw[grid lines] (-3,-3) grid (4, 4);
+  \path[clip] (-3,-3) rectangle (4, 4);
+  \node[seq4] at (.5,2.5) {$\Span\{v,w\}$};
+  \draw[thin, seq4] ($-2*(2,2)$) -- ($2*(2,2)$);
+  \draw[vector, seq1] (0,0) to["$v$"] (2,2);
+  \draw[vector, seq2] (0,0) to["$w$"' pos=.4] (-1,-1);
+  \point at (0,0);
+\end{scope}
+\end{tikzpicture}
+            ]]>
+          </latex-image-code>
+        </image>
+      </figure>
+
+      <figure>
+        <caption>Pictures of spans in <m>\R^3</m>.  The span of two noncollinear vectors is the plane containing the origin and the heads of the vectors.  Note that three coplanar (but not collinear) vectors span a plane and not a 3-space, just as two collinear vectors span a line and not a plane.</caption>
+        <image>
+          <latex-image-code>
+            <![CDATA[
+\begin{tikzpicture}[myxyz, thin border nodes, scale=.8]
+\begin{scope}
+  \path[clip, resetxy] (-4,-3) rectangle (4,3);
+
+  \draw[seq4] ($-3*(2,-1,1)$) -- (0,0,0);
+
+  \begin{scope}[transformxy]
+    \fill[white, nearly opaque] (-2, -2) rectangle (3, 3);
+    \draw[grid lines] (-2, -2) grid (3, 3);
+  \end{scope}
+
+  \draw[seq4] (0,0,0) -- ($3*(2,-1,1)$);
+  \node[seq4] at (-1cm, 2cm) {$\Span\{v\}$};
+
+  \draw[vector, seq1] (0,0,0) to["$v$"] (2,-1,1);
+  \draw[thin, densely dotted] (2,-1,1) -- (2,-1,0);
+
+  \point at (0,0,0);
+\end{scope}
+
+\begin{scope}[xshift=9cm]
+  \path[clip, resetxy] (-4,-3) rectangle (4,3);
+
+  \def\v{(2,-1,1)}
+  \def\w{(2,1,.3)}
+
+  \node[coordinate] (X) at \v {};
+  \node[coordinate] (Y) at \w {};
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-1.5, 5) -- (1.5, -5) -- (1.5, -7) -- (-1.5, -7) -- cycle;
+    \fill[seq4!30, nearly opaque] (-1.5,-1) rectangle (1.5,2);
+    \draw[step=.5cm, seq4, very thin] (-1.5,-1) grid (1.5,2);
+  \end{scope}
+
+  \begin{scope}[transformxy]
+    \fill[white, nearly opaque] (-2, -2) rectangle (3, 3);
+    \draw[grid lines] (-2, -2) grid (3, 3);
+  \end{scope}
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-1.5, 5) -- (1.5, -5) -- (1.5, 7) -- (-1.5, 7) -- cycle;
+    \fill[seq4!30, nearly opaque] (-1.5,-1) rectangle (1.5,2);
+    \draw[step=.5cm, seq4, very thin] (-1.5,-1) grid (1.5,2);
+  \end{scope}
+
+  \node[seq4] at (-1cm, 2cm) {$\Span\{v,w\}$};
+
+  \draw[vector, seq1] (0,0,0) --
+    node [midway, above] {$v$} \v;
+  \draw[thin, densely dotted] \v -- \projxy\v;
+  \draw[vector, seq2] (0,0,0) --
+    node [midway, below] {\strut$w$} \w;
+  \draw[thin, densely dotted] \w -- \projxy\w;
+
+  \point at (0,0,0);
+\end{scope}
+
+\begin{scope}[yshift=-7cm]
+  \path[clip, resetxy] (-4,-3) rectangle (4,3);
+
+  \begin{scope}[transformxy]
+    \fill[white, nearly opaque] (-2, -2) rectangle (3, 3);
+    \draw[grid lines] (-2, -2) grid (3, 3);
+  \end{scope}
+
+  \draw[vector, seq1] (0,0,0) to["$v$"] (2,-1,1);
+  \draw[thin, densely dotted] (2,-1,1) -- (2,-1,0);
+  \draw[vector, seq2] (0,0,0) to["\strut$w$"'] (2,1,.3);
+  \draw[thin, densely dotted] (2,1,.3) -- (2,1,0);
+  \draw[vector, seq3] (0,0,0) to["$u$"] (-.5,.5,1);
+  \draw[thin, densely dotted] (-.5,.5,1) -- (-.5,.5,0);
+
+  \point at (0,0,0);
+
+  \fill[seq4!30, nearly transparent, resetxy] (-4,-3) rectangle (4,3);
+  \node[seq4] at (-1cm, 2cm) {$\Span\{u,v,w\}$};
+
+\end{scope}
+
+\begin{scope}[xshift=9cm, yshift=-7cm]
+  \path[clip, resetxy] (-4,-3) rectangle (4,3);
+
+  \def\v{(2,-1,1)}
+  \def\w{(2,1,.3)}
+  \def\u{(2,0,.65)}
+
+  \node[coordinate] (X) at \v {};
+  \node[coordinate] (Y) at \w {};
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-1.5, 5) -- (1.5, -5) -- (1.5, -7) -- (-1.5, -7) -- cycle;
+    \fill[seq4!30, nearly opaque] (-1.5,-1) rectangle (1.5,2);
+    \draw[step=.5cm, seq4, very thin] (-1.5,-1) grid (1.5,2);
+  \end{scope}
+
+  \begin{scope}[transformxy]
+    \fill[white, nearly opaque] (-2, -2) rectangle (3, 3);
+    \draw[grid lines] (-2, -2) grid (3, 3);
+  \end{scope}
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-1.5, 5) -- (1.5, -5) -- (1.5, 7) -- (-1.5, 7) -- cycle;
+    \fill[seq4!30, nearly opaque] (-1.5,-1) rectangle (1.5,2);
+    \draw[step=.5cm, seq4, very thin] (-1.5,-1) grid (1.5,2);
+  \end{scope}
+
+  \node[seq4] at (-1cm, 2cm) {$\Span\{u,v,w\}$};
+
+  \draw[vector, seq1] (0,0,0) --
+    node [midway, above] {$v$} \v;
+  \draw[thin, densely dotted] \v -- \projxy\v;
+  \draw[vector, seq2] (0,0,0) --
+    node [midway, below] {\strut$w$} \w;
+  \draw[thin, densely dotted] \w -- \projxy\w;
+  \draw[vector, seq3] (0,0,0) --
+    \u node [right] {$u$};
+  \draw[thin, densely dotted] \u -- \projxy\u;
+
+  \draw[thin, densely dotted] \v -- \w;
+
+  \point at (0,0,0);
+\end{scope}
+
+\end{tikzpicture}
+            ]]>
+          </latex-image-code>
+        </image>
+      </figure>
+
+      <figure>
+        <caption>Interactive picture of a span of two vectors in <m>\R^3</m>.</caption>
+        <mathbox source="demos/span2.html" height="500px"/>
+      </figure>
+
+      <figure>
+        <caption>Interactive picture of a span of three vectors in <m>\R^3</m>.</caption>
+        <mathbox source="demos/span3.html" height="500px"/>
+      </figure>
+    </paragraphs>
+
+  </subsection>
+
+</section>

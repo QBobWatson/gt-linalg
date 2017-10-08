@@ -10,10 +10,390 @@ the license is included in gfdl.xml.
 *********************************************************************-->
 
 <section xml:id="section-vectors">
-  <title>Vectors in <m>\R^n</m></title>
+  <title>Vectors: Algebra and Geometry</title>
 
-  <p>
-    Vectors: algebra and geometry.  Linear combinations and span.  How to draw pictures of everything in the first chapter.
-  </p>
+  <objectives>
+    <ol>
+      <li>Learn how to add and scalar-multiply vectors in <m>\R^n</m>, both algebraically and geometrically.</li>
+      <li>Understand linear combinations geometrically.</li>
+      <li>Vocabulary words: <term>vector</term>, <term>linear combination</term>.</li>
+    </ol>
+  </objectives>
+
+  <subsection>
+    <title>Vectors in <m>\R^n</m></title>
+
+    <p>We have been drawing elements of <m>\R^n</m> as points in the line, plane, space, etc.  We can also draw them as <em>arrows</em>.</p>
+
+    <definition>
+      <statement>
+        <p>A <term>point</term> is an element of <m>\R^n</m>, drawn as a point (a dot).</p>
+        <sidebyside>
+          <image>
+            <latex-image-code>
+              <![CDATA[
+    \begin{tikzpicture}[scale=1, every pin/.style={whitebg, thin border}]
+    \draw[grid lines] (-1,-1) grid (4, 4);
+    \draw[->, thick] (-1,0) -- (4,0);
+    \draw[->, thick] (0,-1) -- (0,4);
+    \point[seq-blue, pin={
+      [pin edge={seq-blue}, text=seq-blue]
+      -85:the point $(1,3)$}] (x) at (1,3);
+    \end{tikzpicture}
+              ]]>
+            </latex-image-code>
+          </image>
+        </sidebyside>
+        <p>A <term>vector</term> is an element of <m>\R^n</m>, drawn as an arrow.</p>
+        <sidebyside>
+          <image>
+            <latex-image-code>
+              <![CDATA[
+    \begin{tikzpicture}[scale=1, every pin/.style={whitebg, thin border}]
+    \draw[grid lines] (-1,-1) grid (4, 4);
+      \draw[thick vector, green!50!black] (0,0)
+        -- node[midway, pin={[right]-10:the vector $1\choose3$}] {} (1,3);
+    \useasboundingbox (6,0);
+  \end{tikzpicture}
+              ]]>
+            </latex-image-code>
+          </image>
+        </sidebyside>
+      </statement>
+    </definition>
+
+    <p>The difference is purely psychological: <em>points and vectors are both just lists of numbers</em>.</p>
+
+    <figure>
+      <caption>A vector in <m>\R^3</m>, by coordinates.</caption>
+      <mathbox source="demos/vector.html" height="350px"/>
+    </figure>
+
+    <p>When we think of an element of <m>\R^n</m> as a vector, we will usually write it vertically, like a matrix with one column:
+    <me>v = \vec{1 3}.</me>
+    </p>
+
+    <p>Why make the distinction between points and vectors?  A vector need not start at the origin: <em>it can be located anywhere</em>! In other words, an arrow is determined by its length and its direction, not by its location.  For instance, these arrows all represent the vector <m>\color{seq-green}\vec{1 2}</m>.
+    </p>
+    <sidebyside>
+      <image>
+        <latex-image-code>
+          <![CDATA[
+\begin{tikzpicture}
+  \draw[help lines] (-1,-1) grid (4, 4);
+  \draw[thick vector, seq-green] (0,1) -- (1,3);
+  \draw[thick vector, seq-green] (1,1) -- (2,3);
+  \draw[thick vector, seq-green] (2,0) -- (3,2);
+\end{tikzpicture}
+          ]]>
+        </latex-image-code>
+      </image>
+    </sidebyside>
+
+    <remark>
+      <p>Unless otherwise specified, we will assume that all vectors start at the origin.
+      </p>
+    </remark>
+
+    <remark>
+      <p>Vectors makes sense in the real world: many physical quantities, such as velocity, are represented as vectors.  But it makes more sense to think of the velocity of a car as being located at the car.</p>
+    </remark>
+
+    <remark>
+      <p>Some authors use boldface letters to represent vectors, as in "<m>\mathbf v</m>", or use arrows, as in "<m>\oldvec v</m>".  As it is usually clear from context if a letter represents a vector, we do not decorate vectors in this way.</p>
+    </remark>
+
+    <p>Another way to think about a vector is as a <em>difference</em> between two
+points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> is the arrow from <m>(1,1)</m> to <m>(2,3)</m>.
+    </p>
+    <sidebyside>
+      <image>
+        <latex-image-code>
+          <![CDATA[
+  \begin{tikzpicture}[whitebg nodes, thin border nodes]
+  \draw[help lines] (0,0) grid (4,4);
+  \draw[->] (0,0) -- (4,0);
+  \draw[->] (0,0) -- (0,4);
+  \point["${(1,1)}$" {left, text=seq-red}, seq-red] (x) at (1,1);
+  \point["${(2,3)}$" {right, text=seq-green}, seq-green] (y) at (2,3);
+  \draw[vector, seq-blue] (x)
+    -- node[below right=1pt] {${1\choose 2}$} (y);
+  \end{tikzpicture}
+          ]]>
+        </latex-image-code>
+      </image>
+    </sidebyside>
+
+  </subsection>
+
+  <subsection>
+    <title>Vector Algebra and Geometry</title>
+
+    <p>Here we learn how to add vectors together and how to multiply vectors by numbers, both algebraically and geometrically.</p>
+
+    <definition>
+      <statement>
+        <p><ul>
+          <li>We can add two vectors together:
+          <me>\vec{ a b c} + \vec{ x y z} = \vec{ a+x b+y c+z}.</me>
+          </li>
+          <li>We can multiply, or <term>scale</term>, a vector by a real number <m>c</m>:
+          <me>\def\r{\textcolor{red}} \r c\vec{ x y z} = \vec{ \r c\cdot x \r c\cdot y \r c\cdot z}.</me>
+          We call <m>c</m> a <term>scalar</term> to distinguish it from a vector.  If <m>v</m> is a vector and <m>c</m> is a scalar, then <m>cv</m> is called a <term>scalar multiple</term> of <m>v</m>.
+          </li>
+        </ul>
+        Addition and scalar multiplication work in the same way for vectors of length <m>n</m>.</p>
+      </statement>
+    </definition>
+
+    <example>
+      <p><me>
+        \vec{ 1 2 3} + \vec{ 4 5 6} = \vec{ 5 7 9} \quad\text{and}\quad
+        -2\vec{ 1 2 3} = \vec{-2 -4 -6}.
+      </me></p>
+    </example>
+
+    <paragraphs>
+      <title>The Parallelogram Law for Vector Addition</title>
+      <p>
+       Geometrically, the sum of two vectors <m>v,w</m> is obtained as follows: place the tail of <m>w</m> at the head of <m>v</m>. Then <m>v+w</m> is the vector whose tail is the tail of <m>v</m> and whose head is the head of <m>w</m>. Doing this both ways creates a parallelogram. For example,
+       <me> \textcolor{seq-blue}{\vec{1 3}}
+       + \textcolor{seq-green}{\vec{4 2}}
+       = \vec{5 5}.
+       </me>
+      </p>
+      <p>Why? The width of <m>v+w</m> is the sum of the widths, and likewise with
+       the heights.</p>
+
+      <sidebyside>
+        <image>
+          <latex-image-code>
+            <![CDATA[
+\begin{tikzpicture}
+  \draw[grid lines] (0,0) grid (5,5);
+  \fill[red!30, nearly transparent] (0,0) -- (1,3) -- (5,5) -- (4,2) -- cycle;
+  \begin{scope}[thin border nodes]
+  \draw[vector, seq-blue] (0,0) to["$v$"] (1,3);
+  \draw[vector, seq-green] (1,3) to["$w$"] (5,5);
+  \draw[vector, seq-green] (0,0) to["$w$"'] (4,2);
+  \draw[vector, seq-blue] (4,2) to["$v$"'] (5,5);
+  \draw[vector] (0,0) to["$v+w$" {sloped, pos=.6}] (5,5);
+  \end{scope}
+  \draw[|<->|] (0,5.5) -- (1,5.5);
+  \draw[|<->|] (1,5.5) -- (5,5.5);
+  \draw[|<->|] (0,-.5) -- (4,-.5);
+  \draw[|<->|] (4,-.5) -- (5,-.5);
+  \path (0,-.5) -- (5,-.5)
+     node[pos=.5, font=\small, below=1mm] {$5 = 1 + 4 = 4+1$};
+  \draw[|<->|] (5.5,0) -- (5.5,2);
+  \draw[|<->|] (5.5,2) -- (5.5,5);
+  \draw[|<->|] (-.5,0) -- (-.5,3);
+  \draw[|<->|] (-.5,3) -- (-.5,5);
+  \path (-.5, 0) -- (-.5, 5)
+     node[pos=.5, font=\small, above, rotate=90] {$5 = 2 + 3 = 3 + 2$};
+\end{tikzpicture}
+            ]]>
+          </latex-image-code>
+        </image>
+      </sidebyside>
+
+      <figure>
+        <caption>The parallelogram law for vector addition.</caption>
+        <mathbox source="demos/vector-add.html" height="350px"/>
+      </figure>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Vector Subtraction</title>
+      <p>Geometrically, the difference of two vectors <m>v,w</m> is obtained as follows: place the tail of <m>v</m> and <m>w</m> at the same point.  Then <m>v-w</m> is the vector from the head of <m>v</m> to the head of <m>w</m>. For example,
+       <me> \textcolor{seq-blue}{\vec{1 4}}
+       - \textcolor{seq-green}{\vec{4 2}}
+       = \vec{-3 2}.
+       </me>
+      </p>
+      <p>Why? If you add <m>v-w</m> to <m>w</m>, you get <m>v</m>.</p>
+
+      <sidebyside>
+        <image>
+          <latex-image-code>
+            <![CDATA[
+\begin{tikzpicture}
+  \draw[grid lines] (0,0) grid (5,5);
+  \begin{scope}[thin border nodes]
+  \draw[vector, seq-blue] (0,0) to["$v$"] (1,4);
+  \draw[vector, seq-green] (0,0) to["$w$"] (4,2);
+  \draw[vector] (4,2) to["$v-w$"' {sloped, pos=.7}] (1,4);
+  \end{scope}
+\end{tikzpicture}
+        ]]>
+          </latex-image-code>
+        </image>
+      </sidebyside>
+
+      <figure>
+        <caption>Vector subtraction.</caption>
+        <mathbox source="demos/vector-sub.html" height="350px"/>
+      </figure>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Scalar Multiplication</title>
+
+      <p>A scalar multiple of a vector <m>v</m> has the same (or opposite) direction, but a different length.  For instance, <m>2v</m> is the vector in the direction of <m>v</m> but twice as long, and <m>-\frac 12v</m> is the vector in the opposite direction of <m>v</m>, but half as long.  Note that the set of all scalar multiples of a (nonzero) vector <m>v</m> is a <em>line</em>.
+      </p>
+
+      <sidebyside>
+        <image>
+          <latex-image-code>
+            <![CDATA[
+  \begin{tikzpicture}
+    \draw[grid lines] (-2,-2) grid (3,5);
+    \node[anchor=south] at (.5,5) {Some multiples of $v$.};
+    \draw[vector] (0,0) -- (1,2) node[below right, whitebg] {$v$};
+    \draw[vector] (0,0) -- (2,4) node[below right, whitebg] {$2v$};
+    \draw[vector] (0,0) -- (-.5,-1) node[left, whitebg] {$-\frac 12v$};
+    \point["$0v$" below right] at (0,0);
+    \begin{scope}[xshift=6cm]
+    \node[anchor=south] at (.5,5) {All multiples of $v$.};
+    \draw[help lines] (-2,-2) grid (3,5);
+    \pause
+    \draw[thick, seq-blue, <->] (-1,-2) -- (2.5, 5);
+    \point at (0,0);
+    \end{scope}
+  \end{tikzpicture}
+        ]]>
+          </latex-image-code>
+        </image>
+      </sidebyside>
+
+      <figure>
+        <caption>Scalar multiplication.</caption>
+        <mathbox source="demos/vector-mul.html" height="350px"/>
+      </figure>
+
+    </paragraphs>
+
+  </subsection>
+
+  <subsection>
+    <title>Linear Combinations</title>
+
+    <p>We can add and scalar multiply vectors in the same equation.</p>
+
+    <definition>
+      <statement>
+        <p>Let <m>c_1,c_2,\ldots,c_p</m> be scalars, and let <m>v_1,v_2,\ldots,v_p</m> be vectors in <m>\R^n</m>.  The vector in <m>\R^n</m>
+        <me>c_1v_1 + c_2v_2 + \cdots + c_pv_p
+        </me>
+        is called a <term>linear combination</term> of the vectors <m>v_1,v_2,\ldots,v_p</m>, with <term>weights</term> or <term>coefficients</term> <m>c_1,c_2,\ldots,c_p</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>Geometrically, a linear combination is obtained by stretching / shrinking the vectors <m>v_1,v_2,\ldots,v_p</m> according to the coefficients, then adding them together using the parallelogram law.
+    </p>
+
+    <example xml:id="vectors-eg-lincombo-plane">
+      <p>Let <m>v_1 = \vec{1 2}</m> and <m>v_2 = \vec{1 0}</m>.  Here are some linear combinations of <m>v_1</m> and <m>v_2</m>, drawn as points.
+      </p>
+      <sidebyside>
+        <image>
+          <latex-image-code>
+            <![CDATA[
+  \begin{tikzpicture}[thin border nodes]
+    \draw[help lines] (-3,-3) grid (4, 4);
+    \draw[->] (-3,0) -- (4,0);
+    \draw[->] (0,-3) -- (0,4);
+    \draw[vector, seq1] (0,0) to["$v_1$"] (1,2);
+    \draw[vector, seq2] (0,0) to["\strut$v_2$"'] (1,0);
+    \point at (0,0);
+    \point[seq3] at (2,2);
+    \point[seq4] at (0,2);
+    \point[seq5] at (2,4);
+    \point[seq8] at (2,0);
+    \point[seq7] at (-1,-2);
+
+    \node[anchor=west] at (5, .75)
+      {
+        \begin{minipage}{0.6\linewidth}
+           \begin{itemize}
+           \item $\color{seq3} v_1+v_2$
+           \item $\color{seq4} v_1-v_2$
+           \item $\color{seq5} 2v_1\color{gray}+0v_2$
+           \item $\color{seq8} 2v_2$
+           \item $\color{seq7} -v_1$
+           \end{itemize}
+        \end{minipage}
+      };
+  \end{tikzpicture}
+            ]]>
+          </latex-image-code>
+        </image>
+      </sidebyside>
+      <p>The locations of these points are found using the parallelogram law for vector addition.  Any vector on the plane is a linear combination of <m>v_1</m> and <m>v_2</m>, with suitable coefficients.</p>
+    </example>
+
+    <figure>
+      <caption>Linear combinations of two vectors (in <m>\R^3</m> instead of <m>\R^2</m>): move the sliders to change the coefficients of <m>v_1</m> and <m>v_2</m>.  Note that any vector on the plane can be obtained as a linear combination of <m>v_1,v_2</m> with suitable coefficients.</caption>
+      <mathbox source="demos/lincombo.html?v1=1,0,2&amp;v2=1,0,0&amp;range=5&amp;camera=0,0,-2" height="350px"/>
+    </figure>
+
+    <figure>
+      <caption>Linear combinations of three vectors: move the sliders to change the coefficients of <m>v_1,v_2,v_3</m>.  Note how the parallelogram law for addition of three vectors is more of a "parallepiped law".</caption>
+      <mathbox source="demos/lincombo.html?v1=2,-1,1&amp;v2=1,1,-1&amp;v3=-1,1,4&amp;range=5" height="500px"/>
+    </figure>
+
+    <example>
+      <p>A linear combination of a single vector <m>v = \vec{1 2}</m> is just a scalar multiple of <m>v</m>.  So some examples include
+      <me>v=\vec{1 2},\quad \frac 32v=\vec{3/2 3},\quad -\frac12v = \vec{-1/2 -1},\quad\ldots
+      </me>
+      The set of all linear combinations is the <em>line through <m>v</m></em>.  (Unless <m>v=0</m>, in which case any scalar multiple of <m>v</m> is again <m>0</m>.)
+      </p>
+      <sidebyside>
+        <image>
+          <latex-image-code>
+            <![CDATA[
+  \begin{tikzpicture}
+    \draw[grid lines] (-3,-3) grid (4, 4);
+    \clip (-3,-3) rectangle (4, 4);
+    \draw[thin, seq4] ($-2*(2,1)$) -- ($2*(2,1)$);
+    \draw[vector, seq1] (0,0) to["$v$" thin border] (2,1);
+    \point at (0,0);
+  \end{tikzpicture}
+            ]]>
+          </latex-image-code>
+        </image>
+      </sidebyside>
+    </example>
+
+    <example>
+      <p>The set of all linear combinations of the vectors
+      <me>v_1 = \vec{2 2}\qquad\text{and}\qquad v_2 = \vec{-1 -1}</me>
+      is the <em>line</em> containing both vectors.</p>
+      <sidebyside>
+        <image>
+          <latex-image-code>
+            <![CDATA[
+  \begin{tikzpicture}
+    \draw[grid lines] (-3,-3) grid (4, 4);
+    \path[clip] (-3,-3) rectangle (4, 4);
+    \draw<3->[thin, seq4] ($-2*(2,2)$) -- ($2*(2,2)$);
+    \draw[vector, seq1] (0,0) to["$v_1$" thin border] (2,2);
+    \draw[vector, seq2] (0,0) to["$v_2$"' thin border] (-1,-1);
+    \point at (0,0);
+  \end{tikzpicture}
+            ]]>
+          </latex-image-code>
+        </image>
+      </sidebyside>
+      <p>The difference between this and <xref ref="vectors-eg-lincombo-plane"/> is that both vectors lie on the same line.  Hence any scalar multiples of <m>v_1,v_2</m> lie on that line, as does their sum.
+      </p>
+      <figure>
+        <caption>Linear combinations of two collinear vectors (in <m>\R^3</m> instead of <m>\R^2</m>).</caption>
+        <mathbox source="demos/lincombo.html?v1=2,0,2&amp;v2=-1,0,-1&amp;range=5&amp;camera=0,0,-2" height="350px"/>
+      </figure>
+    </example>
+
+  </subsection>
 
 </section>

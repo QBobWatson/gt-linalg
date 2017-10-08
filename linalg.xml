@@ -41,6 +41,7 @@ Free Documentation License"
     <chapter xml:id="chap-geometry">
       <title>Systems of Linear Equations: Geometry</title>
       <xi:include href="./vectors.xml" />
+      <xi:include href="./spans.xml" />
       <xi:include href="./matrixeq.xml" />
       <xi:include href="./solnsets.xml" />
       <xi:include href="./linindep.xml" />
