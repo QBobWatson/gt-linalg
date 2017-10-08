@@ -82,14 +82,16 @@ the license is included in gfdl.xml.
     and row reducing.  Note that <em>the columns of the augmented matrix are the vectors from the original vector equation</em>, so it is not actually necessary to write the system of equations: one can go directly from the vector equation to the augmented matrix by "smooshing the vectors together".
     </p>
 
-    <p>In general, the vector equation
-    <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = b</me>
-    where <m>v_1,v_2,\ldots,v_p,\,b</m> are vectors in <m>\R^n</m> and <m>x_1,x_2,\ldots,x_p</m> are unknown scalars, has the same solution set as the linear system with augmented matrix
-    <me>\amat[c]{| | ,{} , | |; v_1 v_2 \cdots, v_p b; | | ,{} , | |}</me>
-    whose columns are the <m>v_i</m>'s and the <m>b</m>'s.
-    </p>
+    <paragraphs class="bluebox">
+      <p>In general, the vector equation
+      <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = b</me>
+      where <m>v_1,v_2,\ldots,v_p,\,b</m> are vectors in <m>\R^n</m> and <m>x_1,x_2,\ldots,x_p</m> are unknown scalars, has the same solution set as the linear system with augmented matrix
+      <me>\amat[c]{| | ,{} , | |; v_1 v_2 \cdots, v_p b; | | ,{} , | |}</me>
+      whose columns are the <m>v_i</m>'s and the <m>b</m>'s.
+      </p>
+    </paragraphs>
 
-    <remark>
+    <note>
     <p>Now we have (at least) <em>two</em> equivalent ways of thinking about systems of equations:
     <ol>
       <li>Augmented matrices.</li>
@@ -97,7 +99,7 @@ the license is included in gfdl.xml.
     </ol>
     The second is more geometric in nature: it lends itself to drawing pictures.
     </p>
-    </remark>
+    </note>
 
   </subsection>
 
@@ -335,12 +337,12 @@ the license is included in gfdl.xml.
       </figure>
 
       <figure>
-        <caption>Interactive picture of a span of two vectors in <m>\R^3</m>.</caption>
+        <caption>Interactive picture of a span of two vectors in <m>\R^3</m>.  Check "Show a.v1 + b.v2" and move the sliders to see how every point in the red region is in fact a linear combination of the two vectors.</caption>
         <mathbox source="demos/span2.html" height="500px"/>
       </figure>
 
       <figure>
-        <caption>Interactive picture of a span of three vectors in <m>\R^3</m>.</caption>
+        <caption>Interactive picture of a span of three vectors in <m>\R^3</m>.  Check "Show a.v1 + b.v2 + c.v3" and move the sliders to see how every point in the red region is in fact a linear combination of the three vectors.</caption>
         <mathbox source="demos/span3.html" height="500px"/>
       </figure>
     </paragraphs>

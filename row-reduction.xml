@@ -151,13 +151,16 @@ the license is included in gfdl.xml.
     </algorithm>
 
     <example xml:id="row-reduction-eg1">
-      <p>Let's row reduce this matrix:
+      <statement>
+      <p>Row reduce this matrix:
       <me>\amat{
       0   -7   -4   2 ;
       2   4   6   12 ;
       3   1   -1   -2
       }.</me>
       </p>
+      </statement>
+      <solution>
       <sidebyside>
         <image>
           <latex-image-code>
@@ -336,6 +339,7 @@ the license is included in gfdl.xml.
         <caption>Animated slideshow of the row reduction in <xref ref="row-reduction-eg1"/>.</caption>
         <mathbox source="demos/rowred2.html" height="500px"/>
       </figure>
+    </solution>
     </example>
 
     <p>Here is the row reduction algorithm, summarized in pictures.</p>
@@ -475,41 +479,46 @@ the license is included in gfdl.xml.
     </sidebyside>
 
     <example xml:id="row-reduction-eg-inconsistent">
-      <p>Let's solve the linear system
+      <statement>
+      <p>Solve the linear system
       <me>
         \syseq{2x + 10y = -1; 3x + 15y = 2}
         \def\r{\color{red}}
       </me>
       using row reduction.
-      <md>
-        <mrow>
-          \amat{ 2 {10} {-1} ;3 {15} 2}
-          \quad\xrightarrow{R_1=R_1\div 2}\quad
-          &amp;\amat{\r1 5 {-\frac 12}; 3 {15} 2}
-          &amp;&amp;\color{blue}\text{(Step 1b)}
-        </mrow>
-        <mrow>
-          {}\quad\xrightarrow{R_2=R_2-3R_1}\quad
-          &amp;\amat{1 5 {-\frac 12}; \r0 0 \frac72}
-          &amp;&amp;\color{blue}\text{(Step 1c)}
-        </mrow>
-        <mrow>
-          {}\quad\xrightarrow{R_2=R_2\times\frac 27}\quad
-          &amp;\amat{1 5 {-\frac 12}; 0 0 \r1}
-          &amp;&amp;\color{blue}\text{(Step 2b)}
-        </mrow>
-        <mrow>
-          {}\quad\xrightarrow{R_1=R_1+\frac 12R_2}\quad
-          &amp;\amat{1 5 \r0; 0 0 1}
-          &amp;&amp;\color{blue}\text{(Step 2c)}
-        </mrow>
-      </md>
-      This row reduced matrix corresponds to the <em>inconsistent</em> system
-      <me>
-        \syseq{x + 5y = 0; \. \+ 0 = 1\rlap.}
-      </me>
       </p>
-
+      </statement>
+      <solution>
+        <p>
+          <md>
+            <mrow>
+              \amat{ 2 {10} {-1} ;3 {15} 2}
+              \quad\xrightarrow{R_1=R_1\div 2}\quad
+              &amp;\amat{\r1 5 {-\frac 12}; 3 {15} 2}
+              &amp;&amp;\color{blue}\text{(Step 1b)}
+            </mrow>
+            <mrow>
+              {}\quad\xrightarrow{R_2=R_2-3R_1}\quad
+              &amp;\amat{1 5 {-\frac 12}; \r0 0 \frac72}
+              &amp;&amp;\color{blue}\text{(Step 1c)}
+            </mrow>
+            <mrow>
+              {}\quad\xrightarrow{R_2=R_2\times\frac 27}\quad
+              &amp;\amat{1 5 {-\frac 12}; 0 0 \r1}
+              &amp;&amp;\color{blue}\text{(Step 2b)}
+            </mrow>
+            <mrow>
+              {}\quad\xrightarrow{R_1=R_1+\frac 12R_2}\quad
+              &amp;\amat{1 5 \r0; 0 0 1}
+              &amp;&amp;\color{blue}\text{(Step 2c)}
+            </mrow>
+          </md>
+          This row reduced matrix corresponds to the <em>inconsistent</em> system
+          <me>
+            \syseq{x + 5y = 0; \. \+ 0 = 1\rlap.}
+          </me>
+        </p>
+      </solution>
     </example>
 
     <observation>

@@ -355,40 +355,43 @@ the license is included in gfdl.xml.
     </p>
 
     <example xml:id="systems-eqns-example1">
-      <p>Let's solve <xref ref="systems-eqns-example"/> using the elimination method.
-      <me>
-        \begin{split}
-        \syseq{x + 2y + 3z = 6;
-        2x - 3y + 2z = 14;
-        3x + y - z = -2
-        }
-        \quad\xrightarrow{\text{2nd ${}={}$ 2nd$-2\times$1st}}\quad&amp;
-        \syseq{x + 2y + 3z = 6;
-        \. \+ -7y - 4z = 2;
-        3x + y - z = -2
-        } \\
-        {}\quad\xrightarrow{\text{3rd ${}={}$ 3rd$-3\times$1st}}\quad&amp;
-        \syseq{x + 2y + 3z = 6;
-        \. \+ -7y - 4z = 2;
-        \. \+ -5y - 10z = -20
-        } \\
-        {}\quad\xrightarrow{\text{2nd $\longleftrightarrow$ 3rd}}\quad&amp;
-        \syseq{x + 2y + 3z = 6;
-        \. \+ -5y - 10z = -20;
-        \. \+ -7y - 4z = 2
-        } \\
-        {}\quad\xrightarrow{\text{divide 2nd by $-5$}}\quad&amp;
-        \syseq{x + 2y + 3z = 6;
-        \. \+  y + 2z = 4;
-        \. \+ -7y - 4z = 2
-        } \\
-        {}\quad\xrightarrow{\text{3rd ${}={}$ 3rd$+7\times$2nd}}\quad&amp;
-        \syseq{x + 2y + 3z = 6;
-        \. \+  y + 2z = 4;
-        \. \+ \. \+ 10z = 30
-        }
-        \end{split}
-      </me>
+      <statement>
+        <p>Solve <xref ref="systems-eqns-example"/> using the elimination method.</p>
+      </statement>
+      <solution>
+        <p><me>
+          \begin{split}
+          \syseq{x + 2y + 3z = 6;
+          2x - 3y + 2z = 14;
+          3x + y - z = -2
+          }
+          \quad\xrightarrow{\text{2nd ${}={}$ 2nd$-2\times$1st}}\quad&amp;
+          \syseq{x + 2y + 3z = 6;
+          \. \+ -7y - 4z = 2;
+          3x + y - z = -2
+          } \\
+          {}\quad\xrightarrow{\text{3rd ${}={}$ 3rd$-3\times$1st}}\quad&amp;
+          \syseq{x + 2y + 3z = 6;
+          \. \+ -7y - 4z = 2;
+          \. \+ -5y - 10z = -20
+          } \\
+          {}\quad\xrightarrow{\text{2nd $\longleftrightarrow$ 3rd}}\quad&amp;
+          \syseq{x + 2y + 3z = 6;
+          \. \+ -5y - 10z = -20;
+          \. \+ -7y - 4z = 2
+          } \\
+          {}\quad\xrightarrow{\text{divide 2nd by $-5$}}\quad&amp;
+          \syseq{x + 2y + 3z = 6;
+          \. \+  y + 2z = 4;
+          \. \+ -7y - 4z = 2
+          } \\
+          {}\quad\xrightarrow{\text{3rd ${}={}$ 3rd$+7\times$2nd}}\quad&amp;
+          \syseq{x + 2y + 3z = 6;
+          \. \+  y + 2z = 4;
+          \. \+ \. \+ 10z = 30
+          }
+          \end{split}
+        </me>
       At this point we've eliminated both <m>x</m> and <m>y</m> from the third equation, and we can solve <m>10z=30</m> to get <m>z=3</m>.  Substituting for <m>z</m> in the second equation gives <m>y+2\cdot3=4</m>, or <m>y=-2</m>.  Substituting for <m>y</m> and <m>z</m> in the first equation gives <m>x + 2\cdot(-2) + 3\cdot3 = 6</m>, or <m>x=3</m>.  Thus the only solution is <m>(x,y,z)=(1,-2,3)</m>.
       </p>
 
@@ -406,6 +409,7 @@ the license is included in gfdl.xml.
         }
       </me>
       </p>
+      </solution>
     </example>
     </paragraphs>
 
@@ -475,90 +479,96 @@ the license is included in gfdl.xml.
     </p>
 
     <example>
-      <p>Let's solve <xref ref="systems-eqns-example"/> using elementary row operations.  We start by forming an augmented matrix:
-      <me>
-        \syseq{x + 2y + 3z = 6;
-        2x - 3y + 2z = 14;
-        3x + y - z = -2
-        }
-        \quad\xrightarrow{\text{becomes}}\quad
-        \amat{
-        1  2  3  6 ;
-        2  -3  2  14;
-        3  1  -1  -2
-        }.
-      </me>
-      Eliminating a variable from an equation means producing a zero to the left of the line in an augmented matrix.  First we produce zeros in the first column (i.e. we eliminate <m>x</m>) by subtracting multiples of the first row.
-      <me>
-        \begin{split}
-        \def\r{\color{red}}
-        \amat{
-        1  2  3  6 ;
-        2  -3  2  14;
-        3  1  -1  -2
-        }
-        \quad\xrightarrow{R_2=R_2-2R_1}\quad&amp;
-        \amat{
-        1  2  3  6 ;
-        \r0 -7 -4 2 ;
-        3  1  -1  -2
-        } \\
-        {}\quad\xrightarrow{R_3=R_3-3R_1}\quad&amp;
-        \amat{
-        1  2  3  6 ;
-        0 -7 -4 2 ;
-        \r0 -5 -10 -20
-        }
-        \end{split}
-      </me>
-      This was made much easier by the fact that the top-left entry is equal to <m>1</m>, so we can simply multiply the first row by the number below and subtract.  In order to eliminate <m>y</m> in the same way, we would like to produce a <m>1</m> in the second column.  We could divide the second row by <m>-7</m>, but this would produce fractions; instead, let's divide the third by <m>-5</m>.
-      <me>
-        \begin{split}
-        \amat{
-        1  2  3  6 ;
-        0 -7 -4 2 ;
-        0 -5 -10 -20
-        }
-        \quad\xrightarrow{R_3=R_3\div-5}\quad&amp;
-        \amat{
-        1  2  3  6 ;
-        0 -7 -4 2 ;
-        0 \r1 2 4
-        } \\
-        {}\quad\xrightarrow{R_2\longleftrightarrow R_3}\quad&amp;
-        \amat{
-        1  2  3  6 ;
-        0 1 2 4 ;
-        0 -7 -4 2
-        } \\
-        {}\quad\xrightarrow{R_2\longleftrightarrow R_3}\quad&amp;
-        \amat{
-        1  2  3  6 ;
-        0 1 2 4 ;
-        0 \r0 10 30
-        } \\
-        {}\quad\xrightarrow{R_3 = R_3\div 10}\quad&amp;
-        \amat{
-        1  2  3  6 ;
-        0 1 2 4 ;
-        0 0 \r1 3
-        }
-        \end{split}
-      </me>
-      We swapped the second and third row just to keep things orderly.  Now we translate this augmented matrix back into a system of equations:
-      <me>
-        \amat{
-        1  2  3  6 ;
-        0 1 2 4 ;
-        0 0 1 3
-        } \quad\xrightarrow{\text{becomes}}\quad
-        \syseq{
-        x + 2y + 3z = 6;
-        \. \+ y + 2z = 4;
-        \. \+ \. \+ z = 3}
-      </me>
-      Hence <m>z=3</m>; back-substituting as in <xref ref="systems-eqns-example1"/> gives <m>(x,y,z)=(1,-2,3)</m>.
-      </p>
+      <statement>
+        <p>Solve <xref ref="systems-eqns-example"/> using elementary row operations.</p>
+      </statement>
+      <solution>
+        <p>
+        We start by forming an augmented matrix:
+        <me>
+          \syseq{x + 2y + 3z = 6;
+          2x - 3y + 2z = 14;
+          3x + y - z = -2
+          }
+          \quad\xrightarrow{\text{becomes}}\quad
+          \amat{
+          1  2  3  6 ;
+          2  -3  2  14;
+          3  1  -1  -2
+          }.
+        </me>
+        Eliminating a variable from an equation means producing a zero to the left of the line in an augmented matrix.  First we produce zeros in the first column (i.e. we eliminate <m>x</m>) by subtracting multiples of the first row.
+        <me>
+          \begin{split}
+          \def\r{\color{red}}
+          \amat{
+          1  2  3  6 ;
+          2  -3  2  14;
+          3  1  -1  -2
+          }
+          \quad\xrightarrow{R_2=R_2-2R_1}\quad&amp;
+          \amat{
+          1  2  3  6 ;
+          \r0 -7 -4 2 ;
+          3  1  -1  -2
+          } \\
+          {}\quad\xrightarrow{R_3=R_3-3R_1}\quad&amp;
+          \amat{
+          1  2  3  6 ;
+          0 -7 -4 2 ;
+          \r0 -5 -10 -20
+          }
+          \end{split}
+        </me>
+        This was made much easier by the fact that the top-left entry is equal to <m>1</m>, so we can simply multiply the first row by the number below and subtract.  In order to eliminate <m>y</m> in the same way, we would like to produce a <m>1</m> in the second column.  We could divide the second row by <m>-7</m>, but this would produce fractions; instead, let's divide the third by <m>-5</m>.
+        <me>
+          \begin{split}
+          \amat{
+          1  2  3  6 ;
+          0 -7 -4 2 ;
+          0 -5 -10 -20
+          }
+          \quad\xrightarrow{R_3=R_3\div-5}\quad&amp;
+          \amat{
+          1  2  3  6 ;
+          0 -7 -4 2 ;
+          0 \r1 2 4
+          } \\
+          {}\quad\xrightarrow{R_2\longleftrightarrow R_3}\quad&amp;
+          \amat{
+          1  2  3  6 ;
+          0 1 2 4 ;
+          0 -7 -4 2
+          } \\
+          {}\quad\xrightarrow{R_2\longleftrightarrow R_3}\quad&amp;
+          \amat{
+          1  2  3  6 ;
+          0 1 2 4 ;
+          0 \r0 10 30
+          } \\
+          {}\quad\xrightarrow{R_3 = R_3\div 10}\quad&amp;
+          \amat{
+          1  2  3  6 ;
+          0 1 2 4 ;
+          0 0 \r1 3
+          }
+          \end{split}
+        </me>
+        We swapped the second and third row just to keep things orderly.  Now we translate this augmented matrix back into a system of equations:
+        <me>
+          \amat{
+          1  2  3  6 ;
+          0 1 2 4 ;
+          0 0 1 3
+          } \quad\xrightarrow{\text{becomes}}\quad
+          \syseq{
+          x + 2y + 3z = 6;
+          \. \+ y + 2z = 4;
+          \. \+ \. \+ z = 3}
+        </me>
+        Hence <m>z=3</m>; back-substituting as in <xref ref="systems-eqns-example1"/> gives <m>(x,y,z)=(1,-2,3)</m>.
+        </p>
+      </solution>
     </example>
 
     <important><p>The process of doing row operations to a matrix does not change the solution set of the corresponding linear equations!</p></important>
@@ -574,39 +584,52 @@ the license is included in gfdl.xml.
     <p>So the linear equations of row-equivalent matrices have the <em>same solution set</em>.</p>
 
     <example>
+      <statement>
       <p>
-        Let's solve the following system of equations using row operations.
+        Solve the following system of equations using row operations:
         <me>
           \syseq{x + y = 2;
           3x + 4y = 5;
           4x + 5y = 9
           }
-          \quad\xrightarrow{\text{augmented matrix}}\quad
-          \amat{1 1 2; 3 4 5; 4 5 9}
         </me>
-        First we clear the entries below the top-left using row replacement.
-        <me>
-        \def\r{\color{red}}
-          \begin{split}
-          \amat{1 1 2; 3 4 5; 4 5 9}
-          \quad\xrightarrow{R_2=R_2-3R_1}\quad&amp;
-          \amat{1 1 2; \r0 1 -1; 4 5 9} \\
-          {}\quad\xrightarrow{R_3=R_3-4R_1}\quad&amp;
-          \amat{1 1 2; 0 1 -1; \r0 1 1}
-          \end{split}
-        </me>
-        Now we clear the second entry from the last row.
-        <me>
-          \amat{1 1 2; 0 1 -1; 0 1 1}
-          \quad\xrightarrow{R_3=R_3-R_2}\quad
-          \amat{1 1 2; 0 1 -1; 0 \r0 2}
-        </me>
-        This translates back into the system of equations
-        <me>
-          \syseq{x + y = 2; \. \+ y = -1; \. \+ 0 = 2\rlap.}
-        </me>
-        Our original system has the same solution set as this system.  But this system has no solutions: there are no values of <m>x,y</m> making the third equation true!  We conclude that our original equation has no solutions either.
       </p>
+      </statement>
+      <solution>
+        <p>
+          First we put our system of equations into an augmented matrix.
+          <me>
+            \syseq{x + y = 2;
+            3x + 4y = 5;
+            4x + 5y = 9
+            }
+            \quad\xrightarrow{\text{augmented matrix}}\quad
+            \amat{1 1 2; 3 4 5; 4 5 9}
+          </me>
+          We clear the entries below the top-left using row replacement.
+          <me>
+            \def\r{\color{red}}
+            \begin{split}
+            \amat{1 1 2; 3 4 5; 4 5 9}
+            \quad\xrightarrow{R_2=R_2-3R_1}\quad&amp;
+            \amat{1 1 2; \r0 1 -1; 4 5 9} \\
+            {}\quad\xrightarrow{R_3=R_3-4R_1}\quad&amp;
+            \amat{1 1 2; 0 1 -1; \r0 1 1}
+            \end{split}
+          </me>
+          Now we clear the second entry from the last row.
+          <me>
+            \amat{1 1 2; 0 1 -1; 0 1 1}
+            \quad\xrightarrow{R_3=R_3-R_2}\quad
+            \amat{1 1 2; 0 1 -1; 0 \r0 2}
+          </me>
+          This translates back into the system of equations
+          <me>
+            \syseq{x + y = 2; \. \+ y = -1; \. \+ 0 = 2\rlap.}
+          </me>
+          Our original system has the same solution set as this system.  But this system has no solutions: there are no values of <m>x,y</m> making the third equation true!  We conclude that our original equation has no solutions either.
+        </p>
+      </solution>
     </example>
 
     <definition>

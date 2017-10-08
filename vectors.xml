@@ -90,10 +90,10 @@ the license is included in gfdl.xml.
       </image>
     </sidebyside>
 
-    <remark>
+    <note>
       <p>Unless otherwise specified, we will assume that all vectors start at the origin.
       </p>
-    </remark>
+    </note>
 
     <remark>
       <p>Vectors makes sense in the real world: many physical quantities, such as velocity, are represented as vectors.  But it makes more sense to think of the velocity of a car as being located at the car.</p>
@@ -317,11 +317,16 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
       {
         \begin{minipage}{0.6\linewidth}
            \begin{itemize}
-           \item $\color{seq3} v_1+v_2$
-           \item $\color{seq4} v_1-v_2$
-           \item $\color{seq5} 2v_1\color{gray}+0v_2$
-           \item $\color{seq8} 2v_2$
-           \item $\color{seq7} -v_1$
+           \color{seq3}
+           \item $v_1+v_2$
+           \color{seq4}
+           \item $v_1-v_2$
+           \color{seq5}
+           \item $2v_1\color{gray}+0v_2$
+           \color{seq8}
+           \item $2v_2$
+           \color{seq7}
+           \item $-v_1$
            \end{itemize}
         \end{minipage}
       };

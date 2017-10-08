@@ -41,5 +41,6 @@
   <uri resource="parametric-form.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="rank-nullity.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="row-reduction.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="spans.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="systems-eqns.xml" uri="../mathbook/schema/pretext.rnc"/>
 </locatingRules>

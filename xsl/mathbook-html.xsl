@@ -131,6 +131,11 @@
     </xsl:element>
 </xsl:template>
 
+<!-- JDR: "answers" in examples not hidden -->
+<xsl:template match="example/hint|example/answer|example/solution" mode="is-hidden">
+    <xsl:text>false</xsl:text>
+</xsl:template>
+
 <!-- JDR: allow images with natural width, including in sidebyside panels -->
 <xsl:template match="image|video|jsxgraph" mode="get-width-percentage">
     <xsl:choose>
@@ -252,6 +257,16 @@
 
 <xsl:template match="exercise" mode="heading-birth">
     <xsl:apply-templates select="." mode="heading-simple-number" />
+</xsl:template>
+
+<xsl:template match="paragraphs" mode="body-css-class">
+    <xsl:text>paragraphs</xsl:text>
+    <xsl:choose>
+      <xsl:when test="@class">
+        <xsl:text> </xsl:text>
+        <xsl:value-of select="@class"/>
+      </xsl:when>
+    </xsl:choose>
 </xsl:template>
 
 <xsl:template match="caption">
