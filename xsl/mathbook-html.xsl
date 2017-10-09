@@ -132,7 +132,11 @@
 </xsl:template>
 
 <!-- JDR: "answers" in examples not hidden -->
-<xsl:template match="example/hint|example/answer|example/solution" mode="is-hidden">
+<xsl:template match="example/hint|example/answer|example/solution|specialcase/hint|specialcase/answer|specialcase/solution" mode="is-hidden">
+    <xsl:text>false</xsl:text>
+</xsl:template>
+
+<xsl:template match="specialcase" mode="is-hidden">
     <xsl:text>false</xsl:text>
 </xsl:template>
 

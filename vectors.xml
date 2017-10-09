@@ -348,8 +348,8 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
       <mathbox source="demos/lincombo.html?v1=2,-1,1&amp;v2=1,1,-1&amp;v3=-1,1,4&amp;range=5" height="500px"/>
     </figure>
 
-    <example>
-      <title>Linear Combinations of a Single Vector</title>
+    <specialcase>
+      <title>(Linear Combinations of a Single Vector)</title>
       <p>A linear combination of a single vector <m>v = \vec{1 2}</m> is just a scalar multiple of <m>v</m>.  So some examples include
       <me>v=\vec{1 2},\quad \frac 32v=\vec{3/2 3},\quad -\frac12v = \vec{-1/2 -1},\quad\ldots
       </me>
@@ -370,10 +370,10 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
           </latex-image-code>
         </image>
       </sidebyside>
-    </example>
+    </specialcase>
 
-    <example>
-      <title>Linear Combinations of Collinear Vectors</title>
+    <specialcase>
+      <title>(Linear Combinations of Collinear Vectors)</title>
       <p>The set of all linear combinations of the vectors
       <me>v_1 = \vec{2 2}\qquad\text{and}\qquad v_2 = \vec{-1 -1}</me>
       is the <em>line</em> containing both vectors.</p>
@@ -399,7 +399,7 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
         <caption>Linear combinations of two collinear vectors (in <m>\R^3</m> instead of <m>\R^2</m>).</caption>
         <mathbox source="demos/lincombo.html?v1=2,0,2&amp;v2=-1,0,-1&amp;range=5&amp;camera=0,0,-2" height="350px"/>
       </figure>
-    </example>
+    </specialcase>
 
   </subsection>
 
