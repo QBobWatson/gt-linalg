@@ -29,6 +29,7 @@ Copyright 2017 Georgia Institute of Technology
     \definecolor{ColorEx2}{rgb}{1,1,0}
     \let\To=\longrightarrow
     \def\rref{\;\overset{\text{rref}}\To\;}
+    \def\matrow#1{\text{&#8212;}\,#1\,\text{&#8212;}}
 
     \definecolor{seq-red}{rgb}{0.8941,0.1020,0.1098}
     \definecolor{seq-blue}{rgb}{0.2157,0.4941,0.7216}

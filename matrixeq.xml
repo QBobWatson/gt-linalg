@@ -12,8 +12,447 @@ the license is included in gfdl.xml.
 <section xml:id="section-matrix-eq">
   <title>Matrix Equations</title>
 
-  <p>
-    Matrix equations.  Column span.  Four equivalent ways to write a system of equations.
-  </p>
+  <objectives>
+    <ol>
+      <li>Understand the equivalence between a system of linear equations, an augmented matrix, a vector equation, and a matrix equation.</li>
+      <li>Characterize the vectors <m>b</m> such that <m>Ax=b</m> is consistent. in terms of the span of the columns of <m>A</m>.</li>
+      <li>Characterize matrices <m>A</m> such that <m>Ax=b</m> is consistent for all vectors <m>b</m>.</li>
+      <li>Vocabulary word: <term>matrix equation</term>.</li>
+    </ol>
+  </objectives>
+
+  <subsection>
+    <title>The Matrix Equation <m>Ax=b</m>.</title>
+
+    <p>In this section we introduce a very concise way of writing a system of linear equations: <m>Ax=b</m>.  Here <m>A</m> is a matrix and <m>x,b</m> are vectors (generally of different sizes), so first we must explain how to multiply a matrix by a vector.
+    </p>
+
+    <paragraphs class="bluebox">
+      <p>When we say "<m>A</m> is an <m>m\times n</m> matrix," we mean that <m>A</m> has <m>m</m> rows an <m>n</m> columns.
+      </p>
+    </paragraphs>
+
+    <remark>
+      <p>In this book, we do <em>not</em> reserve the letters <m>m</m> and <m>n</m> for the numbers of rows and columns of a matrix.  If we write "<m>A</m> is an <m>n\times m</m> matrix", then <m>n</m> is the number of rows of <m>A</m> and <m>m</m> is the number of columns.</p>
+    </remark>
+
+    <definition xml:id="matrixeq-defn-Ax1">
+      <statement>
+        <p>Let <m>A</m> be an <m>m\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_n</m>:
+        <me>A = \mat{| | ,{}, |; v_1 v_1 \cdots, v_n;| | ,{}, | }</me>
+        The <term>product</term> of <m>A</m> with a vector <m>x</m> in <m>\R^n</m> is the linear combination
+        <me>Ax = \mat{| | ,{}, |; v_1 v_1 \cdots, v_n;| | ,{}, | }
+        \vec{x_1 x_2 \vdots, x_n} = x_1v_1 + x_2v_2 + \cdots + x_nv_n.</me>
+        This is a vector in <m>\R^m</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <example>
+      <p><me>
+        \mat{
+        4 5 6;
+        7 8 9}
+        \vec{1 2 3}
+        = 1\vec{4 7} + 2\vec{5 8} + 3\vec{6 9} = \vec{32 50}.
+      </me></p>
+    </example>
+
+    <p>In order for <m>Ax</m> to make sense, the number of entries of <m>x</m> has to be the same as the number of columns of <m>A</m>: we are using the entries of <m>x</m> as the coefficients of the columns of <m>A</m> in a linear combination.  The resulting vector has the same number of entries as the number of <em>rows</em> of <m>A</m>, since each column of <m>A</m> has that number of entries.
+    </p>
+
+    <paragraphs class="bluebox">
+      <p>If <m>A</m> is an <m>m\times n</m> matrix, then <m>Ax</m> makes sense when <m>x</m> has <m>n</m> entries.  The product <m>Ax</m> has <m>m</m> entries.
+      </p>
+    </paragraphs>
+
+    <definition>
+      <statement>
+        <p>A <term>matrix equation</term> is an equation of the form <m>Ax=b</m>, where <m>A</m> is an <m>m\times n</m> matrix, <m>b</m> is a vector in <m>\R^m</m>, and <m>x</m> is a vector whose coefficients <m>x_1,x_2,\ldots,x_n</m> are unknown.</p>
+      </statement>
+    </definition>
+
+    <paragraphs class="remark-like">
+      <title>Matrix Equations and Vector Equations</title>
+      <p>Let <m>v_1,v_2,\ldots,v_n</m> and <m>b</m> be vectors in <m>\R^m</m>.  Consider the vector equation
+      <me>x_1v_1 + x_2v_2 + \cdots + x_nv_n = b.</me>
+      This is equivalent to the matrix equation <m>Ax=b</m>, where
+      <me>A = \mat{ | | {} |; v_1 v_2 \cdots, v_n; | | {} |}
+      \qquad\text{and}\qquad
+      x = \vec{x_1 x_2 \vdots, x_n}.
+      </me>
+      Conversely, if <m>A</m> is any <m>m\times n</m> matrix, then
+      <m>Ax=b</m> is equivalent to the vector equation
+      <me>x_1v_1 + x_2v_2 + \cdots + x_nv_n = b,</me>
+      where <m>v_1,v_2,\ldots,v_n</m> are the columns of <m>A</m>, and <m>x_1,x_2,\ldots,x_n</m> are the entries of <m>x</m>.
+      </p>
+    </paragraphs>
+
+    <example>
+      <statement>
+        <p>Write the vector equation
+        <me>2v_1 + 3v_2 - 4v_3 = \vec{7 2 1}</me>
+        as a matrix equation, where <m>v_1,v_2,v_3</m> are vectors in <m>\R^3</m>.
+        </p>
+      </statement>
+
+      <solution>
+        <p>Let <m>A</m> be the matrix with columns <m>v_1,v_2,v_3</m>, and let <m>x</m> be the vector with entries <m>2,3,-4</m>.  Then
+        <me>Ax =  \mat{ | | |; v_1 v_2 v_3; | | |}\vec{2 3 -4}
+        = 2v_1 + 3v_2 - 4v_3, </me>
+        so the vector equation is equivalent to the matrix equation
+        <m>Ax=\vec{7 2 1}.</m>
+        </p>
+      </solution>
+    </example>
+
+    <important>
+      <title>(Four Ways of Writing a Linear System)</title>
+      <p>We now have <em>four</em> equivalent ways of writing (and thinking about) a system of linear equations:
+      <ol>
+        <li>As a system of equations:
+        <me>\syseq{2x_1 + 3x_2 - 2x_3 = 7; x_1 - x_2 - 3x_3 = 5}
+        </me>
+        </li>
+        <li>As an augmented matrix:
+        <me>\amat{2 3 -2 7; 1 -1 -3 5}</me>
+        </li>
+        <li>As a vector equation (<m>x_1v_1 + x_2v_2 + \cdots + x_nv_n = b</m>):
+        <me>x_1\vec{2 1} + x_2\vec{3 -1} + x_3\vec{-2 -3} = \vec{7 5}</me>
+        </li>
+        <li>As a matrix equation (<m>Ax=b</m>):
+        <me>\mat{2 3 -2; 1 -1 -3}\vec{x_1 x_2 x_3} = \vec{7 5}.
+        </me>
+        </li>
+      </ol>
+      In particular, <em>all four have the same solution set</em>.
+      </p>
+    </important>
+
+    <paragraphs class="bluebox">
+      <p>We will move back and forth freely between the four ways of writing a linear system, over and over again, for the rest of the semester.</p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Another Way to Compute <m>Ax</m></title>
+
+      <p><xref ref="matrixeq-defn-Ax1"/> is a useful way of defining the product of a matrix with a vector when it comes to understanding the relationship between matrix eqeuations and vector equations.  Here we give a definition that is better-adapted to computations by hand.
+      </p>
+
+      <definition>
+        <statement>
+          <p>A <term>row vector</term> is a matrix with one row.  The product of a row vector of length <m>n</m> and a (column) vector of length <m>n</m> is
+          <me>\mat{a_1 a_2 \cdots, a_n} \vec{x_1 x_2 \vdots, x_n}
+          = a_1x_1 + a_2x_2 + \cdots + a_nx_n.</me>
+          This is a scalar.
+          </p>
+        </statement>
+      </definition>
+
+      <p>If <m>A</m> is an <m>m\times n</m> matrix with rows <m>r_1,r_2,\ldots,r_m</m>, and <m>x</m> is a vector in <m>\R^n</m>, then
+      <me>Ax = \mat[c]{ \matrow{r_1};
+      \matrow{r_2};
+      \vdots ;
+      \matrow{r_m}}
+      x
+      = \vec{r_1x r_2x \vdots, r_mx}.
+      </me>
+      </p>
+
+      <example>
+        <p><me>
+          \mat{
+          4 5 6;
+          7 8 9}
+          \vec{1 2 3} =
+          \vec{\mat{4, 5, 6}\vec{1 2 3}
+          \mat{7 8 9}\vec{1 2 3}}
+          = \vec{4\cdot1+5\cdot2+6\cdot3 7\cdot1+8\cdot2+9\cdot3}
+          = \vec{32 50}.
+        </me>
+        This is the same result as before:
+        <me>
+        \mat{
+        4 5 6;
+        7 8 9}
+        \vec{1 2 3}
+        = 1\vec{4 7} + 2\vec{5 8} + 3\vec{6 9}
+        = \vec{1\cdot4+2\cdot5+3\cdot6 1\cdot7+2\cdot8+3\cdot9}
+        = \vec{32 50}.
+        </me>
+        </p>
+      </example>
+    </paragraphs>
+
+  </subsection>
+
+  <subsection>
+    <title>Spans and Consistency</title>
+
+    <p>Let <m>A</m> be a matrix with columns <m>v_1,v_2,\ldots,v_n</m>:
+    <me>A = \mat{ | | {} |; v_1 v_2 \cdots, v_n; | | {} |}.</me>
+    Then
+    <me>\begin{split}
+    Ax=b&amp;\text{ has a solution} \\
+    &amp;\iff \text{there exist $x_1,x_2,\ldots,x_n$ such that }
+    A\vec{x_1 x_2 \vdots, x_n} = b \\
+    &amp;\iff \text{there exist $x_1,x_2,\ldots,x_n$ such that }
+    x_1v_1 + x_2v_2 + \cdots + x_nv_n = b \\
+    &amp;\iff \text{$b$ is a linear combination of } v_1,v_2,\ldots,v_n \\
+    &amp;\iff \text{$b$ is in the span of the columns of $A$}.
+    \end{split}
+    </me>
+    </p>
+
+    <important xml:id="matrixeq-spans-consistency">
+      <title>(Spans and Consistency)</title>
+
+      <p>The matrix equation <m>Ax=b</m> has a solution if and only if <m>b</m> is in the span of the columns of <m>A</m>.</p>
+    </important>
+
+    <p>Note that <xref ref="matrixeq-spans-consistency"/> gives an equivalence between an <em>algebraic</em> statement (<m>Ax=b</m> is consistent), and a <em>geometric</em> statement (<m>b</m> is in the span of the columns of <m>A</m>).
+    </p>
+
+    <example>
+      <title>An Inconsistent System</title>
+      <statement><p>
+        Let <m>A=\mat[r]{2 1; -1 0; 1 -1}</m>.  Does the equation <m>Ax=\vec{0 2 2}</m> have a solution?
+      </p></statement>
+
+      <solution>
+        <p>First we answer the question geometrically.  The columns of <m>A</m> are
+        <me>\textcolor{seq-red}{v_1 = \vec{2 -1 1}}
+        \qquad\text{and}\qquad
+        \textcolor{seq-blue}{v_2 = \vec{1 0 -1}},</me>
+        and the target vector (on the right-hand side of the equation) is <m>\textcolor{seq-green}{w = \vec{0 2 2}}.</m>  The equation <m>Ax=w</m> is consistent if and only if <m>w</m> is contained in the span of the columns of <m>A</m>.  So we draw a picture:
+        </p>
+        <sidebyside>
+          <image>
+            <latex-image-code>
+              <![CDATA[
+\begin{tikzpicture}[myxyz, thin border nodes]
+  \path[clip, resetxy] (-4,-4) rectangle (4,4);
+
+  \def\v{(2,-1,1)}
+  \def\w{(1,0,-1)}
+  \def\b{(0,2,2)}
+
+  \node[coordinate] (X) at \v {};
+  \node[coordinate] (Y) at \w {};
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-5, -5) -- (5, 5) -- (5, 10) -- (-5, 10) -- cycle;
+    \fill[seq4!30, nearly opaque] (-1.5,-1) rectangle (1.5,2);
+    \draw[step=.5cm, seq4, very thin] (-1.5,-1) grid (1.5,2);
+  \end{scope}
+
+  \begin{scope}[transformxy]
+    \fill[white, nearly opaque] (-2, -2) rectangle (3, 3);
+    \draw[grid lines] (-2, -2) grid (3, 3);
+  \end{scope}
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-5, -5) -- (5, 5) -- (5, -10) -- (-5, -10) -- cycle;
+    \fill[seq4!30, nearly opaque] (-1.5,-1) rectangle (1.5,2);
+    \draw[step=.5cm, seq4, very thin] (-1.5,-1) grid (1.5,2);
+  \end{scope}
+
+  \draw[vector, seq1] (0,0,0) --
+    node [midway, above left] {$v_1$} \v;
+  \draw[thin, densely dotted] \v -- \projxy\v;
+
+  \draw[vector, seq2!50!white] (0,0,0) --
+    node [midway, below left] {$v_2$} \w;
+  \draw[thin, densely dotted, black!50!white] \w -- \projxy\w;
+
+  \draw[vector, seq3] (0,0,0) --
+    node [midway, above right] {$w$} \b;
+  \draw[thin, densely dotted] \b -- \projxy\b;
+
+  \node[seq4] at (-1.5cm, 2cm) {$\Span\{v_1,v_2\}$};
+
+  \point at (0,0,0);
+
+\end{tikzpicture}
+              ]]>
+            </latex-image-code>
+          </image>
+        </sidebyside>
+        <p>It does not appear that <m>w</m> lies in <m>\Span\{v_1,v_2\},</m> so the equation is inconsistent.</p>
+        <figure>
+          <caption>The vector <m>w</m> is not contained in <m>\Span\{v_1,v_2\}</m>, so the equation <m>Ax=b</m> is inconsistent.  (Try moving the sliders to solve the equation.)</caption>
+          <mathbox source="demos/lincombo.html?v1=2,-1,1&amp;v2=1,0,-1&amp;w=0,2,2&amp;range=5" height="500px"/>
+        </figure>
+
+        <p>Let's check our geometric answer by solving the matrix equation using row reduction.  We put the system into an augmented matrix and row reduce:
+        <me>\amat{2 1 0; -1 0 2; 1 -1 2}
+        \quad\xrightarrow{\text{RREF}}\quad
+        \amat{1 0 0; 0 1 0; 0 0 1}.
+        </me>
+        The last equation is <m>0=1</m>, so the system is indeed inconsistent, and the matrix equation
+        <me>\mat[r]{2 1; -1 0; 1 -1}x = \vec{0 2 2}</me>
+        has no solution.
+        </p>
+
+      </solution>
+    </example>
+
+    <example>
+      <title>A Consistent System</title>
+
+      <statement><p>
+        Let <m>A=\mat[r]{2 1; -1 0; 1 -1}</m>.  Does the equation <m>Ax=\vec{1 -1 2}</m> have a solution?
+      </p></statement>
+
+      <solution>
+        <p>First we answer the question geometrically.  The columns of <m>A</m> are
+        <me>\textcolor{seq-red}{v_1 = \vec{2 -1 1}}
+        \qquad\text{and}\qquad
+        \textcolor{seq-blue}{v_2 = \vec{1 0 -1}},</me>
+        and the target vector (on the right-hand side of the equation) is <m>\textcolor{seq-green}{w = \vec{1 -1 2}}.</m>  The equation <m>Ax=w</m> is consistent if and only if <m>w</m> is contained in the span of the columns of <m>A</m>.  So we draw a picture:
+        </p>
+        <sidebyside>
+          <image>
+            <latex-image-code>
+              <![CDATA[
+\begin{tikzpicture}[myxyz, thin border nodes]
+  \path[clip, resetxy] (-4,-4) rectangle (4,4);
+
+  \def\v{(2,-1,1)}
+  \def\w{(1,0,-1)}
+  \def\b{(1,-1,2)}
+
+  \node[coordinate] (X) at \v {};
+  \node[coordinate] (Y) at \w {};
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-5, -5) -- (5, 5) -- (5, 10) -- (-5, 10) -- cycle;
+    \fill[seq4!30, nearly opaque] (-1.5,-1.5) rectangle (1.5,2);
+    \draw[step=.5cm, seq4, very thin] (-1.5,-1.5) grid (1.5,2);
+  \end{scope}
+
+  \begin{scope}[transformxy]
+    \fill[white, nearly opaque] (-2, -2) rectangle (3, 3);
+    \draw[help lines] (-2, -2) grid (3, 3);
+  \end{scope}
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-5, -5) -- (5, 5) -- (5, -10) -- (-5, -10) -- cycle;
+    \fill[seq4!30, nearly opaque] (-1.5,-1.5) rectangle (1.5,2);
+    \draw[step=.5cm, seq4, very thin] (-1.5,-1.5) grid (1.5,2);
+  \end{scope}
+
+  \draw[vector, seq1] (0,0,0) --
+    node [midway, below right] {$v_1$} \v;
+  \draw[thin, densely dotted] \v -- \projxy\v;
+
+  \draw[vector, seq2!50!white] (0,0,0) --
+    node [midway, below left] {$v_2$} \w;
+  \draw[thin, densely dotted, black!50!white] \w -- \projxy\w;
+
+  \draw[vector, seq3] (0,0,0) --
+    node [midway, above left] {$w$} \b;
+  \draw[thin, densely dotted] \b -- \projxy\b;
+
+  \node[seq4] at (-1.75cm, 2.45cm) {$\Span\{v_1,v_2\}$};
+
+  \point at (0,0,0);
+\end{tikzpicture}
+              ]]>
+            </latex-image-code>
+          </image>
+        </sidebyside>
+        <p>It appears that <m>w</m> is indeed contained in the span of the columns of <m>A</m>; in fact, we can see
+        <me>w = v_1 - v_2 \implies x = \vec{1 -1}.</me>
+        </p>
+        <figure>
+          <caption>The vector <m>w</m> is contained in <m>\Span\{v_1,v_2\}</m>, so the equation <m>Ax=b</m> is consistent.  (Move the sliders to solve the equation.)</caption>
+          <mathbox source="demos/lincombo.html?v1=2,-1,1&amp;v2=1,0,-1&amp;w=1,-1,2&amp;range=5" height="500px"/>
+        </figure>
+
+        <p>Let's check our geometric answer by solving the matrix equation using row reduction.  We put the system into an augmented matrix and row reduce:
+        <me>\amat{2 1 1; -1 0 -1; 1 -1 2}
+        \quad\xrightarrow{\text{RREF}}\quad
+        \amat{1 0 1; 0 1 -1; 0 0 0}.
+        </me>
+        This gives us <m>x=1</m> and <m>y=-1</m>, which is consistent with the picture:
+        <me>1\vec{2 -1 1} -1\vec{1 0 -1} = \vec{1 -1 2}
+        \qquad\text{or}\qquad
+        A\vec{1 -1} = \vec{1 -1 2}.</me>
+        </p>
+
+      </solution>
+    </example>
+
+    <paragraphs>
+      <title>When Solutions Always Exist</title>
+
+      <p>Building on <xref ref="matrixeq-spans-consistency"/>, we have the following criterion for when <m>Ax=b</m> is consistent for <em>every</em> choice of <m>b</m>.</p>
+
+      <theorem xml:id="matrixeq-thm-full-span">
+        <statement>
+          <p>Let <m>A</m> be an <m>m\times n</m> (non-augmented) matrix.  The following are equivalent:
+          <ol>
+            <li><m>Ax=b</m> has a solution for all <m>b</m> in <m>\R^m</m>.</li>
+            <li>The span of the columns of <m>A</m> is all of <m>\R^m</m>.</li>
+            <li><m>A</m> has a pivot in every row.</li>
+          </ol>
+          </p>
+        </statement>
+
+        <proof>
+          <p>The equivalence of 1 and 2 is established by <xref ref="matrixeq-spans-consistency"/> as applied to every <m>b</m> in <m>\R^m</m>.
+          </p>
+
+          <p>Now we show that 1 and 3 are equivalent.  (Since we know 1 and 2 are equivalent, this implies 2 and 3 are equivalent as well.)  If <m>A</m> has a pivot in every row, then its reduced row echelon form looks like this:
+          <me>\mat{
+          1   0   \star,   0   \star ;
+          0   1   \star , 0   \star ;
+          0   0   0   1   \star
+          },</me>
+          and therefore <m>\amat{A b}</m> reduces to this:
+          <me>\amat[c]{
+          1   0   \star,   0   \star, \star ;
+          0   1   \star , 0   \star, \star ;
+          0   0   0   1   \star, \star
+          }.</me>
+          There is no <m>b</m> that makes it inconsistent, so there is always a solution.  Conversely, if <m>A</m> does not have a pivot in each row, then its reduced row echelon form looks like this:
+          <me>\mat{
+          1   0   \star,   0   \star ;
+          0   1   \star , 0   \star ;
+          0   0   0   0  0
+          },</me>
+          which can give rise to an inconsistent system after augmenting with <m>b</m>:
+          <me>\amat{
+          1   0   \star,   0   \star, 0 ;
+          0   1   \star , 0   \star, 0 ;
+          0   0   0   0   0 16
+          }.
+          </me>
+          </p>
+        </proof>
+      </theorem>
+
+      <p>Recall that <term>equivalent</term> means that, for any given matrix <m>A</m>, either <em>all</em> of the conditions of <xref ref="matrixeq-thm-full-span"/> are true, or they are all false.
+      </p>
+
+      <warning>
+        <p>Be careful when reading the statement of <xref ref="matrixeq-thm-full-span"/>.  The first two conditions look very much like <xref ref="matrixeq-spans-consistency"/>, but they are logically quite different because of the quantifier "<em>for all</em> <m>b</m>".
+        </p>
+      </warning>
+
+      <figure>
+        <caption>An example where the criteria of <xref ref="matrixeq-thm-full-span"/> are satisfied.  The red region is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.</caption>
+        <mathbox source="demos/span3.html?v1=2,-1,1&amp;v2=1,0,-1&amp;v3=-1,2,2&amp;range=5&amp;noninteractive=true" height="400px"/>
+      </figure>
+
+      <figure>
+        <caption>An example where the criteria of <xref ref="matrixeq-thm-full-span"/> are <em>not</em> satisfied.  The red region is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.</caption>
+        <mathbox source="demos/span3.html?v1=2,-1,1&amp;v2=1,0,-1&amp;v3=1,-1,2&amp;range=5&amp;noninteractive=true" height="400px"/>
+      </figure>
+
+    </paragraphs>
+
+  </subsection>
 
 </section>

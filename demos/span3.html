@@ -519,14 +519,16 @@ new Demo({
         };
     }).apply(this);
 
-    // Make the vectors draggable
-    var draggable = new Draggable({
-        view:   this.view,
-        points: vectors,
-        size:   30,
-        hiliteColor: [0, 1, 1, .75],
-        onDrag: onDrag,
-    });
+    if(!paramQS.noninteractive) {
+        // Make the vectors draggable
+        var draggable = new Draggable({
+            view:   this.view,
+            points: vectors,
+            size:   30,
+            hiliteColor: [0, 1, 1, .75],
+            onDrag: onDrag,
+        });
+    }
 
     if(paramsQS.indep)
         this.label.innerHTML =

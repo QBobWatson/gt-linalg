@@ -256,7 +256,6 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
     \begin{scope}[xshift=6cm]
     \node[anchor=south] at (.5,5) {All multiples of $v$.};
     \draw[help lines] (-2,-2) grid (3,5);
-    \pause
     \draw[thick, seq-blue, <->] (-1,-2) -- (2.5, 5);
     \point at (0,0);
     \end{scope}
