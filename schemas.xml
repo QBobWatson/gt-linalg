@@ -13,6 +13,7 @@
   <uri resource="cplx-nums.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="determinant-compute.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="determinant-defn.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="determinant-motivation-cofactors.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="diagonalization.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="dimension.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="eigenvectors.xml" uri="../mathbook/schema/pretext.rnc"/>

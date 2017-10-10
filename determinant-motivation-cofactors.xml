@@ -208,7 +208,7 @@ the license is included in gfdl.xml.
   <p>
   Beoynd <m>n=3</m>, the formula for the determinant gets more complicated. In the subsequent sections, we will give several different ways for computing the determinant, we will apply them to give a general formula for the inverse of a matrix, and we will see how they can be thought of as stretch factors for linear transformations. That’s a lot to do, so let’s get going!
   </p>
-  
+</subsection>  
 
 <subsection xml:id="subsection-cofactors">	
   <title>DCofactor expansions</title>
