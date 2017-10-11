@@ -132,12 +132,12 @@
 </xsl:template>
 
 <!-- JDR: "answers" in examples not hidden -->
-<xsl:template match="example/hint|example/answer|example/solution|specialcase/hint|specialcase/answer|specialcase/solution" mode="is-hidden">
+<xsl:template match="example/hint|example/answer|example/solution" mode="is-hidden">
     <xsl:text>false</xsl:text>
 </xsl:template>
 
-<xsl:template match="specialcase" mode="is-hidden">
-    <xsl:text>false</xsl:text>
+<xsl:template match="remark" mode="is-hidden">
+    <xsl:text>true</xsl:text>
 </xsl:template>
 
 <!-- JDR: allow images with natural width, including in sidebyside panels -->
@@ -227,7 +227,24 @@
 
 <!-- JDR: simpler numbering of some elements -->
 <xsl:template match="*" mode="heading-simple-number">
-    <h5 class="heading">
+    <xsl:param name="important"/>
+    <xsl:element name="h5">
+        <xsl:attribute name="class">
+            <xsl:text>heading</xsl:text>
+            <xsl:if test="$important">
+               <xsl:text> important</xsl:text>
+            </xsl:if>
+        </xsl:attribute>
+        <xsl:if test="$important">
+            <xsl:element name="img">
+                <xsl:attribute name="src">
+                    <xsl:text>static/images/important.svg</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="class">
+                    <xsl:text>important</xsl:text>
+                </xsl:attribute>
+            </xsl:element>
+        </xsl:if>
         <span class="type">
             <xsl:apply-templates select="." mode="type-name" />
         </span>
@@ -244,11 +261,17 @@
                 <xsl:apply-templates select="." mode="title-full" />
             </span>
         </xsl:if>
-    </h5>
+    </xsl:element>
 </xsl:template>
 
 <xsl:template match="&DEFINITION-LIKE;|&REMARK-LIKE;" mode="heading-birth">
     <xsl:apply-templates select="." mode="heading-simple-number" />
+</xsl:template>
+
+<xsl:template match="essential" mode="heading-birth">
+    <xsl:apply-templates select="." mode="heading-simple-number">
+        <xsl:with-param name="important" select="true()"/>
+    </xsl:apply-templates>
 </xsl:template>
 
 <xsl:template match="&EXAMPLE-LIKE;|&PROJECT-LIKE;|list" mode="heading-birth">
