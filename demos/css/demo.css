@@ -4,6 +4,9 @@
   top:      10px;
   color:    white;
   opacity:  1.0;
+  background-color: rgba(0, 0, 0, .5);
+  border:    solid 1px rgba(200, 200, 200, .5);
+  padding:   5px;
 }
 
 .overlay-text p {

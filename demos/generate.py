@@ -5,6 +5,7 @@
 
 import os
 import itertools
+from subprocess import Popen, PIPE
 
 from mako.template import Template
 from mako.lookup import TemplateLookup
@@ -43,9 +44,17 @@ def markdown_filter(text):
                         SemiSaneListExtension()]
         ) + '</div>'
 
+def coffee_filter(text):
+    proc = Popen(['coffee', '-scb'], stdin=PIPE, stdout=PIPE,
+                 universal_newlines=True)
+    out, _ = proc.communicate(text)
+    if proc.returncode > 0:
+        raise Exception("Can't compile coffeescript")
+    return out
+
 def process(path=".", context=None):
     if context is None:
-        context = dict(base_dir='.', md=markdown_filter)
+        context = dict(base_dir='.', md=markdown_filter, coffee=coffee_filter)
     else:
         context = dict(context)
         if context['base_dir'] == '.':
