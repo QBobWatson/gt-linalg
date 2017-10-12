@@ -1,6 +1,7 @@
 function start_game() {
 	var size = $('#size-selector').find(':selected').val();
-	return new Game(size);
+	var starting_player = $('#player-selector').find(':selected').val();
+	return new Game(size, starting_player);
 }
 
 function coordinates($element){
@@ -11,18 +12,26 @@ function coordinates($element){
 }
 
 class Game {
-	constructor(size) {
+	constructor(size, starting_player) {
 		this.size = size;
 		this.clear_board();
 		this.generate_board();
-		this.current_player = 0;
+		this.current_player = starting_player;
 		this.remaining = size*size;
+	}
+
+	current_class() {
+		if (this.current_player == 0) {
+			return 'zero_hover';
+		} else {
+			return 'one_hover';
+		}
 	}
 
 	clear_board() {
 		$('#board').empty();
-		$('#result').hide();
 		$('#determinant').html('');
+		$('#winner').html('').removeClass('one').removeClass('zero').addClass('neutral');
 	}
 	
 	generate_board() {
@@ -36,29 +45,36 @@ class Game {
 			"class": `empty size${this.size}`}).click(function() {
 				that.enter_entry(this);
 			  });
+			  $div.hover(function(){
+				if ($(this).hasClass('empty')){
+				  $(this).removeClass('empty').addClass(that.current_class()).html(that.current_player);
+				}
+			  },
+			  function(){
+				var cls = that.current_class();
+				if ($(this).hasClass(cls)){
+				  $(this).removeClass(cls).addClass('empty').html('');
+				}
+			  }
+			  )
 			  	$td.append($div)
 				$tr.append($td);
 				$board.append($tr);
 			}
 		}
-		this.give_instruction('Player 0: choose a square to enter a 0');
 	}
 
 	enter_entry(td_div) {
-		var cls = $(td_div).attr('class').split(' ');
-		if (!cls.includes('empty')) {
-		} else {
+		if ($(td_div).hasClass('zero_hover') || $(td_div).hasClass('one_hover'))
+		{
 			this.remaining -= 1;
 			if (this.current_player == 0) {
-				$(td_div).removeClass('empty').addClass('zero').html('0');
+				$(td_div).removeClass('zero_hover').addClass('zero');
 				this.current_player = 1;
-				this.give_instruction('Player 1: choose a square to enter a 1')
-				$("#instructions").removeClass('zero').addClass('one');
 			} else {
-				$(td_div).removeClass('empty').addClass('one').html('1');
+				$(td_div).removeClass('one_hover').addClass('one');
 				this.current_player = 0;
-				this.give_instruction('Player 0: choose a square to enter a 0')
-				$("#instructions").removeClass('one').addClass('zero');
+
 			}
 			this.check_winner();
 		}
@@ -86,23 +102,15 @@ class Game {
 			}			console.log(matrix);
 			var det = numeric.det(matrix);
 			console.log(det);
-
 			$('#determinant').html(det);
-			$('#result').show();	
+			var winner;
 			if (det == 0) {
-				this.give_instruction("<strong>Player 0 wins!</strong>")
-				$("#instructions").removeClass('one').addClass('zero');
-				// $('#result').html();
+				$('#winner').html(0).removeClass('neutral').addClass('zero');
 			} else {
-				this.give_instruction("<strong>Player 1 wins!</strong>")
-				$("#instructions").removeClass('zero').addClass('one');
-
+				$('#winner').html(1).removeClass('neutral').addClass('one');
 			}
-			$("#instructions div").fadeToggle('slow').fadeToggle('slow').fadeToggle('slow').fadeToggle('slow');				
+			$('#winner').fadeTo('slow',0.2).fadeTo('slow',1).fadeTo('slow',0.2).fadeTo('slow',1).fadeTo('slow',0.2).fadeTo('slow',1);
 		}
 	}
 
-	give_instruction(text) {
-		$("#instructions div").html(text);
-	}
 }
