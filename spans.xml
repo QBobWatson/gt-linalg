@@ -125,15 +125,15 @@ the license is included in gfdl.xml.
       </p>
     </aside>
 
-    <paragraphs class="remark-like">
-      <title>Set Builder Notation</title>
+    <note>
+      <title>(Set Builder Notation)</title>
       <p>The notation
       <me>\bigl\{x_1v_1 + x_2v_2 + \cdots + x_pv_p \mid x_1,x_2,\ldots,x_p \text{ in }\R\bigr\}</me>
       reads as: "the set of all things of the form <m>x_1v_1 + x_2v_2 + \cdots + x_pv_p</m> such that <m>x_1,x_2,\ldots,x_p</m> are in <m>\R</m>."  The vertical line is "such that"; everything to the left of it is "the set of all things of this form", and everything to the right is the condition that those things must satisfy to be in the set.  Specifying a set in this way is called <term>set builder notation</term>.
       </p>
 
       <p>All mathematical notation is only shorthand: any sequence of symbols must translate into a usual sentence.</p>
-    </paragraphs>
+    </note>
 
     <paragraphs class="remark-like">
       <title>Three characterizations of consistency</title>
