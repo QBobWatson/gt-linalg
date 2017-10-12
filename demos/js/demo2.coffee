@@ -102,7 +102,7 @@ class View
             classes:    ["#{@name}-axes"]
             size:       20
             color:      "white"
-            opacity:    0.5
+            opacity:    1
             outline:    2
             background: "black"
             offset:     [0, 0]
@@ -220,7 +220,7 @@ class Demo
         clearOpacity = @opts.clearOpacity ? 1.0
         cameraOpts   =
             proxy:    true
-            position: [2, 1, 1.5]
+            position: [3, 1.5, 1.5]
             lookAt:   [0, 0, 0]
         extend cameraOpts, @opts.camera ? {}
         # Transform camera position (z is up...)
