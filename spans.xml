@@ -10,7 +10,7 @@ the license is included in gfdl.xml.
 *********************************************************************-->
 
 <section xml:id="section-spans">
-  <title>Spans</title>
+  <title>Vector Equations and Spans</title>
 
   <objectives>
     <ol>
@@ -120,8 +120,10 @@ the license is included in gfdl.xml.
       </statement>
     </essential>
 
-    <p><xref ref="vectors-defn-span"/> is the first of several <em>essential definitions</em> that we will see in this course.  They are essential in that they form the essence of the subject of linear algebra: learning linear algebra means (in part) learning these definitions.  All of the definitions are important, but it is essential that you learn and understand the definitions marked as such.
-    </p>
+    <aside>
+      <p><xref ref="vectors-defn-span"/> is the first of several <em>essential definitions</em> that we will see in this course.  They are essential in that they form the essence of the subject of linear algebra: learning linear algebra means (in part) learning these definitions.  All of the definitions are important, but it is essential that you learn and understand the definitions marked as such.
+      </p>
+    </aside>
 
     <paragraphs class="remark-like">
       <title>Set Builder Notation</title>
