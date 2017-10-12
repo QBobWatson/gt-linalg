@@ -1,0 +1,317 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <title>"Solving" a matrix</title>
+
+      <link rel="stylesheet" href="mathbox/mathbox.css">
+      <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+  
+    <link rel="stylesheet" href="css/rrmat.css">
+    <link rel="stylesheet" href="css/slideshow.css">
+
+
+  <style>
+      
+  body {
+      text-align: center;
+      margin: 0;
+      background: white;
+  }
+
+  #mathbox {
+      width: 800px;
+      height: 300px;
+      margin: 0;
+      border: 0;
+      position: relative;
+      display: inline-block;
+  }
+
+  .centered {
+      width: 800px;
+      display: inline-block;
+  }
+
+  .my-turn {
+      width: 30%;
+      text-align: center;
+  }
+
+  </style>
+
+  <link rel="stylesheet" href="css/demo.css">
+
+</head>
+<body>
+    
+    <div id="mathbox"></div>
+    <div class="centered">
+        <div class="slideshow rrmat">
+            <div class="controls">
+                <span class="control-button">
+                    <span class="icon-arrow prev-button inactive">
+                        <span></span><span></span>
+                    </span>
+                </span>
+                <span class="control-button">
+                    <span class="icon-repeat reload-button inactive">
+                        <span></span><span></span><span></span><span></span>
+                    </span>
+                </span>
+                <span class="control-button" id="next-button">
+                    <span class="icon-arrow next-button">
+                        <span></span><span></span></span>
+                </span><br>
+                <span class="pages"></span>
+            </div>
+            <div class="caption">We want to "solve" this matrix.</div>
+        </div>
+        <div class="my-turn">
+            <button class="slideshow-button">
+                Let me take it from here.
+            </button>
+        </div>
+    </div>
+
+
+        <script src="mathbox/mathbox-bundle.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js">
+        </script>
+        <script src="lib/domready.js"></script>
+
+    
+  <script src="js/rrmat.js"></script>
+
+
+    <script type="text/javascript">
+        "use strict";
+        DomReady.ready(function() {
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+DomReady.ready(function() {
+    var ortho = 10000;
+    var width = 800;
+    var height = 300;
+
+    var mathbox = window.mathbox = mathBox({
+        element: document.getElementById("mathbox"),
+        size: { width: width, height: height },
+        plugins: ['core'],
+        mathbox: {
+            warmup: 2,
+            splash: true,
+            inspect: false,
+        },
+        splash: {fancy: true, color: "blue"},
+        camera: {
+            near: ortho / 4,
+            far: ortho * 4,
+            lookAt: -width/4,
+        },
+    });
+    if (mathbox.fallback) throw "WebGL not supported"
+    var three = mathbox.three;
+    three.renderer.setClearColor(new THREE.Color(0xFFFFFF), 1.0);
+    // Place camera
+    var camera = mathbox
+        .camera({
+            proxy: false,
+            position: [0, 0, ortho],
+            fov: Math.atan(height/ortho) * 360 / π,
+            lookAt: [width/4,0,0],
+        });
+    // 2D cartesian
+    var view = mathbox
+        .cartesian({
+            range: [[-width/2, width/2], [-height/2, height/2], [-50,50]],
+            scale: [width, height, 100],
+        });
+    // Calibrate focus distance for units
+    mathbox.set('focus', ortho);
+
+    window.rrmat = new RRMatrix(3, 4, view, mathbox,
+                                {augmentCol: 2, startAugmented: true});
+
+    function blink(color, entries, times) {
+        if(!times) {times = 2;}
+        var arr = [], last, delay = 0;
+        for(var i = 0; i < times; ++i) {
+            arr.push({color: color,
+                      transform: "scale(2,2)",
+                      entries:   entries,
+                      duration:  0.4,
+                      delay:     delay});
+            delay += 0.4;
+            last = {color:     "black",
+                    transform: "",
+                    entries:   entries,
+                    duration:  0.4,
+                    delay:     delay};
+            delay += 0.4;
+            arr.push(last);
+        }
+        delete last.color;
+        return arr;
+    }
+    window.blink = blink;
+
+    
+
+
+
+
+
+rrmat.setMatrix([[1, 2, 3, 6],
+                 [2, -3, 2, 14],
+                 [3,  1, -1, -2]]);
+
+window.slideshow =
+    rrmat.slideshow()
+    .caption("We want these two entries to be zero.")
+    .setStyle(blink("red", [[1,0],[2,0]]))
+    .break()
+
+    .caption("So we subtract multiples of the first row.")
+    .rowRep(0, -2, 1)
+    .rowRep(0, -3, 2)
+    .setStyle({color: "black",
+               entries: [[1,0],[2,0]],
+               duration: 0.2})
+    .break()
+
+    .caption("Now we want these to be zero.")
+    .setStyle(blink("red", [[0,1],[2,1]]))
+    .break()
+
+    .caption("It would be nice if this were a 1.")
+    .setStyle(blink("blue", [[1,1]]))
+    .break()
+
+    .caption("We could divide the second row by by -7")
+    .setStyle(blink("blue", [[1,0],[1,1],[1,2],[1,3]]))
+    .caption("We could divide the second row by by -7"
+             + " ... but then we would end up with ugly fractions.")
+    .setStyle({color: "black",
+               entries: [[1,0],[1,1],[1,2],[1,3]],
+               duration: 0.2})
+    .break()
+
+    .caption("Let's swap the last two rows first.")
+    .rowSwap(1, 2)
+    .setStyle([{color: "black", entries: [[1,1]], duration: 1, delay: 0.1},
+               {color: "red", entries: [[2,1]], duration: 1, delay: 0.1}])
+    .break()
+
+    .caption("Now we divide the middle row by -5, without producing fractions.")
+    .rowMult(1, -1/5)
+    .break()
+
+    .caption("We kill the red entries using row replacement, like before.")
+    .rowRep(1, -2, 0)
+    .rowRep(1,  7, 2)
+    .setStyle({color: "black",
+               entries: [[0,1],[2,1]],
+               duration: 0.2})
+    .break()
+
+    .caption("Next we want to get rid of these entries.")
+    .setStyle(blink("red", [[0,2],[1,2]]))
+    .break()
+
+    .caption("To make this entry a 1...")
+    .setStyle(blink("black", [[2,2]]))
+    .caption("To make this entry a 1, we divide the third row by 10")
+    .rowMult(2, 1/10)
+    .break()
+
+    .caption("We kill the red entries using row replacement, like before.")
+    .rowRep(2, -2, 1)
+    .rowRep(2,  1, 0)
+    .setStyle({color: "black",
+               entries: [[0,2],[1,2]],
+               duration: 0.2})
+    .caption("And we're done!")
+    .setStyle({transform: "rotate(360deg)",
+               entries: [[0,0],[0,1],[0,2],[0,3],
+                         [1,0],[1,1],[1,2],[1,3],
+                         [2,0],[2,1],[2,2],[2,3]],
+               duration: 1.5,
+               timing: 'linear'})
+    .break()
+;
+
+
+    document.querySelector(".my-turn button").onclick = function() {
+        // Encode matrix
+        var mat = slideshow.states[0].matrix;
+        var i, j, rows = [];
+        for(i = 0; i < mat.length; ++i) {
+            var row = [];
+            for(j = 0; j < mat[0].length; ++j) {
+                var entry = mat[i][j];
+                var num, den;
+                [num, den] = RRMatrix.approxFraction(entry);
+                row.push(num + (den != 1 ? "%2F" + den : ""));
+            }
+            rows.push(row.join(","));
+        }
+        var matval = rows.join(":");
+        // Encode row operations
+        // Traverse slide tree recursively
+        var getOps = function(slide) {
+            if(slide.slides) {
+                // Has children slides
+                var ret = [];
+                for(var i = 0; i < slide.slides.length; ++i)
+                    ret = ret.concat(getOps(slide.slides[i]));
+                return ret
+            }
+            // No children slides
+            if(slide.data.shortOp)
+                return [slide.data.shortOp];
+            return [];
+        }
+        var ops = [];
+        for(i = 0; i < slideshow.currentSlideNum; ++i)
+            ops = ops.concat(getOps(slideshow.slides[i]));
+        var opsval = ops.join(",");
+
+        window.open("rrinter.html?mat=" + matval + "&ops="
+                    + opsval + "&cur=" + ops.length);
+    }
+});
+
+
+
+        });
+    </script>
+</body>
+</html>
+

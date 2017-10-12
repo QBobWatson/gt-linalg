@@ -537,6 +537,83 @@ new Demo({
         ;
     }
 
+    // Can show a grid for two or three LI vectors
+    // By default do for two
+    var doGrid = false;
+    if(numVecs == 2 && spanDim == 2)
+        doGrid = true;
+    if(numVecs == 3 && spanDim == 3)
+        doGrid = true;
+
+    if(doGrid) {
+        params.Grid = !paramsQS.noGrid;
+
+        var numLines = 40;  // Number of lines in each axis
+        var totLines;       // Total number of lines
+        var doLines;
+        if(numVecs == 2) {
+            totLines = (numLines + 1) * 2;
+            doLines = function(emit, i) {
+                for(var j = -numLines/2; j <= numLines/2; ++j) {
+                    // First axis
+                    var start = (i == 0 ? -numLines/2 : numLines/2);
+                    emit(start*vector1[0] + j*vector2[0],
+                         start*vector1[1] + j*vector2[1],
+                         start*vector1[2] + j*vector2[2]);
+                    // Second axis
+                    emit(start*vector2[0] + j*vector1[0],
+                         start*vector2[1] + j*vector1[1],
+                         start*vector2[2] + j*vector1[2]);
+                }
+            };
+        }
+        else if(numVecs == 3) {
+            totLines = (numLines + 1) * (numLines + 1) * 3;
+            doLines = function(emit, i) {
+                for(var j = -numLines/2; j <= numLines/2; ++j) {
+                    for(var k = -numLines/2; k <= numLines/2; ++k) {
+                        // First axis
+                        var start = (i == 0 ? -numLines/2 : numLines/2);
+                        emit(start*vector1[0] + j*vector2[0] + k*vector3[0],
+                             start*vector1[1] + j*vector2[1] + k*vector3[1],
+                             start*vector1[2] + j*vector2[2] + k*vector3[2]);
+                        // Second axis
+                        emit(start*vector2[0] + j*vector1[0] + k*vector3[0],
+                             start*vector2[1] + j*vector1[1] + k*vector3[1],
+                             start*vector2[2] + j*vector1[2] + k*vector3[2]);
+                        // Third axis
+                        emit(start*vector3[0] + j*vector1[0] + k*vector2[0],
+                             start*vector3[1] + j*vector1[1] + k*vector2[1],
+                             start*vector3[2] + j*vector1[2] + k*vector2[2]);
+                    }
+                }
+            };
+        }
+
+        clipped
+            .array({
+                channels: 3,
+                live:     false,
+                width:    2,
+                items:    totLines,
+                expr:     doLines,
+            })
+            .line({
+                color:   surfaceColor,
+                opacity: .75,
+                stroke:  "solid",
+                width:   3,
+                zBias:   2,
+                classes: ["vecgrid"],
+                visible: params.Grid,
+            })
+        ;
+
+        gui.add(params, 'Grid').onFinishChange(function(val) {
+            mathbox.select(".vecgrid").set("visible", val);
+        });
+    }
+
     var colorize = function(col, text) {
         return "\\color{#" + col.getHexString() + "}{" + text + "}";
     };

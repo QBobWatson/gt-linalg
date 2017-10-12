@@ -10,7 +10,9 @@
 //   hiliteColor: Color (plus opacity) of a hovered point.
 //   hiliteSize: Size of the hover point.
 //   hiliteIndex: zIndex of the hover point.
-//   onDrag:   Drag callback.
+//   onDrag:    Drag callback.
+//   getMatrix: Return a matrix to use as the view matrix.
+//   eyeMatrix: Apply a transformation on eye pass too.
 
 // Available properties:
 //   hovered:  Index of the point the mouse is hovering over, or -1 if none
@@ -18,6 +20,7 @@
 
 function Draggable(opts) {
     var view        = opts.view;
+    var eyeMatrix   = opts.eyeMatrix || new THREE.Matrix4();
     var points      = opts.points;
     var size        = opts.size;
     var onDrag      = opts.onDrag;
@@ -29,23 +32,31 @@ function Draggable(opts) {
         hiliteColor = [0, .5, .5, .75];
     if(hiliteIndex === undefined)
         hiliteIndex = 2;
+    var getMatrix = opts.getMatrix || function(d) {
+        return d.view[0].controller.viewMatrix;
+    };
 
     this.hovered  = -1;
     this.dragging = -1;
+    this.view     = view;
     var self = this;
 
     var scale = 1 / 4;
-    var viewMatrix = view[0].controller.viewMatrix;
+    var viewMatrix = getMatrix(this);
     var viewMatrixInv = new THREE.Matrix4();
     viewMatrixInv.getInverse(viewMatrix);
     var viewMatrixTrans = viewMatrix.clone();
     viewMatrixTrans.transpose();
 
+    var eyeMatrixTrans = eyeMatrix.clone().transpose();
+    var eyeMatrixInv = new THREE.Matrix4();
+    eyeMatrixInv.getInverse(eyeMatrix);
+
     // Red channel picks out the point
     // Alpha channel for existence
     var indices = [];
     for(var i = 0; i < points.length; ++i)
-        indices.push([(i+1)/255, 0, 0, 0]);
+        indices.push([(i+1)/255, 1, 0, 0]);
 
     // Draw the points in RTT
     view
@@ -71,6 +82,10 @@ function Draggable(opts) {
     });
 
     rtt
+        .transform({
+            pass:   'eye',
+            matrix: Array.prototype.slice.call(eyeMatrixTrans.elements),
+        })
         // This should really be automatic...
         .transform({
             matrix: Array.prototype.slice.call(viewMatrixTrans.elements),
@@ -145,6 +160,11 @@ function Draggable(opts) {
         activePoint = points[self.dragging];
     }, false);
 
+    var projected = new THREE.Vector3();
+    var vector = new THREE.Vector3();
+    var matrix = new THREE.Matrix4();
+    var matrixInv = new THREE.Matrix4();
+
     three.canvas.addEventListener('mousemove', function (event) {
         mouse = [event.offsetX * window.devicePixelRatio,
                  event.offsetY * window.devicePixelRatio];
@@ -152,13 +172,19 @@ function Draggable(opts) {
 
         event.preventDefault();
         // Move the point in the plane parallel to the camera.
-        var projected = new THREE.Vector3(
-            activePoint[0], activePoint[1], activePoint[2]);
-        projected.applyMatrix4(viewMatrix).project(camera);
+        projected
+            .set(activePoint[0], activePoint[1], activePoint[2])
+            .applyMatrix4(viewMatrix);
+        matrix.multiplyMatrices(camera.projectionMatrix, eyeMatrix);
+        matrix.multiply(matrixInv.getInverse(camera.matrixWorld));
+        projected.applyProjection(matrix);
+        //projected.project(camera);
         var mouseX = event.offsetX / three.canvas.offsetWidth * 2 - 1.0;
         var mouseY = -(event.offsetY / three.canvas.offsetHeight * 2 - 1.0);
-        var vector = new THREE.Vector3(mouseX, mouseY, projected.z);
-        vector.unproject(camera).applyMatrix4(viewMatrixInv);
+        vector.set(mouseX, mouseY, projected.z);
+        vector.applyProjection(matrixInv.getInverse(matrix));
+        //vector.unproject(camera);
+        vector.applyMatrix4(viewMatrixInv);
         if(onDrag) onDrag(vector);
         activePoint[0] = vector.x;
         activePoint[1] = vector.y;
