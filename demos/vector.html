@@ -47,6 +47,9 @@ new Demo({
       splash: false,
       inspect: false
     }
+  },
+  camera: {
+    position: [3, -1, 1.5]
   }
 }, function() {
   var a, b, c, color, gui, origin, params, update, vector, view;
@@ -62,8 +65,7 @@ new Demo({
     vectors: [vector],
     origins: [origin],
     colors: [color],
-    labels: ['v'],
-    zeroPoints: true
+    labels: ['v']
   });
   view.array({
     channels: 3,

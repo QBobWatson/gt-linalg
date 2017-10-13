@@ -12,6 +12,8 @@ new Demo {
             warmup:  10
             splash:  false
             inspect: false
+    camera:
+        position: [3, -1, 1.5]
 }, () ->
     window.mathbox = @mathbox
 
@@ -30,7 +32,6 @@ new Demo {
         origins:    [origin]
         colors:     [color]
         labels:     ['v']
-        zeroPoints: true
 
     view
         .array

@@ -1,69 +1,65 @@
-## /* -*- javascript -*-
+## -*- coffee -*-
 
-<%! draggable=True %>
 <%! datgui=False %>
 
-<%inherit file="base.mako"/>
+<%inherit file="base2.mako"/>
 
 <%block name="title">Vector addition</%block>
 
-## */
+##
 
-new Demo({
-    mathbox: {
-        plugins: ['core', 'controls'],
-        controls: {
-            klass: THREE.OrbitControls,
-            parameters: {
-                // noZoom: true,
-            }
-        },
-        mathbox: {
-            warmup: 10,
-            splash: false,
-            inspect: false,
-        },
-        splash: {fancy: true, color: "blue"},
-    },
-    camera: {
-        proxy:     true,
-        position: [-1.5, 1.5, -3],
-        lookAt:   [0, 0, 0],
-        up:       [0, 1, 0]
-    },
-    caption: katex.renderToString("\\color{#ff4dff}v + \\color{#00ff00}w")
-        + "<br><br>[Drag the vector heads with the mouse to move them]",
-    axes: false,
+new Demo {
+    mathbox:
+        mathbox:
+            warmup:  10
+            splash:  false
+            inspect: false
+    camera:
+        position:
+            [-1.5, -3, 1.5]
+}, () ->
+    window.mathbox = @mathbox
 
-}, function() {
-    var self = this;
+    view = @view axes: false
+    vector1 = [3, -5,  4]
+    vector2 = [4, -1, -2]
+    vector3 = [vector1[0] + vector2[0],
+               vector1[1] + vector2[1],
+               vector1[2] + vector2[2]]
+    color1 = [1, .3, 1, 1]
+    color2 = [0,  1, 0, 1]
+    color3 = [1,  1, 0, 1]
+    origins = [[0, 0, 0], [0, 0, 0], vector2, vector1, [0, 0, 0]]
+    vectors = [vector1,   vector2,   vector3, vector3, vector3]
+    colors  = [color1,    color2,    color1,  color2,  color3]
 
-    var vector1 = [3, -5,  4];
-    var vector2 = [4, -1, -2];
-    var vector3 = [vector1[0]+vector2[0], vector1[1]+vector2[1], vector1[2]+vector2[2]];
-    var vectors = [vector1, vector2, vector3, vector3, vector3];
-    var color1 = [1, .3, 1, 1];
-    var color2 = [0, 1, 0, 1];
-    var color3 = [1, 1, 0, 1];
-    var colors = [color1, color2, color1, color2, color3];
-    var origins = [[0, 0, 0], [0, 0, 0], vector2, vector1, [0, 0, 0]];
+    @labeledVectors view,
+        vectors: vectors
+        origins: origins
+        colors:  colors
+        labels:  ['v', 'w', 'v', 'w', 'v+w']
 
-    this.labeledVectors(vectors, colors, ['v', 'w', 'v', 'w', 'v+w'], {
-        origins: origins,
-    });
-    // Make the vectors draggable
-    new Draggable({
-        view:   this.view,
-        points: [vector1, vector2],
-        size:   30,
-        hiliteColor: [0, 1, 1, .75],
-        onDrag: function(vec) {
-            vec.clampScalar(-10, 10);
-            vector3[0] = vector1[0] + vector2[0];
-            vector3[1] = vector1[1] + vector2[1];
-            vector3[2] = vector1[2] + vector2[2];
-        },
-    });
+    # Make the vectors draggable
+    @draggable view,
+        points: [vector1, vector2]
+        onDrag: (vec) ->
+            vec.clampScalar -10, 10
+            vector3[0] = vector1[0] + vector2[0]
+            vector3[1] = vector1[1] + vector2[1]
+            vector3[2] = vector1[2] + vector2[2]
+            update()
 
-});
+    @caption '''<p><span id="vectors-here"></span></p>
+                <p>[click and drag the heads of v and w to move them]</p>
+             '''
+    @vecElt = document.getElementById "vectors-here"
+    update = () =>
+        katex.render \
+            @texVector(vector1[0], vector1[1], vector1[2], color: "#ff4dff") \
+          + "+" \
+          + @texVector(vector2[0], vector2[1], vector2[2], color: "#00ff00") \
+          + "=" \
+          + @texVector(vector3[0], vector3[1], vector3[2], color: "#ffff00"),
+          @vecElt
 
+    update()
