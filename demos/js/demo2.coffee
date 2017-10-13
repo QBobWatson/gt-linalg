@@ -195,7 +195,7 @@ class ClipCube
 #    mathboxOpts: passed to the mathBox constructor
 #    clearColor: THREE's clear color
 #    clearOpacity: THREE's clear opacity
-#    cameraOpts: passed to mathbox.camera()
+#    camera: passed to mathbox.camera()
 #    focusDist: mathbox focus distance
 #    scaleUI: whether to scale focusDist by min(width, height)/1000
 #    doFullScreen: enable screenfull binding to key 'f'
