@@ -1,6 +1,7 @@
 (function() {
   "use strict";
-  var Caption, ClipCube, Demo, View, clipFragment, clipShader, extend;
+  var Caption, ClipCube, Demo, Draggable, LabeledVectors, View, clipFragment, clipShader, extend,
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   extend = function(obj, src) {
     var key, results, val;
@@ -129,6 +130,202 @@
 
   })();
 
+  Draggable = (function() {
+    function Draggable(view1, opts1) {
+      var getMatrix, hiliteColor, hiliteOpts, i, indices, name, ref, ref1, ref2, ref3, ref4, ref5, ref6, rtt, size;
+      this.view = view1;
+      this.opts = opts1;
+      this.getIndexAt = bind(this.getIndexAt, this);
+      this.post = bind(this.post, this);
+      this.onMouseUp = bind(this.onMouseUp, this);
+      this.onMouseMove = bind(this.onMouseMove, this);
+      this.onMouseDown = bind(this.onMouseDown, this);
+      if (this.opts == null) {
+        this.opts = {};
+      }
+      name = (ref = this.opts.name) != null ? ref : "draggable";
+      this.points = this.opts.points;
+      size = (ref1 = this.opts.size) != null ? ref1 : 30;
+      this.onDrag = (ref2 = this.opts.onDrag) != null ? ref2 : function() {};
+      hiliteColor = (ref3 = this.opts.hiliteColor) != null ? ref3 : [0, .5, .5, .75];
+      this.eyeMatrix = (ref4 = this.opts.eyeMatrix) != null ? ref4 : new THREE.Matrix4();
+      getMatrix = (ref5 = this.opts.getMatrix) != null ? ref5 : function(d) {
+        return d.view[0].controller.viewMatrix;
+      };
+      hiliteOpts = {
+        id: name + "-hilite",
+        color: "white",
+        points: "#" + name + "-points",
+        colors: "#" + name + "-colors",
+        size: size,
+        zIndex: 2,
+        zTest: false,
+        zWrite: false
+      };
+      extend(hiliteOpts, (ref6 = this.opts.hiliteOpts) != null ? ref6 : {});
+      this.three = this.view._context.api.three;
+      this.canvas = this.three.canvas;
+      this.camera = this.view._context.api.select("camera")[0].controller.camera;
+      this.hovered = -1;
+      this.dragging = -1;
+      this.mouse = [-1, -1];
+      this.activePoint = void 0;
+      this.projected = new THREE.Vector3();
+      this.vector = new THREE.Vector3();
+      this.matrix = new THREE.Matrix4();
+      this.matrixInv = new THREE.Matrix4();
+      this.scale = 1 / 4;
+      this.viewMatrix = getMatrix(this);
+      this.viewMatrixInv = new THREE.Matrix4().getInverse(this.viewMatrix);
+      this.viewMatrixTrans = this.viewMatrix.clone().transpose();
+      this.eyeMatrixTrans = this.eyeMatrix.clone().transpose();
+      this.eyeMatrixInv = new THREE.Matrix4().getInverse(this.eyeMatrix);
+      indices = (function() {
+        var k, ref7, results;
+        results = [];
+        for (i = k = 0, ref7 = this.points.length; 0 <= ref7 ? k < ref7 : k > ref7; i = 0 <= ref7 ? ++k : --k) {
+          results.push([(i + 1) / 255, 1.0, 0, 0]);
+        }
+        return results;
+      }).call(this);
+      this.view.array({
+        id: name + "-points",
+        channels: 3,
+        width: this.points.length,
+        data: this.points
+      }).array({
+        id: name + "-index",
+        channels: 4,
+        width: this.points.length,
+        data: indices,
+        live: false
+      });
+      rtt = this.view.rtt({
+        id: name + "-rtt",
+        size: 'relative',
+        width: this.scale,
+        height: this.scale
+      });
+      rtt.transform({
+        pass: 'eye',
+        matrix: Array.prototype.slice.call(this.eyeMatrixTrans.elements)
+      }).transform({
+        matrix: Array.prototype.slice.call(this.viewMatrixTrans.elements)
+      }).point({
+        points: "#" + name + "-points",
+        colors: "#" + name + "-index",
+        color: 'white',
+        size: size,
+        blending: 'no'
+      }).end();
+      this.view.array({
+        id: name + "-colors",
+        channels: 4,
+        width: this.points.length,
+        expr: (function(_this) {
+          return function(emit, i, t) {
+            if (_this.dragging === i || _this.hovered === i) {
+              return emit.apply(null, hiliteColor);
+            } else {
+              return emit(1, 1, 1, 0);
+            }
+          };
+        })(this)
+      }).point(hiliteOpts);
+      this.readback = this.view.readback({
+        source: "#" + name + "-rtt",
+        type: 'unsignedByte'
+      });
+      this.canvas.addEventListener('mousedown', this.onMouseDown, false);
+      this.canvas.addEventListener('mousemove', this.onMouseMove, false);
+      this.canvas.addEventListener('mouseup', this.onMouseUp, false);
+      this.three.on('post', this.post);
+    }
+
+    Draggable.prototype.onMouseDown = function(event) {
+      if (this.hovered < 0) {
+        return;
+      }
+      event.preventDefault();
+      this.dragging = this.hovered;
+      return this.activePoint = this.points[this.dragging];
+    };
+
+    Draggable.prototype.onMouseMove = function(event) {
+      var mouseX, mouseY;
+      this.mouse = [event.offsetX * window.devicePixelRatio, event.offsetY * window.devicePixelRatio];
+      this.hovered = this.getIndexAt(this.mouse[0], this.mouse[1]);
+      if (this.dragging < 0) {
+        return;
+      }
+      event.preventDefault();
+      mouseX = event.offsetX / this.canvas.offsetWidth * 2 - 1.0;
+      mouseY = -(event.offsetY / this.canvas.offsetHeight * 2 - 1.0);
+      this.projected.set(this.activePoint[0], this.activePoint[1], this.activePoint[2]).applyMatrix4(this.viewMatrix);
+      this.matrix.multiplyMatrices(this.camera.projectionMatrix, this.eyeMatrix);
+      this.matrix.multiply(this.matrixInv.getInverse(this.camera.matrixWorld));
+      this.projected.applyProjection(this.matrix);
+      this.vector.set(mouseX, mouseY, this.projected.z);
+      this.vector.applyProjection(this.matrixInv.getInverse(this.matrix));
+      this.vector.applyMatrix4(this.viewMatrixInv);
+      this.onDrag.call(this, this.vector);
+      this.activePoint[0] = this.vector.x;
+      this.activePoint[1] = this.vector.y;
+      return this.activePoint[2] = this.vector.z;
+    };
+
+    Draggable.prototype.onMouseUp = function(event) {
+      if (this.dragging < 0) {
+        return;
+      }
+      event.preventDefault();
+      this.dragging = -1;
+      return this.activePoint = void 0;
+    };
+
+    Draggable.prototype.post = function() {
+      if (this.dragging >= 0) {
+        this.canvas.style.cursor = 'pointer';
+      } else if (this.hovered >= 0) {
+        this.canvas.style.cursor = 'pointer';
+      } else if (this.three.controls) {
+        this.canvas.style.cursor = 'move';
+      } else {
+        this.canvas.style.cursor = '';
+      }
+      if (this.three.controls) {
+        return this.three.controls.enabled = this.hovered < 0 && this.dragging < 0;
+      }
+    };
+
+    Draggable.prototype.getIndexAt = function(x, y) {
+      var a, data, h, o, r, w;
+      data = this.readback.get('data');
+      if (!data) {
+        return -1;
+      }
+      x = Math.floor(x * this.scale);
+      y = Math.floor(y * this.scale);
+      w = this.readback.get('width');
+      h = this.readback.get('height');
+      o = (x + w * (h - y - 1)) * 4;
+      r = data[o];
+      a = data[o + 3];
+      if (r != null) {
+        if (a === 0) {
+          return r - 1;
+        } else {
+          return -1;
+        }
+      } else {
+        return -1;
+      }
+    };
+
+    return Draggable;
+
+  })();
+
   ClipCube = (function() {
     function ClipCube(view1, opts1) {
       var color, draw, hilite, material, pass, range, ref, ref1, ref2, ref3, ref4, ref5;
@@ -176,6 +373,121 @@
     }
 
     return ClipCube;
+
+  })();
+
+  LabeledVectors = (function() {
+    function LabeledVectors(view, opts1) {
+      var colors, doZero, i, k, labelOpts, labels, name, origins, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, vectorData, vectorOpts, vectors, zeroData, zeroOpts, zeroThreshold;
+      this.opts = opts1;
+      if (this.opts == null) {
+        this.opts = {};
+      }
+      name = (ref = this.opts.name) != null ? ref : "labeled";
+      vectors = this.opts.vectors;
+      colors = this.opts.colors;
+      labels = this.opts.labels;
+      origins = (ref1 = this.opts.origins) != null ? ref1 : (function() {
+        var k, ref2, results;
+        results = [];
+        for (k = 0, ref2 = vectors.length; 0 <= ref2 ? k < ref2 : k > ref2; 0 <= ref2 ? k++ : k--) {
+          results.push([0, 0, 0]);
+        }
+        return results;
+      })();
+      vectorOpts = {
+        id: name + "-vectors-drawn",
+        points: "#" + name + "-vectors",
+        colors: "#" + name + "-colors",
+        color: "white",
+        end: true,
+        size: 5,
+        width: 5
+      };
+      extend(vectorOpts, (ref2 = this.opts.vectorOpts) != null ? ref2 : {});
+      labelOpts = {
+        id: name + "-vector-labels",
+        colors: "#" + name + "-colors",
+        color: "white",
+        outline: 2,
+        background: "black",
+        size: 15,
+        offset: [0, 25]
+      };
+      extend(labelOpts, (ref3 = this.opts.labelOpts) != null ? ref3 : {});
+      doZero = (ref4 = this.opts.zeroPoints) != null ? ref4 : false;
+      zeroOpts = {
+        id: name + "-zero-points",
+        points: "#" + name + "-zeros",
+        colors: "#" + name + "-zero-colors",
+        color: "white",
+        size: 20,
+        visible: false
+      };
+      extend(zeroOpts, (ref5 = this.opts.zeroOpts) != null ? ref5 : {});
+      zeroThreshold = (ref6 = this.opts.zeroThreshold) != null ? ref6 : 0.0;
+      vectorData = [];
+      for (i = k = 0, ref7 = vectors.length; 0 <= ref7 ? k < ref7 : k > ref7; i = 0 <= ref7 ? ++k : --k) {
+        vectorData.push(origins[i]);
+        vectorData.push(vectors[i]);
+      }
+      view.array({
+        id: name + "-vectors",
+        channels: 3,
+        width: vectors.length,
+        items: 2,
+        data: vectorData
+      }).array({
+        id: name + "-colors",
+        channels: 4,
+        width: colors.length,
+        data: colors
+      }).vector(vectorOpts);
+      if (labels != null) {
+        view.array({
+          channels: 3,
+          width: vectors.length,
+          expr: function(emit, i) {
+            return emit((vectors[i][0] + origins[i][0]) / 2, (vectors[i][1] + origins[i][1]) / 2, (vectors[i][2] + origins[i][2]) / 2);
+          }
+        }).text({
+          id: name + "-text",
+          live: false,
+          width: labels.length,
+          data: labels
+        }).label(labelOpts);
+      }
+      if (doZero) {
+        zeroData = (function() {
+          var l, ref8, results;
+          results = [];
+          for (l = 0, ref8 = vectors.length; 0 <= ref8 ? l < ref8 : l > ref8; 0 <= ref8 ? l++ : l--) {
+            results.push([0, 0, 0]);
+          }
+          return results;
+        })();
+        view.array({
+          id: name + "-zero-colors",
+          channels: 4,
+          width: vectors.length,
+          expr: function(emit, i) {
+            if (Math.abs(vectors[i][0]) < zeroThreshold && Math.abs(vectors[i][1]) < zeroThreshold && Math.abs(vectors[i][2]) < zeroThreshold) {
+              return emit.apply(null, colors[i]);
+            } else {
+              return emit(0, 0, 0, 0);
+            }
+          }
+        }).array({
+          id: name + "-zeros",
+          channels: 3,
+          width: vectors.length,
+          data: zeroData
+        });
+        this.zeroPoints = view.point(zeroOpts);
+      }
+    }
+
+    return LabeledVectors;
 
   })();
 
@@ -275,6 +587,23 @@
       return this.urlParams;
     };
 
+    Demo.prototype.texVector = function(x, y, z, opts) {
+      var precision, ref, ret;
+      if (opts == null) {
+        opts = {};
+      }
+      precision = (ref = opts.precision) != null ? ref : 2;
+      ret = '';
+      if (opts.color != null) {
+        ret += "\\color{" + opts.color + "}{";
+      }
+      ret += "\\begin{bmatrix}\n    " + (x.toFixed(precision)) + " \\\\\n    " + (y.toFixed(precision)) + " \\\\\n    " + (z.toFixed(precision)) + "\n\\end{bmatrix}";
+      if (opts.color != null) {
+        ret += "}";
+      }
+      return ret;
+    };
+
     Demo.prototype.view = function(opts) {
       return new View(this.mathbox, opts).view;
     };
@@ -285,6 +614,14 @@
 
     Demo.prototype.clipCube = function(view, opts) {
       return new ClipCube(view, opts);
+    };
+
+    Demo.prototype.draggable = function(view, opts) {
+      return new Draggable(view, opts);
+    };
+
+    Demo.prototype.labeledVectors = function(view, opts) {
+      return new LabeledVectors(view, opts);
     };
 
     return Demo;

@@ -69,10 +69,10 @@ class Caption
 class View
     constructor: (@mathbox, @opts) ->
         @opts ?= {}
-        @name        = @opts.name         ? "view"
-        viewRange    = @opts.viewRange    ? [[-10, 10], [-10, 10], [-10, 10]]
+        @name        = @opts.name      ? "view"
+        viewRange    = @opts.viewRange ? [[-10, 10], [-10, 10], [-10, 10]]
         @numDims     = viewRange.length
-        viewScale    = @opts.viewScale    ? [1, 1, 1]
+        viewScale    = @opts.viewScale ? [1, 1, 1]
 
         doAxes = @opts.axes ? true
         axisOpts =
@@ -146,6 +146,189 @@ class View
             .label labelOpts
 
 
+# Make points draggable.
+# Options:
+#     points: list of draggable points.  The coordinates of these points will be
+#         changed by the drag.  Max 254 points.
+#     size: size of the draggable point
+#     hiliteColor: color (plus opacity) of a hovered point
+#     hiliteOpts: other options for the hilite points
+#     onDrag: drag callback
+#     getMatrix: return a matrix to use as the view matrix
+#     eyeMatrix: apply a transformation on eye pass too
+#
+# Available instance attributes:
+#     hovered: index of the point the mouse is hovering over, or -1 if none
+#     dragging: point currently being dragged, or -1 if none
+
+class Draggable
+    constructor: (@view, @opts) ->
+        @opts ?= {}
+        name        = @opts.name      ? "draggable"
+        @points     = @opts.points
+        size        = @opts.size      ? 30
+        @onDrag     = @opts.onDrag    ? () ->
+        hiliteColor = @opts.hiliteColor ? [0, .5, .5, .75]
+        @eyeMatrix  = @opts.eyeMatrix ? new THREE.Matrix4()
+        getMatrix   = @opts.getMatrix ? (d) ->
+            d.view[0].controller.viewMatrix
+        hiliteOpts =
+            id:     "#{name}-hilite"
+            color:  "white"
+            points: "##{name}-points"
+            colors: "##{name}-colors"
+            size:   size
+            zIndex: 2
+            zTest:  false
+            zWrite: false
+        extend hiliteOpts, @opts.hiliteOpts ? {}
+        @three = @view._context.api.three
+        @canvas = @three.canvas
+        @camera = @view._context.api.select("camera")[0].controller.camera
+
+        # State
+        @hovered     = -1
+        @dragging    = -1
+        @mouse       = [-1, -1]
+        @activePoint = undefined
+
+        # Scratch
+        @projected = new THREE.Vector3()
+        @vector    = new THREE.Vector3()
+        @matrix    = new THREE.Matrix4()
+        @matrixInv = new THREE.Matrix4()
+
+        @scale = 1/4  # Render RTT at quarter resolution
+        @viewMatrix = getMatrix @
+        @viewMatrixInv = new THREE.Matrix4().getInverse @viewMatrix
+        @viewMatrixTrans = @viewMatrix.clone().transpose()
+        @eyeMatrixTrans = @eyeMatrix.clone().transpose()
+        @eyeMatrixInv = new THREE.Matrix4().getInverse @eyeMatrix
+
+        # Red channel picks out the point
+        # Alpha channel for existence
+        indices = ([(i+1)/255, 1.0, 0, 0] for i in [0...@points.length])
+
+        @view
+            .array
+                id:       "#{name}-points"
+                channels: 3
+                width:    @points.length
+                data:     @points
+            .array
+                id:       "#{name}-index"
+                channels: 4
+                width:    @points.length
+                data:     indices
+                live:     false
+
+        rtt = @view.rtt
+            id:     "#{name}-rtt"
+            size:   'relative'
+            width:  @scale
+            height: @scale
+
+        rtt
+            .transform
+                pass:   'eye'
+                matrix: Array.prototype.slice.call @eyeMatrixTrans.elements
+            # This should really be automatic...
+            .transform
+                matrix: Array.prototype.slice.call @viewMatrixTrans.elements
+            .point
+                points:   "##{name}-points"
+                colors:   "##{name}-index"
+                color:    'white'
+                size:     size
+                blending: 'no'
+            .end()
+
+        # Debug RTT
+        # @view.compose opacity: 0.5
+
+        @view
+            .array
+                id:       "#{name}-colors"
+                channels: 4
+                width:    @points.length
+                expr: (emit, i, t) =>
+                    if @dragging == i or @hovered == i
+                        # Show the hilite
+                        emit.apply null, hiliteColor
+                    else
+                        emit 1, 1, 1, 0
+            .point hiliteOpts
+
+        # Readback RTT pixels
+        @readback = @view.readback
+            source: "##{name}-rtt"
+            type:   'unsignedByte'
+
+        @canvas.addEventListener 'mousedown', @onMouseDown, false
+        @canvas.addEventListener 'mousemove', @onMouseMove, false
+        @canvas.addEventListener 'mouseup',   @onMouseUp,   false
+        @three.on 'post', @post
+
+    onMouseDown: (event) =>
+        return if @hovered < 0
+        event.preventDefault()
+        @dragging = @hovered
+        @activePoint = @points[@dragging]
+
+    onMouseMove: (event) =>
+        @mouse = [event.offsetX * window.devicePixelRatio,
+                  event.offsetY * window.devicePixelRatio]
+        @hovered = @getIndexAt @mouse[0], @mouse[1]
+        return if @dragging < 0
+        event.preventDefault()
+        mouseX = event.offsetX / @canvas.offsetWidth * 2 - 1.0
+        mouseY = -(event.offsetY / @canvas.offsetHeight * 2 - 1.0)
+        # Move the point in the plane parallel to the camera.
+        @projected
+            .set(@activePoint[0], @activePoint[1], @activePoint[2])
+            .applyMatrix4 @viewMatrix
+        @matrix.multiplyMatrices @camera.projectionMatrix, @eyeMatrix
+        @matrix.multiply @matrixInv.getInverse @camera.matrixWorld
+        @projected.applyProjection @matrix
+        @vector.set mouseX, mouseY, @projected.z
+        @vector.applyProjection @matrixInv.getInverse @matrix
+        @vector.applyMatrix4 @viewMatrixInv
+        @onDrag.call @, @vector
+        @activePoint[0] = @vector.x
+        @activePoint[1] = @vector.y
+        @activePoint[2] = @vector.z
+
+    onMouseUp: (event) =>
+        return if @dragging < 0
+        event.preventDefault()
+        @dragging = -1
+        @activePoint = undefined
+
+    post: () =>
+        if @dragging >= 0
+            @canvas.style.cursor = 'pointer'
+        else if @hovered >= 0
+            @canvas.style.cursor = 'pointer'
+        else if @three.controls
+            @canvas.style.cursor = 'move'
+        else
+            @canvas.style.cursor = ''
+        if @three.controls
+            @three.controls.enabled = @hovered < 0 and @dragging < 0
+
+    getIndexAt: (x, y) =>
+        data = @readback.get 'data'
+        return -1 unless data
+        x = Math.floor x * @scale
+        y = Math.floor y * @scale
+        w = @readback.get 'width'
+        h = @readback.get 'height'
+        o = (x + w * (h - y - 1)) * 4
+        r = data[o]
+        a = data[o+3]
+        if r? then (if a == 0 then r-1 else -1) else -1
+
+
 # Makes a mathbox API that clips its contents to the cube [-range,range]^3.
 # Optionally draws the cube too.
 # Options:
@@ -188,6 +371,103 @@ class ClipCube
                         type: 'i'
                         value: if hilite then 1 else 0
             .fragment()
+
+
+class LabeledVectors
+    constructor: (view, @opts) ->
+        @opts ?= {}
+        name    = @opts.name ? "labeled"
+        vectors = @opts.vectors
+        colors  = @opts.colors
+        labels  = @opts.labels
+        origins = @opts.origins ? ([0, 0, 0] for [0...vectors.length])
+        vectorOpts =
+            id:     "#{name}-vectors-drawn"
+            points: "##{name}-vectors"
+            colors: "##{name}-colors"
+            color:  "white"
+            end:    true
+            size:   5
+            width:  5
+        extend vectorOpts, @opts.vectorOpts ? {}
+        labelOpts =
+            id:         "#{name}-vector-labels"
+            colors:     "##{name}-colors"
+            color:      "white"
+            outline:    2
+            background: "black"
+            size:       15
+            offset:     [0, 25]
+        extend labelOpts, @opts.labelOpts ? {}
+        doZero = @opts.zeroPoints ? false
+        zeroOpts =
+            id:      "#{name}-zero-points"
+            points:  "##{name}-zeros"
+            colors:  "##{name}-zero-colors"
+            color:   "white"
+            size:    20
+            visible: false
+        extend zeroOpts, @opts.zeroOpts ? {}
+        zeroThreshold = @opts.zeroThreshold ? 0.0
+
+        vectorData = []
+        for i in [0...vectors.length]
+            vectorData.push origins[i]
+            vectorData.push vectors[i]
+
+        # vectors
+        view
+            .array
+                id:       "#{name}-vectors"
+                channels: 3
+                width:    vectors.length
+                items:    2
+                data:     vectorData
+            .array
+                id:       "#{name}-colors"
+                channels: 4
+                width:    colors.length
+                data:     colors
+            .vector vectorOpts
+
+        # Labels
+        if labels?
+            view
+                .array
+                    channels: 3
+                    width:    vectors.length
+                    expr: (emit, i) ->
+                        emit (vectors[i][0] + origins[i][0])/2,
+                             (vectors[i][1] + origins[i][1])/2,
+                             (vectors[i][2] + origins[i][2])/2
+                .text
+                    id:    "#{name}-text"
+                    live:  false
+                    width: labels.length
+                    data:  labels
+                .label labelOpts
+
+        # Points for when vectors are zero
+        if doZero
+            zeroData = ([0, 0, 0] for [0...vectors.length])
+            view
+                .array
+                    id:       "#{name}-zero-colors"
+                    channels: 4
+                    width:    vectors.length
+                    expr: (emit, i) ->
+                        if Math.abs(vectors[i][0]) < zeroThreshold and
+                           Math.abs(vectors[i][1]) < zeroThreshold and
+                           Math.abs(vectors[i][2]) < zeroThreshold
+                            emit.apply null, colors[i]
+                        else
+                            emit 0, 0, 0, 0
+                .array
+                    id:       "#{name}-zeros"
+                    channels: 3
+                    width:    vectors.length
+                    data:     zeroData
+            @zeroPoints = view.point zeroOpts
 
 
 # Class for constructing components common to the demos
@@ -274,9 +554,28 @@ class Demo
             @urlParams[decode match[1]] = decode match[2]
         @urlParams
 
+    texVector: (x, y, z, opts) ->
+        opts ?= {}
+        precision = opts.precision ? 2
+        ret = ''
+        if opts.color?
+            ret += "\\color{#{opts.color}}{"
+        ret += """
+               \\begin{bmatrix}
+                   #{x.toFixed precision} \\\\
+                   #{y.toFixed precision} \\\\
+                   #{z.toFixed precision}
+               \\end{bmatrix}
+               """
+        if opts.color?
+            ret += "}"
+        ret
+
     view: (opts) -> new View(@mathbox, opts).view
     caption: (text) -> new Caption @mathbox, text
     clipCube: (view, opts) -> new ClipCube view, opts
+    draggable: (view, opts) -> new Draggable view, opts
+    labeledVectors: (view, opts) -> new LabeledVectors view, opts
 
 
 window.Demo = Demo
