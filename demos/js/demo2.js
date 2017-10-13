@@ -421,8 +421,7 @@
         points: "#" + name + "-zeros",
         colors: "#" + name + "-zero-colors",
         color: "white",
-        size: 20,
-        visible: false
+        size: 20
       };
       extend(zeroOpts, (ref5 = this.opts.zeroOpts) != null ? ref5 : {});
       zeroThreshold = (ref6 = this.opts.zeroThreshold) != null ? ref6 : 0.0;
@@ -471,7 +470,7 @@
           channels: 4,
           width: vectors.length,
           expr: function(emit, i) {
-            if (Math.abs(vectors[i][0]) < zeroThreshold && Math.abs(vectors[i][1]) < zeroThreshold && Math.abs(vectors[i][2]) < zeroThreshold) {
+            if (Math.abs(vectors[i][0]) <= zeroThreshold && Math.abs(vectors[i][1]) <= zeroThreshold && Math.abs(vectors[i][2]) <= zeroThreshold) {
               return emit.apply(null, colors[i]);
             } else {
               return emit(0, 0, 0, 0);
@@ -482,8 +481,7 @@
           channels: 3,
           width: vectors.length,
           data: zeroData
-        });
-        this.zeroPoints = view.point(zeroOpts);
+        }).point(zeroOpts);
       }
     }
 

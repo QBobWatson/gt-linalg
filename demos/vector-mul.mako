@@ -1,88 +1,75 @@
-## /* -*- javascript -*-
+## -*- coffee -*-
 
-<%! draggable=True %>
+<%inherit file="base2.mako"/>
 
-<%inherit file="base.mako"/>
+<%block name="title">Scalar multiplication</%block>
+##
 
-<%block name="title">Vector multiplication</%block>
+new Demo {
+    mathbox:
+        mathbox:
+            warmup:  10
+            splash:  false
+            inspect: false
+    camera:
+        position:
+            [-1.5, -3, 1.5]
+}, () ->
+    window.mathbox = @mathbox
 
-## */
+    view = @view axes: false
+    vector1 = [3, -5,  4]
+    vector2 = [3*1.5, -5*1.5,  4*1.5]
+    color1 = [1, .3, 1, 1]
+    color2 = [1,  1, 0, 1]
 
-new Demo({
-    mathbox: {
-        plugins: ['core', 'controls'],
-        controls: {
-            klass: THREE.OrbitControls,
-            parameters: {
-                // noZoom: true,
-            }
-        },
-        mathbox: {
-            warmup: 10,
-            splash: false,
-            inspect: false,
-        },
-        splash: {fancy: true, color: "blue"},
-    },
-    camera: {
-        proxy:     true,
-        position: [-1.5, 1.5, -3],
-        lookAt:   [0, 0, 0],
-        up:       [0, 1, 0]
-    },
-    caption: "[Drag the vector head with the mouse to move it]",
-    axes: false,
+    @labeledVectors view,
+        vectors: [vector1]
+        colors:  [color1]
+        labels:  ['v']
+        vectorOpts:
+            width: 10
 
-}, function() {
-    var self = this;
+    @labeledVectors view,
+        vectors: [vector2]
+        colors:  [color2]
+        labels:  ['v']
+        zeroPoints: true
+        name:    'scaled'
+    mathbox.select("#scaled-text").set 'live', true
+    mathbox.select("#scaled-text").bind 'data', () -> [params.c.toFixed(2) + 'v']
 
-    var vector1 = [3, -5, 4];
-    var vector2 = [3*1.5, -5*1.5, 4*1.5];
-    var color1 = [1, .3, 1, 1];
-    var color2 = [1, 1, 0, 1];
+    # Make the vector draggable
+    @draggable view,
+        points: [vector1]
+        onDrag: (vec) ->
+            vec.clampScalar -10, 10
+            vector2[0] = vector1[0] * params.c
+            vector2[1] = vector1[1] * params.c
+            vector2[2] = vector1[2] * params.c
+            update()
 
-    this.labeledVectors([vector1], [color1], ['v'], {
-        vectorWidth: 10,
-    });
+    # gui
+    params =
+        c: 1.5
+    gui = new dat.GUI();
+    gui.add(params, 'c', -10, 10).step(0.1).onChange () ->
+        vector2[0] = vector1[0] * params.c
+        vector2[1] = vector1[1] * params.c
+        vector2[2] = vector1[2] * params.c
+        update()
 
-    this.labeledVectors([vector2], [color2], ['v'], {
-        prefix: 'scaled-',
-        zeroPoints: true,
-    });
+    @caption '''<p><span id="vectors-here"></span></p>
+                <p>[click and drag the head of v to move it]</p>
+             '''
+    @vecElt = document.getElementById "vectors-here"
+    update = () =>
+        katex.render \
+            params.c.toFixed(2) + "\\cdot" \
+          + @texVector(vector1[0], vector1[1], vector1[2], color: "#ff4dff") \
+          + "=" \
+          + @texVector(vector2[0], vector2[1], vector2[2], color: "#ffff00"),
+          @vecElt
 
-    mathbox.select("#scaled-text").set('live', true);
-    mathbox.select("#scaled-text").bind('data', function() {
-        return [params.c.toFixed(2) + 'v'];
-    });
-
-    // Make the vectors draggable
-    new Draggable({
-        view:   this.view,
-        points: [vector1],
-        size:   30,
-        hiliteColor: [0, 1, 1, .75],
-        onDrag: function(vec) {
-            vec.clampScalar(-10, 10);
-            vector2[0] = vector1[0] * params.c;
-            vector2[1] = vector1[1] * params.c;
-            vector2[2] = vector1[2] * params.c;
-            self.zeroPoints.set(
-                'visible', (vector2[0] == 0 && vector2[1] == 0 && vector2[2] == 0));
-        },
-    });
-
-    // gui
-    var Params = function() {
-        this.c = 1.5;
-    };
-    var params = new Params();
-    var gui = new dat.GUI();
-    gui.add(params, 'c', -10, 10).step(0.1).onChange(function() {
-        vector2[0] = vector1[0] * params.c;
-        vector2[1] = vector1[1] * params.c;
-        vector2[2] = vector1[2] * params.c;
-        self.zeroPoints.set(
-            'visible', (vector2[0] == 0 && vector2[1] == 0 && vector2[2] == 0));
-    });
-});
+    update()
 

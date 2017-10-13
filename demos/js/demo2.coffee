@@ -406,7 +406,6 @@ class LabeledVectors
             colors:  "##{name}-zero-colors"
             color:   "white"
             size:    20
-            visible: false
         extend zeroOpts, @opts.zeroOpts ? {}
         zeroThreshold = @opts.zeroThreshold ? 0.0
 
@@ -456,9 +455,9 @@ class LabeledVectors
                     channels: 4
                     width:    vectors.length
                     expr: (emit, i) ->
-                        if Math.abs(vectors[i][0]) < zeroThreshold and
-                           Math.abs(vectors[i][1]) < zeroThreshold and
-                           Math.abs(vectors[i][2]) < zeroThreshold
+                        if Math.abs(vectors[i][0]) <= zeroThreshold and
+                           Math.abs(vectors[i][1]) <= zeroThreshold and
+                           Math.abs(vectors[i][2]) <= zeroThreshold
                             emit.apply null, colors[i]
                         else
                             emit 0, 0, 0, 0
@@ -467,7 +466,7 @@ class LabeledVectors
                     channels: 3
                     width:    vectors.length
                     data:     zeroData
-            @zeroPoints = view.point zeroOpts
+                .point zeroOpts
 
 
 # Class for constructing components common to the demos
