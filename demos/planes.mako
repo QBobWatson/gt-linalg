@@ -9,6 +9,8 @@
 ##
 
 new Demo camera: position: [-1.3,3,1.5], ()->
+    window.mathbox = @mathbox
+
     view = @view()
 
     # Plane 1
