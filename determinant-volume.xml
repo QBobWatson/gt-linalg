@@ -5,8 +5,9 @@
 
 
 
-  <p>It turns out that determinants are actually an instance of something you already know about: volume. Specifically, the <m>n</m> many columns of a square <m>n\times n</m> matrix <m>A</m> are all <m>n</m>-dimensional vectors.
+  <p>It turns out that determinants are actually an instance of something you already know about: volume. Specifically, the <m>n</m> many columns of a square <m>n\times n</m> matrix <m>A</m> are all vectors in <m>\mathbb R^n</m>.
   These <m>n</m> vectors determine a parallelepiped in <m>\R^n</m>, which we will call the <em>parallelepiped for <m>A</m>.</em>
+  In particular, if <m>n=2</m>, then we obtain a <em>parallelogram</em>.
   For example, if <m>A</m> is a <m>2\times2</m> matrix whose columns are non-zero vectors <m>v</m> and <m>w</m>, that is, if <m>A=\spalignmat{v; w}</m>, then we have the parallelogram determined by <m>v</m> and <m>w</m>:
   </p>
 
@@ -78,6 +79,11 @@
 		 The determinant of a <m>n\times n</m> matrix with rows <m>v_1,\ldots,v_n</m> is <m>\pm1</m> times the volume of the parallelepiped spanned by the vectors <m>v_1,\ldots,v_n</m> in <m>\mathbb R^n</m>.
 	  </p>
   </fact>
+  <proof>
+  <p>
+	  Why should <xref ref="DeterminantSignedVolume"/> be true? Well, we saw in <xref ref="DeterminantUniqueMultilinAlt"/> that the properties of having the value <m>1</m> on the identity matrix and satisfying the properties of <xref ref="DeterminantRowRedFacts"/> <em>uniquely</em> determine the determinant. Thus, you just have to check that the volume of the parallelepiped for a matrix <m>A</m> is also a function on square matrices which satisfies these properties. Firstly, re-scaling a row of a matrix by a constant multiple re-scales the parallelepiped by that multiple in the direction of the corresponding row vector. In particular, you can think of that row as being the one giving the height of the parallelepiped, the base doesn’t change, but the height gets scaled by the same amount you scaled the row. Swapping rows swaps the ordering of the sides of the parallelepiped, but this just changes labelling, and hence doesn't change volume, while in the determinant it only changes the volume by a fator of <m>\pm 1</m> (technically, the determinant give the <em>signed volume</em> of the parallelepiped with a fixed ordering on the row vectors; this is similar to the signed area you saw that integrals give in calculus). Moreover, if you perform a row replacement on a matrix changes neither the base nor the height of the corresponding  parallelepiped (thinking of the replaced row as giving the height), and so the volume is left the same, as is the determinant. Finally, the parallelepiped for the identity matrix is the unit <m>n</m>-dimensional cube, which has volume <m>1=\det I_n</m>.
+  </p>
+</proof>
  
 
   <p>For example, if <m>n=1</m> and <m>A=\spalignmat{a}</m>, we can think of <m>1</m>-dimensional "volume" as length, and the "parallelepiped for <m>A</m>" is just the vector <m>a</m> in <m>\R^1</m>. Moreover, the length of this vector is <m>|a|</m>, which is <m>\pm a=\pm\det A</m>.
@@ -89,22 +95,13 @@
   It may seem that this formula has little to do with volume. However, it is a fun geometry problem to show that the parallelogram for <m>A</m> in <xref ref="PicPar2Vec"/> has area <m>|ad-bc|</m> (first think about the case when the first column of <m>A</m> lies on the <m>x</m>-axis). As another fun problem, one can perform row reduction directly on <m>A</m> to find that the reduced row echelon form of <m>A</m> is the identity matrix <m>I_2</m> exactly when <m>ad-bc\neq0</m> (although we omit the calculation here).
   </p>
 
-  <p>
-	  Why should <xref ref="DeterminantSignedVolume"/> be true? Well, we saw in <xref ref="DeterminantUniqueMultilinAlt"/> that the properties of having the value <m>1</m> on the identity matrix and satisfying the properties of <xref ref="DeterminantRowRedFacts"/> <em>uniquely</em> determine the determinant. Thus, you just have to check that the volume of the parallelepiped for a matrix <m>A</m> is also a function on square matrices which satisfies these properties. Firstly, re-scaling a row of a matrix by a constant multiple re-scales the parallelepiped by that multiple in the direction of the corresponding row vector. In particular, you can think of that row as being the one giving the height of the parallelepiped, the base doesn’t change, but the height gets scaled by the same amount you scaled the row. Swapping rows swaps the ordering of the sides of the parallelepiped, but this just changes labelling, and hence doesn't change volume, while in the determinant it only changes the volume by a fator of <m>\pm 1</m> (technically, the determinant give the <em>signed volume</em> of the parallelepiped with a fixed ordering on the row vectors; this is similar to the signed area you saw that integrals give in calculus). Moreover, if you perform a row replacement on a matrix changes neither the base nor the height of the corresponding  parallelepiped (thinking of the replaced row as giving the height), and so the volume is left the same, as is the determinant. Finally, the parallelepiped for the identity matrix is the unit <m>n</m>-dimensional cube, which has volume <m>1=\det I_n</m>.
-  </p>
   
   
   <p>
-	  That’s that. Now suppose that <m>T_A\colon\mathbb R^n\rightarrow\mathbb R^n</m> is the linear transformation associated to an invertible <m>n\times n</m> matrix <m>A</m>. We think of <m>T_A</m> as some operation that you do to <m>\mathbb R^n</m>. We’ve seen examples of this before, for instance when <m>T_A</m> is a reflection, a projection, a rotation, a stretch or a shear. Of course, in general, <m>T_A</m> can be some complicated combination of these.
+	  Now suppose that <m>T_A\colon\mathbb R^n\rightarrow\mathbb R^n</m> is the linear transformation associated to an invertible <m>n\times n</m> matrix <m>A</m>. We think of <m>T_A</m> as some operation that you do to <m>\mathbb R^n</m>. We’ve seen examples of this before, for instance when <m>T_A</m> is a reflection, a projection, a rotation, a stretch or a shear. Of course, in general, <m>T_A</m> can be some complicated combination of these.
   </p>
   <p>
-	  So what can we say about what <m>T_A</m> does to <m>\mathbb R^n</m>? Well, we know that <m>T_A</m> takes the standard basis vectors <m>e_1,\ldots,e_n</m> to the columns of <m>A</m>. It follows that the standard unit cube spanned by <m>e_1,\ldots,e_n</m> gets taken to the parallelepiped spanned by the columns of <m>A</m>. What is the volume of this parallelepiped? Well, since <m>\det A = \det A^T</m> (can you see why?),the volume of the parallelepiped is <m>|det A|</m> by <xref ref="DeterminantSignedVolume"/>. In summary, <m>T_A</m> changes the volume of the standard cube by <m>det A</m>. Now we know something about what <m>T_A</m> does.
-  </p>
-  <p>
-	  Actually, we know more. If we take the cube <m>\varepsilon e_1,\ldots, \varepsilon e_n</m> where <m>\varepsilon</m> is a small  real number (wait, are we doing Calculus now?), then since <m>T_A</m> is linear, the image of this cube—which has (signed) volume <m>\varepsilon^n</m>—will have volume <m>\left|\det A\varepsilon^n\right|</m>. What does that buy us? Well now take any shape <m>S</m> in <m>\mathbb R^n</m> that has finite volume. Fill it as best you can with <m>\varepsilon</m>-cubes. The total volume of the <m>\varepsilon</m>-cubes is approximately volume<m>(S)</m>. Now apply <m>T_A</m>. What is the volume of <m>T_A(S)</m>? We just said that each of the little cubes gets its volume stretched by <m>\det A</m>. Since that’s true, all of <m>S</m> gets its volume stretched by <m>\det A</m>. 
-  </p>
-  <p>
-	  This discussion leads us to conclude the following fact.
+	  What does <m>T_A</m> do to <m>\mathbb R^n</m>? It turns out that it transforms finite-volume regions in <m>\mathbb R^n</m> to regions with predictable volumes.
   </p>
   <fact>
 	  <p>
@@ -114,6 +111,101 @@
 		  </me>
 	  </p>
   </fact>
+	  
+	  <p>Why should this be true? Well, we know that <m>T_A</m> takes the standard basis vectors <m>e_1,\ldots,e_n</m> to the columns of <m>A</m>. It follows that the standard unit cube spanned by <m>e_1,\ldots,e_n</m> gets taken to the parallelepiped spanned by the columns of <m>A</m>. What is the volume of this parallelepiped? Well, since <m>\det A = \det A^T</m> (can you see why?),the volume of the parallelepiped is <m>|det A|</m> by <xref ref="DeterminantSignedVolume"/>. In summary, <m>T_A</m> changes the volume of the standard cube by <m>det A</m>. Now we know something about what <m>T_A</m> does.
+  </p>
+  <p>
+	  Actually, we know more. If we take the cube <m>\varepsilon e_1,\ldots, \varepsilon e_n</m> where <m>\varepsilon</m> is a small  real number (wait, are we doing Calculus now?), then since <m>T_A</m> is linear, the image of this cube—which has (signed) volume <m>\varepsilon^n</m>—will have volume <m>\left|\det A\varepsilon^n\right|</m>. What does that buy us? Well now take any shape <m>S</m> in <m>\mathbb R^n</m> that has finite volume. Fill it as best you can with <m>\varepsilon</m>-cubes. The total volume of the <m>\varepsilon</m>-cubes is approximately volume<m>(S)</m>. Now apply <m>T_A</m>. What is the volume of <m>T_A(S)</m>? We just said that each of the little cubes gets its volume stretched by <m>\det A</m>. Since that’s true, all of <m>S</m> gets its volume stretched by <m>\det A</m>. 
+  </p>
+
+<p>  Let's illustrate this in a visual example in <m>\mathbb R^2</m>
+</p>
+
+<sidebyside>
+  <image>
+    <latex-image-code><![CDATA[
+    \begin{tikzpicture}
+	\begin{center}
+\begin{tikzpicture}[scale=.7, thin border nodes]
+  \draw[help lines, black!25] (-2,-2) grid (2,2);
+  \draw[vector] (0,0) to["$e_1$\strut"'] (1,0);
+  \draw[vector] (0,0) to["$e_2$"] (0,1);
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+  \node at (.5,.5) {$S$};
+  \node[fill=white] at (0,-1) {$\vol(S)=1$};
+  \point at (0,0);
+
+  \draw[->, thick] (2.1,.5) to[bend left, "$T$" above=1mm]  
+     node[align=center, below=2mm] {$A = \mat{1 1; -1 1}$\\[1mm]$\det(A)=2$}
+     (10-2.1,.5);
+
+  \begin{scope}[xshift=10cm]
+    \draw[help lines, black!25] (-2,-2) grid (2,2);
+    \draw[vector] (0,0) to["$T(e_1)$"'] (1,-1);
+    \draw[vector] (0,0) to["$T(e_2)$"] (1,1);
+    \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+      (0,0) -- (1,-1) -- (2,0) -- (1,1) -- cycle;
+    \node at (1,0) {$T(S)$};
+    \node[fill=white,anchor=center] at (0,-1.5) {$\vol(T(S)) = 2$};
+    \point at (0,0);
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+    \end{tikzpicture}
+    ]]>
+    </latex-image-code>
+  </image>
+</sidebyside>
+
+<p>
+For curvy shapes, the idea described above it the usual one from calculus; you break <m>S</m> up into a bunch of tiny cubes.  Each one is
+scaled by <m>|\det A|</m>.
+</p>
+<sidebyside>
+  <image>
+    <latex-image-code><![CDATA[
+    \begin{tikzpicture}
+	\begin{center}
+\begin{center}
+\begin{tikzpicture}[scale=.7, thin border nodes]
+  \draw[help lines, black!25] (-2,-2) rectangle (2,2);
+  \begin{scope}[ipe import, fill=seq-orange, fill opacity=.2, thin,
+      x=.7bp, y=.7bp]
+    \expandafter\filldraw\curvy;
+    \expandafter\clip\curvy;
+    \draw[very thin, step=4] (-60,-60) grid (60,60);
+  \end{scope}
+
+  \node at (0,.7) {$S$};
+  \point at (0,0);
+
+  \draw[->, thick] (2.1,0) to[bend left, "$T$" above=1mm] 
+    node[below=5mm] {$\vol(T(S)) = 2\vol(S)$}
+    (10-2.1,0);
+
+  \begin{scope}[xshift=10cm]
+    \draw[help lines, black!25] (-2,-2) rectangle (2,2);
+    \begin{scope}[ipe import, cm={1,-1,1,1,(0,0)}, x=.7bp, y=.7bp,
+        fill=seq-orange, fill opacity=.2, thin]
+      \expandafter\filldraw\curvy;
+      \expandafter\clip\curvy;
+      \draw[very thin, step=4] (-60,-60) grid (60,60);
+    \end{scope}
+
+    \node at (.8,.5) {$T(S)$};
+    \point at (0,0);
+  \end{scope}
+\end{center}
+\end{tikzpicture}
+    ]]>
+    </latex-image-code>
+  </image>
+</sidebyside>
+  
+  
+  
+  
   
   
   

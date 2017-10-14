@@ -108,9 +108,9 @@ the license is included in gfdl.xml.
 
   <p>
     In formulas, this says that if we pick row <m>i</m> to "expand along," then the cofactor expansion formula is
-    <me>\det A=\sum_{j=1}^n a_{ij}C_{ij},</me>
-    where in the sum the number <m>i</m> is fixed. Similarly, if we pick column <m>j</m> to expand along, then we obtain a formula
-    <me>\det A=\sum_{i=1}^n a_{ij}C_{ij}.</me>
+    <me>\det A=a_{i1}C_{i1}+a_{i2}C_{i2}+\ldots+a_{in}C_{in}.</me>   
+     Similarly, if we pick column <m>j</m> to expand along, then we obtain a formula
+    <me>\det A=a_{1j}C_{1j}+a_{2j}C_{2j}+\ldots+a_{nj}C_{nj}.</me>
     Note that this gives <m>2n</m> seemingly-different formulas, which all give the same number! We will see why this is true later, and simply assume this for now.
   </p>
 
@@ -184,16 +184,12 @@ the license is included in gfdl.xml.
     </md>
     Choosing the first row of <m>A</m> in Step 1 of the cofactor expansion algorithm (when we do this, we also say that we are <em>expanding the determinant along the first row</em>), we find that
     <me>\det A=aC_{11}+bC_{12} = ad - bc,</me>
-    which is a useful formula you may have seen before
+    which is a useful formula we encountered in the last section.
   </p>
 
   <p>
-    In the next example, we use cofactor expansion find a formula for the determinant of any <m>3\times 3</m> matrix.
-  </p>
-
-  <example>
-    <statement>
-      <p>We find the determinant of
+    We can also use the cofactor expansion to find a formula for the determinant of any <m>3\times 3</m> matrix.
+     Specifically,  we can find the determinant of 
       <me>A = \mat{a_{11} a_{12} a_{13}; a_{21} a_{22} a_{23}; a_{31} a_{32} a_{33}}</me>
       by expanding along the first row.  The minors and cofactors are computed as follows:
       </p>
@@ -269,13 +265,96 @@ the license is included in gfdl.xml.
           + a_{13}\det\mat{a_{21} a_{22}; a_{31} a_{32}},
           </mrow>
         </md>
-        which (magically) is the same formula as before.
+        which is 
+		<me>
+			a_{11}(a_{22}a_{33}-a_{23}a_{32})
+			          - a_{12}(a_{21}a_{33}-a_{23}a_{31})
+			          + a_{13}(a_{21}a_{32}-a_{22}a_{31}).
+		</me>
+		This formula looks too complicated to memorize outright. Fortunately, there is a useful mnemonic device for this formula, which works only in the case of <m>3\times3</m> matrices, and whose validity follows from writing down the cofactor expansion.
       </p>
-    </statement>
-  </example>
+	  <sidebyside>
+	      <image>
+	        <latex-image-code><![CDATA[
+	        \begin{tikzpicture}
+	        \matrix (a) [matrix of math nodes, anchor=south east] {
+	        a_{11} \& a_{12} \& a_{13} \& a_{14} \& a_{15} \\
+	        \llap{$+\quad$}a_{21} \& a_{22} \& a_{23} \& a_{24} \& a_{25} \\
+	        a_{21} \& a_{22} \& a_{23} \& a_{24} \& a_{25} \\
+	        };
+	        \matrix (b) [matrix of math nodes, anchor=south west, xshift=1.5em] {
+	        a_{11} \& a_{12} \& a_{13} \& a_{14} \& a_{15} \\
+	        \llap{$-\quad$}a_{21} \& a_{22} \& a_{23} \& a_{24} \& a_{25} \\
+	        a_{21} \& a_{22} \& a_{23} \& a_{24} \& a_{25} \\
+	        };
+	        \begin{scope}[very thick, opacity=.75]
+	          \draw[seq-green] (a-1-1.north west) -- (a-3-3.south east);
+	          \draw[seq-green] (a-1-2.north west) -- (a-3-4.south east);
+	          \draw[seq-green] (a-1-3.north west) -- (a-3-5.south east);
+	          \draw[seq-blue]  (b-1-3.north east) -- (b-3-1.south west);
+	          \draw[seq-blue]  (b-1-4.north east) -- (b-3-2.south west);
+	          \draw[seq-blue]  (b-1-5.north east) -- (b-3-3.south west);
+	        \end{scope}
+	        \node at (0, -1em)
+	          {$\color{seq-green}a_{11}a_{22}a_{33}+a_{12}a_{23}a_{31}+a_{13}a_{21}a_{32}
+	            \color{seq-blue}-a_{13}a_{22}a_{31}-a_{11}a_{23}a_{32}-a_{12}a_{21}a_{33}$};
+	        \end{tikzpicture}
+	        ]]>
+	        </latex-image-code>
+	      </image>
+	    </sidebyside>
+
+	  <p>
+	    Then, we multiply all the entries on each slash together, and add the products of the downward ones, and subtract the products of the upwards ones. 
+	  </p>
+	  <example>
+		  <statement>
+			  <p>
+				  To find the determinant of <m>A=\mat{1 3 5; 2 0 -1; 4 -3 1}</m>, we draw the diagram
+			  </p>
+	  <sidebyside>
+	    <image>
+	      <latex-image-code><![CDATA[
+	      \begin{tikzpicture}
+	        \matrix (a) [matrix of math nodes, nodes={minimum width=2em}]
+	        { 1 \& 3 \& 5 \& 1\& 3 \\
+	          2 \& 0 \& -1 \& 2 \& 0 \\
+	          4 \& -3 \& 1  \& 4 \& -3 \\
+	        };
+	      \begin{scope}[very thick, opacity=.75]
+	        \draw[seq-green] (a-1-1.north west) -- (a-3-3.south east);
+	        \draw[seq-green] (a-1-2.north west) -- (a-3-4.south east);
+	        \draw[seq-green] (a-1-3.north west) -- (a-3-5.south east);
+	        \draw[seq-blue]  (a-1-3.north east) -- (a-3-1.south west);
+	        \draw[seq-blue]  (a-1-4.north east) -- (a-3-2.south west);
+	        \draw[seq-blue]  (a-1-5.north east) -- (a-3-3.south west);
+	      \end{scope}
+	      \end{tikzpicture}
+	      ]]>
+	      </latex-image-code>
+	    </image>
+	  </sidebyside>
+
+	  <p>
+	  and find that 
+	  <me>
+	  \begin{aligned}
+	  \det A&amp; = \textcolor{seq-green}{1\cdot0\cdot1+3\cdot(-1)\cdot4+5\cdot2\cdot(-3)}
+	  \\ &amp;\textcolor{seq-blue}{-4\cdot0\cdot5-(-3)\cdot(-1)\cdot1-\cdot(1)\cdot2\cdot3}
+	  \\
+	  &amp;= 0-12-30-0-3-6 = -51.
+	  \end{aligned}
+	  </me>
+	  </p>
+  </statement>
+	  </example>
+	  
+
+
+
 
   <p>
-    Here we perform the computation for a particular matrix.
+    Here is another example of using the cofactor expansion for a particular matrix.
   </p>
 
   <example>
