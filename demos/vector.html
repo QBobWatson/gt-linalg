@@ -35,6 +35,8 @@
         <script src="lib/dat.gui.min.js"></script>
         <script src="lib/screenfull.min.js"></script>
 
+    
+
     <script type="text/javascript">
         "use strict";
         DomReady.ready(function() {
@@ -129,7 +131,7 @@ new Demo({
       vector[0] = params.a + origin[0];
       vector[1] = params.b + origin[1];
       vector[2] = params.c + origin[2];
-      return katex.render("\\color{#00ff00}v = " + _this.texVector(params.a, params.b, params.c), document.getElementById("vector-here"));
+      return katex.render("\\color{#00ff00}v = " + _this.texVector([params.a, params.b, params.c]), document.getElementById("vector-here"));
     };
   })(this);
   a.onChange(update);

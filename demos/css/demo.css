@@ -20,10 +20,12 @@
   top:       100%;
   transform: translate(-50%, -100%);
   color:     white;
-  background-color: black;
-  border:    solid 1px rgb(200, 200, 200);
+  background-color: rgba(50, 50, 50, .5);
+  opacity:  1.0;
+  border:    solid 1px rgba(200, 200, 200, .5);
   padding:   30px;
-  opacity:   .9;
+  padding-top: 0px;
+  box-sizing: border-box;
 }
 
 body {

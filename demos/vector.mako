@@ -85,7 +85,7 @@ new Demo {
         vector[1] = params.b + origin[1]
         vector[2] = params.c + origin[2]
         katex.render "\\color{#00ff00}v = " \
-            + @texVector(params.a, params.b, params.c),
+            + @texVector([params.a, params.b, params.c]),
             document.getElementById "vector-here"
     a.onChange update
     b.onChange update

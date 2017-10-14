@@ -53,6 +53,8 @@
         <script src="lib/screenfull.min.js"></script>
     % endif
 
+    <%block name="extra_js"/>
+
     <script type="text/javascript">
         "use strict";
         DomReady.ready(function() {

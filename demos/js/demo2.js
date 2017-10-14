@@ -1,6 +1,6 @@
 (function() {
   "use strict";
-  var Caption, ClipCube, Demo, Draggable, LabeledVectors, View, clipFragment, clipShader, extend,
+  var Caption, ClipCube, Demo, Draggable, Grid, LabeledVectors, LinearCombo, Popup, Subspace, View, clipFragment, clipShader, extend, makeTvec, orthogonalize, setTvec,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   extend = function(obj, src) {
@@ -17,9 +17,568 @@
     return results;
   };
 
+  orthogonalize = (function() {
+    var tmpVec;
+    tmpVec = null;
+    return function(vec1, vec2) {
+      if (tmpVec == null) {
+        tmpVec = new THREE.Vector3();
+      }
+      tmpVec.copy(vec1.normalize());
+      return vec2.sub(tmpVec.multiplyScalar(vec2.dot(vec1))).normalize();
+    };
+  })();
+
+  makeTvec = function(vec) {
+    var ret;
+    if (vec instanceof THREE.Vector3) {
+      return vec;
+    }
+    ret = new THREE.Vector3();
+    return ret.set.apply(ret, vec);
+  };
+
+  setTvec = function(orig, vec) {
+    if (vec instanceof THREE.Vector3) {
+      return orig.copy(vec);
+    } else {
+      return orig.set.apply(orig, vec);
+    }
+  };
+
   clipShader = "// Enable STPQ mapping\n#define POSITION_STPQ\nvoid getPosition(inout vec4 xyzw, inout vec4 stpq) {\n  // Store XYZ per vertex in STPQ\nstpq = xyzw;\n}";
 
   clipFragment = "// Enable STPQ mapping\n#define POSITION_STPQ\nuniform float range;\nuniform int hilite;\n\nvec4 getColor(vec4 rgba, inout vec4 stpq) {\n    stpq = abs(stpq);\n\n    // Discard pixels outside of clip box\n    if(stpq.x > range || stpq.y > range || stpq.z > range)\n        discard;\n\n    if(hilite != 0 &&\n       (range - stpq.x < range * 0.002 ||\n        range - stpq.y < range * 0.002 ||\n        range - stpq.z < range * 0.002)) {\n        rgba.xyz *= 10.0;\n        rgba.w = 1.0;\n    }\n\n    return rgba;\n}";
+
+  Subspace = (function() {
+    function Subspace(opts1) {
+      var i, l, ref, ref1, ref2;
+      this.opts = opts1;
+      this.updateDim = bind(this.updateDim, this);
+      this.draw = bind(this.draw, this);
+      this.project = bind(this.project, this);
+      this.update = bind(this.update, this);
+      this.setVecs = bind(this.setVecs, this);
+      this.onDimChange = (ref = this.opts.onDimChange) != null ? ref : function() {};
+      this.ortho = (function() {
+        var l, results;
+        results = [];
+        for (l = 0; l < 2; l++) {
+          results.push(new THREE.Vector3());
+        }
+        return results;
+      })();
+      this.zeroThreshold = (ref1 = this.opts.zeroThreshold) != null ? ref1 : 0.00001;
+      this.numVecs = this.opts.vectors.length;
+      this.vectors = [];
+      for (i = l = 0, ref2 = this.numVecs; 0 <= ref2 ? l < ref2 : l > ref2; i = 0 <= ref2 ? ++l : --l) {
+        this.vectors[i] = makeTvec(this.opts.vectors[i]);
+      }
+      this.tmpVec1 = new THREE.Vector3();
+      this.tmpVec2 = new THREE.Vector3();
+      this.drawn = false;
+      this.dim = -1;
+      this.update();
+    }
+
+    Subspace.prototype.setVecs = function(vecs) {
+      var i, l, ref;
+      for (i = l = 0, ref = this.numVecs; 0 <= ref ? l < ref : l > ref; i = 0 <= ref ? ++l : --l) {
+        setTvec(this.vectors[i], vecs[i]);
+      }
+      return this.update();
+    };
+
+    Subspace.prototype.update = function() {
+      var cross, oldDim, ortho1, ortho2, ref, ref1, vec1, vec1Zero, vec2, vec2Zero, vec3;
+      ref = this.vectors, vec1 = ref[0], vec2 = ref[1], vec3 = ref[2];
+      ref1 = this.ortho, ortho1 = ref1[0], ortho2 = ref1[1];
+      cross = this.tmpVec1;
+      oldDim = this.dim;
+      switch (this.numVecs) {
+        case 1:
+          if (vec1.lengthSq() <= this.zeroThreshold) {
+            this.dim = 0;
+          } else {
+            this.dim = 1;
+            ortho1.copy(vec1).normalize();
+          }
+          break;
+        case 2:
+          cross.crossVectors(vec1, vec2);
+          if (cross.lengthSq() <= this.zeroThreshold) {
+            vec1Zero = vec1.lengthSq() <= this.zeroThreshold;
+            vec2Zero = vec2.lengthSq() <= this.zeroThreshold;
+            if (vec1Zero && vec2Zero) {
+              this.dim = 0;
+            } else if (vec1Zero) {
+              this.dim = 1;
+              ortho1.copy(vec2).normalize();
+            } else {
+              this.dim = 1;
+              ortho1.copy(vec1).normalize();
+            }
+          } else {
+            this.dim = 2;
+            orthogonalize(ortho1.copy(vec1), ortho2.copy(vec2));
+          }
+          break;
+        case 3:
+          cross.crossVectors(vec1, vec2);
+          if (Math.abs(cross.dot(vec3)) > this.zeroThreshold) {
+            this.dim = 3;
+          } else {
+            if (cross.lengthSq() > this.zeroThreshold) {
+              this.dim = 2;
+              orthogonalize(ortho1.copy(vec1), ortho2.copy(vec2));
+            } else {
+              cross.crossVectors(vec1, vec3);
+              if (cross.lengthSq() > this.zeroThreshold) {
+                this.dim = 2;
+                orthogonalize(ortho1.copy(vec1), ortho2.copy(vec3));
+              } else {
+                cross.crossVectors(vec2, vec3);
+                if (cross.lengthSq() > this.zeroThreshold) {
+                  this.dim = 2;
+                  orthogonalize(ortho1.copy(vec2), ortho2.copy(vec3));
+                } else if (vec1.lengthSq() > this.zeroThreshold) {
+                  this.dim = 1;
+                  ortho1.copy(vec1);
+                } else if (vec2.lengthSq() > this.zeroThreshold) {
+                  this.dim = 1;
+                  ortho1.copy(vec2);
+                } else if (vec3.lengthSq() > this.zeroThreshold) {
+                  this.dim = 1;
+                  ortho1.copy(vec3);
+                } else {
+                  this.dim = 0;
+                }
+              }
+            }
+          }
+      }
+      if (oldDim !== this.dim) {
+        return this.updateDim(oldDim);
+      }
+    };
+
+    Subspace.prototype.project = function(vec, projected) {
+      var ortho1, ortho2, ref;
+      vec = setTvec(this.tmpVec1, vec);
+      ref = this.ortho, ortho1 = ref[0], ortho2 = ref[1];
+      switch (this.dim) {
+        case 0:
+          return projected.set(0, 0, 0);
+        case 1:
+          return projected.copy(ortho1).multiplyScalar(ortho1.dot(vec));
+        case 2:
+          projected.copy(ortho1).multiplyScalar(ortho1.dot(vec));
+          this.tmpVec2.copy(ortho2).multiplyScalar(ortho2.dot(vec));
+          return projected.add(this.tmpVec2);
+        case 3:
+          return projected.copy(vec);
+      }
+    };
+
+    Subspace.prototype.draw = function(view) {
+      var color, lineOpts, live, name, pointOpts, ref, ref1, ref2, ref3, ref4, ref5, ref6, surfaceOpts;
+      name = (ref = this.opts.name) != null ? ref : 'subspace';
+      this.range = (ref1 = this.opts.range) != null ? ref1 : 10.0;
+      color = (ref2 = this.opts.color) != null ? ref2 : 0x880000;
+      live = (ref3 = this.opts.live) != null ? ref3 : true;
+      this.range *= 2;
+      pointOpts = {
+        id: name + "-point",
+        color: color,
+        opacity: 1.0,
+        size: 15,
+        visible: false
+      };
+      extend(pointOpts, (ref4 = this.opts.pointOpts) != null ? ref4 : {});
+      lineOpts = {
+        id: name + "-line",
+        color: 0x880000,
+        opacity: 1.0,
+        stroke: 'solid',
+        width: 5,
+        visible: false
+      };
+      extend(lineOpts, (ref5 = this.opts.lineOpts) != null ? ref5 : {});
+      surfaceOpts = {
+        id: name + "-plane",
+        color: color,
+        opacity: 0.5,
+        lineX: false,
+        lineY: false,
+        fill: true,
+        visible: false
+      };
+      extend(surfaceOpts, (ref6 = this.opts.surfaceOpts) != null ? ref6 : {});
+      if (live || this.dim === 0) {
+        view.array({
+          channels: 3,
+          width: 1,
+          live: live,
+          data: [[0, 0, 0]]
+        });
+        this.point = view.point(pointOpts);
+      }
+      if ((live && this.numVecs >= 1) || this.dim === 1) {
+        view.array({
+          channels: 3,
+          width: 2,
+          live: live,
+          expr: (function(_this) {
+            return function(emit, i) {
+              if (i === 0) {
+                return emit(-_this.ortho[0].x * _this.range, -_this.ortho[0].y * _this.range, -_this.ortho[0].z * _this.range);
+              } else {
+                return emit(_this.ortho[0].x * _this.range, _this.ortho[0].y * _this.range, _this.ortho[0].z * _this.range);
+              }
+            };
+          })(this)
+        });
+        this.line = view.line(lineOpts);
+      }
+      if ((live && this.numVecs >= 2) || this.dim === 2) {
+        view.matrix({
+          channels: 3,
+          width: 2,
+          height: 2,
+          live: live,
+          expr: (function(_this) {
+            return function(emit, i, j) {
+              var sign1, sign2;
+              sign1 = i === 0 ? -1 : 1;
+              sign2 = j === 0 ? -1 : 1;
+              return emit(sign1 * _this.ortho[0].x * _this.range + sign2 * _this.ortho[1].x * _this.range, sign1 * _this.ortho[0].y * _this.range + sign2 * _this.ortho[1].y * _this.range, sign1 * _this.ortho[0].z * _this.range + sign2 * _this.ortho[1].z * _this.range);
+            };
+          })(this)
+        });
+        this.plane = view.surface(surfaceOpts);
+      }
+      this.objects = [this.point, this.line, this.plane];
+      this.drawn = true;
+      return this.updateDim(-1);
+    };
+
+    Subspace.prototype.updateDim = function(oldDim) {
+      this.onDimChange(this);
+      if (!this.drawn) {
+        return;
+      }
+      if (oldDim >= 0 && oldDim < 3) {
+        this.objects[oldDim].set('visible', false);
+      }
+      if (this.dim < 3) {
+        return this.objects[this.dim].set('visible', true);
+      }
+    };
+
+    return Subspace;
+
+  })();
+
+  LinearCombo = (function() {
+    function LinearCombo(view, opts) {
+      var c, coeffVars, coeffs, color1, color2, color3, colors, combine, labelOpts, labels, lineOpts, name, numVecs, pointOpts, ref, ref1, ref2, ref3, ref4, vector1, vector2, vector3, vectors;
+      name = (ref = opts.name) != null ? ref : 'lincombo';
+      vectors = opts.vectors;
+      colors = opts.colors;
+      labels = opts.labels;
+      coeffs = opts.coeffs;
+      coeffVars = (ref1 = opts.coeffVars) != null ? ref1 : ['x', 'y', 'z'];
+      c = function(i) {
+        return coeffs[coeffVars[i]];
+      };
+      lineOpts = {
+        classes: [name],
+        points: "#" + name + "-points",
+        colors: "#" + name + "-colors",
+        color: "white",
+        opacity: 0.75,
+        width: 3,
+        zIndex: 1
+      };
+      extend(lineOpts, (ref2 = opts.lineOpts) != null ? ref2 : {});
+      pointOpts = {
+        classes: [name],
+        points: "#" + name + "-combo",
+        color: 0x00ffff,
+        zIndex: 2,
+        size: 15
+      };
+      extend(pointOpts, (ref3 = opts.pointOpts) != null ? ref3 : {});
+      labelOpts = {
+        classes: [name],
+        outline: 2,
+        background: "black",
+        color: 0x00ffff,
+        offset: [0, 25],
+        zIndex: 3,
+        size: 15
+      };
+      extend(labelOpts, (ref4 = opts.labelOpts) != null ? ref4 : {});
+      numVecs = vectors.length;
+      vector1 = vectors[0];
+      vector2 = vectors[1];
+      vector3 = vectors[2];
+      color1 = colors[0];
+      color2 = colors[1];
+      color3 = colors[2];
+      switch (numVecs) {
+        case 1:
+          combine = (function(_this) {
+            return function() {
+              return _this.combo = [vector1[0] * c(0), vector1[1] * c(0), vector1[2] * c(0)];
+            };
+          })(this);
+          view.array({
+            id: name + "-points",
+            channels: 3,
+            width: 2,
+            items: 1,
+            expr: function(emit, i) {
+              if (i === 0) {
+                return emit(0, 0, 0);
+              } else {
+                return emit(vector1[0] * c(0), vector1[1] * c(0), vector1[2] * c(0));
+              }
+            }
+          }).array({
+            id: name + "-colors",
+            channels: 4,
+            width: 1,
+            items: 1,
+            data: [color1]
+          }).array({
+            id: name + "-combo",
+            channels: 3,
+            width: 1,
+            expr: function(emit) {
+              return emit.apply(null, combine());
+            }
+          });
+          break;
+        case 2:
+          combine = (function(_this) {
+            return function() {
+              return _this.combo = [vector1[0] * c(0) + vector2[0] * c(1), vector1[1] * c(0) + vector2[1] * c(1), vector1[2] * c(0) + vector2[2] * c(1)];
+            };
+          })(this);
+          view.array({
+            id: name + "-points",
+            channels: 3,
+            width: 2,
+            items: 4,
+            expr: function(emit, i) {
+              var vec1, vec12, vec2;
+              vec1 = [vector1[0] * c(0), vector1[1] * c(0), vector1[2] * c(0)];
+              vec2 = [vector2[0] * c(1), vector2[1] * c(1), vector2[2] * c(1)];
+              vec12 = [vec1[0] + vec2[0], vec1[1] + vec2[1], vec1[2] + vec2[2]];
+              if (i === 0) {
+                emit(0, 0, 0);
+                emit(0, 0, 0);
+                emit.apply(null, vec1);
+                return emit.apply(null, vec2);
+              } else {
+                emit.apply(null, vec1);
+                emit.apply(null, vec2);
+                emit.apply(null, vec12);
+                return emit.apply(null, vec12);
+              }
+            }
+          }).array({
+            id: name + "-colors",
+            channels: 4,
+            width: 2,
+            items: 4,
+            data: [color1, color2, color2, color1, color1, color2, color2, color1]
+          }).array({
+            id: name + "-combo",
+            channels: 3,
+            width: 1,
+            expr: function(emit) {
+              return emit.apply(null, combine());
+            }
+          });
+          break;
+        case 3:
+          combine = (function(_this) {
+            return function() {
+              return _this.combo = [vector1[0] * c(0) + vector2[0] * c(1) + vector3[0] * c(2), vector1[1] * c(0) + vector2[1] * c(1) + vector3[1] * c(2), vector1[2] * c(0) + vector2[2] * c(1) + vector3[2] * c(2)];
+            };
+          })(this);
+          view.array({
+            id: name + "-points",
+            channels: 3,
+            width: 2,
+            items: 12,
+            expr: function(emit, i) {
+              var vec1, vec12, vec123, vec13, vec2, vec23, vec3;
+              vec1 = [vector1[0] * c(0), vector1[1] * c(0), vector1[2] * c(0)];
+              vec2 = [vector2[0] * c(1), vector2[1] * c(1), vector2[2] * c(1)];
+              vec3 = [vector3[0] * c(2), vector3[1] * c(2), vector3[2] * c(2)];
+              vec12 = [vec1[0] + vec2[0], vec1[1] + vec2[1], vec1[2] + vec2[2]];
+              vec13 = [vec1[0] + vec3[0], vec1[1] + vec3[1], vec1[2] + vec3[2]];
+              vec23 = [vec2[0] + vec3[0], vec2[1] + vec3[1], vec2[2] + vec3[2]];
+              vec123 = [vec1[0] + vec2[0] + vec3[0], vec1[1] + vec2[1] + vec3[1], vec1[2] + vec2[2] + vec3[2]];
+              if (i === 0) {
+                emit(0, 0, 0);
+                emit(0, 0, 0);
+                emit(0, 0, 0);
+                emit.apply(null, vec1);
+                emit.apply(null, vec1);
+                emit.apply(null, vec2);
+                emit.apply(null, vec2);
+                emit.apply(null, vec3);
+                emit.apply(null, vec3);
+                emit.apply(null, vec12);
+                emit.apply(null, vec13);
+                return emit.apply(null, vec23);
+              } else {
+                emit.apply(null, vec1);
+                emit.apply(null, vec2);
+                emit.apply(null, vec3);
+                emit.apply(null, vec12);
+                emit.apply(null, vec13);
+                emit.apply(null, vec12);
+                emit.apply(null, vec23);
+                emit.apply(null, vec13);
+                emit.apply(null, vec23);
+                emit.apply(null, vec123);
+                emit.apply(null, vec123);
+                return emit.apply(null, vec123);
+              }
+            }
+          }).array({
+            id: name + "-colors",
+            channels: 4,
+            width: 2,
+            items: 12,
+            data: [color1, color2, color3, color2, color3, color1, color3, color1, color2, color3, color2, color1, color1, color2, color3, color2, color3, color1, color3, color1, color2, color3, color2, color1]
+          }).array({
+            id: name + "-combo",
+            channels: 3,
+            width: 1,
+            expr: function(emit) {
+              return emit.apply(null, combine());
+            }
+          });
+      }
+      view.line(lineOpts).point(pointOpts).text({
+        live: true,
+        width: 1,
+        expr: function(emit) {
+          var add, b, cc, ret;
+          ret = c(0).toFixed(2) + labels[0];
+          if (numVecs >= 2) {
+            b = Math.abs(c(1));
+            add = c(1) >= 0 ? "+" : "-";
+            ret += add + b.toFixed(2) + labels[1];
+          }
+          if (numVecs >= 3) {
+            cc = Math.abs(c(2));
+            add = c(2) >= 0 ? "+" : "-";
+            ret += add + cc.toFixed(2) + labels[2];
+          }
+          return emit(ret);
+        }
+      }).label(labelOpts);
+      this.combine = combine;
+    }
+
+    return LinearCombo;
+
+  })();
+
+  Grid = (function() {
+    function Grid(view, opts) {
+      var doLines, lineOpts, live, name, numLines, numVecs, perSide, ref, ref1, ref2, ref3, ref4, ticksOpts, totLines, vector1, vector2, vector3, vectors;
+      name = (ref = opts.name) != null ? ref : "vecgrid";
+      vectors = opts.vectors;
+      numLines = (ref1 = opts.numLines) != null ? ref1 : 40;
+      live = (ref2 = opts.live) != null ? ref2 : true;
+      ticksOpts = {
+        id: name,
+        opacity: 1,
+        size: 20,
+        normal: false,
+        color: 0xcc0000
+      };
+      extend(ticksOpts, (ref3 = opts.ticksOpts) != null ? ref3 : {});
+      lineOpts = {
+        id: name,
+        opacity: .75,
+        stroke: 'solid',
+        width: 3,
+        color: 0x880000,
+        zBias: 2
+      };
+      extend(lineOpts, (ref4 = opts.lineOpts) != null ? ref4 : {});
+      numVecs = vectors.length;
+      vector1 = vectors[0], vector2 = vectors[1], vector3 = vectors[2];
+      perSide = numLines / 2;
+      if (numVecs === 1) {
+        view.array({
+          channels: 3,
+          live: live,
+          width: numLines + 1,
+          expr: function(emit, i) {
+            i -= perSide;
+            return emit(i * vector1[0], i * vector1[1], i * vector1[2]);
+          }
+        });
+        this.ticks = view.ticks(ticksOpts);
+        return;
+      }
+      if (numVecs === 2) {
+        totLines = (numLines + 1) * 2;
+        doLines = function(emit, i) {
+          var j, l, ref5, ref6, results, start;
+          results = [];
+          for (j = l = ref5 = -perSide, ref6 = perSide; ref5 <= ref6 ? l <= ref6 : l >= ref6; j = ref5 <= ref6 ? ++l : --l) {
+            start = i === 0 ? -perSide : perSide;
+            emit(start * vector1[0] + j * vector2[0], start * vector1[1] + j * vector2[1], start * vector1[2] + j * vector2[2]);
+            results.push(emit(start * vector2[0] + j * vector1[0], start * vector2[1] + j * vector1[1], start * vector2[2] + j * vector1[2]));
+          }
+          return results;
+        };
+      }
+      if (numVecs === 3) {
+        totLines = (numLines + 1) * (numLines + 1) * 3;
+        doLines = function(emit, i) {
+          var j, k, l, ref5, ref6, results, start;
+          results = [];
+          for (j = l = ref5 = -perSide, ref6 = perSide; ref5 <= ref6 ? l <= ref6 : l >= ref6; j = ref5 <= ref6 ? ++l : --l) {
+            results.push((function() {
+              var m, ref7, ref8, results1;
+              results1 = [];
+              for (k = m = ref7 = -perSide, ref8 = perSide; ref7 <= ref8 ? m <= ref8 : m >= ref8; k = ref7 <= ref8 ? ++m : --m) {
+                start = i === 0 ? -perSide : perSide;
+                emit(start * vector1[0] + j * vector2[0] + k * vector3[0], start * vector1[1] + j * vector2[1] + k * vector3[1], start * vector1[2] + j * vector2[2] + k * vector3[2]);
+                emit(start * vector2[0] + j * vector1[0] + k * vector3[0], start * vector2[1] + j * vector1[1] + k * vector3[1], start * vector2[2] + j * vector1[2] + k * vector3[2]);
+                results1.push(emit(start * vector3[0] + j * vector1[0] + k * vector2[0], start * vector3[1] + j * vector1[1] + k * vector2[1], start * vector3[2] + j * vector1[2] + k * vector2[2]));
+              }
+              return results1;
+            })());
+          }
+          return results;
+        };
+      }
+      view.array({
+        channels: 3,
+        live: live,
+        width: 2,
+        items: totLines,
+        expr: doLines
+      });
+      this.lines = view.line(lineOpts);
+    }
+
+    return Grid;
+
+  })();
 
   Caption = (function() {
     function Caption(mathbox, text) {
@@ -35,9 +594,37 @@
 
   })();
 
+  Popup = (function() {
+    function Popup(mathbox, text) {
+      this.mathbox = mathbox;
+      this.div = this.mathbox._context.overlays.div;
+      this.popup = document.createElement('div');
+      this.popup.className = "overlay-popup";
+      this.popup.style.display = 'none';
+      if (text != null) {
+        this.popup.innerHTML = text;
+      }
+      this.div.appendChild(this.popup);
+    }
+
+    Popup.prototype.show = function(text) {
+      if (text != null) {
+        this.popup.innerHTML = text;
+      }
+      return this.popup.style.display = '';
+    };
+
+    Popup.prototype.hide = function() {
+      return this.popup.style.display = 'none';
+    };
+
+    return Popup;
+
+  })();
+
   View = (function() {
     function View(mathbox, opts1) {
-      var axisOpts, doAxes, doAxisLabels, doGrid, gridOpts, i, k, labelOpts, ref, ref1, ref10, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, viewOpts, viewRange, viewScale;
+      var axisOpts, doAxes, doAxisLabels, doGrid, gridOpts, i, l, labelOpts, ref, ref1, ref10, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, viewOpts, viewRange, viewScale;
       this.mathbox = mathbox;
       this.opts = opts1;
       if (this.opts == null) {
@@ -91,7 +678,7 @@
       extend(viewOpts, (ref9 = this.opts.viewOpts) != null ? ref9 : {});
       this.view = this.mathbox.cartesian(viewOpts);
       if (doAxes) {
-        for (i = k = 1, ref10 = this.numDims; 1 <= ref10 ? k <= ref10 : k >= ref10; i = 1 <= ref10 ? ++k : --k) {
+        for (i = l = 1, ref10 = this.numDims; 1 <= ref10 ? l <= ref10 : l >= ref10; i = 1 <= ref10 ? ++l : --l) {
           axisOpts.axis = i;
           this.view.axis(axisOpts);
         }
@@ -106,9 +693,9 @@
           live: false,
           expr: (function(_this) {
             return function(emit, i) {
-              var arr, j, l, ref11;
+              var arr, j, m, ref11;
               arr = [];
-              for (j = l = 0, ref11 = _this.numDims; 0 <= ref11 ? l < ref11 : l > ref11; j = 0 <= ref11 ? ++l : --l) {
+              for (j = m = 0, ref11 = _this.numDims; 0 <= ref11 ? m < ref11 : m > ref11; j = 0 <= ref11 ? ++m : --m) {
                 if (i === j) {
                   arr.push(viewRange[i][1] * 1.04);
                 } else {
@@ -132,7 +719,7 @@
 
   Draggable = (function() {
     function Draggable(view1, opts1) {
-      var getMatrix, hiliteColor, hiliteOpts, i, indices, name, ref, ref1, ref2, ref3, ref4, ref5, ref6, rtt, size;
+      var getMatrix, hiliteColor, hiliteOpts, i, indices, name, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, rtt, size;
       this.view = view1;
       this.opts = opts1;
       this.getIndexAt = bind(this.getIndexAt, this);
@@ -147,9 +734,10 @@
       this.points = this.opts.points;
       size = (ref1 = this.opts.size) != null ? ref1 : 30;
       this.onDrag = (ref2 = this.opts.onDrag) != null ? ref2 : function() {};
-      hiliteColor = (ref3 = this.opts.hiliteColor) != null ? ref3 : [0, .5, .5, .75];
-      this.eyeMatrix = (ref4 = this.opts.eyeMatrix) != null ? ref4 : new THREE.Matrix4();
-      getMatrix = (ref5 = this.opts.getMatrix) != null ? ref5 : function(d) {
+      this.postDrag = (ref3 = this.opts.postDrag) != null ? ref3 : function() {};
+      hiliteColor = (ref4 = this.opts.hiliteColor) != null ? ref4 : [0, .5, .5, .75];
+      this.eyeMatrix = (ref5 = this.opts.eyeMatrix) != null ? ref5 : new THREE.Matrix4();
+      getMatrix = (ref6 = this.opts.getMatrix) != null ? ref6 : function(d) {
         return d.view[0].controller.viewMatrix;
       };
       hiliteOpts = {
@@ -162,7 +750,7 @@
         zTest: false,
         zWrite: false
       };
-      extend(hiliteOpts, (ref6 = this.opts.hiliteOpts) != null ? ref6 : {});
+      extend(hiliteOpts, (ref7 = this.opts.hiliteOpts) != null ? ref7 : {});
       this.three = this.view._context.api.three;
       this.canvas = this.three.canvas;
       this.camera = this.view._context.api.select("camera")[0].controller.camera;
@@ -181,9 +769,9 @@
       this.eyeMatrixTrans = this.eyeMatrix.clone().transpose();
       this.eyeMatrixInv = new THREE.Matrix4().getInverse(this.eyeMatrix);
       indices = (function() {
-        var k, ref7, results;
+        var l, ref8, results;
         results = [];
-        for (i = k = 0, ref7 = this.points.length; 0 <= ref7 ? k < ref7 : k > ref7; i = 0 <= ref7 ? ++k : --k) {
+        for (i = l = 0, ref8 = this.points.length; 0 <= ref8 ? l < ref8 : l > ref8; i = 0 <= ref8 ? ++l : --l) {
           results.push([(i + 1) / 255, 1.0, 0, 0]);
         }
         return results;
@@ -271,7 +859,8 @@
       this.onDrag.call(this, this.vector);
       this.activePoint[0] = this.vector.x;
       this.activePoint[1] = this.vector.y;
-      return this.activePoint[2] = this.vector.z;
+      this.activePoint[2] = this.vector.z;
+      return this.postDrag.call(this);
     };
 
     Draggable.prototype.onMouseUp = function(event) {
@@ -341,7 +930,7 @@
       if (draw) {
         material = (ref4 = this.opts.material) != null ? ref4 : new THREE.MeshBasicMaterial();
         color = (ref5 = this.opts.color) != null ? ref5 : new THREE.Color(1, 1, 1);
-        this.clipCubeMesh = (function(_this) {
+        this.mesh = (function(_this) {
           return function() {
             var cube, geo, mesh;
             geo = new THREE.BoxGeometry(2, 2, 2);
@@ -353,22 +942,23 @@
           };
         })(this)();
       }
+      this.uniforms = {
+        range: {
+          type: 'f',
+          value: range
+        },
+        hilite: {
+          type: 'i',
+          value: hilite ? 1 : 0
+        }
+      };
       this.clipped = this.view.shader({
         code: clipShader
       }).vertex({
         pass: pass
       }).shader({
         code: clipFragment,
-        uniforms: {
-          range: {
-            type: 'f',
-            value: range
-          },
-          hilite: {
-            type: 'i',
-            value: hilite ? 1 : 0
-          }
-        }
+        uniforms: this.uniforms
       }).fragment();
     }
 
@@ -378,7 +968,7 @@
 
   LabeledVectors = (function() {
     function LabeledVectors(view, opts1) {
-      var colors, doZero, i, k, labelOpts, labels, name, origins, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, vectorData, vectorOpts, vectors, zeroData, zeroOpts, zeroThreshold;
+      var colors, doZero, i, l, labelOpts, labels, live, name, origins, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, vectorData, vectorOpts, vectors, zeroData, zeroOpts, zeroThreshold;
       this.opts = opts1;
       if (this.opts == null) {
         this.opts = {};
@@ -388,13 +978,14 @@
       colors = this.opts.colors;
       labels = this.opts.labels;
       origins = (ref1 = this.opts.origins) != null ? ref1 : (function() {
-        var k, ref2, results;
+        var l, ref2, results;
         results = [];
-        for (k = 0, ref2 = vectors.length; 0 <= ref2 ? k < ref2 : k > ref2; 0 <= ref2 ? k++ : k--) {
+        for (l = 0, ref2 = vectors.length; 0 <= ref2 ? l < ref2 : l > ref2; 0 <= ref2 ? l++ : l--) {
           results.push([0, 0, 0]);
         }
         return results;
       })();
+      live = (ref2 = this.opts.live) != null ? ref2 : true;
       vectorOpts = {
         id: name + "-vectors-drawn",
         points: "#" + name + "-vectors",
@@ -404,7 +995,7 @@
         size: 5,
         width: 5
       };
-      extend(vectorOpts, (ref2 = this.opts.vectorOpts) != null ? ref2 : {});
+      extend(vectorOpts, (ref3 = this.opts.vectorOpts) != null ? ref3 : {});
       labelOpts = {
         id: name + "-vector-labels",
         colors: "#" + name + "-colors",
@@ -414,8 +1005,8 @@
         size: 15,
         offset: [0, 25]
       };
-      extend(labelOpts, (ref3 = this.opts.labelOpts) != null ? ref3 : {});
-      doZero = (ref4 = this.opts.zeroPoints) != null ? ref4 : false;
+      extend(labelOpts, (ref4 = this.opts.labelOpts) != null ? ref4 : {});
+      doZero = (ref5 = this.opts.zeroPoints) != null ? ref5 : false;
       zeroOpts = {
         id: name + "-zero-points",
         points: "#" + name + "-zeros",
@@ -423,10 +1014,10 @@
         color: "white",
         size: 20
       };
-      extend(zeroOpts, (ref5 = this.opts.zeroOpts) != null ? ref5 : {});
-      zeroThreshold = (ref6 = this.opts.zeroThreshold) != null ? ref6 : 0.0;
+      extend(zeroOpts, (ref6 = this.opts.zeroOpts) != null ? ref6 : {});
+      zeroThreshold = (ref7 = this.opts.zeroThreshold) != null ? ref7 : 0.0;
       vectorData = [];
-      for (i = k = 0, ref7 = vectors.length; 0 <= ref7 ? k < ref7 : k > ref7; i = 0 <= ref7 ? ++k : --k) {
+      for (i = l = 0, ref8 = vectors.length; 0 <= ref8 ? l < ref8 : l > ref8; i = 0 <= ref8 ? ++l : --l) {
         vectorData.push(origins[i]);
         vectorData.push(vectors[i]);
       }
@@ -435,12 +1026,14 @@
         channels: 3,
         width: vectors.length,
         items: 2,
-        data: vectorData
+        data: vectorData,
+        live: live
       }).array({
         id: name + "-colors",
         channels: 4,
         width: colors.length,
-        data: colors
+        data: colors,
+        live: live
       }).vector(vectorOpts);
       if (labels != null) {
         view.array({
@@ -448,7 +1041,8 @@
           width: vectors.length,
           expr: function(emit, i) {
             return emit((vectors[i][0] + origins[i][0]) / 2, (vectors[i][1] + origins[i][1]) / 2, (vectors[i][2] + origins[i][2]) / 2);
-          }
+          },
+          live: live
         }).text({
           id: name + "-text",
           live: false,
@@ -458,9 +1052,9 @@
       }
       if (doZero) {
         zeroData = (function() {
-          var l, ref8, results;
+          var m, ref9, results;
           results = [];
-          for (l = 0, ref8 = vectors.length; 0 <= ref8 ? l < ref8 : l > ref8; 0 <= ref8 ? l++ : l--) {
+          for (m = 0, ref9 = vectors.length; 0 <= ref9 ? m < ref9 : m > ref9; 0 <= ref9 ? m++ : m--) {
             results.push([0, 0, 0]);
           }
           return results;
@@ -469,8 +1063,9 @@
           id: name + "-zero-colors",
           channels: 4,
           width: vectors.length,
+          live: live,
           expr: function(emit, i) {
-            if (Math.abs(vectors[i][0]) <= zeroThreshold && Math.abs(vectors[i][1]) <= zeroThreshold && Math.abs(vectors[i][2]) <= zeroThreshold) {
+            if (vectors[i][0] * vectors[i][0] + vectors[i][1] * vectors[i][1] + vectors[i][2] * vectors[i][2] <= zeroThreshold * zeroThreshold) {
               return emit.apply(null, colors[i]);
             } else {
               return emit(0, 0, 0, 0);
@@ -480,8 +1075,19 @@
           id: name + "-zeros",
           channels: 3,
           width: vectors.length,
-          data: zeroData
-        }).point(zeroOpts);
+          data: zeroData,
+          live: false
+        });
+        this.zeroPoints = view.point(zeroOpts);
+        this.zeroPoints.bind('visible', function() {
+          var m, ref9;
+          for (i = m = 0, ref9 = vectors.length; 0 <= ref9 ? m < ref9 : m > ref9; i = 0 <= ref9 ? ++m : --m) {
+            if (vectors[i][0] * vectors[i][0] + vectors[i][1] * vectors[i][1] + vectors[i][2] * vectors[i][2] <= zeroThreshold * zeroThreshold) {
+              return true;
+            }
+          }
+          return false;
+        });
       }
     }
 
@@ -491,8 +1097,10 @@
 
   Demo = (function() {
     function Demo(opts1, callback) {
-      var cameraOpts, clearColor, clearOpacity, doFullScreen, focusDist, image, key, mathboxOpts, onPreloaded, p, preload, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, scaleUI, toPreload, value;
+      var cameraOpts, clearColor, clearOpacity, doFullScreen, focusDist, image, key, mathboxOpts, onPreloaded, p, preload, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, scaleUI, toPreload, value;
       this.opts = opts1;
+      this.texCombo = bind(this.texCombo, this);
+      this.decodeQS();
       if (this.opts == null) {
         this.opts = {};
       }
@@ -521,11 +1129,14 @@
         lookAt: [0, 0, 0]
       };
       extend(cameraOpts, (ref3 = this.opts.camera) != null ? ref3 : {});
+      if (((ref4 = this.opts.cameraPosFromQS) != null ? ref4 : true) && (this.urlParams.camera != null)) {
+        cameraOpts.position = this.urlParams.camera.split(",").map(parseFloat);
+      }
       p = cameraOpts.position;
       cameraOpts.position = [-p[0], p[2], -p[1]];
-      focusDist = (ref4 = this.opts.focusDist) != null ? ref4 : 1.5;
-      scaleUI = (ref5 = this.opts.scaleUI) != null ? ref5 : true;
-      doFullScreen = (ref6 = this.opts.fullscreen) != null ? ref6 : true;
+      focusDist = (ref5 = this.opts.focusDist) != null ? ref5 : 1.5;
+      scaleUI = (ref6 = this.opts.scaleUI) != null ? ref6 : true;
+      doFullScreen = (ref7 = this.opts.fullscreen) != null ? ref7 : true;
       onPreloaded = (function(_this) {
         return function() {
           _this.mathbox = mathBox(mathboxOpts);
@@ -548,8 +1159,7 @@
           return callback.apply(_this);
         };
       })(this);
-      this.decodeQS();
-      preload = (ref7 = this.opts.preload) != null ? ref7 : {};
+      preload = (ref8 = this.opts.preload) != null ? ref8 : {};
       toPreload = 0;
       if (preload) {
         for (key in preload) {
@@ -585,29 +1195,116 @@
       return this.urlParams;
     };
 
-    Demo.prototype.texVector = function(x, y, z, opts) {
-      var precision, ref, ret;
+    Demo.prototype.texVector = function(vec, opts) {
+      var coord, i, l, len, precision, ref, ret;
       if (opts == null) {
         opts = {};
       }
       precision = (ref = opts.precision) != null ? ref : 2;
+      vec = vec.slice();
+      if (precision >= 0) {
+        for (i = l = 0, len = vec.length; l < len; i = ++l) {
+          coord = vec[i];
+          vec[i] = coord.toFixed(precision);
+        }
+      }
       ret = '';
       if (opts.color != null) {
         ret += "\\color{" + opts.color + "}{";
       }
-      ret += "\\begin{bmatrix}\n    " + (x.toFixed(precision)) + " \\\\\n    " + (y.toFixed(precision)) + " \\\\\n    " + (z.toFixed(precision)) + "\n\\end{bmatrix}";
+      ret += "\\begin{bmatrix}";
+      ret += vec.join("\\\\");
+      ret += "\\end{bmatrix}";
       if (opts.color != null) {
         ret += "}";
       }
       return ret;
     };
 
+    Demo.prototype.texCombo = function(vecs, coeffs, opts) {
+      var colors, i, l, len, precision, ref, str, vec;
+      if (opts == null) {
+        opts = {};
+      }
+      colors = opts.colors;
+      precision = (ref = opts.precision) != null ? ref : 2;
+      str = '';
+      for (i = l = 0, len = vecs.length; l < len; i = ++l) {
+        vec = vecs[i];
+        if (coeffs[i] !== 1) {
+          if (coeffs[i] === -1) {
+            str += '-';
+          } else {
+            str += coeffs[i].toFixed(precision);
+          }
+        }
+        if (colors != null) {
+          opts.color = colors[i];
+        }
+        str += this.texVector(vec, opts);
+        if (i + 1 < vecs.length && coeffs[i + 1] >= 0) {
+          str += ' + ';
+        }
+      }
+      return str;
+    };
+
+    Demo.prototype.texMatrix = function(cols, opts) {
+      var colors, i, j, l, m, precision, ref, ref1, ref2, str;
+      if (opts == null) {
+        opts = {};
+      }
+      colors = opts.colors;
+      precision = (ref = opts.precision) != null ? ref : 2;
+      str = "\\begin{bmatrix}";
+      for (i = l = 0, ref1 = cols[0].length; 0 <= ref1 ? l < ref1 : l > ref1; i = 0 <= ref1 ? ++l : --l) {
+        for (j = m = 0, ref2 = cols.length; 0 <= ref2 ? m < ref2 : m > ref2; j = 0 <= ref2 ? ++m : --m) {
+          if (colors != null) {
+            str += "\\color{" + colors[j] + "}{";
+          }
+          if (precision >= 0) {
+            str += cols[j][i].toFixed(precision);
+          } else {
+            str += cols[j][i];
+          }
+          if (colors != null) {
+            str += "}";
+          }
+          if (j + 1 < cols.length) {
+            str += "&";
+          }
+        }
+        if (i + 1 < cols[0].length) {
+          str += "\\\\";
+        }
+      }
+      return str += "\\end{bmatrix}";
+    };
+
+    Demo.prototype.moveCamera = function(x, y, z) {
+      return this.camera.position.set(-x, z, -y);
+    };
+
     Demo.prototype.view = function(opts) {
+      var r;
+      if (opts == null) {
+        opts = {};
+      }
+      if (this.urlParams.range != null) {
+        r = parseFloat(this.urlParams.range);
+        if (opts.viewRange == null) {
+          opts.viewRange = [[-r, r], [-r, r], [-r, r]];
+        }
+      }
       return new View(this.mathbox, opts).view;
     };
 
     Demo.prototype.caption = function(text) {
       return new Caption(this.mathbox, text);
+    };
+
+    Demo.prototype.popup = function(text) {
+      return new Popup(this.mathbox, text);
     };
 
     Demo.prototype.clipCube = function(view, opts) {
@@ -618,8 +1315,20 @@
       return new Draggable(view, opts);
     };
 
+    Demo.prototype.linearCombo = function(view, opts) {
+      return new LinearCombo(view, opts);
+    };
+
+    Demo.prototype.grid = function(view, opts) {
+      return new Grid(view, opts);
+    };
+
     Demo.prototype.labeledVectors = function(view, opts) {
       return new LabeledVectors(view, opts);
+    };
+
+    Demo.prototype.subspace = function(opts) {
+      return new Subspace(opts);
     };
 
     return Demo;
@@ -627,5 +1336,7 @@
   })();
 
   window.Demo = Demo;
+
+  window.extend = extend;
 
 }).call(this);

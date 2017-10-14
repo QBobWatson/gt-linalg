@@ -55,11 +55,11 @@ new Demo {
     @vecElt = document.getElementById "vectors-here"
     update = () =>
         katex.render \
-            @texVector(vector1[0], vector1[1], vector1[2], color: "#ff4dff") \
+            @texVector(vector1, color: "#ff4dff") \
           + "+" \
-          + @texVector(vector2[0], vector2[1], vector2[2], color: "#00ff00") \
+          + @texVector(vector2, color: "#00ff00") \
           + "=" \
-          + @texVector(vector3[0], vector3[1], vector3[2], color: "#ffff00"),
+          + @texVector(vector3, color: "#ffff00"),
           @vecElt
 
     update()

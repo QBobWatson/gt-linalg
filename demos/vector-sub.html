@@ -34,6 +34,8 @@
         <script src="js/demo2.js"></script>
         <script src="lib/screenfull.min.js"></script>
 
+    
+
     <script type="text/javascript">
         "use strict";
         DomReady.ready(function() {
@@ -81,11 +83,11 @@ new Demo({
   this.vecElt = document.getElementById("vectors-here");
   update = (function(_this) {
     return function() {
-      return katex.render(_this.texVector(vector1[0], vector1[1], vector1[2], {
+      return katex.render(_this.texVector(vector1, {
         color: "#ff4dff"
-      }) + "-" + _this.texVector(vector2[0], vector2[1], vector2[2], {
+      }) + "-" + _this.texVector(vector2, {
         color: "#00ff00"
-      }) + "=" + _this.texVector(vector1[0] - vector2[0], vector1[1] - vector2[1], vector1[2] - vector2[2], {
+      }) + "=" + _this.texVector([vector1[0] - vector2[0], vector1[1] - vector2[1], vector1[2] - vector2[2]], {
         color: "#ffff00"
       }), _this.vecElt);
     };

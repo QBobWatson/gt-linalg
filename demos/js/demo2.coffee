@@ -1,9 +1,37 @@
 "use strict"
 
+################################################################################
+# * Utility functions
+
+# Extend an object by another
 extend = (obj, src) ->
     for key, val of src
         obj[key] = val if src.hasOwnProperty key
 
+# Orthogonalize linearly independent vectors
+orthogonalize = do () ->
+    tmpVec = null
+    (vec1, vec2) ->
+        tmpVec = new THREE.Vector3() unless tmpVec?
+        tmpVec.copy vec1.normalize()
+        vec2.sub(tmpVec.multiplyScalar vec2.dot vec1).normalize()
+
+# If 'vec' is an array, convert it to a THREE.Vector3()
+makeTvec = (vec) ->
+    return vec if vec instanceof THREE.Vector3
+    ret = new THREE.Vector3()
+    ret.set.apply ret, vec
+
+# Set a THREE.Vector3 to another THREE.Vector3 or an array
+setTvec = (orig, vec) ->
+    if vec instanceof THREE.Vector3
+        orig.copy vec
+    else
+        orig.set.apply orig, vec
+
+
+################################################################################
+# * Shaders
 
 # Clipping shader
 clipShader = \
@@ -43,6 +71,534 @@ clipFragment = \
     """
 
 
+################################################################################
+# * Subspace
+
+# Abstract representation of a subspace, which can draw itself
+# Options:
+#     vectors: a spanning set
+#     onDimChange: called when the dimension changes
+#     zeroThreshold: a number smaller than this is considered zero, for the
+#        purposes of linear independence
+# Drawing options:
+#     name: object id's will be prefixed with "#{name}"
+#     range: make drawn objects at least [-range, range] on a side
+#     color: default color of drawn objects
+#     pointOpts: passed to mathbox.point
+#     lineOpts: passed to mathbox.line
+#     surfaceOpts: passed to mathbox.surface
+#     live: whether the vectors can change
+
+class Subspace
+    constructor: (@opts) ->
+        @onDimChange = @opts.onDimChange ? () ->
+
+        @ortho = (new THREE.Vector3() for [0...2])
+        @zeroThreshold = @opts.zeroThreshold ? 0.00001
+
+        @numVecs = @opts.vectors.length
+        @vectors = []
+        @vectors[i] = makeTvec @opts.vectors[i] for i in [0...@numVecs]
+
+        # Scratch
+        @tmpVec1 = new THREE.Vector3()
+        @tmpVec2 = new THREE.Vector3()
+
+        @drawn = false
+        @dim = -1
+        @update()
+
+    setVecs: (vecs) =>
+        setTvec @vectors[i], vecs[i] for i in [0...@numVecs]
+        @update()
+
+    update: () =>
+        # Compute the dimension, and an orthonormal basis if dim <= 2
+        [vec1, vec2, vec3] = @vectors
+        [ortho1, ortho2] = @ortho
+        cross = @tmpVec1
+        oldDim = @dim
+
+        switch @numVecs
+            when 1
+                if vec1.lengthSq() <= @zeroThreshold
+                    @dim = 0
+                else
+                    @dim = 1
+                    ortho1.copy(vec1).normalize()
+            when 2
+                cross.crossVectors vec1, vec2
+                if cross.lengthSq() <= @zeroThreshold
+                    vec1Zero = vec1.lengthSq() <= @zeroThreshold
+                    vec2Zero = vec2.lengthSq() <= @zeroThreshold
+                    if vec1Zero and vec2Zero
+                        @dim = 0
+                    else if vec1Zero
+                        @dim = 1
+                        ortho1.copy(vec2).normalize()
+                    else
+                        @dim = 1
+                        ortho1.copy(vec1).normalize()
+                else
+                    @dim = 2
+                    orthogonalize ortho1.copy(vec1), ortho2.copy(vec2)
+            when 3
+                cross.crossVectors vec1, vec2
+                if Math.abs(cross.dot vec3) > @zeroThreshold
+                    @dim = 3
+                else # dim <= 2
+                    if cross.lengthSq() > @zeroThreshold
+                        @dim = 2
+                        orthogonalize ortho1.copy(vec1), ortho2.copy(vec2)
+                    else
+                        cross.crossVectors vec1, vec3
+                        if cross.lengthSq() > @zeroThreshold
+                            @dim = 2
+                            orthogonalize ortho1.copy(vec1), ortho2.copy(vec3)
+                        else
+                            cross.crossVectors vec2, vec3
+                            if cross.lengthSq() > @zeroThreshold
+                               @dim = 2
+                               orthogonalize ortho1.copy(vec2), ortho2.copy(vec3)
+                             # dim <= 1
+                            else if vec1.lengthSq() > @zeroThreshold
+                                @dim = 1
+                                ortho1.copy vec1
+                            else if vec2.lengthSq() > @zeroThreshold
+                                @dim = 1
+                                ortho1.copy vec2
+                            else if vec3.lengthSq() > @zeroThreshold
+                                @dim = 1
+                                ortho1.copy vec3
+                            else
+                                @dim = 0
+
+        if oldDim != @dim
+            @updateDim oldDim
+
+    project: (vec, projected) =>
+        vec = setTvec @tmpVec1, vec
+        [ortho1, ortho2] = @ortho
+        switch @dim
+            when 0
+                projected.set 0, 0, 0
+            when 1
+                projected.copy(ortho1).multiplyScalar ortho1.dot(vec)
+            when 2
+                projected.copy(ortho1).multiplyScalar ortho1.dot(vec)
+                @tmpVec2.copy(ortho2).multiplyScalar ortho2.dot(vec)
+                projected.add @tmpVec2
+            when 3
+                projected.copy vec
+
+    # Set up the mathbox elements to draw the subspace if dim < 3
+    draw: (view) =>
+        name    = @opts.name   ? 'subspace'
+        @range  = @opts.range  ? 10.0
+        color   = @opts.color  ? 0x880000
+        live    = @opts.live   ? true
+
+        @range *= 2
+
+        pointOpts =
+            id:      "#{name}-point"
+            color:   color
+            opacity: 1.0
+            size:    15
+            visible: false
+        extend pointOpts, @opts.pointOpts ? {}
+        lineOpts =
+            id:      "#{name}-line"
+            color:   0x880000
+            opacity: 1.0
+            stroke:  'solid'
+            width:   5
+            visible: false
+        extend lineOpts, @opts.lineOpts ? {}
+        surfaceOpts =
+            id:      "#{name}-plane"
+            color:   color
+            opacity: 0.5
+            lineX:   false
+            lineY:   false
+            fill:    true
+            visible: false
+        extend surfaceOpts, @opts.surfaceOpts ? {}
+
+        if live or @dim == 0
+            view.array
+                channels: 3
+                width:    1
+                live:     live
+                data:     [[0, 0, 0]]
+            @point = view.point pointOpts
+
+        if (live and @numVecs >= 1) or @dim == 1
+            view.array
+                channels: 3
+                width:    2
+                live:     live
+                expr: (emit, i) =>
+                    if i == 0
+                        emit -@ortho[0].x * @range,
+                             -@ortho[0].y * @range,
+                             -@ortho[0].z * @range
+                    else
+                        emit  @ortho[0].x * @range,
+                              @ortho[0].y * @range,
+                              @ortho[0].z * @range
+            @line = view.line lineOpts
+
+        if (live and @numVecs >= 2) or @dim == 2
+            view.matrix
+                channels: 3
+                width:    2
+                height:   2
+                live:     live
+                expr: (emit, i, j) =>
+                    sign1 = if i == 0 then -1 else 1
+                    sign2 = if j == 0 then -1 else 1
+                    emit sign1 * @ortho[0].x * @range + sign2 * @ortho[1].x * @range,
+                         sign1 * @ortho[0].y * @range + sign2 * @ortho[1].y * @range,
+                         sign1 * @ortho[0].z * @range + sign2 * @ortho[1].z * @range
+            @plane = view.surface surfaceOpts
+
+        @objects = [@point, @line, @plane]
+
+        @drawn = true
+        @updateDim -1
+
+    updateDim: (oldDim) =>
+        @onDimChange @
+        return unless @drawn
+        if oldDim >= 0 and oldDim < 3
+            @objects[oldDim].set 'visible', false
+        if @dim < 3
+            @objects[@dim].set 'visible', true
+
+
+################################################################################
+# * Linear Combination
+
+# Draw a linear combination of 1, 2, or 3 vectors
+# Options:
+#     vectors: input vectors
+#     colors: colors of the lines
+#     labels: vector labels
+#     coeffs: .x, .y, .z are the coefficients, or:
+#     coeffVars: names of the coefficients
+#     lineOpts: passed to mathbox.line
+#     pointOpts: passed to mathbox.point for the end point
+#     labelOpts: passed to mathbox.label
+
+class LinearCombo
+    constructor: (view, opts) ->
+        name = opts.name ? 'lincombo'
+        vectors   = opts.vectors
+        colors    = opts.colors
+        labels    = opts.labels
+        coeffs    = opts.coeffs
+        coeffVars = opts.coeffVars ? ['x', 'y', 'z']
+
+        c = (i) -> coeffs[coeffVars[i]]
+
+        lineOpts =
+            classes: [name]
+            points:  "##{name}-points"
+            colors:  "##{name}-colors"
+            color:   "white"
+            opacity: 0.75
+            width:   3
+            zIndex:  1
+        extend lineOpts, opts.lineOpts ? {}
+        pointOpts =
+            classes: [name]
+            points:  "##{name}-combo"
+            color:   0x00ffff
+            zIndex:  2
+            size:    15
+        extend pointOpts, opts.pointOpts ? {}
+        labelOpts =
+            classes:    [name]
+            outline:    2
+            background: "black"
+            color:      0x00ffff
+            offset:     [0, 25]
+            zIndex:     3
+            size:       15
+        extend labelOpts, opts.labelOpts ? {}
+
+        numVecs = vectors.length
+        vector1 = vectors[0]
+        vector2 = vectors[1]
+        vector3 = vectors[2]
+        color1 = colors[0]
+        color2 = colors[1]
+        color3 = colors[2]
+
+        switch numVecs
+            when 1
+                combine = () =>
+                    @combo = [vector1[0]*c(0), vector1[1]*c(0), vector1[2]*c(0)]
+
+                view
+                    .array
+                        id:       "#{name}-points"
+                        channels: 3
+                        width:    2
+                        items:    1
+                        expr: (emit, i) ->
+                            if i == 0
+                                # starting points of lines
+                                emit 0, 0, 0
+                            else
+                                emit vector1[0]*c(0),
+                                     vector1[1]*c(0),
+                                     vector1[2]*c(0)
+                    .array
+                        id:       "#{name}-colors"
+                        channels: 4
+                        width:    1
+                        items:    1
+                        data:     [color1]
+                    .array
+                        id:       "#{name}-combo"
+                        channels: 3
+                        width:    1
+                        expr: (emit) -> emit.apply null, combine()
+            when 2
+                combine = () =>
+                    @combo = [vector1[0]*c(0) + vector2[0]*c(1),
+                              vector1[1]*c(0) + vector2[1]*c(1),
+                              vector1[2]*c(0) + vector2[2]*c(1)]
+                view
+                    .array
+                        id:       "#{name}-points"
+                        channels: 3
+                        width:    2
+                        items:    4
+                        expr: (emit, i) ->
+                            vec1 = [vector1[0]*c(0),
+                                    vector1[1]*c(0),
+                                    vector1[2]*c(0)]
+                            vec2 = [vector2[0]*c(1),
+                                    vector2[1]*c(1),
+                                    vector2[2]*c(1)]
+                            vec12 = [vec1[0] + vec2[0],
+                                     vec1[1] + vec2[1],
+                                     vec1[2] + vec2[2]]
+                            if i == 0
+                                # starting points of lines
+                                emit 0, 0, 0
+                                emit 0, 0, 0
+                                emit.apply null, vec1
+                                emit.apply null, vec2
+                            else
+                                emit.apply null, vec1
+                                emit.apply null, vec2
+                                emit.apply null, vec12
+                                emit.apply null, vec12
+                    .array
+                        id:       "#{name}-colors"
+                        channels: 4
+                        width:    2
+                        items:    4
+                        data:     [color1, color2, color2, color1,
+                                   color1, color2, color2, color1]
+                    .array
+                        id:       "#{name}-combo"
+                        channels: 3
+                        width:    1
+                        expr: (emit) -> emit.apply null, combine()
+            when 3
+                combine = () =>
+                    @combo = \
+                        [vector1[0]*c(0) + vector2[0]*c(1) + vector3[0]*c(2),
+                         vector1[1]*c(0) + vector2[1]*c(1) + vector3[1]*c(2),
+                         vector1[2]*c(0) + vector2[2]*c(1) + vector3[2]*c(2)]
+
+                view
+                    .array
+                        id:       "#{name}-points"
+                        channels: 3
+                        width:    2
+                        items:    12
+                        expr: (emit, i) ->
+                            vec1 = [vector1[0]*c(0),
+                                    vector1[1]*c(0),
+                                    vector1[2]*c(0)]
+                            vec2 = [vector2[0]*c(1),
+                                    vector2[1]*c(1),
+                                    vector2[2]*c(1)]
+                            vec3 = [vector3[0]*c(2),
+                                    vector3[1]*c(2),
+                                    vector3[2]*c(2)]
+                            vec12 = [vec1[0]+vec2[0], vec1[1]+vec2[1], vec1[2]+vec2[2]]
+                            vec13 = [vec1[0]+vec3[0], vec1[1]+vec3[1], vec1[2]+vec3[2]]
+                            vec23 = [vec2[0]+vec3[0], vec2[1]+vec3[1], vec2[2]+vec3[2]]
+                            vec123 = [vec1[0] + vec2[0] + vec3[0],
+                                      vec1[1] + vec2[1] + vec3[1],
+                                      vec1[2] + vec2[2] + vec3[2]]
+                            if i == 0
+                                # starting points of lines
+                                emit 0, 0, 0
+                                emit 0, 0, 0
+                                emit 0, 0, 0
+                                emit.apply null, vec1
+                                emit.apply null, vec1
+                                emit.apply null, vec2
+                                emit.apply null, vec2
+                                emit.apply null, vec3
+                                emit.apply null, vec3
+                                emit.apply null, vec12
+                                emit.apply null, vec13
+                                emit.apply null, vec23
+                            else
+                                # ending points of lines
+                                emit.apply null, vec1
+                                emit.apply null, vec2
+                                emit.apply null, vec3
+                                emit.apply null, vec12
+                                emit.apply null, vec13
+                                emit.apply null, vec12
+                                emit.apply null, vec23
+                                emit.apply null, vec13
+                                emit.apply null, vec23
+                                emit.apply null, vec123
+                                emit.apply null, vec123
+                                emit.apply null, vec123
+                    .array
+                        id:       "#{name}-colors"
+                        channels: 4
+                        width:    2
+                        items:    12
+                        data:     [color1, color2, color3, color2, color3, color1,
+                                   color3, color1, color2, color3, color2, color1,
+                                   color1, color2, color3, color2, color3, color1,
+                                   color3, color1, color2, color3, color2, color1]
+                    .array
+                        id:       "#{name}-combo"
+                        channels: 3
+                        width:    1
+                        expr: (emit) -> emit.apply null, combine()
+
+        view
+            .line lineOpts
+            # Label
+            .point pointOpts
+            .text
+                live:  true
+                width: 1
+                expr: (emit) ->
+                    ret = c(0).toFixed(2) + labels[0]
+                    if numVecs >= 2
+                        b = Math.abs c(1)
+                        add = if c(1) >= 0 then "+" else "-"
+                        ret += add + b.toFixed(2) + labels[1]
+                    if numVecs >= 3
+                        cc = Math.abs c(2)
+                        add = if c(2) >= 0 then "+" else "-"
+                        ret += add + cc.toFixed(2) + labels[2]
+                    emit ret
+            .label labelOpts
+
+        @combine = combine
+
+
+################################################################################
+# * Grid
+
+# Draw a grid along one, two, or three vectors
+# Options:
+#     name: id of the drawn primitive
+#     vectors: vectors along which to draw the grid
+#     numLines: number of lines or ticks to draw (minus 1)
+#     live: whether the vectors can move
+
+class Grid
+    constructor: (view, opts) ->
+        name     = opts.name     ? "vecgrid"
+        vectors  = opts.vectors
+        numLines = opts.numLines ? 40
+        live     = opts.live     ? true
+
+        ticksOpts =
+            id:      name
+            opacity: 1
+            size:    20
+            normal:  false
+            color:   0xcc0000
+        extend ticksOpts, opts.ticksOpts ? {}
+
+        lineOpts =
+            id:      name
+            opacity: .75
+            stroke:  'solid'
+            width:   3
+            color:   0x880000
+            zBias:   2
+        extend lineOpts, opts.lineOpts ? {}
+
+        numVecs = vectors.length
+        [vector1, vector2, vector3] = vectors
+        perSide = numLines/2
+
+        if numVecs == 1
+            view.array
+                channels: 3
+                live:     live
+                width:    numLines + 1
+                expr: (emit, i) ->
+                    i -= perSide
+                    emit i * vector1[0], i * vector1[1], i * vector1[2]
+            @ticks = view.ticks ticksOpts
+            return
+
+        if numVecs == 2
+            totLines = (numLines + 1) * 2
+            doLines = (emit, i) ->
+                for j in [-perSide..perSide]
+                    start = if i == 0 then -perSide else perSide
+                    # First axis
+                    emit start*vector1[0] + j*vector2[0],
+                         start*vector1[1] + j*vector2[1],
+                         start*vector1[2] + j*vector2[2]
+                    # Second axis
+                    emit start*vector2[0] + j*vector1[0],
+                         start*vector2[1] + j*vector1[1],
+                         start*vector2[2] + j*vector1[2]
+
+        if numVecs == 3
+            totLines = (numLines + 1) * (numLines + 1) * 3;
+            doLines = (emit, i) ->
+                for j in [-perSide..perSide]
+                    for k in [-perSide..perSide]
+                        start = if i == 0 then -perSide else perSide
+                        # First axis
+                        emit start*vector1[0] + j*vector2[0] + k*vector3[0],
+                             start*vector1[1] + j*vector2[1] + k*vector3[1],
+                             start*vector1[2] + j*vector2[2] + k*vector3[2]
+                        # Second axis
+                        emit start*vector2[0] + j*vector1[0] + k*vector3[0],
+                             start*vector2[1] + j*vector1[1] + k*vector3[1],
+                             start*vector2[2] + j*vector1[2] + k*vector3[2]
+                        # Third axis
+                        emit start*vector3[0] + j*vector1[0] + k*vector2[0],
+                             start*vector3[1] + j*vector1[1] + k*vector2[1],
+                             start*vector3[2] + j*vector1[2] + k*vector2[2]
+
+        view.array
+            channels: 3
+            live:     live
+            width:    2
+            items:    totLines
+            expr:     doLines
+        @lines = view.line lineOpts
+
+
+################################################################################
+# * Caption
+
 # Caption in the upper-left part of the screen (controlled by css)
 
 class Caption
@@ -53,6 +609,32 @@ class Caption
         @label.innerHTML = text
         @div.appendChild @label
 
+
+################################################################################
+# * Popup
+
+# Popup in the bottom part of the screen (controlled by css)
+
+class Popup
+    constructor: (@mathbox, text) ->
+        @div = @mathbox._context.overlays.div
+        @popup = document.createElement 'div'
+        @popup.className = "overlay-popup"
+        @popup.style.display = 'none'
+        if text?
+            @popup.innerHTML = text
+        @div.appendChild @popup
+
+    show: (text) ->
+        if text?
+            @popup.innerHTML = text
+        @popup.style.display = ''
+
+    hide: () -> @popup.style.display = 'none'
+
+
+################################################################################
+# * View
 
 # Wrapper for a mathbox cartesian view (2D or 3D).
 # Options:
@@ -146,6 +728,9 @@ class View
             .label labelOpts
 
 
+################################################################################
+# * Draggable
+
 # Make points draggable.
 # Options:
 #     points: list of draggable points.  The coordinates of these points will be
@@ -153,7 +738,8 @@ class View
 #     size: size of the draggable point
 #     hiliteColor: color (plus opacity) of a hovered point
 #     hiliteOpts: other options for the hilite points
-#     onDrag: drag callback
+#     onDrag: drag callback where you can modify the new vector
+#     postDrag: drag callback where the vector has been already updated
 #     getMatrix: return a matrix to use as the view matrix
 #     eyeMatrix: apply a transformation on eye pass too
 #
@@ -168,6 +754,7 @@ class Draggable
         @points     = @opts.points
         size        = @opts.size      ? 30
         @onDrag     = @opts.onDrag    ? () ->
+        @postDrag   = @opts.postDrag  ? () ->
         hiliteColor = @opts.hiliteColor ? [0, .5, .5, .75]
         @eyeMatrix  = @opts.eyeMatrix ? new THREE.Matrix4()
         getMatrix   = @opts.getMatrix ? (d) ->
@@ -297,6 +884,7 @@ class Draggable
         @activePoint[0] = @vector.x
         @activePoint[1] = @vector.y
         @activePoint[2] = @vector.z
+        @postDrag.call @
 
     onMouseUp: (event) =>
         return if @dragging < 0
@@ -329,6 +917,9 @@ class Draggable
         if r? then (if a == 0 then r-1 else -1) else -1
 
 
+################################################################################
+# * ClipCube
+
 # Makes a mathbox API that clips its contents to the cube [-range,range]^3.
 # Optionally draws the cube too.
 # Options:
@@ -350,7 +941,7 @@ class ClipCube
         if draw
             material = @opts.material ? new THREE.MeshBasicMaterial()
             color    = @opts.color    ? new THREE.Color 1, 1, 1
-            @clipCubeMesh = do () =>
+            @mesh = do () =>
                 geo  = new THREE.BoxGeometry 2, 2, 2
                 mesh = new THREE.Mesh geo, material
                 cube = new THREE.BoxHelper mesh
@@ -358,20 +949,39 @@ class ClipCube
                 @view._context.api.three.scene.add cube
                 mesh
 
+        @uniforms =
+            range:
+                type: 'f'
+                value: range
+            hilite:
+                type: 'i'
+                value: if hilite then 1 else 0
+
         @clipped = @view
             .shader code: clipShader
             .vertex pass: pass
             .shader
                 code: clipFragment
-                uniforms:
-                    range:
-                        type: 'f'
-                        value: range
-                    hilite:
-                        type: 'i'
-                        value: if hilite then 1 else 0
+                uniforms: @uniforms
             .fragment()
 
+
+################################################################################
+# * Labeled vectors
+
+# Constructs mathbox primitives for vectors with labels
+# Options:
+#     name: ids begin with "#{name}-"
+#     vectors: heads of vectors to draw (dynamic array)
+#     origins: tails of the vectors
+#     colors: colors to draw the vectors
+#     labels: labels for the vectors
+#     live: if the vectors can move
+#     vectorOpts: passed to mathbox.vector
+#     labelOpts: passed to mathbox.label
+#     zeroPoints: draw a point when a vector is zero
+#     zeroThreshold: a vector is considered "zero" if it's this small
+#     zeroOpts: passed to mathbox.point
 
 class LabeledVectors
     constructor: (view, @opts) ->
@@ -381,6 +991,7 @@ class LabeledVectors
         colors  = @opts.colors
         labels  = @opts.labels
         origins = @opts.origins ? ([0, 0, 0] for [0...vectors.length])
+        live    = @opts.live ? true
         vectorOpts =
             id:     "#{name}-vectors-drawn"
             points: "##{name}-vectors"
@@ -422,11 +1033,13 @@ class LabeledVectors
                 width:    vectors.length
                 items:    2
                 data:     vectorData
+                live:     live
             .array
                 id:       "#{name}-colors"
                 channels: 4
                 width:    colors.length
                 data:     colors
+                live:     live
             .vector vectorOpts
 
         # Labels
@@ -439,6 +1052,7 @@ class LabeledVectors
                         emit (vectors[i][0] + origins[i][0])/2,
                              (vectors[i][1] + origins[i][1])/2,
                              (vectors[i][2] + origins[i][2])/2
+                    live:     live
                 .text
                     id:    "#{name}-text"
                     live:  false
@@ -454,10 +1068,12 @@ class LabeledVectors
                     id:       "#{name}-zero-colors"
                     channels: 4
                     width:    vectors.length
+                    live:     live
                     expr: (emit, i) ->
-                        if Math.abs(vectors[i][0]) <= zeroThreshold and
-                           Math.abs(vectors[i][1]) <= zeroThreshold and
-                           Math.abs(vectors[i][2]) <= zeroThreshold
+                        if vectors[i][0] * vectors[i][0] +
+                           vectors[i][1] * vectors[i][1] +
+                           vectors[i][2] * vectors[i][2] <=
+                           zeroThreshold * zeroThreshold
                             emit.apply null, colors[i]
                         else
                             emit 0, 0, 0, 0
@@ -466,8 +1082,20 @@ class LabeledVectors
                     channels: 3
                     width:    vectors.length
                     data:     zeroData
-                .point zeroOpts
+                    live:     false
+            @zeroPoints = view.point zeroOpts
+            @zeroPoints.bind 'visible', () ->
+                for i in [0...vectors.length]
+                    if vectors[i][0] * vectors[i][0] +
+                       vectors[i][1] * vectors[i][1] +
+                       vectors[i][2] * vectors[i][2] <=
+                       zeroThreshold * zeroThreshold
+                        return true
+                return false
 
+
+################################################################################
+# * Demo
 
 # Class for constructing components common to the demos
 # Options:
@@ -475,6 +1103,7 @@ class LabeledVectors
 #    clearColor: THREE's clear color
 #    clearOpacity: THREE's clear opacity
 #    camera: passed to mathbox.camera()
+#    cameraPosFromQS: read camera position from query string
 #    focusDist: mathbox focus distance
 #    scaleUI: whether to scale focusDist by min(width, height)/1000
 #    doFullScreen: enable screenfull binding to key 'f'
@@ -482,6 +1111,8 @@ class LabeledVectors
 class Demo
     # Construct a mathBox instance, with optional preload
     constructor: (@opts, callback) ->
+        @decodeQS()
+
         @opts ?= {}
         mathboxOpts =
             plugins:     ['core', 'controls', 'cursor']
@@ -502,6 +1133,8 @@ class Demo
             position: [3, 1.5, 1.5]
             lookAt:   [0, 0, 0]
         extend cameraOpts, @opts.camera ? {}
+        if @opts.cameraPosFromQS ? true and @urlParams.camera?
+            cameraOpts.position = @urlParams.camera.split(",").map parseFloat
         # Transform camera position (z is up...)
         p = cameraOpts.position
         cameraOpts.position = [-p[0], p[2], -p[1]]
@@ -527,8 +1160,6 @@ class Demo
 
             callback.apply @
 
-        @decodeQS()
-
         # Do preloading (only images currently)
         preload = @opts.preload ? {}
         toPreload = 0
@@ -553,28 +1184,79 @@ class Demo
             @urlParams[decode match[1]] = decode match[2]
         @urlParams
 
-    texVector: (x, y, z, opts) ->
+    texVector: (vec, opts) ->
         opts ?= {}
         precision = opts.precision ? 2
+        vec = vec.slice()
+        if precision >= 0
+            for coord, i in vec
+                vec[i] = coord.toFixed precision
         ret = ''
         if opts.color?
             ret += "\\color{#{opts.color}}{"
-        ret += """
-               \\begin{bmatrix}
-                   #{x.toFixed precision} \\\\
-                   #{y.toFixed precision} \\\\
-                   #{z.toFixed precision}
-               \\end{bmatrix}
-               """
+        ret += "\\begin{bmatrix}"
+        ret += vec.join "\\\\"
+        ret += "\\end{bmatrix}"
         if opts.color?
             ret += "}"
         ret
 
-    view: (opts) -> new View(@mathbox, opts).view
+    texCombo: (vecs, coeffs, opts) =>
+        opts ?= {}
+        colors = opts.colors
+        precision = opts.precision ? 2
+        str = ''
+        for vec, i in vecs
+            if coeffs[i] != 1
+                if coeffs[i] == -1
+                    str += '-'
+                else
+                    str += coeffs[i].toFixed precision
+            if colors?
+                opts.color = colors[i]
+            str += @texVector vec, opts
+            if i+1 < vecs.length and coeffs[i+1] >= 0
+                str += ' + '
+        str
+
+    texMatrix: (cols, opts) ->
+        opts ?= {}
+        colors = opts.colors
+        precision = opts.precision ? 2
+        str = "\\begin{bmatrix}"
+        for i in [0...cols[0].length]
+            for j in [0...cols.length]
+                if colors?
+                    str += "\\color{#{colors[j]}}{"
+                if precision >= 0
+                    str += cols[j][i].toFixed precision
+                else
+                    str += cols[j][i]
+                if colors?
+                    str += "}"
+                str += "&" if j+1 < cols.length
+            str += "\\\\" if i+1 < cols[0].length
+        str += "\\end{bmatrix}"
+
+    moveCamera: (x, y, z) ->
+        @camera.position.set -x, z, -y
+
+    view: (opts) ->
+        opts ?= {}
+        if @urlParams.range?
+            r = parseFloat @urlParams.range
+            opts.viewRange ?= [[-r, r], [-r, r], [-r, r]]
+        new View(@mathbox, opts).view
+
     caption: (text) -> new Caption @mathbox, text
+    popup: (text) -> new Popup @mathbox, text
     clipCube: (view, opts) -> new ClipCube view, opts
     draggable: (view, opts) -> new Draggable view, opts
+    linearCombo: (view, opts) -> new LinearCombo view, opts
+    grid: (view, opts) -> new Grid view, opts
     labeledVectors: (view, opts) -> new LabeledVectors view, opts
+    subspace: (opts) -> new Subspace opts
 
 
 window.Demo = Demo
+window.extend = extend

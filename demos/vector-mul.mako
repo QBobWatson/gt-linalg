@@ -5,7 +5,7 @@
 <%block name="title">Scalar multiplication</%block>
 ##
 
-new Demo {
+window.demo = new Demo {
     mathbox:
         mathbox:
             warmup:  10
@@ -66,9 +66,9 @@ new Demo {
     update = () =>
         katex.render \
             params.c.toFixed(2) + "\\cdot" \
-          + @texVector(vector1[0], vector1[1], vector1[2], color: "#ff4dff") \
+          + @texVector(vector1, color: "#ff4dff") \
           + "=" \
-          + @texVector(vector2[0], vector2[1], vector2[2], color: "#ffff00"),
+          + @texVector(vector2, color: "#ffff00"),
           @vecElt
 
     update()
