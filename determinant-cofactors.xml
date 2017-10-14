@@ -9,24 +9,21 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="section-determinant-cofactors">
-  <title>Determinants: Cofactor expansions</title>
+<section xml:id="section-determinant-motivation-cofactors">
+  <title>Cofactor expansions </title>
 
-  <figure>
-    <caption>Orthogonal complements</caption>
-    <mathbox source="demos/orthogonal-complements.html" height="500px" />
-  </figure>
+
 
   <p>
-    We begin by describing one formula for determinants. This definition may seem strange, and we will have to wait to see where it comes from and how it is connected to invertibility and volumes. However, it is convenient for calculations and will be enough to kick off our study of the determinant.
+    We now give another description of the determinant which is often useful in computations.
   </p>
 
-  <p>We will build up this <em>cofactor expansion</em> from the ground up in a recursive procedure. Namely, this method will say how to compute the determinant for <m>n\times n</m> matrices, <em>assuming</em> we already know how to do so for <m>(n-1)\times(n-1)</m> matrices.
+  <p>This is called the <em>cofactor expansion</em>  of a matrix, and computes the determinant from the ground up via a recursive procedure. Namely, this method will show how to compute the determinant for <m>n\times n</m> matrices, <em>assuming</em> we already know how to do so for <m>(n-1)\times(n-1)</m> matrices.
   </p>
 
-  <p>Let's start at the beginning. First, we require determinants for <m>1\times1</m> matrices. As discussed in the last section, the natural definition of the determinant in this case, which is correct one, is
+  <p>Let's start at the beginning. First, we consider the case of <m>1\times1</m> matrices. The definition of determinant directly implies that
   <me>\det\mat a=a.</me>
-  To give our general formula, we first need to introduce a little notation.
+  To describe cofactor expansions, we first need to introduce a little notation.
   </p>
 
   <definition xml:id="Minor-Cofactors-Defn">
@@ -187,11 +184,11 @@ the license is included in gfdl.xml.
     </md>
     Choosing the first row of <m>A</m> in Step 1 of the cofactor expansion algorithm (when we do this, we also say that we are <em>expanding the determinant along the first row</em>), we find that
     <me>\det A=aC_{11}+bC_{12} = ad - bc,</me>
-    which is the same formula as before.
+    which is a useful formula you may have seen before
   </p>
 
   <p>
-    In the next example, we use cofactor expansion to re-derive the formula for the determinant of a <m>3\times 3</m> matrix.
+    In the next example, we use cofactor expansion find a formula for the determinant of any <m>3\times 3</m> matrix.
   </p>
 
   <example>
@@ -337,7 +334,7 @@ the license is included in gfdl.xml.
   </example>
 
   <p>
-    Although this technique works reasonably quickly in most small examples, several important questions remain:
+    Although this technique works reasonably quickly in most small examples, several questions come to mind.
 
     <ol>
       <li>
@@ -347,9 +344,35 @@ the license is included in gfdl.xml.
 	How do we know that these numbers give the same answer <em>regardless</em> of which row or column we choose (that is, this method gives <m>2n</m> different expressions for the same number attached to an <m>n\times n</m> matrix, which we claim are always all equal).
       </li>
       <li>
-	Why does this number have to do with invertibility?
+	How do we know that this procedure gives the same number as in the definition of determinant by row reduction in the last section?
       </li>
     </ol>
   </p>
+
+  <p>
+	  For now, we don't have the tools to answer these questions. However, these "coincidences" show that the existence of a function like the determinant is surprising and very special.
+  </p>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
 
 </section>

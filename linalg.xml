@@ -61,11 +61,12 @@ Free Documentation License"
     <chapter xml:id="chap-determinant">
       <title>Determinants</title>
       <introduction>
-        <p>In this chapter, you will learn about one of most handy tools in linear algebra-- the <em>determinant.</em> Roughly speaking, this is numerical procedure assigning a number to any <em>square</em> matrix. As we shall see, this number "detects" invertibility, and can also be used to directly solve systems of linear equations in nice situations.
+        <p>In this chapter, you will learn about the <em>determinant.</em> The determinant is a special number assigned to any <em>square</em> matrix. As we shall see, this number "detects" invertibility of matrices, one of the key concepts of this course.
 	</p>
       </introduction>
-      <xi:include href="./determinant-motivation-cofactors.xml" />
 	  <xi:include href="./determinant-definitions-properties.xml" />
+      <xi:include href="./determinant-cofactors.xml" />
+	  <xi:include href="./determinant-volume.xml" />
 
     </chapter>
 

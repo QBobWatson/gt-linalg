@@ -1,6 +1,186 @@
 <section xml:id="section-determinant-definitions-properties">
-  <title>Determinants: Definitions and properties </title>
+  <title>Definition and properties of determinants</title>
 
-  <p>Row operations and examples.</p>
+
+  <p>
+    We begin by recalling three primary goals of this course:
+  </p>
+
+  <p>
+    <ol>
+      <li> Solving systems of linear equations, a.k.a. solving the matrix equation <m>Ax=b</m> (we've studied this problem in detail).</li>
+      <li>Solving the matrix equation <m>Ax=\lambda x</m>, where <m>\lambda</m> is a number (the eigenvalue problem). We are currently studying this problem.</li>
+      <li> "Almost solving" the matrix equation <m>Ax=b</m> (we will study this problem).</li>
+    </ol>
+  </p>
+
+  <p>As we have seen that solving matrix equations <m>Ax=b</m> are much easier if we can find an inverse matrix <m>A^{-1}</m>, it is interesting to know when matrices are invertible. The theory of <em>determinants</em> will give an efficient method for determining when a given matrix is invertible. Specifically, we will see that the determinant is a special number attached to any square matrix (we already know that non-square matrices are automatically non-invertible). We will give two different ways to describe this number, which will seem different, but which surprisingly end up giving the same result.
+  </p>
+  
+  <p>
+	  To get the ball rolling, let's give one way to define the determinant. Suppose that <m>A</m> is a square matrix. Then we can always transform the matrix to reduced echelon form. In doing so, we use elementary row operations. In terms of row operations and the reduced echelon form, we can define the determinant as follows.
+  </p>
+  <definition xml:id="DeterminantDefnREF">
+	  <statement>
+		  <p>
+			  The <term>determinant</term> of an <m>n\times n</m> square matrix <m>A</m> is a number, denoted by <m>\det A</m>. To find this number, we first compute the reduced echelon form, call it <m>B</m>, of <m>A</m>. If in this process we multiplied various rows by factors <m>c_1,\ldots,c_m</m> in our row reduction, and if we performed <m>r</m> row switches, then we define
+			  <me>
+				  \det A=(-1)^r\cdot c_1\cdot c_2\cdot\ldots\cdot c_m\cdot b_{11}\cdot b_{22}\cdot\ldots\cdot b_{nn}.
+			  </me>
+			  That is, the determinant is the product of diagonal entries of the reduced echelon form of <m>A</m>, multiplied with the scaling factors from row reduction and a <m>\pm1</m> coming from the number of row flips we made.
+		  </p>
+	  </statement>
+  </definition>
+  <remark>
+	  <p>
+		  You may be wondering what happens when we find the reduced echelon form of a matrix using two different sequences of row operations. It turns out that no matter what steps you take, as long as you end up in reduced echelon form, this definition always gives you the same answer.
+	  </p>
+  </remark>
+  <remark>
+	  <p>
+		  Note that the determinant of any upper triangular matrix is the product of its diagonal entries. For example, 
+		  <m>\det \spalignmat{1,2,3; 0,4,5;0,0,6}=1\cdot4\cdot6=24</m>, and <m>\det \spalignmat{-20,\pi,100;0,0,3;0,0,-7}=0</m>.
+	  </p>
+  </remark>
+  <p>
+	  By definition, we see that the determinant of a matrix is non-zero if and only if its reduced echelon form has no zeros on the diagonal. But we have seen before that is the same as saying that the matrix is invertible! Thus, our definition is designed so that the following is true.
+</p>
+<fact>
+	<p>
+		A square matrix <m>A</m> is invertible if and only if <m>\det A\neq0.</m>
+	</p>
+</fact>
+<p>
+	Let's try using the definition to compute a few determinants.
+</p>
+
+
+<example>
+  <statement>
+    <p>Consider the matrix <m>A=\spalignmat{1,2,3;2,-1,1;3,0,-1}</m>. After subtracting twice the first row from the second row and three times the first row from the third row, we obtain <m>\spalignmat{1,2,3;0,-5,-5;0,-6,-10}</m>. Since we didn't flip any rows or multiply a row by a constant, there is no data picked up to keep track of when we compute the determinant using the definition above (that is, this new matrix has the <em>same</em> determinant as <m>A</m>). Continuing in our row reduction, we factor out a <m>-5</m> from the second row, giving <m>\spalignmat{1,2,3;0,1,1;0,-6,-10}</m>. We keep track of this number <m>-5</m> for later. Continuing, we add six times the second row to the third row, giving <m>\spalignmat{1,2,3;0,1,1;0,0,-4}</m>. At this point, we are already in reduced ecehlon form, so we stop. The product of the diagonal entries in this reduced form is <m>1\cdot1\cdot(-4)=-4</m>. We made <m>0</m> row flips, and only once multiplied a row by a constant factor, which was <m>-5</m>. Thus, by the definition above, we find that 
+	<me>\det A=(-1)^0\cdot(-5)\cdot(-4)=20.</me>
+  </p>
+  </statement>
+</example>
+<example>
+	<statement>
+		<p>
+			The determinant of the matrix <m>\spalignmat{1,2,3;4,5,6;2,4,6}</m> is <m>0</m>, as it can be reduced by row operations to give <m>\spalignmat{1,2,3;0,-3,-6;0,0,0},</m>
+			which has a zero on the diagonal.
+		</p>
+	</statement>
+</example>
+<p>
+Based on these examples, we can infer that the definition of the determinant shows that it automatically satisfies several key properties.
+</p>
+<fact xml:id="DeterminantRowRedFacts">
+	<p>
+		The determinant gives a function from square <m>n\times n</m> matrices to real numbers which satisfies the following properties under row operations.
+		<ol>
+			<li>
+				Multiplying a row of a matrix <m>A</m> by a constant <m>c</m> gives a new matrix with determinant <m>c\det A</m>.
+			</li>
+			<li>
+				Swapping two rows of a matrix multiplies the determinant by <m>-1</m>.
+			</li>
+			<li>
+				Adding a multiple of one row to a different row leaves the determinant unchanged.
+			</li>
+		</ol>
+	</p>
+</fact>
+<p>
+	In fact, it is a theorem that these properties essentially determine the determinant. 
+</p>
+<theorem xml:id="DeterminantUniqueMultilinAlt">
+	<statement>
+		<p>
+			The determinant is the <em>only</em> function from square matrices to the real numbers which satisfies these three row operation properties and which satisfies the normalization <m>\det(I_n)=1</m>.
+		</p>
+	</statement>
+</theorem>
+<p>
+	These properties imply several useful facts about determinants. Firstly, if a matrix has a row of all zeros, then multiplying that row by <m>-1</m> doesn't change the row, and hence this row operation doesn't change the matrix at all, but property 1 above implies that the "new" matrix's determinant is <m>-1</m> times the determinant of the original matrix. This means that the following is true.
+</p>
+<fact>
+	<p>
+		If a matrix has a row of all zeros, then its determinant is zero. In particular, the matrix is non-invertible.
+	</p>
+</fact>
+<p>
+	By combining this fact with the third property of determinants above, we see that if one row of a matrix is a multiple of another, say if row <m>i</m> is the constant <m>c</m> times row <m>j</m>, then adding <m>-c</m> times row <m>j</m> to row <m>i</m> gives a row of zeros. The properties of determinants above says that this new matrix has the same determinant, which has to be zero by the last fact. For example, in <m>A=\spalignmat{-2,3;4,-6}</m>, we can add twice the first row to the second row to obtain <m>\spalignmat{-2,3;0,0}</m>, which has the same determinant as <m>A</m>. This means that <m>\det A=0</m>. That is, we have shown that the following is true.
+</p>
+<fact>
+	<p>
+		If one row of a matrix is a constant multiple of another row, then that matrix has determinant zero.
+	</p>
+</fact>
+<p>
+	One more surprising fact which is often very handy is that instead of using row operations to define determinants, if you used "column operations" instead of row operations, you would get the same theory of determinants. In practical terms, this means that the following analogue of the row reduction properties of the determinant also holds. At this point, this fact should seem like magic, and we will simply take this as a pleasant surprise for the time-being.
+</p>
+<fact>
+	<p>
+		The determinant satisfies the following properties under "column operations."
+		<ol>
+			<li>
+				Multiplying a column of a matrix <m>A</m> by a constant <m>c</m> gives a new matrix with determinant <m>c\det A</m>.
+			</li>
+			<li>
+				Swapping two columns of a matrix multiplies the determinant by <m>-1</m>.
+			</li>
+			<li>
+				Adding a multiple of one column to a different column leaves the determinant unchanged.
+			</li>
+		</ol>
+	</p>
+</fact>
+<p>
+	In particular, by the same reasoning as for row operations, we find the following. 
+</p>
+<fact>
+	<p>
+		If one column of a matrix is a constant multiple of another column, then that matrix has determinant zero. In particular, if some column of a matrix has all zeros, then that matrix has determinant zero.
+	</p>
+</fact>
+<example>
+	<statement>
+		<p>
+			The following matrices all have determinant zero, and hence are non-invertible:
+			<me>\spalignmat{0,2,-1;0,5,10;0,-7,3},\quad\spalignmat{5,-15;3,-9},\quad\spalignmat{3,1,2,4;0,0,0,0;4,2,5,12;-1,3,4,8},\spalignmat{\pi,e;3\pi,3e}.</me>
+		</p>
+	</statement>
+</example>
+
+<p>
+There is one more key property of determinants which is a little strange-looking at first, but very important. This is a type of multiplicative property of determinants, and will be a special fact that we'll assume to be true for the moment (to see how surprising this is, try it on a few examples yourself!).
+</p>
+<fact>
+	<p>
+	If <m>A</m> and <m>B</m> are <m>n\times n</m> matrices, then 
+	<me>
+		\det(AB)=\det A\cdot \det B.
+	</me>
+</p>
+</fact>
+<p>
+	We illustrate this property in the next example.
+</p>
+<example>
+	<statement>
+		<p>
+			If <m>A</m> and <m>B</m> are both invertible, then <m>\det A\neq0</m> and <m>\det B\neq0</m>. Thus, <m>\det(AB)=\det(A)\cdot\det(B)\neq0</m>, and so the product <m>AB</m> is invertible as well. Explicitly, by the socks and shoes property, we know that this inverse is <m>B^{-1}A^{-1}</m>.
+		</p>
+		<p>
+			If <m>I_n</m> is the identity matrix, then since it is upper triangular, its determinant is the product of its diagonal entries, which is <m>1</m>. This is constistent with the multiplicative property of determinants, as <m>I_nA=AI_n=A</m> for any <m>n\times n</m> matrix <m>A</m>, and so it is true that <m>\det(I_nA)=\det(AI_n)=1\cdot\det(A)=\det(A)\cdot1=\det(A)</m>.
+		</p>
+	</statement>
+</example>
+
+<p>
+	In the next two sections, we will give two other ways of thinking about determinants, one of which is useful in many examples for computing, and one which connects determinants to volumes of certain geometric figures.
+</p>
+
+
+
 
 </section>
