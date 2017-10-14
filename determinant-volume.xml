@@ -124,8 +124,6 @@
 <sidebyside>
   <image>
     <latex-image-code><![CDATA[
-    \begin{tikzpicture}
-	\begin{center}
 \begin{tikzpicture}[scale=.7, thin border nodes]
   \draw[help lines, black!25] (-2,-2) grid (2,2);
   \draw[vector] (0,0) to["$e_1$\strut"'] (1,0);
@@ -150,8 +148,6 @@
     \node[fill=white,anchor=center] at (0,-1.5) {$\vol(T(S)) = 2$};
     \point at (0,0);
   \end{scope}
-\end{tikzpicture}
-\end{center}
     \end{tikzpicture}
     ]]>
     </latex-image-code>
@@ -165,9 +161,6 @@ scaled by <m>|\det A|</m>.
 <sidebyside>
   <image>
     <latex-image-code><![CDATA[
-    \begin{tikzpicture}
-	\begin{center}
-\begin{center}
 \begin{tikzpicture}[scale=.7, thin border nodes]
   \draw[help lines, black!25] (-2,-2) rectangle (2,2);
   \begin{scope}[ipe import, fill=seq-orange, fill opacity=.2, thin,
@@ -196,7 +189,6 @@ scaled by <m>|\det A|</m>.
     \node at (.8,.5) {$T(S)$};
     \point at (0,0);
   \end{scope}
-\end{center}
 \end{tikzpicture}
     ]]>
     </latex-image-code>
