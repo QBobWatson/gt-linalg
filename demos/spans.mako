@@ -61,8 +61,15 @@
 #     capopt: caption options:
 #         matrix: use matrix equation instead of vector equation
 
+<%! is2D=False %>
 
-window.demo = new Demo {
+% if self.attr.is2D:
+is2D = true
+% else:
+is2D = false
+% endif
+
+window.demo = new (if is2D then Demo2D else Demo) {
     mathbox:
         mathbox:
             warmup:  10
@@ -128,6 +135,10 @@ window.demo = new Demo {
 
     @isLive = !@urlParams.nomove? or @urlParams.nomove == "false"
 
+    if is2D
+        vec[2] = 0 for vec in @vectors
+        @target[2] = 0 if @doTarget
+
     ##################################################
     # gui
     params =
@@ -190,7 +201,7 @@ window.demo = new Demo {
         zeroPoints:    true
         zeroThreshold: 0.05
         vectorOpts:    zIndex: 2
-        labelOpts:     zIndex: 2
+        labelOpts:     zIndex: 3
         zeroOpts:      zIndex: 3
 
     ##################################################
@@ -239,6 +250,7 @@ window.demo = new Demo {
 
     subspace = @subspace
         vectors: @vectors
+        noPlane: is2D
         zeroThreshold: zeroThreshold
         onDimChange: (ss) =>
             clipCube.mesh.material.visible = (ss.dim == 3 and !@urlParams.hidespace?)

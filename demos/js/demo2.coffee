@@ -20,14 +20,14 @@ orthogonalize = do () ->
 makeTvec = (vec) ->
     return vec if vec instanceof THREE.Vector3
     ret = new THREE.Vector3()
-    ret.set.apply ret, vec
+    ret.set vec[0], vec[1], vec[2] ? 0
 
 # Set a THREE.Vector3 to another THREE.Vector3 or an array
 setTvec = (orig, vec) ->
     if vec instanceof THREE.Vector3
         orig.copy vec
     else
-        orig.set.apply orig, vec
+        orig.set vec[0], vec[1], vec[2] ? 0
 
 
 ################################################################################
@@ -84,16 +84,19 @@ clipFragment = \
 #     name: object id's will be prefixed with "#{name}"
 #     range: make drawn objects at least [-range, range] on a side
 #     color: default color of drawn objects
+#     noPlane: do not draw planes
 #     pointOpts: passed to mathbox.point
 #     lineOpts: passed to mathbox.line
 #     surfaceOpts: passed to mathbox.surface
 #     live: whether the vectors can change
+#
+# In 2D, the z-coordinate is just always zero.
 
 class Subspace
     constructor: (@opts) ->
         @onDimChange = @opts.onDimChange ? () ->
 
-        @ortho = (new THREE.Vector3() for [0...2])
+        @ortho = [new THREE.Vector3(), new THREE.Vector3()]
         @zeroThreshold = @opts.zeroThreshold ? 0.00001
 
         @numVecs = @opts.vectors.length
@@ -250,18 +253,19 @@ class Subspace
             @line = view.line lineOpts
 
         if (live and @numVecs >= 2) or @dim == 2
-            view.matrix
-                channels: 3
-                width:    2
-                height:   2
-                live:     live
-                expr: (emit, i, j) =>
-                    sign1 = if i == 0 then -1 else 1
-                    sign2 = if j == 0 then -1 else 1
-                    emit sign1 * @ortho[0].x * @range + sign2 * @ortho[1].x * @range,
-                         sign1 * @ortho[0].y * @range + sign2 * @ortho[1].y * @range,
-                         sign1 * @ortho[0].z * @range + sign2 * @ortho[1].z * @range
-            @plane = view.surface surfaceOpts
+            unless @opts.noPlane
+                view.matrix
+                    channels: 3
+                    width:    2
+                    height:   2
+                    live:     live
+                    expr: (emit, i, j) =>
+                        sign1 = if i == 0 then -1 else 1
+                        sign2 = if j == 0 then -1 else 1
+                        emit sign1 * @ortho[0].x * @range + sign2 * @ortho[1].x * @range,
+                             sign1 * @ortho[0].y * @range + sign2 * @ortho[1].y * @range,
+                             sign1 * @ortho[0].z * @range + sign2 * @ortho[1].z * @range
+                @plane = view.surface surfaceOpts
 
         @objects = [@point, @line, @plane]
 
@@ -271,9 +275,9 @@ class Subspace
     updateDim: (oldDim) =>
         @onDimChange @
         return unless @drawn
-        if oldDim >= 0 and oldDim < 3
+        if oldDim >= 0 and oldDim < 3 and @objects[oldDim]?
             @objects[oldDim].set 'visible', false
-        if @dim < 3
+        if @dim < 3 and @objects[@dim]?
             @objects[@dim].set 'visible', true
 
 
@@ -290,6 +294,8 @@ class Subspace
 #     lineOpts: passed to mathbox.line
 #     pointOpts: passed to mathbox.point for the end point
 #     labelOpts: passed to mathbox.label
+#
+# In 2D, this adds a zero final coordinate to the vectors if necessary
 
 class LinearCombo
     constructor: (view, opts) ->
@@ -329,6 +335,8 @@ class LinearCombo
         extend labelOpts, opts.labelOpts ? {}
 
         numVecs = vectors.length
+        # Extend to 3D vectors
+        vec[2] ?= 0 for vec in vectors
         vector1 = vectors[0]
         vector2 = vectors[1]
         vector3 = vectors[2]
@@ -339,7 +347,9 @@ class LinearCombo
         switch numVecs
             when 1
                 combine = () =>
-                    @combo = [vector1[0]*c(0), vector1[1]*c(0), vector1[2]*c(0)]
+                    @combo = [vector1[0]*c(0),
+                              vector1[1]*c(0),
+                              vector1[2]*c(0)]
 
                 view
                     .array
@@ -514,6 +524,8 @@ class LinearCombo
 #     vectors: vectors along which to draw the grid
 #     numLines: number of lines or ticks to draw (minus 1)
 #     live: whether the vectors can move
+#
+# In 2D, this adds a zero final coordinate to the vectors if necessary
 
 class Grid
     constructor: (view, opts) ->
@@ -540,6 +552,8 @@ class Grid
         extend lineOpts, opts.lineOpts ? {}
 
         numVecs = vectors.length
+        # Extend to 3D
+        vec[2] ?= 0 for vec in vectors
         [vector1, vector2, vector3] = vectors
         perSide = numLines/2
 
@@ -690,13 +704,19 @@ class View
             offset:     [0, 0]
         extend labelOpts, @opts.labelOpts ? {}
 
-        viewScale[0] = -viewScale[0]
-        viewOpts =
-            range:    viewRange
-            scale:    viewScale
-            # z is up...
-            rotation: [-π/2, 0, 0]
-            id:       "#{@name}-view"
+        if @numDims == 3
+            viewScale[0] = -viewScale[0]
+            viewOpts =
+                range:    viewRange
+                scale:    viewScale
+                # z is up...
+                rotation: [-π/2, 0, 0]
+                id:       "#{@name}-view"
+        else
+            viewOpts =
+                range:    viewRange
+                scale:    viewScale
+                id:       "#{@name}-view"
         extend viewOpts, @opts.viewOpts ? {}
         @view = @mathbox.cartesian viewOpts
 
@@ -742,10 +762,13 @@ class View
 #     postDrag: drag callback where the vector has been already updated
 #     getMatrix: return a matrix to use as the view matrix
 #     eyeMatrix: apply a transformation on eye pass too
+#     is2D: the z-coordinate is always zero in drags
 #
 # Available instance attributes:
 #     hovered: index of the point the mouse is hovering over, or -1 if none
 #     dragging: point currently being dragged, or -1 if none
+#
+# In 2D, this adds a zero final coordinate to the vectors if necessary
 
 class Draggable
     constructor: (@view, @opts) ->
@@ -755,6 +778,7 @@ class Draggable
         size        = @opts.size      ? 30
         @onDrag     = @opts.onDrag    ? () ->
         @postDrag   = @opts.postDrag  ? () ->
+        @is2D       = @opts.is2D      ? false
         hiliteColor = @opts.hiliteColor ? [0, .5, .5, .75]
         @eyeMatrix  = @opts.eyeMatrix ? new THREE.Matrix4()
         getMatrix   = @opts.getMatrix ? (d) ->
@@ -772,6 +796,9 @@ class Draggable
         @three = @view._context.api.three
         @canvas = @three.canvas
         @camera = @view._context.api.select("camera")[0].controller.camera
+
+        # Extend to 3D
+        point[2] ?= 0 for point in @points
 
         # State
         @hovered     = -1
@@ -880,6 +907,7 @@ class Draggable
         @vector.set mouseX, mouseY, @projected.z
         @vector.applyProjection @matrixInv.getInverse @matrix
         @vector.applyMatrix4 @viewMatrixInv
+        @vector.z = 0 if @is2D
         @onDrag.call @, @vector
         @activePoint[0] = @vector.x
         @activePoint[1] = @vector.y
@@ -929,6 +957,8 @@ class Draggable
 #    draw: draw the cube
 #    material: material to draw the cube
 #    color: color for the wireframe cube
+#
+# Works equally well for a 2D view
 
 class ClipCube
     constructor: (@view, @opts) ->
@@ -982,6 +1012,8 @@ class ClipCube
 #     zeroPoints: draw a point when a vector is zero
 #     zeroThreshold: a vector is considered "zero" if it's this small
 #     zeroOpts: passed to mathbox.point
+#
+# In 2D, this adds a zero final coordinate to the vectors if necessary
 
 class LabeledVectors
     constructor: (view, @opts) ->
@@ -1021,6 +1053,9 @@ class LabeledVectors
         zeroThreshold = @opts.zeroThreshold ? 0.0
 
         vectorData = []
+        # Extend to 3D
+        vec[2] ?= 0 for vec in vectors
+        vec[2] ?= 0 for vec in origins
         for i in [0...vectors.length]
             vectorData.push origins[i]
             vectorData.push vectors[i]
@@ -1141,6 +1176,7 @@ class Demo
         focusDist    = @opts.focusDist  ? 1.5
         scaleUI      = @opts.scaleUI    ? true
         doFullScreen = @opts.fullscreen ? true
+        @dims        = @opts.dims       ? 3
 
         onPreloaded = () =>
             # Setup mathbox
@@ -1187,7 +1223,7 @@ class Demo
     texVector: (vec, opts) ->
         opts ?= {}
         precision = opts.precision ? 2
-        vec = vec.slice()
+        vec = vec.slice(0, @dims)
         if precision >= 0
             for coord, i in vec
                 vec[i] = coord.toFixed precision
@@ -1224,7 +1260,7 @@ class Demo
         colors = opts.colors
         precision = opts.precision ? 2
         str = "\\begin{bmatrix}"
-        for i in [0...cols[0].length]
+        for i in [0...@dims]
             for j in [0...cols.length]
                 if colors?
                     str += "\\color{#{colors[j]}}{"
@@ -1235,7 +1271,7 @@ class Demo
                 if colors?
                     str += "}"
                 str += "&" if j+1 < cols.length
-            str += "\\\\" if i+1 < cols[0].length
+            str += "\\\\" if i+1 < @dims
         str += "\\end{bmatrix}"
 
     moveCamera: (x, y, z) ->
@@ -1258,5 +1294,49 @@ class Demo
     subspace: (opts) -> new Subspace opts
 
 
-window.Demo = Demo
-window.extend = extend
+################################################################################
+# * Demo2D
+
+class Demo2D extends Demo
+    constructor: (opts, callback) ->
+        opts                 ?= {}
+        opts.dims            ?= 2
+        opts.mathbox         ?= {}
+        opts.mathbox.plugins ?= ['core']
+
+        # Setup fake orthographic camera
+        ortho = opts.ortho ? 10000
+        opts.mathbox.camera      ?= {}
+        opts.mathbox.camera.near ?= ortho/4
+        opts.mathbox.camera.far  ?= ortho*4
+        opts.camera              ?= {}
+        opts.camera.proxy        ?= false
+        opts.camera.position     ?= [0, -ortho, 0]
+        opts.camera.lookAt       ?= [0, 0, 0]
+        opts.camera.up           ?= [1, 0, 0]
+        vertical = opts.vertical ? 1.1
+        opts.camera.fov          ?= Math.atan(vertical/ortho) * 360 / π
+        opts.focusDist           ?= ortho/1.5
+
+        super opts, callback
+
+    view: (opts) ->
+        opts ?= {}
+        if @urlParams.range?
+            r = parseFloat @urlParams.range
+            opts.viewRange ?= [[-r, r], [-r, r]]
+        else
+            opts.viewRange ?= [[-10, 10], [-10, 10]]
+        new View(@mathbox, opts).view
+
+    draggable: (view, opts) ->
+        opts ?= {}
+        opts.is2D ?= true
+        new Draggable view, opts
+
+
+################################################################################
+# * Globals
+
+window.Demo   = Demo
+window.Demo2D = Demo2D

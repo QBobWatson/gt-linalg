@@ -1,7 +1,9 @@
 (function() {
   "use strict";
-  var Caption, ClipCube, Demo, Draggable, Grid, LabeledVectors, LinearCombo, Popup, Subspace, View, clipFragment, clipShader, extend, makeTvec, orthogonalize, setTvec,
-    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  var Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledVectors, LinearCombo, Popup, Subspace, View, clipFragment, clipShader, extend, makeTvec, orthogonalize, setTvec,
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend1 = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
 
   extend = function(obj, src) {
     var key, results, val;
@@ -30,19 +32,20 @@
   })();
 
   makeTvec = function(vec) {
-    var ret;
+    var ref, ret;
     if (vec instanceof THREE.Vector3) {
       return vec;
     }
     ret = new THREE.Vector3();
-    return ret.set.apply(ret, vec);
+    return ret.set(vec[0], vec[1], (ref = vec[2]) != null ? ref : 0);
   };
 
   setTvec = function(orig, vec) {
+    var ref;
     if (vec instanceof THREE.Vector3) {
       return orig.copy(vec);
     } else {
-      return orig.set.apply(orig, vec);
+      return orig.set(vec[0], vec[1], (ref = vec[2]) != null ? ref : 0);
     }
   };
 
@@ -60,14 +63,7 @@
       this.update = bind(this.update, this);
       this.setVecs = bind(this.setVecs, this);
       this.onDimChange = (ref = this.opts.onDimChange) != null ? ref : function() {};
-      this.ortho = (function() {
-        var l, results;
-        results = [];
-        for (l = 0; l < 2; l++) {
-          results.push(new THREE.Vector3());
-        }
-        return results;
-      })();
+      this.ortho = [new THREE.Vector3(), new THREE.Vector3()];
       this.zeroThreshold = (ref1 = this.opts.zeroThreshold) != null ? ref1 : 0.00001;
       this.numVecs = this.opts.vectors.length;
       this.vectors = [];
@@ -241,21 +237,23 @@
         this.line = view.line(lineOpts);
       }
       if ((live && this.numVecs >= 2) || this.dim === 2) {
-        view.matrix({
-          channels: 3,
-          width: 2,
-          height: 2,
-          live: live,
-          expr: (function(_this) {
-            return function(emit, i, j) {
-              var sign1, sign2;
-              sign1 = i === 0 ? -1 : 1;
-              sign2 = j === 0 ? -1 : 1;
-              return emit(sign1 * _this.ortho[0].x * _this.range + sign2 * _this.ortho[1].x * _this.range, sign1 * _this.ortho[0].y * _this.range + sign2 * _this.ortho[1].y * _this.range, sign1 * _this.ortho[0].z * _this.range + sign2 * _this.ortho[1].z * _this.range);
-            };
-          })(this)
-        });
-        this.plane = view.surface(surfaceOpts);
+        if (!this.opts.noPlane) {
+          view.matrix({
+            channels: 3,
+            width: 2,
+            height: 2,
+            live: live,
+            expr: (function(_this) {
+              return function(emit, i, j) {
+                var sign1, sign2;
+                sign1 = i === 0 ? -1 : 1;
+                sign2 = j === 0 ? -1 : 1;
+                return emit(sign1 * _this.ortho[0].x * _this.range + sign2 * _this.ortho[1].x * _this.range, sign1 * _this.ortho[0].y * _this.range + sign2 * _this.ortho[1].y * _this.range, sign1 * _this.ortho[0].z * _this.range + sign2 * _this.ortho[1].z * _this.range);
+              };
+            })(this)
+          });
+          this.plane = view.surface(surfaceOpts);
+        }
       }
       this.objects = [this.point, this.line, this.plane];
       this.drawn = true;
@@ -267,10 +265,10 @@
       if (!this.drawn) {
         return;
       }
-      if (oldDim >= 0 && oldDim < 3) {
+      if (oldDim >= 0 && oldDim < 3 && (this.objects[oldDim] != null)) {
         this.objects[oldDim].set('visible', false);
       }
-      if (this.dim < 3) {
+      if (this.dim < 3 && (this.objects[this.dim] != null)) {
         return this.objects[this.dim].set('visible', true);
       }
     };
@@ -281,7 +279,7 @@
 
   LinearCombo = (function() {
     function LinearCombo(view, opts) {
-      var c, coeffVars, coeffs, color1, color2, color3, colors, combine, labelOpts, labels, lineOpts, name, numVecs, pointOpts, ref, ref1, ref2, ref3, ref4, vector1, vector2, vector3, vectors;
+      var c, coeffVars, coeffs, color1, color2, color3, colors, combine, l, labelOpts, labels, len, lineOpts, name, numVecs, pointOpts, ref, ref1, ref2, ref3, ref4, vec, vector1, vector2, vector3, vectors;
       name = (ref = opts.name) != null ? ref : 'lincombo';
       vectors = opts.vectors;
       colors = opts.colors;
@@ -320,6 +318,12 @@
       };
       extend(labelOpts, (ref4 = opts.labelOpts) != null ? ref4 : {});
       numVecs = vectors.length;
+      for (l = 0, len = vectors.length; l < len; l++) {
+        vec = vectors[l];
+        if (vec[2] == null) {
+          vec[2] = 0;
+        }
+      }
       vector1 = vectors[0];
       vector2 = vectors[1];
       vector3 = vectors[2];
@@ -494,7 +498,7 @@
 
   Grid = (function() {
     function Grid(view, opts) {
-      var doLines, lineOpts, live, name, numLines, numVecs, perSide, ref, ref1, ref2, ref3, ref4, ticksOpts, totLines, vector1, vector2, vector3, vectors;
+      var doLines, l, len, lineOpts, live, name, numLines, numVecs, perSide, ref, ref1, ref2, ref3, ref4, ticksOpts, totLines, vec, vector1, vector2, vector3, vectors;
       name = (ref = opts.name) != null ? ref : "vecgrid";
       vectors = opts.vectors;
       numLines = (ref1 = opts.numLines) != null ? ref1 : 40;
@@ -517,6 +521,12 @@
       };
       extend(lineOpts, (ref4 = opts.lineOpts) != null ? ref4 : {});
       numVecs = vectors.length;
+      for (l = 0, len = vectors.length; l < len; l++) {
+        vec = vectors[l];
+        if (vec[2] == null) {
+          vec[2] = 0;
+        }
+      }
       vector1 = vectors[0], vector2 = vectors[1], vector3 = vectors[2];
       perSide = numLines / 2;
       if (numVecs === 1) {
@@ -535,9 +545,9 @@
       if (numVecs === 2) {
         totLines = (numLines + 1) * 2;
         doLines = function(emit, i) {
-          var j, l, ref5, ref6, results, start;
+          var j, m, ref5, ref6, results, start;
           results = [];
-          for (j = l = ref5 = -perSide, ref6 = perSide; ref5 <= ref6 ? l <= ref6 : l >= ref6; j = ref5 <= ref6 ? ++l : --l) {
+          for (j = m = ref5 = -perSide, ref6 = perSide; ref5 <= ref6 ? m <= ref6 : m >= ref6; j = ref5 <= ref6 ? ++m : --m) {
             start = i === 0 ? -perSide : perSide;
             emit(start * vector1[0] + j * vector2[0], start * vector1[1] + j * vector2[1], start * vector1[2] + j * vector2[2]);
             results.push(emit(start * vector2[0] + j * vector1[0], start * vector2[1] + j * vector1[1], start * vector2[2] + j * vector1[2]));
@@ -548,13 +558,13 @@
       if (numVecs === 3) {
         totLines = (numLines + 1) * (numLines + 1) * 3;
         doLines = function(emit, i) {
-          var j, k, l, ref5, ref6, results, start;
+          var j, k, m, ref5, ref6, results, start;
           results = [];
-          for (j = l = ref5 = -perSide, ref6 = perSide; ref5 <= ref6 ? l <= ref6 : l >= ref6; j = ref5 <= ref6 ? ++l : --l) {
+          for (j = m = ref5 = -perSide, ref6 = perSide; ref5 <= ref6 ? m <= ref6 : m >= ref6; j = ref5 <= ref6 ? ++m : --m) {
             results.push((function() {
-              var m, ref7, ref8, results1;
+              var n, ref7, ref8, results1;
               results1 = [];
-              for (k = m = ref7 = -perSide, ref8 = perSide; ref7 <= ref8 ? m <= ref8 : m >= ref8; k = ref7 <= ref8 ? ++m : --m) {
+              for (k = n = ref7 = -perSide, ref8 = perSide; ref7 <= ref8 ? n <= ref8 : n >= ref8; k = ref7 <= ref8 ? ++n : --n) {
                 start = i === 0 ? -perSide : perSide;
                 emit(start * vector1[0] + j * vector2[0] + k * vector3[0], start * vector1[1] + j * vector2[1] + k * vector3[1], start * vector1[2] + j * vector2[2] + k * vector3[2]);
                 emit(start * vector2[0] + j * vector1[0] + k * vector3[0], start * vector2[1] + j * vector1[1] + k * vector3[1], start * vector2[2] + j * vector1[2] + k * vector3[2]);
@@ -668,13 +678,21 @@
         offset: [0, 0]
       };
       extend(labelOpts, (ref8 = this.opts.labelOpts) != null ? ref8 : {});
-      viewScale[0] = -viewScale[0];
-      viewOpts = {
-        range: viewRange,
-        scale: viewScale,
-        rotation: [-π / 2, 0, 0],
-        id: this.name + "-view"
-      };
+      if (this.numDims === 3) {
+        viewScale[0] = -viewScale[0];
+        viewOpts = {
+          range: viewRange,
+          scale: viewScale,
+          rotation: [-π / 2, 0, 0],
+          id: this.name + "-view"
+        };
+      } else {
+        viewOpts = {
+          range: viewRange,
+          scale: viewScale,
+          id: this.name + "-view"
+        };
+      }
       extend(viewOpts, (ref9 = this.opts.viewOpts) != null ? ref9 : {});
       this.view = this.mathbox.cartesian(viewOpts);
       if (doAxes) {
@@ -719,7 +737,7 @@
 
   Draggable = (function() {
     function Draggable(view1, opts1) {
-      var getMatrix, hiliteColor, hiliteOpts, i, indices, name, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, rtt, size;
+      var getMatrix, hiliteColor, hiliteOpts, i, indices, l, len, name, point, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, rtt, size;
       this.view = view1;
       this.opts = opts1;
       this.getIndexAt = bind(this.getIndexAt, this);
@@ -735,9 +753,10 @@
       size = (ref1 = this.opts.size) != null ? ref1 : 30;
       this.onDrag = (ref2 = this.opts.onDrag) != null ? ref2 : function() {};
       this.postDrag = (ref3 = this.opts.postDrag) != null ? ref3 : function() {};
-      hiliteColor = (ref4 = this.opts.hiliteColor) != null ? ref4 : [0, .5, .5, .75];
-      this.eyeMatrix = (ref5 = this.opts.eyeMatrix) != null ? ref5 : new THREE.Matrix4();
-      getMatrix = (ref6 = this.opts.getMatrix) != null ? ref6 : function(d) {
+      this.is2D = (ref4 = this.opts.is2D) != null ? ref4 : false;
+      hiliteColor = (ref5 = this.opts.hiliteColor) != null ? ref5 : [0, .5, .5, .75];
+      this.eyeMatrix = (ref6 = this.opts.eyeMatrix) != null ? ref6 : new THREE.Matrix4();
+      getMatrix = (ref7 = this.opts.getMatrix) != null ? ref7 : function(d) {
         return d.view[0].controller.viewMatrix;
       };
       hiliteOpts = {
@@ -750,10 +769,17 @@
         zTest: false,
         zWrite: false
       };
-      extend(hiliteOpts, (ref7 = this.opts.hiliteOpts) != null ? ref7 : {});
+      extend(hiliteOpts, (ref8 = this.opts.hiliteOpts) != null ? ref8 : {});
       this.three = this.view._context.api.three;
       this.canvas = this.three.canvas;
       this.camera = this.view._context.api.select("camera")[0].controller.camera;
+      ref9 = this.points;
+      for (l = 0, len = ref9.length; l < len; l++) {
+        point = ref9[l];
+        if (point[2] == null) {
+          point[2] = 0;
+        }
+      }
       this.hovered = -1;
       this.dragging = -1;
       this.mouse = [-1, -1];
@@ -769,9 +795,9 @@
       this.eyeMatrixTrans = this.eyeMatrix.clone().transpose();
       this.eyeMatrixInv = new THREE.Matrix4().getInverse(this.eyeMatrix);
       indices = (function() {
-        var l, ref8, results;
+        var m, ref10, results;
         results = [];
-        for (i = l = 0, ref8 = this.points.length; 0 <= ref8 ? l < ref8 : l > ref8; i = 0 <= ref8 ? ++l : --l) {
+        for (i = m = 0, ref10 = this.points.length; 0 <= ref10 ? m < ref10 : m > ref10; i = 0 <= ref10 ? ++m : --m) {
           results.push([(i + 1) / 255, 1.0, 0, 0]);
         }
         return results;
@@ -856,6 +882,9 @@
       this.vector.set(mouseX, mouseY, this.projected.z);
       this.vector.applyProjection(this.matrixInv.getInverse(this.matrix));
       this.vector.applyMatrix4(this.viewMatrixInv);
+      if (this.is2D) {
+        this.vector.z = 0;
+      }
       this.onDrag.call(this, this.vector);
       this.activePoint[0] = this.vector.x;
       this.activePoint[1] = this.vector.y;
@@ -968,7 +997,7 @@
 
   LabeledVectors = (function() {
     function LabeledVectors(view, opts1) {
-      var colors, doZero, i, l, labelOpts, labels, live, name, origins, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, vectorData, vectorOpts, vectors, zeroData, zeroOpts, zeroThreshold;
+      var colors, doZero, i, l, labelOpts, labels, len, len1, live, m, n, name, origins, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, vec, vectorData, vectorOpts, vectors, zeroData, zeroOpts, zeroThreshold;
       this.opts = opts1;
       if (this.opts == null) {
         this.opts = {};
@@ -1017,7 +1046,19 @@
       extend(zeroOpts, (ref6 = this.opts.zeroOpts) != null ? ref6 : {});
       zeroThreshold = (ref7 = this.opts.zeroThreshold) != null ? ref7 : 0.0;
       vectorData = [];
-      for (i = l = 0, ref8 = vectors.length; 0 <= ref8 ? l < ref8 : l > ref8; i = 0 <= ref8 ? ++l : --l) {
+      for (l = 0, len = vectors.length; l < len; l++) {
+        vec = vectors[l];
+        if (vec[2] == null) {
+          vec[2] = 0;
+        }
+      }
+      for (m = 0, len1 = origins.length; m < len1; m++) {
+        vec = origins[m];
+        if (vec[2] == null) {
+          vec[2] = 0;
+        }
+      }
+      for (i = n = 0, ref8 = vectors.length; 0 <= ref8 ? n < ref8 : n > ref8; i = 0 <= ref8 ? ++n : --n) {
         vectorData.push(origins[i]);
         vectorData.push(vectors[i]);
       }
@@ -1052,9 +1093,9 @@
       }
       if (doZero) {
         zeroData = (function() {
-          var m, ref9, results;
+          var q, ref9, results;
           results = [];
-          for (m = 0, ref9 = vectors.length; 0 <= ref9 ? m < ref9 : m > ref9; 0 <= ref9 ? m++ : m--) {
+          for (q = 0, ref9 = vectors.length; 0 <= ref9 ? q < ref9 : q > ref9; 0 <= ref9 ? q++ : q--) {
             results.push([0, 0, 0]);
           }
           return results;
@@ -1080,8 +1121,8 @@
         });
         this.zeroPoints = view.point(zeroOpts);
         this.zeroPoints.bind('visible', function() {
-          var m, ref9;
-          for (i = m = 0, ref9 = vectors.length; 0 <= ref9 ? m < ref9 : m > ref9; i = 0 <= ref9 ? ++m : --m) {
+          var q, ref9;
+          for (i = q = 0, ref9 = vectors.length; 0 <= ref9 ? q < ref9 : q > ref9; i = 0 <= ref9 ? ++q : --q) {
             if (vectors[i][0] * vectors[i][0] + vectors[i][1] * vectors[i][1] + vectors[i][2] * vectors[i][2] <= zeroThreshold * zeroThreshold) {
               return true;
             }
@@ -1097,7 +1138,7 @@
 
   Demo = (function() {
     function Demo(opts1, callback) {
-      var cameraOpts, clearColor, clearOpacity, doFullScreen, focusDist, image, key, mathboxOpts, onPreloaded, p, preload, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, scaleUI, toPreload, value;
+      var cameraOpts, clearColor, clearOpacity, doFullScreen, focusDist, image, key, mathboxOpts, onPreloaded, p, preload, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, scaleUI, toPreload, value;
       this.opts = opts1;
       this.texCombo = bind(this.texCombo, this);
       this.decodeQS();
@@ -1137,6 +1178,7 @@
       focusDist = (ref5 = this.opts.focusDist) != null ? ref5 : 1.5;
       scaleUI = (ref6 = this.opts.scaleUI) != null ? ref6 : true;
       doFullScreen = (ref7 = this.opts.fullscreen) != null ? ref7 : true;
+      this.dims = (ref8 = this.opts.dims) != null ? ref8 : 3;
       onPreloaded = (function(_this) {
         return function() {
           _this.mathbox = mathBox(mathboxOpts);
@@ -1159,7 +1201,7 @@
           return callback.apply(_this);
         };
       })(this);
-      preload = (ref8 = this.opts.preload) != null ? ref8 : {};
+      preload = (ref9 = this.opts.preload) != null ? ref9 : {};
       toPreload = 0;
       if (preload) {
         for (key in preload) {
@@ -1201,7 +1243,7 @@
         opts = {};
       }
       precision = (ref = opts.precision) != null ? ref : 2;
-      vec = vec.slice();
+      vec = vec.slice(0, this.dims);
       if (precision >= 0) {
         for (i = l = 0, len = vec.length; l < len; i = ++l) {
           coord = vec[i];
@@ -1257,7 +1299,7 @@
       colors = opts.colors;
       precision = (ref = opts.precision) != null ? ref : 2;
       str = "\\begin{bmatrix}";
-      for (i = l = 0, ref1 = cols[0].length; 0 <= ref1 ? l < ref1 : l > ref1; i = 0 <= ref1 ? ++l : --l) {
+      for (i = l = 0, ref1 = this.dims; 0 <= ref1 ? l < ref1 : l > ref1; i = 0 <= ref1 ? ++l : --l) {
         for (j = m = 0, ref2 = cols.length; 0 <= ref2 ? m < ref2 : m > ref2; j = 0 <= ref2 ? ++m : --m) {
           if (colors != null) {
             str += "\\color{" + colors[j] + "}{";
@@ -1274,7 +1316,7 @@
             str += "&";
           }
         }
-        if (i + 1 < cols[0].length) {
+        if (i + 1 < this.dims) {
           str += "\\\\";
         }
       }
@@ -1335,8 +1377,92 @@
 
   })();
 
+  Demo2D = (function(superClass) {
+    extend1(Demo2D, superClass);
+
+    function Demo2D(opts, callback) {
+      var base, base1, base2, base3, base4, base5, base6, base7, base8, ortho, ref, ref1, vertical;
+      if (opts == null) {
+        opts = {};
+      }
+      if (opts.dims == null) {
+        opts.dims = 2;
+      }
+      if (opts.mathbox == null) {
+        opts.mathbox = {};
+      }
+      if ((base = opts.mathbox).plugins == null) {
+        base.plugins = ['core'];
+      }
+      ortho = (ref = opts.ortho) != null ? ref : 10000;
+      if ((base1 = opts.mathbox).camera == null) {
+        base1.camera = {};
+      }
+      if ((base2 = opts.mathbox.camera).near == null) {
+        base2.near = ortho / 4;
+      }
+      if ((base3 = opts.mathbox.camera).far == null) {
+        base3.far = ortho * 4;
+      }
+      if (opts.camera == null) {
+        opts.camera = {};
+      }
+      if ((base4 = opts.camera).proxy == null) {
+        base4.proxy = false;
+      }
+      if ((base5 = opts.camera).position == null) {
+        base5.position = [0, -ortho, 0];
+      }
+      if ((base6 = opts.camera).lookAt == null) {
+        base6.lookAt = [0, 0, 0];
+      }
+      if ((base7 = opts.camera).up == null) {
+        base7.up = [1, 0, 0];
+      }
+      vertical = (ref1 = opts.vertical) != null ? ref1 : 1.1;
+      if ((base8 = opts.camera).fov == null) {
+        base8.fov = Math.atan(vertical / ortho) * 360 / π;
+      }
+      if (opts.focusDist == null) {
+        opts.focusDist = ortho / 1.5;
+      }
+      Demo2D.__super__.constructor.call(this, opts, callback);
+    }
+
+    Demo2D.prototype.view = function(opts) {
+      var r;
+      if (opts == null) {
+        opts = {};
+      }
+      if (this.urlParams.range != null) {
+        r = parseFloat(this.urlParams.range);
+        if (opts.viewRange == null) {
+          opts.viewRange = [[-r, r], [-r, r]];
+        }
+      } else {
+        if (opts.viewRange == null) {
+          opts.viewRange = [[-10, 10], [-10, 10]];
+        }
+      }
+      return new View(this.mathbox, opts).view;
+    };
+
+    Demo2D.prototype.draggable = function(view, opts) {
+      if (opts == null) {
+        opts = {};
+      }
+      if (opts.is2D == null) {
+        opts.is2D = true;
+      }
+      return new Draggable(view, opts);
+    };
+
+    return Demo2D;
+
+  })(Demo);
+
   window.Demo = Demo;
 
-  window.extend = extend;
+  window.Demo2D = Demo2D;
 
 }).call(this);
