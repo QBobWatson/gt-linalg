@@ -1237,6 +1237,19 @@ class Demo
             ret += "}"
         ret
 
+    texSet: (vecs, opts) =>
+        opts ?= {}
+        colors = opts.colors
+        precision = opts.precision ? 2
+        str = "\\left\\{"
+        for vec, i in vecs
+            if colors?
+                opts.color = colors[i]
+            str += @texVector vec, opts
+            if i+1 < vecs.length
+                str += ",\\,"
+        str + "\\right\\}"
+
     texCombo: (vecs, coeffs, opts) =>
         opts ?= {}
         colors = opts.colors

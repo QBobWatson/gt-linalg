@@ -6,25 +6,49 @@
 
 ##
 
-new Demo {}, () ->
-    view = @view()
+new Demo2D {}, () ->
     window.mathbox = @mathbox
+
+    view = @view grid: false
+
+    cube = @clipCube view,
+        hilite: false
+
+    vectors = [[1,1], [-1, 1]]
+    colors  = [[1,0,0,1], [0,1,0,1]]
+    labels  = ['v', 'w']
+
+    subspace = @subspace
+        vectors: vectors
+        noPlane: true
+    subspace.draw cube.clipped
+
+    params =
+        x: 1.2
+        y: -2.5
+
+    @linearCombo view,
+        vectors: vectors
+        colors:  colors
+        labels:  labels
+        coeffs:  params
+
+    @labeledVectors view,
+        vectors:       vectors
+        colors:        colors
+        labels:        labels
+        zeroPoints:    true
+        zeroThreshold: 0.05
+        vectorOpts:    zIndex: 2
+        labelOpts:     zIndex: 3
+        zeroOpts:      zIndex: 3
+
+    @draggable view,
+        points: vectors
+        size:   20
+
+    @grid cube.clipped,
+        vectors: vectors
 
     @caption "Test caption"
 
-    cube = @clipCube view,
-        draw:    true
-        color:   new THREE.Color .75, .75, .75
-        hilite:  true
-
-    cube.clipped
-        .matrix
-            channels: 3
-            width:    2
-            height:   2
-            data: [[[-20, -20, -18], [-20, 20, 18]],
-                   [[20, -20, -18], [20, 20, 18]]]
-        .surface
-            color:   0x880000
-            opacity: 0.5
-            stroke:  "solid"

@@ -86,7 +86,7 @@ window.demo = new (is2D ? Demo2D : Demo)({
     }
   }
 }, function() {
-  var base, base1, base2, base3, base4, base5, c, checkLabel, clipCube, coeff, diff, eqnElt, gui, guiElts, j, k, l, lColors, lLabels, lVectors, len, len1, len2, linCombo, makeTexVecs, onDrag, params, popup, range, ref, ref1, ref2, ref3, ref4, ref5, self, snap, snapThreshold, snapped, spanElt, ss0, ss1, ss2, ss3, subspace, subspaces, successElt, surfaceColor, updateCaption, vec, vectorsElt, view, zeroThreshold;
+  var base, base1, base2, base3, base4, base5, base6, base7, c, checkLabel, clipCube, coeff, diff, eqnElt, gui, guiElts, j, k, l, lColors, lLabels, lVectors, len, len1, len2, linCombo, onDrag, params, popup, range, ref, ref1, ref2, ref3, ref4, ref5, self, snap, snapThreshold, snapped, spanElt, ss0, ss1, ss2, ss3, str, subspace, subspaces, successElt, surfaceColor, updateCaption, vec, vectorsElt, view, zeroThreshold;
   window.mathbox = this.mathbox;
   this.numVecs = 3;
   this.vector1 = [5, 3, -2];
@@ -135,12 +135,18 @@ window.demo = new (is2D ? Demo2D : Demo)({
     if ((base3 = this.urlParams).grid == null) {
       base3.grid = 'on';
     }
-  } else if (this.urlParams.captions === 'combo') {
-    if ((base4 = this.urlParams).lincombo == null) {
-      base4.lincombo = 'on';
+    if ((base4 = this.urlParams).hidespace == null) {
+      base4.hidespace = 'true';
     }
-    if ((base5 = this.urlParams).grid == null) {
-      base5.grid = 'on';
+  } else if (this.urlParams.captions === 'combo') {
+    if ((base5 = this.urlParams).lincombo == null) {
+      base5.lincombo = 'on';
+    }
+    if ((base6 = this.urlParams).grid == null) {
+      base6.grid = 'on';
+    }
+    if ((base7 = this.urlParams).hidespace == null) {
+      base7.hidespace = 'true';
     }
   }
   this.targetLabel = (ref = this.urlParams.tlabel) != null ? ref : 'w';
@@ -286,14 +292,15 @@ window.demo = new (is2D ? Demo2D : Demo)({
   zeroThreshold = 0.00001;
   subspace = this.subspace({
     vectors: this.vectors,
-    noPlane: is2D,
+    noPlane: is2D && !this.urlParams.showPlane,
     zeroThreshold: zeroThreshold,
     onDimChange: (function(_this) {
       return function(ss) {
         return clipCube.mesh.material.visible = ss.dim === 3 && (_this.urlParams.hidespace == null);
       };
     })(this),
-    live: this.isLive
+    live: this.isLive,
+    range: range
   });
   subspace.draw(clipCube.clipped);
   if ((ref3 = this.urlParams.grid) === "enabled" || ref3 === "on") {
@@ -381,21 +388,6 @@ window.demo = new (is2D ? Demo2D : Demo)({
       })(this)
     });
   }
-  makeTexVecs = (function(_this) {
-    return function() {
-      var i, k, len1, ref4, str, texVecs;
-      str = "\\left\\{";
-      texVecs = [];
-      ref4 = _this.vectors;
-      for (i = k = 0, len1 = ref4.length; k < len1; i = ++k) {
-        vec = ref4[i];
-        texVecs.push(_this.texVector(vec, {
-          color: _this.hexColors[i]
-        }));
-      }
-      return str += texVecs.join(",\\,") + "\\right\\}";
-    };
-  })(this);
   switch (this.urlParams.captions) {
     case "target":
       this.caption('<p>Solve this equation by moving the sliders:</p>\n<p><span id="eqn-here"></span>.</p>');
@@ -509,7 +501,9 @@ window.demo = new (is2D ? Demo2D : Demo)({
       spanElt = document.getElementById('span-type');
       updateCaption = (function(_this) {
         return function() {
-          katex.render(makeTexVecs(), vectorsElt);
+          katex.render(_this.texSet(_this.vectors, {
+            colors: _this.hexColors
+          }), vectorsElt);
           if (subspace.dim === _this.numVecs) {
             return spanElt.innerText = "linearly independent";
           } else {
@@ -519,12 +513,25 @@ window.demo = new (is2D ? Demo2D : Demo)({
       })(this);
       break;
     default:
-      this.caption('<p>Span <span id="vectors-here"></span>\n<span id="inter-is">is</span>\n<span id="span-type"></span>.</p>');
+      if (this.urlParams.capopt === 'matrix') {
+        str = '<p>The span of the columns of <span id="vectors-here"></span>';
+      } else {
+        str = '<p>Span <span id="vectors-here"></span>';
+      }
+      this.caption(str + '<span id="inter-is">is</span>\n<span id="span-type"></span>.</p>');
       vectorsElt = document.getElementById('vectors-here');
       spanElt = document.getElementById('span-type');
       updateCaption = (function(_this) {
         return function() {
-          katex.render(makeTexVecs(), vectorsElt);
+          if (_this.urlParams.capopt === 'matrix') {
+            katex.render(_this.texMatrix(_this.vectors, {
+              colors: _this.hexColors
+            }), vectorsElt);
+          } else {
+            katex.render(_this.texSet(_this.vectors, {
+              colors: _this.hexColors
+            }), vectorsElt);
+          }
           return spanElt.innerText = ["a point", "a line", "a plane", "space"][subspace.dim];
         };
       })(this);

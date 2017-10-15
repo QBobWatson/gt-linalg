@@ -1141,6 +1141,7 @@
       var cameraOpts, clearColor, clearOpacity, doFullScreen, focusDist, image, key, mathboxOpts, onPreloaded, p, preload, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, scaleUI, toPreload, value;
       this.opts = opts1;
       this.texCombo = bind(this.texCombo, this);
+      this.texSet = bind(this.texSet, this);
       this.decodeQS();
       if (this.opts == null) {
         this.opts = {};
@@ -1261,6 +1262,27 @@
         ret += "}";
       }
       return ret;
+    };
+
+    Demo.prototype.texSet = function(vecs, opts) {
+      var colors, i, l, len, precision, ref, str, vec;
+      if (opts == null) {
+        opts = {};
+      }
+      colors = opts.colors;
+      precision = (ref = opts.precision) != null ? ref : 2;
+      str = "\\left\\{";
+      for (i = l = 0, len = vecs.length; l < len; i = ++l) {
+        vec = vecs[i];
+        if (colors != null) {
+          opts.color = colors[i];
+        }
+        str += this.texVector(vec, opts);
+        if (i + 1 < vecs.length) {
+          str += ",\\,";
+        }
+      }
+      return str + "\\right\\}";
     };
 
     Demo.prototype.texCombo = function(vecs, coeffs, opts) {

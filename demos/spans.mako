@@ -113,13 +113,15 @@ window.demo = new (if is2D then Demo2D else Demo) {
         @target = @urlParams.target.split(",").map parseFloat
         @doTarget = true
         # Existence of a target by default puts us into "linear combination" mode
-        @urlParams.lincombo ?= 'on'
-        @urlParams.captions ?= 'target'
-        @urlParams.nomove   ?= 'true'
-        @urlParams.grid     ?= 'on'
+        @urlParams.lincombo  ?= 'on'
+        @urlParams.captions  ?= 'target'
+        @urlParams.nomove    ?= 'true'
+        @urlParams.grid      ?= 'on'
+        @urlParams.hidespace ?= 'true'
     else if @urlParams.captions == 'combo'
-        @urlParams.lincombo ?= 'on'
-        @urlParams.grid     ?= 'on'
+        @urlParams.lincombo  ?= 'on'
+        @urlParams.grid      ?= 'on'
+        @urlParams.hidespace ?= 'true'
     @targetLabel = @urlParams.tlabel ? 'w'
 
     @vectors = [@vector1, @vector2, @vector3][0...@numVecs]
@@ -250,11 +252,12 @@ window.demo = new (if is2D then Demo2D else Demo) {
 
     subspace = @subspace
         vectors: @vectors
-        noPlane: is2D
+        noPlane: is2D and not @urlParams.showPlane
         zeroThreshold: zeroThreshold
         onDimChange: (ss) =>
             clipCube.mesh.material.visible = (ss.dim == 3 and !@urlParams.hidespace?)
         live: @isLive
+        range: range
     subspace.draw clipCube.clipped
 
     ##################################################
@@ -310,12 +313,6 @@ window.demo = new (if is2D then Demo2D else Demo) {
 
     ##################################################
     # Captions
-    makeTexVecs = () =>
-        str = "\\left\\{"
-        texVecs = []
-        for vec, i in @vectors
-             texVecs.push(@texVector vec, color: @hexColors[i])
-        str += texVecs.join(",\\,") + "\\right\\}"
 
     switch @urlParams.captions
         when "target"
@@ -381,7 +378,7 @@ window.demo = new (if is2D then Demo2D else Demo) {
             vectorsElt = document.getElementById 'vectors-here'
             spanElt    = document.getElementById 'span-type'
             updateCaption = () =>
-                katex.render makeTexVecs(), vectorsElt
+                katex.render @texSet(@vectors, colors: @hexColors), vectorsElt
 
                 if subspace.dim == @numVecs
                     spanElt.innerText = "linearly independent"
@@ -389,14 +386,21 @@ window.demo = new (if is2D then Demo2D else Demo) {
                     spanElt.innerText = "linearly dependent"
 
         else
-            @caption '''<p>Span <span id="vectors-here"></span>
-                        <span id="inter-is">is</span>
-                        <span id="span-type"></span>.</p>
-                     '''
+            if @urlParams.capopt == 'matrix'
+                str = '<p>The span of the columns of <span id="vectors-here"></span>'
+            else
+                str = '<p>Span <span id="vectors-here"></span>'
+            @caption str + '''
+                              <span id="inter-is">is</span>
+                              <span id="span-type"></span>.</p>
+                           '''
             vectorsElt = document.getElementById 'vectors-here'
             spanElt    = document.getElementById 'span-type'
             updateCaption = () =>
-                katex.render makeTexVecs(), vectorsElt
+                if @urlParams.capopt == 'matrix'
+                    katex.render @texMatrix(@vectors, colors: @hexColors), vectorsElt
+                else
+                    katex.render @texSet(@vectors, colors: @hexColors), vectorsElt
 
                 spanElt.innerText = \
                     ["a point", "a line", "a plane", "space"][subspace.dim]

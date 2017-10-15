@@ -9,56 +9,58 @@
 new Demo {}, () ->
     window.mathbox = @mathbox
 
+    coeffs = ['y', 'z']
+    if @urlParams.coeffs?
+        coeffs = @urlParams.coeffs.split ","
+
+    cf = (i) -> params[coeffs[i]]
+
     updateCaption = () =>
-        katex.render """(x,\\,y,\\,z) = (1-y-z,\\,y,\\,z)
-                          = (#{(1-params.y-params.z).toFixed(2)},\\,
-                             #{params.y.toFixed(2)},\\,
-                             #{params.z.toFixed(2)})
+        katex.render """(x,\\,y,\\,z)
+                          = (1-#{coeffs[0]}-#{coeffs[1]},\\,#{coeffs[0]},\\,#{coeffs[1]})
+                          = \\color{#00ff00}{({#{(1-cf(0)-cf(1)).toFixed(2)}},\\,
+                             {#{cf(0).toFixed(2)}},\\,
+                             {#{cf(1).toFixed(2)}})}
                      """, @vecElt
 
+    vectors = [[-1, 1, 0], [-1, 0, 1]]
+
     # gui
-    params =
-        y: 0.0
-        z: 0.0
+    params = {}
+    params[coeffs[0]] = 0.0
+    params[coeffs[1]] = 0.0
     gui = new dat.GUI()
-    gui.add(params, 'y', -10, 10).step(0.1).onChange updateCaption
-    gui.add(params, 'z', -10, 10).step(0.1).onChange updateCaption
+    gui.add(params, coeffs[0], -10, 10).step(0.1).onChange updateCaption
+    gui.add(params, coeffs[1], -10, 10).step(0.1).onChange updateCaption
+
+    view = @view()
 
     # Plane
-    view = @view()
-    view
-        .matrix
-            channels: 3
-            live:     false
-            width:    21
-            height:   21
-            expr: (emit, i, j) ->
-                i -= 10
-                j -= 10
-                emit(1-i-j, i, j)
-        .surface
-            color:   "rgb(128,0,0)"
-            opacity: 0.75
-            stroke:  "solid"
-            lineX:   true
-            lineY:   true
-            width:   3
-            fill:    false
-        .surface
-            color:   "rgb(128,0,0)"
-            opacity: 0.5
-            stroke:  "solid"
+    clipCube = @clipCube view,
+        draw:   true
+        hilite: false
+        color:  new THREE.Color .75, .75, .75
+    trans = clipCube.clipped.transform position: [1, 0, 0]
+
+    subspace = @subspace
+        vectors: vectors
+        live: false
+    subspace.draw trans
+
+    @grid trans, vectors: vectors
+
     # Parameterized point
+    view
         .array
             channels: 3
             width:    1
             expr: (emit) ->
-                emit 1 - params.y - params.z, params.y, params.z
+                emit 1 - cf(0) - cf(1), cf(0), cf(1)
         .point
             color:  "rgb(0,200,0)"
             size:   15
-            zTest:      false
-            zWrite:     false
+            zTest:  false
+            zWrite: false
         .format
             expr: (x, y, z) ->
                 "(" + x.toPrecision(2) + ", " \
