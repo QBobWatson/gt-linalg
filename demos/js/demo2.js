@@ -1,6 +1,6 @@
 (function() {
   "use strict";
-  var Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledVectors, LinearCombo, Popup, Subspace, View, clipFragment, clipShader, extend, makeTvec, orthogonalize, setTvec,
+  var Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledVectors, LinearCombo, Popup, Subspace, View, clipFragment, clipShader, extend, makeTvec, orthogonalize, rowReduce, setTvec,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     extend1 = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
@@ -47,6 +47,168 @@
     } else {
       return orig.set(vec[0], vec[1], (ref = vec[2]) != null ? ref : 0);
     }
+  };
+
+  rowReduce = function(M) {
+    var E, aa, ab, ac, ad, ae, af, ag, ah, ai, aj, ak, c, col, colBasis, f, fn, i, j, k, l, lastPivot, len, len1, m, maxEl, maxRow, n, noPivots, nulBasis, orig, pivot, pivots, q, ref, ref1, ref10, ref11, ref12, ref13, ref14, ref15, ref16, ref17, ref18, ref19, ref2, ref20, ref21, ref22, ref3, ref4, ref5, ref6, ref7, ref8, ref9, row, u, v;
+    orig = (function() {
+      var l, len, results;
+      results = [];
+      for (l = 0, len = M.length; l < len; l++) {
+        c = M[l];
+        results.push(c.slice());
+      }
+      return results;
+    })();
+    m = M[0].length;
+    n = M.length;
+    row = 0;
+    col = 0;
+    pivots = [];
+    lastPivot = -1;
+    noPivots = [];
+    colBasis = [];
+    nulBasis = [];
+    E = (function() {
+      var l, ref, results;
+      results = [];
+      for (l = 0, ref = m; 0 <= ref ? l < ref : l > ref; 0 <= ref ? l++ : l--) {
+        results.push((function() {
+          var q, ref1, results1;
+          results1 = [];
+          for (q = 0, ref1 = m; 0 <= ref1 ? q < ref1 : q > ref1; 0 <= ref1 ? q++ : q--) {
+            results1.push(0);
+          }
+          return results1;
+        })());
+      }
+      return results;
+    })();
+    for (i = l = 0, ref = m; 0 <= ref ? l < ref : l > ref; i = 0 <= ref ? ++l : --l) {
+      E[i][i] = 1;
+    }
+    while (true) {
+      if (col === n) {
+        break;
+      }
+      if (row === m) {
+        for (k = q = ref1 = col, ref2 = n; ref1 <= ref2 ? q < ref2 : q > ref2; k = ref1 <= ref2 ? ++q : --q) {
+          noPivots.push(k);
+        }
+        break;
+      }
+      maxEl = Math.abs(M[col][row]);
+      maxRow = row;
+      for (k = u = ref3 = row + 1, ref4 = m; ref3 <= ref4 ? u < ref4 : u > ref4; k = ref3 <= ref4 ? ++u : --u) {
+        if (Math.abs(M[col][k]) > maxEl) {
+          maxEl = Math.abs(M[col][k]);
+          maxRow = k;
+        }
+      }
+      if (maxEl === 0) {
+        noPivots.push(col);
+        col++;
+        continue;
+      }
+      for (k = v = 0, ref5 = n; 0 <= ref5 ? v < ref5 : v > ref5; k = 0 <= ref5 ? ++v : --v) {
+        ref6 = [M[k][row], M[k][maxRow]], M[k][maxRow] = ref6[0], M[k][row] = ref6[1];
+      }
+      for (k = aa = 0, ref7 = m; 0 <= ref7 ? aa < ref7 : aa > ref7; k = 0 <= ref7 ? ++aa : --aa) {
+        ref8 = [E[k][row], E[k][maxRow]], E[k][maxRow] = ref8[0], E[k][row] = ref8[1];
+      }
+      pivots.push([row, col]);
+      colBasis.push(orig[col]);
+      lastPivot = row;
+      pivot = M[col][row];
+      for (k = ab = ref9 = row + 1, ref10 = m; ref9 <= ref10 ? ab < ref10 : ab > ref10; k = ref9 <= ref10 ? ++ab : --ab) {
+        c = M[col][k] / pivot;
+        if (c === 0) {
+          continue;
+        }
+        M[col][k] = 0;
+        for (j = ac = ref11 = col + 1, ref12 = n; ref11 <= ref12 ? ac < ref12 : ac > ref12; j = ref11 <= ref12 ? ++ac : --ac) {
+          M[j][k] -= c * M[j][row];
+        }
+        for (j = ad = 0, ref13 = m; 0 <= ref13 ? ad < ref13 : ad > ref13; j = 0 <= ref13 ? ++ad : --ad) {
+          E[j][k] -= c * E[j][row];
+        }
+      }
+      row++;
+      col++;
+    }
+    ref14 = pivots.reverse();
+    for (ae = 0, len = ref14.length; ae < len; ae++) {
+      ref15 = ref14[ae], row = ref15[0], col = ref15[1];
+      pivot = M[col][row];
+      M[col][row] = 1;
+      for (k = af = ref16 = col + 1, ref17 = n; ref16 <= ref17 ? af < ref17 : af > ref17; k = ref16 <= ref17 ? ++af : --af) {
+        M[k][row] /= pivot;
+      }
+      for (k = ag = 0, ref18 = m; 0 <= ref18 ? ag < ref18 : ag > ref18; k = 0 <= ref18 ? ++ag : --ag) {
+        E[k][row] /= pivot;
+      }
+      for (k = ah = 0, ref19 = row; 0 <= ref19 ? ah < ref19 : ah > ref19; k = 0 <= ref19 ? ++ah : --ah) {
+        c = M[col][k];
+        M[col][k] = 0;
+        for (j = ai = ref20 = col + 1, ref21 = n; ref20 <= ref21 ? ai < ref21 : ai > ref21; j = ref20 <= ref21 ? ++ai : --ai) {
+          M[j][k] -= c * M[j][row];
+        }
+        for (j = aj = 0, ref22 = m; 0 <= ref22 ? aj < ref22 : aj > ref22; j = 0 <= ref22 ? ++aj : --aj) {
+          E[j][k] -= c * E[j][row];
+        }
+      }
+    }
+    fn = function() {
+      var al, len2, ref23, vec;
+      vec = (function() {
+        var al, ref23, results;
+        results = [];
+        for (al = 0, ref23 = n; 0 <= ref23 ? al < ref23 : al > ref23; 0 <= ref23 ? al++ : al--) {
+          results.push(0);
+        }
+        return results;
+      })();
+      vec[i] = 1;
+      for (al = 0, len2 = pivots.length; al < len2; al++) {
+        ref23 = pivots[al], row = ref23[0], col = ref23[1];
+        vec[col] = -M[i][row];
+      }
+      return nulBasis.push(vec);
+    };
+    for (ak = 0, len1 = noPivots.length; ak < len1; ak++) {
+      i = noPivots[ak];
+      fn();
+    }
+    f = function(b) {
+      var Eb, al, am, an, ao, len2, ref23, ref24, ref25, ref26, ref27, ret, x;
+      Eb = [];
+      for (i = al = 0, ref23 = m; 0 <= ref23 ? al < ref23 : al > ref23; i = 0 <= ref23 ? ++al : --al) {
+        x = 0;
+        for (j = am = 0, ref24 = m; 0 <= ref24 ? am < ref24 : am > ref24; j = 0 <= ref24 ? ++am : --am) {
+          x += E[j][i] * b[j];
+        }
+        Eb.push(x);
+      }
+      for (i = an = ref25 = lastPivot + 1, ref26 = n; ref25 <= ref26 ? an < ref26 : an > ref26; i = ref25 <= ref26 ? ++an : --an) {
+        if (Math.abs(Eb[i]) > 0.000001) {
+          return null;
+        }
+      }
+      ret = (function() {
+        var ao, ref27, results;
+        results = [];
+        for (ao = 0, ref27 = n; 0 <= ref27 ? ao < ref27 : ao > ref27; 0 <= ref27 ? ao++ : ao--) {
+          results.push(0);
+        }
+        return results;
+      })();
+      for (ao = 0, len2 = pivots.length; ao < len2; ao++) {
+        ref27 = pivots[ao], row = ref27[0], col = ref27[1];
+        ret[col] = Eb[row];
+      }
+      return ret;
+    };
+    return [nulBasis, colBasis, E, f];
   };
 
   clipShader = "// Enable STPQ mapping\n#define POSITION_STPQ\nvoid getPosition(inout vec4 xyzw, inout vec4 stpq) {\n  // Store XYZ per vertex in STPQ\nstpq = xyzw;\n}";
@@ -545,9 +707,9 @@
       if (numVecs === 2) {
         totLines = (numLines + 1) * 2;
         doLines = function(emit, i) {
-          var j, m, ref5, ref6, results, start;
+          var j, q, ref5, ref6, results, start;
           results = [];
-          for (j = m = ref5 = -perSide, ref6 = perSide; ref5 <= ref6 ? m <= ref6 : m >= ref6; j = ref5 <= ref6 ? ++m : --m) {
+          for (j = q = ref5 = -perSide, ref6 = perSide; ref5 <= ref6 ? q <= ref6 : q >= ref6; j = ref5 <= ref6 ? ++q : --q) {
             start = i === 0 ? -perSide : perSide;
             emit(start * vector1[0] + j * vector2[0], start * vector1[1] + j * vector2[1], start * vector1[2] + j * vector2[2]);
             results.push(emit(start * vector2[0] + j * vector1[0], start * vector2[1] + j * vector1[1], start * vector2[2] + j * vector1[2]));
@@ -558,13 +720,13 @@
       if (numVecs === 3) {
         totLines = (numLines + 1) * (numLines + 1) * 3;
         doLines = function(emit, i) {
-          var j, k, m, ref5, ref6, results, start;
+          var j, k, q, ref5, ref6, results, start;
           results = [];
-          for (j = m = ref5 = -perSide, ref6 = perSide; ref5 <= ref6 ? m <= ref6 : m >= ref6; j = ref5 <= ref6 ? ++m : --m) {
+          for (j = q = ref5 = -perSide, ref6 = perSide; ref5 <= ref6 ? q <= ref6 : q >= ref6; j = ref5 <= ref6 ? ++q : --q) {
             results.push((function() {
-              var n, ref7, ref8, results1;
+              var ref7, ref8, results1, u;
               results1 = [];
-              for (k = n = ref7 = -perSide, ref8 = perSide; ref7 <= ref8 ? n <= ref8 : n >= ref8; k = ref7 <= ref8 ? ++n : --n) {
+              for (k = u = ref7 = -perSide, ref8 = perSide; ref7 <= ref8 ? u <= ref8 : u >= ref8; k = ref7 <= ref8 ? ++u : --u) {
                 start = i === 0 ? -perSide : perSide;
                 emit(start * vector1[0] + j * vector2[0] + k * vector3[0], start * vector1[1] + j * vector2[1] + k * vector3[1], start * vector1[2] + j * vector2[2] + k * vector3[2]);
                 emit(start * vector2[0] + j * vector1[0] + k * vector3[0], start * vector2[1] + j * vector1[1] + k * vector3[1], start * vector2[2] + j * vector1[2] + k * vector3[2]);
@@ -711,9 +873,9 @@
           live: false,
           expr: (function(_this) {
             return function(emit, i) {
-              var arr, j, m, ref11;
+              var arr, j, q, ref11;
               arr = [];
-              for (j = m = 0, ref11 = _this.numDims; 0 <= ref11 ? m < ref11 : m > ref11; j = 0 <= ref11 ? ++m : --m) {
+              for (j = q = 0, ref11 = _this.numDims; 0 <= ref11 ? q < ref11 : q > ref11; j = 0 <= ref11 ? ++q : --q) {
                 if (i === j) {
                   arr.push(viewRange[i][1] * 1.04);
                 } else {
@@ -795,9 +957,9 @@
       this.eyeMatrixTrans = this.eyeMatrix.clone().transpose();
       this.eyeMatrixInv = new THREE.Matrix4().getInverse(this.eyeMatrix);
       indices = (function() {
-        var m, ref10, results;
+        var q, ref10, results;
         results = [];
-        for (i = m = 0, ref10 = this.points.length; 0 <= ref10 ? m < ref10 : m > ref10; i = 0 <= ref10 ? ++m : --m) {
+        for (i = q = 0, ref10 = this.points.length; 0 <= ref10 ? q < ref10 : q > ref10; i = 0 <= ref10 ? ++q : --q) {
           results.push([(i + 1) / 255, 1.0, 0, 0]);
         }
         return results;
@@ -997,8 +1159,10 @@
 
   LabeledVectors = (function() {
     function LabeledVectors(view, opts1) {
-      var colors, doZero, i, l, labelOpts, labels, len, len1, live, m, n, name, origins, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, vec, vectorData, vectorOpts, vectors, zeroData, zeroOpts, zeroThreshold;
+      var colors, doZero, i, l, labelOpts, labels, len, len1, live, name, origins, q, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, u, vec, vectorData, vectorOpts, vectors, zeroData, zeroOpts, zeroThreshold;
       this.opts = opts1;
+      this.show = bind(this.show, this);
+      this.hide = bind(this.hide, this);
       if (this.opts == null) {
         this.opts = {};
       }
@@ -1017,6 +1181,7 @@
       live = (ref2 = this.opts.live) != null ? ref2 : true;
       vectorOpts = {
         id: name + "-vectors-drawn",
+        classes: [name],
         points: "#" + name + "-vectors",
         colors: "#" + name + "-colors",
         color: "white",
@@ -1027,6 +1192,7 @@
       extend(vectorOpts, (ref3 = this.opts.vectorOpts) != null ? ref3 : {});
       labelOpts = {
         id: name + "-vector-labels",
+        classes: [name],
         colors: "#" + name + "-colors",
         color: "white",
         outline: 2,
@@ -1038,6 +1204,7 @@
       doZero = (ref5 = this.opts.zeroPoints) != null ? ref5 : false;
       zeroOpts = {
         id: name + "-zero-points",
+        classes: [name],
         points: "#" + name + "-zeros",
         colors: "#" + name + "-zero-colors",
         color: "white",
@@ -1045,6 +1212,7 @@
       };
       extend(zeroOpts, (ref6 = this.opts.zeroOpts) != null ? ref6 : {});
       zeroThreshold = (ref7 = this.opts.zeroThreshold) != null ? ref7 : 0.0;
+      this.hidden = false;
       vectorData = [];
       for (l = 0, len = vectors.length; l < len; l++) {
         vec = vectors[l];
@@ -1052,13 +1220,13 @@
           vec[2] = 0;
         }
       }
-      for (m = 0, len1 = origins.length; m < len1; m++) {
-        vec = origins[m];
+      for (q = 0, len1 = origins.length; q < len1; q++) {
+        vec = origins[q];
         if (vec[2] == null) {
           vec[2] = 0;
         }
       }
-      for (i = n = 0, ref8 = vectors.length; 0 <= ref8 ? n < ref8 : n > ref8; i = 0 <= ref8 ? ++n : --n) {
+      for (i = u = 0, ref8 = vectors.length; 0 <= ref8 ? u < ref8 : u > ref8; i = 0 <= ref8 ? ++u : --u) {
         vectorData.push(origins[i]);
         vectorData.push(vectors[i]);
       }
@@ -1075,7 +1243,8 @@
         width: colors.length,
         data: colors,
         live: live
-      }).vector(vectorOpts);
+      });
+      this.vecs = view.vector(vectorOpts);
       if (labels != null) {
         view.array({
           channels: 3,
@@ -1089,13 +1258,14 @@
           live: false,
           width: labels.length,
           data: labels
-        }).label(labelOpts);
+        });
+        this.labels = view.label(labelOpts);
       }
       if (doZero) {
         zeroData = (function() {
-          var q, ref9, results;
+          var ref9, results, v;
           results = [];
-          for (q = 0, ref9 = vectors.length; 0 <= ref9 ? q < ref9 : q > ref9; 0 <= ref9 ? q++ : q--) {
+          for (v = 0, ref9 = vectors.length; 0 <= ref9 ? v < ref9 : v > ref9; 0 <= ref9 ? v++ : v--) {
             results.push([0, 0, 0]);
           }
           return results;
@@ -1120,17 +1290,42 @@
           live: false
         });
         this.zeroPoints = view.point(zeroOpts);
-        this.zeroPoints.bind('visible', function() {
-          var q, ref9;
-          for (i = q = 0, ref9 = vectors.length; 0 <= ref9 ? q < ref9 : q > ref9; i = 0 <= ref9 ? ++q : --q) {
-            if (vectors[i][0] * vectors[i][0] + vectors[i][1] * vectors[i][1] + vectors[i][2] * vectors[i][2] <= zeroThreshold * zeroThreshold) {
-              return true;
+        this.zeroPoints.bind('visible', (function(_this) {
+          return function() {
+            var ref9, v;
+            if (_this.hidden) {
+              return false;
             }
-          }
-          return false;
-        });
+            for (i = v = 0, ref9 = vectors.length; 0 <= ref9 ? v < ref9 : v > ref9; i = 0 <= ref9 ? ++v : --v) {
+              if (vectors[i][0] * vectors[i][0] + vectors[i][1] * vectors[i][1] + vectors[i][2] * vectors[i][2] <= zeroThreshold * zeroThreshold) {
+                return true;
+              }
+            }
+            return false;
+          };
+        })(this));
       }
     }
+
+    LabeledVectors.prototype.hide = function() {
+      var ref;
+      if (this.hidden) {
+        return;
+      }
+      this.hidden = true;
+      this.vecs.set('visible', false);
+      return (ref = this.labels) != null ? ref.set('visible', false) : void 0;
+    };
+
+    LabeledVectors.prototype.show = function() {
+      var ref;
+      if (!this.hidden) {
+        return;
+      }
+      this.hidden = false;
+      this.vecs.set('visible', true);
+      return (ref = this.labels) != null ? ref.set('visible', true) : void 0;
+    };
 
     return LabeledVectors;
 
@@ -1191,6 +1386,8 @@
             _this.mathbox.bind('focus', function() {
               return focusDist / 1000 * Math.min(_this.canvas.clientWidth, _this.canvas.clientHeight);
             });
+          } else {
+            _this.mathbox.set('focus', focusDist);
           }
           if (doFullScreen) {
             document.body.addEventListener('keypress', function(event) {
@@ -1239,12 +1436,13 @@
     };
 
     Demo.prototype.texVector = function(vec, opts) {
-      var coord, i, l, len, precision, ref, ret;
+      var coord, dim, i, l, len, precision, ref, ref1, ret;
       if (opts == null) {
         opts = {};
       }
       precision = (ref = opts.precision) != null ? ref : 2;
-      vec = vec.slice(0, this.dims);
+      dim = (ref1 = opts.dim) != null ? ref1 : this.dims;
+      vec = vec.slice(0, dim);
       if (precision >= 0) {
         for (i = l = 0, len = vec.length; l < len; i = ++l) {
           coord = vec[i];
@@ -1314,15 +1512,16 @@
     };
 
     Demo.prototype.texMatrix = function(cols, opts) {
-      var colors, i, j, l, m, precision, ref, ref1, ref2, str;
+      var colors, i, j, l, precision, q, ref, ref1, ref2, ref3, rows, str;
       if (opts == null) {
         opts = {};
       }
       colors = opts.colors;
       precision = (ref = opts.precision) != null ? ref : 2;
+      rows = (ref1 = opts.rows) != null ? ref1 : this.dims;
       str = "\\begin{bmatrix}";
-      for (i = l = 0, ref1 = this.dims; 0 <= ref1 ? l < ref1 : l > ref1; i = 0 <= ref1 ? ++l : --l) {
-        for (j = m = 0, ref2 = cols.length; 0 <= ref2 ? m < ref2 : m > ref2; j = 0 <= ref2 ? ++m : --m) {
+      for (i = l = 0, ref2 = rows; 0 <= ref2 ? l < ref2 : l > ref2; i = 0 <= ref2 ? ++l : --l) {
+        for (j = q = 0, ref3 = cols.length; 0 <= ref3 ? q < ref3 : q > ref3; j = 0 <= ref3 ? ++q : --q) {
           if (colors != null) {
             str += "\\color{" + colors[j] + "}{";
           }
@@ -1338,7 +1537,7 @@
             str += "&";
           }
         }
-        if (i + 1 < this.dims) {
+        if (i + 1 < rows) {
           str += "\\\\";
         }
       }
@@ -1347,6 +1546,10 @@
 
     Demo.prototype.moveCamera = function(x, y, z) {
       return this.camera.position.set(-x, z, -y);
+    };
+
+    Demo.prototype.rowred = function(mat) {
+      return rowReduce(mat);
     };
 
     Demo.prototype.view = function(opts) {

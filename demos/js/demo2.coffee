@@ -29,6 +29,101 @@ setTvec = (orig, vec) ->
     else
         orig.set vec[0], vec[1], vec[2] ? 0
 
+# Row reduce a matrix (in-place)
+# Return [basis for null space,
+#         basis for col space,
+#         E st EA = rref,
+#         f(b) = specific solution]
+rowReduce = (M) ->
+    orig = (c.slice() for c in M)
+    m = M[0].length # Number of rows
+    n = M.length    # Number of columns
+    row = 0  # Current row
+    col = 0  # Current pivot column
+    pivots = []
+    lastPivot = -1
+    noPivots = []
+    colBasis = []
+    nulBasis = []
+    # Start with m by m identity matrix, then do the same row ops
+    E = ((0 for [0...m]) for [0...m])
+    E[i][i] = 1 for i in [0...m]
+    while true
+        if col == n
+            break
+        if row == m
+            noPivots.push k for k in [col...n]
+            break
+        # Find max in this column
+        maxEl = Math.abs M[col][row]
+        maxRow = row
+        for k in [row+1...m]
+            if Math.abs(M[col][k]) > maxEl
+                maxEl = Math.abs M[col][k]
+                maxRow = k
+        if maxEl == 0
+            # No pivot in this column
+            noPivots.push col
+            col++
+            continue
+        # Swap max row with current row
+        for k in [0...n]
+            [M[k][maxRow], M[k][row]] = [M[k][row], M[k][maxRow]]
+        for k in [0...m]
+            [E[k][maxRow], E[k][row]] = [E[k][row], E[k][maxRow]]
+        # Clear entries below (i,col)
+        pivots.push [row, col]
+        colBasis.push orig[col]
+        lastPivot = row
+        pivot = M[col][row]
+        for k in [row+1...m]
+            c = M[col][k] / pivot
+            continue if c == 0
+            M[col][k] = 0
+            M[j][k] -= c * M[j][row] for j in [col+1...n]
+            E[j][k] -= c * E[j][row] for j in [0...m]
+        row++
+        col++
+    # Clear above pivot columns
+    for [row, col] in pivots.reverse()
+        pivot = M[col][row]
+        # Divide by the pivot
+        M[col][row] = 1
+        for k in [col+1...n]
+            M[k][row] /= pivot
+        for k in [0...m]
+            E[k][row] /= pivot
+        for k in [0...row]
+            c = M[col][k]
+            M[col][k] = 0
+            for j in [col+1...n]
+                M[j][k] -= c * M[j][row]
+            for j in [0...m]
+                E[j][k] -= c * E[j][row]
+    # Compute basis of null space
+    for i in noPivots
+        do () ->
+            vec = (0 for [0...n])
+            vec[i] = 1
+            for [row, col] in pivots
+                vec[col] = -M[i][row]
+            nulBasis.push vec
+    # Function that computes a specific solution
+    # Returns null for inconsistent
+    f = (b) ->
+        Eb = []
+        for i in [0...m]
+            x = 0
+            x += E[j][i] * b[j] for j in [0...m]
+            Eb.push x
+        for i in [lastPivot+1...n]
+            return null if Math.abs(Eb[i]) > 0.000001
+        ret = (0 for [0...n])
+        for [row, col] in pivots
+            ret[col] = Eb[row]
+        ret
+    return [nulBasis, colBasis, E, f]
+
 
 ################################################################################
 # * Shaders
@@ -659,7 +754,7 @@ class Popup
 #     axisOpts: options to mathbox.axis
 #     doGrid: construct a grid
 #     gridOpts: options to mathbox.grid
-#     doAxisLabels: draw axis labels (x, y, z)
+#     axisLabels: draw axis labels (x, y, z)
 #     labelOpts: options to mathbox.label
 
 class View
@@ -693,7 +788,7 @@ class View
             zBias:   0
         extend gridOpts, @opts.gridOpts ? {}
 
-        doAxisLabels = (@opts.axisLabels  ? true) and doAxes
+        doAxisLabels = (@opts.axisLabels ? true) and doAxes
         labelOpts =
             classes:    ["#{@name}-axes"]
             size:       20
@@ -1025,16 +1120,18 @@ class LabeledVectors
         origins = @opts.origins ? ([0, 0, 0] for [0...vectors.length])
         live    = @opts.live ? true
         vectorOpts =
-            id:     "#{name}-vectors-drawn"
-            points: "##{name}-vectors"
-            colors: "##{name}-colors"
-            color:  "white"
-            end:    true
-            size:   5
-            width:  5
+            id:      "#{name}-vectors-drawn"
+            classes: [name]
+            points:  "##{name}-vectors"
+            colors:  "##{name}-colors"
+            color:   "white"
+            end:     true
+            size:    5
+            width:   5
         extend vectorOpts, @opts.vectorOpts ? {}
         labelOpts =
             id:         "#{name}-vector-labels"
+            classes:    [name]
             colors:     "##{name}-colors"
             color:      "white"
             outline:    2
@@ -1045,12 +1142,15 @@ class LabeledVectors
         doZero = @opts.zeroPoints ? false
         zeroOpts =
             id:      "#{name}-zero-points"
+            classes: [name]
             points:  "##{name}-zeros"
             colors:  "##{name}-zero-colors"
             color:   "white"
             size:    20
         extend zeroOpts, @opts.zeroOpts ? {}
         zeroThreshold = @opts.zeroThreshold ? 0.0
+
+        @hidden = false
 
         vectorData = []
         # Extend to 3D
@@ -1075,7 +1175,7 @@ class LabeledVectors
                 width:    colors.length
                 data:     colors
                 live:     live
-            .vector vectorOpts
+        @vecs = view.vector vectorOpts
 
         # Labels
         if labels?
@@ -1093,7 +1193,7 @@ class LabeledVectors
                     live:  false
                     width: labels.length
                     data:  labels
-                .label labelOpts
+            @labels = view.label labelOpts
 
         # Points for when vectors are zero
         if doZero
@@ -1119,7 +1219,8 @@ class LabeledVectors
                     data:     zeroData
                     live:     false
             @zeroPoints = view.point zeroOpts
-            @zeroPoints.bind 'visible', () ->
+            @zeroPoints.bind 'visible', () =>
+                return false if @hidden
                 for i in [0...vectors.length]
                     if vectors[i][0] * vectors[i][0] +
                        vectors[i][1] * vectors[i][1] +
@@ -1127,6 +1228,17 @@ class LabeledVectors
                        zeroThreshold * zeroThreshold
                         return true
                 return false
+
+    hide: () =>
+        return if @hidden
+        @hidden = true
+        @vecs.set 'visible', false
+        @labels?.set 'visible', false
+    show: () =>
+        return unless @hidden
+        @hidden = false
+        @vecs.set 'visible', true
+        @labels?.set 'visible', true
 
 
 ################################################################################
@@ -1188,6 +1300,8 @@ class Demo
             if scaleUI
                 @mathbox.bind 'focus', () =>
                     focusDist / 1000 * Math.min @canvas.clientWidth, @canvas.clientHeight
+            else
+                @mathbox.set 'focus', focusDist
             # Setup screenfull
             if doFullScreen
                 document.body.addEventListener 'keypress', (event) ->
@@ -1223,7 +1337,8 @@ class Demo
     texVector: (vec, opts) ->
         opts ?= {}
         precision = opts.precision ? 2
-        vec = vec.slice(0, @dims)
+        dim = opts.dim ? @dims
+        vec = vec.slice(0, dim)
         if precision >= 0
             for coord, i in vec
                 vec[i] = coord.toFixed precision
@@ -1272,8 +1387,9 @@ class Demo
         opts ?= {}
         colors = opts.colors
         precision = opts.precision ? 2
+        rows = opts.rows ? @dims
         str = "\\begin{bmatrix}"
-        for i in [0...@dims]
+        for i in [0...rows]
             for j in [0...cols.length]
                 if colors?
                     str += "\\color{#{colors[j]}}{"
@@ -1284,11 +1400,13 @@ class Demo
                 if colors?
                     str += "}"
                 str += "&" if j+1 < cols.length
-            str += "\\\\" if i+1 < @dims
+            str += "\\\\" if i+1 < rows
         str += "\\end{bmatrix}"
 
     moveCamera: (x, y, z) ->
         @camera.position.set -x, z, -y
+
+    rowred: (mat) -> rowReduce mat
 
     view: (opts) ->
         opts ?= {}
