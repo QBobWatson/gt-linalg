@@ -6,36 +6,39 @@
 
 <%block name="inline_style">
 html, body {
-    margin: 0;
-    height: 100%;
+    margin:           0;
+    height:           100%;
+    background-color: #111111;
+    overflow-x:       hidden;
 }
-#mathbox1 {
+.mathbox-wrapper {
+    width:       50%;
+    padding-top: 50%;
+    position:    absolute;
+    left:        0;
+    top:         50%;
+    transform:   translate(0, -50%);
+}
+.mathbox-wrapper + .mathbox-wrapper {
+    left:        50%;
+}
+.mathbox-wrapper > div {
+    position: absolute;
+    top:      0;
+    left:     0;
     width:    100%;
     height:   100%;
-    position: relative;
-    z-index:  0;
 }
-#inset-container {
-    width : 30%;
-    position: absolute;
-    bottom:   0px;
-    right:    0px;
-    z-index:  1;
-}
-#inset-container2 {
-    position: absolute;
-    left:   0px;
-    top:    0px;
-    transform: translateY(-100%);
-    width:  100%;
-    padding-bottom: 100%;
-    border: 2px solid #cccccc;
-    box-sizing: border-box;
-}
-#mathbox2 {
-    position: absolute;
-    width:    100%;
-    height:   100%;
+.mathbox-label {
+    position:  absolute;
+    left:      50%;
+    top:       10px;
+    color:     white;
+    opacity:   1.0;
+    background-color: rgba(50, 50, 50, .5);
+    border:    solid 1px rgba(200, 200, 200, .5);
+    padding:   5px;
+    transform: translate(-50%, 0);
 }
 #inconsistent {
     font-weight:   bold;
@@ -45,23 +48,35 @@ html, body {
     color:         red;
     display:       none;
 }
+#matrix-here {
+    display: none;
+    text-align: center;
+}
+.overlay-text {
+    z-index: 1;
+}
 .overlay-text > p:last-child {
     text-align: center;
 }
 </%block>
 
 <%block name="body_html">
-<div id="mathbox1">
-    <div id="inset-container">
-        <div id="inset-container2">
-            <div id="mathbox2"></div>
-        </div>
+<div class="overlay-text">
+  <p id="matrix-here"><span id="the-matrix"></span></p>
+  <p><span id="the-equation"></span>
+      <span id="inconsistent">inconsistent</span></p>
+  <p>[Click and drag the heads of x and b]</p>
+</div>
+<div class="mathbox-wrapper">
+    <div id="mathbox1">
+        <div class="mathbox-label">Input</div>
     </div>
-    <div class="overlay-text">
-      <p><span id="the-equation"></span>
-          <span id="inconsistent">inconsistent</span></p>
-      <p>[Click and drag the heads of x and b]</p>
+</div>
+<div class="mathbox-wrapper">
+    <div id="mathbox2">
+        <div class="mathbox-label">Output</div>
     </div>
+</div>
 </div>
 </%block>
 
@@ -70,7 +85,7 @@ html, body {
 ##################################################
 # Globals
 vector    = [-1, 2, 3]
-outVec    = [0, 0]
+outVec    = [0, 0, 0]
 colBasis  = []
 showSolnsKey = "Show solution set"
 lockSolnsKey = "Lock solution set"
@@ -81,31 +96,49 @@ params        = null
 labeled       = null
 updateCaption = null
 
+matrix = [[ 1, -1,  2],
+          [-2,  2, -4]]
+if urlParams.mat?
+   matrix = urlParams.mat.split(":").map (s) -> s.split(",").map parseFloat
+rows = matrix.length
+cols = matrix[0].length
 
-window.demo1 = new Demo {
+# Make 3x3, first coord = column
+tmp = []
+for i in [0...3]
+    tmp[i] = []
+    for j in [0...3]
+        tmp[i][j] = matrix[j]?[i] ? 0
+matrix = tmp
+
+
+window.demo1 = new (if cols == 3 then Demo else Demo2D) {
     mathbox: element: document.getElementById "mathbox1"
+    scaleUI: false
 }, () ->
     window.mathbox1 = @mathbox
 
     ##################################################
     # Demo parameters
-    @showSolns = @urlParams.show ? false
-    @lockSolns = @urlParams.lock ? true
-    @matrix    = [ 1, -1,  2,
-                  -2,  2, -4]
+    @showSolns = true
+    @lockSolns = false
+    if @urlParams.captions == 'rankthm'
+        vector = [0, 0, 0]
+    if @urlParams.show?
+        @showSolns = if @urlParams.show == 'false' then false else true
+    if @urlParams.lock?
+        @lockSolns = if @urlParams.lock? then true else false
+    @range = @urlParams.range1 ? 5
 
     if @urlParams.x?
         vector = @urlParams.x.split(",").map parseFloat
-    if @urlParams.mat?
-        @matrix = @urlParams.mat.split(",").map parseFloat
+    vector[2] ?= 0
+    vector[2] = 0 if cols == 2
 
     @tMatrix = new THREE.Matrix3()
-    @tMatrix.set @matrix[0], @matrix[1], @matrix[2],
-                 @matrix[3], @matrix[4], @matrix[5],
-                          0,          0,          0
-    @matrix = [[@matrix[0], @matrix[3]],
-               [@matrix[1], @matrix[4]],
-               [@matrix[2], @matrix[5]]]
+    @tMatrix.set matrix[0][0], matrix[1][0], matrix[2][0],
+                 matrix[0][1], matrix[1][1], matrix[2][1],
+                 matrix[0][2], matrix[1][2], matrix[2][2]
 
     # Scratch
     tmpVec = new THREE.Vector3()
@@ -125,7 +158,8 @@ window.demo1 = new Demo {
 
     gui = new dat.GUI width: 350
     gui.add(params, 'Axes').onFinishChange (val) =>
-        @mathbox.select(".view-axes").set 'visible', val
+        @mathbox.select(".view1-axes").set 'visible', val
+        demo2.mathbox.select(".view2-axes").set 'visible', val
     gui.add(params, showSolnsKey).listen().onFinishChange (val) =>
         @mathbox.select("#solnset").set 'visible', val
     gui.add(params, lockSolnsKey).listen()
@@ -133,9 +167,11 @@ window.demo1 = new Demo {
 
     ##################################################
     # view, axes
+    r = @range
     view = @view
-        name: 'view1'
-        viewRange: [[-5,5], [-5,5], [-5,5]]
+        name:       'view1'
+        viewRange:  [[-r,r], [-r,r], [-r,r]][0...cols]
+        axisLabels: false
     @mathbox.select(".view1-axes").set 'visible', params.Axes
 
     ##################################################
@@ -154,20 +190,41 @@ window.demo1 = new Demo {
     ##################################################
     # Clip cube
     clipCube = @clipCube view,
-        draw:     true
-        color:    new THREE.Color .75, .75, .75
+        draw:   cols == 3
+        hilite: cols == 3
+        color:  new THREE.Color .75, .75, .75
+        material: new THREE.MeshBasicMaterial
+            color:       new THREE.Color 0.5, 0, 0
+            opacity:     0.5
+            transparent: true
+            visible:     false
+            depthWrite:  false
+            depthTest:   true
 
     ##################################################
     # Solution set
-    [nulBasis, colBasis, Emat, solve] = @rowred (c.slice() for c in @matrix)
+    [nulBasis, colBasis, Emat, solve] \
+        = @rowred (c.slice() for c in matrix), {rows: rows, cols: cols}
     solnspace = @subspace
-        name: 'nulspace'
+        name:    'nulspace'
         vectors: nulBasis
-        live: false
-        surfaceOpts: id: 'solnset'
+        live:    false
     tform = clipCube.clipped.transform().bind position: () => vector
     solnspace.draw tform
-    @mathbox.select("#solnset").set 'visible', params[showSolnsKey]
+    @mathbox.select(".nulspace").set 'visible', params[showSolnsKey]
+
+    if solnspace.dim == 3
+        # Make "space" span: it's the cube texture.
+        @three.scene.add clipCube.mesh
+        clipCube.mesh.material.visible = true
+        # Make sure it's visible from inside the cube.
+        @three.on 'pre', () ->
+            if Math.abs(@camera.position.x < 1.0) and
+               Math.abs(@camera.position.y < 1.0) and
+               Math.abs(@camera.position.z < 1.0)
+                clipCube.mesh.material.side = THREE.BackSide
+            else
+                clipCube.mesh.material.side = THREE.FrontSide
 
     ##################################################
     # Dragging
@@ -175,6 +232,7 @@ window.demo1 = new Demo {
         tmpVec.set.apply(tmpVec, vector).applyMatrix3 @tMatrix
         outVec[0] = tmpVec.x
         outVec[1] = tmpVec.y
+        outVec[2] = tmpVec.z
         updateCaption()
 
     onDrag = (vec) =>
@@ -184,34 +242,53 @@ window.demo1 = new Demo {
             vec.add tmpVec
 
     @draggable view,
-        points: [vector]
-        onDrag: onDrag
+        points:   [vector]
+        onDrag:   onDrag
         postDrag: computeOut
 
     ##################################################
     # Caption
     eqnElt = document.getElementById 'the-equation'
     inconsElt = document.getElementById 'inconsistent'
-    updateCaption = () =>
-        if labeled.hidden
-            katex.render @texMatrix(@matrix, {rows: 2, precision: -1}) \
-                + '\\color{#00ff00}{x}' \
-                + ' = ' \
-                + @texVector(outVec, {color: '#ffff00', dim: 2}),
-                eqnElt
-            inconsElt.style.display = 'inline'
+    switch @urlParams.captions
+        when 'rankthm'
+            document.getElementById('matrix-here').style.display = 'block'
+            str = @texMatrix matrix,
+                rows:      rows
+                cols:      cols
+                precision: -1
+            katex.render 'A=' + str, document.getElementById('the-matrix')
+            katex.render """
+                            \\text{rank}(A) = #{cols-solnspace.dim} \\qquad
+                            \\text{dim Nul}(A) = #{solnspace.dim} \\qquad
+                            \\#\\text{ columns of } A = #{cols}
+                         """, eqnElt
+            updateCaption = () ->
         else
-            katex.render @texMatrix(@matrix, {rows: 2, precision: -1}) \
-                + @texVector(vector, color: '#00ff00') \
-                + ' = ' \
-                + @texVector(outVec, {color: '#ffff00', dim: 2}),
-                eqnElt
-            inconsElt.style.display = 'none'
+            updateCaption = () =>
+                str = @texMatrix matrix,
+                    rows:      rows
+                    cols:      cols
+                    precision: -1
+                if labeled.hidden
+                    katex.render str \
+                        + '\\color{#00ff00}{x}' \
+                        + ' = ' \
+                        + @texVector(outVec, {color: '#ffff00', dim: rows}),
+                        eqnElt
+                    inconsElt.style.display = 'inline'
+                else
+                    katex.render str \
+                        + @texVector(vector, color: '#00ff00', dim: cols) \
+                        + ' = ' \
+                        + @texVector(outVec, {color: '#ffff00', dim: rows}),
+                        eqnElt
+                    inconsElt.style.display = 'none'
 
     computeOut()
 
 
-window.demo2 = new Demo2D {
+window.demo2 = new (if rows == 3 then Demo else Demo2D) {
     mathbox: element: document.getElementById "mathbox2"
     scaleUI: false
 }, () ->
@@ -219,9 +296,13 @@ window.demo2 = new Demo2D {
 
     ##################################################
     # view, axes
+    @range = @urlParams.range2 ? 10
+    r = @range
     view = @view
-        name: 'view2'
+        name:       'view2'
+        viewRange:  [[-r,r], [-r,r], [-r,r]][0...rows]
         axisLabels: false
+    @mathbox.select(".view2-axes").set 'visible', params.Axes
 
     ##################################################
     # labeled vector
@@ -239,8 +320,16 @@ window.demo2 = new Demo2D {
     ##################################################
     # Clip cube
     clipCube = @clipCube view,
-        draw: false
-        hilite: false
+        draw:   rows == 3
+        hilite: rows == 3
+        color:  new THREE.Color .75, .75, .75
+        material: new THREE.MeshBasicMaterial
+            color:       new THREE.Color 0.5, 0, 0
+            opacity:     0.5
+            transparent: true
+            visible:     false
+            depthWrite:  false
+            depthTest:   true
 
     ##################################################
     # Column span
@@ -250,9 +339,22 @@ window.demo2 = new Demo2D {
         live: false
     subspace.draw clipCube.clipped
 
+    if subspace.dim == 3
+        # Make "space" span: it's the cube texture.
+        @three.scene.add clipCube.mesh
+        clipCube.mesh.material.visible = true
+        # Make sure it's visible from inside the cube.
+        @three.on 'pre', () ->
+            if Math.abs(@camera.position.x < 1.0) and
+               Math.abs(@camera.position.y < 1.0) and
+               Math.abs(@camera.position.z < 1.0)
+                clipCube.mesh.material.side = THREE.BackSide
+            else
+                clipCube.mesh.material.side = THREE.FrontSide
+
     ##################################################
     # Dragging
-    snapThreshold = 1.0
+    snapThreshold = 1.0 * 10.0 / @range
     snapped = new THREE.Vector3()
     diff = new THREE.Vector3()
 
@@ -267,16 +369,17 @@ window.demo2 = new Demo2D {
         inVec = solve outVec
         if inVec?
             # Find solution closest to current vector
+            inVec[2] ?= 0
             tmpVec.set vector[0]-inVec[0], vector[1]-inVec[1], vector[2]-inVec[2]
             solnspace.project tmpVec, tmpVec
             vector[0] = tmpVec.x + inVec[0]
             vector[1] = tmpVec.y + inVec[1]
             vector[2] = tmpVec.z + inVec[2]
-            mathbox1.select("#solnset").set 'visible', params[showSolnsKey]
+            mathbox1.select(".nulspace").set 'visible', params[showSolnsKey]
             labeled.show()
         else
             # So the zero point doesn't show up
-            mathbox1.select("#solnset").set 'visible', false
+            mathbox1.select(".nulspace").set 'visible', false
             labeled.hide()
         updateCaption()
 

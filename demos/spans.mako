@@ -61,13 +61,7 @@
 #     capopt: caption options:
 #         matrix: use matrix equation instead of vector equation
 
-<%! is2D=False %>
-
-% if self.attr.is2D:
-is2D = true
-% else:
-is2D = false
-% endif
+is2D = urlParams.v1?.split(',').length == 2
 
 window.demo = new (if is2D then Demo2D else Demo) {
     mathbox:

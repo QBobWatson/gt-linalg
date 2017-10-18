@@ -1,6 +1,6 @@
 (function() {
   "use strict";
-  var Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledVectors, LinearCombo, Popup, Subspace, View, clipFragment, clipShader, extend, makeTvec, orthogonalize, rowReduce, setTvec,
+  var Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledVectors, LinearCombo, Popup, Subspace, View, clipFragment, clipShader, decodeQS, extend, makeTvec, orthogonalize, rowReduce, setTvec, urlParams,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     extend1 = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
@@ -49,8 +49,8 @@
     }
   };
 
-  rowReduce = function(M) {
-    var E, aa, ab, ac, ad, ae, af, ag, ah, ai, aj, ak, c, col, colBasis, f, fn, i, j, k, l, lastPivot, len, len1, m, maxEl, maxRow, n, noPivots, nulBasis, orig, pivot, pivots, q, ref, ref1, ref10, ref11, ref12, ref13, ref14, ref15, ref16, ref17, ref18, ref19, ref2, ref20, ref21, ref22, ref3, ref4, ref5, ref6, ref7, ref8, ref9, row, u, v;
+  rowReduce = function(M, opts) {
+    var E, aa, ab, ac, ad, ae, af, ag, ah, ai, aj, ak, c, col, colBasis, f, fn, i, j, k, l, lastPivot, len, len1, m, maxEl, maxRow, n, noPivots, nulBasis, orig, pivot, pivots, q, ref, ref1, ref10, ref11, ref12, ref13, ref14, ref15, ref16, ref17, ref18, ref19, ref2, ref20, ref21, ref22, ref23, ref24, ref3, ref4, ref5, ref6, ref7, ref8, ref9, row, u, v;
     orig = (function() {
       var l, len, results;
       results = [];
@@ -60,8 +60,11 @@
       }
       return results;
     })();
-    m = M[0].length;
-    n = M.length;
+    if (opts == null) {
+      opts = {};
+    }
+    m = (ref = opts.rows) != null ? ref : M[0].length;
+    n = (ref1 = opts.cols) != null ? ref1 : M.length;
     row = 0;
     col = 0;
     pivots = [];
@@ -70,13 +73,13 @@
     colBasis = [];
     nulBasis = [];
     E = (function() {
-      var l, ref, results;
+      var l, ref2, results;
       results = [];
-      for (l = 0, ref = m; 0 <= ref ? l < ref : l > ref; 0 <= ref ? l++ : l--) {
+      for (l = 0, ref2 = m; 0 <= ref2 ? l < ref2 : l > ref2; 0 <= ref2 ? l++ : l--) {
         results.push((function() {
-          var q, ref1, results1;
+          var q, ref3, results1;
           results1 = [];
-          for (q = 0, ref1 = m; 0 <= ref1 ? q < ref1 : q > ref1; 0 <= ref1 ? q++ : q--) {
+          for (q = 0, ref3 = m; 0 <= ref3 ? q < ref3 : q > ref3; 0 <= ref3 ? q++ : q--) {
             results1.push(0);
           }
           return results1;
@@ -84,7 +87,7 @@
       }
       return results;
     })();
-    for (i = l = 0, ref = m; 0 <= ref ? l < ref : l > ref; i = 0 <= ref ? ++l : --l) {
+    for (i = l = 0, ref2 = m; 0 <= ref2 ? l < ref2 : l > ref2; i = 0 <= ref2 ? ++l : --l) {
       E[i][i] = 1;
     }
     while (true) {
@@ -92,14 +95,14 @@
         break;
       }
       if (row === m) {
-        for (k = q = ref1 = col, ref2 = n; ref1 <= ref2 ? q < ref2 : q > ref2; k = ref1 <= ref2 ? ++q : --q) {
+        for (k = q = ref3 = col, ref4 = n; ref3 <= ref4 ? q < ref4 : q > ref4; k = ref3 <= ref4 ? ++q : --q) {
           noPivots.push(k);
         }
         break;
       }
       maxEl = Math.abs(M[col][row]);
       maxRow = row;
-      for (k = u = ref3 = row + 1, ref4 = m; ref3 <= ref4 ? u < ref4 : u > ref4; k = ref3 <= ref4 ? ++u : --u) {
+      for (k = u = ref5 = row + 1, ref6 = m; ref5 <= ref6 ? u < ref6 : u > ref6; k = ref5 <= ref6 ? ++u : --u) {
         if (Math.abs(M[col][k]) > maxEl) {
           maxEl = Math.abs(M[col][k]);
           maxRow = k;
@@ -110,67 +113,67 @@
         col++;
         continue;
       }
-      for (k = v = 0, ref5 = n; 0 <= ref5 ? v < ref5 : v > ref5; k = 0 <= ref5 ? ++v : --v) {
-        ref6 = [M[k][row], M[k][maxRow]], M[k][maxRow] = ref6[0], M[k][row] = ref6[1];
+      for (k = v = 0, ref7 = n; 0 <= ref7 ? v < ref7 : v > ref7; k = 0 <= ref7 ? ++v : --v) {
+        ref8 = [M[k][row], M[k][maxRow]], M[k][maxRow] = ref8[0], M[k][row] = ref8[1];
       }
-      for (k = aa = 0, ref7 = m; 0 <= ref7 ? aa < ref7 : aa > ref7; k = 0 <= ref7 ? ++aa : --aa) {
-        ref8 = [E[k][row], E[k][maxRow]], E[k][maxRow] = ref8[0], E[k][row] = ref8[1];
+      for (k = aa = 0, ref9 = m; 0 <= ref9 ? aa < ref9 : aa > ref9; k = 0 <= ref9 ? ++aa : --aa) {
+        ref10 = [E[k][row], E[k][maxRow]], E[k][maxRow] = ref10[0], E[k][row] = ref10[1];
       }
       pivots.push([row, col]);
       colBasis.push(orig[col]);
       lastPivot = row;
       pivot = M[col][row];
-      for (k = ab = ref9 = row + 1, ref10 = m; ref9 <= ref10 ? ab < ref10 : ab > ref10; k = ref9 <= ref10 ? ++ab : --ab) {
+      for (k = ab = ref11 = row + 1, ref12 = m; ref11 <= ref12 ? ab < ref12 : ab > ref12; k = ref11 <= ref12 ? ++ab : --ab) {
         c = M[col][k] / pivot;
         if (c === 0) {
           continue;
         }
         M[col][k] = 0;
-        for (j = ac = ref11 = col + 1, ref12 = n; ref11 <= ref12 ? ac < ref12 : ac > ref12; j = ref11 <= ref12 ? ++ac : --ac) {
+        for (j = ac = ref13 = col + 1, ref14 = n; ref13 <= ref14 ? ac < ref14 : ac > ref14; j = ref13 <= ref14 ? ++ac : --ac) {
           M[j][k] -= c * M[j][row];
         }
-        for (j = ad = 0, ref13 = m; 0 <= ref13 ? ad < ref13 : ad > ref13; j = 0 <= ref13 ? ++ad : --ad) {
+        for (j = ad = 0, ref15 = m; 0 <= ref15 ? ad < ref15 : ad > ref15; j = 0 <= ref15 ? ++ad : --ad) {
           E[j][k] -= c * E[j][row];
         }
       }
       row++;
       col++;
     }
-    ref14 = pivots.reverse();
-    for (ae = 0, len = ref14.length; ae < len; ae++) {
-      ref15 = ref14[ae], row = ref15[0], col = ref15[1];
+    ref16 = pivots.reverse();
+    for (ae = 0, len = ref16.length; ae < len; ae++) {
+      ref17 = ref16[ae], row = ref17[0], col = ref17[1];
       pivot = M[col][row];
       M[col][row] = 1;
-      for (k = af = ref16 = col + 1, ref17 = n; ref16 <= ref17 ? af < ref17 : af > ref17; k = ref16 <= ref17 ? ++af : --af) {
+      for (k = af = ref18 = col + 1, ref19 = n; ref18 <= ref19 ? af < ref19 : af > ref19; k = ref18 <= ref19 ? ++af : --af) {
         M[k][row] /= pivot;
       }
-      for (k = ag = 0, ref18 = m; 0 <= ref18 ? ag < ref18 : ag > ref18; k = 0 <= ref18 ? ++ag : --ag) {
+      for (k = ag = 0, ref20 = m; 0 <= ref20 ? ag < ref20 : ag > ref20; k = 0 <= ref20 ? ++ag : --ag) {
         E[k][row] /= pivot;
       }
-      for (k = ah = 0, ref19 = row; 0 <= ref19 ? ah < ref19 : ah > ref19; k = 0 <= ref19 ? ++ah : --ah) {
+      for (k = ah = 0, ref21 = row; 0 <= ref21 ? ah < ref21 : ah > ref21; k = 0 <= ref21 ? ++ah : --ah) {
         c = M[col][k];
         M[col][k] = 0;
-        for (j = ai = ref20 = col + 1, ref21 = n; ref20 <= ref21 ? ai < ref21 : ai > ref21; j = ref20 <= ref21 ? ++ai : --ai) {
+        for (j = ai = ref22 = col + 1, ref23 = n; ref22 <= ref23 ? ai < ref23 : ai > ref23; j = ref22 <= ref23 ? ++ai : --ai) {
           M[j][k] -= c * M[j][row];
         }
-        for (j = aj = 0, ref22 = m; 0 <= ref22 ? aj < ref22 : aj > ref22; j = 0 <= ref22 ? ++aj : --aj) {
+        for (j = aj = 0, ref24 = m; 0 <= ref24 ? aj < ref24 : aj > ref24; j = 0 <= ref24 ? ++aj : --aj) {
           E[j][k] -= c * E[j][row];
         }
       }
     }
     fn = function() {
-      var al, len2, ref23, vec;
+      var al, len2, ref25, vec;
       vec = (function() {
-        var al, ref23, results;
+        var al, ref25, results;
         results = [];
-        for (al = 0, ref23 = n; 0 <= ref23 ? al < ref23 : al > ref23; 0 <= ref23 ? al++ : al--) {
+        for (al = 0, ref25 = n; 0 <= ref25 ? al < ref25 : al > ref25; 0 <= ref25 ? al++ : al--) {
           results.push(0);
         }
         return results;
       })();
       vec[i] = 1;
       for (al = 0, len2 = pivots.length; al < len2; al++) {
-        ref23 = pivots[al], row = ref23[0], col = ref23[1];
+        ref25 = pivots[al], row = ref25[0], col = ref25[1];
         vec[col] = -M[i][row];
       }
       return nulBasis.push(vec);
@@ -180,36 +183,55 @@
       fn();
     }
     f = function(b) {
-      var Eb, al, am, an, ao, len2, ref23, ref24, ref25, ref26, ref27, ret, x;
+      var Eb, al, am, an, ao, len2, ref25, ref26, ref27, ref28, ref29, ret, x;
       Eb = [];
-      for (i = al = 0, ref23 = m; 0 <= ref23 ? al < ref23 : al > ref23; i = 0 <= ref23 ? ++al : --al) {
+      for (i = al = 0, ref25 = m; 0 <= ref25 ? al < ref25 : al > ref25; i = 0 <= ref25 ? ++al : --al) {
         x = 0;
-        for (j = am = 0, ref24 = m; 0 <= ref24 ? am < ref24 : am > ref24; j = 0 <= ref24 ? ++am : --am) {
+        for (j = am = 0, ref26 = m; 0 <= ref26 ? am < ref26 : am > ref26; j = 0 <= ref26 ? ++am : --am) {
           x += E[j][i] * b[j];
         }
         Eb.push(x);
       }
-      for (i = an = ref25 = lastPivot + 1, ref26 = n; ref25 <= ref26 ? an < ref26 : an > ref26; i = ref25 <= ref26 ? ++an : --an) {
+      for (i = an = ref27 = lastPivot + 1, ref28 = n; ref27 <= ref28 ? an < ref28 : an > ref28; i = ref27 <= ref28 ? ++an : --an) {
         if (Math.abs(Eb[i]) > 0.000001) {
           return null;
         }
       }
       ret = (function() {
-        var ao, ref27, results;
+        var ao, ref29, results;
         results = [];
-        for (ao = 0, ref27 = n; 0 <= ref27 ? ao < ref27 : ao > ref27; 0 <= ref27 ? ao++ : ao--) {
+        for (ao = 0, ref29 = n; 0 <= ref29 ? ao < ref29 : ao > ref29; 0 <= ref29 ? ao++ : ao--) {
           results.push(0);
         }
         return results;
       })();
       for (ao = 0, len2 = pivots.length; ao < len2; ao++) {
-        ref27 = pivots[ao], row = ref27[0], col = ref27[1];
+        ref29 = pivots[ao], row = ref29[0], col = ref29[1];
         ret[col] = Eb[row];
       }
       return ret;
     };
     return [nulBasis, colBasis, E, f];
   };
+
+  urlParams = {};
+
+  decodeQS = function() {
+    var decode, match, pl, query, search;
+    pl = /\+/g;
+    search = /([^&=]+)=?([^&]*)/g;
+    decode = function(s) {
+      return decodeURIComponent(s.replace(pl, " "));
+    };
+    query = window.location.search.substring(1);
+    urlParams = {};
+    while (match = search.exec(query)) {
+      urlParams[decode(match[1])] = decode(match[2]);
+    }
+    return urlParams;
+  };
+
+  decodeQS();
 
   clipShader = "// Enable STPQ mapping\n#define POSITION_STPQ\nvoid getPosition(inout vec4 xyzw, inout vec4 stpq) {\n  // Store XYZ per vertex in STPQ\nstpq = xyzw;\n}";
 
@@ -254,6 +276,9 @@
       cross = this.tmpVec1;
       oldDim = this.dim;
       switch (this.numVecs) {
+        case 0:
+          this.dim = 0;
+          break;
         case 1:
           if (vec1.lengthSq() <= this.zeroThreshold) {
             this.dim = 0;
@@ -347,6 +372,7 @@
       this.range *= 2;
       pointOpts = {
         id: name + "-point",
+        classes: [name],
         color: color,
         opacity: 1.0,
         size: 15,
@@ -355,6 +381,7 @@
       extend(pointOpts, (ref4 = this.opts.pointOpts) != null ? ref4 : {});
       lineOpts = {
         id: name + "-line",
+        classes: [name],
         color: 0x880000,
         opacity: 1.0,
         stroke: 'solid',
@@ -364,6 +391,7 @@
       extend(lineOpts, (ref5 = this.opts.lineOpts) != null ? ref5 : {});
       surfaceOpts = {
         id: name + "-plane",
+        classes: [name],
         color: color,
         opacity: 0.5,
         lineX: false,
@@ -1337,7 +1365,7 @@
       this.opts = opts1;
       this.texCombo = bind(this.texCombo, this);
       this.texSet = bind(this.texSet, this);
-      this.decodeQS();
+      this.urlParams = urlParams;
       if (this.opts == null) {
         this.opts = {};
       }
@@ -1420,21 +1448,6 @@
       }
     }
 
-    Demo.prototype.decodeQS = function() {
-      var decode, match, pl, query, search;
-      pl = /\+/g;
-      search = /([^&=]+)=?([^&]*)/g;
-      decode = function(s) {
-        return decodeURIComponent(s.replace(pl, " "));
-      };
-      query = window.location.search.substring(1);
-      this.urlParams = {};
-      while (match = search.exec(query)) {
-        this.urlParams[decode(match[1])] = decode(match[2]);
-      }
-      return this.urlParams;
-    };
-
     Demo.prototype.texVector = function(vec, opts) {
       var coord, dim, i, l, len, precision, ref, ref1, ret;
       if (opts == null) {
@@ -1512,16 +1525,17 @@
     };
 
     Demo.prototype.texMatrix = function(cols, opts) {
-      var colors, i, j, l, precision, q, ref, ref1, ref2, ref3, rows, str;
+      var colors, i, j, l, m, n, precision, q, ref, ref1, ref2, ref3, ref4, str;
       if (opts == null) {
         opts = {};
       }
       colors = opts.colors;
       precision = (ref = opts.precision) != null ? ref : 2;
-      rows = (ref1 = opts.rows) != null ? ref1 : this.dims;
+      m = (ref1 = opts.rows) != null ? ref1 : this.dims;
+      n = (ref2 = opts.cols) != null ? ref2 : cols.length;
       str = "\\begin{bmatrix}";
-      for (i = l = 0, ref2 = rows; 0 <= ref2 ? l < ref2 : l > ref2; i = 0 <= ref2 ? ++l : --l) {
-        for (j = q = 0, ref3 = cols.length; 0 <= ref3 ? q < ref3 : q > ref3; j = 0 <= ref3 ? ++q : --q) {
+      for (i = l = 0, ref3 = m; 0 <= ref3 ? l < ref3 : l > ref3; i = 0 <= ref3 ? ++l : --l) {
+        for (j = q = 0, ref4 = n; 0 <= ref4 ? q < ref4 : q > ref4; j = 0 <= ref4 ? ++q : --q) {
           if (colors != null) {
             str += "\\color{" + colors[j] + "}{";
           }
@@ -1533,11 +1547,11 @@
           if (colors != null) {
             str += "}";
           }
-          if (j + 1 < cols.length) {
+          if (j + 1 < n) {
             str += "&";
           }
         }
-        if (i + 1 < rows) {
+        if (i + 1 < m) {
           str += "\\\\";
         }
       }
@@ -1548,8 +1562,8 @@
       return this.camera.position.set(-x, z, -y);
     };
 
-    Demo.prototype.rowred = function(mat) {
-      return rowReduce(mat);
+    Demo.prototype.rowred = function(mat, opts) {
+      return rowReduce(mat, opts);
     };
 
     Demo.prototype.view = function(opts) {
@@ -1689,5 +1703,7 @@
   window.Demo = Demo;
 
   window.Demo2D = Demo2D;
+
+  window.urlParams = urlParams;
 
 }).call(this);

@@ -34,10 +34,11 @@ setTvec = (orig, vec) ->
 #         basis for col space,
 #         E st EA = rref,
 #         f(b) = specific solution]
-rowReduce = (M) ->
+rowReduce = (M, opts) ->
     orig = (c.slice() for c in M)
-    m = M[0].length # Number of rows
-    n = M.length    # Number of columns
+    opts ?= {}
+    m = opts.rows ? M[0].length
+    n = opts.cols ? M.length
     row = 0  # Current row
     col = 0  # Current pivot column
     pivots = []
@@ -123,6 +124,18 @@ rowReduce = (M) ->
             ret[col] = Eb[row]
         ret
     return [nulBasis, colBasis, E, f]
+
+urlParams = {}
+decodeQS = () ->
+    pl = /\+/g
+    search = /([^&=]+)=?([^&]*)/g
+    decode = (s) -> decodeURIComponent s.replace pl, " "
+    query = window.location.search.substring 1
+    urlParams = {}
+    while match = search.exec query
+        urlParams[decode match[1]] = decode match[2]
+    urlParams
+decodeQS()
 
 
 ################################################################################
@@ -218,6 +231,8 @@ class Subspace
         oldDim = @dim
 
         switch @numVecs
+            when 0
+                @dim = 0
             when 1
                 if vec1.lengthSq() <= @zeroThreshold
                     @dim = 0
@@ -300,6 +315,7 @@ class Subspace
 
         pointOpts =
             id:      "#{name}-point"
+            classes: [name]
             color:   color
             opacity: 1.0
             size:    15
@@ -307,6 +323,7 @@ class Subspace
         extend pointOpts, @opts.pointOpts ? {}
         lineOpts =
             id:      "#{name}-line"
+            classes: [name]
             color:   0x880000
             opacity: 1.0
             stroke:  'solid'
@@ -315,6 +332,7 @@ class Subspace
         extend lineOpts, @opts.lineOpts ? {}
         surfaceOpts =
             id:      "#{name}-plane"
+            classes: [name]
             color:   color
             opacity: 0.5
             lineX:   false
@@ -1258,7 +1276,7 @@ class LabeledVectors
 class Demo
     # Construct a mathBox instance, with optional preload
     constructor: (@opts, callback) ->
-        @decodeQS()
+        @urlParams = urlParams
 
         @opts ?= {}
         mathboxOpts =
@@ -1324,16 +1342,6 @@ class Demo
                         onPreloaded()
         onPreloaded() unless toPreload > 0
 
-    decodeQS: () ->
-        pl = /\+/g
-        search = /([^&=]+)=?([^&]*)/g
-        decode = (s) -> decodeURIComponent s.replace pl, " "
-        query = window.location.search.substring 1
-        @urlParams = {}
-        while match = search.exec query
-            @urlParams[decode match[1]] = decode match[2]
-        @urlParams
-
     texVector: (vec, opts) ->
         opts ?= {}
         precision = opts.precision ? 2
@@ -1387,10 +1395,11 @@ class Demo
         opts ?= {}
         colors = opts.colors
         precision = opts.precision ? 2
-        rows = opts.rows ? @dims
+        m = opts.rows ? @dims
+        n = opts.cols ? cols.length
         str = "\\begin{bmatrix}"
-        for i in [0...rows]
-            for j in [0...cols.length]
+        for i in [0...m]
+            for j in [0...n]
                 if colors?
                     str += "\\color{#{colors[j]}}{"
                 if precision >= 0
@@ -1399,14 +1408,14 @@ class Demo
                     str += cols[j][i]
                 if colors?
                     str += "}"
-                str += "&" if j+1 < cols.length
-            str += "\\\\" if i+1 < rows
+                str += "&" if j+1 < n
+            str += "\\\\" if i+1 < m
         str += "\\end{bmatrix}"
 
     moveCamera: (x, y, z) ->
         @camera.position.set -x, z, -y
 
-    rowred: (mat) -> rowReduce mat
+    rowred: (mat, opts) -> rowReduce mat, opts
 
     view: (opts) ->
         opts ?= {}
@@ -1471,3 +1480,4 @@ class Demo2D extends Demo
 
 window.Demo   = Demo
 window.Demo2D = Demo2D
+window.urlParams = urlParams
