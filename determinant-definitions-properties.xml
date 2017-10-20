@@ -1,7 +1,5 @@
 <section xml:id="section-determinant-definitions-properties">
   <title>Definition and properties of determinants</title>
-
-
   <p>
     We begin by recalling three primary goals of this course:
   </p>
@@ -9,31 +7,95 @@
   <p>
     <ol>
       <li> Solving systems of linear equations, a.k.a. solving the matrix equation <m>Ax=b</m> (we've studied this problem in detail).</li>
-      <li>Solving the matrix equation <m>Ax=\lambda x</m>, where <m>\lambda</m> is a number (the eigenvalue problem). We are currently studying this problem.</li>
+      <li>Solving the matrix equation <m>Ax=\lambda x</m>, where <m>\lambda</m> is a number (the eigenvalue problem).</li>
       <li> "Almost solving" the matrix equation <m>Ax=b</m> (we will study this problem).</li>
     </ol>
   </p>
+  
 
   <p>As we have seen that solving matrix equations <m>Ax=b</m> are much easier if we can find an inverse matrix <m>A^{-1}</m>, it is interesting to know when matrices are invertible. The theory of <em>determinants</em> will give an efficient method for determining when a given matrix is invertible. Specifically, we will see that the determinant is a special number attached to any square matrix (we already know that non-square matrices are automatically non-invertible). We will give two different ways to describe this number, which will seem different, but which surprisingly end up giving the same result.
-  </p>
-  
+    </p>
+<!--<subsection>
+	  <title>Definition of the determinant</title>
+	-->
   <p>
-	  To get the ball rolling, let's give one way to define the determinant. Suppose that <m>A</m> is a square matrix. Then we can always transform the matrix to reduced echelon form. In doing so, we use elementary row operations. In terms of row operations and the reduced echelon form, we can define the determinant as follows.
+	  To get the ball rolling, let's give one way to define the determinant. The determinant is a <em>function</em> which assigns a real number <m>\det A</m> to any square matrix <m>A</m>. This number is defined by the following properties.
   </p>
-  <definition xml:id="DeterminantDefnREF">
+	  <definition xml:id="DeterminantRowRedFacts">
+		  <statement>
+	<p>
+		 The <term>determinant</term> of an <m>n\times n</m> square matrix <m>A</m> is a number, denoted by <m>\det A</m>. 
+		Specifically, the determinant is the unique function from square <m>n\times n</m> matrices to real numbers which satisfies the following properties:
+		<ol>
+			<li>
+				Multiplying a row of a matrix <m>A</m> by a constant <m>c</m> gives a new matrix with determinant <m>c\det A</m>.
+			</li>
+			<li>
+				Swapping two rows of a matrix multiplies the determinant by <m>-1</m>.
+			</li>
+			<li>
+				Adding a multiple of one row to a different row leaves the determinant unchanged.
+			</li>
+			<li>
+				The determinant of the identity matrix <m>I_n</m> is <m>1</m>.
+			</li>
+		</ol>
+	</p>
+</statement>
+</definition>
+  <p>
+	  It is not immediately clear that these properties are sufficient to define exactly one number associated to any square matrix. However,  this is a true fact, and in particular, we have the following.</p>
+	  <theorem xml:id="DeterminantUniqueMultilinAlt">
+	  	<statement>
+	  		<p>
+	  			The determinant is the <em>only</em> function from square matrices to the real numbers which satisfies the four properties of <xref ref="DeterminantRowRedFacts"/>.
+	  		</p>
+	  	</statement>
+	  </theorem>
+	  <p>
+		  The idea of why this is true is that the first three properties determine what happens under elementary row operations, and one can keep track of what happens to the determinant when we compute the reduced ecehlon form (which is the identity, with determinant <m>1</m>, if and only if the matrix is invertible). To illustrate this, we compute what the determinant must be for two simple matrices.
+  </p>
+  <example>
 	  <statement>
 		  <p>
-			  The <term>determinant</term> of an <m>n\times n</m> square matrix <m>A</m> is a number, denoted by <m>\det A</m>. To find this number, we first compute the reduced echelon form, call it <m>B</m>, of <m>A</m>. We then define
+			  Let <m>A=\spalignmat{1,0;0,3}</m>. By parts 1 and 4 of <xref ref="DeterminantRowRedFacts"/>, we find that <m>\det A=3</m>. Specifically, since <m>A</m> is obtained from <m>I_n</m> by multiplying the second row by the constant <m>3</m>, we have <m>\det A=3\det I_n=3\cdot 1=3</m>.
+		  </p>
+	  </statement>
+  </example>
+  <example>
+	  <statement>
+		  <p>
+			  Suppose that <m>A=\spalignmat{1,0,0;0,0,1;5,1,0}</m>. Then if we switch the second and third rows, we obtain the matrix <m>B=\spalignmat{1,0,0;5,1,0;0,0,1}</m>. Adding <m>-5</m> times the first row to the second row of <m>B</m> gives the identity <m>I_3</m>. Working backwards from <m>I_3</m> and using properties 2, 3, and 4 of <xref ref="DeterminantRowRedFacts"/>, we have
+			  <me>
+				  1=\det I_n=\det B=-\det A
+				  ,
+			  </me>
+			  and so <m>\det A=-1</m>.
+		  </p>
+	  </statement>
+  </example>
+ <!-- </subsection>
+  <subsection>
+	  <title>A concrete formula for the determinant</title>
+  -->
+	    <p>
+	  We can turn the above abstract definition into a concrete formula as follows. 
+	  We can always transform the matrix to its reduced echelon form. In doing so, we use elementary row operations. A careful analysis of this procedure shows that the determinant has the following formula.
+  </p>
+  <fact xml:id="DeterminantDefnREF">
+	  <statement>
+		  <p>
+			 Given a square matrix <m>A</m>, let <m>B</m> denote its reduced echelon form. Then
 			  <me>
 				  \det A=(-1)^r\cdot\frac{\text{product of pivot entries of } B}{\text{product of scaling factors used}}.
 			  </me>
 			  That is, the determinant is the product of diagonal entries of the reduced echelon form of <m>A</m>, times a factor of  <m>\pm1</m> coming from the number of row flips we made, divided by the scaling factors used in the row reduction. 
 		  </p>
 	  </statement>
-  </definition>
+  </fact>
   <remark>
 	  <p>
-		  You may be wondering what happens when we find the reduced echelon form of a matrix using two different sequences of row operations. It turns out that no matter what steps you take, as long as you end up in reduced echelon form, this definition always gives you the same answer.
+		  You may be wondering what happens when we find the reduced echelon form of a matrix using two different sequences of row operations. It turns out that no matter what steps you take, as long as you end up in reduced echelon form, this formula always gives you the same answer.
 	  </p>
   </remark>
   <p>
@@ -41,7 +103,7 @@
 	  <me>\det \spalignmat{1,2,3; 0,4,5;0,0,6}=1\cdot4\cdot6=24,</me> and <me>\det \spalignmat{-20,\pi,100;0,0,3;0,0,-7}=0.</me>
   </p>
   <p>
-	  By definition, we see that the determinant of a matrix is non-zero if and only if its reduced echelon form has no zeros on the diagonal. But we have seen before that is the same as saying that the matrix is invertible! Thus, our definition is designed so that the following is true.
+	  This formula directly implies that determinant of a matrix is non-zero if and only if its reduced echelon form has no zeros on the diagonal. But we have seen before that is the same as saying that the matrix is invertible! Thus, the following  key result is true.
 </p>
 <fact>
 	<p>
@@ -49,13 +111,13 @@
 	</p>
 </fact>
 <p>
-	Let's try using the definition to compute a few determinants.
+	Let's try using this formula to compute a few determinants.
 </p>
 
 
 <example>
   <statement>
-    <p>Consider the matrix <m>A=\spalignmat{1,2,3;2,-1,1;3,0,-1}</m>. After subtracting twice the first row from the second row and three times the first row from the third row, we obtain <m>\spalignmat{1,2,3;0,-5,-5;0,-6,-10}</m>. Since we didn't flip any rows or multiply a row by a constant, there is no data picked up to keep track of when we compute the determinant using the definition above (that is, this new matrix has the <em>same</em> determinant as <m>A</m>). Continuing in our row reduction, we factor out a <m>-5</m> from the second row, giving <m>\spalignmat{1,2,3;0,1,1;0,-6,-10}</m>. We keep track of the scaling factor we multiplied by in this step, namely <m>-1/5</m> ,for later. Continuing, we add six times the second row to the third row, giving <m>\spalignmat{1,2,3;0,1,1;0,0,-4}</m>. At this point, we are already in reduced ecehlon form, so we stop. The product of the diagonal entries in this reduced form is <m>1\cdot1\cdot(-4)=-4</m>. We made <m>0</m> row flips, and only once multiplied a row by a constant factor, which was <m>-1/5</m>. Thus, by the definition above, we find that 
+    <p>Consider the matrix <m>A=\spalignmat{1,2,3;2,-1,1;3,0,-1}</m>. After subtracting twice the first row from the second row and three times the first row from the third row, we obtain <m>\spalignmat{1,2,3;0,-5,-5;0,-6,-10}</m>. Since we didn't flip any rows or multiply a row by a constant, there is no data picked up to keep track of when we compute the determinant using the formula above (that is, this new matrix has the <em>same</em> determinant as <m>A</m>). Continuing in our row reduction, we factor out a <m>-5</m> from the second row, giving <m>\spalignmat{1,2,3;0,1,1;0,-6,-10}</m>. We keep track of the scaling factor we multiplied by in this step, namely <m>-1/5</m> ,for later. Continuing, we add six times the second row to the third row, giving <m>\spalignmat{1,2,3;0,1,1;0,0,-4}</m>. At this point, we are already in reduced ecehlon form, so we stop. The product of the diagonal entries in this reduced form is <m>1\cdot1\cdot(-4)=-4</m>. We made <m>0</m> row flips, and only once multiplied a row by a constant factor, which was <m>-1/5</m>. Thus,
 	<me>\det A=(-1)^0\cdot\frac{-4}{-\frac15}=20.</me>
   </p>
   </statement>
@@ -68,57 +130,52 @@
 		</p>
 	</statement>
 </example>
+<!--</subsection>
+<subsection>
+	<title>Further propreties of the determinant and useful facts</title>
+-->
 
 <p>
 Based on these examples, we can infer that the definition of the determinant shows that it automatically satisfies several key properties.
 </p>
-<fact xml:id="DeterminantRowRedFacts">
-	<p>
-		The determinant gives a function from square <m>n\times n</m> matrices to real numbers which satisfies the following properties under row operations.
-		<ol>
-			<li>
-				Multiplying a row of a matrix <m>A</m> by a constant <m>c</m> gives a new matrix with determinant <m>c\det A</m>.
-			</li>
-			<li>
-				Swapping two rows of a matrix multiplies the determinant by <m>-1</m>.
-			</li>
-			<li>
-				Adding a multiple of one row to a different row leaves the determinant unchanged.
-			</li>
-		</ol>
-	</p>
-</fact>
+
 
 <p>
-	Let's use these properties to give the determinant of an arbitrary <m>2\times2</m> matrix.
+	To illustrate <xref ref="DeterminantRowRedFacts"/> further, let's see what happens in the case of an arbitrary <m>2\times2</m> matrix.
+	Let <m>A=\spalignmat{a,b;c,d}</m>. If <m>a=0</m>, then <m>A=\spalignmat{0,b;c,d}</m>, and so
+	<me>
+		\det A=-\det\spalignmat{c,d;0,b}=-bc.
+	</me>
+	Now suppose <m>a\neq0</m>. Then 
+	<me>
+		\det A=a\det\spalignmat{1,\frac ba;c,d}=a\det\spalignmat{1,\frac ba;0,d-\frac{bc}a},
+	</me>
+	which equals 
+	<me>
+		a\cdot1\cdot\left(d-\frac{bc}a\right)=ad-bc.
+	</me>		
+	In either case (i.e., regardless of whether <m>\det A</m> is zero or non-zero), we find that 
+	<me>
+		\det \spalignmat{a,b;c,d}=ad-bc
+		.
+	</me>
+	This formula, which you may have seen before, comes up often enough that you should memorize it.
+	For future reference, we record this formula as a fact.
 </p>
-<example>
+<fact>
 	<statement>
 		<p>
-			Let <m>A=\spalignmat{a,b;c,d}</m>. If <m>a=0</m>, then <m>A=\spalignmat{0,b;c,d}</m>, and so
-			<me>
-				\det A=-\det\spalignmat{c,d;0,b}=-bc.
-			</me>
-			Now suppose <m>a\neq0</m>. Then 
-			<me>
-				\det A=a\det\spalignmat{1,\frac ba;c,d}=a\det\spalignmat{1,\frac ba;0,d-\frac{bc}a},
-			</me>
-			which equals 
-			<me>
-				a\cdot1\cdot\left(d-\frac{bc}a\right)=ad-bc.
-			</me>		
-			In either case (i.e., regardless of whether <m>\det A</m> is zero or non-zero), we find that
+			The determinants of <m>2\times2</m> matrices are determined by the formula
 			<me>
 				\det \spalignmat{a,b;c,d}=ad-bc
 				.
-			</me>
-			This formula, which you may have seen before, comes up often enough that you should memorize it.
+			</me>			
 		</p>
 	</statement>
-</example>
+</fact>
 
 <p>
-	These properties imply several useful facts about determinants. Firstly, if a matrix has a row of all zeros, then multiplying that row by <m>-1</m> doesn't change the row, and hence this row operation doesn't change the matrix at all, but property 1 above implies that the "new" matrix's determinant is <m>-1</m> times the determinant of the original matrix. This means that the following is true.
+	<xref ref="DeterminantRowRedFacts"/> also implies several useful facts about determinants. Firstly, if a matrix has a row of all zeros, then multiplying that row by <m>-1</m> doesn't change the row, and hence this row operation doesn't change the matrix at all, but property 1 above implies that the "new" matrix's determinant is <m>-1</m> times the determinant of the original matrix. This means that the following is true.
 </p>
 <fact>
 	<p>
@@ -126,17 +183,17 @@ Based on these examples, we can infer that the definition of the determinant sho
 	</p>
 </fact>
 <p>
-	By combining this fact with the third property of determinants above, we see that if one row of a matrix is a multiple of another, say if row <m>i</m> is the constant <m>c</m> times row <m>j</m>, then adding <m>-c</m> times row <m>j</m> to row <m>i</m> gives a row of zeros. The properties of determinants above says that this new matrix has the same determinant, which has to be zero by the last fact. For example, in <m>A=\spalignmat{-2,3;4,-6}</m>, we can add twice the first row to the second row to obtain <m>\spalignmat{-2,3;0,0}</m>, which has the same determinant as <m>A</m>. This means that <m>\det A=0</m>. That is, we have shown that the following is true.
+	By combining this fact with the third property of determinants above, we see that if one row of a matrix is a multiple of another, say if row <m>i</m> is the constant <m>c</m> times row <m>j</m>, then adding <m>-c</m> times row <m>j</m> to row <m>i</m> gives a row of zeros. <xref ref="DeterminantRowRedFacts"/> implies that this new matrix has the same determinant, which has to be zero by the last fact. For example, in <m>A=\spalignmat{-2,3;4,-6}</m>, we can add twice the first row to the second row to obtain <m>\spalignmat{-2,3;0,0}</m>, which has the same determinant as <m>A</m>. This means that <m>\det A=0</m>. That is, we have shown that the following is true.
 </p>
 <fact>
 	<p>
 		If one row of a matrix is a constant multiple of another row, then that matrix has determinant zero.
 	</p>
 </fact>
-<p>
-	One more surprising fact which is often very handy is that instead of using row operations to define determinants, if you used "column operations" instead of row operations, you would get the same theory of determinants. In practical terms, this means that the following analogue of the row reduction properties of the determinant also holds. At this point, this fact should seem like magic, and we will simply take this as a pleasant surprise for the time-being.
-</p>
-<fact>
+	<p>
+		One more surprising fact which is sometimes handy is that instead of using row operations to define determinants, if you used "column operations" instead of row operations, you would get the same numbers. In practical terms, this means that the following analogue of the row reduction properties of the determinant also holds. At this point, this fact should seem like magic, and we will simply take this as a pleasant surprise for the time-being.
+	</p>
+	<fact>
 	<p>
 		The determinant satisfies the following properties under "column operations."
 		<ol>
@@ -194,17 +251,8 @@ There is one more key property of determinants which is a little strange-looking
 	</statement>
 </example>
 
-<p>
-	Finally, we note that the properties of determinant in <xref ref="DeterminantRowRedFacts"/> are especially important as they essentially define determinants uniquely. Specifically, we have the following theorem.
-</p>
-<theorem xml:id="DeterminantUniqueMultilinAlt">
-	<statement>
-		<p>
-			The determinant is the <em>only</em> function from square matrices to the real numbers which satisfies these three row operation properties and which satisfies the normalization <m>\det(I_n)=1</m>.
-		</p>
-	</statement>
-</theorem>
-
+<!--</subsection>
+-->
 <p>
 	In the next two sections, we will give two other ways of thinking about determinants, one of which is useful in many examples for computing, and one which connects determinants to volumes of certain geometric figures.
 </p>
