@@ -198,7 +198,7 @@ window.demo1 = new (cols === 3 ? Demo : Demo2D)({
         vector[0] = vector[1] = vector[2] = 0;
         params[showSolnsKey] = true;
         params[lockSolnsKey] = true;
-        _this.mathbox.select('#solnset').set('visible', true);
+        _this.mathbox.select('.nulspace').set('visible', true);
         return computeOut();
       };
     })(this)
@@ -216,7 +216,7 @@ window.demo1 = new (cols === 3 ? Demo : Demo2D)({
   })(this));
   gui.add(params, showSolnsKey).listen().onFinishChange((function(_this) {
     return function(val) {
-      return _this.mathbox.select("#solnset").set('visible', val);
+      return _this.mathbox.select(".nulspace").set('visible', val);
     };
   })(this));
   gui.add(params, lockSolnsKey).listen();

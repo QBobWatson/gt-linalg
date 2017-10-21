@@ -151,7 +151,7 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
             vector[0] = vector[1] = vector[2] = 0
             params[showSolnsKey] = true
             params[lockSolnsKey] = true
-            @mathbox.select('#solnset').set 'visible', true
+            @mathbox.select('.nulspace').set 'visible', true
             computeOut()
     params[showSolnsKey] = @showSolns
     params[lockSolnsKey] = @lockSolns
@@ -161,7 +161,7 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
         @mathbox.select(".view1-axes").set 'visible', val
         demo2.mathbox.select(".view2-axes").set 'visible', val
     gui.add(params, showSolnsKey).listen().onFinishChange (val) =>
-        @mathbox.select("#solnset").set 'visible', val
+        @mathbox.select(".nulspace").set 'visible', val
     gui.add(params, lockSolnsKey).listen()
     gui.add params, 'Homogeneous'
 
