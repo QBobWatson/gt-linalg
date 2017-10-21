@@ -271,42 +271,8 @@ the license is included in gfdl.xml.
 			          - a_{12}(a_{21}a_{33}-a_{23}a_{31})
 			          + a_{13}(a_{21}a_{32}-a_{22}a_{31}).
 		</me>
-		This formula looks too complicated to memorize outright. Fortunately, there is a useful mnemonic device for this formula, which works only in the case of <m>3\times3</m> matrices, and whose validity follows from writing down the cofactor expansion.
+		This formula looks too complicated to memorize outright. Fortunately, there is a useful mnemonic device for this formula. Namely, to find the determinant of a <m>3\times3</m> matrix, we copy the first two columns to the right of the matrix, draw a series of upwards and downwards slashes, and add or subtract the products of the entries on the slashes. We illustrate this in an example.
       </p>
-	  <sidebyside>
-	      <image>
-	        <latex-image-code><![CDATA[
-	        \begin{tikzpicture}
-	        \matrix (a) [matrix of math nodes, anchor=south east] {
-	        a_{11} \& a_{12} \& a_{13} \& a_{14} \& a_{15} \\
-	        \llap{$+\quad$}a_{21} \& a_{22} \& a_{23} \& a_{24} \& a_{25} \\
-	        a_{21} \& a_{22} \& a_{23} \& a_{24} \& a_{25} \\
-	        };
-	        \matrix (b) [matrix of math nodes, anchor=south west, xshift=1.5em] {
-	        a_{11} \& a_{12} \& a_{13} \& a_{14} \& a_{15} \\
-	        \llap{$-\quad$}a_{21} \& a_{22} \& a_{23} \& a_{24} \& a_{25} \\
-	        a_{21} \& a_{22} \& a_{23} \& a_{24} \& a_{25} \\
-	        };
-	        \begin{scope}[very thick, opacity=.75]
-	          \draw[seq-green] (a-1-1.north west) -- (a-3-3.south east);
-	          \draw[seq-green] (a-1-2.north west) -- (a-3-4.south east);
-	          \draw[seq-green] (a-1-3.north west) -- (a-3-5.south east);
-	          \draw[seq-blue]  (b-1-3.north east) -- (b-3-1.south west);
-	          \draw[seq-blue]  (b-1-4.north east) -- (b-3-2.south west);
-	          \draw[seq-blue]  (b-1-5.north east) -- (b-3-3.south west);
-	        \end{scope}
-	        \node at (0, -1em)
-	          {$\color{seq-green}a_{11}a_{22}a_{33}+a_{12}a_{23}a_{31}+a_{13}a_{21}a_{32}
-	            \color{seq-blue}-a_{13}a_{22}a_{31}-a_{11}a_{23}a_{32}-a_{12}a_{21}a_{33}$};
-	        \end{tikzpicture}
-	        ]]>
-	        </latex-image-code>
-	      </image>
-	    </sidebyside>
-
-	  <p>
-	    Then, we multiply all the entries on each slash together, and add the products of the downward ones, and subtract the products of the upwards ones. 
-	  </p>
 	  <example>
 		  <statement>
 			  <p>
@@ -336,7 +302,7 @@ the license is included in gfdl.xml.
 	  </sidebyside>
 
 	  <p>
-	  and find that 
+		  Then, we multiply all the entries on each slash together, and add the products of the downward ones, and subtract the products of the upwards ones. This gives that 
 	  <me>
 	  \begin{aligned}
 	  \det A&amp; = \textcolor{seq-green}{1\cdot0\cdot1+3\cdot(-1)\cdot4+5\cdot2\cdot(-3)}
