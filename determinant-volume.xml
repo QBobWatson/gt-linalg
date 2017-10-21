@@ -112,7 +112,7 @@
   <p>Actually, we know more. If we take the cube <m>\varepsilon e_1,\ldots, \varepsilon e_n</m> where <m>\varepsilon</m> is a small  real number (wait, are we doing Calculus now?), then since <m>T_A</m> is linear, the image of this cube—which has (signed) volume <m>\varepsilon^n</m>—will have volume <m>\left|\det A\varepsilon^n\right|</m>. What does that buy us? Well now take any shape <m>S</m> in <m>\mathbb R^n</m> that has finite volume. Fill it as best you can with <m>\varepsilon</m>-cubes. The total volume of the <m>\varepsilon</m>-cubes is approximately volume<m>(S)</m>. Now apply <m>T_A</m>. What is the volume of <m>T_A(S)</m>? We just said that each of the little cubes gets its volume stretched by <m>\det A</m>. Since that’s true, all of <m>S</m> gets its volume stretched by <m>\det A</m>.
   </p>
 
-  <p>  Let's illustrate this in a visual example in <m>\mathbb R^2</m>
+  <p>  Let's illustrate this by a visual example in <m>\mathbb R^2</m>:
   </p>
 
   <sidebyside>
