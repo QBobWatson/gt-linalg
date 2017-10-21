@@ -228,6 +228,31 @@ the license is included in gfdl.xml.
       <sidebyside>
         <image>
           <latex-image-code><![CDATA[
+\usetikzlibrary{decorations.markings}
+
+\tikzset{
+  mid arrow/.style={
+    postaction={
+      decoration={
+        markings,
+        mark=at position #1 with {\arrow{Stealth[scale=1.25]}},
+      },
+      decorate
+    },
+  },
+  rmid arrow/.style={
+    postaction={
+      decoration={
+        markings,
+        mark=at position #1 with {\arrowreversed{Stealth[scale=1.25]}},
+      },
+      decorate
+    }
+  },
+  mid arrow/.default={0.5},
+  rmid arrow/.default={0.5},
+}
+
   \begin{tikzpicture}[scale=1, thick,
       every node/.style={inner sep=3pt, label distance=1mm}]
     \point[scale=1.5] (A) at (-1,1);

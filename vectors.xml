@@ -384,7 +384,7 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
   \begin{tikzpicture}
     \draw[grid lines] (-3,-3) grid (4, 4);
     \path[clip] (-3,-3) rectangle (4, 4);
-    \draw<3->[thin, seq4] ($-2*(2,2)$) -- ($2*(2,2)$);
+    \draw[thin, seq4] ($-2*(2,2)$) -- ($2*(2,2)$);
     \draw[vector, seq1] (0,0) to["$v_1$" thin border] (2,2);
     \draw[vector, seq2] (0,0) to["$v_2$"' thin border] (-1,-1);
     \point at (0,0);
