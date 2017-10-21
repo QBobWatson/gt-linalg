@@ -15,6 +15,7 @@ Copyright 2017 Georgia Institute of Technology
   <!-- LaTeX macros for this book go here. -->
   <macros>
     \def\R{\mathbf R}
+    \let\mathbb=\mathbf
     \spaligndelims[]
     \let\oldvec=\vec
     \let\vec=\spalignvector
@@ -30,6 +31,7 @@ Copyright 2017 Georgia Institute of Technology
     \let\To=\longrightarrow
     \def\rref{\;\overset{\text{rref}}\To\;}
     \def\matrow#1{\text{&#8212;}\,#1\,\text{&#8212;}}
+    \def\vol{\operatorname{vol}}
 
     \definecolor{seq-red}{rgb}{0.8941,0.1020,0.1098}
     \definecolor{seq-blue}{rgb}{0.2157,0.4941,0.7216}

@@ -11,20 +11,17 @@
       <li> "Almost solving" the matrix equation <m>Ax=b</m> (we will study this problem).</li>
     </ol>
   </p>
-  
+
 
   <p>As we have seen that solving matrix equations <m>Ax=b</m> are much easier if we can find an inverse matrix <m>A^{-1}</m>, it is interesting to know when matrices are invertible. The theory of <em>determinants</em> will give an efficient method for determining when a given matrix is invertible. Specifically, we will see that the determinant is a special number attached to any square matrix (we already know that non-square matrices are automatically non-invertible). We will give two different ways to describe this number, which will seem different, but which surprisingly end up giving the same result.
     </p>
-<!--<subsection>
-	  <title>Definition of the determinant</title>
-	-->
   <p>
 	  To get the ball rolling, let's give one way to define the determinant. The determinant is a <em>function</em> which assigns a real number <m>\det A</m> to any square matrix <m>A</m>. This number is defined by the following properties.
   </p>
 	  <definition xml:id="DeterminantRowRedFacts">
 		  <statement>
 	<p>
-		 The <term>determinant</term> of an <m>n\times n</m> square matrix <m>A</m> is a number, denoted by <m>\det A</m>. 
+		 The <term>determinant</term> of an <m>n\times n</m> square matrix <m>A</m> is a number, denoted by <m>\det A</m>.
 		Specifically, the determinant is the unique function from square <m>n\times n</m> matrices to real numbers which satisfies the following properties:
 		<ol>
 			<li>
@@ -74,12 +71,8 @@
 		  </p>
 	  </statement>
   </example>
- <!-- </subsection>
-  <subsection>
-	  <title>A concrete formula for the determinant</title>
-  -->
 	    <p>
-	  We can turn the above abstract definition into a concrete formula as follows. 
+	  We can turn the above abstract definition into a concrete formula as follows.
 	  We can always transform the matrix to its reduced echelon form. In doing so, we use elementary row operations. A careful analysis of this procedure shows that the determinant has the following formula.
   </p>
   <fact xml:id="DeterminantDefnREF">
@@ -89,7 +82,7 @@
 			  <me>
 				  \det A=(-1)^r\cdot\frac{\text{product of pivot entries of } B}{\text{product of scaling factors used}}.
 			  </me>
-			  That is, the determinant is the product of diagonal entries of the reduced echelon form of <m>A</m>, times a factor of  <m>\pm1</m> coming from the number of row flips we made, divided by the scaling factors used in the row reduction. 
+			  That is, the determinant is the product of diagonal entries of the reduced echelon form of <m>A</m>, times a factor of  <m>\pm1</m> coming from the number of row flips we made, divided by the scaling factors used in the row reduction.
 		  </p>
 	  </statement>
   </fact>
@@ -99,7 +92,7 @@
 	  </p>
   </remark>
   <p>
-	For example, the determinant of any upper triangular matrix is the product of its diagonal entries. For instance, 
+	For example, the determinant of any upper triangular matrix is the product of its diagonal entries. For instance,
 	  <me>\det \spalignmat{1,2,3; 0,4,5;0,0,6}=1\cdot4\cdot6=24,</me> and <me>\det \spalignmat{-20,\pi,100;0,0,3;0,0,-7}=0.</me>
   </p>
   <p>
@@ -130,10 +123,6 @@
 		</p>
 	</statement>
 </example>
-<!--</subsection>
-<subsection>
-	<title>Further propreties of the determinant and useful facts</title>
--->
 
 <p>
 Based on these examples, we can infer that the definition of the determinant shows that it automatically satisfies several key properties.
@@ -146,15 +135,15 @@ Based on these examples, we can infer that the definition of the determinant sho
 	<me>
 		\det A=-\det\spalignmat{c,d;0,b}=-bc.
 	</me>
-	Now suppose <m>a\neq0</m>. Then 
+	Now suppose <m>a\neq0</m>. Then
 	<me>
 		\det A=a\det\spalignmat{1,\frac ba;c,d}=a\det\spalignmat{1,\frac ba;0,d-\frac{bc}a},
 	</me>
-	which equals 
+	which equals
 	<me>
 		a\cdot1\cdot\left(d-\frac{bc}a\right)=ad-bc.
-	</me>		
-	In either case (i.e., regardless of whether <m>\det A</m> is zero or non-zero), we find that 
+	</me>
+	In either case (i.e., regardless of whether <m>\det A</m> is zero or non-zero), we find that
 	<me>
 		\det \spalignmat{a,b;c,d}=ad-bc
 		.
@@ -169,7 +158,7 @@ Based on these examples, we can infer that the definition of the determinant sho
 			<me>
 				\det \spalignmat{a,b;c,d}=ad-bc
 				.
-			</me>			
+			</me>
 		</p>
 	</statement>
 </fact>
@@ -210,7 +199,7 @@ Based on these examples, we can infer that the definition of the determinant sho
 	</p>
 </fact>
 <p>
-	In particular, by the same reasoning as for row operations, we find the following. 
+	In particular, by the same reasoning as for row operations, we find the following.
 </p>
 <fact>
 	<p>
@@ -231,7 +220,7 @@ There is one more key property of determinants which is a little strange-looking
 </p>
 <fact>
 	<p>
-	If <m>A</m> and <m>B</m> are <m>n\times n</m> matrices, then 
+	If <m>A</m> and <m>B</m> are <m>n\times n</m> matrices, then
 	<me>
 		\det(AB)=\det A\cdot \det B.
 	</me>
@@ -251,8 +240,6 @@ There is one more key property of determinants which is a little strange-looking
 	</statement>
 </example>
 
-<!--</subsection>
--->
 <p>
 	In the next two sections, we will give two other ways of thinking about determinants, one of which is useful in many examples for computing, and one which connects determinants to volumes of certain geometric figures.
 </p>

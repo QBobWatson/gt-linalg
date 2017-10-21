@@ -11,6 +11,8 @@
   <uri resource="charpoly.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="cplx-eigenvals.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="cplx-nums.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="determinant-definitions-properties.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="determinant-volume.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="determinant-compute.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="determinant-defn.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="determinant-motivation-cofactors.xml" uri="../mathbook/schema/pretext.rnc"/>
