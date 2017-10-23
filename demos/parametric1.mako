@@ -6,7 +6,7 @@
 
 ##
 
-new Demo {}, () ->
+new Demo {camera: position: [1.5, 3, 1.5]}, () ->
     window.mathbox = @mathbox
 
     view = @view viewRange: [[-10, 10], [-10, 10], [-3, 3]]

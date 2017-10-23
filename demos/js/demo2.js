@@ -1,6 +1,6 @@
 (function() {
   "use strict";
-  var Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledVectors, LinearCombo, Popup, Subspace, View, clipFragment, clipShader, decodeQS, extend, makeTvec, orthogonalize, rowReduce, setTvec, urlParams,
+  var Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledVectors, LinearCombo, OrbitControls, Popup, Subspace, View, clipFragment, clipShader, decodeQS, extend, makeTvec, orthogonalize, rowReduce, setTvec, urlParams,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     extend1 = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
@@ -50,7 +50,7 @@
   };
 
   rowReduce = function(M, opts) {
-    var E, aa, ab, ac, ad, ae, af, ag, ah, ai, aj, ak, c, col, colBasis, f, fn, i, j, k, l, lastPivot, len, len1, m, maxEl, maxRow, n, noPivots, nulBasis, orig, pivot, pivots, q, ref, ref1, ref10, ref11, ref12, ref13, ref14, ref15, ref16, ref17, ref18, ref19, ref2, ref20, ref21, ref22, ref23, ref24, ref3, ref4, ref5, ref6, ref7, ref8, ref9, row, u, v;
+    var E, aa, ab, ac, ad, ae, af, ag, ah, ai, c, col, colBasis, f, fn, i, j, k, l, lastPivot, len, len1, m, maxEl, maxRow, n, noPivots, nulBasis, orig, p, pivot, pivots, q, ref, ref1, ref10, ref11, ref12, ref13, ref14, ref15, ref16, ref17, ref18, ref19, ref2, ref20, ref21, ref22, ref23, ref24, ref3, ref4, ref5, ref6, ref7, ref8, ref9, row, u, v, z;
     orig = (function() {
       var l, len, results;
       results = [];
@@ -77,9 +77,9 @@
       results = [];
       for (l = 0, ref2 = m; 0 <= ref2 ? l < ref2 : l > ref2; 0 <= ref2 ? l++ : l--) {
         results.push((function() {
-          var q, ref3, results1;
+          var p, ref3, results1;
           results1 = [];
-          for (q = 0, ref3 = m; 0 <= ref3 ? q < ref3 : q > ref3; 0 <= ref3 ? q++ : q--) {
+          for (p = 0, ref3 = m; 0 <= ref3 ? p < ref3 : p > ref3; 0 <= ref3 ? p++ : p--) {
             results1.push(0);
           }
           return results1;
@@ -95,14 +95,14 @@
         break;
       }
       if (row === m) {
-        for (k = q = ref3 = col, ref4 = n; ref3 <= ref4 ? q < ref4 : q > ref4; k = ref3 <= ref4 ? ++q : --q) {
+        for (k = p = ref3 = col, ref4 = n; ref3 <= ref4 ? p < ref4 : p > ref4; k = ref3 <= ref4 ? ++p : --p) {
           noPivots.push(k);
         }
         break;
       }
       maxEl = Math.abs(M[col][row]);
       maxRow = row;
-      for (k = u = ref5 = row + 1, ref6 = m; ref5 <= ref6 ? u < ref6 : u > ref6; k = ref5 <= ref6 ? ++u : --u) {
+      for (k = q = ref5 = row + 1, ref6 = m; ref5 <= ref6 ? q < ref6 : q > ref6; k = ref5 <= ref6 ? ++q : --q) {
         if (Math.abs(M[col][k]) > maxEl) {
           maxEl = Math.abs(M[col][k]);
           maxRow = k;
@@ -113,26 +113,26 @@
         col++;
         continue;
       }
-      for (k = v = 0, ref7 = n; 0 <= ref7 ? v < ref7 : v > ref7; k = 0 <= ref7 ? ++v : --v) {
+      for (k = u = 0, ref7 = n; 0 <= ref7 ? u < ref7 : u > ref7; k = 0 <= ref7 ? ++u : --u) {
         ref8 = [M[k][row], M[k][maxRow]], M[k][maxRow] = ref8[0], M[k][row] = ref8[1];
       }
-      for (k = aa = 0, ref9 = m; 0 <= ref9 ? aa < ref9 : aa > ref9; k = 0 <= ref9 ? ++aa : --aa) {
+      for (k = v = 0, ref9 = m; 0 <= ref9 ? v < ref9 : v > ref9; k = 0 <= ref9 ? ++v : --v) {
         ref10 = [E[k][row], E[k][maxRow]], E[k][maxRow] = ref10[0], E[k][row] = ref10[1];
       }
       pivots.push([row, col]);
       colBasis.push(orig[col]);
       lastPivot = row;
       pivot = M[col][row];
-      for (k = ab = ref11 = row + 1, ref12 = m; ref11 <= ref12 ? ab < ref12 : ab > ref12; k = ref11 <= ref12 ? ++ab : --ab) {
+      for (k = z = ref11 = row + 1, ref12 = m; ref11 <= ref12 ? z < ref12 : z > ref12; k = ref11 <= ref12 ? ++z : --z) {
         c = M[col][k] / pivot;
         if (c === 0) {
           continue;
         }
         M[col][k] = 0;
-        for (j = ac = ref13 = col + 1, ref14 = n; ref13 <= ref14 ? ac < ref14 : ac > ref14; j = ref13 <= ref14 ? ++ac : --ac) {
+        for (j = aa = ref13 = col + 1, ref14 = n; ref13 <= ref14 ? aa < ref14 : aa > ref14; j = ref13 <= ref14 ? ++aa : --aa) {
           M[j][k] -= c * M[j][row];
         }
-        for (j = ad = 0, ref15 = m; 0 <= ref15 ? ad < ref15 : ad > ref15; j = 0 <= ref15 ? ++ad : --ad) {
+        for (j = ab = 0, ref15 = m; 0 <= ref15 ? ab < ref15 : ab > ref15; j = 0 <= ref15 ? ++ab : --ab) {
           E[j][k] -= c * E[j][row];
         }
       }
@@ -140,73 +140,73 @@
       col++;
     }
     ref16 = pivots.reverse();
-    for (ae = 0, len = ref16.length; ae < len; ae++) {
-      ref17 = ref16[ae], row = ref17[0], col = ref17[1];
+    for (ac = 0, len = ref16.length; ac < len; ac++) {
+      ref17 = ref16[ac], row = ref17[0], col = ref17[1];
       pivot = M[col][row];
       M[col][row] = 1;
-      for (k = af = ref18 = col + 1, ref19 = n; ref18 <= ref19 ? af < ref19 : af > ref19; k = ref18 <= ref19 ? ++af : --af) {
+      for (k = ad = ref18 = col + 1, ref19 = n; ref18 <= ref19 ? ad < ref19 : ad > ref19; k = ref18 <= ref19 ? ++ad : --ad) {
         M[k][row] /= pivot;
       }
-      for (k = ag = 0, ref20 = m; 0 <= ref20 ? ag < ref20 : ag > ref20; k = 0 <= ref20 ? ++ag : --ag) {
+      for (k = ae = 0, ref20 = m; 0 <= ref20 ? ae < ref20 : ae > ref20; k = 0 <= ref20 ? ++ae : --ae) {
         E[k][row] /= pivot;
       }
-      for (k = ah = 0, ref21 = row; 0 <= ref21 ? ah < ref21 : ah > ref21; k = 0 <= ref21 ? ++ah : --ah) {
+      for (k = af = 0, ref21 = row; 0 <= ref21 ? af < ref21 : af > ref21; k = 0 <= ref21 ? ++af : --af) {
         c = M[col][k];
         M[col][k] = 0;
-        for (j = ai = ref22 = col + 1, ref23 = n; ref22 <= ref23 ? ai < ref23 : ai > ref23; j = ref22 <= ref23 ? ++ai : --ai) {
+        for (j = ag = ref22 = col + 1, ref23 = n; ref22 <= ref23 ? ag < ref23 : ag > ref23; j = ref22 <= ref23 ? ++ag : --ag) {
           M[j][k] -= c * M[j][row];
         }
-        for (j = aj = 0, ref24 = m; 0 <= ref24 ? aj < ref24 : aj > ref24; j = 0 <= ref24 ? ++aj : --aj) {
+        for (j = ah = 0, ref24 = m; 0 <= ref24 ? ah < ref24 : ah > ref24; j = 0 <= ref24 ? ++ah : --ah) {
           E[j][k] -= c * E[j][row];
         }
       }
     }
     fn = function() {
-      var al, len2, ref25, vec;
+      var aj, len2, ref25, vec;
       vec = (function() {
-        var al, ref25, results;
+        var aj, ref25, results;
         results = [];
-        for (al = 0, ref25 = n; 0 <= ref25 ? al < ref25 : al > ref25; 0 <= ref25 ? al++ : al--) {
+        for (aj = 0, ref25 = n; 0 <= ref25 ? aj < ref25 : aj > ref25; 0 <= ref25 ? aj++ : aj--) {
           results.push(0);
         }
         return results;
       })();
       vec[i] = 1;
-      for (al = 0, len2 = pivots.length; al < len2; al++) {
-        ref25 = pivots[al], row = ref25[0], col = ref25[1];
+      for (aj = 0, len2 = pivots.length; aj < len2; aj++) {
+        ref25 = pivots[aj], row = ref25[0], col = ref25[1];
         vec[col] = -M[i][row];
       }
       return nulBasis.push(vec);
     };
-    for (ak = 0, len1 = noPivots.length; ak < len1; ak++) {
-      i = noPivots[ak];
+    for (ai = 0, len1 = noPivots.length; ai < len1; ai++) {
+      i = noPivots[ai];
       fn();
     }
     f = function(b) {
-      var Eb, al, am, an, ao, len2, ref25, ref26, ref27, ref28, ref29, ret, x;
+      var Eb, aj, ak, al, am, len2, ref25, ref26, ref27, ref28, ref29, ret, x;
       Eb = [];
-      for (i = al = 0, ref25 = m; 0 <= ref25 ? al < ref25 : al > ref25; i = 0 <= ref25 ? ++al : --al) {
+      for (i = aj = 0, ref25 = m; 0 <= ref25 ? aj < ref25 : aj > ref25; i = 0 <= ref25 ? ++aj : --aj) {
         x = 0;
-        for (j = am = 0, ref26 = m; 0 <= ref26 ? am < ref26 : am > ref26; j = 0 <= ref26 ? ++am : --am) {
+        for (j = ak = 0, ref26 = m; 0 <= ref26 ? ak < ref26 : ak > ref26; j = 0 <= ref26 ? ++ak : --ak) {
           x += E[j][i] * b[j];
         }
         Eb.push(x);
       }
-      for (i = an = ref27 = lastPivot + 1, ref28 = n; ref27 <= ref28 ? an < ref28 : an > ref28; i = ref27 <= ref28 ? ++an : --an) {
+      for (i = al = ref27 = lastPivot + 1, ref28 = n; ref27 <= ref28 ? al < ref28 : al > ref28; i = ref27 <= ref28 ? ++al : --al) {
         if (Math.abs(Eb[i]) > 0.000001) {
           return null;
         }
       }
       ret = (function() {
-        var ao, ref29, results;
+        var am, ref29, results;
         results = [];
-        for (ao = 0, ref29 = n; 0 <= ref29 ? ao < ref29 : ao > ref29; 0 <= ref29 ? ao++ : ao--) {
+        for (am = 0, ref29 = n; 0 <= ref29 ? am < ref29 : am > ref29; 0 <= ref29 ? am++ : am--) {
           results.push(0);
         }
         return results;
       })();
-      for (ao = 0, len2 = pivots.length; ao < len2; ao++) {
-        ref29 = pivots[ao], row = ref29[0], col = ref29[1];
+      for (am = 0, len2 = pivots.length; am < len2; am++) {
+        ref29 = pivots[am], row = ref29[0], col = ref29[1];
         ret[col] = Eb[row];
       }
       return ret;
@@ -236,6 +236,448 @@
   clipShader = "// Enable STPQ mapping\n#define POSITION_STPQ\nvoid getPosition(inout vec4 xyzw, inout vec4 stpq) {\n  // Store XYZ per vertex in STPQ\nstpq = xyzw;\n}";
 
   clipFragment = "// Enable STPQ mapping\n#define POSITION_STPQ\nuniform float range;\nuniform int hilite;\n\nvec4 getColor(vec4 rgba, inout vec4 stpq) {\n    stpq = abs(stpq);\n\n    // Discard pixels outside of clip box\n    if(stpq.x > range || stpq.y > range || stpq.z > range)\n        discard;\n\n    if(hilite != 0 &&\n       (range - stpq.x < range * 0.002 ||\n        range - stpq.y < range * 0.002 ||\n        range - stpq.z < range * 0.002)) {\n        rgba.xyz *= 10.0;\n        rgba.w = 1.0;\n    }\n\n    return rgba;\n}";
+
+  OrbitControls = (function() {
+    function OrbitControls(camera, domElement) {
+      this.camera = camera;
+      this.touchEnd = bind(this.touchEnd, this);
+      this.touchMove = bind(this.touchMove, this);
+      this.touchStart = bind(this.touchStart, this);
+      this.onKeyDown = bind(this.onKeyDown, this);
+      this.onMouseWheel = bind(this.onMouseWheel, this);
+      this.onMouseUp = bind(this.onMouseUp, this);
+      this.onMouseMove = bind(this.onMouseMove, this);
+      this.onMouseDown = bind(this.onMouseDown, this);
+      this.reset = bind(this.reset, this);
+      this.update = bind(this.update, this);
+      this.pan = bind(this.pan, this);
+      this.panUp = bind(this.panUp, this);
+      this.panLeft = bind(this.panLeft, this);
+      this.dollyOut = bind(this.dollyOut, this);
+      this.dollyIn = bind(this.dollyIn, this);
+      this.getZoomScale = bind(this.getZoomScale, this);
+      this.rotateUp = bind(this.rotateUp, this);
+      this.rotateLeft = bind(this.rotateLeft, this);
+      this.getAutoRotationAngle = bind(this.getAutoRotationAngle, this);
+      this.updateCamera = bind(this.updateCamera, this);
+      THREE.EventDispatcher.prototype.apply(this);
+      this.domElement = domElement != null ? domElement : document;
+      this.enabled = true;
+      this.target = new THREE.Vector3();
+      this.noZoom = false;
+      this.zoomSpeed = 1.0;
+      this.minDistance = 0;
+      this.maxDistance = Infinity;
+      this.noRotate = false;
+      this.rotateSpeed = 1.0;
+      this.noPan = false;
+      this.keyPanSpeed = 7.0;
+      this.autoRotate = false;
+      this.autoRotateSpeed = 2.0;
+      this.minPolarAngle = 0;
+      this.maxPolarAngle = Math.PI;
+      this.noKeys = true;
+      this.keys = {
+        LEFT: 37,
+        UP: 38,
+        RIGHT: 39,
+        BOTTOM: 40
+      };
+      this.clones = [];
+      this.EPS = 0.000001;
+      this.rotateStart = new THREE.Vector2();
+      this.rotateEnd = new THREE.Vector2();
+      this.rotateDelta = new THREE.Vector2();
+      this.panStart = new THREE.Vector2();
+      this.panEnd = new THREE.Vector2();
+      this.panDelta = new THREE.Vector2();
+      this.panOffset = new THREE.Vector3();
+      this.panCurrent = new THREE.Vector3();
+      this.offset = new THREE.Vector3();
+      this.dollyStart = new THREE.Vector2();
+      this.dollyEnd = new THREE.Vector2();
+      this.dollyDelta = new THREE.Vector2();
+      this.phiDelta = 0;
+      this.thetaDelta = 0;
+      this.scale = 1;
+      this.lastPosition = new THREE.Vector3();
+      this.STATE = {
+        NONE: -1,
+        ROTATE: 0,
+        DOLLY: 1,
+        PAN: 2,
+        TOUCH_ROTATE: 3,
+        TOUCH_DOLLY: 4,
+        TOUCH_PAN: 5
+      };
+      this.state = this.STATE.NONE;
+      this.target0 = this.target.clone();
+      this.position0 = this.camera.position.clone();
+      this.updateCamera();
+      this.changeEvent = {
+        type: 'change'
+      };
+      this.startEvent = {
+        type: 'start'
+      };
+      this.endEvent = {
+        type: 'end'
+      };
+      this.domElement.addEventListener('contextmenu', (function(event) {
+        return event.preventDefault();
+      }), false);
+      this.domElement.addEventListener('mousedown', this.onMouseDown, false);
+      this.domElement.addEventListener('mousewheel', this.onMouseWheel, false);
+      this.domElement.addEventListener('DOMMouseScroll', this.onMouseWheel, false);
+      this.domElement.addEventListener('touchstart', this.touchStart, false);
+      this.domElement.addEventListener('touchend', this.touchEnd, false);
+      this.domElement.addEventListener('touchmove', this.touchMove, false);
+      window.addEventListener('keydown', this.onKeyDown, false);
+      this.update();
+    }
+
+    OrbitControls.prototype.updateCamera = function() {
+      this.quat = new THREE.Quaternion().setFromUnitVectors(this.camera.up, new THREE.Vector3(0, 1, 0));
+      this.quatInverse = this.quat.clone().inverse();
+      return this.update();
+    };
+
+    OrbitControls.prototype.getAutoRotationAngle = function() {
+      return 2 * Math.PI / 60 / 60 * this.autoRotateSpeed;
+    };
+
+    OrbitControls.prototype.rotateLeft = function(angle) {
+      return this.thetaDelta -= angle != null ? angle : this.getAutoRotationAngle();
+    };
+
+    OrbitControls.prototype.rotateUp = function(angle) {
+      return this.phiDelta -= angle != null ? angle : this.getAutoRotationAngle();
+    };
+
+    OrbitControls.prototype.getZoomScale = function() {
+      return Math.pow(0.95, this.zoomSpeed);
+    };
+
+    OrbitControls.prototype.dollyIn = function(dollyScale) {
+      return this.scale /= dollyScale != null ? dollyScale : this.getZoomScale();
+    };
+
+    OrbitControls.prototype.dollyOut = function(dollyScale) {
+      return this.scale *= dollyScale != null ? dollyScale : this.getZoomScale();
+    };
+
+    OrbitControls.prototype.panLeft = function(distance) {
+      var te;
+      te = this.camera.matrix.elements;
+      this.panOffset.set(te[0], te[1], te[2]);
+      this.panOffset.multiplyScalar(-distance);
+      return this.panCurrent.add(this.panOffset);
+    };
+
+    OrbitControls.prototype.panUp = function(distance) {
+      var te;
+      te = this.camera.matrix.elements;
+      this.panOffset.set(te[4], te[5], te[6]);
+      this.panOffset.multiplyScalar(distance);
+      return this.panCurrent.add(this.panOffset);
+    };
+
+    OrbitControls.prototype.pan = function(deltaX, deltaY) {
+      var element, offset, position, targetDistance;
+      element = this.domElement === document ? document.body : this.domElement;
+      if (this.camera.fov != null) {
+        position = this.camera.position;
+        offset = position.clone().sub(this.target);
+        targetDistance = offset.length();
+        targetDistance *= Math.tan(this.camera.fov / 2 * Math.PI / 180.0);
+        this.panLeft(2 * deltaX * targetDistance / element.clientHeight);
+        return this.panUp(2 * deltaY * targetDistance / element.clientHeight);
+      } else if (this.camera.top != null) {
+        this.panLeft(deltaX * (this.camera.right - this.camera.left) / element.clientWidth);
+        return this.panUp(deltaY * (this.camera.top - this.camera.bottom) / element.clientHeight);
+      } else {
+        return console.warn('WARNING: OrbitControls encountered unknown camera type; pan disabled');
+      }
+    };
+
+    OrbitControls.prototype.update = function(delta, state) {
+      var clone, l, len, panCurrent, phi, phiDelta, position, radius, ref, scale, theta, thetaDelta;
+      if (state == null) {
+        ref = this.clones;
+        for (l = 0, len = ref.length; l < len; l++) {
+          clone = ref[l];
+          clone.update(0, this);
+        }
+      }
+      if (state == null) {
+        state = this;
+      }
+      thetaDelta = state.thetaDelta, phiDelta = state.phiDelta, panCurrent = state.panCurrent, scale = state.scale;
+      position = this.camera.position;
+      this.offset.copy(position).sub(this.target);
+      this.offset.applyQuaternion(this.quat);
+      theta = Math.atan2(this.offset.x, this.offset.z);
+      phi = Math.atan2(Math.sqrt(this.offset.x * this.offset.x + this.offset.z * this.offset.z), this.offset.y);
+      if (this.autoRotate) {
+        this.rotateLeft(this.getAutoRotationAngle());
+      }
+      theta += thetaDelta;
+      phi += phiDelta;
+      phi = Math.max(this.minPolarAngle, Math.min(this.maxPolarAngle, phi));
+      phi = Math.max(this.EPS, Math.min(Math.PI - this.EPS, phi));
+      radius = this.offset.length() * scale;
+      radius = Math.max(this.minDistance, Math.min(this.maxDistance, radius));
+      this.target.add(panCurrent);
+      this.offset.x = radius * Math.sin(phi) * Math.sin(theta);
+      this.offset.y = radius * Math.cos(phi);
+      this.offset.z = radius * Math.sin(phi) * Math.cos(theta);
+      this.offset.applyQuaternion(this.quatInverse);
+      position.copy(this.target).add(this.offset);
+      this.camera.lookAt(this.target);
+      this.thetaDelta = 0;
+      this.phiDelta = 0;
+      this.scale = 1;
+      this.panCurrent.set(0, 0, 0);
+      if (this.lastPosition.distanceToSquared(position) > this.EPS) {
+        this.dispatchEvent(this.changeEvent);
+        return this.lastPosition.copy(position);
+      }
+    };
+
+    OrbitControls.prototype.reset = function() {
+      this.state = this.STATE.NONE;
+      this.target.copy(this.target0);
+      this.camera.position.copy(this.position0);
+      return this.update();
+    };
+
+    OrbitControls.prototype.onMouseDown = function(event) {
+      if (!this.enabled) {
+        return;
+      }
+      event.preventDefault();
+      switch (event.button) {
+        case 0:
+          if (this.noRotate) {
+            return;
+          }
+          this.state = this.STATE.ROTATE;
+          this.rotateStart.set(event.clientX, event.clientY);
+          break;
+        case 1:
+          if (this.noZoom) {
+            return;
+          }
+          this.state = this.STATE.DOLLY;
+          this.dollyStart.set(event.clientX, event.clientY);
+          break;
+        case 2:
+          if (this.noPan) {
+            return;
+          }
+          this.state = this.STATE.PAN;
+          this.panStart.set(event.clientX, event.clientY);
+      }
+      document.documentElement.addEventListener('mousemove', this.onMouseMove, false);
+      document.documentElement.addEventListener('mouseup', this.onMouseUp, false);
+      return this.dispatchEvent(this.startEvent);
+    };
+
+    OrbitControls.prototype.onMouseMove = function(event) {
+      var element;
+      if (!this.enabled) {
+        return;
+      }
+      event.preventDefault();
+      element = this.domElement === document ? document.body : this.domElement;
+      switch (this.state) {
+        case this.STATE.ROTATE:
+          if (this.noRotate) {
+            return;
+          }
+          this.rotateEnd.set(event.clientX, event.clientY);
+          this.rotateDelta.subVectors(this.rotateEnd, this.rotateStart);
+          this.rotateLeft(2 * Math.PI * this.rotateDelta.x / element.clientWidth * this.rotateSpeed);
+          this.rotateUp(2 * Math.PI * this.rotateDelta.y / element.clientHeight * this.rotateSpeed);
+          this.rotateStart.copy(this.rotateEnd);
+          break;
+        case this.STATE.DOLLY:
+          if (this.noZoom) {
+            return;
+          }
+          this.dollyEnd.set(event.clientX, event.clientY);
+          this.dollyDelta.subVectors(this.dollyEnd, this.dollyStart);
+          if (this.dollyDelta.y > 0) {
+            this.dollyIn();
+          } else {
+            this.dollyOut();
+          }
+          this.dollyStart.copy(this.dollyEnd);
+          break;
+        case this.STATE.PAN:
+          if (this.noPan) {
+            return;
+          }
+          this.panEnd.set(event.clientX, event.clientY);
+          this.panDelta.subVectors(this.panEnd, this.panStart);
+          this.pan(this.panDelta.x, this.panDelta.y);
+          this.panStart.copy(this.panEnd);
+          break;
+        default:
+          return;
+      }
+      return this.update();
+    };
+
+    OrbitControls.prototype.onMouseUp = function() {
+      if (!this.enabled) {
+        return;
+      }
+      document.documentElement.removeEventListener('mousemove', this.onMouseMove, false);
+      document.documentElement.removeEventListener('mouseup', this.onMouseUp, false);
+      this.dispatchEvent(this.endEvent);
+      return this.state = this.STATE.NONE;
+    };
+
+    OrbitControls.prototype.onMouseWheel = function(event) {
+      var delta, ref;
+      if (!(this.enabled && !this.noZoom)) {
+        return;
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      delta = (ref = event.wheelDelta) != null ? ref : -event.detail;
+      if (delta > 0) {
+        this.dollyOut();
+      } else {
+        this.dollyIn();
+      }
+      this.update();
+      this.dispatchEvent(this.startEvent);
+      return this.dispatchEvent(this.endEvent);
+    };
+
+    OrbitControls.prototype.onKeyDown = function(event) {
+      if (!this.enabled || this.noKeys || this.noPan) {
+        return;
+      }
+      switch (event.keyCode) {
+        case this.keys.UP:
+          this.pan(0, this.keyPanSpeed);
+          break;
+        case this.keys.BOTTOM:
+          this.pan(0, -this.keyPanSpeed);
+          break;
+        case this.keys.LEFT:
+          this.pan(this.keyPanSpeed, 0);
+          break;
+        case this.keys.RIGHT:
+          this.pan(-this.keyPanSpeed, 0);
+          break;
+        default:
+          return;
+      }
+      return this.update();
+    };
+
+    OrbitControls.prototype.touchStart = function(event) {
+      var distance, dx, dy;
+      if (!this.enabled) {
+        return;
+      }
+      switch (event.touches.length) {
+        case 1:
+          if (this.noRotate) {
+            return;
+          }
+          this.state = this.STATE.TOUCH_ROTATE;
+          this.rotateStart.set(event.touches[0].pageX, event.touches[0].pageY);
+          break;
+        case 2:
+          if (this.noZoom) {
+            return;
+          }
+          this.state = this.STATE.TOUCH_DOLLY;
+          dx = event.touches[0].pageX - event.touches[1].pageX;
+          dy = event.touches[0].pageY - event.touches[1].pageY;
+          distance = Math.sqrt(dx * dx + dy * dy);
+          this.dollyStart.set(0, distance);
+          break;
+        case 3:
+          if (this.noPan) {
+            return;
+          }
+          this.state = this.STATE.TOUCH_PAN;
+          this.panStart.set(event.touches[0].pageX, event.touches[0].pageY);
+          break;
+        default:
+          this.state = this.STATE.NONE;
+      }
+      return this.dispatchEvent(this.startEvent);
+    };
+
+    OrbitControls.prototype.touchMove = function(event) {
+      var distance, dx, dy, element;
+      if (!this.enabled) {
+        return;
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      element = this.domElement === document ? document.body : this.domElement;
+      switch (event.touches.length) {
+        case 1:
+          if (this.noRotate || this.state !== this.STATE.TOUCH_ROTATE) {
+            return;
+          }
+          this.rotateEnd.set(event.touches[0].pageX, event.touches[0].pageY);
+          this.rotateDelta.subVectors(this.rotateEnd, this.rotateStart);
+          this.rotateLeft(2 * Math.PI * this.rotateDelta.x / element.clientWidth * this.rotateSpeed);
+          this.rotateUp(2 * Math.PI * rotateDelta.y / element.clientHeight * this.rotateSpeed);
+          this.rotateStart.copy(this.rotateEnd);
+          break;
+        case 2:
+          if (this.noZoom || this.state !== this.STATE.TOUCH_DOLLY) {
+            return;
+          }
+          dx = event.touches[0].pageX - event.touches[1].pageX;
+          dy = event.touches[0].pageY - event.touches[1].pageY;
+          distance = Math.sqrt(dx * dx + dy * dy);
+          this.dollyEnd.set(0, distance);
+          this.dollyDelta.subVectors(this.dollyEnd, this.dollyStart);
+          if (this.dollyDelta.y > 0) {
+            this.dollyOut();
+          } else {
+            this.dollyIn();
+          }
+          this.dollyStart.copy(this.dollyEnd);
+          break;
+        case 3:
+          if (this.noPan || this.state !== this.STATE.TOUCH_PAN) {
+            return;
+          }
+          this.panEnd.set(event.touches[0].pageX, event.touches[0].pageY);
+          this.panDelta.subVectors(this.panEnd, this.panStart);
+          this.pan(this.panDelta.x, this.panDelta.y);
+          this.panStart.copy(this.panEnd);
+          break;
+        default:
+          this.state = this.STATE.NONE;
+          return;
+      }
+      return this.update();
+    };
+
+    OrbitControls.prototype.touchEnd = function() {
+      if (!this.enabled) {
+        return;
+      }
+      this.dispatchEvent(this.endEvent);
+      return this.state = this.STATE.NONE;
+    };
+
+    return OrbitControls;
+
+  })();
 
   Subspace = (function() {
     function Subspace(opts1) {
@@ -735,9 +1177,9 @@
       if (numVecs === 2) {
         totLines = (numLines + 1) * 2;
         doLines = function(emit, i) {
-          var j, q, ref5, ref6, results, start;
+          var j, p, ref5, ref6, results, start;
           results = [];
-          for (j = q = ref5 = -perSide, ref6 = perSide; ref5 <= ref6 ? q <= ref6 : q >= ref6; j = ref5 <= ref6 ? ++q : --q) {
+          for (j = p = ref5 = -perSide, ref6 = perSide; ref5 <= ref6 ? p <= ref6 : p >= ref6; j = ref5 <= ref6 ? ++p : --p) {
             start = i === 0 ? -perSide : perSide;
             emit(start * vector1[0] + j * vector2[0], start * vector1[1] + j * vector2[1], start * vector1[2] + j * vector2[2]);
             results.push(emit(start * vector2[0] + j * vector1[0], start * vector2[1] + j * vector1[1], start * vector2[2] + j * vector1[2]));
@@ -748,13 +1190,13 @@
       if (numVecs === 3) {
         totLines = (numLines + 1) * (numLines + 1) * 3;
         doLines = function(emit, i) {
-          var j, k, q, ref5, ref6, results, start;
+          var j, k, p, ref5, ref6, results, start;
           results = [];
-          for (j = q = ref5 = -perSide, ref6 = perSide; ref5 <= ref6 ? q <= ref6 : q >= ref6; j = ref5 <= ref6 ? ++q : --q) {
+          for (j = p = ref5 = -perSide, ref6 = perSide; ref5 <= ref6 ? p <= ref6 : p >= ref6; j = ref5 <= ref6 ? ++p : --p) {
             results.push((function() {
-              var ref7, ref8, results1, u;
+              var q, ref7, ref8, results1;
               results1 = [];
-              for (k = u = ref7 = -perSide, ref8 = perSide; ref7 <= ref8 ? u <= ref8 : u >= ref8; k = ref7 <= ref8 ? ++u : --u) {
+              for (k = q = ref7 = -perSide, ref8 = perSide; ref7 <= ref8 ? q <= ref8 : q >= ref8; k = ref7 <= ref8 ? ++q : --q) {
                 start = i === 0 ? -perSide : perSide;
                 emit(start * vector1[0] + j * vector2[0] + k * vector3[0], start * vector1[1] + j * vector2[1] + k * vector3[1], start * vector1[2] + j * vector2[2] + k * vector3[2]);
                 emit(start * vector2[0] + j * vector1[0] + k * vector3[0], start * vector2[1] + j * vector1[1] + k * vector3[1], start * vector2[2] + j * vector1[2] + k * vector3[2]);
@@ -869,11 +1311,9 @@
       };
       extend(labelOpts, (ref8 = this.opts.labelOpts) != null ? ref8 : {});
       if (this.numDims === 3) {
-        viewScale[0] = -viewScale[0];
         viewOpts = {
           range: viewRange,
           scale: viewScale,
-          rotation: [-π / 2, 0, 0],
           id: this.name + "-view"
         };
       } else {
@@ -901,9 +1341,9 @@
           live: false,
           expr: (function(_this) {
             return function(emit, i) {
-              var arr, j, q, ref11;
+              var arr, j, p, ref11;
               arr = [];
-              for (j = q = 0, ref11 = _this.numDims; 0 <= ref11 ? q < ref11 : q > ref11; j = 0 <= ref11 ? ++q : --q) {
+              for (j = p = 0, ref11 = _this.numDims; 0 <= ref11 ? p < ref11 : p > ref11; j = 0 <= ref11 ? ++p : --p) {
                 if (i === j) {
                   arr.push(viewRange[i][1] * 1.04);
                 } else {
@@ -985,9 +1425,9 @@
       this.eyeMatrixTrans = this.eyeMatrix.clone().transpose();
       this.eyeMatrixInv = new THREE.Matrix4().getInverse(this.eyeMatrix);
       indices = (function() {
-        var q, ref10, results;
+        var p, ref10, results;
         results = [];
-        for (i = q = 0, ref10 = this.points.length; 0 <= ref10 ? q < ref10 : q > ref10; i = 0 <= ref10 ? ++q : --q) {
+        for (i = p = 0, ref10 = this.points.length; 0 <= ref10 ? p < ref10 : p > ref10; i = 0 <= ref10 ? ++p : --p) {
           results.push([(i + 1) / 255, 1.0, 0, 0]);
         }
         return results;
@@ -1187,7 +1627,7 @@
 
   LabeledVectors = (function() {
     function LabeledVectors(view, opts1) {
-      var colors, doZero, i, l, labelOpts, labels, len, len1, live, name, origins, q, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, u, vec, vectorData, vectorOpts, vectors, zeroData, zeroOpts, zeroThreshold;
+      var colors, doZero, i, l, labelOpts, labels, len, len1, live, name, origins, p, q, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, vec, vectorData, vectorOpts, vectors, zeroData, zeroOpts, zeroThreshold;
       this.opts = opts1;
       this.show = bind(this.show, this);
       this.hide = bind(this.hide, this);
@@ -1248,13 +1688,13 @@
           vec[2] = 0;
         }
       }
-      for (q = 0, len1 = origins.length; q < len1; q++) {
-        vec = origins[q];
+      for (p = 0, len1 = origins.length; p < len1; p++) {
+        vec = origins[p];
         if (vec[2] == null) {
           vec[2] = 0;
         }
       }
-      for (i = u = 0, ref8 = vectors.length; 0 <= ref8 ? u < ref8 : u > ref8; i = 0 <= ref8 ? ++u : --u) {
+      for (i = q = 0, ref8 = vectors.length; 0 <= ref8 ? q < ref8 : q > ref8; i = 0 <= ref8 ? ++q : --q) {
         vectorData.push(origins[i]);
         vectorData.push(vectors[i]);
       }
@@ -1291,9 +1731,9 @@
       }
       if (doZero) {
         zeroData = (function() {
-          var ref9, results, v;
+          var ref9, results, u;
           results = [];
-          for (v = 0, ref9 = vectors.length; 0 <= ref9 ? v < ref9 : v > ref9; 0 <= ref9 ? v++ : v--) {
+          for (u = 0, ref9 = vectors.length; 0 <= ref9 ? u < ref9 : u > ref9; 0 <= ref9 ? u++ : u--) {
             results.push([0, 0, 0]);
           }
           return results;
@@ -1320,11 +1760,11 @@
         this.zeroPoints = view.point(zeroOpts);
         this.zeroPoints.bind('visible', (function(_this) {
           return function() {
-            var ref9, v;
+            var ref9, u;
             if (_this.hidden) {
               return false;
             }
-            for (i = v = 0, ref9 = vectors.length; 0 <= ref9 ? v < ref9 : v > ref9; i = 0 <= ref9 ? ++v : --v) {
+            for (i = u = 0, ref9 = vectors.length; 0 <= ref9 ? u < ref9 : u > ref9; i = 0 <= ref9 ? ++u : --u) {
               if (vectors[i][0] * vectors[i][0] + vectors[i][1] * vectors[i][1] + vectors[i][2] * vectors[i][2] <= zeroThreshold * zeroThreshold) {
                 return true;
               }
@@ -1361,7 +1801,7 @@
 
   Demo = (function() {
     function Demo(opts1, callback) {
-      var cameraOpts, clearColor, clearOpacity, doFullScreen, focusDist, image, key, mathboxOpts, onPreloaded, p, preload, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, scaleUI, toPreload, value;
+      var cameraOpts, clearColor, clearOpacity, doFullScreen, focusDist, image, key, mathboxOpts, onPreloaded, preload, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, scaleUI, toPreload, value;
       this.opts = opts1;
       this.texCombo = bind(this.texCombo, this);
       this.texSet = bind(this.texSet, this);
@@ -1372,7 +1812,7 @@
       mathboxOpts = {
         plugins: ['core', 'controls', 'cursor'],
         controls: {
-          klass: THREE.OrbitControls,
+          klass: OrbitControls,
           parameters: {
             noKeys: true
           }
@@ -1391,24 +1831,30 @@
       cameraOpts = {
         proxy: true,
         position: [3, 1.5, 1.5],
-        lookAt: [0, 0, 0]
+        lookAt: [0, 0, 0],
+        up: [0, 0, 1]
       };
       extend(cameraOpts, (ref3 = this.opts.camera) != null ? ref3 : {});
       if (((ref4 = this.opts.cameraPosFromQS) != null ? ref4 : true) && (this.urlParams.camera != null)) {
         cameraOpts.position = this.urlParams.camera.split(",").map(parseFloat);
       }
-      p = cameraOpts.position;
-      cameraOpts.position = [-p[0], p[2], -p[1]];
       focusDist = (ref5 = this.opts.focusDist) != null ? ref5 : 1.5;
       scaleUI = (ref6 = this.opts.scaleUI) != null ? ref6 : true;
       doFullScreen = (ref7 = this.opts.fullscreen) != null ? ref7 : true;
       this.dims = (ref8 = this.opts.dims) != null ? ref8 : 3;
       onPreloaded = (function(_this) {
         return function() {
+          var ref9;
           _this.mathbox = mathBox(mathboxOpts);
           _this.three = _this.mathbox.three;
           _this.three.renderer.setClearColor(new THREE.Color(clearColor), clearOpacity);
+          _this.controls = _this.three.controls;
           _this.camera = _this.mathbox.camera(cameraOpts)[0].controller.camera;
+          if ((ref9 = _this.controls) != null) {
+            if (typeof ref9.updateCamera === "function") {
+              ref9.updateCamera();
+            }
+          }
           _this.canvas = _this.mathbox._context.canvas;
           if (scaleUI) {
             _this.mathbox.bind('focus', function() {
@@ -1525,7 +1971,7 @@
     };
 
     Demo.prototype.texMatrix = function(cols, opts) {
-      var colors, i, j, l, m, n, precision, q, ref, ref1, ref2, ref3, ref4, str;
+      var colors, i, j, l, m, n, p, precision, ref, ref1, ref2, ref3, ref4, str;
       if (opts == null) {
         opts = {};
       }
@@ -1535,7 +1981,7 @@
       n = (ref2 = opts.cols) != null ? ref2 : cols.length;
       str = "\\begin{bmatrix}";
       for (i = l = 0, ref3 = m; 0 <= ref3 ? l < ref3 : l > ref3; i = 0 <= ref3 ? ++l : --l) {
-        for (j = q = 0, ref4 = n; 0 <= ref4 ? q < ref4 : q > ref4; j = 0 <= ref4 ? ++q : --q) {
+        for (j = p = 0, ref4 = n; 0 <= ref4 ? p < ref4 : p > ref4; j = 0 <= ref4 ? ++p : --p) {
           if (colors != null) {
             str += "\\color{" + colors[j] + "}{";
           }
@@ -1556,10 +2002,6 @@
         }
       }
       return str += "\\end{bmatrix}";
-    };
-
-    Demo.prototype.moveCamera = function(x, y, z) {
-      return this.camera.position.set(-x, z, -y);
     };
 
     Demo.prototype.rowred = function(mat, opts) {
@@ -1650,7 +2092,7 @@
         base4.proxy = false;
       }
       if ((base5 = opts.camera).position == null) {
-        base5.position = [0, -ortho, 0];
+        base5.position = [0, 0, -ortho];
       }
       if ((base6 = opts.camera).lookAt == null) {
         base6.lookAt = [0, 0, 0];
@@ -1705,5 +2147,7 @@
   window.Demo2D = Demo2D;
 
   window.urlParams = urlParams;
+
+  window.OrbitControls = OrbitControls;
 
 }).call(this);

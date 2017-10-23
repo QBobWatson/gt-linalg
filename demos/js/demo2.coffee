@@ -180,6 +180,380 @@ clipFragment = \
 
 
 ################################################################################
+# * Orbit controls
+
+# Modified from three.js OrbitControls:
+#  * Can set 'up'
+#  * Can control multiple cameras
+
+class OrbitControls
+    constructor: (@camera, domElement) ->
+        THREE.EventDispatcher.prototype.apply @
+
+        @domElement = domElement ? document
+
+        @enabled         = true
+        @target          = new THREE.Vector3()
+        @noZoom          = false
+        @zoomSpeed       = 1.0
+        @minDistance     = 0
+        @maxDistance     = Infinity
+        @noRotate        = false
+        @rotateSpeed     = 1.0
+        @noPan           = false
+        @keyPanSpeed     = 7.0
+        @autoRotate      = false
+        @autoRotateSpeed = 2.0
+        @minPolarAngle   = 0
+        @maxPolarAngle   = Math.PI
+        @noKeys          = true
+        @keys =
+            LEFT:   37
+            UP:     38
+            RIGHT:  39
+            BOTTOM: 40
+        @clones = []
+
+        # Internal state
+        @EPS = 0.000001
+
+        @rotateStart = new THREE.Vector2()
+        @rotateEnd   = new THREE.Vector2()
+        @rotateDelta = new THREE.Vector2()
+
+        @panStart   = new THREE.Vector2()
+        @panEnd     = new THREE.Vector2()
+        @panDelta   = new THREE.Vector2()
+        @panOffset  = new THREE.Vector3()
+        @panCurrent = new THREE.Vector3()
+
+        @offset = new THREE.Vector3()
+
+        @dollyStart = new THREE.Vector2()
+        @dollyEnd   = new THREE.Vector2()
+        @dollyDelta = new THREE.Vector2()
+
+        @phiDelta   = 0
+        @thetaDelta = 0
+        @scale      = 1
+
+        @lastPosition = new THREE.Vector3()
+
+        @STATE =
+            NONE:        -1
+            ROTATE:       0
+            DOLLY:        1
+            PAN:          2
+            TOUCH_ROTATE: 3
+            TOUCH_DOLLY:  4
+            TOUCH_PAN:    5
+
+        @state = @STATE.NONE
+
+        # for reset
+        @target0   = @target.clone()
+        @position0 = @camera.position.clone()
+
+        @updateCamera()
+
+        # events
+        @changeEvent = type: 'change'
+        @startEvent  = type: 'start'
+        @endEvent    = type: 'end'
+
+        # install listeners
+        @domElement.addEventListener 'contextmenu',
+            ((event) -> event.preventDefault()), false
+        @domElement.addEventListener 'mousedown',      @onMouseDown,  false
+        @domElement.addEventListener 'mousewheel',     @onMouseWheel, false
+        @domElement.addEventListener 'DOMMouseScroll', @onMouseWheel, false
+        @domElement.addEventListener 'touchstart',     @touchStart,   false
+        @domElement.addEventListener 'touchend',       @touchEnd,     false
+        @domElement.addEventListener 'touchmove',      @touchMove,    false
+        window     .addEventListener 'keydown',        @onKeyDown,    false
+
+        # force an update at start
+        @update()
+
+    updateCamera: () =>
+        # so camera.up is the orbit axis
+        @quat = new THREE.Quaternion().setFromUnitVectors(
+            @camera.up, new THREE.Vector3 0, 1, 0)
+        @quatInverse = @quat.clone().inverse()
+        @update()
+
+    getAutoRotationAngle: () => 2 * Math.PI / 60 / 60 * @autoRotateSpeed
+    rotateLeft: (angle) => @thetaDelta -= angle ? @getAutoRotationAngle()
+    rotateUp: (angle) => @phiDelta -= angle ? @getAutoRotationAngle()
+    getZoomScale: () => Math.pow 0.95, @zoomSpeed
+    dollyIn: (dollyScale) => @scale /= dollyScale ? @getZoomScale()
+    dollyOut: (dollyScale) => @scale *= dollyScale ? @getZoomScale()
+
+    # pass in distance in world space to move left
+    panLeft: (distance) =>
+        te = @camera.matrix.elements
+        # get X column of matrix
+        @panOffset.set te[0], te[1], te[2]
+        @panOffset.multiplyScalar -distance
+        @panCurrent.add @panOffset
+
+    # pass in distance in world space to move up
+    panUp: (distance) =>
+        te = @camera.matrix.elements
+        # get Y column of matrix
+        @panOffset.set te[4], te[5], te[6]
+        @panOffset.multiplyScalar distance
+        @panCurrent.add @panOffset
+
+    # pass in x,y of change desired in pixel space,
+    # right and down are positive
+    pan: (deltaX, deltaY) =>
+        element = if @domElement == document then document.body else @domElement
+        if @camera.fov?
+            # perspective
+            position       = @camera.position
+            offset         = position.clone().sub @target
+            targetDistance = offset.length()
+            # half of the fov is center to top of screen
+            targetDistance *= Math.tan(@camera.fov/2 * Math.PI / 180.0)
+            # we actually don't use screenWidth, since perspective camera
+            # is fixed to screen height
+            @panLeft(2 * deltaX * targetDistance / element.clientHeight)
+            @panUp(2 * deltaY * targetDistance / element.clientHeight)
+
+        else if @camera.top?
+            # orthographic
+            @panLeft(deltaX * (@camera.right - @camera.left)   / element.clientWidth)
+            @panUp  (deltaY * (@camera.top -   @camera.bottom) / element.clientHeight)
+
+        else
+            console.warn 'WARNING: OrbitControls encountered unknown camera type; pan disabled'
+
+    update: (delta, state) =>
+        clone.update 0, @ for clone in @clones unless state?
+        state ?= @
+        {thetaDelta, phiDelta, panCurrent, scale} = state
+
+        position = @camera.position
+        @offset.copy(position).sub @target
+        # rotate offset to "y-axis-is-up" space
+        @offset.applyQuaternion @quat
+        # angle from z-axis around y-axis
+        theta = Math.atan2 @offset.x, @offset.z
+        # angle from y-axis
+        phi = Math.atan2 \
+            Math.sqrt(@offset.x * @offset.x + @offset.z * @offset.z), @offset.y
+
+        if @autoRotate
+            @rotateLeft @getAutoRotationAngle()
+
+        theta += thetaDelta
+        phi += phiDelta
+        # restrict phi to be between desired limits
+        phi = Math.max @minPolarAngle, Math.min(@maxPolarAngle, phi)
+        # restrict phi to be between EPS and PI-EPS
+        phi = Math.max @EPS, Math.min(Math.PI - @EPS, phi)
+        radius = @offset.length() * scale
+        # restrict radius to be between desired limits
+        radius = Math.max @minDistance, Math.min(@maxDistance, radius)
+        # move target to panned location
+        @target.add panCurrent
+        @offset.x = radius * Math.sin(phi) * Math.sin(theta)
+        @offset.y = radius * Math.cos(phi)
+        @offset.z = radius * Math.sin(phi) * Math.cos(theta)
+        # rotate offset back to "camera-up-vector-is-up" space
+        @offset.applyQuaternion @quatInverse
+        # Update camera
+        position.copy(@target).add @offset
+        @camera.lookAt @target
+
+        @thetaDelta = 0
+        @phiDelta = 0
+        @scale = 1
+        @panCurrent.set 0, 0, 0
+
+        if @lastPosition.distanceToSquared(position) > @EPS
+            @dispatchEvent @changeEvent
+            @lastPosition.copy position
+
+    reset: () =>
+        @state = @STATE.NONE
+        @target.copy @target0
+        @camera.position.copy @position0
+        @update()
+
+    onMouseDown: (event) =>
+        return unless @enabled
+        event.preventDefault()
+
+        switch event.button
+            when 0
+                return if @noRotate
+                @state = @STATE.ROTATE
+                @rotateStart.set event.clientX, event.clientY
+            when 1
+                return if @noZoom
+                @state = @STATE.DOLLY
+                @dollyStart.set event.clientX, event.clientY
+            when 2
+                return if @noPan
+                @state = @STATE.PAN
+                @panStart.set event.clientX, event.clientY
+
+        document.documentElement.addEventListener 'mousemove', @onMouseMove, false
+        document.documentElement.addEventListener 'mouseup',   @onMouseUp,   false
+        @dispatchEvent @startEvent
+
+    onMouseMove: (event) =>
+        return unless @enabled
+        event.preventDefault()
+
+        element = if @domElement == document then document.body else @domElement
+
+        switch @state
+            when @STATE.ROTATE
+                return if @noRotate
+
+                @rotateEnd.set event.clientX, event.clientY
+                @rotateDelta.subVectors @rotateEnd, @rotateStart
+                # rotating across whole screen goes 360 degrees around
+                @rotateLeft(
+                    2 * Math.PI * @rotateDelta.x / element.clientWidth * @rotateSpeed)
+                # rotating up and down along whole screen attempts to go 360,
+                # but limited to 180
+                @rotateUp(
+                    2 * Math.PI * @rotateDelta.y / element.clientHeight * @rotateSpeed)
+                @rotateStart.copy @rotateEnd
+
+            when @STATE.DOLLY
+                return if @noZoom
+
+                @dollyEnd.set event.clientX, event.clientY
+                @dollyDelta.subVectors @dollyEnd, @dollyStart
+                if @dollyDelta.y > 0 then @dollyIn() else @dollyOut()
+                @dollyStart.copy @dollyEnd
+
+            when @STATE.PAN
+                return if @noPan
+
+                @panEnd.set event.clientX, event.clientY
+                @panDelta.subVectors @panEnd, @panStart
+                @pan @panDelta.x, @panDelta.y
+                @panStart.copy @panEnd
+
+            else return
+
+        @update()
+
+    onMouseUp: () =>
+        return unless @enabled
+
+        document.documentElement.removeEventListener 'mousemove', @onMouseMove, false
+        document.documentElement.removeEventListener 'mouseup',   @onMouseUp,   false
+        @dispatchEvent @endEvent
+        @state = @STATE.NONE
+
+    onMouseWheel: (event) =>
+        return unless @enabled and not @noZoom
+        event.preventDefault()
+        event.stopPropagation()
+
+        delta = event.wheelDelta ? -event.detail
+        if delta > 0 then @dollyOut() else @dollyIn()
+        @update()
+        @dispatchEvent @startEvent
+        @dispatchEvent @endEvent
+
+    onKeyDown: (event) =>
+        return if not @enabled or @noKeys or @noPan
+
+        switch event.keyCode
+            when @keys.UP     then @pan 0,  @keyPanSpeed
+            when @keys.BOTTOM then @pan 0, -@keyPanSpeed
+            when @keys.LEFT   then @pan  @keyPanSpeed, 0
+            when @keys.RIGHT  then @pan -@keyPanSpeed, 0
+            else return
+
+        @update()
+
+    touchStart: (event) =>
+        return unless @enabled
+
+        switch event.touches.length
+            # one-fingered touch: rotate
+            when 1
+                return if @noRotate
+                @state = @STATE.TOUCH_ROTATE
+                @rotateStart.set event.touches[0].pageX, event.touches[0].pageY
+            # two-fingered touch: dolly
+            when 2
+                return if @noZoom
+                @state = @STATE.TOUCH_DOLLY
+                dx = event.touches[0].pageX - event.touches[1].pageX
+                dy = event.touches[0].pageY - event.touches[1].pageY
+                distance = Math.sqrt(dx * dx + dy * dy)
+                @dollyStart.set 0, distance
+            # three-fingered touch: pan
+            when 3
+                return if @noPan
+                @state = @STATE.TOUCH_PAN
+                @panStart.set event.touches[0].pageX, event.touches[0].pageY
+            else
+                @state = @STATE.NONE
+
+        @dispatchEvent @startEvent
+
+    touchMove: (event) =>
+        return unless @enabled
+        event.preventDefault()
+        event.stopPropagation()
+
+        element = if @domElement == document then document.body else @domElement
+
+        switch event.touches.length
+            # one-fingered touch: rotate
+            when 1
+                return if @noRotate or @state != @STATE.TOUCH_ROTATE
+                @rotateEnd.set event.touches[0].pageX, event.touches[0].pageY
+                @rotateDelta.subVectors @rotateEnd, @rotateStart
+                # rotating across whole screen goes 360 degrees around
+                @rotateLeft(
+                    2 * Math.PI * @rotateDelta.x / element.clientWidth * @rotateSpeed)
+                # rotating up and down along whole screen attempts to go 360,
+                # but limited to 180
+                @rotateUp(
+                    2 * Math.PI * rotateDelta.y / element.clientHeight * @rotateSpeed)
+                @rotateStart.copy @rotateEnd
+            # two-fingered touch: dolly
+            when 2
+                return if @noZoom or @state != @STATE.TOUCH_DOLLY
+                dx = event.touches[0].pageX - event.touches[1].pageX
+                dy = event.touches[0].pageY - event.touches[1].pageY
+                distance = Math.sqrt(dx * dx + dy * dy)
+                @dollyEnd.set 0, distance
+                @dollyDelta.subVectors @dollyEnd, @dollyStart
+                if @dollyDelta.y > 0 then @dollyOut() else @dollyIn()
+                @dollyStart.copy @dollyEnd
+            # three-fingered touch: pan
+            when 3
+                return if @noPan or @state != @STATE.TOUCH_PAN
+                @panEnd.set event.touches[0].pageX, event.touches[0].pageY
+                @panDelta.subVectors @panEnd, @panStart
+                @pan @panDelta.x, @panDelta.y
+                @panStart.copy @panEnd
+            else
+                @state = @STATE.NONE
+                return
+
+        @update()
+
+    touchEnd: () =>
+        return unless @enabled
+        @dispatchEvent @endEvent
+        @state = @STATE.NONE
+
+
+################################################################################
 # * Subspace
 
 # Abstract representation of a subspace, which can draw itself
@@ -696,7 +1070,7 @@ class Grid
                          start*vector2[2] + j*vector1[2]
 
         if numVecs == 3
-            totLines = (numLines + 1) * (numLines + 1) * 3;
+            totLines = (numLines + 1) * (numLines + 1) * 3
             doLines = (emit, i) ->
                 for j in [-perSide..perSide]
                     for k in [-perSide..perSide]
@@ -818,12 +1192,9 @@ class View
         extend labelOpts, @opts.labelOpts ? {}
 
         if @numDims == 3
-            viewScale[0] = -viewScale[0]
             viewOpts =
                 range:    viewRange
                 scale:    viewScale
-                # z is up...
-                rotation: [-π/2, 0, 0]
                 id:       "#{@name}-view"
         else
             viewOpts =
@@ -1282,7 +1653,7 @@ class Demo
         mathboxOpts =
             plugins:     ['core', 'controls', 'cursor']
             controls:
-                klass:   THREE.OrbitControls
+                klass:   OrbitControls
                 parameters:
                     noKeys: true
             mathbox:
@@ -1297,12 +1668,10 @@ class Demo
             proxy:    true
             position: [3, 1.5, 1.5]
             lookAt:   [0, 0, 0]
+            up:       [0, 0, 1]
         extend cameraOpts, @opts.camera ? {}
         if @opts.cameraPosFromQS ? true and @urlParams.camera?
             cameraOpts.position = @urlParams.camera.split(",").map parseFloat
-        # Transform camera position (z is up...)
-        p = cameraOpts.position
-        cameraOpts.position = [-p[0], p[2], -p[1]]
         focusDist    = @opts.focusDist  ? 1.5
         scaleUI      = @opts.scaleUI    ? true
         doFullScreen = @opts.fullscreen ? true
@@ -1313,7 +1682,9 @@ class Demo
             @mathbox = mathBox(mathboxOpts)
             @three = @mathbox.three
             @three.renderer.setClearColor new THREE.Color(clearColor), clearOpacity
+            @controls = @three.controls
             @camera = @mathbox.camera(cameraOpts)[0].controller.camera
+            @controls?.updateCamera?()
             @canvas = @mathbox._context.canvas
             if scaleUI
                 @mathbox.bind 'focus', () =>
@@ -1412,9 +1783,6 @@ class Demo
             str += "\\\\" if i+1 < m
         str += "\\end{bmatrix}"
 
-    moveCamera: (x, y, z) ->
-        @camera.position.set -x, z, -y
-
     rowred: (mat, opts) -> rowReduce mat, opts
 
     view: (opts) ->
@@ -1451,7 +1819,7 @@ class Demo2D extends Demo
         opts.mathbox.camera.far  ?= ortho*4
         opts.camera              ?= {}
         opts.camera.proxy        ?= false
-        opts.camera.position     ?= [0, -ortho, 0]
+        opts.camera.position     ?= [0, 0, -ortho]
         opts.camera.lookAt       ?= [0, 0, 0]
         opts.camera.up           ?= [1, 0, 0]
         vertical = opts.vertical ? 1.1
@@ -1478,6 +1846,7 @@ class Demo2D extends Demo
 ################################################################################
 # * Globals
 
-window.Demo   = Demo
-window.Demo2D = Demo2D
-window.urlParams = urlParams
+window.Demo          = Demo
+window.Demo2D        = Demo2D
+window.urlParams     = urlParams
+window.OrbitControls = OrbitControls

@@ -390,3 +390,7 @@ window.demo2 = new (if rows == 3 then Demo else Demo2D) {
         postDrag: computeIn
 
 
+if demo1.three.controls?
+    demo2.three.controls?.clones?.push demo1.three.controls
+if demo2.three.controls?
+    demo1.three.controls?.clones?.push demo2.three.controls
