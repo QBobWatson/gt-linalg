@@ -277,7 +277,7 @@ updateCaption = () ->
     str += "="
     str += demo3.texVector vector3, {color: hexColor3}
     katex.render str, matrix2Elt
-    str  = "T(U(\\color{#{hexColor1}}{x})) = "
+    str  = "T\\circ U(\\color{#{hexColor1}}{x}) = "
     str += demo1.texMatrix matrix3, {cols: dim1, rows: dim3}
     str += demo1.texVector vector1, {color: hexColor1}
     str += "="
