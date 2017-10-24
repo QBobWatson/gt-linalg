@@ -58,15 +58,8 @@ html, body {
     padding:   5px;
     transform: translate(-50%, 0);
 }
-#matrix-here {
-    display: none;
-    text-align: center;
-}
 .overlay-text {
     z-index: 1;
-}
-.overlay-text > p:last-child {
-    text-align: center;
 }
 
   </style>
@@ -76,26 +69,33 @@ html, body {
 </head>
 <body>
     
+
 <div class="overlay-text">
   <p><span id="matrix1-here"></span></p>
   <p><span id="matrix2-here"></span></p>
   <p><span id="matrix3-here"></span></p>
 </div>
+
 <div class="mathbox-wrapper">
     <div id="mathbox1">
-        <div class="mathbox-label">Input of U</div>
+        
+<div class="mathbox-label">Input of U</div>
+
     </div>
 </div>
 <div class="mathbox-wrapper">
     <div id="mathbox2">
-        <div class="mathbox-label">Output of U / Input of T</div>
+        
+<div class="mathbox-label">Output of U / Input of T</div>
+
     </div>
 </div>
 <div class="mathbox-wrapper">
     <div id="mathbox3">
-        <div class="mathbox-label">Output of T / of T &#x25CB; U</div>
+        
+<div class="mathbox-label">Output of T / of T &#x25CB; U</div>
+
     </div>
-</div>
 </div>
 
 
@@ -227,7 +227,7 @@ setupDemo = function(opts) {
     scaleUI: false
   }, function() {
     var labeled, r, range;
-    this.index = opts.index, this.vector = opts.vector, this.matrix = opts.matrix, this.dim = opts.dim, this.color = opts.color, this.label = opts.label;
+    this.index = opts.index, this.vector = opts.vector, this.dim = opts.dim, this.color = opts.color, this.label = opts.label;
     window["mathbox" + this.index] = this.mathbox;
     range = 10.0;
     if (urlParams["range" + this.index] != null) {

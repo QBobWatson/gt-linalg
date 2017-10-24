@@ -1,83 +1,25 @@
 ## -*- coffee -*-
 
-<%inherit file="base2.mako"/>
+<%inherit file="base_triptych.mako"/>
 
 <%block name="title">Composition of Transformations</%block>
 
-<%block name="inline_style">
-html, body {
-    margin:           0;
-    height:           100%;
-    background-color: #111111;
-    overflow-x:       hidden;
-}
-.mathbox-wrapper {
-    width:       33.333333%;
-    padding-top: 33.333333%;
-    position:    absolute;
-    left:        0;
-    top:         50%;
-    transform:   translate(0, -50%);
-    border:      1px solid black;
-}
-.mathbox-wrapper + .mathbox-wrapper {
-    left: 33.333333%;
-}
-.mathbox-wrapper + .mathbox-wrapper + .mathbox-wrapper {
-    left: 66.666666%;
-}
-.mathbox-wrapper > div {
-    position: absolute;
-    top:      0;
-    left:     0;
-    width:    100%;
-    height:   100%;
-}
-.mathbox-label {
-    position:  absolute;
-    left:      50%;
-    top:       10px;
-    color:     white;
-    opacity:   1.0;
-    background-color: rgba(50, 50, 50, .5);
-    border:    solid 1px rgba(200, 200, 200, .5);
-    padding:   5px;
-    transform: translate(-50%, 0);
-}
-#matrix-here {
-    display: none;
-    text-align: center;
-}
-.overlay-text {
-    z-index: 1;
-}
-.overlay-text > p:last-child {
-    text-align: center;
-}
-</%block>
-
-<%block name="body_html">
+<%block name="overlay_text">
 <div class="overlay-text">
   <p><span id="matrix1-here"></span></p>
   <p><span id="matrix2-here"></span></p>
   <p><span id="matrix3-here"></span></p>
 </div>
-<div class="mathbox-wrapper">
-    <div id="mathbox1">
-        <div class="mathbox-label">Input of U</div>
-    </div>
-</div>
-<div class="mathbox-wrapper">
-    <div id="mathbox2">
-        <div class="mathbox-label">Output of U / Input of T</div>
-    </div>
-</div>
-<div class="mathbox-wrapper">
-    <div id="mathbox3">
-        <div class="mathbox-label">Output of T / of T &#x25CB; U</div>
-    </div>
-</div>
-</div>
+</%block>
+
+<%block name="label1">
+<div class="mathbox-label">Input of U</div>
+</%block>
+<%block name="label2">
+<div class="mathbox-label">Output of U / Input of T</div>
+</%block>
+<%block name="label3">
+<div class="mathbox-label">Output of T / of T &#x25CB; U</div>
 </%block>
 
 ##
@@ -194,7 +136,7 @@ setupDemo = (opts) ->
         mathbox: element: document.getElementById "mathbox#{opts.index}"
         scaleUI: false
     }, () ->
-        {@index, @vector, @matrix, @dim, @color, @label} = opts
+        {@index, @vector, @dim, @color, @label} = opts
         window["mathbox#{@index}"] = @mathbox
 
         ##################################################

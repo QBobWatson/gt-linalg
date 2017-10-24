@@ -19,6 +19,7 @@
 
   <style>
       
+
 html, body {
     margin:           0;
     height:           100%;
@@ -54,6 +55,10 @@ html, body {
     padding:   5px;
     transform: translate(-50%, 0);
 }
+.overlay-text {
+    z-index: 1;
+}
+
 #inconsistent {
     font-weight:   bold;
     font-size:     120%;
@@ -66,9 +71,6 @@ html, body {
     display: none;
     text-align: center;
 }
-.overlay-text {
-    z-index: 1;
-}
 .overlay-text > p:last-child {
     text-align: center;
 }
@@ -80,22 +82,27 @@ html, body {
 </head>
 <body>
     
+
 <div class="overlay-text">
   <p id="matrix-here"><span id="the-matrix"></span></p>
   <p><span id="the-equation"></span>
       <span id="inconsistent">inconsistent</span></p>
   <p>[Click and drag the heads of x and b]</p>
 </div>
+
 <div class="mathbox-wrapper">
     <div id="mathbox1">
-        <div class="mathbox-label">Input</div>
+        
+<div class="mathbox-label">Input</div>
+
     </div>
 </div>
 <div class="mathbox-wrapper">
     <div id="mathbox2">
-        <div class="mathbox-label">Output</div>
+        
+<div class="mathbox-label">Output</div>
+
     </div>
-</div>
 </div>
 
 
@@ -208,6 +215,7 @@ window.demo1 = new (cols === 3 ? Demo : Demo2D)({
   gui = new dat.GUI({
     width: 350
   });
+  gui.closed = this.urlParams.closed != null;
   gui.add(params, 'Axes').onFinishChange((function(_this) {
     return function(val) {
       _this.mathbox.select(".view1-axes").set('visible', val);

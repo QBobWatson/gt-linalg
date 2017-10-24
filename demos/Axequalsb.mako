@@ -1,45 +1,11 @@
 ## -*- coffee -*-
 
-<%inherit file="base2.mako"/>
+<%inherit file="base_diptych.mako"/>
 
 <%block name="title">The function Ax=b</%block>
 
 <%block name="inline_style">
-html, body {
-    margin:           0;
-    height:           100%;
-    background-color: #111111;
-    overflow-x:       hidden;
-}
-.mathbox-wrapper {
-    width:       50%;
-    padding-top: 50%;
-    position:    absolute;
-    left:        0;
-    top:         50%;
-    transform:   translate(0, -50%);
-}
-.mathbox-wrapper + .mathbox-wrapper {
-    left:        50%;
-}
-.mathbox-wrapper > div {
-    position: absolute;
-    top:      0;
-    left:     0;
-    width:    100%;
-    height:   100%;
-}
-.mathbox-label {
-    position:  absolute;
-    left:      50%;
-    top:       10px;
-    color:     white;
-    opacity:   1.0;
-    background-color: rgba(50, 50, 50, .5);
-    border:    solid 1px rgba(200, 200, 200, .5);
-    padding:   5px;
-    transform: translate(-50%, 0);
-}
+${parent.inline_style()}
 #inconsistent {
     font-weight:   bold;
     font-size:     120%;
@@ -52,33 +18,28 @@ html, body {
     display: none;
     text-align: center;
 }
-.overlay-text {
-    z-index: 1;
-}
 .overlay-text > p:last-child {
     text-align: center;
 }
 </%block>
 
-<%block name="body_html">
+<%block name="overlay_text">
 <div class="overlay-text">
   <p id="matrix-here"><span id="the-matrix"></span></p>
   <p><span id="the-equation"></span>
       <span id="inconsistent">inconsistent</span></p>
   <p>[Click and drag the heads of x and b]</p>
 </div>
-<div class="mathbox-wrapper">
-    <div id="mathbox1">
-        <div class="mathbox-label">Input</div>
-    </div>
-</div>
-<div class="mathbox-wrapper">
-    <div id="mathbox2">
-        <div class="mathbox-label">Output</div>
-    </div>
-</div>
-</div>
 </%block>
+
+<%block name="label1">
+<div class="mathbox-label">Input</div>
+</%block>
+
+<%block name="label2">
+<div class="mathbox-label">Output</div>
+</%block>
+
 
 ##
 
@@ -157,6 +118,7 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
     params[lockSolnsKey] = @lockSolns
 
     gui = new dat.GUI width: 350
+    gui.closed = @urlParams.closed?
     gui.add(params, 'Axes').onFinishChange (val) =>
         @mathbox.select(".view1-axes").set 'visible', val
         demo2.mathbox.select(".view2-axes").set 'visible', val
