@@ -1,7 +1,8 @@
 (function() {
   "use strict";
-  var Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledVectors, LinearCombo, OrbitControls, Popup, Subspace, View, clipFragment, clipShader, decodeQS, extend, makeTvec, orthogonalize, rowReduce, setTvec, urlParams,
+  var Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledVectors, LinearCombo, OrbitControls, Popup, Subspace, View, clipFragment, clipShader, decodeQS, extend, groupControls, makeTvec, orthogonalize, rowReduce, setTvec, urlParams,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    slice = [].slice,
     extend1 = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
@@ -679,11 +680,35 @@
 
   })();
 
+  groupControls = function() {
+    var demos, i, j, l, ref, results;
+    demos = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+    demos = demos.filter(function(x) {
+      return x.three.controls != null;
+    });
+    results = [];
+    for (i = l = 0, ref = demos.length; 0 <= ref ? l < ref : l > ref; i = 0 <= ref ? ++l : --l) {
+      results.push((function() {
+        var p, ref1, results1;
+        results1 = [];
+        for (j = p = 0, ref1 = demos.length; 0 <= ref1 ? p < ref1 : p > ref1; j = 0 <= ref1 ? ++p : --p) {
+          if (j === i) {
+            continue;
+          }
+          results1.push(demos[i].three.controls.clones.push(demos[j].three.controls));
+        }
+        return results1;
+      })());
+    }
+    return results;
+  };
+
   Subspace = (function() {
     function Subspace(opts1) {
       var i, l, ref, ref1, ref2;
       this.opts = opts1;
       this.updateDim = bind(this.updateDim, this);
+      this.setVisibility = bind(this.setVisibility, this);
       this.draw = bind(this.draw, this);
       this.project = bind(this.project, this);
       this.update = bind(this.update, this);
@@ -696,6 +721,7 @@
       for (i = l = 0, ref2 = this.numVecs; 0 <= ref2 ? l < ref2 : l > ref2; i = 0 <= ref2 ? ++l : --l) {
         this.vectors[i] = makeTvec(this.opts.vectors[i]);
       }
+      this.mesh = this.opts.mesh;
       this.tmpVec1 = new THREE.Vector3();
       this.tmpVec2 = new THREE.Vector3();
       this.drawn = false;
@@ -824,7 +850,7 @@
       lineOpts = {
         id: name + "-line",
         classes: [name],
-        color: 0x880000,
+        color: color,
         opacity: 1.0,
         stroke: 'solid',
         width: 5,
@@ -892,7 +918,21 @@
       return this.updateDim(-1);
     };
 
+    Subspace.prototype.setVisibility = function(val) {
+      var ref, ref1;
+      if (!this.drawn) {
+        return;
+      }
+      if ((ref = this.objects[this.dim]) != null) {
+        ref.set('visible', val);
+      }
+      if (this.dim === 3) {
+        return (ref1 = this.mesh) != null ? ref1.material.visible = val : void 0;
+      }
+    };
+
     Subspace.prototype.updateDim = function(oldDim) {
+      var ref;
       this.onDimChange(this);
       if (!this.drawn) {
         return;
@@ -901,8 +941,9 @@
         this.objects[oldDim].set('visible', false);
       }
       if (this.dim < 3 && (this.objects[this.dim] != null)) {
-        return this.objects[this.dim].set('visible', true);
+        this.objects[this.dim].set('visible', true);
       }
+      return (ref = this.mesh) != null ? ref.material.visible = this.dim === 3 : void 0;
     };
 
     return Subspace;
@@ -1403,6 +1444,7 @@
       this.three = this.view._context.api.three;
       this.canvas = this.three.canvas;
       this.camera = this.view._context.api.select("camera")[0].controller.camera;
+      this.enabled = true;
       ref9 = this.points;
       for (l = 0, len = ref9.length; l < len; l++) {
         point = ref9[l];
@@ -1468,6 +1510,10 @@
         width: this.points.length,
         expr: (function(_this) {
           return function(emit, i, t) {
+            if (!_this.enabled) {
+              emit(1, 1, 1, 0);
+              return;
+            }
             if (_this.dragging === i || _this.hovered === i) {
               return emit.apply(null, hiliteColor);
             } else {
@@ -1487,7 +1533,7 @@
     }
 
     Draggable.prototype.onMouseDown = function(event) {
-      if (this.hovered < 0) {
+      if (this.hovered < 0 || !this.enabled) {
         return;
       }
       event.preventDefault();
@@ -1499,7 +1545,7 @@
       var mouseX, mouseY;
       this.mouse = [event.offsetX * window.devicePixelRatio, event.offsetY * window.devicePixelRatio];
       this.hovered = this.getIndexAt(this.mouse[0], this.mouse[1]);
-      if (this.dragging < 0) {
+      if (this.dragging < 0 || !this.enabled) {
         return;
       }
       event.preventDefault();
@@ -1523,7 +1569,7 @@
     };
 
     Draggable.prototype.onMouseUp = function(event) {
-      if (this.dragging < 0) {
+      if (this.dragging < 0 || !this.enabled) {
         return;
       }
       event.preventDefault();
@@ -1532,6 +1578,13 @@
     };
 
     Draggable.prototype.post = function() {
+      var ref;
+      if (!this.enabled) {
+        if ((ref = this.three.controls) != null) {
+          ref.enabled = true;
+        }
+        return;
+      }
       if (this.dragging >= 0) {
         this.canvas.style.cursor = 'pointer';
       } else if (this.hovered >= 0) {
@@ -1586,6 +1639,8 @@
       pass = (ref1 = this.opts.pass) != null ? ref1 : "world";
       hilite = (ref2 = this.opts.hilite) != null ? ref2 : true;
       draw = (ref3 = this.opts.draw) != null ? ref3 : false;
+      this.three = this.view._context.api.three;
+      this.camera = this.view._context.api.select("camera")[0].controller.camera;
       if (draw) {
         material = (ref4 = this.opts.material) != null ? ref4 : new THREE.MeshBasicMaterial();
         color = (ref5 = this.opts.color) != null ? ref5 : new THREE.Color(1, 1, 1);
@@ -1596,7 +1651,7 @@
             mesh = new THREE.Mesh(geo, material);
             cube = new THREE.BoxHelper(mesh);
             cube.material.color = color;
-            _this.view._context.api.three.scene.add(cube);
+            _this.three.scene.add(cube);
             return mesh;
           };
         })(this)();
@@ -1620,6 +1675,19 @@
         uniforms: this.uniforms
       }).fragment();
     }
+
+    ClipCube.prototype.installMesh = function() {
+      this.three.scene.add(this.mesh);
+      return this.three.on('pre', (function(_this) {
+        return function() {
+          if (Math.abs(_this.camera.position.x < 1.0) && Math.abs(_this.camera.position.y < 1.0) && Math.abs(_this.camera.position.z < 1.0)) {
+            return _this.mesh.material.side = THREE.BackSide;
+          } else {
+            return _this.mesh.material.side = THREE.FrontSide;
+          }
+        };
+      })(this));
+    };
 
     return ClipCube;
 
@@ -2092,7 +2160,7 @@
         base4.proxy = false;
       }
       if ((base5 = opts.camera).position == null) {
-        base5.position = [0, 0, -ortho];
+        base5.position = [0, 0, ortho];
       }
       if ((base6 = opts.camera).lookAt == null) {
         base6.lookAt = [0, 0, 0];
@@ -2149,5 +2217,7 @@
   window.urlParams = urlParams;
 
   window.OrbitControls = OrbitControls;
+
+  window.groupControls = groupControls;
 
 }).call(this);

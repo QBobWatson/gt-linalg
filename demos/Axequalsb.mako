@@ -151,7 +151,7 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
             vector[0] = vector[1] = vector[2] = 0
             params[showSolnsKey] = true
             params[lockSolnsKey] = true
-            @mathbox.select('.nulspace').set 'visible', true
+            solnspace.setVisibility true
             computeOut()
     params[showSolnsKey] = @showSolns
     params[lockSolnsKey] = @lockSolns
@@ -161,7 +161,7 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
         @mathbox.select(".view1-axes").set 'visible', val
         demo2.mathbox.select(".view2-axes").set 'visible', val
     gui.add(params, showSolnsKey).listen().onFinishChange (val) =>
-        @mathbox.select(".nulspace").set 'visible', val
+        solnspace.setVisibility val
     gui.add(params, lockSolnsKey).listen()
     gui.add params, 'Homogeneous'
 
@@ -205,26 +205,16 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
     # Solution set
     [nulBasis, colBasis, Emat, solve] \
         = @rowred (c.slice() for c in matrix), {rows: rows, cols: cols}
-    solnspace = @subspace
+    @nulspace = solnspace = @subspace
         name:    'nulspace'
         vectors: nulBasis
         live:    false
+        mesh:    clipCube.mesh
     tform = clipCube.clipped.transform().bind position: () => vector
     solnspace.draw tform
-    @mathbox.select(".nulspace").set 'visible', params[showSolnsKey]
-
     if solnspace.dim == 3
-        # Make "space" span: it's the cube texture.
-        @three.scene.add clipCube.mesh
-        clipCube.mesh.material.visible = true
-        # Make sure it's visible from inside the cube.
-        @three.on 'pre', () ->
-            if Math.abs(@camera.position.x < 1.0) and
-               Math.abs(@camera.position.y < 1.0) and
-               Math.abs(@camera.position.z < 1.0)
-                clipCube.mesh.material.side = THREE.BackSide
-            else
-                clipCube.mesh.material.side = THREE.FrontSide
+        clipCube.installMesh()
+    solnspace.setVisibility params[showSolnsKey]
 
     ##################################################
     # Dragging
@@ -340,17 +330,8 @@ window.demo2 = new (if rows == 3 then Demo else Demo2D) {
     subspace.draw clipCube.clipped
 
     if subspace.dim == 3
-        # Make "space" span: it's the cube texture.
-        @three.scene.add clipCube.mesh
+        clipCube.installMesh()
         clipCube.mesh.material.visible = true
-        # Make sure it's visible from inside the cube.
-        @three.on 'pre', () ->
-            if Math.abs(@camera.position.x < 1.0) and
-               Math.abs(@camera.position.y < 1.0) and
-               Math.abs(@camera.position.z < 1.0)
-                clipCube.mesh.material.side = THREE.BackSide
-            else
-                clipCube.mesh.material.side = THREE.FrontSide
 
     ##################################################
     # Dragging
@@ -375,11 +356,11 @@ window.demo2 = new (if rows == 3 then Demo else Demo2D) {
             vector[0] = tmpVec.x + inVec[0]
             vector[1] = tmpVec.y + inVec[1]
             vector[2] = tmpVec.z + inVec[2]
-            mathbox1.select(".nulspace").set 'visible', params[showSolnsKey]
+            demo1.nulspace.setVisibility params[showSolnsKey]
             labeled.show()
         else
             # So the zero point doesn't show up
-            mathbox1.select(".nulspace").set 'visible', false
+            demo1.nulspace.setVisibility false
             labeled.hide()
         updateCaption()
 
@@ -390,7 +371,4 @@ window.demo2 = new (if rows == 3 then Demo else Demo2D) {
         postDrag: computeIn
 
 
-if demo1.three.controls?
-    demo2.three.controls?.clones?.push demo1.three.controls
-if demo2.three.controls?
-    demo1.three.controls?.clones?.push demo2.three.controls
+groupControls demo1, demo2

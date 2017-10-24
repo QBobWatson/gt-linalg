@@ -226,16 +226,7 @@ window.demo = new (if is2D then Demo2D else Demo) {
             depthWrite:  false
             depthTest:   true
 
-    # Make "space" span: it's the cube texture.
-    @three.scene.add clipCube.mesh
-    # Make sure it's visible from inside the cube.
-    @three.on 'pre', () ->
-        if Math.abs(@camera.position.x < 1.0) and
-           Math.abs(@camera.position.y < 1.0) and
-           Math.abs(@camera.position.z < 1.0)
-            clipCube.mesh.material.side = THREE.BackSide
-        else
-            clipCube.mesh.material.side = THREE.FrontSide
+    clipCube.installMesh()
     clipCube.uniforms.hilite.value = not params.Grid
 
     ##################################################
@@ -248,10 +239,9 @@ window.demo = new (if is2D then Demo2D else Demo) {
         vectors: @vectors
         noPlane: is2D and not @urlParams.showPlane
         zeroThreshold: zeroThreshold
-        onDimChange: (ss) =>
-            clipCube.mesh.material.visible = (ss.dim == 3 and !@urlParams.hidespace?)
         live: @isLive
         range: range
+        mesh: if @urlParams.hidespace? then undefined else clipCube.mesh
     subspace.draw clipCube.clipped
 
     ##################################################

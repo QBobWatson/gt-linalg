@@ -553,6 +553,15 @@ class OrbitControls
         @state = @STATE.NONE
 
 
+# Make demo controls all clone each other
+groupControls = (demos...) ->
+    demos = demos.filter (x) -> x.three.controls?
+    for i in [0...demos.length]
+        for j in [0...demos.length]
+            continue if j == i
+            demos[i].three.controls.clones.push demos[j].three.controls
+
+
 ################################################################################
 # * Subspace
 
@@ -566,6 +575,7 @@ class OrbitControls
 #     name: object id's will be prefixed with "#{name}"
 #     range: make drawn objects at least [-range, range] on a side
 #     color: default color of drawn objects
+#     mesh: mesh for setting visibility of space
 #     noPlane: do not draw planes
 #     pointOpts: passed to mathbox.point
 #     lineOpts: passed to mathbox.line
@@ -584,6 +594,8 @@ class Subspace
         @numVecs = @opts.vectors.length
         @vectors = []
         @vectors[i] = makeTvec @opts.vectors[i] for i in [0...@numVecs]
+
+        @mesh = @opts.mesh
 
         # Scratch
         @tmpVec1 = new THREE.Vector3()
@@ -698,7 +710,7 @@ class Subspace
         lineOpts =
             id:      "#{name}-line"
             classes: [name]
-            color:   0x880000
+            color:   color
             opacity: 1.0
             stroke:  'solid'
             width:   5
@@ -759,6 +771,12 @@ class Subspace
         @drawn = true
         @updateDim -1
 
+    setVisibility: (val) =>
+        return unless @drawn
+        @objects[@dim]?.set 'visible', val
+        if @dim == 3
+            @mesh?.material.visible = val
+
     updateDim: (oldDim) =>
         @onDimChange @
         return unless @drawn
@@ -766,6 +784,7 @@ class Subspace
             @objects[oldDim].set 'visible', false
         if @dim < 3 and @objects[@dim]?
             @objects[@dim].set 'visible', true
+        @mesh?.material.visible = @dim == 3
 
 
 ################################################################################
@@ -1280,6 +1299,8 @@ class Draggable
         @three = @view._context.api.three
         @canvas = @three.canvas
         @camera = @view._context.api.select("camera")[0].controller.camera
+        # Set this to false to disable hovering
+        @enabled = true
 
         # Extend to 3D
         point[2] ?= 0 for point in @points
@@ -1350,6 +1371,9 @@ class Draggable
                 channels: 4
                 width:    @points.length
                 expr: (emit, i, t) =>
+                    if not @enabled
+                        emit 1, 1, 1, 0
+                        return
                     if @dragging == i or @hovered == i
                         # Show the hilite
                         emit.apply null, hiliteColor
@@ -1368,7 +1392,7 @@ class Draggable
         @three.on 'post', @post
 
     onMouseDown: (event) =>
-        return if @hovered < 0
+        return if @hovered < 0 or not @enabled
         event.preventDefault()
         @dragging = @hovered
         @activePoint = @points[@dragging]
@@ -1377,7 +1401,7 @@ class Draggable
         @mouse = [event.offsetX * window.devicePixelRatio,
                   event.offsetY * window.devicePixelRatio]
         @hovered = @getIndexAt @mouse[0], @mouse[1]
-        return if @dragging < 0
+        return if @dragging < 0 or not @enabled
         event.preventDefault()
         mouseX = event.offsetX / @canvas.offsetWidth * 2 - 1.0
         mouseY = -(event.offsetY / @canvas.offsetHeight * 2 - 1.0)
@@ -1399,12 +1423,15 @@ class Draggable
         @postDrag.call @
 
     onMouseUp: (event) =>
-        return if @dragging < 0
+        return if @dragging < 0 or not @enabled
         event.preventDefault()
         @dragging = -1
         @activePoint = undefined
 
     post: () =>
+        if not @enabled
+            @three.controls?.enabled = true
+            return
         if @dragging >= 0
             @canvas.style.cursor = 'pointer'
         else if @hovered >= 0
@@ -1452,6 +1479,9 @@ class ClipCube
         hilite = @opts.hilite ? true
         draw   = @opts.draw   ? false
 
+        @three = @view._context.api.three
+        @camera = @view._context.api.select("camera")[0].controller.camera
+
         if draw
             material = @opts.material ? new THREE.MeshBasicMaterial()
             color    = @opts.color    ? new THREE.Color 1, 1, 1
@@ -1460,7 +1490,7 @@ class ClipCube
                 mesh = new THREE.Mesh geo, material
                 cube = new THREE.BoxHelper mesh
                 cube.material.color = color
-                @view._context.api.three.scene.add cube
+                @three.scene.add cube
                 mesh
 
         @uniforms =
@@ -1478,6 +1508,16 @@ class ClipCube
                 code: clipFragment
                 uniforms: @uniforms
             .fragment()
+
+    installMesh: () ->
+        @three.scene.add @mesh
+        @three.on 'pre', () =>
+            if Math.abs(@camera.position.x < 1.0) and
+               Math.abs(@camera.position.y < 1.0) and
+               Math.abs(@camera.position.z < 1.0)
+                @mesh.material.side = THREE.BackSide
+            else
+                @mesh.material.side = THREE.FrontSide
 
 
 ################################################################################
@@ -1819,7 +1859,7 @@ class Demo2D extends Demo
         opts.mathbox.camera.far  ?= ortho*4
         opts.camera              ?= {}
         opts.camera.proxy        ?= false
-        opts.camera.position     ?= [0, 0, -ortho]
+        opts.camera.position     ?= [0, 0, ortho]
         opts.camera.lookAt       ?= [0, 0, 0]
         opts.camera.up           ?= [1, 0, 0]
         vertical = opts.vertical ? 1.1
@@ -1850,3 +1890,4 @@ window.Demo          = Demo
 window.Demo2D        = Demo2D
 window.urlParams     = urlParams
 window.OrbitControls = OrbitControls
+window.groupControls = groupControls

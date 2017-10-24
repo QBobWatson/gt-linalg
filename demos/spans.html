@@ -278,14 +278,7 @@ window.demo = new (is2D ? Demo2D : Demo)({
       depthTest: true
     })
   });
-  this.three.scene.add(clipCube.mesh);
-  this.three.on('pre', function() {
-    if (Math.abs(this.camera.position.x < 1.0) && Math.abs(this.camera.position.y < 1.0) && Math.abs(this.camera.position.z < 1.0)) {
-      return clipCube.mesh.material.side = THREE.BackSide;
-    } else {
-      return clipCube.mesh.material.side = THREE.FrontSide;
-    }
-  });
+  clipCube.installMesh();
   clipCube.uniforms.hilite.value = !params.Grid;
   range = this.urlParams.range != null ? parseFloat(this.urlParams.range) : 10.0;
   snapThreshold = 1.0 * range / 10.0;
@@ -294,13 +287,9 @@ window.demo = new (is2D ? Demo2D : Demo)({
     vectors: this.vectors,
     noPlane: is2D && !this.urlParams.showPlane,
     zeroThreshold: zeroThreshold,
-    onDimChange: (function(_this) {
-      return function(ss) {
-        return clipCube.mesh.material.visible = ss.dim === 3 && (_this.urlParams.hidespace == null);
-      };
-    })(this),
     live: this.isLive,
-    range: range
+    range: range,
+    mesh: this.urlParams.hidespace != null ? void 0 : clipCube.mesh
   });
   subspace.draw(clipCube.clipped);
   if ((ref4 = this.urlParams.grid) === "enabled" || ref4 === "on") {
