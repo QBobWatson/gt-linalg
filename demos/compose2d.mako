@@ -23,7 +23,7 @@ window.demo = new Demo2D {
     if @urlParams.range?
         range = parseFloat @urlParams.range
 
-    vector1 = [2, 4]
+    vector1 = [1, 2]
     if @urlParams.vec?
         vector1 = @urlParams.vec.split(',').map parseFloat
     vector2 = [0, 0]
@@ -157,13 +157,13 @@ window.demo = new Demo2D {
     clipCube2 = @clipCube view2,
         draw:   false
         hilite: false
-        range:  10.0
+        range:  range
         pass:   'view'
 
     clipCube3 = @clipCube view3,
         draw:   false
         hilite: false
-        range:  10.0
+        range:  range
         pass:   'view'
 
     ##################################################
@@ -301,4 +301,4 @@ window.demo = new Demo2D {
         str += @texVector vector3, color: '#ffff00'
         katex.render str, matrix3Elt
 
-    computeOut()
+    computeProduct()

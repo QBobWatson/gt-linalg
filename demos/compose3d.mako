@@ -128,6 +128,10 @@ computeOut = () ->
     vector3[2] = tmpVec.z
     updateCaption()
 
+
+if urlParams.range?
+    urlParams.range1 = urlParams.range2 = urlParams.range3 = urlParams.range
+
 ##################################################
 # make demos
 

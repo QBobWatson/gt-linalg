@@ -219,6 +219,10 @@ computeOut = function() {
   return updateCaption();
 };
 
+if (urlParams.range != null) {
+  urlParams.range1 = urlParams.range2 = urlParams.range3 = urlParams.range;
+}
+
 setupDemo = function(opts) {
   return new (opts.dim === 3 ? Demo : Demo2D)({
     mathbox: {
