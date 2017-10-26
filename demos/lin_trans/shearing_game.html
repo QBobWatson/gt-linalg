@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   <title>Shearing game</title>
-  <script src="../build/mathbox-bundle.js"></script>
+  <script src="../mathbox/mathbox-bundle.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
-  <link type="text/css" rel="stylesheet" href="bootstrap.min.css"/>
+  <!-- <link type="text/css" rel="stylesheet" href="bootstrap.min.css"/> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
   <script src="matrices.js"></script>
   <script src="matrix_game.js"></script>
-  <link rel="stylesheet" href="../build/mathbox.css">
+  <link rel="stylesheet" href="../mathbox/mathbox.css">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
 </head>
 <body>
-    <header id="header" >
-    </header>
+    <!-- <header id="header"> -->
+    <!-- </header> -->
 
 
     <script>
@@ -72,9 +72,9 @@
      document.onkeyup = game.keyup_action.bind(game);
 
 
-     var header = document.getElementById('header');
-     console.log(game.game_description_html());
-     header.innerHTML = game.game_description_html()
+    //  var header = document.getElementById('header');
+    //  console.log(game.game_description_html());
+    //  header.innerHTML = game.game_description_html()
 
      // Creating data grid.
      var n = 20;
