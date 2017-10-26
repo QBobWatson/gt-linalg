@@ -27,7 +27,7 @@ the license is included in gfdl.xml.
     <p>In this section we will study the geometry of the solution set of any matrix equation <m>Ax=b</m>.</p>
   </introduction>
 
-  <subsection>
+  <subsection xml:id="solnsets-homog">
     <title>Homogeneous Systems</title>
 
     <p>The equation <m>Ax=b</m> is easier to solve when <m>b=0</m>, so we start with this case.</p>
@@ -481,6 +481,13 @@ the license is included in gfdl.xml.
     </example>
 
     <p>See the interactive figures in the next <xref ref="solnsets-ss-and-cs"/> for visualizations of the above <xref ref="solnsets-translate-span">Observation</xref>.</p>
+
+    <warning><title>Dimension of the solution set</title>
+    <p>As in the first <xref ref="solnsets-homog"/>, when there is one free variable in a consistent matrix equation, the solution set is a line<mdash/>this line does not pass through the origin when the system is inhomogeneous<mdash/>when there are two free variables, the solution set is a plane, etc.
+    </p>
+    <p>We will develop a rigorous definition of dimension in <xref ref="section-dimension"/>, but for now it is important to note that the "dimension" of the solution set of a consistent system is equal to the number of free variables.
+    </p>
+    </warning>
 
   </subsection>
 
