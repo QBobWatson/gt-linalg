@@ -172,7 +172,7 @@ window.demo1 = new (cols === 3 ? Demo : Demo2D)({
   },
   scaleUI: false
 }, function() {
-  var Emat, c, clipCube, computeOut, eqnElt, gui, inconsElt, nulBasis, onDrag, r, ref2, ref3, ref4, str, tform, tmpVec, view;
+  var Emat, c, clipCube, computeOut, eqnElt, gui, inconsElt, nulBasis, onDrag, r, ref2, ref3, str, tform, tmpVec, view;
   window.mathbox1 = this.mathbox;
   this.showSolns = true;
   this.lockSolns = false;
@@ -185,7 +185,10 @@ window.demo1 = new (cols === 3 ? Demo : Demo2D)({
   if (this.urlParams.lock != null) {
     this.lockSolns = this.urlParams.lock != null ? true : false;
   }
-  this.range = (ref2 = this.urlParams.range1) != null ? ref2 : 5;
+  this.range = 5;
+  if (this.urlParams.range1 != null) {
+    this.range = parseFloat(this.urlParams.range1);
+  }
   if (this.urlParams.x != null) {
     vector = this.urlParams.x.split(",").map(parseFloat);
   }
@@ -199,7 +202,7 @@ window.demo1 = new (cols === 3 ? Demo : Demo2D)({
   this.tMatrix.set(matrix[0][0], matrix[1][0], matrix[2][0], matrix[0][1], matrix[1][1], matrix[2][1], matrix[0][2], matrix[1][2], matrix[2][2]);
   tmpVec = new THREE.Vector3();
   params = {
-    Axes: !((ref3 = this.urlParams.axes) === 'off' || ref3 === 'disabled'),
+    Axes: !((ref2 = this.urlParams.axes) === 'off' || ref2 === 'disabled'),
     Homogeneous: (function(_this) {
       return function() {
         vector[0] = vector[1] = vector[2] = 0;
@@ -266,7 +269,7 @@ window.demo1 = new (cols === 3 ? Demo : Demo2D)({
       depthTest: true
     })
   });
-  ref4 = this.rowred((function() {
+  ref3 = this.rowred((function() {
     var len, m, results;
     results = [];
     for (m = 0, len = matrix.length; m < len; m++) {
@@ -277,7 +280,7 @@ window.demo1 = new (cols === 3 ? Demo : Demo2D)({
   })(), {
     rows: rows,
     cols: cols
-  }), nulBasis = ref4[0], colBasis = ref4[1], Emat = ref4[2], solve = ref4[3];
+  }), nulBasis = ref3[0], colBasis = ref3[1], Emat = ref3[2], solve = ref3[3];
   this.nulspace = solnspace = this.subspace({
     name: 'nulspace',
     vectors: nulBasis,
@@ -369,9 +372,12 @@ window.demo2 = new (rows === 3 ? Demo : Demo2D)({
   },
   scaleUI: false
 }, function() {
-  var clipCube, computeIn, diff, onDrag, r, ref2, snapThreshold, snapped, subspace, tmpVec, view;
+  var clipCube, computeIn, diff, onDrag, r, snapThreshold, snapped, subspace, tmpVec, view;
   window.mathbox2 = this.mathbox;
-  this.range = (ref2 = this.urlParams.range2) != null ? ref2 : 10;
+  this.range = 10;
+  if (this.urlParams.range2 != null) {
+    this.range = parseFloat(this.urlParams.range2);
+  }
   r = this.range;
   view = this.view({
     name: 'view2',

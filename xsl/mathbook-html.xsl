@@ -110,6 +110,9 @@
 <xsl:template match="example/hint|example/answer|example/solution" mode="is-hidden">
     <xsl:text>false</xsl:text>
 </xsl:template>
+<xsl:template match="specialcase/hint|specialcase/answer|specialcase/solution" mode="is-hidden">
+    <xsl:text>false</xsl:text>
+</xsl:template>
 
 <!-- JDR: "special case" is just a non-hidden example -->
 <xsl:template match="specialcase" mode="is-hidden">

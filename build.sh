@@ -29,6 +29,9 @@ mkdir -p "$static_dir/css"
 mkdir -p "$static_dir/fonts"
 mkdir -p "$static_dir/images"
 
+echo "Making figures..."
+./makefigs.py
+
 echo "Copying static files..."
 cp "$base_dir/gt-text-common/css/"*.css "$static_dir/css"
 cp "$base_dir/mathbook/css/mathbook-add-on.css" "$static_dir/css"
