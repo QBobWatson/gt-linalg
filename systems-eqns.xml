@@ -39,7 +39,7 @@ the license is included in gfdl.xml.
 
     <p>In other words, <m>\R^n</m> is just the set of all (ordered) lists of <m>n</m> real numbers.  We will draw pictures of <m>\R^n</m> in a moment, but keep in mind that <em>this is the definition</em>.  For example, <m>(0, \frac 32, -\pi)</m> is an element of <m>\R^3</m>.</p>
 
-    <example>
+    <specialcase>
       <title>The number line</title>
       <p>When <m>n=1</m>, we just get <m>\R</m> back: <m>\R^1=\R</m>.  Geometrically, this is the number line.</p>
       <sidebyside>
@@ -54,10 +54,10 @@ the license is included in gfdl.xml.
           </latex-image-code>
         </image>
       </sidebyside>
-    </example>
+    </specialcase>
 
-    <definition>
-      <title>(Lines)</title>
+    <definition xml:id="defn-lines">
+      <title>Lines</title>
       <statement>
         <p>For our purposes, a <term>line</term> is a ray that is <em>straight</em> and <em>infinite</em> in both directions.</p>
         <sidebyside>
@@ -78,7 +78,7 @@ the license is included in gfdl.xml.
 
     <p>The number line <m>\R=\R^1</m> is an example of a line, but <em>a line is not the same as <m>\R^1</m></em>.  We will see later how to use the elements of <m>\R^1</m> to label the points on a line.</p>
 
-    <example>
+    <specialcase>
       <title>The plane</title>
       <p>When <m>n=2</m>, we can think of <m>\R^2</m> as the <m>xy</m>-plane.  We can do so because every point on the plane can be represented by an ordered pair of real numebrs, namely, its <m>x</m>- and <m>y</m>-coordinates.</p>
       <sidebyside>
@@ -97,10 +97,10 @@ the license is included in gfdl.xml.
         </image>
       </sidebyside>
       <p>Note that we use the elements of <m>\R^2</m> to <em>label</em> the points of the plane, but <m>\R^2</m> is not defined to be the plane.</p>
-    </example>
+    </specialcase>
 
     <definition>
-      <title>(Planes)</title>
+      <title>Planes</title>
       <statement>
         <p>A <term>plane</term> is a flat sheet that is infinite in all directions.</p>
         <sidebyside>
@@ -128,7 +128,7 @@ the license is included in gfdl.xml.
 
     <p>The <m>xy</m>-plane <m>\R^2</m> is an example of a plane, but <em>a plane is not the same as <m>\R^2</m></em>.  We will see later how to use the elements of <m>\R^2</m> to label the points on a line.</p>
 
-    <example>
+    <specialcase>
       <title>3-Space</title>
       <p>When <m>n=3</m>, we can think of <m>\R^3</m> as the <em>space</em> we (appear to) live in.  We can do so because every point in space can be represented by an ordered triple of real numebrs, namely, its <m>x</m>-, <m>y</m>-, and <m>z</m>-coordinates.</p>
       <sidebyside>
@@ -155,7 +155,7 @@ the license is included in gfdl.xml.
       </sidebyside>
       <p>Again, we can use the elements of <m>\R^3</m> to <em>label</em> points in
   space, but <m>\R^3</m> is not defined to be space!</p>
-    </example>
+    </specialcase>
 
     <example>
       <title>Color Space</title>
@@ -276,8 +276,6 @@ the license is included in gfdl.xml.
           </latex-image-code>
         </image>
       </sidebyside>
-      <p>Again, we can use the elements of <m>\R^3</m> to <em>label</em> points in
-  space, but <m>\R^3</m> is not defined to be space!</p>
     </example>
 
     <p>So what is <m>\R^4</m>?  or <m>\R^5</m>?  or <m>\R^n</m>?
@@ -329,7 +327,7 @@ the license is included in gfdl.xml.
     </p>
 
     <definition>
-      <title>(Solution sets)</title>
+      <title>Solution sets</title>
       <statement>
         <p>
           <ul>
@@ -597,12 +595,12 @@ the license is included in gfdl.xml.
           \. \+ y + 2z = 4;
           \. \+ \. \+ z = 3}
         </me>
-        Hence <m>z=3</m>; back-substituting as in <xref ref="systems-eqns-example1"/> gives <m>(x,y,z)=(1,-2,3)</m>.
+        Hence <m>z=3</m>; back-substituting as in this <xref ref="systems-eqns-example1"/> gives <m>(x,y,z)=(1,-2,3)</m>.
         </p>
       </solution>
     </example>
 
-    <important><p>The process of doing row operations to a matrix does not change the solution set of the corresponding linear equations!</p></important>
+    <warning><p>The process of doing row operations to a matrix does not change the solution set of the corresponding linear equations!</p></warning>
 
     <p>Indeed, the whole point of doing these operations is to solve the equations using the elimination method.</p>
 

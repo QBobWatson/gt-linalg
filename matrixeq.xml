@@ -27,10 +27,10 @@ the license is included in gfdl.xml.
     <p>In this section we introduce a very concise way of writing a system of linear equations: <m>Ax=b</m>.  Here <m>A</m> is a matrix and <m>x,b</m> are vectors (generally of different sizes), so first we must explain how to multiply a matrix by a vector.
     </p>
 
-    <paragraphs class="bluebox">
+    <warning>
       <p>When we say "<m>A</m> is an <m>m\times n</m> matrix," we mean that <m>A</m> has <m>m</m> rows an <m>n</m> columns.
       </p>
-    </paragraphs>
+    </warning>
 
     <remark>
       <p>In this book, we do <em>not</em> reserve the letters <m>m</m> and <m>n</m> for the numbers of rows and columns of a matrix.  If we write "<m>A</m> is an <m>n\times m</m> matrix", then <m>n</m> is the number of rows of <m>A</m> and <m>m</m> is the number of columns.</p>
@@ -61,10 +61,10 @@ the license is included in gfdl.xml.
     <p>In order for <m>Ax</m> to make sense, the number of entries of <m>x</m> has to be the same as the number of columns of <m>A</m>: we are using the entries of <m>x</m> as the coefficients of the columns of <m>A</m> in a linear combination.  The resulting vector has the same number of entries as the number of <em>rows</em> of <m>A</m>, since each column of <m>A</m> has that number of entries.
     </p>
 
-    <paragraphs class="bluebox">
-      <p>If <m>A</m> is an <m>m\times n</m> matrix, then <m>Ax</m> makes sense when <m>x</m> has <m>n</m> entries.  The product <m>Ax</m> has <m>m</m> entries.
+    <warning>
+      <p>If <m>A</m> is an <m>m\times n</m> matrix (<m>m</m> rows, <m>n</m> columns), then <m>Ax</m> makes sense when <m>x</m> has <m>n</m> entries.  The product <m>Ax</m> has <m>m</m> entries.
       </p>
-    </paragraphs>
+    </warning>
 
     <definition>
       <statement>
@@ -72,7 +72,7 @@ the license is included in gfdl.xml.
       </statement>
     </definition>
 
-    <paragraphs class="remark-like">
+    <note hide-type="true">
       <title>Matrix Equations and Vector Equations</title>
       <p>Let <m>v_1,v_2,\ldots,v_n</m> and <m>b</m> be vectors in <m>\R^m</m>.  Consider the vector equation
       <me>x_1v_1 + x_2v_2 + \cdots + x_nv_n = b.</me>
@@ -86,7 +86,7 @@ the license is included in gfdl.xml.
       <me>x_1v_1 + x_2v_2 + \cdots + x_nv_n = b,</me>
       where <m>v_1,v_2,\ldots,v_n</m> are the columns of <m>A</m>, and <m>x_1,x_2,\ldots,x_n</m> are the entries of <m>x</m>.
       </p>
-    </paragraphs>
+    </note>
 
     <example>
       <statement>
@@ -106,8 +106,8 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
-    <important>
-      <title>(Four Ways of Writing a Linear System)</title>
+    <note hide-type="true">
+      <title>Four Ways of Writing a Linear System</title>
       <p>We now have <em>four</em> equivalent ways of writing (and thinking about) a system of linear equations:
       <ol>
         <li>As a system of equations:
@@ -127,16 +127,16 @@ the license is included in gfdl.xml.
       </ol>
       In particular, <em>all four have the same solution set</em>.
       </p>
-    </important>
+    </note>
 
-    <paragraphs class="bluebox">
+    <warning>
       <p>We will move back and forth freely between the four ways of writing a linear system, over and over again, for the rest of the semester.</p>
-    </paragraphs>
+    </warning>
 
     <paragraphs>
       <title>Another Way to Compute <m>Ax</m></title>
 
-      <p><xref ref="matrixeq-defn-Ax1"/> is a useful way of defining the product of a matrix with a vector when it comes to understanding the relationship between matrix eqeuations and vector equations.  Here we give a definition that is better-adapted to computations by hand.
+      <p>The above <xref ref="matrixeq-defn-Ax1"/> is a useful way of defining the product of a matrix with a vector when it comes to understanding the relationship between matrix eqeuations and vector equations.  Here we give a definition that is better-adapted to computations by hand.
       </p>
 
       <definition>
@@ -204,13 +204,12 @@ the license is included in gfdl.xml.
     </me>
     </p>
 
-    <important xml:id="matrixeq-spans-consistency">
-      <title>(Spans and Consistency)</title>
-
+    <warning xml:id="matrixeq-spans-consistency">
+      <title>Spans and Consistency</title>
       <p>The matrix equation <m>Ax=b</m> has a solution if and only if <m>b</m> is in the span of the columns of <m>A</m>.</p>
-    </important>
+    </warning>
 
-    <p>Note that <xref ref="matrixeq-spans-consistency"/> gives an equivalence between an <em>algebraic</em> statement (<m>Ax=b</m> is consistent), and a <em>geometric</em> statement (<m>b</m> is in the span of the columns of <m>A</m>).
+    <p>This gives an equivalence between an <em>algebraic</em> statement (<m>Ax=b</m> is consistent), and a <em>geometric</em> statement (<m>b</m> is in the span of the columns of <m>A</m>).
     </p>
 
     <example>
@@ -281,7 +280,7 @@ the license is included in gfdl.xml.
         <p>It does not appear that <m>w</m> lies in <m>\Span\{v_1,v_2\},</m> so the equation is inconsistent.</p>
         <figure>
           <caption>The vector <m>w</m> is not contained in <m>\Span\{v_1,v_2\}</m>, so the equation <m>Ax=b</m> is inconsistent.  (Try moving the sliders to solve the equation.)</caption>
-          <mathbox source="demos/lincombo.html?v1=2,-1,1&amp;v2=1,0,-1&amp;w=0,2,2&amp;range=5" height="500px"/>
+          <mathbox source="demos/spans.html?v1=2,-1,1&amp;v2=1,0,-1&amp;target=0,2,2&amp;range=5" height="500px"/>
         </figure>
 
         <p>Let's check our geometric answer by solving the matrix equation using row reduction.  We put the system into an augmented matrix and row reduce:
@@ -367,7 +366,7 @@ the license is included in gfdl.xml.
         </p>
         <figure>
           <caption>The vector <m>w</m> is contained in <m>\Span\{v_1,v_2\}</m>, so the equation <m>Ax=b</m> is consistent.  (Move the sliders to solve the equation.)</caption>
-          <mathbox source="demos/lincombo.html?v1=2,-1,1&amp;v2=1,0,-1&amp;w=1,-1,2&amp;range=5" height="500px"/>
+          <mathbox source="demos/spans.html?v1=2,-1,1&amp;v2=1,0,-1&amp;target=1,-1,2&amp;range=5" height="500px"/>
         </figure>
 
         <p>Let's check our geometric answer by solving the matrix equation using row reduction.  We put the system into an augmented matrix and row reduce:
@@ -387,7 +386,7 @@ the license is included in gfdl.xml.
     <paragraphs>
       <title>When Solutions Always Exist</title>
 
-      <p>Building on <xref ref="matrixeq-spans-consistency"/>, we have the following criterion for when <m>Ax=b</m> is consistent for <em>every</em> choice of <m>b</m>.</p>
+      <p>Building on this <xref ref="matrixeq-spans-consistency">Note</xref>, we have the following criterion for when <m>Ax=b</m> is consistent for <em>every</em> choice of <m>b</m>.</p>
 
       <theorem xml:id="matrixeq-thm-full-span">
         <statement>
@@ -401,7 +400,7 @@ the license is included in gfdl.xml.
         </statement>
 
         <proof>
-          <p>The equivalence of 1 and 2 is established by <xref ref="matrixeq-spans-consistency"/> as applied to every <m>b</m> in <m>\R^m</m>.
+          <p>The equivalence of 1 and 2 is established by this <xref ref="matrixeq-spans-consistency">Note</xref> as applied to every <m>b</m> in <m>\R^m</m>.
           </p>
 
           <p>Now we show that 1 and 3 are equivalent.  (Since we know 1 and 2 are equivalent, this implies 2 and 3 are equivalent as well.)  If <m>A</m> has a pivot in every row, then its reduced row echelon form looks like this:
@@ -433,22 +432,22 @@ the license is included in gfdl.xml.
         </proof>
       </theorem>
 
-      <p>Recall that <term>equivalent</term> means that, for any given matrix <m>A</m>, either <em>all</em> of the conditions of <xref ref="matrixeq-thm-full-span"/> are true, or they are all false.
+      <p>Recall that <term>equivalent</term> means that, for any given matrix <m>A</m>, either <em>all</em> of the conditions of the above <xref ref="matrixeq-thm-full-span"/> are true, or they are all false.
       </p>
 
       <warning>
-        <p>Be careful when reading the statement of <xref ref="matrixeq-thm-full-span"/>.  The first two conditions look very much like <xref ref="matrixeq-spans-consistency"/>, but they are logically quite different because of the quantifier "<em>for all</em> <m>b</m>".
+        <p>Be careful when reading the statement of the above <xref ref="matrixeq-thm-full-span"/>.  The first two conditions look very much like this <xref ref="matrixeq-spans-consistency">Note</xref>, but they are logically quite different because of the quantifier "<em>for all</em> <m>b</m>".
         </p>
       </warning>
 
       <figure>
-        <caption>An example where the criteria of <xref ref="matrixeq-thm-full-span"/> are satisfied.  The red region is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.</caption>
-        <mathbox source="demos/span3.html?v1=2,-1,1&amp;v2=1,0,-1&amp;v3=-1,2,2&amp;range=5&amp;noninteractive=true" height="400px"/>
+        <caption>An example where the criteria of the above <xref ref="matrixeq-thm-full-span"/> are satisfied.  The red region is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.</caption>
+        <mathbox source="demos/spans.html?v1=2,-1,1&amp;v2=1,0,-1&amp;v3=-1,2,2&amp;range=5&amp;capopt=matrix" height="400px"/>
       </figure>
 
       <figure>
-        <caption>An example where the criteria of <xref ref="matrixeq-thm-full-span"/> are <em>not</em> satisfied.  The red region is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.</caption>
-        <mathbox source="demos/span3.html?v1=2,-1,1&amp;v2=1,0,-1&amp;v3=1,-1,2&amp;range=5&amp;noninteractive=true" height="400px"/>
+        <caption>An example where the criteria of the above <xref ref="matrixeq-thm-full-span"/> are <em>not</em> satisfied.  The red region is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.</caption>
+        <mathbox source="demos/spans.html?v1=2,-1,1&amp;v2=1,0,-1&amp;v3=1,-1,2&amp;range=5&amp;capopt=matrix" height="400px"/>
       </figure>
 
     </paragraphs>

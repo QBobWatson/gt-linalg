@@ -62,14 +62,14 @@ the license is included in gfdl.xml.
 
     <figure xml:id="vectors-figure-consistent">
       <caption>A picture of the vector equation <xref ref="vectors-vec-eqn-consistent"/>.  Try to solve the equation geometrically by moving the sliders.</caption>
-      <mathbox source="demos/lincombo.html?v1=1,2,6&amp;v2=-1,-2,-1&amp;w=8,16,3&amp;range=20&amp;camera=-3,1.5,-.5" height="500px"/>
+      <mathbox source="demos/spans.html?v1=1,2,6&amp;v2=-1,-2,-1&amp;target=8,16,3&amp;range=20&amp;camera=3,.5,1.5" height="500px"/>
     </figure>
 
-    <paragraphs class="remark-like">
+    <note hide-type="true">
       <title>A Picture of a Consistent System</title>
-      <p>We saw in <xref ref="vectors-example-consistent"/> that the system of equations <xref ref="vectors-system-consistent"/> is consistent.  Equivalently, this means that the vector equation <xref ref="vectors-vec-eqn-consistent"/> has a solution.  Therefore, <xref ref="vectors-figure-consistent"/> is a <em>picture of a consistent system of equations</em>.  Compare <xref ref="vectors-fig-inconsistent"/> below.
+      <p>We saw in the above <xref ref="vectors-example-consistent"/> that the system of equations <xref ref="vectors-system-consistent"/> is consistent.  Equivalently, this means that the vector equation <xref ref="vectors-vec-eqn-consistent"/> has a solution.  Therefore, <xref ref="vectors-figure-consistent"/> is a <em>picture of a consistent system of equations</em>.  Compare <xref ref="vectors-fig-inconsistent"/> below.
       </p>
-    </paragraphs>
+    </note>
 
     <p>In order to actually solve the vector equation
     <me>x\textcolor{seq-red}{\vec{1 2 6}}
@@ -83,14 +83,14 @@ the license is included in gfdl.xml.
     and row reducing.  Note that <em>the columns of the augmented matrix are the vectors from the original vector equation</em>, so it is not actually necessary to write the system of equations: one can go directly from the vector equation to the augmented matrix by "smooshing the vectors together".
     </p>
 
-    <paragraphs class="bluebox">
+    <warning>
       <p>In general, the vector equation
       <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = b</me>
       where <m>v_1,v_2,\ldots,v_p,\,b</m> are vectors in <m>\R^n</m> and <m>x_1,x_2,\ldots,x_p</m> are unknown scalars, has the same solution set as the linear system with augmented matrix
       <me>\amat[c]{| | ,{} , | |; v_1 v_2 \cdots, v_p b; | | ,{} , | |}</me>
       whose columns are the <m>v_i</m>'s and the <m>b</m>'s.
       </p>
-    </paragraphs>
+    </warning>
 
     <p>Now we have (at least) <em>two</em> equivalent ways of thinking about systems of equations:
     <ol>
@@ -120,11 +120,11 @@ the license is included in gfdl.xml.
       </statement>
     </essential>
 
-    <p><xref ref="vectors-defn-span"/> is the first of several <em>essential definitions</em> that we will see in this course.  They are essential in that they form the essence of the subject of linear algebra: learning linear algebra means (in part) learning these definitions.  All of the definitions are important, but it is essential that you learn and understand the definitions marked as such.
+    <p>The above <xref ref="vectors-defn-span"/> is the first of several <em>essential definitions</em> that we will see in this course.  They are essential in that they form the essence of the subject of linear algebra: learning linear algebra means (in part) learning these definitions.  All of the definitions are important, but it is essential that you learn and understand the definitions marked as such.
     </p>
 
-    <note>
-      <title>(Set Builder Notation)</title>
+    <note hide-type="true">
+      <title>Set Builder Notation</title>
       <p>The notation
       <me>\bigl\{x_1v_1 + x_2v_2 + \cdots + x_pv_p \mid x_1,x_2,\ldots,x_p \text{ in }\R\bigr\}</me>
       reads as: "the set of all things of the form <m>x_1v_1 + x_2v_2 + \cdots + x_pv_p</m> such that <m>x_1,x_2,\ldots,x_p</m> are in <m>\R</m>."  The vertical line is "such that"; everything to the left of it is "the set of all things of this form", and everything to the right is the condition that those things must satisfy to be in the set.  Specifying a set in this way is called <term>set builder notation</term>.
@@ -133,7 +133,7 @@ the license is included in gfdl.xml.
       <p>All mathematical notation is only shorthand: any sequence of symbols must translate into a usual sentence.</p>
     </note>
 
-    <paragraphs class="remark-like">
+    <note hide-type="true">
       <title>Three characterizations of consistency</title>
       <p>Now we have three equivalent ways of making the same statement:
       <ol>
@@ -148,7 +148,7 @@ the license is included in gfdl.xml.
         </li>
       </ol>
       </p>
-    </paragraphs>
+    </note>
 
     <p><term>Equivalent</term> means that, for any given list of vectors <m>v_1,v_2,\ldots,v_p,\,b</m>, either all three statements are true, or all three statements are false.</p>
 
@@ -156,7 +156,7 @@ the license is included in gfdl.xml.
       <caption>This is a picture of an <em>inconsistent</em> linear system: the vector <m>w</m> on the right-hand side of the equation <m>x_1v_1 + x_2v_2 = w</m> is not in the span of <m>v_1,v_2</m>.  Convince yourself of this by trying to solve the equation
       <m>x_1v_1 + x_2v_2 = w</m>
       by moving the sliders, and by row reduction.  Compare <xref ref="vectors-figure-consistent"/>.</caption>
-      <mathbox source="demos/lincombo.html?v1=1,2,6&amp;v2=-1,-2,-1&amp;w=2,-2,0&amp;range=8&amp;camera=-3,1.5,-.5" height="500px"/>
+      <mathbox source="demos/spans.html?v1=1,2,6&amp;v2=-1,-2,-1&amp;target=2,-2,0&amp;range=8&amp;camera=3,.5,1.5" height="500px"/>
     </figure>
 
     <paragraphs>
@@ -200,6 +200,11 @@ the license is included in gfdl.xml.
             ]]>
           </latex-image-code>
         </image>
+      </figure>
+
+      <figure>
+        <caption>Interactive picture of a span of two vectors in <m>\R^2</m>.  Check "Show x.v1 + y.v2" and move the sliders to see how every point in the red region is in fact a linear combination of the two vectors.</caption>
+        <mathbox source="demos/spans.html?v1=1,2&amp;v2=1,0&amp;showPlane=true&amp;range=5&amp;labels=v,w" height="500px"/>
       </figure>
 
       <figure>
@@ -338,13 +343,13 @@ the license is included in gfdl.xml.
       </figure>
 
       <figure>
-        <caption>Interactive picture of a span of two vectors in <m>\R^3</m>.  Check "Show a.v1 + b.v2" and move the sliders to see how every point in the red region is in fact a linear combination of the two vectors.</caption>
-        <mathbox source="demos/span2.html" height="500px"/>
+        <caption>Interactive picture of a span of two vectors in <m>\R^3</m>.  Check "Show x.v1 + y.v2" and move the sliders to see how every point in the red region is in fact a linear combination of the three vectors.</caption>
+        <mathbox source="demos/spans.html?v1=3,2,4&amp;v2=-4,2,1&amp;labels=v,w" height="500px"/>
       </figure>
 
       <figure>
-        <caption>Interactive picture of a span of three vectors in <m>\R^3</m>.  Check "Show a.v1 + b.v2 + c.v3" and move the sliders to see how every point in the red region is in fact a linear combination of the three vectors.</caption>
-        <mathbox source="demos/span3.html" height="500px"/>
+        <caption>Interactive picture of a span of three vectors in <m>\R^3</m>.  Check "Show x.v1 + y.v2 + z.v3" and move the sliders to see how every point in the red region is in fact a linear combination of the three vectors.</caption>
+        <mathbox source="demos/spans.html?labels=v,w,u" height="500px"/>
       </figure>
     </paragraphs>
 

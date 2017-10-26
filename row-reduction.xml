@@ -95,9 +95,9 @@ the license is included in gfdl.xml.
       </p>
     </example>
 
-    <note>
+    <warning>
       <p>When deciding if an augmented matrix is in (reduced) row echelon form, there is nothing special about the augmented column(s).  Just ignore the vertical line.</p>
-    </note>
+    </warning>
 
     <p>If an augmented matrix is in reduced row echelon form, the corresponding linear system is viwed as <em>solved</em>.  We will see below why this is the case, and we will show that any matrix can be put into reduced row echelon form using only the elementary row operations.</p>
 
@@ -106,7 +106,7 @@ the license is included in gfdl.xml.
   <subsection>
     <title>The row reduction algorithm</title>
 
-    <theorem>
+    <theorem xml:id="row-reduction-works">
       <statement>
         <p>Every matrix is row equivalent to one and only one matrix in reduced row echelon form.</p>
       </statement>
@@ -114,16 +114,16 @@ the license is included in gfdl.xml.
 
     <p>We will give an algorithm, called <term>row reduction</term> or <term>Gaussian elimination</term>, which demonstrates that every matrix is row equivalent to <em>at least one</em> matrix in reduced row echelon form.</p>
 
-    <remark>
+    <warning>
       <p>The uniqueness statement is interesting<mdash/>it means that, no matter <em>how</em> you row reduce, you <em>always</em> get the same matrix in reduced row echelon form.</p>
-    </remark>
+    </warning>
 
     <p>This assumes, of course, that you only do the three legal row operations, and you don't make any arithmetic errors.</p>
 
     <p>We will not prove uniqueness, but maybe you can!</p>
 
-    <algorithm>
-      <title>(Row Reduction)</title>
+    <algorithm xml:id="algo-row-reduction">
+      <title>Row Reduction</title>
       <statement>
         <p>
           <ul label="">
@@ -336,7 +336,7 @@ the license is included in gfdl.xml.
       The reduced row echelon form of the matrix tells us that the only solution is <m>(x,y,z) = (1,-2,3).</m>
       </p>
       <figure>
-        <caption>Animated slideshow of the row reduction in <xref ref="row-reduction-eg1"/>.</caption>
+        <caption>Animated slideshow of the row reduction in this <xref ref="row-reduction-eg1"/>.</caption>
         <mathbox source="demos/rowred2.html" height="500px"/>
       </figure>
     </solution>
@@ -521,10 +521,10 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
-    <paragraphs class="remark-like">
+    <theorem hide-type="true">
       <title>The Row Echelon Form of an Inconsistent System</title>
       <p>An augmented matrix corresponds to an inconsistent system of equations if and only if the last column (i.e., the augmented column) is a <em>pivot column</em>.</p>
-    </paragraphs>
+    </theorem>
 
     <p>In other words, the row reduced matrix of an inconsistent system looks like this:
     <me>\amat{

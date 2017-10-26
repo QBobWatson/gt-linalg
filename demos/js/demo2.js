@@ -1355,7 +1355,8 @@
         viewOpts = {
           range: viewRange,
           scale: viewScale,
-          id: this.name + "-view"
+          id: this.name + "-view",
+          eulerOrder: "yxz"
         };
       } else {
         viewOpts = {

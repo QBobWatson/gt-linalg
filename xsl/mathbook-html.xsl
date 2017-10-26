@@ -111,9 +111,18 @@
     <xsl:text>false</xsl:text>
 </xsl:template>
 
+<!-- JDR: "special case" is just a non-hidden example -->
+<xsl:template match="specialcase" mode="is-hidden">
+    <xsl:text>false</xsl:text>
+</xsl:template>
+
 <!-- JDR: remarks are hidden -->
 <xsl:template match="remark" mode="is-hidden">
     <xsl:text>true</xsl:text>
+</xsl:template>
+
+<xsl:template match="warning" mode="body-css-class">
+    <xsl:text>warning-like</xsl:text>
 </xsl:template>
 
 <!-- JDR: mathbox support -->
@@ -170,46 +179,68 @@
     </xsl:element>
 </xsl:template>
 
+<xsl:template match="*" mode="get-hide-type">
+    <xsl:value-of select="@hide-type"/>
+</xsl:template>
+
+<!-- Warnings hide type by default -->
+<xsl:template match="warning" mode="get-hide-type">
+    <xsl:choose>
+        <xsl:when test="@hide-type">
+            <xsl:value-of select="@hide-type"/>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:text>true</xsl:text>
+        </xsl:otherwise>
+    </xsl:choose>
+</xsl:template>
+
+
 <!-- JDR: simpler numbering of some elements -->
 <xsl:template match="*" mode="heading-simple-nonumber">
     <xsl:param name="important"/>
-    <xsl:element name="h5">
-        <xsl:attribute name="class">
-            <xsl:text>heading</xsl:text>
-            <xsl:if test="$important">
-               <xsl:text> important</xsl:text>
-            </xsl:if>
-        </xsl:attribute>
-        <xsl:if test="$important">
-            <xsl:element name="img">
-                <xsl:attribute name="src">
-                    <xsl:text>static/images/important.svg</xsl:text>
-                </xsl:attribute>
-                <xsl:attribute name="class">
-                    <xsl:text>important</xsl:text>
-                </xsl:attribute>
-            </xsl:element>
-        </xsl:if>
-        <xsl:choose>
-            <xsl:when test="@hide-type = 'true'">
-                <span class="title">
-                    <xsl:apply-templates select="." mode="title-full" />
-                </span>
-            </xsl:when>
-            <xsl:otherwise>
-                <span class="type">
-                    <xsl:apply-templates select="." mode="type-name" />
-                </span>
-                <xsl:if test="title">
-                    <span class="title">
-                        <xsl:text>(</xsl:text>
-                        <xsl:apply-templates select="." mode="title-full" />
-                        <xsl:text>)</xsl:text>
-                    </span>
+    <xsl:variable name="hide-type">
+        <xsl:apply-templates select="." mode="get-hide-type"/>
+    </xsl:variable>
+    <xsl:if test="title or $hide-type != 'true'">
+        <xsl:element name="h5">
+            <xsl:attribute name="class">
+                <xsl:text>heading</xsl:text>
+                <xsl:if test="$important">
+                   <xsl:text> important</xsl:text>
                 </xsl:if>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:element>
+            </xsl:attribute>
+            <xsl:if test="$important">
+                <xsl:element name="img">
+                    <xsl:attribute name="src">
+                        <xsl:text>static/images/important.svg</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="class">
+                        <xsl:text>important</xsl:text>
+                    </xsl:attribute>
+                </xsl:element>
+            </xsl:if>
+            <xsl:choose>
+                <xsl:when test="$hide-type = 'true'">
+                    <span class="title">
+                        <xsl:apply-templates select="." mode="title-full" />
+                    </span>
+                </xsl:when>
+                <xsl:otherwise>
+                    <span class="type">
+                        <xsl:apply-templates select="." mode="type-name" />
+                    </span>
+                    <xsl:if test="title">
+                        <span class="title">
+                            <xsl:text>(</xsl:text>
+                            <xsl:apply-templates select="." mode="title-full" />
+                            <xsl:text>)</xsl:text>
+                        </span>
+                    </xsl:if>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:element>
+    </xsl:if>
 </xsl:template>
 
 <xsl:template match="&DEFINITION-LIKE;|&REMARK-LIKE;" mode="heading-birth">
