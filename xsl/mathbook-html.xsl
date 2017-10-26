@@ -243,12 +243,59 @@
     </xsl:if>
 </xsl:template>
 
+<!-- JDR: customize heading-full -->
+<xsl:template match="*" mode="heading-full">
+    <xsl:param name="important"/>
+    <xsl:element name="h5">
+        <xsl:attribute name="class">
+            <xsl:text>heading</xsl:text>
+            <xsl:if test="$important">
+               <xsl:text> important</xsl:text>
+            </xsl:if>
+        </xsl:attribute>
+        <xsl:if test="$important">
+            <xsl:element name="img">
+                <xsl:attribute name="src">
+                    <xsl:text>static/images/important.svg</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="class">
+                    <xsl:text>important</xsl:text>
+                </xsl:attribute>
+            </xsl:element>
+        </xsl:if>
+        <xsl:variable name="the-number">
+            <xsl:apply-templates select="." mode="number" />
+        </xsl:variable>
+        <span class="type">
+            <xsl:apply-templates select="." mode="type-name" />
+        </span>
+        <xsl:if test="not($the-number='')">
+            <span class="codenumber">
+                <xsl:value-of select="$the-number" />
+            </span>
+        </xsl:if>
+        <xsl:if test="title">
+            <span class="title">
+                <xsl:text>(</xsl:text>
+                <xsl:apply-templates select="." mode="title-full" />
+                <xsl:text>)</xsl:text>
+            </span>
+        </xsl:if>
+    </xsl:element>
+</xsl:template>
+
 <xsl:template match="&DEFINITION-LIKE;|&REMARK-LIKE;" mode="heading-birth">
     <xsl:apply-templates select="." mode="heading-simple-nonumber" />
 </xsl:template>
 
 <xsl:template match="essential" mode="heading-birth">
     <xsl:apply-templates select="." mode="heading-simple-nonumber">
+        <xsl:with-param name="important" select="true()"/>
+    </xsl:apply-templates>
+</xsl:template>
+
+<xsl:template match="essential" mode="heading-xref-knowl">
+    <xsl:apply-templates select="." mode="heading-full">
         <xsl:with-param name="important" select="true()"/>
     </xsl:apply-templates>
 </xsl:template>

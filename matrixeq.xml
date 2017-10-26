@@ -28,7 +28,7 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
-      <p>When we say "<m>A</m> is an <m>m\times n</m> matrix," we mean that <m>A</m> has <m>m</m> rows an <m>n</m> columns.
+      <p>When we say "<m>A</m> is an <m>m\times n</m> matrix," we mean that <m>A</m> has <m>m</m> rows and <m>n</m> columns.
       </p>
     </warning>
 
@@ -440,15 +440,21 @@ the license is included in gfdl.xml.
         </p>
       </warning>
 
-      <figure>
-        <caption>An example where the criteria of the above <xref ref="matrixeq-thm-full-span"/> are satisfied.  The red region is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.</caption>
-        <mathbox source="demos/spans.html?v1=2,-1,1&amp;v2=1,0,-1&amp;v3=-1,2,2&amp;range=5&amp;capopt=matrix" height="400px"/>
-      </figure>
+      <example hide-type="true">
+        <title>Interactive: the criteria of the Theorem are satisfied</title>
+        <figure>
+          <caption>An example where the criteria of the above <xref ref="matrixeq-thm-full-span"/> are satisfied.  The red region is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.  If you drag <m>b</m>, the demo will solve <m>Ax=b</m> for you and move <m>x</m>.</caption>
+          <mathbox source="demos/Axequalsb.html?mat=2,1,-1:1,0,2&amp;range2=5&amp;show=false&amp;closed=true" height="600px"/>
+        </figure>
+      </example>
 
-      <figure>
-        <caption>An example where the criteria of the above <xref ref="matrixeq-thm-full-span"/> are <em>not</em> satisfied.  The red region is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.</caption>
-        <mathbox source="demos/spans.html?v1=2,-1,1&amp;v2=1,0,-1&amp;v3=1,-1,2&amp;range=5&amp;capopt=matrix" height="400px"/>
-      </figure>
+      <example hide-type="true">
+        <title>Interactive: the critera of the Theorem are not satisfied</title>
+        <figure>
+          <caption>An example where the criteria of the above <xref ref="matrixeq-thm-full-span"/> are <em>not</em> satisfied.  The red region is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.  Try dragging <m>b</m> in and out of the column span.</caption>
+          <mathbox source="demos/Axequalsb.html?show=false&amp;closed=true" height="600px"/>
+        </figure>
+      </example>
 
     </paragraphs>
 
