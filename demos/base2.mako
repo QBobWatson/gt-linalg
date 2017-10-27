@@ -4,6 +4,7 @@
 <%! datgui=True %>
 <%! screenfull=True %>
 <%! demojs=True %>
+<%! roots=False %>
 
 <!DOCTYPE html>
 <html>
@@ -51,6 +52,9 @@
     % endif
     % if self.attr.screenfull:
         <script src="lib/screenfull.min.js"></script>
+    % endif
+    % if self.attr.roots:
+        <script src="lib/roots.js"></script>
     % endif
 
     <%block name="extra_js"/>

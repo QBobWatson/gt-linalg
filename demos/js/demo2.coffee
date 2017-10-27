@@ -39,6 +39,7 @@ rowReduce = (M, opts) ->
     opts ?= {}
     m = opts.rows ? M[0].length
     n = opts.cols ? M.length
+    ε = opts.epsilon ? 1e-5
     row = 0  # Current row
     col = 0  # Current pivot column
     pivots = []
@@ -62,7 +63,7 @@ rowReduce = (M, opts) ->
             if Math.abs(M[col][k]) > maxEl
                 maxEl = Math.abs M[col][k]
                 maxRow = k
-        if maxEl == 0
+        if Math.abs(maxEl) < ε
             # No pivot in this column
             noPivots.push col
             col++
@@ -124,6 +125,44 @@ rowReduce = (M, opts) ->
             ret[col] = Eb[row]
         ret
     return [nulBasis, colBasis, E, f]
+
+# Find the eigenvalues of a 2x2 or 3x3 matrix
+# Must include roots.js
+# Returns [real, cplx] where each is a list of [root, multiplicity]
+eigenvalues = (mat) ->
+    switch mat.length
+        when 2
+            [[a, b], [c, d]] = mat
+            charPoly = [a*d-b*c, -a-d, 1]
+            [real, imag] = findRoots charPoly, null, 1e6, 1e-15
+        when 3
+            [[a, b, c], [d, e, f], [g, h, i]] = mat
+            charPoly = [-a*e*i - b*f*g - c*d*h + a*f*h + b*d*i + c*e*g,
+                        a*e + a*i + e*i - b*d - c*g - f*h,
+                        -a - e - i, 1]
+            [real, imag] = findRoots charPoly, null, 1e6, 1e-15
+    realRoots = []
+    cplxRoots = []
+    for i in [0...real.length]
+        if Math.abs(imag[i]) < 1e-4
+            found = false
+            for x in realRoots
+                root = x[0]
+                if Math.abs(root - real[i]) < 1e-5
+                    x[1]++  # Increase multiplicity
+                    found = true
+                    break
+            realRoots.push [real[i], 1] unless found
+        else
+            found = false
+            for x in cplxRoots
+                [real, imag] = x[0]
+                if (real[i]-real)*(real[i]-real) + (imag[i]-imag)*(imag[i]-imag) < 1e-10
+                    x[1]++ # Increase multiplicity
+                    found = true
+                    break
+            cplxRoots.push [[real[i], imag[i]], 1] unless found
+    [realRoots, cplxRoots]
 
 urlParams = {}
 decodeQS = () ->
@@ -1885,6 +1924,9 @@ class Demo2D extends Demo
 
 ################################################################################
 # * Globals
+
+window.rowReduce     = rowReduce
+window.eigenvalues   = eigenvalues
 
 window.Demo          = Demo
 window.Demo2D        = Demo2D
