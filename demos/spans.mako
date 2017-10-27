@@ -147,6 +147,7 @@ window.demo = new (if is2D then Demo2D else Demo) {
     params[checkLabel] = @urlParams.lincombo == "on"
 
     gui = new dat.GUI width: 350
+    gui.closed = @urlParams.closed?
     guiElts = {}
     if @urlParams.axes != "disabled"
         guiElts.Axes = gui.add(params, 'Axes')

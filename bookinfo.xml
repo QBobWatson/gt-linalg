@@ -27,6 +27,7 @@ Copyright 2017 Georgia Institute of Technology
     <type match="figure" text="phrase-hybrid"/>
     <type match="observation" text="phrase-hybrid"/>
     <type match="subsection" text="phrase-hybrid"/>
+    <type match="fact" text="phrase-hybrid"/>
     <type match="section" text="type-global"/>
   </cross-references>
 

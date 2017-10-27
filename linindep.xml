@@ -12,8 +12,810 @@ the license is included in gfdl.xml.
 <section xml:id="section-lin-indep">
   <title>Linear Independence</title>
 
-  <p>Linear independence.  Equivalent criteria.  Free variables and linear dependence.  Using <m>\R^p</m> to label spans.</p>
+  <objectives>
+    <ol>
+      <li>Understand the concept of linear (in)dependence.</li>
+      <li>Learn several criteria for linear (in)dependence.</li>
+      <li>Understand linear (in)dependence geometrically.</li>
+      <li>Understand the relationship between linear independence and pivot columns / free variables.</li>
+      <li>Vocabulary words: <term>linear dependence relation</term> / <term>equation of linear dependence</term>.</li>
+      <li>Essential vocabulary words: <term>linearly independent</term>, <term>linearly dependent</term>.</li>
+    </ol>
+  </objectives>
 
+  <introduction>
+    <p>
+      Sometimes the span of a set of vectors is "smaller" than you expect from the
+number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means that (at least) one of the vectors is <em>redundant</em>: it can be removed without affecting the span.  In the present section, we formalize this idea in the notion of <em>linear (in)dependence</em>.
+    </p>
+    <figure xml:id="linindep-intro-pic">
+      <caption>Pictures of sets of vectors which are linearly dependent.  Note that in each case, one vector is in the span of the others<mdash/>so it doesn't make the span bigger.</caption>
+      <image>
+        <latex-image-code>
+          <![CDATA[
+\begin{tikzpicture}[thin border nodes]
+  \draw[grid lines, light gray] (-3,-3) grid (4, 4);
+  \path[clip] (-3,-3) rectangle (4, 4);
+  \node[seq4] at (.5,2.5) {$\Span\{v,w\}$};
+  \draw[thin, seq4] ($-2*(2,2)$) -- ($2*(2,2)$);
+  \draw[vector, seq1] (0,0)
+    -- node[midway,above left,text=seq1] {$v$} (2,2);
+  \draw[vector, seq2] (0,0)
+    -- node[pos=.4,above left,text=seq2] {$w$} (-1,-1);
+  \point at (0,0);
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[myxyz, thin border nodes]
+  \path[clip, resetxy] (-4,-3) rectangle (4,3);
+
+  \def\v{(2,-1,1)}
+  \def\w{(2,1,.3)}
+  \def\u{(2,0,.65)}
+
+  \node[coordinate] (X) at \v {};
+  \node[coordinate] (Y) at \w {};
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-1.5, 5) -- (1.5, -5) -- (1.5, -7) -- (-1.5, -7) -- cycle;
+    \fill[seq4!10, nearly opaque] (-1.5,-1) rectangle (1.5,2);
+    \draw[step=.5cm, seq4, very thin] (-1.5,-1) grid (1.5,2);
+  \end{scope}
+
+  \begin{scope}[transformxy]
+    \fill[white, nearly opaque] (-2, -2) rectangle (3, 3);
+    \draw[grid lines] (-2, -2) grid (3, 3);
+  \end{scope}
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-1.5, 5) -- (1.5, -5) -- (1.5, 7) -- (-1.5, 7) -- cycle;
+    \fill[seq4!10, nearly opaque] (-1.5,-1) rectangle (1.5,2);
+    \draw[step=.5cm, seq4, very thin] (-1.5,-1) grid (1.5,2);
+  \end{scope}
+
+  \node[seq4] at (-1cm, 2cm) {$\Span\{u,v,w\}$};
+
+  \draw[vector, seq1] (0,0,0) --
+    node [midway, above] {$v$} \v;
+  \draw[thin, densely dotted] \v -- \projxy\v;
+  \draw[vector, seq2] (0,0,0) --
+    node [midway, below] {\strut$w$} \w;
+  \draw[thin, densely dotted] \w -- \projxy\w;
+  \draw[vector, seq3] (0,0,0) --
+    \u node [right] {$u$};
+  \draw[thin, densely dotted] \u -- \projxy\u;
+
+  \draw[thin, densely dotted] \v -- \w;
+
+  \point at (0,0,0);
+
+\end{tikzpicture}
+          ]]>
+        </latex-image-code>
+      </image>
+    </figure>
+  </introduction>
+
+  <subsection>
+    <title>The Definition of Linear Independence</title>
+
+    <essential xml:id="linindep-defn-linindep">
+      <statement>
+        <p>
+          A set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is <term>linearly independent</term> if the vector equation
+          <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = 0</me>
+          has only the trivial solution <m>x_1=x_2=\cdots=x_p=0</m>.  The set <m>\{v_1,v_2,\ldots,v_p\}</m> is <term>linearly dependent</term> otherwise.
+        </p>
+      </statement>
+    </essential>
+
+    <p>
+      In other words, <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent if there exist numbers <m>x_1,x_2,\ldots,x_p</m>, not all equal to zero, such that
+      <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = 0.</me>
+      This is called a <term>linear dependence relation</term> or <term>equation of linear dependence</term>.
+    </p>
+
+    <warning>
+      <p>
+        Note that linear (in)dependence is a notion that applies to a <em>collection of vectors</em>, not to a single vector, or to one vector in the presence of some others.
+      </p>
+    </warning>
+
+    <example>
+      <title>Checking linear dependence</title>
+      <statement>
+        <p>
+          Is the set
+          <me>\left\{ \vec{1 1 1},\, \vec{1 -1 2},\, \vec{3 1 4} \right\}</me>
+          linearly independent?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Equivalently, we are asking if the homogeneous vector equation
+          <me>x\vec{1 1 1} + y\vec{1 -1 2} + z\vec{3 1 4} = \vec{0 0 0}</me>
+          has a nontrivial solution.  We solve this by forming a matrix and row reducing (we do not augment because of this <xref ref="solnsets-no-augment"/>):
+          <me>\mat{1 1 3; 1 -1 1; 1 2 4}
+          \quad\xrightarrow{\text{row reduce}}\quad
+          \mat{1 0 2; 0 1 1; 0 0 0}</me>
+          This says <m>x = -2z</m> and <m>y = -z</m>.  So there exist nontrivial solutions: for instance, taking <m>z=1</m> gives this equation of linear dependence:
+          <me>-2\vec{1 1 1} - \vec{1 -1 2} + \vec{3 1 4} = \vec{0 0 0}.</me>
+        </p>
+        <figure>
+          <caption>Move the sliders to solve the homogeneous vector equation in this example.  Do you see why the vectors need to be coplanar in order for there to exist a nontrivial solution?</caption>
+          <mathbox source="demos/spans.html?v1=1,1,1&amp;v2=1,-1,2&amp;v3=3,1,4&amp;target=0,0,0" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <example>
+      <title>Checking linear independence</title>
+      <statement>
+        <p>
+          Is the set
+          <me>\left\{ \vec{1 1 -2},\, \vec{1 -1 2},\, \vec{3 1 4} \right\}</me>
+          linearly independent?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Equivalently, we are asking if the homogeneous vector equation
+          <me>x\vec{1 1 -2} + y\vec{1 -1 2} + z\vec{3 1 4} = \vec{0 0 0}</me>
+          has a nontrivial solution.  We solve this by forming a matrix and row reducing (we do not augment because of this <xref ref="solnsets-no-augment"/>):
+          <me>\mat{1 1 3; 1 -1 1; -2 2 4}
+          \quad\xrightarrow{\text{row reduce}}\quad
+          \mat{1 0 0; 0 1 0; 0 0 1}</me>
+          This says <m>x = y = z = 0</m>, i.e., the only solution is the trivial solution.  We conclude that the set is linearly independent.
+        </p>
+        <figure>
+          <caption>Move the sliders to solve the homogeneous vector equation in this example.  Do you see why the vectors would need to be coplanar in order for there to exist a nontrivial solution?</caption>
+          <mathbox source="demos/spans.html?v1=1,1,-2&amp;v2=1,-1,2&amp;v3=3,1,4&amp;target=0,0,0&amp;range=4" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <p>
+      A set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly independent if and only if the vector equation
+      <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = 0</me>
+      has only the trivial solution, if and only if the matrix equation
+      <m>Ax=0</m>
+      has only the trivial solution, where <m>A</m> is the matrix with columns <m>v_1,v_2,\ldots,v_p</m>:
+      <me>A = \mat{| |, , |; v_1 v_2 \cdots, v_p; | |, , |}.</me>
+      This is true if and only if <m>A</m> has a pivot in every column. See this <xref ref="solnsets-nontrivial"/>.
+    </p>
+
+    <p>
+      In summary:
+    </p>
+
+    <note hide-type="true" xml:id="linindep-matrix-cols">
+      <title>Linear independence and matrix columns</title>
+      <p>
+        <ul>
+          <li>The vectors <m>\{v_1,v_2,\ldots,v_p\}</m> are linearly independent if and only if the matrix <m>A</m> with columns <m>v_1,v_2,\ldots,v_p</m> has a pivot in every column.</li>
+          <li>Solving the matrix equatiion <m>Ax=0</m> will either verify that the columns <m>v_1,v_2,\ldots,v_p</m> are linearly independent, or will produce a linear dependece relation by substituting any nonzero values for the free variables.</li>
+        </ul>
+      </p>
+    </note>
+
+    <p>
+      Suppose that <m>A</m> has more columns than rows.  Then <m>A</m> cannot have a pivot in every column (it has at most one pivot per row), so its columns are automatically linearly dependent.
+    </p>
+
+    <warning xml:id="linindep-wide-matrix">
+      <p>A wide matrix has linearly dependent columns.</p>
+    </warning>
+
+      <p>For example, four vectors in <m>\R^3</m> are automatically linearly dependent.  Note that a tall matrix may or may not have linearly independent columns.</p>
+
+    <fact hide-type="true" xml:id="linindep-facts">
+      <title>Facts about linear independence</title>
+      <statement>
+        <p>
+          <ol>
+            <li>Two vectors are linearly dependent if and only if they are collinear, i.e., one is a multiple of the other.</li>
+            <li>Any set containing the zero vector is linearly dependent.</li>
+            <li>If a subset of <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent, then <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent as well.</li>
+          </ol>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          <ol>
+            <li>
+              If <m>v_1 = cv_2</m> then <m>v_1-cv_2=0</m>, so <m>\{v_1,v_2\}</m> is linearly dependent.  Conversely, if <m>x_1v_1+x_2v_2=0</m> with <m>x_1\neq0</m> (say), then <m>v_1 = -\frac{x_2}{x_1}v_2</m>.
+            </li>
+            <li>
+              It is easy to produce a linear dependence relation if one vector is the zero vector: for instance, if <m>v_1=0</m> then
+              <me>1\cdot v_1 + 0\cdot v_2 + \cdots + 0\cdot v_p = 0.</me>
+            </li>
+            <li>
+              Suppose that <m>\{v_1,v_2,\ldots,v_r\}</m> is linearly dependent, with <m>r &lt; p</m>.  This means that there is an equation of linear dependence
+              <me>x_1v_1 + x_2v_2 + \cdots + x_rv_r = 0</me>,
+              with at least one of <m>x_1,x_2,\ldots,x_r</m> nonzero.  This is also an equation of linear dependence among <m>\{v_1,v_2,\ldots,v_p\}</m>, since we can take the coefficients of <m>v_{r+1},\ldots,v_p</m> to all be zero.
+            </li>
+          </ol>
+        </p>
+      </proof>
+    </fact>
+
+    <p>
+      With regard to the first Fact, note that the zero vector is a multiple of any vector, so it is collinear with any other vector.  Hence Facts 1 and 2 are consistent with each other.
+    </p>
+
+  </subsection>
+
+  <subsection>
+    <title>Criteria for Linear Independence</title>
+
+    <p>
+      In this subsection we give several criteria for a set of vectors to be linearly (in)dependent.  Keep in mind, however, that the actual <xref ref="linindep-defn-linindep"/> is above.
+    </p>
+
+    <theorem xml:id="linindep-criterion-inspan">
+      <statement>
+        <p>A set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent if and only if one of the vectors is in the span of the other ones.</p>
+      </statement>
+      <proof>
+        <p>
+          Suppose, for instance, that <m>v_3</m> is in <m>\Span\{v_1,v_2,v_4\}</m>, so we have an equation like
+          <me>v_3 = 2v_1 - \frac 12v_2 + 6v_4.</me>
+          We can subract <m>v_3</m> from both sides of the equation to get
+          <me>0 = 2v_1 - \frac 12v_2 - v_3 + 6v_4.</me>
+          This is a linear dependence relation.
+        </p>
+        <p>
+          Conversely, if we have a linear dependence relation like
+          <me>0 = 2v_1 - \frac 12v_2 + v_3 - 6v_4,</me>
+          then we can move any nonzero term to the left side of the equation and divide by its coefficient:
+          <me>v_1 = \frac 12\left(\frac 12v_2 - v_3 + 6v_4\right).</me>
+          This shows that <m>v_1</m> is in <m>\Span\{v_2,v_3,v_4\}</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <warning type-name="Warning" xml:id="linindep-not-any"><p>
+      In a linearly dependent set <m>\{v_1,v_2,\ldots,v_p\}</m>, it is not generally true that <em>any</em> vector <m>v_j</m> is in the span of the others, only that <em>at least one</em> of them is.  See this <xref ref="linindep-3d-4vecs"/> below.
+    </p></warning>
+
+    <theorem xml:id="linindep-criterion-redundant">
+      <statement>
+        <p>A set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent if and only if we can remove one of the vectors without shrinking the span.</p>
+      </statement>
+      <proof>
+        <p>
+          If <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent, then we know from the above <xref ref="linindep-criterion-inspan"/> that one vector is in the span of the others; for instance,
+          <me>v_3 = 2v_1 - \frac 12v_2 + 6v_4.</me>
+          In this case, any linear combination of <m>v_1,v_2,v_3,v_4</m> is already a linear combination of <m>v_1,v_2,v_4</m>:
+          <md>
+            <mrow>
+              x_1v_1 + x_2v_2 + x_3v_3 + x_4v_4 &amp;=
+              x_1v_1 + x_2v_2 + x_3\left(2v_1-\frac 12v_2 + 6v_4\right) + x_4v_4
+            </mrow>
+            <mrow>
+              &amp;= (x_1+2x_3)v_1 + \left(x_2-\frac 12x_3\right)v_2 + (x_4+6)v_4.
+            </mrow>
+          </md>
+          Therefore, <m>\Span\{v_1,v_2,v_3,v_4\}</m> is contained in <m>\Span\{v_1,v_2,v_4\}</m>.  Any linear combination of <m>v_1,v_2,v_4</m> is also a linear combination of <m>v_1,v_2,v_3,v_4</m> (with the <m>v_3</m>-coefficient equal to zero), so <m>\Span\{v_1,v_2,v_4\}</m> is also contained in <m>\Span\{v_1,v_2,v_3,v_4\}</m>, and thus they are equal.
+        </p>
+
+        <p>
+          Conversely, suppose that we can remove <m>v_3</m> without shrinking the span of <m>\{v_1,v_2,v_3,v_4\}</m>: in other words, <m>\Span\{v_1,v_2,v_3,v_4\} = \Span\{v_1,v_2,v_4\}</m>.  Since <m>v_3</m> is in <m>\Span\{v_1,v_2,v_3,v_4\}</m> (the <m>v_3</m>-coefficient is 1 and the rest are 0), this means that <m>v_3</m> is in <m>\Span\{v_1,v_2,v_4\}</m>, so the vectors are linearly dependent by the previous <xref ref="linindep-criterion-inspan"/>.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The previous <xref ref="linindep-criterion-redundant"/> makes precise in what sense a set of linearly dependent vectors is <em>redundant</em>.
+    </p>
+
+    <theorem xml:id="linindep-increasing-span" type-name="Increasing Span Criterion">
+      <statement>
+        <p>A set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly independent if and only if, for every <m>j</m>, the vector <m>v_j</m> is not in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m>.</p>
+      </statement>
+      <proof>
+        <p>
+          It is equivalent to show that <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent if and only if <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m> for some <m>j</m>.  The "if" implication is an immediate consequence of the previous <xref ref="linindep-criterion-redundant"/>.  Suppose then that <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent.  This means that some <m>v_j</m> is in the span of the others.  Choose the largest such <m>j</m>.  We claim that this <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m>.  If not, then
+          <me>v_j = x_1v_1 + x_2v_2 + \cdots + x_{j-1}v_{j-1} + x_{j+1}v_{j+1} + \cdots + x_pv_p</me>
+          with not all of <m>x_{j+1},\ldots,x_p</m> equal to zero.  Suppose for simplicity that <m>x_p\neq 0</m>.  Then we can rearrange:
+          <me>
+            v_p = -\frac 1{x_p}\bigl( x_1v_1 + x_2v_2 + \cdots + x_{j-1}v_{j-1}
+            - v_j + x_{j+1}v_{j+1} + \cdots + x_{p-1}v_{p-1}
+            \bigr).
+          </me>
+          This says that <m>v_p</m> is in the span of <m>\{v_1,v_2,\ldots,v_{p-1}\}</m>, which contradicts our assumption that <m>v_j</m> is the last vector in the span of the others.
+        </p>
+      </proof>
+    </theorem>
+
+    <warning>
+      <p>A set of vectors is linearly independent if and only if, every time we add another vector to the set, the span gets bigger.</p>
+    </warning>
+
+  </subsection>
+
+
+  <subsection>
+    <title>Pictures of Linear Independence</title>
+
+    <figure xml:id="linindep-2d-1vec">
+      <caption>A set containg one vector <m>\{v\}</m> is linearly independent when <m>v\neq 0</m>, since <m>xv = 0</m> implies <m>x=0</m>.</caption>
+      <image>
+        <latex-image-code>
+          <![CDATA[
+\begin{tikzpicture}[thin border nodes, scale=1.5]
+  \path[use as bounding box] (-3,-3) rectangle (3,3);
+
+  \path[clip] (-3,-3) rectangle (3,3);
+  \draw[seq4!30] (-4,-2) -- (4,2);
+  \path (-2,-1) node[below right, seq4] {$\Span\{v\}$};
+  \draw[vector, seq1] (0,0) --
+    node[midway,above left]{$v$} (2,1);
+  \point at (0,0);
+  \draw[thin] (-3,-3) rectangle (3,3);
+\end{tikzpicture}
+          ]]>
+        </latex-image-code>
+      </image>
+    </figure>
+
+    <figure xml:id="linindep-2d-2vec">
+      <caption>A set of two noncollinear vectors <m>\{v,w\}</m> is linearly independent: neither is in the span of the other (the first <xref ref="linindep-criterion-inspan">Criterion</xref>), or, the span got bigger when we added <m>w</m> (<xref ref="linindep-increasing-span"/>).</caption>
+      <image>
+        <latex-image-code>
+          <![CDATA[
+\begin{tikzpicture}[thin border nodes, scale=1.5]
+  \path[use as bounding box] (-3,-3) rectangle (3,3);
+
+  \path[clip] (-3,-3) rectangle (3,3);
+  \draw[seq4!30] (-4,-2) -- (4,2);
+  \draw[seq4!30] (-3,3) -- (3,-3);
+  \path (-2,-1) node[below right, seq4] {$\Span\{v\}$};
+  \path (-2,2) node[above right, seq4] {$\Span\{w\}$};
+  \draw[vector, seq1] (0,0) --
+    node[midway,above left]{$v$} (2,1);
+  \draw[vector, seq2] (0,0) --
+    node[midway,below left]{$w$} (-1,1);
+  \point at (0,0);
+  \draw[thin] (-3,-3) rectangle (3,3);
+\end{tikzpicture}
+          ]]>
+        </latex-image-code>
+      </image>
+    </figure>
+
+    <figure xml:id="linindep-2d-3vec">
+      <caption>This set of three vectors <m>\{v,w,u\}</m> is linearly dependent: <m>u</m> is in <m>\Span\{v,w\}</m> (the first <xref ref="linindep-criterion-inspan">Criterion</xref>), we can remove <m>u</m> without shrinking the span (the second <xref ref="linindep-criterion-redundant">Criterion</xref>), or, the span did not increase when we added <m>u</m> (<xref ref="linindep-increasing-span"/>).</caption>
+      <image>
+        <latex-image-code>
+          <![CDATA[
+\begin{tikzpicture}[scale=1.5, thin border nodes]
+  \path[use as bounding box] (-3,-3) rectangle (3,3);
+
+  \path[clip] (-3,-3) rectangle (3,3);
+  \fill[seq4!10] (-3,-3) rectangle (3,3);
+  \draw[seq4!30] (-4,-2) -- (4,2);
+  \draw[seq4!30] (-3,3) -- (3,-3);
+  \path (-2,-1) node[below right, seq4] {$\Span\{v\}$};
+  \path (-2,2) node[above right, seq4] {$\Span\{w\}$};
+  \node[seq4] at (1.2,1.8) {$\Span\{v,w\}$};
+  \draw[vector, seq1] (0,0) --
+    node[midway,above left]{$v$} (2,1);
+  \draw[vector, seq2] (0,0) --
+    node[midway,below left]{$w$} (-1,1);
+  \draw[vector, seq3] (0,0) --
+    node[midway,right]{$u$} (0,-1.5);
+  \point at (0,0);
+  \draw[thin] (-3,-3) rectangle (3,3);
+\end{tikzpicture}
+          ]]>
+        </latex-image-code>
+      </image>
+    </figure>
+
+    <p>
+      In the above <xref ref="linindep-2d-3vec"/>, note that <m>v</m> is in <m>\Span\{u,w\}</m>, and <m>w</m> is in <m>\Span\{u,v\}</m>, so we can remove any of the three vectors without shrinking the span.
+    </p>
+
+    <figure xml:id="linindep-2d-coll">
+      <caption>Two collinear vectors are always linearly dependent: <m>w</m> is in <m>\Span\{v\}</m> (the first <xref ref="linindep-criterion-inspan">Criterion</xref>), we can remove <m>w</m> without shrinking the span (the second <xref ref="linindep-criterion-redundant">Criterion</xref>), or, the span did not increase when we added <m>w</m> (<xref ref="linindep-increasing-span"/>).</caption>
+      <image>
+        <latex-image-code>
+          <![CDATA[
+\begin{tikzpicture}[scale=1.5, thin border nodes]
+  \path[use as bounding box] (-3,-3) rectangle (3,3);
+
+  \path[clip] (-3,-3) rectangle (3,3);
+  \draw[seq4!30] (-4,-2) -- (4,2);
+  \path (-2,-1) node[below right, seq4] {$\Span\{v\}$};
+  \draw[vector, seq1] (0,0) --
+    node[midway,above left]{$v$} (2,1);
+  \draw[vector, seq2] (0,0) --
+    node[pos=.4,above left]{$w$} (-1,-.5);
+  \point at (0,0);
+  \draw[thin] (-3,-3) rectangle (3,3);
+\end{tikzpicture}
+          ]]>
+        </latex-image-code>
+      </image>
+    </figure>
+
+    <figure xml:id="linindep-2d-coll2">
+      <caption>These three vectors <m>\{v,w,u\}</m> are linearly dependent: indeed, <m>\{v,w\}</m> is already linearly dependent, so we can use the third <xref ref="linindep-facts">Fact</xref>.</caption>
+      <image>
+        <latex-image-code>
+          <![CDATA[
+\begin{tikzpicture}[scale=1.5, thin border nodes]
+  \path[use as bounding box] (-3,-3) rectangle (3,3);
+
+  \path[clip] (-3,-3) rectangle (3,3);
+  \draw[seq4!30] (-4,-2) -- (4,2);
+  \path (-2,-1) node[below right, seq4] {$\Span\{v\}$};
+  \draw[vector, seq1] (0,0) --
+    node[midway,above left]{$v$} (2,1);
+  \draw[vector, seq2] (0,0) --
+    node[pos=.4,above left]{$w$} (-1,-.5);
+  \draw[vector, seq3] (0,0) --
+    node[midway,right]{$u$} (0,-1.5);
+  \point at (0,0);
+  \draw[thin] (-3,-3) rectangle (3,3);
+\end{tikzpicture}
+          ]]>
+        </latex-image-code>
+      </image>
+    </figure>
+
+    <example hide-type="true">
+      <title>Interactive: linear independence of two vectors in <m>\R^2</m></title>
+      <figure>
+        <caption>Move the vector heads and the demo will tell you if they are linearly independent and show you their span.</caption>
+        <mathbox source="demos/spans.html?captions=indep&amp;v1=2,1&amp;v2=-1,-.5&amp;labels=v,w&amp;range=5&amp;showPlane=true&amp;closed" height="500px"/>
+      </figure>
+    </example>
+
+    <example hide-type="true">
+      <title>Interactive: linear dependence of three vectors in <m>\R^2</m></title>
+      <figure>
+        <caption>Move the vector heads and the demo will tell you that they are linearly dependent and show you their span.</caption>
+        <mathbox source="demos/spans.html?captions=indep&amp;v1=2,1&amp;v2=-1,-.5&amp;v3=0,-1.5&amp;labels=v,w,u&amp;range=5&amp;showPlane=true&amp;closed" height="500px"/>
+      </figure>
+    </example>
+
+    <figure xml:id="linindep-3d-2vec">
+      <caption>These two vectors <m>\{v,w\}</m> are linearly independent because they are not collinear.</caption>
+      <image>
+        <latex-image-code>
+          <![CDATA[
+\begin{tikzpicture}[myxyz, thin border nodes, scale=1.25]
+  \path[clip, resetxy] (-4,-4) rectangle (4,4);
+
+  \def\v{(2,-1,1)}
+  \def\w{(1,0,-1)}
+  \def\u{(.5,-.5,1)}
+  \def\uu{(0,2,2)}
+
+  \node[coordinate] (X) at \v {};
+  \node[coordinate] (Y) at \w {};
+
+  \draw[seq4!30] ($-3*(2,-1,1)$) -- (0,0,0);
+  \draw[seq4!30] ($5*(1,0,-1)$) -- (0,0,0);
+
+  \begin{scope}[transformxy]
+    \fill[white, semitransparent] (-2, -2) rectangle (3, 3);
+    \draw[help lines, light gray] (-2, -2) grid (3, 3);
+  \end{scope}
+
+  \draw[seq4!30] ($3*(2,-1,1)$) -- (0,0,0);
+  \draw[seq4!30] ($-5*(1,0,-1)$) -- (0,0,0);
+
+  \draw[vector, seq1] (0,0,0) --
+    node [midway, below right] {$v$} \v;
+  \draw[thin, densely dotted] \v -- \projxy\v;
+
+  \draw[vector, seq2!50!white] (0,0,0) --
+    node [midway, below left] {$w$} \w;
+  \draw[thin, densely dotted, black!50!white] \w -- \projxy\w;
+
+  \path[seq4] ($.9*(-3,1.5,-1.5)$) node[below right] {$\Span\{v\}$};
+  \path[seq4] (-2,0,2) node[below left] {$\Span\{w\}$};
+
+  \point at (0,0);
+  \draw[thin,resetxy] (-4,-4) rectangle (4,4);
+
+\end{tikzpicture}
+          ]]>
+        </latex-image-code>
+      </image>
+    </figure>
+
+    <figure xml:id="linindep-3d-3vec">
+      <caption>These three vectors <m>\{v,w,u\}</m> are linearly independent: the span got bigger when we added <m>w</m>, then again when we added <m>u</m> (<xref ref="linindep-increasing-span"/>).</caption>
+      <image>
+        <latex-image-code>
+          <![CDATA[
+\begin{tikzpicture}[myxyz, scale=1.25, thin border nodes]
+  \path[clip, resetxy] (-4,-4) rectangle (4,4);
+
+  \def\v{(2,-1,1)}
+  \def\w{(1,0,-1)}
+  \def\u{(.5,-.5,1)}
+  \def\uu{(0,2,2)}
+
+  \node[coordinate] (X) at \v {};
+  \node[coordinate] (Y) at \w {};
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-5, -5) -- (5, 5) -- (5, 10) -- (-5, 10) -- cycle;
+    \fill[seq4!10, nearly opaque] (-1.5,-1) rectangle (1.5,2);
+    \draw[step=.5cm, seq4!30, very thin] (-1.5,-1) grid (1.5,2);
+  \end{scope}
+
+  \draw[seq4!30] ($-3*(2,-1,1)$) -- (0,0,0);
+  \draw[seq4!30] ($5*(1,0,-1)$) -- (0,0,0);
+
+  \begin{scope}[transformxy]
+    \fill[white, semitransparent] (-2, -2) rectangle (3, 3);
+    \draw[help lines, light gray] (-2, -2) grid (3, 3);
+  \end{scope}
+
+  \draw[seq4!30] ($3*(2,-1,1)$) -- (0,0,0);
+  \draw[seq4!30] ($-5*(1,0,-1)$) -- (0,0,0);
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-5, -5) -- (5, 5) -- (5, -10) -- (-5, -10) -- cycle;
+    \fill[seq4!10, nearly opaque] (-1.5,-1) rectangle (1.5,2);
+    \draw[step=.5cm, seq4!30, very thin] (-1.5,-1) grid (1.5,2);
+  \end{scope}
+
+  \draw[vector, seq1] (0,0,0) --
+    node [midway, below right] {$v$} \v;
+  \draw[thin, densely dotted] \v -- \projxy\v;
+
+  \draw[vector, seq2!50!white] (0,0,0) --
+    node [midway, below left] {$w$} \w;
+  \draw[thin, densely dotted, black!50!white] \w -- \projxy\w;
+
+  \draw[vector, seq3] (0,0,0) --
+    node [midway, below left] {$u$} \uu;
+  \draw[thin, densely dotted] \uu -- \projxy\uu;
+
+  \path[seq4] ($.9*(-3,1.5,-1.5)$) node[below right] {$\Span\{v\}$};
+  \path[seq4] (-2,0,2) node[below left] {$\Span\{w\}$};
+  \node[seq4] at (.8cm, 2.8cm) {$\Span\{v,w\}$};
+
+  \point at (0,0);
+  \draw[thin,resetxy] (-4,-4) rectangle (4,4);
+
+\end{tikzpicture}
+          ]]>
+        </latex-image-code>
+      </image>
+    </figure>
+
+    <figure xml:id="linindep-3d-coplanar">
+      <caption>These three coplanar vectors <m>\{v,w,u\}</m> are linearly dependent: <m>u</m> is in <m>\Span\{v,w\}</m> (the first <xref ref="linindep-criterion-inspan">Criterion</xref>), we can remove <m>u</m> without shrinking the span (the second <xref ref="linindep-criterion-redundant">Criterion</xref>), or, the span did not increase when we added <m>u</m> (<xref ref="linindep-increasing-span"/>).</caption>
+      <image>
+        <latex-image-code>
+          <![CDATA[
+\begin{tikzpicture}[myxyz, scale=1.25, thin border nodes]
+  \path[clip, resetxy] (-4,-4) rectangle (4,4);
+
+  \def\v{(2,-1,1)}
+  \def\w{(1,0,-1)}
+  \def\u{(.5,-.5,1)}
+  \def\uu{(0,2,2)}
+
+  \node[coordinate] (X) at \v {};
+  \node[coordinate] (Y) at \w {};
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-5, -5) -- (5, 5) -- (5, 10) -- (-5, 10) -- cycle;
+    \fill[seq4!10, nearly opaque] (-1.5,-1) rectangle (1.5,2);
+    \draw[step=.5cm, seq4!30, very thin] (-1.5,-1) grid (1.5,2);
+  \end{scope}
+
+  \draw[seq4!30] ($-3*(2,-1,1)$) -- (0,0,0);
+  \draw[seq4!30] ($5*(1,0,-1)$) -- (0,0,0);
+
+  \begin{scope}[transformxy]
+    \fill[white, semitransparent] (-2, -2) rectangle (3, 3);
+    \draw[help lines, light gray] (-2, -2) grid (3, 3);
+  \end{scope}
+
+  \draw[seq4!30] ($3*(2,-1,1)$) -- (0,0,0);
+  \draw[seq4!30] ($-5*(1,0,-1)$) -- (0,0,0);
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-5, -5) -- (5, 5) -- (5, -10) -- (-5, -10) -- cycle;
+    \fill[seq4!10, nearly opaque] (-1.5,-1) rectangle (1.5,2);
+    \draw[step=.5cm, seq4!30, very thin] (-1.5,-1) grid (1.5,2);
+  \end{scope}
+
+  \draw[vector, seq1] (0,0,0) --
+    node [midway, below right] {$v$} \v;
+  \draw[thin, densely dotted] \v -- \projxy\v;
+
+  \draw[vector, seq2!50!white] (0,0,0) --
+    node [midway, below left] {$w$} \w;
+  \draw[thin, densely dotted, black!50!white] \w -- \projxy\w;
+
+  \draw[vector, seq3] (0,0,0) --
+    node [midway, above left] {$u$} \u;
+  \draw[thin, densely dotted] \u -- \projxy\u;
+
+  \path[seq4] ($.9*(-3,1.5,-1.5)$) node[below right] {$\Span\{v\}$};
+  \path[seq4] (-2,0,2) node[below left] {$\Span\{w\}$};
+  \node[seq4] at (.8cm, 2.8cm) {$\Span\{v,w\}$};
+
+  \point at (0,0);
+  \draw[thin,resetxy] (-4,-4) rectangle (4,4);
+
+\end{tikzpicture}
+          ]]>
+        </latex-image-code>
+      </image>
+    </figure>
+
+    <p>
+      Note that three vectors are linearly dependent if and only if they are <em>coplanar</em>.  Indeed, <m>\{v,w,u\}</m> is linearly dependent if and only if one vector is in the span of the other two, which is a plane (or a line) (or <m>\{0\}</m>).
+    </p>
+
+<figure xml:id="linindep-3d-4vecs">
+      <caption>These four vectors <m>\{v,w,u,x\}</m> are linearly dependent: they are the columns of a <xref ref="linindep-wide-matrix">wide matrix</xref>.  Note however that <m>u</m> is not contained in <m>\Span\{v,w,x\}</m>.  See this <xref ref="linindep-not-any">Warning</xref>.</caption>
+      <image>
+        <latex-image-code>
+          <![CDATA[
+\begin{tikzpicture}[myxyz, scale=1.25, thin border nodes]
+  \path[clip, resetxy] (-4,-4) rectangle (4,4);
+
+  \def\v{(2,-1,1)}
+  \def\w{(1,0,-1)}
+  \def\u{(.5,-.5,1)}
+  \def\uu{(0,2,2)}
+
+  \node[coordinate] (X) at \v {};
+  \node[coordinate] (Y) at \w {};
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-5, -5) -- (5, 5) -- (5, 10) -- (-5, 10) -- cycle;
+    \fill[seq4!10, nearly opaque] (-1.5,-1) rectangle (1.5,2);
+    \draw[step=.5cm, seq4!30, very thin] (-1.5,-1) grid (1.5,2);
+  \end{scope}
+
+  \draw[seq4!30] ($-3*(2,-1,1)$) -- (0,0,0);
+  \draw[seq4!30] ($5*(1,0,-1)$) -- (0,0,0);
+
+  \begin{scope}[transformxy]
+    \fill[white, semitransparent] (-2, -2) rectangle (3, 3);
+    \draw[help lines, light gray] (-2, -2) grid (3, 3);
+  \end{scope}
+
+  \draw[seq4!30] ($3*(2,-1,1)$) -- (0,0,0);
+  \draw[seq4!30] ($-5*(1,0,-1)$) -- (0,0,0);
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-5, -5) -- (5, 5) -- (5, -10) -- (-5, -10) -- cycle;
+    \fill[seq4!10, nearly opaque] (-1.5,-1) rectangle (1.5,2);
+    \draw[step=.5cm, seq4!30, very thin] (-1.5,-1) grid (1.5,2);
+  \end{scope}
+
+  \draw[vector, seq1] (0,0,0) --
+    node [midway, below right] {$v$} \v;
+  \draw[thin, densely dotted] \v -- \projxy\v;
+
+  \draw[vector, seq2!50!white] (0,0,0) --
+    node [midway, below left] {$w$} \w;
+  \draw[thin, densely dotted, black!50!white] \w -- \projxy\w;
+
+  \draw[vector, seq3] (0,0,0) --
+    node [midway, below left] {$u$} \uu;
+  \draw[thin, densely dotted] \uu -- \projxy\uu;
+
+  \draw[vector, seq5] (0,0,0) --
+    node [midway, above left] {$x$} \u;
+  \draw[thin, densely dotted] \u -- \projxy\u;
+
+  \path[seq4] ($.9*(-3,1.5,-1.5)$) node[below right] {$\Span\{v\}$};
+  \path[seq4] (-2,0,2) node[below left] {$\Span\{w\}$};
+  \node[seq4] at (.8cm, 2.8cm) {$\Span\{v,w\}$};
+
+  \point at (0,0);
+  \draw[thin,resetxy] (-4,-4) rectangle (4,4);
+
+\end{tikzpicture}
+          ]]>
+        </latex-image-code>
+      </image>
+    </figure>
+
+    <example hide-type="true">
+      <title>Interactive: linear independence of two vectors in <m>\R^3</m></title>
+      <figure>
+        <caption>Move the vector heads and the demo will tell you if they are linearly independent and show you their span.</caption>
+        <mathbox source="demos/spans.html?captions=indep&amp;v1=2,-1,1&amp;v2=1,0,-1&amp;labels=v,w&amp;range=5&amp;closed" height="500px"/>
+      </figure>
+    </example>
+
+    <example hide-type="true">
+      <title>Interactive: linear independence of three vectors in <m>\R^3</m></title>
+      <figure>
+        <caption>Move the vector heads and the demo will tell you if they are linearly independent and show you their span.</caption>
+        <mathbox source="demos/spans.html?captions=indep&amp;v1=2,-1,1&amp;v2=1,0,-1&amp;v3=.5,-.5,1&amp;labels=v,w,u&amp;range=5&amp;closed" height="500px"/>
+      </figure>
+    </example>
+
+  </subsection>
+
+  <subsection>
+    <title>Linear Dependence and Free Variables</title>
+
+    <p>
+      In light of this <xref ref="linindep-matrix-cols"/> and this <xref ref="linindep-criterion-redundant">Criterion</xref>, it is natural to ask which columns of a matrix are "redundant", i.e., which we can remove without affecting the column span.
+    </p>
+
+    <theorem>
+      <statement>
+        <p>
+          Let <m>v_1,v_2,\ldots,v_p</m> be vectors in <m>\R^n</m>, and consider the matrix
+          <me>A = \mat{| |, , |; v_1 v_2 \cdots, v_p; | |, , |}.</me>
+          Then we can delete the columns of <m>A</m> <em>without</em> pivots (the columns corresponding to the free variables), without changing <m>\Span\{v_1,v_2,\ldots,v_p\}</m>.
+        </p>
+
+        <p>The pivot columns are linearly independent, so we cannot delete any more columns.</p>
+      </statement>
+
+      <proof>
+        <p>
+          If the matrix is in reduced row echelon form:
+          <me>A = \mat{1 0 2 0; 0 1 3 0; 0 0 0 1}</me>
+          then the column without a pivot is visibly in the span of the pivot columns:
+          <me>\vec{2 3 0} = 2\vec{1 0 0} + 3\vec{0 1 0} + 0\vec{0 0 1},</me>
+          and the pivot columns are linearly independent:
+          <me>
+            \vec{0 0 0} = x_1\vec{1 0 0} + x_2\vec{0 1 0} + x_4\vec{0 0 1}
+            = \vec{x_1 x_2 x_4} \implies x_1 = x_2 = x_4 = 0.
+          </me>
+        </p>
+
+        <p>
+          If the matrix is not in reduced row echelon form, then we row reduce:
+          <me>
+            A = \mat{1 7 23 3; 2 4 16 0; -1 -2 -8 4}
+            \quad\xrightarrow{\text{RREF}}\quad\mat{1 0 2 0; 0 1 3 0; 0 0 0 1}.
+          </me>
+          The following two vector equations have the same solution set, as they come from row-equivalent matrices:
+          <me>
+            \spalignsysdelims..\syseq{
+            x_1\vec{1 2 -1} + x_2\vec{7 4 -2} + x_3\vec{23 16 -8} + x_4\vec{3 0 4} = 0;
+            x_1\vec{1 0  0} + x_2\vec{0 1  0} + x_3\vec{ 2  3  0} + x_4\vec{0 0 1}
+            = 0\rlap.
+            }
+          </me>
+          We conclude that
+          <me>\vec{23 16 -8} = 2\vec{1 2 -1} + 3\vec{7 4 -2} + 0\vec{3 0 4}</me>
+          and that
+          <me>x_1\vec{1 2 -1} + x_2\vec{7 4 -2} + x_4\vec{3 0 4} = 0</me>
+          has only the trivial solution.
+        </p>
+      </proof>
+    </theorem>
+
+    <warning>
+      <title>Pivot Columns and Dimension</title>
+      <p>
+        Let <m>d</m> be the number of pivot columns in the matrix
+        <me>A = \mat{| |, , |; v_1 v_2 \cdots, v_p; | |, , |}.</me>
+        <ul>
+          <li>If <m>d=1</m> then <m>\Span\{v_1,v_2,\ldots,v_p\}</m> is a line.</li>
+          <li>If <m>d=2</m> then <m>\Span\{v_1,v_2,\ldots,v_p\}</m> is a plane.</li>
+          <li>If <m>d=3</m> then <m>\Span\{v_1,v_2,\ldots,v_p\}</m> is a 3-space.</li>
+          <li>Et cetera.</li>
+        </ul>
+      </p>
+    </warning>
+
+  </subsection>
+
+  <!--
   <exercises>
     <title>Reading Questions</title>
 
@@ -380,5 +1182,6 @@ the license is included in gfdl.xml.
 
 
   </exercises>
+  -->
 
 </section>

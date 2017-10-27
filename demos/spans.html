@@ -192,6 +192,7 @@ window.demo = new (is2D ? Demo2D : Demo)({
   gui = new dat.GUI({
     width: 350
   });
+  gui.closed = this.urlParams.closed != null;
   guiElts = {};
   if (this.urlParams.axes !== "disabled") {
     guiElts.Axes = gui.add(params, 'Axes');

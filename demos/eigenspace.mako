@@ -31,9 +31,9 @@ ${parent.inline_style()}
 
 ##
 
-matrix = [[4, -1, 6],
-          [2,  1, 6],
-          [2, -1, 8]]
+matrix = [[ 7/2,  0,  3],
+          [-3/2,  2, -3],
+          [-3/2,  0, -1]]
 if urlParams.mat?
    matrix = urlParams.mat.split(":").map (s) -> s.split(",").map parseFloat
 size = matrix.length
@@ -154,11 +154,15 @@ window.demo = new (if size == 2 then Demo2D else Demo) {
     evalStrings = []
     for [eigenvalue, mult], j in eigenvals
         eigenval = eigenvalue.toFixed(2)
-        str += "<p>The <span class=\"espace-#{j}\">" +
-               "#{eigenval}-eigenspace</span> " +
-               "has algebraic multiplicity #{mult} " +
-               "and geometric multiplicity #{eigenspaces[j].dim}" +
-               "</p>"
+        if @urlParams.nomult?
+            str += "<p>This is the <span class=\"espace-#{j}\">" +
+                   "#{eigenval}-eigenspace</span></p>"
+        else
+            str += "<p>The <span class=\"espace-#{j}\">" +
+                   "#{eigenval}-eigenspace</span> " +
+                   "has algebraic multiplicity #{mult} " +
+                   "and geometric multiplicity #{eigenspaces[j].dim}" +
+                   "</p>"
         evalStrings.push katex.renderToString \
             "A\\color{#ffff00}{x} = \\color{#{hexColors[j]}}{#{eigenval}}" + \
             "\\color{#ffff00}{x}"
