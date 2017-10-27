@@ -12,8 +12,531 @@ the license is included in gfdl.xml.
 <section xml:id="section-soln-sets">
   <title>Solution Sets</title>
 
-  <p>
-    Solution sets.  Parametric vector form.  Distinction between the solution set and the column span.
-  </p>
+  <objectives>
+    <ol>
+      <li>Express the solution set of a matrix equation in parametric vector form.</li>
+      <li>Find a spanning set for the solution set of a homogeneous system.</li>
+      <li>Understand the relationship between the solution set of <m>Ax=0</m> and the solution set of <m>Ax=b</m>.</li>
+      <li>Understand the geometric picture of solution sets.</li>
+      <li>Understand the difference between the solution set and the column span.</li>
+      <li>Vocabulary words: <term>homogeneous</term>/<term>inhomogeneous</term>, <term>trivial solution</term>, <term>parametric vector form</term>.</li>
+    </ol>
+  </objectives>
+
+  <introduction>
+    <p>In this section we will study the geometry of the solution set of any matrix equation <m>Ax=b</m>.</p>
+  </introduction>
+
+  <subsection xml:id="solnsets-homog">
+    <title>Homogeneous Systems</title>
+
+    <p>The equation <m>Ax=b</m> is easier to solve when <m>b=0</m>, so we start with this case.</p>
+
+    <definition>
+      <statement>
+        <p>A system of linear equations of the form <m>Ax=0</m> is called <term>homogeneous</term>.</p>
+        <p>A system of linear equations of the form <m>Ax=b</m> for <m>b\neq 0</m> is called <term>nonhomogeneous</term> or <term>inhomogeneous</term>.</p>
+      </statement>
+    </definition>
+
+    <p>A homogeneous system is just a system of linear equations where all constants on the right side of the equals sign are zero.</p>
+
+    <warning>
+      <p>A homogeneous system always has the solution <m>x=0</m>.  This is called the <term>trivial solution</term>.  Any nonzero solution is called <term>nontrivial</term>.</p>
+    </warning>
+
+    <observation xml:id="solnsets-no-augment">
+      <p>The equation <m>Ax=0</m> has a nontrivial solution <m>\iff</m> there is a free variable, <m>\iff</m> <m>A</m> has a column without a pivot.</p>
+    </observation>
+
+    <example xml:id="solnsets-eg-no-nontrivial">
+      <title>No nontrivial solutions</title>
+      <statement>
+        <p>What is the solution set of <m>Ax=0</m>, where
+        <me>A = \mat{1 3 4; 2 -1 2; 1 0 1}?</me></p>
+      </statement>
+      <solution>
+        <p>We form an augmented matrix and row reduce:
+        <me>\amat{1 3 4 0; 2 -1 2 0; 1 0 1 0}
+        \quad\xrightarrow{\text{RREF}}\quad
+        \amat{1 0 0 0; 0 1 0 0; 0 0 1 0}.
+        </me>
+        The only solution is the trivial solution <m>x=0</m>.
+        </p>
+      </solution>
+    </example>
+
+    <observation>
+      <p>In the above <xref ref="solnsets-eg-no-nontrivial"/>, the last column of the augmented matrix
+      <me>\amat{1 3 4 0; 2 -1 2 0; 1 0 1 0}</me>
+      will be zero throughout the row reduction process.  So it is not really necessary to write augmented matrices when solving homogeneous systems.</p>
+    </observation>
+
+    <example xml:id="solnsets-eg-line">
+      <title>The solution set is a line</title>
+      <statement>
+        <p>What is the solution set of <m>Ax=0</m>, where
+        <me>A = \mat{1 -3; 2 -6}?</me>
+        </p>
+      </statement>
+      <solution>
+        <p>We row reduce (without augmenting, as suggested in the above <xref ref="solnsets-no-augment"/>):
+        <me>\mat{1 -3; 2 -6} \quad\xrightarrow{\text{RREF}}\quad
+        \mat{1 -3; 0 0}.
+        </me>
+        This corresponds to the single equation <m>x_1 - 3x_2=0</m>.  We can write the parametric form as follows:
+        <me>\syseq{x_1 = 3x_2; x_2 = x_2\rlap.}</me>
+        We wrote the redundant equation <m>x_2=x_2</m> in order to turn the above system into a <em>vector equation</em>:
+        <me>x = \vec{x_1 x_2} = x_2\vec{3 1}.</me>
+        This vector equation is called the <term>parametric vector form</term> of the solution set.
+        Since <m>x_2</m> is allowed to be anything, this says that the solution set is the set of all scalar multiples of <m>\vec{3 1}</m>, otherwise known as
+        <me>\Span\left\{\vec{3 1}\right\}.</me>
+        We know how to draw the picture of a span of a vector: it is a line.  Therefore, this is a picture of the the solution set:
+        </p>
+        <sidebyside>
+          <image>
+            <latex-image-code>
+              <![CDATA[
+\begin{tikzpicture}
+  \path[clip] (-6,-2) rectangle (6,2);
+  \draw[grid lines] (-6,-2) grid (6,2);
+  \draw[thick] (-6,0) -- (6,0);
+  \draw[thick] (0,-2) -- (0,2);
+  \draw[seq4] (-6,-2) -- node[pos=.4, above left=1pt, whitebg, thin border]
+   {$Ax=0$} (6,2);
+  \draw[vector, seq1] (0,0) -- (3,1);
+\end{tikzpicture}
+              ]]>
+            </latex-image-code>
+          </image>
+        </sidebyside>
+
+        <figure>
+          <caption>Interactive picture of the solution set of <m>Ax=0</m>.  If you drag <m>x</m> along the line spanned by <m>\vec{3 1}</m>, the product <m>Ax</m> is always equal to zero.  This is what it means for <m>\Span\left\{\vec{3 1}\right\}</m> to be the solution set of <m>Ax=0</m>.</caption>
+          <mathbox source="demos/Axequalsb.html?lock=true&amp;x=3,1&amp;mat=1,-3:2,-6&amp;range2=5&amp;closed=true" height="600px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <p>Since there were <em>two</em> variables in the above <xref ref="solnsets-eg-line"/>, the solution set is a subset of <m>\R^2</m>.  Since <em>one</em> of the variables was free, the solution set is a <em>line</em>.</p>
+
+    <warning>
+      <p>In order to actually <em>find</em> a nontrivial solution to <m>Ax=0</m> in the above <xref ref="solnsets-eg-line"/>, it suffices to substitute any nonzero value for the free variable <m>x_2</m>.  For instance, taking <m>x_2=1</m> gives the nontrivial solution <m>x = 1\cdot\vec{3 1} = \vec{3 1}.</m></p>
+    </warning>
+
+    <example xml:id="solnsets-eg-plane">
+      <title>The solution set is a plane</title>
+      <statement>
+        <p>What is the solution set of <m>Ax=0</m>, where
+        <me>A = \mat{1 -1 2; -2 2 -4}?</me>
+        </p>
+      </statement>
+      <solution>
+        <p>We row reduce (without augmenting, as suggested in the above <xref ref="solnsets-no-augment"/>):
+        <me>\mat{1 -1 2; -2 2 -4} \quad\xrightarrow{\text{RREF}}\quad
+        \mat{1 -1 2; 0 0 0}.
+        </me>
+        This corresponds to the single equation <m>x_1 - x_2 + 2x_3 = 0</m>.  We can write the parametric form as follows:
+        <me>\syseq{x_1 = x_2 - 2x_3; x_2 = x_2; x_3 = \. \+ x_3\rlap.}</me>
+        We wrote the redundant equations <m>x_2=x_2</m> and <m>x_3=x_3</m> in order to turn the above system into a <em>vector equation</em>:
+        <me>x = \vec{x_1 x_2 x_3} = x_2\vec{1 1 0} + x_3\vec{-2 0 1}.</me>
+        This vector equation is called the <term>parametric vector form</term> of the solution set.
+        Since <m>x_2</m> and <m>x_3</m> are allowed to be anything, this says that the solution set is the set of all linear combinations of <m>\vec{1 1 1}</m> and <m>\vec{-2 0 1}</m>.  In other words, the solution set is
+        <me>\Span\left\{\vec{1 1 1},\;\vec{-2 0 1}\right\}.</me>
+        We know how to draw the span of two noncollinear vectors in <m>\R^3</m>: it is a plane.  Therefore, this is a picture of the solution set:
+        </p>
+        <sidebyside>
+          <image>
+            <latex-image-code>
+              <![CDATA[
+\begin{tikzpicture}[myxyz]
+  \path[clip, resetxy] (-6,-4) rectangle (6,4);
+
+  \def\v{(1, 1, 0)}
+  \def\w{(-2, 0, 1)}
+
+  \node[coordinate] (X) at \v {};
+  \node[coordinate] (Y) at \w {};
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-5, 0) -- (-5, -5) -- (5, -5) -- (5, 0) -- cycle;
+    \fill[seq4!30, nearly opaque] (-3,-2) rectangle (3,2);
+    \draw[step=1cm, seq4, very thin] (-3,-2) grid (3,2);
+  \end{scope}
+
+  \draw (0,0,-3) -- (0,0,0);
+
+  \begin{scope}[transformxy]
+    \fill[white, nearly opaque] (-3, -3) rectangle (3, 3);
+    \draw[grid lines] (-3, -3) grid (3, 3);
+    \draw[->] (-3,0) -- (3,0);
+    \draw[->] (0,-3) -- (0,3);
+  \end{scope}
+
+  \draw[->] (0,0,0) -- (0,0,3);
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-5, 0) -- (-5, 5) -- (5, 5) -- (5, 0) -- cycle;
+    \fill[seq4!30, nearly opaque] (-3,-2) rectangle (3,2);
+    \draw[step=1cm, seq4, very thin] (-3,-2) grid (3,2);
+    \node[seq4, anchor=east] at (1.3, 2) {$Ax=0$};
+  \end{scope}
+
+  \draw[vector, seq1] (0,0,0) -- \v;
+  \draw[vector, seq2] (0,0,0) -- \w;
+  \draw[thin, densely dotted] \w -- \projxy\w;
+
+  \point at (0,0,0);
+
+\end{tikzpicture}
+              ]]>
+            </latex-image-code>
+          </image>
+        </sidebyside>
+
+        <figure>
+          <caption>Interactive picture of the solution set of <m>Ax=0</m>.  If you drag <m>x</m> along the red plane, the product <m>Ax</m> is always equal to zero.  This is what it means for the plane to be the solution set of <m>Ax=0</m>.</caption>
+          <mathbox source="demos/Axequalsb.html?lock=true&amp;closed=true&amp;x=0,0,0" height="600px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <p>Since there were <em>three</em> variables in the above <xref ref="solnsets-eg-plane"/>, the solution set is a subset of <m>\R^3</m>.  Since <em>two</em> of the variables were free, the solution set is a <em>plane</em>.</p>
+
+    <example xml:id="solnsets-eg-R4">
+      <title>Four variables</title>
+      <statement>
+        <p>What is the solution set of <m>Ax=0</m>, where
+        <me>A = \mat[r]{1 2 0 -1; -2 -3 4 5; 2 4 0 -2}?</me>
+        </p>
+      </statement>
+      <solution>
+        <p>We row reduce (without augmenting, as suggested in the above <xref ref="solnsets-no-augment"/>):
+        <me>\mat[r]{1 2 0 -1; -2 -3 4 5; 2 4 0 -2} \quad\xrightarrow{\text{RREF}}\quad
+        \mat[r]{1 0 -8 -7; 0 1 4 3; 0 0 0 0}.
+        </me>
+        This corresponds to the system of equations
+        <me>
+          \syseq{x_1 \+ \. - 8x_3 - 7x_4 = 0;
+          \. \+ x_2 + 4x_3 + 3x_4 = 0}
+        </me>
+        We can write the parametric form as follows:
+        <me>\syseq{
+        x_1 = 8x_3 + 7x_4;
+        x_2 = -4x_3 - 3x_4;
+        x_3 = x_3;
+        x_4 = \. \+ x_4\rlap.}
+        </me>
+        We wrote the redundant equations <m>x_3=x_3</m> and <m>x_4=x_4</m> in order to turn the above system into a <em>vector equation</em>:
+        <me>x = \vec{x_1 x_2 x_3 x_4} = x_3\vec{8 -4 1 0} + x_4\vec{7 -3 0 1}.</me>
+        This vector equation is called the <term>parametric vector form</term> of the solution set.
+        Since <m>x_3</m> and <m>x_4</m> are allowed to be anything, this says that the solution set is the set of all linear combinations of <m>\vec{8 -4 1 0}</m> and <m>\vec{7 -3 0 1}</m>.  In other words, the solution set is
+        <me>\Span\left\{\vec{8 -4 1 0},\;\vec{7 -3 0 1}\right\}.</me>
+        </p>
+      </solution>
+    </example>
+
+    <p>Since there were <em>four</em> variables in the above <xref ref="solnsets-eg-R4"/>, the solution set is a subset of <m>\R^4</m>.  Since <em>two</em> of the variables were free, the solution set is a <em>plane</em>.</p>
+
+    <definition hide-type="true">
+      <title>Parametric Vector Form</title>
+      <statement>
+        <p>Let <m>A</m> be an <m>m\times n</m> matrix.  Suppose that the free variables in the homogeneous equation <m>Ax=0</m> are <m>x_1,x_j,x_k,\ldots</m>.  Then the solutions to <m>Ax=0</m> can be written in the form
+        <me> x = x_iv_i + x_jv_j + x_kv_k + \cdots</me>
+        for some vectors <m>v_i,v_j,v_k,\ldots</m> in <m>\R^n</m>, and any scalars <m>x_i,x_j,x_k,\ldots</m>.  This is called the <term>parametric vector form</term> of the solution.  It is obtained by finding the parametric form of the solution, including the redundant equations <m>x_i=x_i</m>, <m>x_j=x_j</m>, <m>x_k=x_k,\ldots</m>, putting these equations in order, and making a vector equation.
+        </p>
+
+        <p>In this case, the solution set can be written
+        <m>\Span\bigl\{v_i,\,v_j,\,v_k,\ldots\bigl\}.</m>
+        </p>
+      </statement>
+    </definition>
+
+    <warning>
+      <p>The solution set of a homogeneous equation <m>Ax=0</m> is a <em>span</em>!</p>
+    </warning>
+
+  </subsection>
+
+
+  <subsection>
+    <title>Nonhomogeneous Systems</title>
+
+    <p>
+      Recall that a matrix equation <m>Ax=b</m> is called <term>nonhomogeneous</term> when <m>b=0</m>.
+    </p>
+
+    <example xml:id="solnsets-eg-line2">
+      <title>The solution set is a line</title>
+      <statement>
+        <p>What is the solution set of <m>Ax=b</m>, where
+        <me>A = \mat{1 -3; 2 -6} \quad\text{and}\quad b = \vec{-3 -6}?</me>
+        (Compare this <xref ref="solnsets-eg-line"/>.)
+        </p>
+      </statement>
+      <solution>
+        <p>We row reduce the associated augmented matrix:
+        <me>\amat{1 -3 -3; 2 -6 -6} \quad\xrightarrow{\text{RREF}}\quad
+        \amat{1 -3 -3; 0 0 0}.
+        </me>
+        This corresponds to the single equation <m>x_1 - 3x_2 = -3</m>.  We can write the parametric form as follows:
+        <me>\syseq{x_1 = 3x_2 - 3; x_2 = x_2 + 0\rlap.}</me>
+        We turn the above system into a <em>vector equation</em>:
+        <me>x = \vec{x_1 x_2} = x_2\vec{3 1} + \vec{-3 0}.</me>
+        This vector equation is called the <term>parametric vector form</term> of the solution set.
+        Since <m>x_2</m> is allowed to be anything, this says that the solution set is the set of all scalar multiples of <m>\vec{3 1}</m>, <em>translated</em> by the vector <m>p = \vec{-3 0}</m>.  This is a line which contains <m>p</m> and is parallel to <m>\Span\left\{\vec{3 1}\right\}</m>: it is a <em>translate of a line</em>.  We write the solution set as
+        <me>\Span\left\{\vec{3 1}\right\} + \vec{-3 0}.</me>
+        Here is a picture of the the solution set:
+        </p>
+        <sidebyside>
+          <image>
+            <latex-image-code>
+              <![CDATA[
+\begin{tikzpicture}[thin border nodes]
+  \draw[grid lines] (-6,-2) grid (6,3);
+  \path[clip] (-6,-2) rectangle (6,3);
+  \draw (-6,0) -- (6,0);
+  \draw (0,-2) -- (0,3);
+  \draw[seq2] (-6,-2) -- node[pos=.6,below right=1pt,whitebg] {$Ax=0$} (6,2);
+  \draw[seq4] (-6,-1) -- node[pos=.7,above left=1pt,whitebg] {$Ax=b$} (6,3);
+  \point (a) at (-3,0);
+  \draw[vector, seq1] (a) -- (0,1);
+  \draw[->, vector, seq3] (0,0) -- node[pos=.3,above] {$p$} (a);
+  \point at (0,0);
+\end{tikzpicture}
+              ]]>
+            </latex-image-code>
+          </image>
+        </sidebyside>
+
+        <figure>
+          <caption>Interactive picture of the solution set of <m>Ax=b</m>.  If you drag <m>x</m> along the red line, the product <m>Ax</m> is always equal to <m>b</m>.  This is what it means for the line to be the solution set of <m>Ax=b</m>.</caption>
+          <mathbox source="demos/Axequalsb.html?x=-3,0&amp;mat=1,-3:2,-6&amp;lock=true&amp;closed=true" height="600px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <p>In the above <xref ref="solnsets-eg-line2"/>, the solution set was all vectors of the form
+    <me>x = \vec{x_1 x_2} = x_2\vec{3 1} + \vec{-3 0}</me>
+    where <m>x_2</m> is any scalar.  The vector <m>p = \vec{-3 0}</m> is also a solution of <m>Ax=0</m>: take <m>x_2=0</m>.  We call <m>p</m> a <term>particular solution</term>.
+    </p>
+
+    <example xml:id="solnsets-eg-plane2">
+      <title>The solution set is a plane</title>
+      <statement>
+        <p>What is the solution set of <m>Ax=b</m>, where
+        <me>A = \mat{1 -1 2; -2 2 -4}\quad\text{and}\quad b = \vec{1 -2}?</me>
+        (Compare this <xref ref="solnsets-eg-plane"/>.)
+        </p>
+      </statement>
+      <solution>
+        <p>We row reduce the associated augmented matrix:
+        <me>\amat{1 -1 2 1; -2 2 -4 -2} \quad\xrightarrow{\text{RREF}}\quad
+        \mat{1 -1 2 1; 0 0 0 0}.
+        </me>
+        This corresponds to the single equation <m>x_1 - x_2 + 2x_3 = 1</m>.  We can write the parametric form as follows:
+        <me>\syseq{x_1 = x_2 - 2x_3 + 1; x_2 = x_2 \+ \. + 0; x_3 = \. \+ x_3 + 0\rlap.}</me>
+        We turn the above system into a <em>vector equation</em>:
+        <me>x = \vec{x_1 x_2 x_3} = x_2\vec{1 1 0} + x_3\vec{-2 0 1} + \vec{1 0 0}.</me>
+        This vector equation is called the <term>parametric vector form</term> of the solution set.
+        Since <m>x_2</m> and <m>x_3</m> are allowed to be anything, this says that the solution set is the set of all linear combinations of <m>\vec{1 1 1}</m> and <m>\vec{-2 0 1}</m>, <em>translated</em> by the vector <m>p = \vec{1 0 0}</m>.  This is a plane which contains <m>p</m> and is parallel to <m>\Span\left\{\vec{1 1 1},\;\vec{-2 0 1}\right\}</m>: it is a <em>translate of a plane</em>.  We write the solution set as
+        <me>\Span\left\{\vec{1 1 1},\;\vec{-2 0 1}\right\} + \vec{1 0 0}.</me>
+        Here is a picture of the solution set:
+        </p>
+        <sidebyside>
+          <image>
+            <latex-image-code>
+              <![CDATA[
+\begin{tikzpicture}[myxyz]
+  \path[clip, resetxy] (-6,-4) rectangle (6,4);
+
+  \def\v{(1, 1, 0)}
+  \def\w{(-2, 0, 1)}
+  \def\pp{(1, 0, 0)}
+
+  \node[coordinate] (X) at \v  {};
+  \node[coordinate] (Y) at \w  {};
+  \node[coordinate] (P) at \pp {};
+
+  \begin{scope}[x=(X), y=(Y), xshift=1cm, transformxy]
+    \path[clip] (-5, 0) -- (-5, -5) -- (5, -5) -- (5, 0) -- cycle;
+    \fill[seq4!30, nearly opaque] (-3,-2) rectangle (3,2);
+    \draw[step=1cm, seq4, very thin] (-3,-2) grid (3,2);
+  \end{scope}
+
+  \draw (0,0,-3) -- (0,0,0);
+
+  \begin{scope}[transformxy]
+    \fill[white, nearly opaque] (-2, -3) rectangle (4, 3);
+    \draw[grid lines] (-2, -3) grid (4, 3);
+    \draw[->] (-2,0) -- (4,0);
+    \draw[->] (0,-3) -- (0,3);
+  \end{scope}
+
+  \draw[->] (0,0,0) -- (0,0,3);
+
+  \begin{scope}[x=(X), y=(Y), xshift=1cm, transformxy]
+    \path[clip] (-5, 0) -- (-5, 5) -- (5, 5) -- (5, 0) -- cycle;
+    \fill[seq4!30, nearly opaque] (-3,-2) rectangle (3,2);
+    \draw[step=1cm, seq4, very thin] (-3,-2) grid (3,2);
+    \node[seq4, anchor=east] at (1.3, 2) {$Ax=b$};
+  \end{scope}
+
+  \draw[vector, seq1] \pp -- ($(X) + (P)$);
+  \draw[vector, seq2] \pp -- ($(Y) + (P)$);
+  \draw[thin, densely dotted] ($(Y) + (P)$) -- (-1, 0, 0);
+  \draw[vector, seq3] (0,0,0) -- \pp;
+
+  \point at \pp;
+  \point at (0,0,0);
+
+\end{tikzpicture}
+              ]]>
+            </latex-image-code>
+          </image>
+        </sidebyside>
+
+        <figure>
+          <caption>Interactive picture of the solution set of <m>Ax=b</m>.  If you drag <m>x</m> along the red plane, the product <m>Ax</m> is always equal to <m>b</m>.  This is what it means for the plane to be the solution set of <m>Ax=b</m>.</caption>
+          <mathbox source="demos/Axequalsb.html?lock=true&amp;closed=true&amp;range1=3&amp;x=1,0,0" height="600px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <p>In the above <xref ref="solnsets-eg-plane2"/>, the solution set was all vectors of the form
+        <me>x = \vec{x_1 x_2 x_3} = x_2\vec{1 1 0} + x_3\vec{-2 0 1} + \vec{1 0 0}.</me>
+    where <m>x_2</m> and <m>x_3</m> are any scalars.  In this case, a particular solution is <m>p = \vec{1 0 0}</m>.
+    </p>
+
+    <p>In the previous <xref ref="solnsets-eg-plane2"/> and the <xref ref="solnsets-eg-line2"/> before it, the parametric vector form of the solution set of <m>Ax=b</m> was exactly the same as the parametric vector form of the solution set of <m>Ax=0</m> (from this <xref ref="solnsets-eg-plane"/> and this <xref ref="solnsets-eg-line"/>, respectively), plus a particular solution.
+    </p>
+
+    <warning xml:id="solnsets-translate-span">
+      <title>Key Observation</title>
+      <p>
+        The set of solutions to <m>Ax=b</m>, if it is nonempty, is obtained by taking one <term>specific</term> or <term>particular solution</term> <m>p</m> of <m>Ax=b</m>, and adding all solutions of <m>Ax=0</m>.
+      </p>
+
+      <p>In particular, the solution set of <m>Ax=b</m> is either empty, or it is a <em>translate of a span</em>.</p>
+    </warning>
+
+    <p>The <term>parametric vector form</term> of the solutions of <m>Ax=b</m> is just the parametric vector form of the solutions of <m>Ax=0</m>, plus a particular solution <m>p</m>.</p>
+
+    <p>It is not hard to see why the above <xref ref="solnsets-translate-span">Observation</xref> is true.  If <m>p</m> is a particular solution, then <m>Ap=b</m>, and if <m>x</m> is a solution to the homogeneous equation <m>Ax=0</m>, then
+    <me>A(x+p) = Ax + Ap = 0 + b = b,</me>
+    so <m>x+p</m> is another solution of <m>Ax=b</m>.
+    </p>
+
+    <remark>
+      <p>Row reducing to find the parametric vector form will give you one particular solution <m>p</m> of <m>Ax=b</m>.  But the above <xref ref="solnsets-translate-span">Observation</xref> is true for any solution <m>p</m>.</p>
+    </remark>
+
+    <example xml:id="solnsets-eg-point">
+      <title>The solution set is a point</title>
+      <statement>
+        <p>What is the solution set of <m>Ax=b</m>, where
+        <me>A = \mat{1 3 4; 2 -1 2; 1 0 1} \quad\text{and}\quad b = \vec{0 1 0}?</me></p>
+      </statement>
+      <solution>
+        <p>We form an augmented matrix and row reduce:
+        <me>\amat{1 3 4 0; 2 -1 2 1; 1 0 1 0}
+        \quad\xrightarrow{\text{RREF}}\quad
+        \amat{1 0 0 -1; 0 1 0 -1; 0 0 1 1}.
+        </me>
+        The only solution is <m>p=\vec{-1 -1 1}</m>.
+        </p>
+
+        <p>According to the above <xref ref="solnsets-translate-span">Observation</xref>, this is supposed to be a translate of a span by <m>p</m>.  Indeed, we saw in the first <xref ref="solnsets-eg-no-nontrivial"/> that the only solution of <m>Ax=0</m> is the trivial solution, i.e., that the solution set is the one-point set <m>\{0\}</m>.  The solution set of the inhomogeneous equation <m>Ax=b</m> is
+        <me>\{0\} + \vec{-1 -1 1}.</me>
+        Note that <m>\{0\} = \Span\{0\}</m>, so the homogeneous solution set is a span.
+        </p>
+        <sidebyside>
+          <image>
+            <latex-image-code>
+              <![CDATA[
+\begin{tikzpicture}[myxyz, y={(-.8cm,-.6cm)}, thin border nodes]
+  \path[clip, resetxy] (-6,-4) rectangle (6,4);
+
+  \def\v{(-1, -1, 1)}
+
+  \begin{scope}[transformxy]
+    \fill[white, nearly opaque] (-3, -3) rectangle (3, 3);
+    \draw[grid lines] (-3, -3) grid (3, 3);
+    \draw[->] (-3,0) -- (3,0);
+    \draw[->] (0,-3) -- (0,3);
+  \end{scope}
+
+  \draw[vector, seq3] (0,0,0) -- \v;
+
+  \draw[thin, densely dotted] \v -- (-1, -1, 0);
+  \point[fill=seq-violet, "$Ax=b\,$" {left, seq-violet}] at \v;
+  \point[fill=seq-blue, "$Ax=0$" {below right, seq-blue}] at (0,0,0);
+
+\end{tikzpicture}
+              ]]>
+            </latex-image-code>
+          </image>
+        </sidebyside>
+      </solution>
+    </example>
+
+    <p>See the interactive figures in the next <xref ref="solnsets-ss-and-cs"/> for visualizations of the above <xref ref="solnsets-translate-span">Observation</xref>.</p>
+
+    <warning><title>Dimension of the solution set</title>
+    <p>As in the first <xref ref="solnsets-homog"/>, when there is one free variable in a consistent matrix equation, the solution set is a line<mdash/>this line does not pass through the origin when the system is inhomogeneous<mdash/>when there are two free variables, the solution set is a plane, etc.
+    </p>
+    <p>We will develop a rigorous definition of dimension in <xref ref="section-dimension"/>, but for now it is important to note that the "dimension" of the solution set of a consistent system is equal to the number of free variables.
+    </p>
+    </warning>
+
+  </subsection>
+
+  <subsection xml:id="solnsets-ss-and-cs">
+    <title>Solution Sets and Column Spans</title>
+
+    <p>To every <m>m\times n</m> matrix <m>A</m>, we have now associated two completely different geometric objects, both described using spans.
+    <ul>
+      <li>
+        <p>The <term>solution set</term>: for fixed <m>b</m>, this is the set of all <m>x</m> such that <m>Ax=b</m>.
+        <ul>
+          <li>This is a span if <m>b=0</m>, and it is a translate of a span (or it is empty) if <m>b\neq 0</m>.</li>
+          <li>It is a subset of <m>\R^n</m>.</li>
+          <li>It is computed by finding the parametric vector form of the solution.</li>
+        </ul>
+        </p>
+      </li>
+      <li>
+        <p>
+          The <term>column span</term>: this is the set of all <m>b</m> such that <m>Ax=b</m> is consistent.
+          <ul>
+            <li>This is the span of the columns of <m>A</m>.</li>
+            <li>It is a subset of <m>\R^m</m>.</li>
+          </ul>
+        </p>
+      </li>
+    </ul>
+    </p>
+
+    <warning><p>Do not confuse these two geometric constructions!</p></warning>
+
+    <example hide-type="true">
+      <title>Interactive: solution set and column span (1)</title>
+      <figure>
+        <caption>Left: the solution set of <m>Ax=b</m> is in red.  Right: the column span of <m>A</m> is in red.  As you move <m>x</m>, you change <m>b</m>, so the solution set changes<mdash/>but all solution sets are parallel planes.  If you move <m>b</m> within the column span, the solution set also changes, and the demo solves the equation to find a particular solution <m>x</m>.  If you move <m>b</m> outside of the column span, the system becomes inconsistent, and the solution set disappears.
+        </caption>
+        <mathbox source="demos/Axequalsb.html" height="600px"/>
+      </figure>
+    </example>
+
+    <example hide-type="true">
+      <title>Interactive: solution set and column span (2)</title>
+      <figure>
+        <caption>Left: the solution set of <m>Ax=b</m> is in red.  Right: the column span of <m>A</m> is in red.  As you move <m>x</m>, you change <m>b</m>, so the solution set changes<mdash/>but all solution sets are parallel planes.  If you move <m>b</m> within the column span, the solution set also changes, and the demo solves the equation to find a particular solution <m>x</m>.  If you move <m>b</m> outside of the column span, the system becomes inconsistent, and the solution set disappears.
+        </caption>
+        <mathbox source="demos/Axequalsb.html?mat=1,0,-1:0,1,1:1,1,0" height="600px"/>
+      </figure>
+    </example>
+
+  </subsection>
 
 </section>

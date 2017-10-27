@@ -1,6 +1,6 @@
 (function() {
   "use strict";
-  var Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledVectors, LinearCombo, OrbitControls, Popup, Subspace, View, clipFragment, clipShader, decodeQS, extend, groupControls, makeTvec, orthogonalize, rowReduce, setTvec, urlParams,
+  var Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledVectors, LinearCombo, OrbitControls, Popup, Subspace, View, clipFragment, clipShader, decodeQS, eigenvalues, extend, groupControls, makeTvec, orthogonalize, rowReduce, setTvec, urlParams,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     slice = [].slice,
     extend1 = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
@@ -51,7 +51,7 @@
   };
 
   rowReduce = function(M, opts) {
-    var E, aa, ab, ac, ad, ae, af, ag, ah, ai, c, col, colBasis, f, fn, i, j, k, l, lastPivot, len, len1, m, maxEl, maxRow, n, noPivots, nulBasis, orig, p, pivot, pivots, q, ref, ref1, ref10, ref11, ref12, ref13, ref14, ref15, ref16, ref17, ref18, ref19, ref2, ref20, ref21, ref22, ref23, ref24, ref3, ref4, ref5, ref6, ref7, ref8, ref9, row, u, v, z;
+    var E, aa, ab, ac, ad, ae, af, ag, ah, ai, c, col, colBasis, f, fn, i, j, k, l, lastPivot, len, len1, m, maxEl, maxRow, n, noPivots, nulBasis, orig, p, pivot, pivots, q, ref, ref1, ref10, ref11, ref12, ref13, ref14, ref15, ref16, ref17, ref18, ref19, ref2, ref20, ref21, ref22, ref23, ref24, ref25, ref3, ref4, ref5, ref6, ref7, ref8, ref9, row, u, v, z, ε;
     orig = (function() {
       var l, len, results;
       results = [];
@@ -66,6 +66,7 @@
     }
     m = (ref = opts.rows) != null ? ref : M[0].length;
     n = (ref1 = opts.cols) != null ? ref1 : M.length;
+    ε = (ref2 = opts.epsilon) != null ? ref2 : 1e-5;
     row = 0;
     col = 0;
     pivots = [];
@@ -74,13 +75,13 @@
     colBasis = [];
     nulBasis = [];
     E = (function() {
-      var l, ref2, results;
+      var l, ref3, results;
       results = [];
-      for (l = 0, ref2 = m; 0 <= ref2 ? l < ref2 : l > ref2; 0 <= ref2 ? l++ : l--) {
+      for (l = 0, ref3 = m; 0 <= ref3 ? l < ref3 : l > ref3; 0 <= ref3 ? l++ : l--) {
         results.push((function() {
-          var p, ref3, results1;
+          var p, ref4, results1;
           results1 = [];
-          for (p = 0, ref3 = m; 0 <= ref3 ? p < ref3 : p > ref3; 0 <= ref3 ? p++ : p--) {
+          for (p = 0, ref4 = m; 0 <= ref4 ? p < ref4 : p > ref4; 0 <= ref4 ? p++ : p--) {
             results1.push(0);
           }
           return results1;
@@ -88,7 +89,7 @@
       }
       return results;
     })();
-    for (i = l = 0, ref2 = m; 0 <= ref2 ? l < ref2 : l > ref2; i = 0 <= ref2 ? ++l : --l) {
+    for (i = l = 0, ref3 = m; 0 <= ref3 ? l < ref3 : l > ref3; i = 0 <= ref3 ? ++l : --l) {
       E[i][i] = 1;
     }
     while (true) {
@@ -96,85 +97,85 @@
         break;
       }
       if (row === m) {
-        for (k = p = ref3 = col, ref4 = n; ref3 <= ref4 ? p < ref4 : p > ref4; k = ref3 <= ref4 ? ++p : --p) {
+        for (k = p = ref4 = col, ref5 = n; ref4 <= ref5 ? p < ref5 : p > ref5; k = ref4 <= ref5 ? ++p : --p) {
           noPivots.push(k);
         }
         break;
       }
       maxEl = Math.abs(M[col][row]);
       maxRow = row;
-      for (k = q = ref5 = row + 1, ref6 = m; ref5 <= ref6 ? q < ref6 : q > ref6; k = ref5 <= ref6 ? ++q : --q) {
+      for (k = q = ref6 = row + 1, ref7 = m; ref6 <= ref7 ? q < ref7 : q > ref7; k = ref6 <= ref7 ? ++q : --q) {
         if (Math.abs(M[col][k]) > maxEl) {
           maxEl = Math.abs(M[col][k]);
           maxRow = k;
         }
       }
-      if (maxEl === 0) {
+      if (Math.abs(maxEl) < ε) {
         noPivots.push(col);
         col++;
         continue;
       }
-      for (k = u = 0, ref7 = n; 0 <= ref7 ? u < ref7 : u > ref7; k = 0 <= ref7 ? ++u : --u) {
-        ref8 = [M[k][row], M[k][maxRow]], M[k][maxRow] = ref8[0], M[k][row] = ref8[1];
+      for (k = u = 0, ref8 = n; 0 <= ref8 ? u < ref8 : u > ref8; k = 0 <= ref8 ? ++u : --u) {
+        ref9 = [M[k][row], M[k][maxRow]], M[k][maxRow] = ref9[0], M[k][row] = ref9[1];
       }
-      for (k = v = 0, ref9 = m; 0 <= ref9 ? v < ref9 : v > ref9; k = 0 <= ref9 ? ++v : --v) {
-        ref10 = [E[k][row], E[k][maxRow]], E[k][maxRow] = ref10[0], E[k][row] = ref10[1];
+      for (k = v = 0, ref10 = m; 0 <= ref10 ? v < ref10 : v > ref10; k = 0 <= ref10 ? ++v : --v) {
+        ref11 = [E[k][row], E[k][maxRow]], E[k][maxRow] = ref11[0], E[k][row] = ref11[1];
       }
       pivots.push([row, col]);
       colBasis.push(orig[col]);
       lastPivot = row;
       pivot = M[col][row];
-      for (k = z = ref11 = row + 1, ref12 = m; ref11 <= ref12 ? z < ref12 : z > ref12; k = ref11 <= ref12 ? ++z : --z) {
+      for (k = z = ref12 = row + 1, ref13 = m; ref12 <= ref13 ? z < ref13 : z > ref13; k = ref12 <= ref13 ? ++z : --z) {
         c = M[col][k] / pivot;
         if (c === 0) {
           continue;
         }
         M[col][k] = 0;
-        for (j = aa = ref13 = col + 1, ref14 = n; ref13 <= ref14 ? aa < ref14 : aa > ref14; j = ref13 <= ref14 ? ++aa : --aa) {
+        for (j = aa = ref14 = col + 1, ref15 = n; ref14 <= ref15 ? aa < ref15 : aa > ref15; j = ref14 <= ref15 ? ++aa : --aa) {
           M[j][k] -= c * M[j][row];
         }
-        for (j = ab = 0, ref15 = m; 0 <= ref15 ? ab < ref15 : ab > ref15; j = 0 <= ref15 ? ++ab : --ab) {
+        for (j = ab = 0, ref16 = m; 0 <= ref16 ? ab < ref16 : ab > ref16; j = 0 <= ref16 ? ++ab : --ab) {
           E[j][k] -= c * E[j][row];
         }
       }
       row++;
       col++;
     }
-    ref16 = pivots.reverse();
-    for (ac = 0, len = ref16.length; ac < len; ac++) {
-      ref17 = ref16[ac], row = ref17[0], col = ref17[1];
+    ref17 = pivots.reverse();
+    for (ac = 0, len = ref17.length; ac < len; ac++) {
+      ref18 = ref17[ac], row = ref18[0], col = ref18[1];
       pivot = M[col][row];
       M[col][row] = 1;
-      for (k = ad = ref18 = col + 1, ref19 = n; ref18 <= ref19 ? ad < ref19 : ad > ref19; k = ref18 <= ref19 ? ++ad : --ad) {
+      for (k = ad = ref19 = col + 1, ref20 = n; ref19 <= ref20 ? ad < ref20 : ad > ref20; k = ref19 <= ref20 ? ++ad : --ad) {
         M[k][row] /= pivot;
       }
-      for (k = ae = 0, ref20 = m; 0 <= ref20 ? ae < ref20 : ae > ref20; k = 0 <= ref20 ? ++ae : --ae) {
+      for (k = ae = 0, ref21 = m; 0 <= ref21 ? ae < ref21 : ae > ref21; k = 0 <= ref21 ? ++ae : --ae) {
         E[k][row] /= pivot;
       }
-      for (k = af = 0, ref21 = row; 0 <= ref21 ? af < ref21 : af > ref21; k = 0 <= ref21 ? ++af : --af) {
+      for (k = af = 0, ref22 = row; 0 <= ref22 ? af < ref22 : af > ref22; k = 0 <= ref22 ? ++af : --af) {
         c = M[col][k];
         M[col][k] = 0;
-        for (j = ag = ref22 = col + 1, ref23 = n; ref22 <= ref23 ? ag < ref23 : ag > ref23; j = ref22 <= ref23 ? ++ag : --ag) {
+        for (j = ag = ref23 = col + 1, ref24 = n; ref23 <= ref24 ? ag < ref24 : ag > ref24; j = ref23 <= ref24 ? ++ag : --ag) {
           M[j][k] -= c * M[j][row];
         }
-        for (j = ah = 0, ref24 = m; 0 <= ref24 ? ah < ref24 : ah > ref24; j = 0 <= ref24 ? ++ah : --ah) {
+        for (j = ah = 0, ref25 = m; 0 <= ref25 ? ah < ref25 : ah > ref25; j = 0 <= ref25 ? ++ah : --ah) {
           E[j][k] -= c * E[j][row];
         }
       }
     }
     fn = function() {
-      var aj, len2, ref25, vec;
+      var aj, len2, ref26, vec;
       vec = (function() {
-        var aj, ref25, results;
+        var aj, ref26, results;
         results = [];
-        for (aj = 0, ref25 = n; 0 <= ref25 ? aj < ref25 : aj > ref25; 0 <= ref25 ? aj++ : aj--) {
+        for (aj = 0, ref26 = n; 0 <= ref26 ? aj < ref26 : aj > ref26; 0 <= ref26 ? aj++ : aj--) {
           results.push(0);
         }
         return results;
       })();
       vec[i] = 1;
       for (aj = 0, len2 = pivots.length; aj < len2; aj++) {
-        ref25 = pivots[aj], row = ref25[0], col = ref25[1];
+        ref26 = pivots[aj], row = ref26[0], col = ref26[1];
         vec[col] = -M[i][row];
       }
       return nulBasis.push(vec);
@@ -184,35 +185,84 @@
       fn();
     }
     f = function(b) {
-      var Eb, aj, ak, al, am, len2, ref25, ref26, ref27, ref28, ref29, ret, x;
+      var Eb, aj, ak, al, am, len2, ref26, ref27, ref28, ref29, ref30, ret, x;
       Eb = [];
-      for (i = aj = 0, ref25 = m; 0 <= ref25 ? aj < ref25 : aj > ref25; i = 0 <= ref25 ? ++aj : --aj) {
+      for (i = aj = 0, ref26 = m; 0 <= ref26 ? aj < ref26 : aj > ref26; i = 0 <= ref26 ? ++aj : --aj) {
         x = 0;
-        for (j = ak = 0, ref26 = m; 0 <= ref26 ? ak < ref26 : ak > ref26; j = 0 <= ref26 ? ++ak : --ak) {
+        for (j = ak = 0, ref27 = m; 0 <= ref27 ? ak < ref27 : ak > ref27; j = 0 <= ref27 ? ++ak : --ak) {
           x += E[j][i] * b[j];
         }
         Eb.push(x);
       }
-      for (i = al = ref27 = lastPivot + 1, ref28 = n; ref27 <= ref28 ? al < ref28 : al > ref28; i = ref27 <= ref28 ? ++al : --al) {
+      for (i = al = ref28 = lastPivot + 1, ref29 = n; ref28 <= ref29 ? al < ref29 : al > ref29; i = ref28 <= ref29 ? ++al : --al) {
         if (Math.abs(Eb[i]) > 0.000001) {
           return null;
         }
       }
       ret = (function() {
-        var am, ref29, results;
+        var am, ref30, results;
         results = [];
-        for (am = 0, ref29 = n; 0 <= ref29 ? am < ref29 : am > ref29; 0 <= ref29 ? am++ : am--) {
+        for (am = 0, ref30 = n; 0 <= ref30 ? am < ref30 : am > ref30; 0 <= ref30 ? am++ : am--) {
           results.push(0);
         }
         return results;
       })();
       for (am = 0, len2 = pivots.length; am < len2; am++) {
-        ref29 = pivots[am], row = ref29[0], col = ref29[1];
+        ref30 = pivots[am], row = ref30[0], col = ref30[1];
         ret[col] = Eb[row];
       }
       return ret;
     };
     return [nulBasis, colBasis, E, f];
+  };
+
+  eigenvalues = function(mat) {
+    var a, b, c, charPoly, cplxRoots, d, e, f, found, g, h, i, imag, l, len, len1, p, q, real, realRoots, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, root, x;
+    switch (mat.length) {
+      case 2:
+        (ref = mat[0], a = ref[0], b = ref[1]), (ref1 = mat[1], c = ref1[0], d = ref1[1]);
+        charPoly = [a * d - b * c, -a - d, 1];
+        ref2 = findRoots(charPoly, null, 1e6, 1e-15), real = ref2[0], imag = ref2[1];
+        break;
+      case 3:
+        (ref3 = mat[0], a = ref3[0], b = ref3[1], c = ref3[2]), (ref4 = mat[1], d = ref4[0], e = ref4[1], f = ref4[2]), (ref5 = mat[2], g = ref5[0], h = ref5[1], i = ref5[2]);
+        charPoly = [-a * e * i - b * f * g - c * d * h + a * f * h + b * d * i + c * e * g, a * e + a * i + e * i - b * d - c * g - f * h, -a - e - i, 1];
+        ref6 = findRoots(charPoly, null, 1e6, 1e-15), real = ref6[0], imag = ref6[1];
+    }
+    realRoots = [];
+    cplxRoots = [];
+    for (i = l = 0, ref7 = real.length; 0 <= ref7 ? l < ref7 : l > ref7; i = 0 <= ref7 ? ++l : --l) {
+      if (Math.abs(imag[i]) < 1e-4) {
+        found = false;
+        for (p = 0, len = realRoots.length; p < len; p++) {
+          x = realRoots[p];
+          root = x[0];
+          if (Math.abs(root - real[i]) < 1e-5) {
+            x[1]++;
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          realRoots.push([real[i], 1]);
+        }
+      } else {
+        found = false;
+        for (q = 0, len1 = cplxRoots.length; q < len1; q++) {
+          x = cplxRoots[q];
+          ref8 = x[0], real = ref8[0], imag = ref8[1];
+          if ((real[i] - real) * (real[i] - real) + (imag[i] - imag) * (imag[i] - imag) < 1e-10) {
+            x[1]++;
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          cplxRoots.push([[real[i], imag[i]], 1]);
+        }
+      }
+    }
+    return [realRoots, cplxRoots];
   };
 
   urlParams = {};
@@ -1355,8 +1405,7 @@
         viewOpts = {
           range: viewRange,
           scale: viewScale,
-          id: this.name + "-view",
-          eulerOrder: "yxz"
+          id: this.name + "-view"
         };
       } else {
         viewOpts = {
@@ -2210,6 +2259,10 @@
     return Demo2D;
 
   })(Demo);
+
+  window.rowReduce = rowReduce;
+
+  window.eigenvalues = eigenvalues;
 
   window.Demo = Demo;
 

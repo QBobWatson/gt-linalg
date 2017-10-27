@@ -89,7 +89,9 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
         @showSolns = if @urlParams.show == 'false' then false else true
     if @urlParams.lock?
         @lockSolns = if @urlParams.lock? then true else false
-    @range = @urlParams.range1 ? 5
+    @range = 5
+    if @urlParams.range1?
+        @range = parseFloat @urlParams.range1
 
     if @urlParams.x?
         vector = @urlParams.x.split(",").map parseFloat
@@ -248,7 +250,9 @@ window.demo2 = new (if rows == 3 then Demo else Demo2D) {
 
     ##################################################
     # view, axes
-    @range = @urlParams.range2 ? 10
+    @range = 10
+    if @urlParams.range2?
+        @range = parseFloat @urlParams.range2
     r = @range
     view = @view
         name:       'view2'
