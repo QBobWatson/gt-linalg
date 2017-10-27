@@ -1,458 +1,238 @@
-## /* -*- javascript -*-
+## -*- coffee -*-
 
-<%! draggable=True %>
-
-<%inherit file="base.mako"/>
+<%inherit file="base2.mako"/>
 
 <%block name="title">2x2 Matrix Transformations</%block>
 
-<%block name="extra_script">
-    <script type="application/glsl" id="vertex-xyz">
-    // Enable STPQ mapping
-    #define POSITION_STPQ
-    void getPosition(inout vec4 xyzw, inout vec4 stpq) {
-        // Store XYZ per vertex in STPQ
-        stpq = xyzw;
-    }
-    </script>
-
-    <script type="application/glsl" id="fragment-clipping">
-    // Enable STPQ mapping
-    #define POSITION_STPQ
-    vec4 getColor(vec4 rgba, inout vec4 stpq) {
-        stpq = abs(stpq - vec4(2.2, 0.0, 0.0, 0.0));
-
-        // Discard pixels outside of clip box
-        if(stpq.x > 1.0 || stpq.y > 1.0 || stpq.z > 1.0)
-            discard;
-
-        return rgba;
-    }
-    </script>
+<%block name="inline_style">
+#help-text {
+    # text-align: center;
+# }
+.mathbox-overlays {
+    pointer-events: auto;
+}
 </%block>
 
-## */
+##
 
-function decodeQS() {
-    var decode, match, pl, query, search;
-    pl = /\+/g;
-    search = /([^&=]+)=?([^&]*)/g;
-    decode = function(s) {
-        return decodeURIComponent(s.replace(pl, " "));
-    };
-    query = window.location.search.substring(1);
-    var urlParams = {};
-    while (match = search.exec(query)) {
-        urlParams[decode(match[1])] = decode(match[2]);
-    }
-    return urlParams;
-}
-var paramsQS = decodeQS();
+ortho = 10000
 
-var image = new Image();
-image.src = "img/" + (paramsQS.pic || "theo2.jpg");
-image.addEventListener('load', function() {
-    onLoaded();
-});
-
-var matrix = [1,0,0,1];
-if(paramsQS.mat)
-    matrix = paramsQS.mat.split(',').map(parseFloat)
+window.are_matrices_equal = (m1, m2) ->
+    for i in [0...4]
+        if Math.abs(window.matrix[i] - window.winning_matrix[i]) > 0.0001
+            return false
+    return true
 
 
-function onLoaded() {
 
-    var updateMatrix = function() {
-        matrix = [1,0,0,1];
-        for(var i = 0; i < numTransforms; ++i) {
-            var mult = paramses[i].matrix;
-            var a = mult[0]*matrix[0] + mult[1]*matrix[2];
-            var b = mult[0]*matrix[1] + mult[1]*matrix[3];
-            var c = mult[2]*matrix[0] + mult[3]*matrix[2];
-            var d = mult[2]*matrix[1] + mult[3]*matrix[3];
-            matrix = [a, b, c, d];
-        }
-        updateMatrixElt();
-        updateVectorsElt();
-    }
+window.matrix = [1,0,0,1]
+window.updateMatrix = (multiplier) =>
+    @count += 1
+    matrix = @matrix
+    a = multiplier[0]*matrix[0] + multiplier[1]*matrix[2]
+    b = multiplier[0]*matrix[1] + multiplier[1]*matrix[3]
+    c = multiplier[2]*matrix[0] + multiplier[3]*matrix[2]
+    d = multiplier[2]*matrix[1] + multiplier[3]*matrix[3]
+    @matrix = [a, b, c, d]
+    if @are_matrices_equal(@matrix, @winning_matrix)
+        alert_str = "Congratulations, you completed the challege in #{@count} steps!"
+        if @count > @min_count
+            alert_str += "That's more than the optimal. Try again!"
+        else
+            alert_str += "That's the optimal number of moves!"
+        setTimeout(() -> alert alert_str, 1000)
+        @hide_buttons()
+        @show_challenge_picker()
 
-    var doScale = function(params) {
-        params.rotate = 0.0;
-        params.xshear = 0.0;
-        params.yshear = 0.0;
-        params.matrix = [params.xscale, 0, 0, params.yscale];
-        updateMatrix();
-    };
-    var doXShear = function(params) {
-        params.xscale = 1.0;
-        params.yscale = 1.0;
-        params.rotate = 0.0;
-        params.yshear = 0.0;
-        params.matrix = [1,params.xshear,0,1];
-        updateMatrix();
-    };
-    var doYShear = function(params) {
-        params.xscale = 1.0;
-        params.yscale = 1.0;
-        params.rotate = 0.0;
-        params.xshear = 0.0;
-        params.matrix = [1,0,params.yshear,1];
-        updateMatrix();
-    };
-    var doRotate = function(params) {
-        params.xscale = 1.0;
-        params.yscale = 1.0;
-        params.xshear = 0.0;
-        params.yshear = 0.0;
-        var r = params.rotate;
-        var c = Math.cos(r);
-        var s = Math.sin(r);
-        params.matrix = [c, -s, s, c];
-         updateMatrix();
-   };
+window.startGame = (challenge) ->
+    @count = 0
+    @matrix = challenge.starting_matrix
+    @winning_matrix = challenge.winning_matrix
+    @min_count = challenge.min_count
+    par = document.getElementById 'challenge_inst'
+    par.innerHTML = challenge.message
+    @show_buttons()
+    @hide_challenge_picker()
 
-    var Params = function() {
-        this.xscale = 1.0;
-        this.yscale = 1.0;
-        this.rotate = 0.0;
-        this.xshear = 0.0;
-        this.yshear = 0.0;
-        this.matrix = [1,0,0,1];
-    };
+window.demo = new Demo2D {
+    preload:
+        image: 'img/' + (urlParams.pic ? "theo2.jpg")
+    ortho: ortho
+    camera:
+        position: [1.1, 0, ortho]
+        lookAt:   [1.1, 0, 0]
+    vertical: 2.2
+}, () ->
+    window.mathbox = @mathbox
 
-    var numTransforms = 3;
-    var paramses = [];
-    var gui = new dat.GUI();
-    for(var i = 0; i < numTransforms; ++i) {
-        (function(params) {
-            var folder = gui.addFolder('Transform ' + (i+1));
-            if(i == 0)
-                folder.open();
-            folder.add(params, 'xscale', -2, 2).step(0.05).onChange(function() {
-                doScale(params);
-            }).listen();
-            folder.add(params, 'yscale', -2, 2).step(0.05).onChange(function() {
-                doScale(params);
-            }).listen();
-            folder.add(params, 'rotate', -Math.PI, Math.PI).step(0.05)
-                .onChange(function() {
-                    doRotate(params);
-                }).listen();
-            folder.add(params, 'xshear', -2, 2).step(0.05).onChange(function() {
-                doXShear(params);
-            }).listen();
-            folder.add(params, 'yshear', -2, 2).step(0.05).onChange(function() {
-                doYShear(params);
-            }).listen();
-            paramses.push(params);
-        })(new Params());
-    }
+    ##################################################
+    # Demo parameters
+    matrix = [1,0,0,1]
+    future_matrix = matrix
+    if @urlParams.mat?
+        matrix = @urlParams.mat.split(",").map parseFloat
+    numTransforms = 3
+    if @urlParams.num?
+        numTransforms = parseInt @urlParams.num
 
-    if(paramsQS.closed)
-        gui.closed = true;
+    ##################################################
+    # gui
+    inverse = null
 
-    var ortho = 10000;
-    var mathbox = window.mathbox = mathBox({
-        plugins: ['core'],
-        camera: {
-            near:    ortho / 4,
-            far:     ortho * 4,
-        },
-    });
-    if (mathbox.fallback) throw "WebGL not supported"
-    var three = mathbox.three;
-    three.renderer.setClearColor(new THREE.Color(0, 0, 0), 1);
-    var camera = mathbox
-        .camera({
-            proxy:    true,
-            position: [1.1, 0, ortho],
-            lookAt:   [1.1, 0, 0],
-            up:       [0, 1, 0],
-            fov:      Math.atan(2/ortho) * 360 / π,
-        });
-    mathbox.set('focus', ortho);
+    ##################################################
+    # views
+    gridOpts =
+        color:   'white'
+        opacity: 0.25
+        width:   1
+        zOrder:  1
+        zIndex:  1
+    axisOpts =
+        color:   'white'
+        opacity: 0.6
+        zIndex:  1
+        zOrder:  1
+        size:    3
 
-    var gridOpacity = 0.25;
-
-    var view1 = mathbox
-        .cartesian({
-            range: [[-10,10], [-10,10]],
-            scale: [1, 1],
-        });
+    view1 = @view
+        name:       'view1'
+        gridOpts:   gridOpts
+        axisOpts:   axisOpts
+        axisLabels: false
     view1
-        .axis({
-            classes:  ['axes'],
-            axis:     1,
-            end:      true,
-            width:    2,
-            depth:    1,
-            color:    'white',
-            opacity:  0.6,
-            zOrder:   1,
-            zIndex:   1,
-            size:     3,
-        })
-        .axis({
-            classes:  ['axes'],
-            axis:     2,
-            end:      true,
-            width:    2,
-            depth:    1,
-            color:    'white',
-            opacity:  0.6,
-            zOrder:   1,
-            zIndex:   1,
-            size:     3,
-        })
-        .grid({
-            classes:  ['axes', 'grid'],
-            axes:     [1, 2],
-            width:    1,
-            depth:    1,
-            color:    'white',
-            opacity:  gridOpacity,
-            zOrder:   1,
-            zIndex:   1,
-        })
-    ;
-
-    view1
-        .image({
-            image: image,
-        })
-        .matrix({
-            width:    2,
-            height:   2,
-            channels: 2,
+        .image image: @image
+        .matrix
+            width:    2
+            height:   2
+            channels: 2
             data:     [[[-10, -10], [10, -10]],
-                       [[-10,  10], [10,  10]]],
-        })
-        .surface({
-            color:  0xffffff,
-            points: '<',
-            map:    '<<',
-            fill:   true,
-            zOrder: 0,
-        })
-    ;
+                       [[-10,  10], [10,  10]]]
+        .surface
+            color:  'white'
+            points: '<'
+            map:    '<<'
+            fill:   true
+            zOrder: 0
 
-    var vector = [1, 3, 0];
+    view2 = @view
+        name:     'view2'
+        viewOpts: position: [2.2, 0, 0]
+        gridOpts: gridOpts
+        axisOpts:   axisOpts
+        axisLabels: false
 
-    // Make the vectors draggable
-    var draggable = new Draggable({
-        view:        view1,
-        points:      [vector],
-        size:        20,
-        hiliteIndex: 3,
-        hiliteColor: [0, 1, 1, .75],
-        hiliteSize:  20,
-        onDrag:  function() { updateVectorsElt(); },
-    });
-    mathbox.select("#draggable-hilite").set({
-        zTest:   true,
-        zWrite:  true,
-        zOrder:  2,
-        opacity: .5,
-    });
-
-    // Labeled vector
-    view1
-        .array({
-            channels: 3,
-            width:    1,
-            items:    2,
-            data:     [[0, 0, 0], vector],
-        })
-        .vector({
-            color:  "rgb(0,255,0)",
-            end:    true,
-            size:   4,
-            width:  3,
-            zIndex: 2,
-        })
-        .array({
-            channels: 3,
-            width:    1,
-            expr: function(emit) {
-                emit(vector[0]/2, vector[1]/2, vector[2]/2);
-            },
-        })
-        .text({
-            live:  false,
-            width: 1,
-            data:  ['x'],
-        })
-        .label({
-            outline: 1,
-            background: "black",
-            color:   "rgb(0,255,0)",
-            offset:  [0, 25],
-            size:    15,
-            zIndex:  3,
-        })
-    ;
-
-
-    var view2 = mathbox
-        .cartesian({
-            range: [[-10,10], [-10,10]],
-            scale: [1, 1, 1],
-        })
-        .transform({
-            position: [22, 0, 0],
-        });
-
-    view2
-        .axis({
-            classes:  ['axes'],
-            axis:     1,
-            end:      true,
-            width:    2,
-            depth:    1,
-            color:    'white',
-            opacity:  0.6,
-            zIndex:   1,
-            zOrder:   1,
-            size:     3,
-        })
-        .axis({
-            classes:  ['axes'],
-            axis:     2,
-            end:      true,
-            width:    2,
-            depth:    1,
-            color:    'white',
-            opacity:  0.6,
-            zIndex:   1,
-            zOrder:   1,
-            size:     3,
-        })
-        .grid({
-            classes:  ['axes', 'grid'],
-            axes:     [1, 2],
-            width:    1,
-            depth:    1,
-            color:    'white',
-            opacity:  gridOpacity,
-            zIndex:   1,
-            zOrder:   1,
-        })
-    ;
-
-    var clipped = view2
-        .shader({code: "#vertex-xyz"})
-        .vertex({pass: "world"})
-        .shader({code: "#fragment-clipping"})
-        .fragment();
-
-    var transformed = clipped
-        .transform({}, {
-            matrix: function() {
-                return [matrix[0], matrix[1], 0, 0, matrix[2], matrix[3], 0, 0,
-                        0, 0, 1, 0, 0, 0, 0, 1];
-            },
-        })
-        .image({
-            image: image,
-        })
-        .matrix({
-            width:    2,
-            height:   2,
-            channels: 2,
+    clipCube = @clipCube view2,
+        draw:   false
+        hilite: false
+        range:  10.0
+        pass:   'view'
+    clipCube.clipped
+        .transform {},
+            matrix: () -> [window.matrix[0], window.matrix[1], 0, 0, window.matrix[2], window.matrix[3], 0, 0,
+                           0, 0, 1, 0, 0, 0, 0, 1]
+        .image image: @image
+        .matrix
+            width:    2
+            height:   2
+            channels: 2
             data:     [[[-10, -10], [10, -10]],
-                       [[-10,  10], [10,  10]]],
-        })
-        .surface({
-            color:  0xffffff,
-            points: '<',
-            map:    '<<',
-            fill:   true,
-            zOrder: 0,
-        })
-    ;
+                       [[-10,  10], [10,  10]]]
+        .surface
+            color:  'white'
+            points: '<'
+            map:    '<<'
+            fill:   true
+            zOrder: 0
 
-    // Labeled vector
-    view2
-        .transform({}, {
-            matrix: function() {
-                return [matrix[0], matrix[1], 0, 0, matrix[2], matrix[3], 0, 0,
-                        0, 0, 1, 0, 0, 0, 0, 1];
-            },
-        })
-        .array({
-            channels: 3,
-            width:    1,
-            items:    2,
-            data:     [[0, 0, 0], vector],
-        })
-        .vector({
-            color:  "rgb(255,255,0)",
-            end:    true,
-            size:   4,
-            width:  3,
-            zIndex: 2,
-        })
-        .array({
-            channels: 3,
-            width:    1,
-            expr: function(emit) {
-                emit(vector[0]/2, vector[1]/2, vector[2]/2);
-            },
-        })
-        .text({
-            live:  false,
-            width: 1,
-            data:  ['b'],
-        })
-        .label({
-            outline: 1,
-            background: "black",
-            color:   "rgb(255,255,0)",
-            offset:  [0, 25],
-            size:    15,
-            zIndex:  3,
-        })
-    ;
+    ##################################################
+    # captions
+    @caption '''
+    <div id="picker_div">
+    <p id="pick_inst"> Pick a challenge! </p>
+    <ul id="challenge_list">
+        <li><button id="ch1">Challenge 1</button></li>
+        <li><button id="ch2">Challenge 2</button></li>
+    </ul>
+    </div>
+    <div id="challenge_div">
+    <p id="challenge_inst"> </p>
+    <table id="button_table">
+        <tr>
+            <td><button type="button" id="shear_left">Shear left</button></td>
+            <td><button type="button" id="shear_right">Shear right</button></td>
+        </tr>
+        <tr>
+            <td><button type="button" id="shear_up">Shear up</button></td>
+            <td><button type="button" id="shear_down">Shear down</button></td>
+        </tr>
 
-    var div = document.getElementsByClassName("mathbox-overlays")[0];
-    var label = self.label = document.createElement("div");
-    label.className = "overlay-text";
-    div.appendChild(label);
+    </table>
+    <p>(Reload to choose another challenge...)</p>
+    </div>
+             '''
 
-    label.innerHTML = '<span id="matrix-here"></span>'
-        + '<span id="vectors-here"></span>';
-    var matrixSpan = document.getElementById("matrix-here");
-    var vectorSpan = document.getElementById("vectors-here");
+    matrices = {
+        # 'scale_2': [2, 0, 0, 1],
+        # 'scale_half' : [0.5, 0, 0, 1],
+        'shear_left' : [1, -1, 0, 1],
+        'shear_right' : [1, 1, 0, 1],
+        'shear_up' : [1, 0, 1, 1],
+        'shear_down' : [1, 0, -1, 1]
+        # 'reflect_x_axis' : [1, 0, 0, -1]
+    }  
 
-    // Caption
-    var updateMatrixElt = function() {
-        katex.render(
-            "A = \\begin{bmatrix} "
-                + matrix[0].toFixed(2) + "&" + matrix[1].toFixed(2) + "\\\\"
-                + matrix[2].toFixed(2) + "&" + matrix[3].toFixed(2)
-                + "\\end{bmatrix}"
-                + "\\qquad A\\color{#00ff00}{x} = \\color{#ffff00}{b}",
-            matrixSpan);
-    };
-    updateMatrixElt();
+    challenges = [{
+        message : 'Transform the distorted figure back to the original figure.',
+        starting_matrix : [5, 4, 6, 5],
+        winning_matrix : [1, 0, 0, 1],
+        min_count : 6
+    }, {
+        message : 'Rotate the figure back to its original position.',
+        starting_matrix : [0, -1, 1, 0],
+        winning_matrix : [1, 0, 0, 1],
+        min_count : 3
+    }]
 
-    var updateVectorsElt = function() {
-        var outVec = [
-            matrix[0] * vector[0] + matrix[1] * vector[1],
-            matrix[2] * vector[0] + matrix[3] * vector[1]
-        ];
+    for i in [1...challenges.length+1]
+        (() ->
+            ii = i
+            ch = challenges[ii-1]
+            button = document.getElementById "ch#{ii}"
+            button.addEventListener 'click', () -> window.startGame(ch)
+        )()
 
-        katex.render(
-            "\\qquad A\\color{#00ff00}{"
-                + "\\begin{bmatrix}"
-                + vector[0].toFixed(2) + "\\\\"
-                + vector[1].toFixed(2)
-                + "\\end{bmatrix}} = \\color{#ffff00}{"
-                + "\\begin{bmatrix}"
-                + outVec[0].toFixed(2) + "\\\\"
-                + outVec[1].toFixed(2)
-                + "\\end{bmatrix}}",
-            vectorSpan);
-    }
-    updateVectorsElt();
-}
+    for id, matrix of matrices
+        (() -> 
+            id2 = id
+            button = document.getElementById id2
+            button.addEventListener 'click', () -> window.updateMatrix(matrices[id2])
+        )()
+    window.hide_buttons()
+
+
+window.show_buttons = () -> 
+    buttons = document.getElementById 'challenge_div'
+    buttons.style.display = "block"
+
+window.hide_buttons = () -> 
+    buttons = document.getElementById 'challenge_div'
+    buttons.style.display = "none"
+
+window.show_challenge_picker = () ->
+    picker_div = document.getElementById 'picker_div'
+    picker_div.style.display = "block"
+
+window.hide_challenge_picker = () ->
+    picker_div = document.getElementById 'picker_div'
+    picker_div.style.display = "none"
+
+
+        # <tr>
+        #     <td><button type="button" id="scale_2">Scale horizontally by 2</button></td>
+        #     <td><button type="button" id="scale_half">Scale horizontally by 1/2</button></td>
+        # </tr>
+
+        # <tr>
+        #     <td><button type="button" id="reflect_x_axis">Reflect about the x-axis</button></td>
+        #     <td><button type="button">Reflect about the y-axis</button></td>
+        # </tr>
