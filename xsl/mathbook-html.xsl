@@ -316,4 +316,36 @@
 </xsl:template>
 
 
+<!-- JDR: do not preload example knowls.                       -->
+<!-- This prevents initializing all the mathboxes on the page. -->
+<xsl:template match="example" mode="born-hidden">
+    <xsl:param name="b-original" select="true()" />
+    <xsl:variable name="birth-elt">
+        <xsl:apply-templates select="." mode="birth-element" />
+    </xsl:variable>
+    <!-- First: the link that is visible on the page -->
+    <xsl:element name="{$birth-elt}">
+        <xsl:attribute name="class">
+            <xsl:text>hidden-knowl-wrapper</xsl:text>
+        </xsl:attribute>
+        <xsl:element name="a">
+            <xsl:attribute name="knowl">
+                <xsl:apply-templates select="." mode="hidden-knowl-filename" />
+            </xsl:attribute>
+            <xsl:attribute name="knowl-id">
+                <xsl:text>hidden-</xsl:text>
+                <xsl:apply-templates select="." mode="internal-id" />
+            </xsl:attribute>
+            <!-- add HTML title and alt attributes to the link -->
+            <xsl:attribute name="alt">
+                <xsl:apply-templates select="." mode="tooltip-text" />
+            </xsl:attribute>
+            <xsl:attribute name="title">
+                <xsl:apply-templates select="." mode="tooltip-text" />
+            </xsl:attribute>
+            <xsl:apply-templates select="." mode="hidden-knowl-text" />
+        </xsl:element>
+    </xsl:element>
+</xsl:template>
+
 </xsl:stylesheet>
