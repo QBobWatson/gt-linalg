@@ -21,7 +21,7 @@ the license is included in gfdl.xml.
   </objectives>
 
   <subsection>
-    <title>Free variables</title>
+    <title>Free Variables</title>
 
     <p>There is one possibility for the row reduced form of a matrix that we did not see in <xref ref="section-row-reduction"/>.</p>
 
@@ -186,7 +186,7 @@ the license is included in gfdl.xml.
   </subsection>
 
   <subsection>
-    <title>Number of solutions</title>
+    <title>Number of Solutions</title>
 
     <p>There are <em>three possibilities</em> for the reduced row echelon form of the augmented matrix of a linear system.
     <ol>

@@ -21,7 +21,7 @@ the license is included in gfdl.xml.
   </objectives>
 
   <subsection xml:id="subsection-Rn">
-    <title>Preliminaries: line, plane, space, etc.</title>
+    <title>Preliminaries: Line, Plane, Space, Etc.</title>
 
     <p>We use <m>\R</m> to denote the set of all real numbers, i.e., the number
     line.  This contains numbers like <m>0, \frac 32, -\pi, 104, \ldots</m></p>

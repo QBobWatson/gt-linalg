@@ -65,10 +65,13 @@ the license is included in gfdl.xml.
 
     <p>The difference is purely psychological: <em>points and vectors are both just lists of numbers</em>.</p>
 
-    <figure>
-      <caption>A vector in <m>\R^3</m>, by coordinates.</caption>
-      <mathbox source="demos/vector.html" height="400px"/>
-    </figure>
+    <example hide-type="true">
+      <title>Interactive: a vector in <m>\R^3</m>, by coordinates</title>
+      <figure>
+        <caption>A vector in <m>\R^3</m>, and its coordinates.  Drag the arrow head and tail.</caption>
+        <mathbox source="demos/vector.html" height="400px"/>
+      </figure>
+    </example>
 
     <p>When we think of an element of <m>\R^n</m> as a vector, we will usually write it vertically, like a matrix with one column:
     <me>v = \vec{1 3}.</me>
@@ -199,10 +202,13 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
         </image>
       </sidebyside>
 
-      <figure>
-        <caption>The parallelogram law for vector addition.</caption>
-        <mathbox source="demos/vector-add.html" height="400px"/>
-      </figure>
+      <example hide-type="true">
+        <title>Interactive: the parallelogram law for vector addition</title>
+        <figure>
+          <caption>The parallelogram law for vector addition.  Click and drag the heads of <m></m> and <m>w</m>.</caption>
+          <mathbox source="demos/vector-add.html" height="400px"/>
+        </figure>
+      </example>
     </paragraphs>
 
     <paragraphs>
@@ -232,10 +238,13 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
         </image>
       </sidebyside>
 
-      <figure>
-        <caption>Vector subtraction.</caption>
-        <mathbox source="demos/vector-sub.html" height="400px"/>
-      </figure>
+      <example hide-type="true">
+        <title>Interactive: vector subtraction</title>
+        <figure>
+          <caption>Vector subtraction.  Click and drag the heads of <m>v</m> and <m>w</m>.</caption>
+          <mathbox source="demos/vector-sub.html" height="400px"/>
+        </figure>
+      </example>
     </paragraphs>
 
     <paragraphs>
@@ -267,10 +276,13 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
         </image>
       </sidebyside>
 
-      <figure>
-        <caption>Scalar multiplication.</caption>
-        <mathbox source="demos/vector-mul.html" height="400px"/>
-      </figure>
+      <example hide-type="true">
+        <title>Interactive: scalar multiplication</title>
+        <figure>
+          <caption>Scalar multiplication.  Drag the slider to change the scalar.</caption>
+          <mathbox source="demos/vector-mul.html" height="400px"/>
+        </figure>
+      </example>
 
     </paragraphs>
 
@@ -344,10 +356,13 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
       <mathbox source="demos/spans.html?v1=1,2&amp;v2=1,0&amp;range=5&amp;captions=combo" height="400px"/>
     </figure>
 
-    <figure>
-      <caption>Linear combinations of three vectors: move the sliders to change the coefficients of <m>v_1,v_2,v_3</m>.  Note how the parallelogram law for addition of three vectors is more of a "parallepiped law".</caption>
-      <mathbox source="demos/spans.html?v1=2,-1,1&amp;v2=1,1,-1&amp;v3=-1,1,4&amp;range=5&amp;captions=combo" height="500px"/>
-    </figure>
+    <example hide-type="true">
+      <title>Interactive: linear combinations of three vectors</title>
+      <figure>
+        <caption>Linear combinations of three vectors: move the sliders to change the coefficients of <m>v_1,v_2,v_3</m>.  Note how the parallelogram law for addition of three vectors is more of a "parallepiped law".</caption>
+        <mathbox source="demos/spans.html?v1=2,-1,1&amp;v2=1,1,-1&amp;v3=-1,1,4&amp;range=5&amp;captions=combo" height="500px"/>
+      </figure>
+    </example>
 
     <specialcase>
       <title>Linear Combinations of a Single Vector</title>
@@ -396,11 +411,16 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
       </sidebyside>
       <p>The difference between this and a previous <xref ref="vectors-eg-lincombo-plane"/> is that both vectors lie on the same line.  Hence any scalar multiples of <m>v_1,v_2</m> lie on that line, as does their sum.
       </p>
+
+    </specialcase>
+
+    <example hide-type="true">
+      <title>Interactive: linear combinations of two collinear vectors</title>
       <figure>
-        <caption>Linear combinations of two collinear vectors in <m>\R^2</m>.</caption>
+        <caption>Linear combinations of two collinear vectors in <m>\R^2</m>.  Move the sliders to change the coefficients of <m>v_1,v_2</m>.  Note that there is no way to "escape" the line.</caption>
         <mathbox source="demos/spans.html?v1=2,2&amp;v2=-1,-1&amp;range=5&amp;captions=combo&amp;grid=disabled" height="400px"/>
       </figure>
-    </specialcase>
+    </example>
 
   </subsection>
 

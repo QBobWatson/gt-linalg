@@ -21,7 +21,7 @@ the license is included in gfdl.xml.
   </objectives>
 
   <subsection xml:id="subsection-echelon-forms">
-    <title>Echelon forms</title>
+    <title>Echelon Forms</title>
 
     <p>In <xref ref="section-systems-eqns"/> we saw how to translate a system of linear equations into an augmented matrix.  We want to find an <em>algorithm</em> for "solving" such an augmented matrix.  First we must decide what it means for an augmented matrix to be "solved".</p>
 
@@ -104,7 +104,7 @@ the license is included in gfdl.xml.
   </subsection>
 
   <subsection>
-    <title>The row reduction algorithm</title>
+    <title>The Row Reduction Algorithm</title>
 
     <theorem xml:id="row-reduction-works">
       <statement>
@@ -522,7 +522,7 @@ the license is included in gfdl.xml.
     </example>
 
     <theorem hide-type="true">
-      <title>The Row Echelon Form of an Inconsistent System</title>
+      <title>The row echelon form of an inconsistent system</title>
       <p>An augmented matrix corresponds to an inconsistent system of equations if and only if the last column (i.e., the augmented column) is a <em>pivot column</em>.</p>
     </theorem>
 

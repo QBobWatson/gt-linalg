@@ -67,7 +67,7 @@ the license is included in gfdl.xml.
 
     <note hide-type="true">
       <title>A Picture of a Consistent System</title>
-      <p>We saw in the above <xref ref="vectors-example-consistent"/> that the system of equations <xref ref="vectors-system-consistent"/> is consistent.  Equivalently, this means that the vector equation <xref ref="vectors-vec-eqn-consistent"/> has a solution.  Therefore, this <xref ref="vectors-figure-consistent"/> is a <em>picture of a consistent system of equations</em>.  Compare this <xref ref="vectors-fig-inconsistent"/> below.
+      <p>We saw in the above <xref ref="vectors-example-consistent"/> that the system of equations <xref ref="vectors-system-consistent"/> is consistent.  Equivalently, this means that the vector equation <xref ref="vectors-vec-eqn-consistent"/> has a solution.  Therefore, the <xref ref="vectors-figure-consistent"/> above is a <em>picture of a consistent system of equations</em>.  Compare this <xref ref="vectors-fig-inconsistent"/> below.
       </p>
     </note>
 
