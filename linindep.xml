@@ -14,9 +14,9 @@ the license is included in gfdl.xml.
 
   <objectives>
     <ol>
-      <li>Understand the concept of linear (in)dependence.</li>
-      <li>Learn several criteria for linear (in)dependence.</li>
-      <li>Understand linear (in)dependence geometrically.</li>
+      <li>Understand the concept of linear independence.</li>
+      <li>Learn several criteria for linear independence.</li>
+      <li>Understand linear independence geometrically.</li>
       <li>Understand the relationship between linear independence and pivot columns / free variables.</li>
       <li>Vocabulary words: <term>linear dependence relation</term> / <term>equation of linear dependence</term>.</li>
       <li>Essential vocabulary words: <term>linearly independent</term>, <term>linearly dependent</term>.</li>
@@ -229,7 +229,7 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
               <me>1\cdot v_1 + 0\cdot v_2 + \cdots + 0\cdot v_p = 0.</me>
             </li>
             <li>
-              Suppose that <m>\{v_1,v_2,\ldots,v_r\}</m> is linearly dependent, with <m>r &lt; p</m>.  This means that there is an equation of linear dependence
+              After reordering, we may suppose that <m>\{v_1,v_2,\ldots,v_r\}</m> is linearly dependent, with <m>r &lt; p</m>.  This means that there is an equation of linear dependence
               <me>x_1v_1 + x_2v_2 + \cdots + x_rv_r = 0</me>,
               with at least one of <m>x_1,x_2,\ldots,x_r</m> nonzero.  This is also an equation of linear dependence among <m>\{v_1,v_2,\ldots,v_p\}</m>, since we can take the coefficients of <m>v_{r+1},\ldots,v_p</m> to all be zero.
             </li>
@@ -270,6 +270,9 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
           <me>v_1 = \frac 12\left(\frac 12v_2 - v_3 + 6v_4\right).</me>
           This shows that <m>v_1</m> is in <m>\Span\{v_2,v_3,v_4\}</m>.
         </p>
+        <p>
+          We leave it to the reader to generalize this proof for any set of vectors.
+        </p>
       </proof>
     </theorem>
 
@@ -300,6 +303,10 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
 
         <p>
           Conversely, suppose that we can remove <m>v_3</m> without shrinking the span of <m>\{v_1,v_2,v_3,v_4\}</m>: in other words, <m>\Span\{v_1,v_2,v_3,v_4\} = \Span\{v_1,v_2,v_4\}</m>.  Since <m>v_3</m> is in <m>\Span\{v_1,v_2,v_3,v_4\}</m> (the <m>v_3</m>-coefficient is 1 and the rest are 0), this means that <m>v_3</m> is in <m>\Span\{v_1,v_2,v_4\}</m>, so the vectors are linearly dependent by the previous <xref ref="linindep-criterion-inspan"/>.
+        </p>
+
+        <p>
+          We leave it to the reader to generalize this proof for any set of vectors.
         </p>
       </proof>
     </theorem>
