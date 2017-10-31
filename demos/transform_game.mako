@@ -2,7 +2,8 @@
 
 <%inherit file="base2.mako"/>
 
-<%block name="title">2x2 Matrix Transformations</%block>
+<%block name="title">Transformation challenges</%block>
+<%block name="extra_js"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script></%block>
 
 <%block name="inline_style">
 #help-text {
@@ -35,24 +36,50 @@ window.updateMatrix = (multiplier) =>
     d = multiplier[2]*matrix[1] + multiplier[3]*matrix[3]
     @matrix = [a, b, c, d]
     if @are_matrices_equal(@matrix, @winning_matrix)
-        alert_str = "Congratulations, you completed the challege in #{@count} steps!"
-        if @count > @min_count
-            alert_str += "That's more than the optimal. Try again!"
-        else
-            alert_str += "That's the optimal number of moves!"
-        setTimeout(() -> alert alert_str, 1000)
-        @hide_buttons()
-        @show_challenge_picker()
+        @announce_result()
 
 window.startGame = (challenge) ->
     @count = 0
     @matrix = challenge.starting_matrix
     @winning_matrix = challenge.winning_matrix
     @min_count = challenge.min_count
-    par = document.getElementById 'challenge_inst'
-    par.innerHTML = challenge.message
-    @show_buttons()
-    @hide_challenge_picker()
+    $("#challenge_inst").html(challenge.message)
+    $("#challenge_div").show()
+    $("#picker_div").hide()
+    $("#new_challenge_div").show()
+    $("#button-table").find("tr").hide()
+    for id in challenge.transformations
+        console.log id 
+        console.log $(id)
+        $("#"+id).show()
+    # $("#button-table tbody").children("tr").each(() -> 
+    #     console.log this
+    #     console.log challenge.transformations
+    #     if this.attr('id') in challenge.transformations
+    #         this.show()
+    #     else
+    #         this.hide()
+    # )
+    # console.log $("#button-table tbody")
+    # console.log $("#button-table tbody").children("tr")
+
+window.challenge_list_setup = () ->
+    $("#picker_div").show()
+    $("#challenge_div").hide()
+    $("#new_challenge_div").hide()
+    $("#result_div").hide()
+
+window.announce_result = () ->
+    $("#count").html("#{@count}")
+    if @count > @min_count
+        $("#optimal").hide()
+        $("#non-optimal").show()
+    else
+        $("#non-optimal").hide()
+        $("#optimal").show()
+    $("#challenge_div").hide()
+    $("#result_div").show()
+
 
 window.demo = new Demo2D {
     preload:
@@ -150,46 +177,82 @@ window.demo = new Demo2D {
     <div id="picker_div">
     <p id="pick_inst"> Pick a challenge! </p>
     <ul id="challenge_list">
-        <li><button id="ch1">Challenge 1</button></li>
-        <li><button id="ch2">Challenge 2</button></li>
     </ul>
     </div>
     <div id="challenge_div">
     <p id="challenge_inst"> </p>
-    <table id="button_table">
-        <tr>
+    <table id="button-table">
+        <tr id="h-shears">
             <td><button type="button" id="shear_left">Shear left</button></td>
             <td><button type="button" id="shear_right">Shear right</button></td>
         </tr>
-        <tr>
+        <tr id="v-shears">
             <td><button type="button" id="shear_up">Shear up</button></td>
             <td><button type="button" id="shear_down">Shear down</button></td>
         </tr>
-
+        <tr id="rotation">
+            <td><button type="button" id="rotate_45cc">Rotate left by 45 degrees</button></td>
+            <td><button type="button" id="rotate_45c">Rotate right by 45 degrees</button></td>
+        </tr>
+        <tr id="scale">
+            <td><button type="button" id="scale_2">Scale by 2</button></td>
+            <td><button type="button" id="scale_half">Scale by 1/2</button></td>
+        </tr>
+        <tr id="reflect">
+            <td><button type="button" id="reflect_x_axis">Reflect about the x-axis</button></td>
+        </tr>
     </table>
-    <p>(Reload to choose another challenge...)</p>
+    </div>
+    <div id="result_div">
+        <p>Congratulations, you completed the challenge in <span id="count"></span> steps!</p>
+        <p id="non-optimal">That's more than the optimal. Try again!</p>
+        <p id="optimal">That's the optimal number of moves!</p>
+    </div>
+    <div id="new_challenge_div">
+        <button id="new-challenge-btn">Pick another challenge</button>
     </div>
              '''
 
     matrices = {
-        # 'scale_2': [2, 0, 0, 1],
-        # 'scale_half' : [0.5, 0, 0, 1],
+        'scale_2': [2, 0, 0, 2],
+        'scale_half' : [0.5, 0, 0, 0.5],
         'shear_left' : [1, -1, 0, 1],
         'shear_right' : [1, 1, 0, 1],
         'shear_up' : [1, 0, 1, 1],
         'shear_down' : [1, 0, -1, 1]
-        # 'reflect_x_axis' : [1, 0, 0, -1]
+        'reflect_x_axis' : [1, 0, 0, -1]
+        'rotate_45cc' : [1/Math.sqrt(2), -1/Math.sqrt(2),1/Math.sqrt(2),1/Math.sqrt(2)]
+        'rotate_45c' : [1/Math.sqrt(2), 1/Math.sqrt(2),-1/Math.sqrt(2),1/Math.sqrt(2)]
     }  
 
     challenges = [{
+        name: "Zoom",
+        message: "Transform the figure on the right to the figure on the left",
+        starting_matrix: [0,0.25,-0.25,0],
+        winning_matrix: [1, 0, 0, 1],
+        transformations: ["rotation", "scale"],
+        min_count: 4
+    }, {
+        name: "Reflect",
+        message: "Transform the figure on the right to the figure on the left",
+        starting_matrix: [0,1,1,0],
+        winning_matrix: [1, 0, 0, 1],
+        transformations: ["rotation", "reflect"],
+        min_count: 3
+    },
+    {
+        name: "Unwind",
         message : 'Transform the distorted figure back to the original figure.',
         starting_matrix : [5, 4, 6, 5],
         winning_matrix : [1, 0, 0, 1],
+        transformations : ["h-shears", "v-shears"],
         min_count : 6
     }, {
+        name: "Rotate",
         message : 'Rotate the figure back to its original position.',
         starting_matrix : [0, -1, 1, 0],
         winning_matrix : [1, 0, 0, 1],
+        transformations : ["h-shears", "v-shears"],
         min_count : 3
     }]
 
@@ -197,35 +260,24 @@ window.demo = new Demo2D {
         (() ->
             ii = i
             ch = challenges[ii-1]
-            button = document.getElementById "ch#{ii}"
-            button.addEventListener 'click', () -> window.startGame(ch)
+            $li = $("<li>")
+            $ch = $("<button>", {id: "ch#{ii}"})
+            $ch.click(() -> window.startGame(ch))
+            $ch.html("Challenge #{ii}: " + ch.name)
+            $li.append($ch)
+            console.log $li
+            $("#challenge_list").append($li)
         )()
 
     for id, matrix of matrices
         (() -> 
             id2 = id
-            button = document.getElementById id2
-            button.addEventListener 'click', () -> window.updateMatrix(matrices[id2])
+            $("#"+id2).click(() -> window.updateMatrix(matrices[id2]))
         )()
-    window.hide_buttons()
 
+    $("#new-challenge-btn").click(() -> window.challenge_list_setup())
 
-window.show_buttons = () -> 
-    buttons = document.getElementById 'challenge_div'
-    buttons.style.display = "block"
-
-window.hide_buttons = () -> 
-    buttons = document.getElementById 'challenge_div'
-    buttons.style.display = "none"
-
-window.show_challenge_picker = () ->
-    picker_div = document.getElementById 'picker_div'
-    picker_div.style.display = "block"
-
-window.hide_challenge_picker = () ->
-    picker_div = document.getElementById 'picker_div'
-    picker_div.style.display = "none"
-
+    window.challenge_list_setup()
 
         # <tr>
         #     <td><button type="button" id="scale_2">Scale horizontally by 2</button></td>
