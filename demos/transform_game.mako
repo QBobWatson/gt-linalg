@@ -12,6 +12,39 @@
 .mathbox-overlays {
     pointer-events: auto;
 }
+#optimal {
+    color: green
+}
+#non-optimal {
+    color: yellow
+}
+#new_challenge_div, #picker_div, #challenge_div, #challenge_list {
+    text-align: center
+}
+
+#button-table {
+    margin: auto
+}
+#challenge_list {
+    list-style: none;
+    padding-left:0
+}
+button {
+    padding: 0.5em;
+    border-radius: 0;
+    border: none;
+    background-color: white
+}
+button:hover {
+    background-color: LightBlue;
+}
+#new-challenge-btn {
+    background-color: LightGreen;
+}
+#new-challenge-btn:hover {
+    background-color: #33CC33;
+}
+
 </%block>
 
 ##
@@ -25,18 +58,33 @@ window.are_matrices_equal = (m1, m2) ->
     return true
 
 
+window.multiply = (m1, m2) ->
+    a = m1[0]*m2[0] + m1[1]*m2[2]
+    b = m1[0]*m2[1] + m1[1]*m2[3]
+    c = m1[2]*m2[0] + m1[3]*m2[2]
+    d = m1[2]*m2[1] + m1[3]*m2[3]    
+    [a, b, c, d]
 
 window.matrix = [1,0,0,1]
+window.tempmatrix = [1,0,0,1]
 window.updateMatrix = (multiplier) =>
     @count += 1
-    matrix = @matrix
-    a = multiplier[0]*matrix[0] + multiplier[1]*matrix[2]
-    b = multiplier[0]*matrix[1] + multiplier[1]*matrix[3]
-    c = multiplier[2]*matrix[0] + multiplier[3]*matrix[2]
-    d = multiplier[2]*matrix[1] + multiplier[3]*matrix[3]
-    @matrix = [a, b, c, d]
+    @matrix = @multiply(multiplier, @matrix)
+    @hideTempImage()
+    # @tempUpdateMatrix(multiplier)
     if @are_matrices_equal(@matrix, @winning_matrix)
         @announce_result()
+
+window.tempUpdateMatrix = (multiplier) =>
+    @tempmatrix = @multiply(multiplier, @matrix)
+    # @tempmatrix = multiplier
+    @mathbox.select("#temp_image").set('visible', true)
+    @mathbox.select("#real_image").set('visible', false)
+
+window.hideTempImage = () =>
+    @mathbox.select("#temp_image").set('visible', false)
+    @mathbox.select("#real_image").set('visible', true)
+
 
 window.startGame = (challenge) ->
     @count = 0
@@ -165,22 +213,47 @@ window.demo = new Demo2D {
             data:     [[[-10, -10], [10, -10]],
                        [[-10,  10], [10,  10]]]
         .surface
+            id: 'real_image'
             color:  'white'
             points: '<'
             map:    '<<'
             fill:   true
             zOrder: 0
 
+    clipCube.clipped
+        .transform {},
+            matrix: () -> [window.tempmatrix[0], window.tempmatrix[1], 0, 0, window.tempmatrix[2], window.tempmatrix[3], 0, 0,
+                           0, 0, 1, 0, 0, 0, 0, 1]
+        .image image: @image
+        .matrix
+            width:    2
+            height:   2
+            channels: 2
+            data:     [[[-10, -10], [10, -10]],
+                       [[-10,  10], [10,  10]]]
+        .surface
+            id: 'temp_image'
+            color:  'white'
+            opacity: 0.5
+            points: '<'
+            map:    '<<'
+            fill:   true
+            zOrder: 0
+            visible: false
+
+
     ##################################################
     # captions
     @caption '''
     <div id="picker_div">
     <p id="pick_inst"> Pick a challenge! </p>
+    <hr>
     <ul id="challenge_list">
     </ul>
     </div>
     <div id="challenge_div">
     <p id="challenge_inst"> </p>
+    <hr>
     <table id="button-table">
         <tr id="h-shears">
             <td><button type="button" id="shear_left">Shear left</button></td>
@@ -191,8 +264,8 @@ window.demo = new Demo2D {
             <td><button type="button" id="shear_down">Shear down</button></td>
         </tr>
         <tr id="rotation">
-            <td><button type="button" id="rotate_45cc">Rotate left by 45 degrees</button></td>
-            <td><button type="button" id="rotate_45c">Rotate right by 45 degrees</button></td>
+            <td><button type="button" id="rotate_45cc">Rotate left by 45&deg;</button></td>
+            <td><button type="button" id="rotate_45c">Rotate right by 45&deg;</button></td>
         </tr>
         <tr id="scale">
             <td><button type="button" id="scale_2">Scale by 2</button></td>
@@ -206,9 +279,10 @@ window.demo = new Demo2D {
     <div id="result_div">
         <p>Congratulations, you completed the challenge in <span id="count"></span> steps!</p>
         <p id="non-optimal">That's more than the optimal. Try again!</p>
-        <p id="optimal">That's the optimal number of moves!</p>
+        <p id="optimal" style="color:green">That's the optimal number of moves!</p>
     </div>
     <div id="new_challenge_div">
+        <hr>
         <button id="new-challenge-btn">Pick another challenge</button>
     </div>
              '''
@@ -227,14 +301,14 @@ window.demo = new Demo2D {
 
     challenges = [{
         name: "Zoom",
-        message: "Transform the figure on the right to the figure on the left",
+        message: "Transform the figure on the right to the one on the left",
         starting_matrix: [0,0.25,-0.25,0],
         winning_matrix: [1, 0, 0, 1],
         transformations: ["rotation", "scale"],
         min_count: 4
     }, {
         name: "Reflect",
-        message: "Transform the figure on the right to the figure on the left",
+        message: "Transform the figure on the right to the one on the left",
         starting_matrix: [0,1,1,0],
         winning_matrix: [1, 0, 0, 1],
         transformations: ["rotation", "reflect"],
@@ -272,7 +346,10 @@ window.demo = new Demo2D {
     for id, matrix of matrices
         (() -> 
             id2 = id
-            $("#"+id2).click(() -> window.updateMatrix(matrices[id2]))
+            $btn = $("#"+id2)
+            $btn.click(() -> window.updateMatrix(matrices[id2]))
+            $btn.mouseover(() -> window.tempUpdateMatrix(matrices[id2]))
+            $btn.mouseleave(() -> window.hideTempImage())
         )()
 
     $("#new-challenge-btn").click(() -> window.challenge_list_setup())
