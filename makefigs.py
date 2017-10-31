@@ -9,7 +9,7 @@ from hashlib import md5
 from subprocess import check_output, CalledProcessError, STDOUT
 
 BASE = os.path.realpath(os.path.dirname(__file__))
-SOURCES = os.path.join(BASE, 'img-source')
+SOURCES = os.path.join(BASE, 'img-cache')
 OUTPUTS = os.path.join(BASE, 'images')
 XSL_DIR = os.path.realpath(os.path.join(BASE, '..', 'mathbook', 'xsl'))
 

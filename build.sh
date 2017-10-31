@@ -1,5 +1,22 @@
 #!/bin/bash
 
+# TODO: options to recompile images, mathjax, all
+
+MAKEFIGS_COMMAND=./makefigs.py
+PREJAX_COMMAND=./prejax.py
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --recompile-images)
+            MAKEFIGS_COMMAND="$MAKEFIGS_COMMAND --recompile-all"
+            ;;
+        --reprocess-mathjax)
+            PREJAX_COMMAND="$PREJAX_COMMAND --process-all"
+            ;;
+    esac
+    shift
+done
+
 die() {
     echo "$@"
     exit 1
@@ -30,7 +47,7 @@ mkdir -p "$static_dir/fonts"
 mkdir -p "$static_dir/images"
 
 echo "Making figures..."
-./makefigs.py
+$MAKEFIGS_COMMAND
 
 echo "Copying static files..."
 cp "$base_dir/gt-text-common/css/"*.css "$static_dir/css"
@@ -38,6 +55,7 @@ cp "$base_dir/mathbook/css/mathbook-add-on.css" "$static_dir/css"
 cp "$base_dir/gt-text-common/js/"*.js "$static_dir/js"
 cp "$base_dir/mathbook-assets/stylesheets/"*.css "$static_dir/css"
 cp "$base_dir/mathbook-assets/stylesheets/fonts/ionicons/fonts/"* "$static_dir/fonts"
+cp -r "$base_dir/gt-text-common/fonts/"* "$static_dir/fonts"
 cp "$compile_dir/images/"* "$static_dir/images"
 cp -r "$compile_dir/demos" "$build_dir/demos"
 ln -s "static/images" "$build_dir/images"
@@ -46,6 +64,10 @@ echo "Building html..."
 xsltproc -o "$build_dir/" --xinclude \
          "$compile_dir/xsl/mathbook-html.xsl" linalg.xml \
          || die "xsltproc failed!"
+
+echo "Preprocessing mathjax..."
+$PREJAX_COMMAND
+rm "$build_dir/preamble.tex"
 
 echo "Build successful!  Open or reload"
 echo "     $build_dir/index.html"

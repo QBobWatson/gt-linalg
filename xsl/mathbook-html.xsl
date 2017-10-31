@@ -5,9 +5,15 @@
     %entities;
 ]>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
+    xmlns:exsl="http://exslt.org/common"
+    extension-element-prefixes="exsl"
+>
 
 <xsl:import href="../../mathbook/xsl/mathbook-html.xsl" />
+
+<!-- JDR: for caching -->
+<xsl:param name="debug.datedfiles">no</xsl:param>
 
 <xsl:param name="html.css.extra">
   static/css/mathbook-gt-add-on.css
@@ -37,6 +43,8 @@
     <xsl:call-template name="external-css">
         <xsl:with-param name="css-list" select="normalize-space($html.css.extra)" />
     </xsl:call-template>
+    <!-- JDR: preprocessed inline mathjax stylesheet is inserted here -->
+    <style id="mathjax-style"></style>
 </xsl:template>
 
 <!-- Primary Navigation -->
@@ -347,5 +355,16 @@
         </xsl:element>
     </xsl:element>
 </xsl:template>
+
+
+<!-- JDR: we're precompiling mathjax -->
+<xsl:template name="mathjax"/>
+<xsl:template name="latex-macros">
+  <exsl:document href="./preamble.tex" method="text">
+    <xsl:value-of select="$latex-packages-mathjax" />
+    <xsl:value-of select="$latex-macros" />
+  </exsl:document>
+</xsl:template>
+
 
 </xsl:stylesheet>
