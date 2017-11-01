@@ -5,12 +5,13 @@
 
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-  <title>2x2 Matrix Transformations</title>
+  <title>Transformation challenges</title>
 
       <link rel="stylesheet" href="mathbox/mathbox.css">
       <link rel="stylesheet"
@@ -19,9 +20,45 @@
 
   <style>
       
+#help-text {
+    # text-align: center;
+# }
 .mathbox-overlays {
     pointer-events: auto;
 }
+#optimal {
+    color: green
+}
+#non-optimal {
+    color: yellow
+}
+#new_challenge_div, #picker_div, #challenge_div, #challenge_list {
+    text-align: center
+}
+
+#button-table {
+    margin: auto
+}
+#challenge_list {
+    list-style: none;
+    padding-left:0
+}
+button {
+    padding: 0.5em;
+    border-radius: 0;
+    border: none;
+    background-color: white
+}
+button:hover {
+    background-color: LightBlue;
+}
+#new-challenge-btn {
+    background-color: LightGreen;
+}
+#new-challenge-btn:hover {
+    background-color: #33CC33;
+}
+
 
   </style>
 
@@ -39,7 +76,7 @@
         <script src="lib/dat.gui.min.js"></script>
         <script src="lib/screenfull.min.js"></script>
 
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script type="text/javascript">
         "use strict";
@@ -60,44 +97,85 @@ window.are_matrices_equal = function(m1, m2) {
   return true;
 };
 
+window.multiply = function(m1, m2) {
+  var a, b, c, d;
+  a = m1[0] * m2[0] + m1[1] * m2[2];
+  b = m1[0] * m2[1] + m1[1] * m2[3];
+  c = m1[2] * m2[0] + m1[3] * m2[2];
+  d = m1[2] * m2[1] + m1[3] * m2[3];
+  return [a, b, c, d];
+};
+
 window.matrix = [1, 0, 0, 1];
+
+window.tempmatrix = [1, 0, 0, 1];
 
 window.updateMatrix = (function(_this) {
   return function(multiplier) {
-    var a, alert_str, b, c, d, matrix;
     _this.count += 1;
-    matrix = _this.matrix;
-    a = multiplier[0] * matrix[0] + multiplier[1] * matrix[2];
-    b = multiplier[0] * matrix[1] + multiplier[1] * matrix[3];
-    c = multiplier[2] * matrix[0] + multiplier[3] * matrix[2];
-    d = multiplier[2] * matrix[1] + multiplier[3] * matrix[3];
-    _this.matrix = [a, b, c, d];
+    _this.matrix = _this.multiply(multiplier, _this.matrix);
+    _this.hideTempImage();
     if (_this.are_matrices_equal(_this.matrix, _this.winning_matrix)) {
-      alert_str = "Congratulations, you completed the challege in " + _this.count + " steps!";
-      if (_this.count > _this.min_count) {
-        alert_str += "That's more than the optimal. Try again!";
-      } else {
-        alert_str += "That's the optimal number of moves!";
-      }
-      setTimeout(function() {
-        return alert(alert_str, 1000);
-      });
-      _this.hide_buttons();
-      return _this.show_challenge_picker();
+      return _this.announce_result();
     }
   };
 })(this);
 
+window.tempUpdateMatrix = (function(_this) {
+  return function(multiplier) {
+    _this.tempmatrix = _this.multiply(multiplier, _this.matrix);
+    _this.mathbox.select("#temp_image").set('visible', true);
+    return _this.mathbox.select("#real_image").set('visible', false);
+  };
+})(this);
+
+window.hideTempImage = (function(_this) {
+  return function() {
+    _this.mathbox.select("#temp_image").set('visible', false);
+    return _this.mathbox.select("#real_image").set('visible', true);
+  };
+})(this);
+
 window.startGame = function(challenge) {
-  var par;
+  var id, j, len, ref, results;
   this.count = 0;
   this.matrix = challenge.starting_matrix;
   this.winning_matrix = challenge.winning_matrix;
   this.min_count = challenge.min_count;
-  par = document.getElementById('challenge_inst');
-  par.innerHTML = challenge.message;
-  this.show_buttons();
-  return this.hide_challenge_picker();
+  $("#challenge_inst").html(challenge.message);
+  $("#challenge_div").show();
+  $("#picker_div").hide();
+  $("#new_challenge_div").show();
+  $("#button-table").find("tr").hide();
+  ref = challenge.transformations;
+  results = [];
+  for (j = 0, len = ref.length; j < len; j++) {
+    id = ref[j];
+    console.log(id);
+    console.log($(id));
+    results.push($("#" + id).show());
+  }
+  return results;
+};
+
+window.challenge_list_setup = function() {
+  $("#picker_div").show();
+  $("#challenge_div").hide();
+  $("#new_challenge_div").hide();
+  return $("#result_div").hide();
+};
+
+window.announce_result = function() {
+  $("#count").html("" + this.count);
+  if (this.count > this.min_count) {
+    $("#optimal").hide();
+    $("#non-optimal").show();
+  } else {
+    $("#non-optimal").hide();
+    $("#optimal").show();
+  }
+  $("#challenge_div").hide();
+  return $("#result_div").show();
 };
 
 window.demo = new Demo2D({
@@ -184,82 +262,119 @@ window.demo = new Demo2D({
     channels: 2,
     data: [[[-10, -10], [10, -10]], [[-10, 10], [10, 10]]]
   }).surface({
+    id: 'real_image',
     color: 'white',
     points: '<',
     map: '<<',
     fill: true,
     zOrder: 0
   });
-  this.caption('<div id="picker_div">\n<p id="pick_inst"> Pick a challenge! </p>\n<ul id="challenge_list">\n    <li><button id="ch1">Challenge 1</button></li>\n    <li><button id="ch2">Challenge 2</button></li>\n</ul>\n</div>\n<div id="challenge_div">\n<p id="challenge_inst"> </p>\n<table id="button_table">\n    <tr>\n        <td><button type="button" id="shear_left">Shear left</button></td>\n        <td><button type="button" id="shear_right">Shear right</button></td>\n    </tr>\n    <tr>\n        <td><button type="button" id="shear_up">Shear up</button></td>\n        <td><button type="button" id="shear_down">Shear down</button></td>\n    </tr>\n\n</table>\n<p>(Reload to choose another challenge...)</p>\n</div>');
+  clipCube.clipped.transform({}, {
+    matrix: function() {
+      return [window.tempmatrix[0], window.tempmatrix[1], 0, 0, window.tempmatrix[2], window.tempmatrix[3], 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+    }
+  }).image({
+    image: this.image
+  }).matrix({
+    width: 2,
+    height: 2,
+    channels: 2,
+    data: [[[-10, -10], [10, -10]], [[-10, 10], [10, 10]]]
+  }).surface({
+    id: 'temp_image',
+    color: 'white',
+    opacity: 0.5,
+    points: '<',
+    map: '<<',
+    fill: true,
+    zOrder: 0,
+    visible: false
+  });
+  this.caption('<div id="picker_div">\n<p id="pick_inst"> Pick a challenge! </p>\n<hr>\n<ul id="challenge_list">\n</ul>\n</div>\n<div id="challenge_div">\n<p id="challenge_inst"> </p>\n<hr>\n<table id="button-table">\n    <tr id="h-shears">\n        <td><button type="button" id="shear_left">Shear left</button></td>\n        <td><button type="button" id="shear_right">Shear right</button></td>\n    </tr>\n    <tr id="v-shears">\n        <td><button type="button" id="shear_up">Shear up</button></td>\n        <td><button type="button" id="shear_down">Shear down</button></td>\n    </tr>\n    <tr id="rotation">\n        <td><button type="button" id="rotate_45cc">Rotate left by 45&deg;</button></td>\n        <td><button type="button" id="rotate_45c">Rotate right by 45&deg;</button></td>\n    </tr>\n    <tr id="scale">\n        <td><button type="button" id="scale_2">Scale by 2</button></td>\n        <td><button type="button" id="scale_half">Scale by 1/2</button></td>\n    </tr>\n    <tr id="reflect">\n        <td><button type="button" id="reflect_x_axis">Reflect about the x-axis</button></td>\n    </tr>\n</table>\n</div>\n<div id="result_div">\n    <p>Congratulations, you completed the challenge in <span id="count"></span> steps!</p>\n    <p id="non-optimal">That\'s more than the optimal. Try again!</p>\n    <p id="optimal" style="color:green">That\'s the optimal number of moves!</p>\n</div>\n<div id="new_challenge_div">\n    <hr>\n    <button id="new-challenge-btn">Pick another challenge</button>\n</div>');
   matrices = {
+    'scale_2': [2, 0, 0, 2],
+    'scale_half': [0.5, 0, 0, 0.5],
     'shear_left': [1, -1, 0, 1],
     'shear_right': [1, 1, 0, 1],
     'shear_up': [1, 0, 1, 1],
-    'shear_down': [1, 0, -1, 1]
+    'shear_down': [1, 0, -1, 1],
+    'reflect_x_axis': [1, 0, 0, -1],
+    'rotate_45cc': [1 / Math.sqrt(2), -1 / Math.sqrt(2), 1 / Math.sqrt(2), 1 / Math.sqrt(2)],
+    'rotate_45c': [1 / Math.sqrt(2), 1 / Math.sqrt(2), -1 / Math.sqrt(2), 1 / Math.sqrt(2)]
   };
   challenges = [
     {
+      name: "Zoom",
+      message: "Transform the figure on the right to the one on the left",
+      starting_matrix: [0, 0.25, -0.25, 0],
+      winning_matrix: [1, 0, 0, 1],
+      transformations: ["rotation", "scale"],
+      min_count: 4
+    }, {
+      name: "Reflect",
+      message: "Transform the figure on the right to the one on the left",
+      starting_matrix: [0, 1, 1, 0],
+      winning_matrix: [1, 0, 0, 1],
+      transformations: ["rotation", "reflect"],
+      min_count: 3
+    }, {
+      name: "Unwind",
       message: 'Transform the distorted figure back to the original figure.',
       starting_matrix: [5, 4, 6, 5],
       winning_matrix: [1, 0, 0, 1],
+      transformations: ["h-shears", "v-shears"],
       min_count: 6
     }, {
+      name: "Rotate",
       message: 'Rotate the figure back to its original position.',
       starting_matrix: [0, -1, 1, 0],
       winning_matrix: [1, 0, 0, 1],
+      transformations: ["h-shears", "v-shears"],
       min_count: 3
     }
   ];
   fn = function() {
-    var button, ch, ii;
+    var $ch, $li, ch, ii;
     ii = i;
     ch = challenges[ii - 1];
-    button = document.getElementById("ch" + ii);
-    return button.addEventListener('click', function() {
+    $li = $("<li>");
+    $ch = $("<button>", {
+      id: "ch" + ii
+    });
+    $ch.click(function() {
       return window.startGame(ch);
     });
+    $ch.html(("Challenge " + ii + ": ") + ch.name);
+    $li.append($ch);
+    console.log($li);
+    return $("#challenge_list").append($li);
   };
   for (i = j = 1, ref1 = challenges.length + 1; 1 <= ref1 ? j < ref1 : j > ref1; i = 1 <= ref1 ? ++j : --j) {
     fn();
   }
   fn1 = function() {
-    var button, id2;
+    var $btn, id2;
     id2 = id;
-    button = document.getElementById(id2);
-    return button.addEventListener('click', function() {
+    $btn = $("#" + id2);
+    $btn.click(function() {
       return window.updateMatrix(matrices[id2]);
+    });
+    $btn.mouseover(function() {
+      return window.tempUpdateMatrix(matrices[id2]);
+    });
+    return $btn.mouseleave(function() {
+      return window.hideTempImage();
     });
   };
   for (id in matrices) {
     matrix = matrices[id];
     fn1();
   }
-  return window.hide_buttons();
+  $("#new-challenge-btn").click(function() {
+    return window.challenge_list_setup();
+  });
+  return window.challenge_list_setup();
 });
-
-window.show_buttons = function() {
-  var buttons;
-  buttons = document.getElementById('challenge_div');
-  return buttons.style.display = "block";
-};
-
-window.hide_buttons = function() {
-  var buttons;
-  buttons = document.getElementById('challenge_div');
-  return buttons.style.display = "none";
-};
-
-window.show_challenge_picker = function() {
-  var picker_div;
-  picker_div = document.getElementById('picker_div');
-  return picker_div.style.display = "block";
-};
-
-window.hide_challenge_picker = function() {
-  var picker_div;
-  picker_div = document.getElementById('picker_div');
-  return picker_div.style.display = "none";
-};
 
 
         });
