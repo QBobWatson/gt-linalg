@@ -56,6 +56,8 @@ solnspace     = null
 params        = null
 labeled       = null
 updateCaption = null
+doGrid        = null
+basisMode     = null
 
 matrix = [[ 1, -1,  2],
           [-2,  2, -4]]
@@ -72,10 +74,16 @@ for i in [0...3]
         tmp[i][j] = matrix[j]?[i] ? 0
 matrix = tmp
 
+color1 = [.3, .7, .8, .8]
+color2 = [.7,  0, .7, .8]
+color3 = [.8, .5, .3, .8]
+hexColor1 = '#' + new THREE.Color(color1[0], color1[1], color1[2]).getHexString()
+hexColor2 = '#' + new THREE.Color(color2[0], color2[1], color2[2]).getHexString()
+hexColor3 = '#' + new THREE.Color(color3[0], color3[1], color3[2]).getHexString()
 
 window.demo1 = new (if cols == 3 then Demo else Demo2D) {
     mathbox: element: document.getElementById "mathbox1"
-    scaleUI: false
+    scaleUI: true
 }, () ->
     window.mathbox1 = @mathbox
 
@@ -83,11 +91,22 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
     # Demo parameters
     @showSolns = true
     @lockSolns = false
-    if @urlParams.captions == 'rankthm'
-        vector = [0, 0, 0]
-    if @urlParams.show?
+    basisMode  = false
+    doGrid     = 'disabled'
+
+    switch @urlParams.captions
+        when 'rankthm'
+            vector = [0, 0, 0]
+        when 'basis'
+            basisMode  = true
+            @showSolns = false
+            @lockSolns = false
+            doGrid     = 'on'
+            @urlParams.axes = 'disabled'
+
+    if @urlParams.show? and not basisMode
         @showSolns = if @urlParams.show == 'false' then false else true
-    if @urlParams.lock?
+    if @urlParams.lock? and not basisMode
         @lockSolns = if @urlParams.lock? then true else false
     @range = 5
     if @urlParams.range1?
@@ -119,15 +138,17 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
     params[showSolnsKey] = @showSolns
     params[lockSolnsKey] = @lockSolns
 
-    gui = new dat.GUI width: 350
-    gui.closed = @urlParams.closed?
-    gui.add(params, 'Axes').onFinishChange (val) =>
-        @mathbox.select(".view1-axes").set 'visible', val
-        demo2.mathbox.select(".view2-axes").set 'visible', val
-    gui.add(params, showSolnsKey).listen().onFinishChange (val) =>
-        solnspace.setVisibility val
-    gui.add(params, lockSolnsKey).listen()
-    gui.add params, 'Homogeneous'
+    unless basisMode
+        gui = new dat.GUI width: 350
+        gui.closed = @urlParams.closed?
+        if @urlParams.axes != 'disabled'
+            gui.add(params, 'Axes').onFinishChange (val) =>
+                @mathbox.select(".view1-axes").set 'visible', val
+                demo2.mathbox.select(".view2-axes").set 'visible', val
+        gui.add(params, showSolnsKey).listen().onFinishChange (val) =>
+            solnspace.setVisibility val
+        gui.add(params, lockSolnsKey).listen()
+        gui.add params, 'Homogeneous'
 
     ##################################################
     # view, axes
@@ -136,14 +157,33 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
         name:       'view1'
         viewRange:  [[-r,r], [-r,r], [-r,r]][0...cols]
         axisLabels: false
+        grid:       doGrid != 'on'
     @mathbox.select(".view1-axes").set 'visible', params.Axes
 
     ##################################################
-    # labeled vector
+    # labeled vector(s)
+    vectors = [vector]
+    colors  = [[0, 1, 0, 1]]
+    labels  = []
+    if basisMode
+        labels.push '[x]_B'
+        vectors.push [1,0,0]
+        colors.push  color1
+        labels.push  'e1'
+        vectors.push [0,1,0]
+        colors.push  color2
+        labels.push  'e2'
+        if cols == 3
+            vectors.push [0,0,1]
+            colors.push  color3
+            labels.push  'e3'
+    else
+        labels.push 'x'
+
     labeled = @labeledVectors view,
-        vectors:       [vector]
-        colors:        [[0, 1, 0, 1]]
-        labels:        ['x']
+        vectors:       vectors
+        colors:        colors
+        labels:        labels
         live:          true
         zeroPoints:    true
         zeroThreshold: 0.1
@@ -164,6 +204,13 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
             visible:     false
             depthWrite:  false
             depthTest:   true
+
+    ##################################################
+    # Grid
+    if doGrid == 'on'
+        @grid clipCube.clipped,
+            vectors: [[1,0,0], [0,1,0], [0,0,1]][0...cols]
+            live:    false
 
     ##################################################
     # Solution set
@@ -218,6 +265,30 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
                             \\#\\text{ columns of } A = #{cols}
                          """, eqnElt
             updateCaption = () ->
+        when 'basis'
+            document.querySelector('#mathbox1 .mathbox-label')
+                .innerText = 'B-coordinates'
+            document.querySelector('#mathbox2 .mathbox-label')
+                .innerText = 'Usual coordinates'
+            document.querySelector('.overlay-text').innerHTML =
+                """
+                <p><span id="x-B-here"></span></p>
+                <p><span id="vector-eq-here"></span></p>
+                """
+            xBelt       = document.getElementById 'x-B-here'
+            vectorEqElt = document.getElementById 'vector-eq-here'
+            updateCaption = () =>
+                str  = '\\color{#00ff00}{[x]_{\\mathcal B}} = '
+                str += @texVector vector, {dim: cols, color: '#00ff00'}
+                katex.render str, xBelt
+                str  = '\\color{#ffff00}{x} ='
+                str += @texVector outVec, {dim: rows, color: '#ffff00'}
+                str += '='
+                str += @texCombo matrix[0...cols], vector[0...cols],
+                    dim:         rows
+                    colors:      [hexColor1, hexColor2, hexColor3][0...cols]
+                    coeffColors: '#00ff00'
+                katex.render str, vectorEqElt
         else
             updateCaption = () =>
                 str = @texMatrix matrix,
@@ -244,7 +315,7 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
 
 window.demo2 = new (if rows == 3 then Demo else Demo2D) {
     mathbox: element: document.getElementById "mathbox2"
-    scaleUI: false
+    scaleUI: true
 }, () ->
     window.mathbox2 = @mathbox
 
@@ -258,14 +329,33 @@ window.demo2 = new (if rows == 3 then Demo else Demo2D) {
         name:       'view2'
         viewRange:  [[-r,r], [-r,r], [-r,r]][0...rows]
         axisLabels: false
+        grid:       doGrid != 'on'
     @mathbox.select(".view2-axes").set 'visible', params.Axes
 
     ##################################################
     # labeled vector
+    vectors = [outVec]
+    colors  = [[1, 1, 0, 1]]
+    labels  = []
+    if basisMode
+        labels.push 'x'
+        vectors.push matrix[0]
+        colors.push  color1
+        labels.push  'v1'
+        vectors.push matrix[1]
+        colors.push  color2
+        labels.push  'v2'
+        if cols == 3
+            vectors.push matrix[2]
+            colors.push  color3
+            labels.push  'v3'
+    else
+        labels.push 'b'
+
     @labeledVectors view,
-        vectors:       [outVec]
-        colors:        [[1, 1, 0, 1]]
-        labels:        ['b']
+        vectors:       vectors
+        colors:        colors
+        labels:        labels
         live:          true
         zeroPoints:    true
         zeroThreshold: 0.3
@@ -288,11 +378,19 @@ window.demo2 = new (if rows == 3 then Demo else Demo2D) {
             depthTest:   true
 
     ##################################################
+    # Grid
+    if doGrid == 'on'
+        @grid clipCube.clipped,
+            vectors: matrix[0...rows]
+            live:    false
+
+    ##################################################
     # Column span
     subspace = @subspace
-        name: 'colspace'
+        name:    'colspace'
         vectors: colBasis
-        live: false
+        live:    false
+        noPlane: basisMode and rows == 2
     subspace.draw clipCube.clipped
 
     if subspace.dim == 3
@@ -309,7 +407,7 @@ window.demo2 = new (if rows == 3 then Demo else Demo2D) {
     onDrag = (vec) =>
         subspace.project vec, snapped
         diff.copy(vec).sub snapped
-        if diff.lengthSq() <= snapThreshold
+        if diff.lengthSq() <= snapThreshold or basisMode
             vec.copy snapped
 
     computeIn = () ->

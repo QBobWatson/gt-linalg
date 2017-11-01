@@ -1826,14 +1826,21 @@ class Demo
     texCombo: (vecs, coeffs, opts) =>
         opts ?= {}
         colors = opts.colors
+        coeffColors = opts.coeffColors
+        unless coeffColors instanceof Array
+            coeffColors = (coeffColors for [0...vecs.length])
         precision = opts.precision ? 2
         str = ''
         for vec, i in vecs
+            if coeffColors[i]?
+                str += "\\color{#{coeffColors[i]}}{"
             if coeffs[i] != 1
                 if coeffs[i] == -1
                     str += '-'
                 else
                     str += coeffs[i].toFixed precision
+            if coeffColors[i]?
+                str += "}"
             if colors?
                 opts.color = colors[i]
             str += @texVector vec, opts

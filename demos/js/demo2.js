@@ -2061,21 +2061,38 @@
     };
 
     Demo.prototype.texCombo = function(vecs, coeffs, opts) {
-      var colors, i, l, len, precision, ref, str, vec;
+      var coeffColors, colors, i, l, len, precision, ref, str, vec;
       if (opts == null) {
         opts = {};
       }
       colors = opts.colors;
+      coeffColors = opts.coeffColors;
+      if (!(coeffColors instanceof Array)) {
+        coeffColors = (function() {
+          var l, ref, results;
+          results = [];
+          for (l = 0, ref = vecs.length; 0 <= ref ? l < ref : l > ref; 0 <= ref ? l++ : l--) {
+            results.push(coeffColors);
+          }
+          return results;
+        })();
+      }
       precision = (ref = opts.precision) != null ? ref : 2;
       str = '';
       for (i = l = 0, len = vecs.length; l < len; i = ++l) {
         vec = vecs[i];
+        if (coeffColors[i] != null) {
+          str += "\\color{" + coeffColors[i] + "}{";
+        }
         if (coeffs[i] !== 1) {
           if (coeffs[i] === -1) {
             str += '-';
           } else {
             str += coeffs[i].toFixed(precision);
           }
+        }
+        if (coeffColors[i] != null) {
+          str += "}";
         }
         if (colors != null) {
           opts.color = colors[i];
