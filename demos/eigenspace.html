@@ -118,7 +118,7 @@ window.demo = new (size === 2 ? Demo2D : Demo)({
     }
   }
 }, function() {
-  var clipCube, col, computeOut, diff, eigenspaces, eigenval, eigenvals, eigenvalue, eqnElt, evalStrings, j, k, l, len, len1, matrix2, mult, n, nulBasis, onSubspace, popup, ref, ref1, ref2, snap, snapThreshold, snapped, str, subspace, updateCaption, vectorIn, vectorOut, view;
+  var clipCube, col, computeOut, diff, eigenspaces, eigenval, eigenvals, eigenvalue, eqnElt, evalStrings, j, k, l, len, len1, len2, matrix2, mult, n, nulBasis, o, onSubspace, popup, ref, ref1, ref2, snap, snapThreshold, snapped, str, subspace, updateCaption, vectorIn, vectorOut, view;
   window.mathbox = this.mathbox;
   view = this.view({
     axes: false,
@@ -126,9 +126,17 @@ window.demo = new (size === 2 ? Demo2D : Demo)({
   });
   clipCube = this.clipCube(view, {
     draw: size === 3,
-    hilite: size === 3
+    hilite: size === 3,
+    material: new THREE.MeshBasicMaterial({
+      color: new THREE.Color(0.5, 0, 0),
+      opacity: 0.5,
+      transparent: true,
+      visible: true,
+      depthWrite: false,
+      depthTest: true
+    })
   });
-  eigenvals = eigenvalues(matrix)[0];
+  eigenvals = eigenvalues(matrix);
   eigenvals.sort(function(x, y) {
     return x[0] - y[0];
   });
@@ -152,6 +160,9 @@ window.demo = new (size === 2 ? Demo2D : Demo)({
       epsilon: 1e-4
     })[0];
     console.log(nulBasis);
+    if (mult === 3) {
+      clipCube.installMesh();
+    }
     subspace = this.subspace({
       vectors: nulBasis,
       name: "eigenspace-" + j,
@@ -232,6 +243,15 @@ window.demo = new (size === 2 ? Demo2D : Demo)({
       }
     };
   })(this);
+  if (vectorIn[0] * vectorIn[0] + vectorIn[1] * vectorIn[1] + vectorIn[2] * vectorIn[2] >= 1e-8) {
+    for (i = n = 0, len1 = eigenspaces.length; n < len1; i = ++n) {
+      subspace = eigenspaces[i];
+      if (subspace.contains(vectorIn)) {
+        onSubspace = i;
+        break;
+      }
+    }
+  }
   this.draggable(view, {
     points: [vectorIn],
     onDrag: snap,
@@ -239,7 +259,7 @@ window.demo = new (size === 2 ? Demo2D : Demo)({
   });
   str = '<p><span id="eqn-here"></span></p>';
   evalStrings = [];
-  for (j = n = 0, len1 = eigenvals.length; n < len1; j = ++n) {
+  for (j = o = 0, len2 = eigenvals.length; o < len2; j = ++o) {
     ref2 = eigenvals[j], eigenvalue = ref2[0], mult = ref2[1];
     eigenval = eigenvalue.toFixed(2);
     if (this.urlParams.nomult != null) {

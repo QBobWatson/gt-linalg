@@ -134,35 +134,11 @@ eigenvalues = (mat) ->
         when 2
             [[a, b], [c, d]] = mat
             charPoly = [a*d-b*c, -a-d, 1]
-            [real, imag] = findRoots charPoly, null, 1e6, 1e-15
+            return findRoots 1, -a-d, a*d-b*c
         when 3
             [[a, b, c], [d, e, f], [g, h, i]] = mat
-            charPoly = [-a*e*i - b*f*g - c*d*h + a*f*h + b*d*i + c*e*g,
-                        a*e + a*i + e*i - b*d - c*g - f*h,
-                        -a - e - i, 1]
-            [real, imag] = findRoots charPoly, null, 1e6, 1e-15
-    realRoots = []
-    cplxRoots = []
-    for i in [0...real.length]
-        if Math.abs(imag[i]) < 1e-4
-            found = false
-            for x in realRoots
-                root = x[0]
-                if Math.abs(root - real[i]) < 1e-5
-                    x[1]++  # Increase multiplicity
-                    found = true
-                    break
-            realRoots.push [real[i], 1] unless found
-        else
-            found = false
-            for x in cplxRoots
-                [real, imag] = x[0]
-                if (real[i]-real)*(real[i]-real) + (imag[i]-imag)*(imag[i]-imag) < 1e-10
-                    x[1]++ # Increase multiplicity
-                    found = true
-                    break
-            cplxRoots.push [[real[i], imag[i]], 1] unless found
-    [realRoots, cplxRoots]
+            return findRoots 1, -a-e-i, a*e + a*i + e*i - b*d - c*g - f*h,
+                -a*e*i - b*f*g - c*d*h + a*f*h + b*d*i + c*e*g,
 
 urlParams = {}
 decodeQS = () ->
@@ -639,6 +615,7 @@ class Subspace
         # Scratch
         @tmpVec1 = new THREE.Vector3()
         @tmpVec2 = new THREE.Vector3()
+        @tmpVec3 = new THREE.Vector3()
 
         @drawn = false
         @dim = -1
@@ -728,6 +705,12 @@ class Subspace
                 projected.add @tmpVec2
             when 3
                 projected.copy vec
+
+    contains: (vec, ε=1e-8) =>
+        @project vec, @tmpVec3
+        setTvec @tmpVec1, vec
+        @tmpVec1.sub @tmpVec3
+        return @tmpVec1.lengthSq() < ε
 
     # Set up the mathbox elements to draw the subspace if dim < 3
     draw: (view) =>

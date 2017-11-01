@@ -217,52 +217,16 @@
   };
 
   eigenvalues = function(mat) {
-    var a, b, c, charPoly, cplxRoots, d, e, f, found, g, h, i, imag, l, len, len1, p, q, real, realRoots, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, root, x;
+    var a, b, c, charPoly, d, e, f, g, h, i, ref, ref1, ref2, ref3, ref4;
     switch (mat.length) {
       case 2:
         (ref = mat[0], a = ref[0], b = ref[1]), (ref1 = mat[1], c = ref1[0], d = ref1[1]);
         charPoly = [a * d - b * c, -a - d, 1];
-        ref2 = findRoots(charPoly, null, 1e6, 1e-15), real = ref2[0], imag = ref2[1];
-        break;
+        return findRoots(1, -a - d, a * d - b * c);
       case 3:
-        (ref3 = mat[0], a = ref3[0], b = ref3[1], c = ref3[2]), (ref4 = mat[1], d = ref4[0], e = ref4[1], f = ref4[2]), (ref5 = mat[2], g = ref5[0], h = ref5[1], i = ref5[2]);
-        charPoly = [-a * e * i - b * f * g - c * d * h + a * f * h + b * d * i + c * e * g, a * e + a * i + e * i - b * d - c * g - f * h, -a - e - i, 1];
-        ref6 = findRoots(charPoly, null, 1e6, 1e-15), real = ref6[0], imag = ref6[1];
+        (ref2 = mat[0], a = ref2[0], b = ref2[1], c = ref2[2]), (ref3 = mat[1], d = ref3[0], e = ref3[1], f = ref3[2]), (ref4 = mat[2], g = ref4[0], h = ref4[1], i = ref4[2]);
+        return findRoots(1, -a - e - i, a * e + a * i + e * i - b * d - c * g - f * h, -a * e * i - b * f * g - c * d * h + a * f * h + b * d * i + c * e * g);
     }
-    realRoots = [];
-    cplxRoots = [];
-    for (i = l = 0, ref7 = real.length; 0 <= ref7 ? l < ref7 : l > ref7; i = 0 <= ref7 ? ++l : --l) {
-      if (Math.abs(imag[i]) < 1e-4) {
-        found = false;
-        for (p = 0, len = realRoots.length; p < len; p++) {
-          x = realRoots[p];
-          root = x[0];
-          if (Math.abs(root - real[i]) < 1e-5) {
-            x[1]++;
-            found = true;
-            break;
-          }
-        }
-        if (!found) {
-          realRoots.push([real[i], 1]);
-        }
-      } else {
-        found = false;
-        for (q = 0, len1 = cplxRoots.length; q < len1; q++) {
-          x = cplxRoots[q];
-          ref8 = x[0], real = ref8[0], imag = ref8[1];
-          if ((real[i] - real) * (real[i] - real) + (imag[i] - imag) * (imag[i] - imag) < 1e-10) {
-            x[1]++;
-            found = true;
-            break;
-          }
-        }
-        if (!found) {
-          cplxRoots.push([[real[i], imag[i]], 1]);
-        }
-      }
-    }
-    return [realRoots, cplxRoots];
   };
 
   urlParams = {};
@@ -760,6 +724,7 @@
       this.updateDim = bind(this.updateDim, this);
       this.setVisibility = bind(this.setVisibility, this);
       this.draw = bind(this.draw, this);
+      this.contains = bind(this.contains, this);
       this.project = bind(this.project, this);
       this.update = bind(this.update, this);
       this.setVecs = bind(this.setVecs, this);
@@ -774,6 +739,7 @@
       this.mesh = this.opts.mesh;
       this.tmpVec1 = new THREE.Vector3();
       this.tmpVec2 = new THREE.Vector3();
+      this.tmpVec3 = new THREE.Vector3();
       this.drawn = false;
       this.dim = -1;
       this.update();
@@ -879,6 +845,16 @@
         case 3:
           return projected.copy(vec);
       }
+    };
+
+    Subspace.prototype.contains = function(vec, ε) {
+      if (ε == null) {
+        ε = 1e-8;
+      }
+      this.project(vec, this.tmpVec3);
+      setTvec(this.tmpVec1, vec);
+      this.tmpVec1.sub(this.tmpVec3);
+      return this.tmpVec1.lengthSq() < ε;
     };
 
     Subspace.prototype.draw = function(view) {

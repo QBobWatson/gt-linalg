@@ -63,10 +63,17 @@ window.demo = new (if size == 2 then Demo2D else Demo) {
     clipCube = @clipCube view,
         draw:   size == 3
         hilite: size == 3
+        material: new THREE.MeshBasicMaterial
+            color:       new THREE.Color 0.5, 0, 0
+            opacity:     0.5
+            transparent: true
+            visible:     true
+            depthWrite:  false
+            depthTest:   true
 
     ##################################################
     # Compute and draw eigenspaces
-    [eigenvals] = eigenvalues matrix
+    eigenvals = eigenvalues matrix
     eigenvals.sort (x, y) -> x[0] - y[0]
     eigenspaces = []
     for [eigenvalue, mult], j in eigenvals
@@ -76,7 +83,9 @@ window.demo = new (if size == 2 then Demo2D else Demo) {
             matrix2[i][i] -= eigenvalue
         [nulBasis] = rowReduce matrix2, epsilon: 1e-4
         console.log(nulBasis)
-        # This had better be a nonempty list
+        if mult == 3
+            clipCube.installMesh()
+        # nulBasis had better be a nonempty list
         subspace = @subspace
             vectors: nulBasis
             name:    "eigenspace-#{j}"
@@ -142,6 +151,12 @@ window.demo = new (if size == 2 then Demo2D else Demo) {
                 vec.copy snapped
                 onSubspace = i
                 return
+
+    if vectorIn[0]*vectorIn[0]+vectorIn[1]*vectorIn[1]+vectorIn[2]*vectorIn[2] >= 1e-8
+        for subspace, i in eigenspaces
+            if subspace.contains vectorIn
+                onSubspace = i
+                break
 
     @draggable view,
         points:   [vectorIn]
