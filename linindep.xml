@@ -26,10 +26,10 @@ the license is included in gfdl.xml.
   <introduction>
     <p>
       Sometimes the span of a set of vectors is "smaller" than you expect from the
-number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means that (at least) one of the vectors is <em>redundant</em>: it can be removed without affecting the span.  In the present section, we formalize this idea in the notion of <em>linear (in)dependence</em>.
+number of vectors, as in the Figure below.  This means that (at least) one of the vectors is <em>redundant</em>: it can be removed without affecting the span.  In the present section, we formalize this idea in the notion of <em>linear (in)dependence</em>.
     </p>
     <figure xml:id="linindep-intro-pic">
-      <caption>Pictures of sets of vectors which are linearly dependent.  Note that in each case, one vector is in the span of the others<mdash/>so it doesn't make the span bigger.</caption>
+      <caption>Pictures of sets of vectors that are linearly dependent.  Note that in each case, one vector is in the span of the others<mdash/>so it doesn't make the span bigger.</caption>
       <image>
         <latex-image-code>
           <![CDATA[
@@ -174,7 +174,7 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
     </example>
 
     <p>
-      A set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly independent if and only if the vector equation
+      As we saw in the above Examples, a set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly independent if and only if the vector equation
       <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = 0</me>
       has only the trivial solution, if and only if the matrix equation
       <m>Ax=0</m>
@@ -212,7 +212,7 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
       <statement>
         <p>
           <ol>
-            <li>Two vectors are linearly dependent if and only if they are collinear, i.e., one is a multiple of the other.</li>
+            <li>Two vectors are linearly dependent if and only if they are collinear, i.e., one is a scalar multiple of the other.</li>
             <li>Any set containing the zero vector is linearly dependent.</li>
             <li>If a subset of <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent, then <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent as well.</li>
           </ol>
@@ -222,7 +222,7 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
         <p>
           <ol>
             <li>
-              If <m>v_1 = cv_2</m> then <m>v_1-cv_2=0</m>, so <m>\{v_1,v_2\}</m> is linearly dependent.  Conversely, if <m>x_1v_1+x_2v_2=0</m> with <m>x_1\neq0</m> (say), then <m>v_1 = -\frac{x_2}{x_1}v_2</m>.
+              If <m>v_1 = cv_2</m> then <m>v_1-cv_2=0</m>, so <m>\{v_1,v_2\}</m> is linearly dependent.  In the other direction, if <m>x_1v_1+x_2v_2=0</m> with <m>x_1\neq0</m> (say), then <m>v_1 = -\frac{x_2}{x_1}v_2</m>.
             </li>
             <li>
               It is easy to produce a linear dependence relation if one vector is the zero vector: for instance, if <m>v_1=0</m> then
@@ -264,7 +264,7 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
           This is a linear dependence relation.
         </p>
         <p>
-          Conversely, if we have a linear dependence relation like
+          In the other direction, if we have a linear dependence relation like
           <me>0 = 2v_1 - \frac 12v_2 + v_3 - 6v_4,</me>
           then we can move any nonzero term to the left side of the equation and divide by its coefficient:
           <me>v_1 = \frac 12\left(\frac 12v_2 - v_3 + 6v_4\right).</me>
@@ -302,7 +302,7 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
         </p>
 
         <p>
-          Conversely, suppose that we can remove <m>v_3</m> without shrinking the span of <m>\{v_1,v_2,v_3,v_4\}</m>: in other words, <m>\Span\{v_1,v_2,v_3,v_4\} = \Span\{v_1,v_2,v_4\}</m>.  Since <m>v_3</m> is in <m>\Span\{v_1,v_2,v_3,v_4\}</m> (the <m>v_3</m>-coefficient is 1 and the rest are 0), this means that <m>v_3</m> is in <m>\Span\{v_1,v_2,v_4\}</m>, so the vectors are linearly dependent by the previous <xref ref="linindep-criterion-inspan"/>.
+          In the other direction, suppose that we can remove <m>v_3</m> without shrinking the span of <m>\{v_1,v_2,v_3,v_4\}</m>: in other words, <m>\Span\{v_1,v_2,v_3,v_4\} = \Span\{v_1,v_2,v_4\}</m>.  Since <m>v_3</m> is in <m>\Span\{v_1,v_2,v_3,v_4\}</m> (the <m>v_3</m>-coefficient is 1 and the rest are 0), this means that <m>v_3</m> is in <m>\Span\{v_1,v_2,v_4\}</m>, so the vectors are linearly dependent by the previous <xref ref="linindep-criterion-inspan"/>.
         </p>
 
         <p>
@@ -335,7 +335,7 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
     </theorem>
 
     <warning>
-      <p>A set of vectors is linearly independent if and only if, every time we add another vector to the set, the span gets bigger.</p>
+      <p>If you make a set of vectors by adding one vector at a time, and if the span got bigger every time you added a vector, then your set is linearly independent.</p>
     </warning>
 
   </subsection>
@@ -344,8 +344,9 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
   <subsection>
     <title>Pictures of Linear Independence</title>
 
-    <figure xml:id="linindep-2d-1vec">
-      <caption>A set containg one vector <m>\{v\}</m> is linearly independent when <m>v\neq 0</m>, since <m>xv = 0</m> implies <m>x=0</m>.</caption>
+    <p>A set containg one vector <m>\{v\}</m> is linearly independent when <m>v\neq 0</m>, since <m>xv = 0</m> implies <m>x=0</m>.</p>
+
+    <sidebyside>
       <image>
         <latex-image-code>
           <![CDATA[
@@ -363,10 +364,16 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
           ]]>
         </latex-image-code>
       </image>
-    </figure>
+    </sidebyside>
 
-    <figure xml:id="linindep-2d-2vec">
-      <caption>A set of two noncollinear vectors <m>\{v,w\}</m> is linearly independent: neither is in the span of the other (the first <xref ref="linindep-criterion-inspan">Criterion</xref>), or, the span got bigger when we added <m>w</m> (<xref ref="linindep-increasing-span"/>).</caption>
+    <p>A set of two noncollinear vectors <m>\{v,w\}</m> is linearly independent:
+    <ul>
+      <li>Neither is in the span of the other, so we can apply the first <xref ref="linindep-criterion-inspan">Criterion</xref>.</li>
+      <li>The span got bigger when we added <m>w</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</li>
+    </ul>
+    </p>
+
+    <sidebyside>
       <image>
         <latex-image-code>
           <![CDATA[
@@ -388,10 +395,17 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
           ]]>
         </latex-image-code>
       </image>
-    </figure>
+    </sidebyside>
 
-    <figure xml:id="linindep-2d-3vec">
-      <caption>This set of three vectors <m>\{v,w,u\}</m> is linearly dependent: <m>u</m> is in <m>\Span\{v,w\}</m> (the first <xref ref="linindep-criterion-inspan">Criterion</xref>), we can remove <m>u</m> without shrinking the span (the second <xref ref="linindep-criterion-redundant">Criterion</xref>), or, the span did not increase when we added <m>u</m> (<xref ref="linindep-increasing-span"/>).</caption>
+    <p>The set of three vectors <m>\{v,w,u\}</m> below is linearly dependent:
+    <ul>
+      <li><m>u</m> is in <m>\Span\{v,w\}</m>, so we can apply the first <xref ref="linindep-criterion-inspan">Criterion</xref>.</li>
+      <li>The span did not increase when we added <m>u</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</li>
+    </ul>
+    In the picture below, note that <m>v</m> is in <m>\Span\{u,w\}</m>, and <m>w</m> is in <m>\Span\{u,v\}</m>, so we can remove any of the three vectors without shrinking the span.
+    </p>
+
+    <sidebyside>
       <image>
         <latex-image-code>
           <![CDATA[
@@ -417,14 +431,18 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
           ]]>
         </latex-image-code>
       </image>
-    </figure>
+    </sidebyside>
 
     <p>
-      In the above <xref ref="linindep-2d-3vec"/>, note that <m>v</m> is in <m>\Span\{u,w\}</m>, and <m>w</m> is in <m>\Span\{u,v\}</m>, so we can remove any of the three vectors without shrinking the span.
+      Two collinear vectors are always linearly dependent:
+      <ul>
+        <li><m>w</m> is in <m>\Span\{v\}</m>, so we can apply the first <xref ref="linindep-criterion-inspan">Criterion</xref>.</li>
+        <li>We can remove <m>w</m> without shrinking the span, so we can apply the second <xref ref="linindep-criterion-redundant">Criterion</xref>.</li>
+        <li>The span did not increase when we added <m>w</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</li>
+      </ul>
     </p>
 
-    <figure xml:id="linindep-2d-coll">
-      <caption>Two collinear vectors are always linearly dependent: <m>w</m> is in <m>\Span\{v\}</m> (the first <xref ref="linindep-criterion-inspan">Criterion</xref>), we can remove <m>w</m> without shrinking the span (the second <xref ref="linindep-criterion-redundant">Criterion</xref>), or, the span did not increase when we added <m>w</m> (<xref ref="linindep-increasing-span"/>).</caption>
+    <sidebyside>
       <image>
         <latex-image-code>
           <![CDATA[
@@ -444,10 +462,11 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
           ]]>
         </latex-image-code>
       </image>
-    </figure>
+    </sidebyside>
 
-    <figure xml:id="linindep-2d-coll2">
-      <caption>These three vectors <m>\{v,w,u\}</m> are linearly dependent: indeed, <m>\{v,w\}</m> is already linearly dependent, so we can use the third <xref ref="linindep-facts">Fact</xref>.</caption>
+    <p>These three vectors <m>\{v,w,u\}</m> are linearly dependent: indeed, <m>\{v,w\}</m> is already linearly dependent, so we can use the third <xref ref="linindep-facts">Fact</xref>.</p>
+
+    <sidebyside>
       <image>
         <latex-image-code>
           <![CDATA[
@@ -469,7 +488,7 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
           ]]>
         </latex-image-code>
       </image>
-    </figure>
+    </sidebyside>
 
     <example hide-type="true">
       <title>Interactive: linear independence of two vectors in <m>\R^2</m></title>
@@ -487,8 +506,9 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
       </figure>
     </example>
 
-    <figure xml:id="linindep-3d-2vec">
-      <caption>These two vectors <m>\{v,w\}</m> are linearly independent because they are not collinear.</caption>
+    <p>The two vectors <m>\{v,w\}</m> below are linearly independent because they are not collinear.</p>
+
+    <sidebyside>
       <image>
         <latex-image-code>
           <![CDATA[
@@ -532,10 +552,11 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
           ]]>
         </latex-image-code>
       </image>
-    </figure>
+    </sidebyside>
 
-    <figure xml:id="linindep-3d-3vec">
-      <caption>These three vectors <m>\{v,w,u\}</m> are linearly independent: the span got bigger when we added <m>w</m>, then again when we added <m>u</m> (<xref ref="linindep-increasing-span"/>).</caption>
+    <p>The three vectors <m>\{v,w,u\}</m> below are linearly independent: the span got bigger when we added <m>w</m>, then again when we added <m>u</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</p>
+
+    <sidebyside>
       <image>
         <latex-image-code>
           <![CDATA[
@@ -596,10 +617,17 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
           ]]>
         </latex-image-code>
       </image>
-    </figure>
+    </sidebyside>
 
-    <figure xml:id="linindep-3d-coplanar">
-      <caption>These three coplanar vectors <m>\{v,w,u\}</m> are linearly dependent: <m>u</m> is in <m>\Span\{v,w\}</m> (the first <xref ref="linindep-criterion-inspan">Criterion</xref>), we can remove <m>u</m> without shrinking the span (the second <xref ref="linindep-criterion-redundant">Criterion</xref>), or, the span did not increase when we added <m>u</m> (<xref ref="linindep-increasing-span"/>).</caption>
+    <p>The three coplanar vectors <m>\{v,w,u\}</m> below are linearly dependent:
+    <ul>
+      <li><m>u</m> is in <m>\Span\{v,w\}</m>, so we can apply the first <xref ref="linindep-criterion-inspan">Criterion</xref>.</li>
+      <li>We can remove <m>u</m> without shrinking the span, so we can apply the second <xref ref="linindep-criterion-redundant">Criterion</xref>.</li>
+      <li>The span did not increase when we added <m>u</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</li>
+    </ul>
+    </p>
+
+    <sidebyside>
       <image>
         <latex-image-code>
           <![CDATA[
@@ -660,14 +688,16 @@ number of vectors, as in the <xref ref="linindep-intro-pic"/> below.  This means
           ]]>
         </latex-image-code>
       </image>
-    </figure>
+    </sidebyside>
 
     <p>
       Note that three vectors are linearly dependent if and only if they are <em>coplanar</em>.  Indeed, <m>\{v,w,u\}</m> is linearly dependent if and only if one vector is in the span of the other two, which is a plane (or a line) (or <m>\{0\}</m>).
     </p>
 
-<figure xml:id="linindep-3d-4vecs">
-      <caption>These four vectors <m>\{v,w,u,x\}</m> are linearly dependent: they are the columns of a <xref ref="linindep-wide-matrix">wide matrix</xref>.  Note however that <m>u</m> is not contained in <m>\Span\{v,w,x\}</m>.  See this <xref ref="linindep-not-any">Warning</xref>.</caption>
+    <p>The four vectors <m>\{v,w,u,x\}</m> below are linearly dependent: they are the columns of a <xref ref="linindep-wide-matrix">wide matrix</xref>.  Note however that <m>u</m> is not contained in <m>\Span\{v,w,x\}</m>.  See this <xref ref="linindep-not-any">Warning</xref>.</p>
+
+    <figure xml:id="linindep-3d-4vecs">
+      <caption>The vectors <m>\{v,w,u,x\}</m> are linearly dependent, but <m>u</m> is not contained in <m>\Span\{v,w,x\}</m>.</caption>
       <image>
         <latex-image-code>
           <![CDATA[
