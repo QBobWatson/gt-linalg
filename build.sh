@@ -3,7 +3,7 @@
 # TODO: options to recompile images, mathjax, all
 
 MAKEFIGS_COMMAND=./makefigs.py
-PREJAX_COMMAND=./prejax.py
+PREJAX_ALL=
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -11,7 +11,7 @@ while [[ $# -gt 0 ]]; do
             MAKEFIGS_COMMAND="$MAKEFIGS_COMMAND --recompile-all"
             ;;
         --reprocess-mathjax)
-            PREJAX_COMMAND="$PREJAX_COMMAND --process-all"
+            PREJAX_ALL="true"
             ;;
     esac
     shift
@@ -66,7 +66,13 @@ xsltproc -o "$build_dir/" --xinclude \
          || die "xsltproc failed!"
 
 echo "Preprocessing mathjax..."
-$PREJAX_COMMAND
+[ -n "$PREJAX_ALL" ] && rm -r prejax-cache
+nodejs "$base_dir/gt-text-common/prejax/prejax.js" \
+       "$build_dir"/preamble.tex "$build_dir"/*.html \
+       || die "MathJax preprocessing failed"
+nodejs "$base_dir/gt-text-common/prejax/prejax.js" --no-css \
+       "$build_dir"/preamble.tex "$build_dir"/knowl/*.html \
+       || die "MathJax preprocessing failed (knowls)"
 rm "$build_dir/preamble.tex"
 
 echo "Build successful!  Open or reload"
