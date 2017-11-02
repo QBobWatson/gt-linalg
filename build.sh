@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# TODO: options to recompile images, mathjax, all
-
 MAKEFIGS_COMMAND=./makefigs.py
 PREJAX_ALL=
 
