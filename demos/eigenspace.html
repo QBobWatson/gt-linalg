@@ -157,7 +157,7 @@ window.demo = new (size === 2 ? Demo2D : Demo)({
       matrix2[i][i] -= eigenvalue;
     }
     nulBasis = rowReduce(matrix2, {
-      epsilon: 1e-4
+      epsilon: 1e-6
     })[0];
     console.log(nulBasis);
     if (mult === 3) {

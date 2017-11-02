@@ -81,7 +81,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {
         matrix2 = (col.slice() for col in matrixT)
         for i in [0...size]
             matrix2[i][i] -= eigenvalue
-        [nulBasis] = rowReduce matrix2, epsilon: 1e-4
+        [nulBasis] = rowReduce matrix2, epsilon: 1e-6
         console.log(nulBasis)
         if mult == 3
             clipCube.installMesh()
