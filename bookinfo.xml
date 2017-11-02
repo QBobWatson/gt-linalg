@@ -49,7 +49,7 @@ Copyright 2017 Georgia Institute of Technology
     \definecolor{ColorEx2}{rgb}{1,1,0}
     \let\To=\longrightarrow
     \def\rref{\;\overset{\text{rref}}\To\;}
-    \def\matrow#1{\text{&#8212;}\,#1\,\text{&#8212;}}
+    \def\matrow#1{\text{&#8212;}\hspace .5em\,#1\,\text{&#8212;}\hspace .5em}
     \def\vol{\operatorname{vol}}
 
     \definecolor{seq-red}{rgb}{0.8941,0.1020,0.1098}
