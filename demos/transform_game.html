@@ -136,10 +136,26 @@ window.hideTempImage = (function(_this) {
   };
 })(this);
 
+window.random_matrix = function(word_length) {
+  var generators, i, idx, j, ref, result;
+  generators = [this.matrices['shear_left'], this.matrices['shear_right'], this.matrices['shear_up'], this.matrices['shear_down'], this.matrices['reflect_x_axis']];
+  result = [1, 0, 0, 1];
+  for (i = j = 1, ref = word_length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+    idx = Math.floor(Math.random() * 5);
+    result = this.multiply(result, generators[idx]);
+    console.log(result);
+  }
+  return result;
+};
+
 window.startGame = function(challenge) {
   var id, j, len, ref, results;
   this.count = 0;
   this.matrix = challenge.starting_matrix;
+  if (this.matrix === 'random') {
+    this.matrix = this.random_matrix(10);
+  }
+  console.log(this.matrix);
   this.winning_matrix = challenge.winning_matrix;
   this.min_count = challenge.min_count;
   $("#challenge_inst").html(challenge.message);
@@ -151,8 +167,6 @@ window.startGame = function(challenge) {
   results = [];
   for (j = 0, len = ref.length; j < len; j++) {
     id = ref[j];
-    console.log(id);
-    console.log($(id));
     results.push($("#" + id).show());
   }
   return results;
@@ -167,7 +181,10 @@ window.challenge_list_setup = function() {
 
 window.announce_result = function() {
   $("#count").html("" + this.count);
-  if (this.count > this.min_count) {
+  if (this.min_count === 'none') {
+    $("#optimal").hide();
+    $("#non-optimal").hide();
+  } else if (this.count > this.min_count) {
     $("#optimal").hide();
     $("#non-optimal").show();
   } else {
@@ -178,9 +195,23 @@ window.announce_result = function() {
   return $("#result_div").show();
 };
 
+window.matrices = {
+  'h_scale_2': [2, 0, 0, 1],
+  'h_scale_half': [0.5, 0, 0, 1],
+  'scale_2': [2, 0, 0, 2],
+  'scale_half': [0.5, 0, 0, 0.5],
+  'shear_left': [1, -1, 0, 1],
+  'shear_right': [1, 1, 0, 1],
+  'shear_up': [1, 0, 1, 1],
+  'shear_down': [1, 0, -1, 1],
+  'reflect_x_axis': [1, 0, 0, -1],
+  'rotate_45cc': [1 / Math.sqrt(2), -1 / Math.sqrt(2), 1 / Math.sqrt(2), 1 / Math.sqrt(2)],
+  'rotate_45c': [1 / Math.sqrt(2), 1 / Math.sqrt(2), -1 / Math.sqrt(2), 1 / Math.sqrt(2)]
+};
+
 window.demo = new Demo2D({
   preload: {
-    image: 'img/' + ((ref = urlParams.pic) != null ? ref : "theo2.jpg")
+    image: 'img/' + ((ref = urlParams.pic) != null ? ref : "buzz.jpg")
   },
   ortho: ortho,
   camera: {
@@ -189,7 +220,7 @@ window.demo = new Demo2D({
   },
   vertical: 2.2
 }, function() {
-  var axisOpts, challenges, clipCube, fn, fn1, future_matrix, gridOpts, i, id, inverse, j, matrices, matrix, numTransforms, ref1, view1, view2;
+  var axisOpts, challenges, clipCube, fn, fn1, future_matrix, gridOpts, i, id, inverse, j, matrix, numTransforms, ref1, ref2, view1, view2;
   window.mathbox = this.mathbox;
   matrix = [1, 0, 0, 1];
   future_matrix = matrix;
@@ -290,18 +321,7 @@ window.demo = new Demo2D({
     zOrder: 0,
     visible: false
   });
-  this.caption('<div id="picker_div">\n<p id="pick_inst"> Pick a challenge! </p>\n<hr>\n<ul id="challenge_list">\n</ul>\n</div>\n<div id="challenge_div">\n<p id="challenge_inst"> </p>\n<hr>\n<table id="button-table">\n    <tr id="h-shears">\n        <td><button type="button" id="shear_left">Shear left</button></td>\n        <td><button type="button" id="shear_right">Shear right</button></td>\n    </tr>\n    <tr id="v-shears">\n        <td><button type="button" id="shear_up">Shear up</button></td>\n        <td><button type="button" id="shear_down">Shear down</button></td>\n    </tr>\n    <tr id="rotation">\n        <td><button type="button" id="rotate_45cc">Rotate left by 45&deg;</button></td>\n        <td><button type="button" id="rotate_45c">Rotate right by 45&deg;</button></td>\n    </tr>\n    <tr id="scale">\n        <td><button type="button" id="scale_2">Scale by 2</button></td>\n        <td><button type="button" id="scale_half">Scale by 1/2</button></td>\n    </tr>\n    <tr id="reflect">\n        <td><button type="button" id="reflect_x_axis">Reflect about the x-axis</button></td>\n    </tr>\n</table>\n</div>\n<div id="result_div">\n    <p>Congratulations, you completed the challenge in <span id="count"></span> steps!</p>\n    <p id="non-optimal">That\'s more than the optimal. Try again!</p>\n    <p id="optimal" style="color:green">That\'s the optimal number of moves!</p>\n</div>\n<div id="new_challenge_div">\n    <hr>\n    <button id="new-challenge-btn">Pick another challenge</button>\n</div>');
-  matrices = {
-    'scale_2': [2, 0, 0, 2],
-    'scale_half': [0.5, 0, 0, 0.5],
-    'shear_left': [1, -1, 0, 1],
-    'shear_right': [1, 1, 0, 1],
-    'shear_up': [1, 0, 1, 1],
-    'shear_down': [1, 0, -1, 1],
-    'reflect_x_axis': [1, 0, 0, -1],
-    'rotate_45cc': [1 / Math.sqrt(2), -1 / Math.sqrt(2), 1 / Math.sqrt(2), 1 / Math.sqrt(2)],
-    'rotate_45c': [1 / Math.sqrt(2), 1 / Math.sqrt(2), -1 / Math.sqrt(2), 1 / Math.sqrt(2)]
-  };
+  this.caption('<div id="picker_div">\n<p id="pick_inst"> Pick a challenge! </p>\n<hr>\n<ul id="challenge_list">\n</ul>\n</div>\n<div id="challenge_div">\n<p id="challenge_inst"> </p>\n<hr>\n<table id="button-table">\n    <tr id="h-shears">\n        <td><button type="button" id="shear_left">Shear left</button></td>\n        <td><button type="button" id="shear_right">Shear right</button></td>\n    </tr>\n    <tr id="v-shears">\n        <td><button type="button" id="shear_up">Shear up</button></td>\n        <td><button type="button" id="shear_down">Shear down</button></td>\n    </tr>\n    <tr id="rotation">\n        <td><button type="button" id="rotate_45cc">Rotate left by 45&deg;</button></td>\n        <td><button type="button" id="rotate_45c">Rotate right by 45&deg;</button></td>\n    </tr>\n    <tr id="scale">\n        <td><button type="button" id="scale_2">Scale by 2</button></td>\n        <td><button type="button" id="scale_half">Scale by 1/2</button></td>\n    </tr>\n    <tr id="h_scale">\n        <td><button type="button" id="h_scale_2">Scale by 2 horizontally</button></td>\n        <td><button type="button" id="h_scale_half">Scale by 1/2 horizontally</button></td>\n    </tr>\n    <tr id="reflect">\n        <td><button type="button" id="reflect_x_axis">Reflect about the x-axis</button></td>\n    </tr>\n</table>\n</div>\n<div id="result_div">\n    <p>Congratulations, you completed the challenge in <span id="count"></span> steps!</p>\n    <p id="non-optimal">That\'s more than the optimal. Try again!</p>\n    <p id="optimal" style="color:green">That\'s the optimal number of moves!</p>\n</div>\n<div id="new_challenge_div">\n    <hr>\n    <button id="new-challenge-btn">Pick another challenge</button>\n</div>');
   challenges = [
     {
       name: "Zoom",
@@ -318,6 +338,13 @@ window.demo = new Demo2D({
       transformations: ["rotation", "reflect"],
       min_count: 3
     }, {
+      name: "Scale",
+      message: "Transform the figure on the right to the one on the left",
+      starting_matrix: [1, 0, 0, 0.25],
+      winning_matrix: [1, 0, 0, 1],
+      transformations: ["rotation", "h_scale"],
+      min_count: 6
+    }, {
       name: "Unwind",
       message: 'Transform the distorted figure back to the original figure.',
       starting_matrix: [5, 4, 6, 5],
@@ -331,6 +358,13 @@ window.demo = new Demo2D({
       winning_matrix: [1, 0, 0, 1],
       transformations: ["h-shears", "v-shears"],
       min_count: 3
+    }, {
+      name: "Random",
+      message: "Transform the figure on the right to the one on the left",
+      starting_matrix: 'random',
+      winning_matrix: [1, 0, 0, 1],
+      transformations: ["rotation", "h-shears", "v-shears", "reflect"],
+      min_count: 'none'
     }
   ];
   fn = function() {
@@ -346,28 +380,28 @@ window.demo = new Demo2D({
     });
     $ch.html(("Challenge " + ii + ": ") + ch.name);
     $li.append($ch);
-    console.log($li);
     return $("#challenge_list").append($li);
   };
   for (i = j = 1, ref1 = challenges.length + 1; 1 <= ref1 ? j < ref1 : j > ref1; i = 1 <= ref1 ? ++j : --j) {
     fn();
   }
+  ref2 = window.matrices;
   fn1 = function() {
     var $btn, id2;
     id2 = id;
     $btn = $("#" + id2);
     $btn.click(function() {
-      return window.updateMatrix(matrices[id2]);
+      return window.updateMatrix(window.matrices[id2]);
     });
     $btn.mouseover(function() {
-      return window.tempUpdateMatrix(matrices[id2]);
+      return window.tempUpdateMatrix(window.matrices[id2]);
     });
     return $btn.mouseleave(function() {
       return window.hideTempImage();
     });
   };
-  for (id in matrices) {
-    matrix = matrices[id];
+  for (id in ref2) {
+    matrix = ref2[id];
     fn1();
   }
   $("#new-challenge-btn").click(function() {
