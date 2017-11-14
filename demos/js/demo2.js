@@ -1,6 +1,6 @@
 (function() {
   "use strict";
-  var Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledVectors, LinearCombo, OrbitControls, Popup, Subspace, View, clipFragment, clipShader, decodeQS, eigenvalues, extend, groupControls, makeTvec, orthogonalize, rowReduce, setTvec, urlParams,
+  var Animation, Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledVectors, LinearCombo, MathboxAnimation, OrbitControls, Popup, Subspace, View, addEvents, clipFragment, clipShader, decodeQS, eigenvalues, extend, groupControls, makeTvec, orthogonalize, rowReduce, setTvec, urlParams,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     slice = [].slice,
     extend1 = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
@@ -247,6 +247,57 @@
   };
 
   decodeQS();
+
+  addEvents = function(cls) {
+    cls.prototype.on = function(types, callback) {
+      var base, l, len, type;
+      if (!(types instanceof Array)) {
+        types = [types];
+      }
+      if (this._listeners == null) {
+        this._listeners = {};
+      }
+      for (l = 0, len = types.length; l < len; l++) {
+        type = types[l];
+        if ((base = this._listeners)[type] == null) {
+          base[type] = [];
+        }
+        this._listeners[type].push(callback);
+      }
+      return this;
+    };
+    cls.prototype.off = function(types, callback) {
+      var idx, l, len, ref, ref1, type;
+      if (!(types instanceof Array)) {
+        types = [types];
+      }
+      for (l = 0, len = types.length; l < len; l++) {
+        type = types[l];
+        idx = (ref = this._listeners) != null ? (ref1 = ref[type]) != null ? ref1.indexOf(callback) : void 0 : void 0;
+        if ((idx != null) && idx >= 0) {
+          this._listeners[type].splice(idx, 1);
+        }
+      }
+      return this;
+    };
+    return cls.prototype.trigger = function(event) {
+      var callback, l, len, listeners, ref, ref1, type;
+      type = event.type;
+      event.target = this;
+      listeners = (ref = this._listeners) != null ? (ref1 = ref[type]) != null ? ref1.slice() : void 0 : void 0;
+      if (listeners == null) {
+        return;
+      }
+      for (l = 0, len = listeners.length; l < len; l++) {
+        callback = listeners[l];
+        callback.call(this, event, this);
+        if (callback.triggerOnce) {
+          this.off(type, callback);
+        }
+      }
+      return this;
+    };
+  };
 
   clipShader = "// Enable STPQ mapping\n#define POSITION_STPQ\nvoid getPosition(inout vec4 xyzw, inout vec4 stpq) {\n  // Store XYZ per vertex in STPQ\nstpq = xyzw;\n}";
 
@@ -716,6 +767,86 @@
     }
     return results;
   };
+
+  Animation = (function() {
+    function Animation() {
+      this.running = false;
+    }
+
+    Animation.prototype.start = function() {
+      this.running = true;
+      return this;
+    };
+
+    Animation.prototype.stop = function() {
+      if (!this.running) {
+        return;
+      }
+      this.running = false;
+      this.trigger({
+        type: 'stopped'
+      });
+      return this;
+    };
+
+    Animation.prototype.done = function() {
+      this.running = false;
+      this.trigger({
+        type: 'done'
+      });
+      return this;
+    };
+
+    return Animation;
+
+  })();
+
+  addEvents(Animation);
+
+  MathboxAnimation = (function(superClass) {
+    extend1(MathboxAnimation, superClass);
+
+    function MathboxAnimation(element, opts1) {
+      var base, k;
+      this.opts = opts1;
+      this.opts.target = element;
+      if ((base = this.opts).to == null) {
+        base.to = Math.max.apply(null, (function() {
+          var results;
+          results = [];
+          for (k in this.opts.script) {
+            results.push(k);
+          }
+          return results;
+        }).call(this));
+      }
+      MathboxAnimation.__super__.constructor.apply(this, arguments);
+    }
+
+    MathboxAnimation.prototype.start = function() {
+      this._play = this.opts.target.play(this.opts);
+      this._play.on('play.done', (function(_this) {
+        return function() {
+          _this._play.remove();
+          delete _this._play;
+          return _this.done();
+        };
+      })(this));
+      return MathboxAnimation.__super__.start.apply(this, arguments);
+    };
+
+    MathboxAnimation.prototype.stop = function() {
+      var ref;
+      if ((ref = this._play) != null) {
+        ref.remove();
+      }
+      delete this._play;
+      return MathboxAnimation.__super__.stop.apply(this, arguments);
+    };
+
+    return MathboxAnimation;
+
+  })(Animation);
 
   Subspace = (function() {
     function Subspace(opts1) {
@@ -1897,6 +2028,8 @@
     function Demo(opts1, callback) {
       var cameraOpts, clearColor, clearOpacity, doFullScreen, focusDist, image, key, mathboxOpts, onPreloaded, preload, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, scaleUI, toPreload, value;
       this.opts = opts1;
+      this.stopAll = bind(this.stopAll, this);
+      this.animate = bind(this.animate, this);
       this.texCombo = bind(this.texCombo, this);
       this.texSet = bind(this.texSet, this);
       this.urlParams = urlParams;
@@ -1936,6 +2069,7 @@
       scaleUI = (ref6 = this.opts.scaleUI) != null ? ref6 : true;
       doFullScreen = (ref7 = this.opts.fullscreen) != null ? ref7 : true;
       this.dims = (ref8 = this.opts.dims) != null ? ref8 : 3;
+      this.animations = [];
       onPreloaded = (function(_this) {
         return function() {
           var ref9;
@@ -2163,6 +2297,32 @@
 
     Demo.prototype.subspace = function(opts) {
       return new Subspace(opts);
+    };
+
+    Demo.prototype.animate = function(element, opts) {
+      var anim, clearAnims;
+      clearAnims = (function(_this) {
+        return function() {
+          return _this.animations = _this.animations.filter(function(a) {
+            return a.running;
+          });
+        };
+      })(this);
+      anim = new MathboxAnimation(element, opts);
+      anim.on('stopped', clearAnims);
+      anim.on('done', clearAnims);
+      anim.start();
+      return this.animations.push(anim);
+    };
+
+    Demo.prototype.stopAll = function() {
+      var anim, l, len, ref;
+      ref = this.animations;
+      for (l = 0, len = ref.length; l < len; l++) {
+        anim = ref[l];
+        anim.stop();
+      }
+      return this.animations = [];
     };
 
     return Demo;

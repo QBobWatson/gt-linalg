@@ -152,6 +152,35 @@ decodeQS = () ->
     urlParams
 decodeQS()
 
+# Poor man's listen / trigger mix-in
+addEvents = (cls) ->
+    cls.prototype.on = (types, callback) ->
+        if not (types instanceof Array)
+            types = [types]
+        @_listeners ?= {}
+        for type in types
+            @_listeners[type] ?= []
+            @_listeners[type].push callback
+        @
+    cls.prototype.off = (types, callback) ->
+        if not (types instanceof Array)
+            types = [types]
+        for type in types
+            idx = @_listeners?[type]?.indexOf callback
+            if idx? and idx >= 0
+                @_listeners[type].splice idx, 1
+        @
+    cls.prototype.trigger = (event) ->
+        type = event.type
+        event.target = @
+        listeners = @_listeners?[type]?.slice()
+        return unless listeners?
+        for callback in listeners
+            callback.call @, event, @
+            if callback.triggerOnce
+                @off type, callback
+        @
+
 
 ################################################################################
 # * Shaders
@@ -575,6 +604,54 @@ groupControls = (demos...) ->
         for j in [0...demos.length]
             continue if j == i
             demos[i].three.controls.clones.push demos[j].three.controls
+
+
+################################################################################
+# * Animations
+
+# This class represents a single animation.  It knows how to start()
+# itself, how to stop() itself, and when it is done().  It knows when it is
+# @running, and it emits signals when start()ed and stop()ped.
+#
+# The stop() method should do nothing if @running is false.
+class Animation
+    constructor: () ->
+        @running = false
+
+    start: () ->
+        @running = true
+        @
+
+    stop: () ->
+        return unless @running
+        @running = false
+        @trigger type: 'stopped'
+        @
+
+    done: () ->
+        @running = false
+        @trigger type: 'done'
+        @
+
+addEvents Animation
+
+# Thin wrapper around the mathbox API's play() method
+class MathboxAnimation extends Animation
+    constructor: (element, @opts) ->
+        @opts.target = element
+        @opts.to ?= Math.max.apply null, (k for k of @opts.script)
+        super
+    start: () ->
+        @_play = @opts.target.play @opts
+        @_play.on 'play.done', () =>
+            @_play.remove()
+            delete @_play
+            @done()
+        super
+    stop: () ->
+        @_play?.remove()
+        delete @_play
+        super
 
 
 ################################################################################
@@ -1739,6 +1816,8 @@ class Demo
         doFullScreen = @opts.fullscreen ? true
         @dims        = @opts.dims       ? 3
 
+        @animations = []
+
         onPreloaded = () =>
             # Setup mathbox
             @mathbox = mathBox(mathboxOpts)
@@ -1869,6 +1948,20 @@ class Demo
     grid: (view, opts) -> new Grid view, opts
     labeledVectors: (view, opts) -> new LabeledVectors view, opts
     subspace: (opts) -> new Subspace opts
+
+    animate: (element, opts) =>
+        clearAnims = () =>
+            @animations = @animations.filter (a) -> a.running
+        anim = new MathboxAnimation element, opts
+        anim.on 'stopped', clearAnims
+        anim.on 'done', clearAnims
+        anim.start()
+        @animations.push anim
+
+    stopAll: () =>
+        for anim in @animations
+            anim.stop()
+        @animations = []
 
 
 ################################################################################
