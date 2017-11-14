@@ -85,10 +85,25 @@ window.hideTempImage = () =>
     @mathbox.select("#temp_image").set('visible', false)
     @mathbox.select("#real_image").set('visible', true)
 
+window.random_matrix = (word_length) ->
+    generators = [@matrices['shear_left'],
+                @matrices['shear_right'],
+                @matrices['shear_up'],
+                @matrices['shear_down'],
+                @matrices['reflect_x_axis']]
+    result = [1,0,0,1]
+    for i in [1...word_length]
+        idx = Math.floor((Math.random() * 5));
+        result = @multiply(result, generators[idx])
+        console.log result
+    return result
 
 window.startGame = (challenge) ->
     @count = 0
     @matrix = challenge.starting_matrix
+    if @matrix == 'random'
+        @matrix = @random_matrix(10)
+    console.log @matrix
     @winning_matrix = challenge.winning_matrix
     @min_count = challenge.min_count
     $("#challenge_inst").html(challenge.message)
@@ -97,8 +112,6 @@ window.startGame = (challenge) ->
     $("#new_challenge_div").show()
     $("#button-table").find("tr").hide()
     for id in challenge.transformations
-        console.log id 
-        console.log $(id)
         $("#"+id).show()
     # $("#button-table tbody").children("tr").each(() -> 
     #     console.log this
@@ -119,7 +132,10 @@ window.challenge_list_setup = () ->
 
 window.announce_result = () ->
     $("#count").html("#{@count}")
-    if @count > @min_count
+    if @min_count == 'none'
+        $("#optimal").hide()
+        $("#non-optimal").hide() 
+    else if @count > @min_count
         $("#optimal").hide()
         $("#non-optimal").show()
     else
@@ -129,9 +145,23 @@ window.announce_result = () ->
     $("#result_div").show()
 
 
+window.matrices = {
+        'h_scale_2': [2,0,0,1],
+        'h_scale_half': [0.5,0,0,1],
+        'scale_2': [2, 0, 0, 2],
+        'scale_half' : [0.5, 0, 0, 0.5],
+        'shear_left' : [1, -1, 0, 1],
+        'shear_right' : [1, 1, 0, 1],
+        'shear_up' : [1, 0, 1, 1],
+        'shear_down' : [1, 0, -1, 1]
+        'reflect_x_axis' : [1, 0, 0, -1]
+        'rotate_45cc' : [1/Math.sqrt(2), -1/Math.sqrt(2),1/Math.sqrt(2),1/Math.sqrt(2)]
+        'rotate_45c' : [1/Math.sqrt(2), 1/Math.sqrt(2),-1/Math.sqrt(2),1/Math.sqrt(2)]
+    }  
+
 window.demo = new Demo2D {
     preload:
-        image: 'img/' + (urlParams.pic ? "theo2.jpg")
+        image: 'img/' + (urlParams.pic ? "buzz.jpg")
     ortho: ortho
     camera:
         position: [1.1, 0, ortho]
@@ -271,6 +301,10 @@ window.demo = new Demo2D {
             <td><button type="button" id="scale_2">Scale by 2</button></td>
             <td><button type="button" id="scale_half">Scale by 1/2</button></td>
         </tr>
+        <tr id="h_scale">
+            <td><button type="button" id="h_scale_2">Scale by 2 horizontally</button></td>
+            <td><button type="button" id="h_scale_half">Scale by 1/2 horizontally</button></td>
+        </tr>
         <tr id="reflect">
             <td><button type="button" id="reflect_x_axis">Reflect about the x-axis</button></td>
         </tr>
@@ -287,17 +321,7 @@ window.demo = new Demo2D {
     </div>
              '''
 
-    matrices = {
-        'scale_2': [2, 0, 0, 2],
-        'scale_half' : [0.5, 0, 0, 0.5],
-        'shear_left' : [1, -1, 0, 1],
-        'shear_right' : [1, 1, 0, 1],
-        'shear_up' : [1, 0, 1, 1],
-        'shear_down' : [1, 0, -1, 1]
-        'reflect_x_axis' : [1, 0, 0, -1]
-        'rotate_45cc' : [1/Math.sqrt(2), -1/Math.sqrt(2),1/Math.sqrt(2),1/Math.sqrt(2)]
-        'rotate_45c' : [1/Math.sqrt(2), 1/Math.sqrt(2),-1/Math.sqrt(2),1/Math.sqrt(2)]
-    }  
+
 
     challenges = [{
         name: "Zoom",
@@ -313,6 +337,13 @@ window.demo = new Demo2D {
         winning_matrix: [1, 0, 0, 1],
         transformations: ["rotation", "reflect"],
         min_count: 3
+    },{
+        name: "Scale",
+        message: "Transform the figure on the right to the one on the left",
+        starting_matrix: [1,0,0,0.25],
+        winning_matrix: [1, 0, 0, 1],
+        transformations: ["rotation", "h_scale"],
+        min_count: 6
     },
     {
         name: "Unwind",
@@ -328,6 +359,13 @@ window.demo = new Demo2D {
         winning_matrix : [1, 0, 0, 1],
         transformations : ["h-shears", "v-shears"],
         min_count : 3
+    }, {
+        name: "Random",
+        message: "Transform the figure on the right to the one on the left",
+        starting_matrix: 'random',
+        winning_matrix: [1, 0, 0, 1],
+        transformations: ["rotation", "h-shears", "v-shears", "reflect"],
+        min_count: 'none'        
     }]
 
     for i in [1...challenges.length+1]
@@ -339,16 +377,15 @@ window.demo = new Demo2D {
             $ch.click(() -> window.startGame(ch))
             $ch.html("Challenge #{ii}: " + ch.name)
             $li.append($ch)
-            console.log $li
             $("#challenge_list").append($li)
         )()
 
-    for id, matrix of matrices
+    for id, matrix of window.matrices
         (() -> 
             id2 = id
             $btn = $("#"+id2)
-            $btn.click(() -> window.updateMatrix(matrices[id2]))
-            $btn.mouseover(() -> window.tempUpdateMatrix(matrices[id2]))
+            $btn.click(() -> window.updateMatrix(window.matrices[id2]))
+            $btn.mouseover(() -> window.tempUpdateMatrix(window.matrices[id2]))
             $btn.mouseleave(() -> window.hideTempImage())
         )()
 
