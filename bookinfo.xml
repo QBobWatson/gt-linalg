@@ -8,9 +8,10 @@ Copyright 2017 Georgia Institute of Technology
 
   <brandlogo url="http://www.gatech.edu" source="static/images/gatech.gif" />
 
-  <latex-preamble>
-    <package>color</package>
-  </latex-preamble>
+  <!-- JDR: put everything in "macros" below. -->
+  <!-- <latex-preamble> -->
+  <!--   <package>color</package> -->
+  <!-- </latex-preamble> -->
 
   <defaults>
     <image-width>auto</image-width>
@@ -33,6 +34,9 @@ Copyright 2017 Georgia Institute of Technology
 
   <!-- LaTeX macros for this book go here. -->
   <macros>
+    \usepackage{color}
+    \usepackage{spalign}
+
     \def\R{\mathbf R}
     \let\mathbb=\mathbf
     \spaligndelims[]
@@ -49,7 +53,7 @@ Copyright 2017 Georgia Institute of Technology
     \definecolor{ColorEx2}{rgb}{1,1,0}
     \let\To=\longrightarrow
     \def\rref{\;\overset{\text{rref}}\To\;}
-    \def\matrow#1{\text{&#8212;}\hspace .5em\,#1\,\text{&#8212;}\hspace .5em}
+    \def\matrow#1{\text{---}\,#1\,\text{---}}
     \def\vol{\operatorname{vol}}
 
     \definecolor{seq-red}{rgb}{0.8941,0.1020,0.1098}
@@ -70,10 +74,6 @@ Copyright 2017 Georgia Institute of Technology
     \definecolor{seq7}{rgb}{0.6510,0.3373,0.1569}
     \definecolor{seq8}{rgb}{0.9686,0.5059,0.7490}
 
-  </macros>
-
-  <!-- tikz package and libraries for images -->
-  <latex-image-preamble>
     \usepackage{tikz}
     \usetikzlibrary{backgrounds}
     \usetikzlibrary{arrows,matrix}
@@ -84,11 +84,6 @@ Copyright 2017 Georgia Institute of Technology
     \usetikzlibrary{calc,arrows.meta,quotes}
     \usepackage{jdr-tikz}
     \usepackage{spalign}
-    \usepackage{mathjax}
-    \usepackage{geometry}
-    \geometry{paperwidth=300mm, paperheight=300mm,
-      layoutwidth=300mm, layoutheight=300mm,
-      textwidth=300mm, textheight=300mm, ignoreall}
 
     \tikzset{
         whitebg/.style={fill=white},
@@ -115,11 +110,6 @@ Copyright 2017 Georgia Institute of Technology
                       minimum size=2mm, anchor=center},
     }
 
-    \pgfkeysdefnargs{/mathjax font size}{2}{\fontsize{#1}{#2}\selectfont}
-    \tikzset{
-        every picture/.style={/mathjax font size={13pt}{15.8pt}},
-    }
-
     % JDR: fix delimiter size (?)
     \makeatletter
     \def\tikz@delimiter#1#2#3#4#5#6#7#8{%
@@ -136,6 +126,14 @@ Copyright 2017 Georgia Institute of Technology
     }
     \makeatother
 
+  </macros>
+
+  <!-- tikz package and libraries for images -->
+  <latex-image-preamble>
+    \usepackage{geometry}
+    \geometry{paperwidth=300mm, paperheight=300mm,
+      layoutwidth=300mm, layoutheight=300mm,
+      textwidth=300mm, textheight=300mm, ignoreall}
   </latex-image-preamble>
 
   <!-- TODO: Google custom search -->

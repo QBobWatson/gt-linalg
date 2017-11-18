@@ -43,8 +43,9 @@
     <xsl:call-template name="external-css">
         <xsl:with-param name="css-list" select="normalize-space($html.css.extra)" />
     </xsl:call-template>
-    <!-- JDR: preprocessed inline mathjax stylesheet is inserted here -->
-    <style id="mathjax-style"></style>
+    <!-- JDR: preprocessed inline pretex stylesheet is inserted here -->
+    <style id="pretex-style"></style>
+    <style id="pretex-fonts"></style>
 </xsl:template>
 
 <!-- Primary Navigation -->
@@ -357,7 +358,7 @@
 </xsl:template>
 
 
-<!-- JDR: we're precompiling mathjax -->
+<!-- JDR: we're precompiling latex -->
 <xsl:template name="mathjax"/>
 <xsl:template name="latex-macros">
   <exsl:document href="./preamble.tex" method="text">
@@ -365,6 +366,5 @@
     <xsl:value-of select="$latex-macros" />
   </exsl:document>
 </xsl:template>
-
 
 </xsl:stylesheet>

@@ -31,7 +31,6 @@ the license is included in gfdl.xml.
         <p>Solve the linear system
         <me>
           \syseq{2x + y + 12z = 1; x + 2y + 9z = -1}
-          \def\r{\color{red}}
         </me>
         using row reduction.
         </p>
@@ -42,22 +41,22 @@ the license is included in gfdl.xml.
             <mrow>
               \amat{2 1 12 1; 1 2 9 -1}
               \quad\xrightarrow{R_1 \longleftrightarrow R_2}\quad
-              &amp;\amat{\r1 2 9 -1; 2 1 12 1}
+              &amp;\amat{\color{red}1 2 9 -1; 2 1 12 1}
               &amp;&amp;\color{blue}\text{(Optional)}
             </mrow>
             <mrow>
               {}\quad\xrightarrow{R_2=R_2-2R_1}\quad
-              &amp;\amat{1 2 9 -1; \r0 -3 -6 3}
+              &amp;\amat{1 2 9 -1; \color{red}0 -3 -6 3}
               &amp;&amp;\color{blue}\text{(Step 1c)}
             </mrow>
             <mrow>
               {}\quad\xrightarrow{R_2=R_2\div -3}\quad
-              &amp;\amat{1 2 9 -1; 0 \r1 2 -1}
+              &amp;\amat{1 2 9 -1; 0 \color{red}1 2 -1}
               &amp;&amp;\color{blue}\text{(Step 2b)}
             </mrow>
             <mrow>
               {}\quad\xrightarrow{R_1=R_1-2R_2}\quad
-              &amp;\amat{1 \r0 5 1; 0 1 2 -1}
+              &amp;\amat{1 \color{red}0 5 1; 0 1 2 -1}
               &amp;&amp;\color{blue}\text{(Step 2c)}
             </mrow>
           </md>

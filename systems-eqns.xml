@@ -527,9 +527,8 @@ the license is included in gfdl.xml.
           }.
         </me>
         Eliminating a variable from an equation means producing a zero to the left of the line in an augmented matrix.  First we produce zeros in the first column (i.e. we eliminate <m>x</m>) by subtracting multiples of the first row.
-        <me>
+        <me>\def\r{\color{red}}
           \begin{split}
-          \def\r{\color{red}}
           \amat{
           1  2  3  6 ;
           2  -3  2  14;
@@ -550,7 +549,7 @@ the license is included in gfdl.xml.
           \end{split}
         </me>
         This was made much easier by the fact that the top-left entry is equal to <m>1</m>, so we can simply multiply the first row by the number below and subtract.  In order to eliminate <m>y</m> in the same way, we would like to produce a <m>1</m> in the second column.  We could divide the second row by <m>-7</m>, but this would produce fractions; instead, let's divide the third by <m>-5</m>.
-        <me>
+        <me>\def\r{\color{red}}
           \begin{split}
           \amat{
           1  2  3  6 ;
@@ -637,8 +636,7 @@ the license is included in gfdl.xml.
             \amat{1 1 2; 3 4 5; 4 5 9}
           </me>
           We clear the entries below the top-left using row replacement.
-          <me>
-            \def\r{\color{red}}
+          <me>\def\r{\color{red}}
             \begin{split}
             \amat{1 1 2; 3 4 5; 4 5 9}
             \quad\xrightarrow{R_2=R_2-3R_1}\quad&amp;
@@ -648,7 +646,7 @@ the license is included in gfdl.xml.
             \end{split}
           </me>
           Now we clear the second entry from the last row.
-          <me>
+          <me>\def\r{\color{red}}
             \amat{1 1 2; 0 1 -1; 0 1 1}
             \quad\xrightarrow{R_3=R_3-R_2}\quad
             \amat{1 1 2; 0 1 -1; 0 \r0 2}

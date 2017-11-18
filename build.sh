@@ -1,15 +1,15 @@
 #!/bin/bash
 
 MAKEFIGS_COMMAND=./makefigs.py
-PREJAX_ALL=
+PRETEX_ALL=
 
 while [[ $# -gt 0 ]]; do
     case $1 in
         --recompile-images)
             MAKEFIGS_COMMAND="$MAKEFIGS_COMMAND --recompile-all"
             ;;
-        --reprocess-mathjax)
-            PREJAX_ALL="true"
+        --reprocess-latex)
+            PRETEX_ALL="true"
             ;;
     esac
     shift
@@ -25,6 +25,7 @@ base_dir="$compile_dir/.."
 base_dir="$(cd "$base_dir"; pwd)"
 build_dir="$base_dir/build"
 static_dir="$build_dir/static"
+pretex="$base_dir/gt-text-common/pretex/processtex.py"
 
 echo "Checking xml..."
 cd "$compile_dir"
@@ -32,7 +33,7 @@ xmllint --xinclude --noout --relaxng "$base_dir/mathbook/schema/pretext.rng" \
         linalg.xml
 if [[ $? == 3 || $? == 4 ]]; then
     echo "Input is not valid MathBook XML; exiting"
-    exit 1
+#    exit 1
 fi
 
 echo "Cleaning up previous build..."
@@ -53,25 +54,22 @@ cp "$base_dir/mathbook/css/mathbook-add-on.css" "$static_dir/css"
 cp "$base_dir/gt-text-common/js/"*.js "$static_dir/js"
 cp "$base_dir/mathbook-assets/stylesheets/"*.css "$static_dir/css"
 cp "$base_dir/mathbook-assets/stylesheets/fonts/ionicons/fonts/"* "$static_dir/fonts"
-cp -r "$base_dir/gt-text-common/fonts/"* "$static_dir/fonts"
+#cp -r "$base_dir/gt-text-common/fonts/"* "$static_dir/fonts"
 cp "$compile_dir/images/"* "$static_dir/images"
 cp -r "$compile_dir/demos" "$build_dir/demos"
 ln -s "static/images" "$build_dir/images"
 
-echo "Building html..."
+echo "Converting xml to html..."
 xsltproc -o "$build_dir/" --xinclude \
          "$compile_dir/xsl/mathbook-html.xsl" linalg.xml \
-         || die "xsltproc failed!"
+    || die "xsltproc failed!"
 
-echo "Preprocessing mathjax..."
-[ -n "$PREJAX_ALL" ] && rm -r prejax-cache
-nodejs "$base_dir/gt-text-common/prejax/prejax.js" \
-       "$build_dir"/preamble.tex "$build_dir"/*.html \
-       || die "MathJax preprocessing failed"
-nodejs "$base_dir/gt-text-common/prejax/prejax.js" --no-css \
-       "$build_dir"/preamble.tex "$build_dir"/knowl/*.html \
-       || die "MathJax preprocessing failed (knowls)"
-rm "$build_dir/preamble.tex"
+echo "Preprocessing LaTeX..."
+[ -n "$PRETEX_ALL" ] && rm -r pretex-cache
+python3 "$pretex" --preamble "$build_dir/preamble.tex" \
+        --cache-dir pretex-cache \
+        "$build_dir"/*.html "$build_dir"/knowl/*.html \
+    || die "Can't process html!"
 
 echo "Build successful!  Open or reload"
 echo "     $build_dir/index.html"

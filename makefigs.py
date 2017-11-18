@@ -109,7 +109,7 @@ def main():
     if compiled > 0:
         print("Successfully compiled {} images".format(compiled))
     else:
-        print("All images are up to date (use --recompile-all)")
+        print("All images are up to date")
 
 
 if __name__ == "__main__":
