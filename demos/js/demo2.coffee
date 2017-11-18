@@ -783,11 +783,49 @@ class Subspace
             when 3
                 projected.copy vec
 
-    contains: (vec, ε=1e-8) =>
+    complement: () =>
+        # Return an orthonormal basis for the orthogonal complement
+        [ortho1, ortho2] = @ortho
+        switch @dim
+            when 0
+                return [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+            when 1
+                [a, b, c] = [ortho1.x, ortho1.y, ortho1.z]
+                if Math.abs(a) < @zeroThreshold
+                    if Math.abs(b) < @zeroThreshold
+                        return [[1, 0, 0], [0, 1, 0]]
+                    if Math.abs(c) < @zeroThreshold
+                        return [[1, 0, 0], [0, 0, 1]]
+                    # b and c are nonzero
+                    return [[1, 0, 0], [0, c, -b]]
+                # a is nonzero
+                setTvec @tmpVec1, [b, -a, 0]
+                setTvec @tmpVec2, [c, 0, -a]
+                orthogonalize @tmpVec1, @tmpVec2
+                return [[@tmpVec1.x, @tmpVec1.y, @tmpVec1.z],
+                        [@tmpVec2.x, @tmpVec2.y, @tmpVec2.z]]
+            when 2
+                cross = @tmpVec1
+                cross.crossVectors ortho1, ortho2
+                return [[cross.x, cross.y, cross.z]]
+            when 3
+                return []
+
+    complementFull: (twod) =>
+        # Return three vectors that span the complement, or 2 vectors if twod
+        # is true.
+        vecs = @complement().concat([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
+        if twod
+            vecs[0][2] = 0
+            vecs[1][2] = 0
+            return [vecs[0], vecs[1]]
+        return vecs.slice(0, 3)
+
+    contains: (vec) =>
         @project vec, @tmpVec3
         setTvec @tmpVec1, vec
         @tmpVec1.sub @tmpVec3
-        return @tmpVec1.lengthSq() < ε
+        return @tmpVec1.lengthSq() < @zeroThreshold
 
     # Set up the mathbox elements to draw the subspace if dim < 3
     draw: (view) =>

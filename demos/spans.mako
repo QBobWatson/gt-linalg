@@ -2,19 +2,23 @@
 
 <%inherit file="base2.mako"/>
 
-<%block name="title">Span of vectors in space</%block>
+<%block name="title">Span of vectors</%block>
 
 <%block name="inline_style">
   .overlay-popup h2 {
       color:      green;
       text-align: center;
   }
-  #span-type {
+  .span-type {
       border: solid 1px white;
       padding: 5px;
       margin: 5px;
+      background-color: rgb(100, 0, 0);
   }
-  #inter-is {
+  .complement {
+      background-color: rgb(0, 100, 100);
+  }
+  .inter-is {
       padding: 10px;
   }
   .dg.main .cr.boolean > div > .property-name {
@@ -57,6 +61,7 @@
 #         target: "make this vector as a linear combination..."
 #         combo: write linear combination
 #         indep: "these vectors are linearly independent"
+#         orthog: orthogonal complements
 #         default: "the span of these vectors is a plane"
 #     capopt: caption options:
 #         matrix: use matrix equation instead of vector equation
@@ -85,8 +90,9 @@ window.demo = new (if is2D then Demo2D else Demo) {
                  [0,   1, 0, 1],
                  [1,   1, 0, 1]]
     @doTarget = false
-    @target   = null
+    @target = null
     @targetColor = [1, 1, 1, 1]
+    @doComplement = false
 
     if @urlParams.v1?
         @numVecs = 1
@@ -116,7 +122,13 @@ window.demo = new (if is2D then Demo2D else Demo) {
         @urlParams.lincombo  ?= 'on'
         @urlParams.grid      ?= 'on'
         @urlParams.hidespace ?= 'true'
+    else if @urlParams.captions == 'orthog'
+        @urlParams.lincombo  ?= 'disabled'
+        @urlParams.grid      ?= 'disabled'
+        @doComplement = true
     @targetLabel = @urlParams.tlabel ? 'w'
+
+    @hideSpace = @urlParams.hidespace? and @urlParams.hidespace != 'false'
 
     @vectors = [@vector1, @vector2, @vector3][0...@numVecs]
     @colors  = @colors[0...@numVecs]
@@ -215,6 +227,7 @@ window.demo = new (if is2D then Demo2D else Demo) {
     ##################################################
     # Clip cube
     surfaceColor = new THREE.Color 0.5, 0, 0
+    complementColor = new THREE.Color 0, 0.7, 0.7
 
     clipCube = @clipCube view,
         draw:     true
@@ -237,13 +250,24 @@ window.demo = new (if is2D then Demo2D else Demo) {
     zeroThreshold = 0.00001
 
     subspace = @subspace
-        vectors: @vectors
-        noPlane: is2D and not @urlParams.showPlane
+        vectors:       @vectors
+        noPlane:       is2D and @hideSpace
         zeroThreshold: zeroThreshold
-        live: @isLive
-        range: range
-        mesh: if @urlParams.hidespace? then undefined else clipCube.mesh
+        live:          @isLive
+        range:         range
     subspace.draw clipCube.clipped
+
+    if @doComplement
+        complement = @subspace
+            name:          'complement'
+            vectors:       subspace.complementFull(is2D)
+            noPlane:       is2D and @hideSpace
+            zeroThreshold: zeroThreshold
+            live:          @isLive
+            range:         range
+            color:         0x00aaaa
+            pointOpts:     {size: 20, zIndex: 4}
+        complement.draw clipCube.clipped
 
     ##################################################
     # Grid
@@ -287,6 +311,18 @@ window.demo = new (if is2D then Demo2D else Demo) {
         # Try snapping to the span of the other vectors
         snap vec, others
 
+    updateMesh = () ->
+        mesh = clipCube.mesh
+        if complement?.dim == 3
+            mesh.material.color = complementColor
+            mesh.material.visible = true
+        else if subspace.dim == 3
+            mesh.material.color = surfaceColor
+            mesh.material.visible = true
+        else
+            mesh.material.visible = false
+    updateMesh()
+
     if @isLive
         # Make the vectors draggable
         @draggable view,
@@ -294,6 +330,8 @@ window.demo = new (if is2D then Demo2D else Demo) {
             onDrag: onDrag
             postDrag: () =>
                 subspace.setVecs @vectors
+                complement?.setVecs subspace.complementFull(is2D)
+                updateMesh()
                 updateCaption()
 
     ##################################################
@@ -357,8 +395,8 @@ window.demo = new (if is2D then Demo2D else Demo) {
 
         when "indep"
             @caption '''<p>The set <span id="vectors-here"></span>
-                        <span id="inter-is">is</span>
-                        <span id="span-type"></span>.</p>
+                        <span class="inter-is">is</span>
+                        <span id="span-type" class="span-type"></span>.</p>
                      '''
             vectorsElt = document.getElementById 'vectors-here'
             spanElt    = document.getElementById 'span-type'
@@ -370,13 +408,29 @@ window.demo = new (if is2D then Demo2D else Demo) {
                 else
                     spanElt.innerText = "linearly dependent"
 
+        when "orthog"
+            labels = @labels.join ', '
+            @caption """
+                <p>The subspace Span{#{labels}} <span class="inter-is">is</span>
+                <span id="span-type" class="span-type"></span>.</p>
+                <p>The orthogonal complement of Span{#{labels}}
+                <span class="inter-is">is</span>
+                <span id="complement-type" class="span-type complement"></span>.</p>
+            """
+            spaceElt = document.getElementById 'span-type'
+            complElt = document.getElementById 'complement-type'
+            types = ["a point", "a line", "a plane", "space"]
+            updateCaption = () =>
+                spaceElt.innerText = types[subspace.dim]
+                complElt.innerText = types[complement.dim]
+
         else
             if @urlParams.capopt == 'matrix'
                 str = '<p>The span of the columns of <span id="vectors-here"></span>'
             else
                 str = '<p>Span <span id="vectors-here"></span>'
             @caption str + '''
-                              <span id="inter-is">is</span>
+                              <span class="inter-is">is</span>
                               <span id="span-type"></span>.</p>
                            '''
             vectorsElt = document.getElementById 'vectors-here'

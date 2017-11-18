@@ -856,6 +856,8 @@
       this.setVisibility = bind(this.setVisibility, this);
       this.draw = bind(this.draw, this);
       this.contains = bind(this.contains, this);
+      this.complementFull = bind(this.complementFull, this);
+      this.complement = bind(this.complement, this);
       this.project = bind(this.project, this);
       this.update = bind(this.update, this);
       this.setVecs = bind(this.setVecs, this);
@@ -978,14 +980,52 @@
       }
     };
 
-    Subspace.prototype.contains = function(vec, ε) {
-      if (ε == null) {
-        ε = 1e-8;
+    Subspace.prototype.complement = function() {
+      var a, b, c, cross, ortho1, ortho2, ref, ref1;
+      ref = this.ortho, ortho1 = ref[0], ortho2 = ref[1];
+      switch (this.dim) {
+        case 0:
+          return [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+        case 1:
+          ref1 = [ortho1.x, ortho1.y, ortho1.z], a = ref1[0], b = ref1[1], c = ref1[2];
+          if (Math.abs(a) < this.zeroThreshold) {
+            if (Math.abs(b) < this.zeroThreshold) {
+              return [[1, 0, 0], [0, 1, 0]];
+            }
+            if (Math.abs(c) < this.zeroThreshold) {
+              return [[1, 0, 0], [0, 0, 1]];
+            }
+            return [[1, 0, 0], [0, c, -b]];
+          }
+          setTvec(this.tmpVec1, [b, -a, 0]);
+          setTvec(this.tmpVec2, [c, 0, -a]);
+          orthogonalize(this.tmpVec1, this.tmpVec2);
+          return [[this.tmpVec1.x, this.tmpVec1.y, this.tmpVec1.z], [this.tmpVec2.x, this.tmpVec2.y, this.tmpVec2.z]];
+        case 2:
+          cross = this.tmpVec1;
+          cross.crossVectors(ortho1, ortho2);
+          return [[cross.x, cross.y, cross.z]];
+        case 3:
+          return [];
       }
+    };
+
+    Subspace.prototype.complementFull = function(twod) {
+      var vecs;
+      vecs = this.complement().concat([[0, 0, 0], [0, 0, 0], [0, 0, 0]]);
+      if (twod) {
+        vecs[0][2] = 0;
+        vecs[1][2] = 0;
+        return [vecs[0], vecs[1]];
+      }
+      return vecs.slice(0, 3);
+    };
+
+    Subspace.prototype.contains = function(vec) {
       this.project(vec, this.tmpVec3);
       setTvec(this.tmpVec1, vec);
       this.tmpVec1.sub(this.tmpVec3);
-      return this.tmpVec1.lengthSq() < ε;
+      return this.tmpVec1.lengthSq() < this.zeroThreshold;
     };
 
     Subspace.prototype.draw = function(view) {

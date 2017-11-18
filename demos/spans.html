@@ -11,7 +11,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-  <title>Span of vectors in space</title>
+  <title>Span of vectors</title>
 
       <link rel="stylesheet" href="mathbox/mathbox.css">
       <link rel="stylesheet"
@@ -24,12 +24,16 @@
       color:      green;
       text-align: center;
   }
-  #span-type {
+  .span-type {
       border: solid 1px white;
       padding: 5px;
       margin: 5px;
+      background-color: rgb(100, 0, 0);
   }
-  #inter-is {
+  .complement {
+      background-color: rgb(0, 100, 100);
+  }
+  .inter-is {
       padding: 10px;
   }
   .dg.main .cr.boolean > div > .property-name {
@@ -87,7 +91,7 @@ window.demo = new (is2D ? Demo2D : Demo)({
     }
   }
 }, function() {
-  var base, base1, base2, base3, base4, base5, base6, base7, c, checkLabel, clipCube, coeff, diff, eqnElt, gui, guiElts, j, k, l, lColors, lLabels, lVectors, len, len1, len2, linCombo, onDrag, params, popup, range, ref1, ref2, ref3, ref4, ref5, ref6, self, snap, snapThreshold, snapped, spanElt, ss0, ss1, ss2, ss3, str, subspace, subspaces, successElt, surfaceColor, updateCaption, vec, vectorsElt, view, zeroThreshold;
+  var base, base1, base2, base3, base4, base5, base6, base7, base8, base9, c, checkLabel, clipCube, coeff, complElt, complement, complementColor, diff, eqnElt, gui, guiElts, j, k, l, lColors, lLabels, lVectors, labels, len, len1, len2, linCombo, onDrag, params, popup, range, ref1, ref2, ref3, ref4, ref5, ref6, self, snap, snapThreshold, snapped, spaceElt, spanElt, ss0, ss1, ss2, ss3, str, subspace, subspaces, successElt, surfaceColor, types, updateCaption, updateMesh, vec, vectorsElt, view, zeroThreshold;
   window.mathbox = this.mathbox;
   this.numVecs = 3;
   this.vector1 = [5, 3, -2];
@@ -100,6 +104,7 @@ window.demo = new (is2D ? Demo2D : Demo)({
   this.doTarget = false;
   this.target = null;
   this.targetColor = [1, 1, 1, 1];
+  this.doComplement = false;
   if (this.urlParams.v1 != null) {
     this.numVecs = 1;
     this.vector1 = this.urlParams.v1.split(",").map(parseFloat);
@@ -149,8 +154,17 @@ window.demo = new (is2D ? Demo2D : Demo)({
     if ((base7 = this.urlParams).hidespace == null) {
       base7.hidespace = 'true';
     }
+  } else if (this.urlParams.captions === 'orthog') {
+    if ((base8 = this.urlParams).lincombo == null) {
+      base8.lincombo = 'disabled';
+    }
+    if ((base9 = this.urlParams).grid == null) {
+      base9.grid = 'disabled';
+    }
+    this.doComplement = true;
   }
   this.targetLabel = (ref1 = this.urlParams.tlabel) != null ? ref1 : 'w';
+  this.hideSpace = (this.urlParams.hidespace != null) && this.urlParams.hidespace !== 'false';
   this.vectors = [this.vector1, this.vector2, this.vector3].slice(0, this.numVecs);
   this.colors = this.colors.slice(0, this.numVecs);
   this.labels = this.labels.slice(0, this.numVecs);
@@ -268,6 +282,7 @@ window.demo = new (is2D ? Demo2D : Demo)({
     this.mathbox.select(".lincombo").set("visible", params[checkLabel]);
   }
   surfaceColor = new THREE.Color(0.5, 0, 0);
+  complementColor = new THREE.Color(0, 0.7, 0.7);
   clipCube = this.clipCube(view, {
     draw: true,
     color: new THREE.Color(.75, .75, .75),
@@ -287,13 +302,28 @@ window.demo = new (is2D ? Demo2D : Demo)({
   zeroThreshold = 0.00001;
   subspace = this.subspace({
     vectors: this.vectors,
-    noPlane: is2D && !this.urlParams.showPlane,
+    noPlane: is2D && this.hideSpace,
     zeroThreshold: zeroThreshold,
     live: this.isLive,
-    range: range,
-    mesh: this.urlParams.hidespace != null ? void 0 : clipCube.mesh
+    range: range
   });
   subspace.draw(clipCube.clipped);
+  if (this.doComplement) {
+    complement = this.subspace({
+      name: 'complement',
+      vectors: subspace.complementFull(is2D),
+      noPlane: is2D && this.hideSpace,
+      zeroThreshold: zeroThreshold,
+      live: this.isLive,
+      range: range,
+      color: 0x00aaaa,
+      pointOpts: {
+        size: 20,
+        zIndex: 4
+      }
+    });
+    complement.draw(clipCube.clipped);
+  }
   if ((ref4 = this.urlParams.grid) === "enabled" || ref4 === "on") {
     this.grid(clipCube.clipped, {
       vectors: this.vectors,
@@ -367,6 +397,20 @@ window.demo = new (is2D ? Demo2D : Demo)({
     }
     return snap(vec, others);
   };
+  updateMesh = function() {
+    var mesh;
+    mesh = clipCube.mesh;
+    if ((complement != null ? complement.dim : void 0) === 3) {
+      mesh.material.color = complementColor;
+      return mesh.material.visible = true;
+    } else if (subspace.dim === 3) {
+      mesh.material.color = surfaceColor;
+      return mesh.material.visible = true;
+    } else {
+      return mesh.material.visible = false;
+    }
+  };
+  updateMesh();
   if (this.isLive) {
     this.draggable(view, {
       points: this.vectors,
@@ -374,6 +418,10 @@ window.demo = new (is2D ? Demo2D : Demo)({
       postDrag: (function(_this) {
         return function() {
           subspace.setVecs(_this.vectors);
+          if (complement != null) {
+            complement.setVecs(subspace.complementFull(is2D));
+          }
+          updateMesh();
           return updateCaption();
         };
       })(this)
@@ -487,7 +535,7 @@ window.demo = new (is2D ? Demo2D : Demo)({
       }
       break;
     case "indep":
-      this.caption('<p>The set <span id="vectors-here"></span>\n<span id="inter-is">is</span>\n<span id="span-type"></span>.</p>');
+      this.caption('<p>The set <span id="vectors-here"></span>\n<span class="inter-is">is</span>\n<span id="span-type" class="span-type"></span>.</p>');
       vectorsElt = document.getElementById('vectors-here');
       spanElt = document.getElementById('span-type');
       updateCaption = (function(_this) {
@@ -503,13 +551,26 @@ window.demo = new (is2D ? Demo2D : Demo)({
         };
       })(this);
       break;
+    case "orthog":
+      labels = this.labels.join(', ');
+      this.caption("<p>The subspace Span{" + labels + "} <span class=\"inter-is\">is</span>\n<span id=\"span-type\" class=\"span-type\"></span>.</p>\n<p>The orthogonal complement of Span{" + labels + "}\n<span class=\"inter-is\">is</span>\n<span id=\"complement-type\" class=\"span-type complement\"></span>.</p>");
+      spaceElt = document.getElementById('span-type');
+      complElt = document.getElementById('complement-type');
+      types = ["a point", "a line", "a plane", "space"];
+      updateCaption = (function(_this) {
+        return function() {
+          spaceElt.innerText = types[subspace.dim];
+          return complElt.innerText = types[complement.dim];
+        };
+      })(this);
+      break;
     default:
       if (this.urlParams.capopt === 'matrix') {
         str = '<p>The span of the columns of <span id="vectors-here"></span>';
       } else {
         str = '<p>Span <span id="vectors-here"></span>';
       }
-      this.caption(str + '<span id="inter-is">is</span>\n<span id="span-type"></span>.</p>');
+      this.caption(str + '<span class="inter-is">is</span>\n<span id="span-type"></span>.</p>');
       vectorsElt = document.getElementById('vectors-here');
       spanElt = document.getElementById('span-type');
       updateCaption = (function(_this) {
