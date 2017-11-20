@@ -305,7 +305,13 @@ window.demo = new (is2D ? Demo2D : Demo)({
     noPlane: is2D && this.hideSpace,
     zeroThreshold: zeroThreshold,
     live: this.isLive,
-    range: range
+    range: range,
+    lineOpts: {
+      zOrder: 0
+    },
+    surfaceOpts: {
+      zOrder: 1
+    }
   });
   subspace.draw(clipCube.clipped);
   if (this.doComplement) {
@@ -320,6 +326,12 @@ window.demo = new (is2D ? Demo2D : Demo)({
       pointOpts: {
         size: 20,
         zIndex: 4
+      },
+      lineOpts: {
+        zOrder: 0
+      },
+      surfaceOpts: {
+        zOrder: 1
       }
     });
     complement.draw(clipCube.clipped);

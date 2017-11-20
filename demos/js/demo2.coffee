@@ -1685,6 +1685,7 @@ class LabeledVectors
         labels  = @opts.labels
         origins = @opts.origins ? ([0, 0, 0] for [0...vectors.length])
         live    = @opts.live ? true
+        labelsLive = @opts.labelsLive ? false
         vectorOpts =
             id:      "#{name}-vectors-drawn"
             classes: [name]
@@ -1756,7 +1757,7 @@ class LabeledVectors
                     live:     live
                 .text
                     id:    "#{name}-text"
-                    live:  false
+                    live:  labelsLive
                     width: labels.length
                     data:  labels
             @labels = view.label labelOpts

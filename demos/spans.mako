@@ -255,6 +255,11 @@ window.demo = new (if is2D then Demo2D else Demo) {
         zeroThreshold: zeroThreshold
         live:          @isLive
         range:         range
+        # Lines before planes for transparency
+        lineOpts:
+            zOrder: 0
+        surfaceOpts:
+            zOrder: 1
     subspace.draw clipCube.clipped
 
     if @doComplement
@@ -267,6 +272,11 @@ window.demo = new (if is2D then Demo2D else Demo) {
             range:         range
             color:         0x00aaaa
             pointOpts:     {size: 20, zIndex: 4}
+            # Lines before planes for transparency
+            lineOpts:
+                zOrder: 0
+            surfaceOpts:
+                zOrder: 1
         complement.draw clipCube.clipped
 
     ##################################################

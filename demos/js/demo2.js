@@ -1892,7 +1892,7 @@
 
   LabeledVectors = (function() {
     function LabeledVectors(view, opts1) {
-      var colors, doZero, i, l, labelOpts, labels, len, len1, live, name, origins, p, q, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, vec, vectorData, vectorOpts, vectors, zeroData, zeroOpts, zeroThreshold;
+      var colors, doZero, i, l, labelOpts, labels, labelsLive, len, len1, live, name, origins, p, q, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, vec, vectorData, vectorOpts, vectors, zeroData, zeroOpts, zeroThreshold;
       this.opts = opts1;
       this.show = bind(this.show, this);
       this.hide = bind(this.hide, this);
@@ -1912,6 +1912,7 @@
         return results;
       })();
       live = (ref2 = this.opts.live) != null ? ref2 : true;
+      labelsLive = (ref3 = this.opts.labelsLive) != null ? ref3 : false;
       vectorOpts = {
         id: name + "-vectors-drawn",
         classes: [name],
@@ -1922,7 +1923,7 @@
         size: 5,
         width: 5
       };
-      extend(vectorOpts, (ref3 = this.opts.vectorOpts) != null ? ref3 : {});
+      extend(vectorOpts, (ref4 = this.opts.vectorOpts) != null ? ref4 : {});
       labelOpts = {
         id: name + "-vector-labels",
         classes: [name],
@@ -1933,8 +1934,8 @@
         size: 15,
         offset: [0, 25]
       };
-      extend(labelOpts, (ref4 = this.opts.labelOpts) != null ? ref4 : {});
-      doZero = (ref5 = this.opts.zeroPoints) != null ? ref5 : false;
+      extend(labelOpts, (ref5 = this.opts.labelOpts) != null ? ref5 : {});
+      doZero = (ref6 = this.opts.zeroPoints) != null ? ref6 : false;
       zeroOpts = {
         id: name + "-zero-points",
         classes: [name],
@@ -1943,8 +1944,8 @@
         color: "white",
         size: 20
       };
-      extend(zeroOpts, (ref6 = this.opts.zeroOpts) != null ? ref6 : {});
-      zeroThreshold = (ref7 = this.opts.zeroThreshold) != null ? ref7 : 0.0;
+      extend(zeroOpts, (ref7 = this.opts.zeroOpts) != null ? ref7 : {});
+      zeroThreshold = (ref8 = this.opts.zeroThreshold) != null ? ref8 : 0.0;
       this.hidden = false;
       vectorData = [];
       for (l = 0, len = vectors.length; l < len; l++) {
@@ -1959,7 +1960,7 @@
           vec[2] = 0;
         }
       }
-      for (i = q = 0, ref8 = vectors.length; 0 <= ref8 ? q < ref8 : q > ref8; i = 0 <= ref8 ? ++q : --q) {
+      for (i = q = 0, ref9 = vectors.length; 0 <= ref9 ? q < ref9 : q > ref9; i = 0 <= ref9 ? ++q : --q) {
         vectorData.push(origins[i]);
         vectorData.push(vectors[i]);
       }
@@ -1988,7 +1989,7 @@
           live: live
         }).text({
           id: name + "-text",
-          live: false,
+          live: labelsLive,
           width: labels.length,
           data: labels
         });
@@ -1996,9 +1997,9 @@
       }
       if (doZero) {
         zeroData = (function() {
-          var ref9, results, u;
+          var ref10, results, u;
           results = [];
-          for (u = 0, ref9 = vectors.length; 0 <= ref9 ? u < ref9 : u > ref9; 0 <= ref9 ? u++ : u--) {
+          for (u = 0, ref10 = vectors.length; 0 <= ref10 ? u < ref10 : u > ref10; 0 <= ref10 ? u++ : u--) {
             results.push([0, 0, 0]);
           }
           return results;
@@ -2025,11 +2026,11 @@
         this.zeroPoints = view.point(zeroOpts);
         this.zeroPoints.bind('visible', (function(_this) {
           return function() {
-            var ref9, u;
+            var ref10, u;
             if (_this.hidden) {
               return false;
             }
-            for (i = u = 0, ref9 = vectors.length; 0 <= ref9 ? u < ref9 : u > ref9; i = 0 <= ref9 ? ++u : --u) {
+            for (i = u = 0, ref10 = vectors.length; 0 <= ref10 ? u < ref10 : u > ref10; i = 0 <= ref10 ? ++u : --u) {
               if (vectors[i][0] * vectors[i][0] + vectors[i][1] * vectors[i][1] + vectors[i][2] * vectors[i][2] <= zeroThreshold * zeroThreshold) {
                 return true;
               }
