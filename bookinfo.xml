@@ -58,6 +58,8 @@ Copyright 2017 Georgia Institute of Technology
     \def\matrow#1{\text{---}\,#1\,\text{---}}
     \def\vol{\operatorname{vol}}
 
+    \def\cB{{\mathcal B}}
+
     \definecolor{seq-red}{rgb}{0.8941,0.1020,0.1098}
     \definecolor{seq-blue}{rgb}{0.2157,0.4941,0.7216}
     \definecolor{seq-green}{rgb}{0.3020,0.6863,0.2902}
