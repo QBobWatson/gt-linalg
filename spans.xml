@@ -168,7 +168,7 @@ the license is included in gfdl.xml.
         <image>
           <latex-image-code>
             <![CDATA[
-\begin{tikzpicture}[thin border nodes]
+\begin{tikzpicture}[thin border nodes, scale=.9]
 \begin{scope}
   \draw[grid lines] (-3,-2) grid (4, 3);
   \path[clip] (-3,-2) rectangle (4, 3);

@@ -41,28 +41,23 @@ the license is included in gfdl.xml.
 
     <specialcase>
       <title>The number line</title>
-      <p>When <m>n=1</m>, we just get <m>\R</m> back: <m>\R^1=\R</m>.  Geometrically, this is the number line.</p>
-      <sidebyside>
-        <image>
-          <latex-image-code><![CDATA[
+      <p>When <m>n=1</m>, we just get <m>\R</m> back: <m>\R^1=\R</m>.  Geometrically, this is the number line.
+      <latex-code>
     \begin{tikzpicture}
-      \draw [<->, thick] (-3.5,0) -- (3.5,0);
+      \draw [&lt;-&gt;, thick] (-3.5,0) -- (3.5,0);
       \foreach \x in {-3,...,3}
          \draw[thin] (\x,-.1) -- (\x,0.1) node[anchor=south] {$\x$};
     \end{tikzpicture}
-            ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
+      </latex-code>
+      </p>
+
     </specialcase>
 
     <definition xml:id="defn-lines">
       <title>Lines</title>
       <statement>
-        <p>For our purposes, a <term>line</term> is a ray that is <em>straight</em> and <em>infinite</em> in both directions.</p>
-        <sidebyside>
-          <image>
-            <latex-image-code><![CDATA[
+        <p>For our purposes, a <term>line</term> is a ray that is <em>straight</em> and <em>infinite</em> in both directions.
+        <latex-code><![CDATA[
   \begin{tikzpicture}[scale=1]
     \draw[grid lines] (-2,-2) grid (2,2);
     \draw[->] (-2,0) -- (2,0);
@@ -70,9 +65,8 @@ the license is included in gfdl.xml.
     \draw[{Stealth}-{Stealth}, seq1, thick] (-1,2) -- (2,-1);
   \end{tikzpicture}
             ]]>
-            </latex-image-code>
-          </image>
-        </sidebyside>
+        </latex-code>
+        </p>
       </statement>
     </definition>
 
@@ -80,10 +74,9 @@ the license is included in gfdl.xml.
 
     <specialcase>
       <title>The plane</title>
-      <p>When <m>n=2</m>, we can think of <m>\R^2</m> as the <m>xy</m>-plane.  We can do so because every point on the plane can be represented by an ordered pair of real numebrs, namely, its <m>x</m>- and <m>y</m>-coordinates.</p>
-      <sidebyside>
-        <image>
-          <latex-image-code><![CDATA[
+      <p>When <m>n=2</m>, we can think of <m>\R^2</m> as the <m>xy</m>-plane.  We can do so because every point on the plane can be represented by an ordered pair of real numebrs, namely, its <m>x</m>- and <m>y</m>-coordinates.
+      <latex-code>
+        <![CDATA[
     \begin{tikzpicture}[every node/.append style={whitebg, thin border},
         every label/.append style={text=seq-blue}, scale=1]
       \draw[help lines] (-4, -4) grid (4, 4);
@@ -93,19 +86,16 @@ the license is included in gfdl.xml.
       \point[seq-blue, "{$(0,-3)$}" above right] at (0,-3);
     \end{tikzpicture}
             ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
+      </latex-code>
+      </p>
       <p>Note that we use the elements of <m>\R^2</m> to <em>label</em> the points of the plane, but <m>\R^2</m> is not defined to be the plane.</p>
     </specialcase>
 
     <definition>
       <title>Planes</title>
       <statement>
-        <p>A <term>plane</term> is a flat sheet that is infinite in all directions.</p>
-        <sidebyside>
-          <image>
-            <latex-image-code><![CDATA[
+        <p>A <term>plane</term> is a flat sheet that is infinite in all directions.
+        <latex-code><![CDATA[
   \begin{tikzpicture}[scale=.75, myxyz]
     \clip[resetxy] (-5, -3) rectangle (5, 4);
     \draw[densely dotted] (0,0,0) -- (1,0,0);
@@ -120,21 +110,18 @@ the license is included in gfdl.xml.
     \draw[->] (0,0,1) -- (0,0,3) node[above] {$z$};
   \end{tikzpicture}
             ]]>
-            </latex-image-code>
-          </image>
-        </sidebyside>
+        </latex-code>
+        </p>
       </statement>
     </definition>
 
-    <p>The <m>xy</m>-plane <m>\R^2</m> is an example of a plane, but <em>a plane is not the same as <m>\R^2</m></em>.  We will see later how to use the elements of <m>\R^2</m> to label the points on a line.</p>
+    <p>The <m>xy</m>-plane <m>\R^2</m> is an example of a plane, but <em>a plane is not the same as <m>\R^2</m></em>.  We will see later how to use the elements of <m>\R^2</m> to label the points on a plane.</p>
 
     <specialcase>
       <title>3-Space</title>
-      <p>When <m>n=3</m>, we can think of <m>\R^3</m> as the <em>space</em> we (appear to) live in.  We can do so because every point in space can be represented by an ordered triple of real numebrs, namely, its <m>x</m>-, <m>y</m>-, and <m>z</m>-coordinates.</p>
-      <sidebyside>
-        <image>
-          <latex-image-code><![CDATA[
-    \begin{tikzpicture}[myxyz, scale=1,
+      <p>When <m>n=3</m>, we can think of <m>\R^3</m> as the <em>space</em> we (appear to) live in.  We can do so because every point in space can be represented by an ordered triple of real numebrs, namely, its <m>x</m>-, <m>y</m>-, and <m>z</m>-coordinates.
+      <latex-code><![CDATA[
+    \begin{tikzpicture}[myxyz, scale=.75,
         every label/.append style={text=seq-blue}]
       \begin{scope}[transformxy]
         \draw[help lines] (-4, -4) grid (4, 4);
@@ -150,19 +137,15 @@ the license is included in gfdl.xml.
       \point[seq-blue, "${(-2,2,2)}$" above] at (-2,2,2);
     \end{tikzpicture}
             ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
-      <p>Again, we can use the elements of <m>\R^3</m> to <em>label</em> points in
-  space, but <m>\R^3</m> is not defined to be space!</p>
+      </latex-code>
+      Again, we can use the elements of <m>\R^3</m> to <em>label</em> points in
+      space, but <m>\R^3</m> is not defined to be space!</p>
     </specialcase>
 
     <example>
       <title>Color Space</title>
-      <p>All colors you can see can be described by three quantities: the amount of red, green, and blue light in that color.  (Humans are <url href="https://en.wikipedia.org/wiki/Trichromacy">trichromatic</url>.)  So we can also think of <m>\R^3</m> as the space of all <em>colors</em>.</p>
-      <sidebyside>
-        <image>
-          <latex-image-code><![CDATA[
+      <p>All colors you can see can be described by three quantities: the amount of red, green, and blue light in that color.  (Humans are <url href="https://en.wikipedia.org/wiki/Trichromacy">trichromatic</url>.)  So we can also think of <m>\R^3</m> as the space of all <em>colors</em>.
+      <latex-code><![CDATA[
 \begin{tikzpicture}[x={(1cm,0cm)}, y={(-.5cm,-.3cm)}, z={(0cm,1cm)}, scale=1,
     every node/.append style={transform shape}]
   \def\divisions{10}
@@ -216,20 +199,15 @@ the license is included in gfdl.xml.
   \end{scope}
 
 \end{tikzpicture}
-            ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
-      <p>Again, we can use the elements of <m>\R^3</m> to <em>label</em> the colors, but <m>\R^3</m> is not defined to be the set of all visible colors!</p>
+]]>
+      </latex-code>
+      Again, we can use the elements of <m>\R^3</m> to <em>label</em> the colors, but <m>\R^3</m> is not defined to be the set of all visible colors!</p>
     </example>
 
     <example>
-      <p>In <xref ref="overview" />, we could have used <m>\R^4</m> to label the amount of traffic <m>(x,y,z,w)</m> passing through four streets.</p>
-      <sidebyside>
-        <image>
-          <latex-image-code><![CDATA[
-\usetikzlibrary{decorations.markings}
-
+      <p>In <xref ref="overview" />, we could have used <m>\R^4</m> to label the amount of traffic <m>(x,y,z,w)</m> passing through four streets.
+      <latex-code>
+      <![CDATA[
 \tikzset{
   mid arrow/.style={
     postaction={
@@ -273,9 +251,8 @@ the license is included in gfdl.xml.
     \draw[rmid arrow=.3] (D.center) to +(0,-1);
   \end{tikzpicture}
             ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
+      </latex-code>
+      </p>
     </example>
 
     <p>So what is <m>\R^4</m>?  or <m>\R^5</m>?  or <m>\R^n</m>?

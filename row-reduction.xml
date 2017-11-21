@@ -161,11 +161,9 @@ the license is included in gfdl.xml.
       </p>
       </statement>
       <solution>
-      <sidebyside>
-        <image>
-          <latex-image-code>
+        <p><latex-code>
             <![CDATA[
-\begin{tikzpicture}
+\begin{tikzpicture}[all nodes={font=\small}]
   \tikzset{
     my matrix/.style={
       matrix, math matrix, every node/.append style={anchor=east, minimum width=1.5em}},
@@ -323,10 +321,8 @@ the license is included in gfdl.xml.
 
 \end{tikzpicture}
             ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
-      <p>The reduced row echelon form of the matrix is
+          </latex-code>
+      The reduced row echelon form of the matrix is
       <me>\amat{1 0 0 1; 0 1 0 -2; 0 0 1 3}
       \quad\xrightarrow{\text{translates to}}\quad
       \syseq{x \+ \. \+ \. = 1;
@@ -342,11 +338,8 @@ the license is included in gfdl.xml.
     </solution>
     </example>
 
-    <p>Here is the row reduction algorithm, summarized in pictures.</p>
-
-    <sidebyside>
-      <image>
-        <latex-image-code>
+    <p>Here is the row reduction algorithm, summarized in pictures.
+    <latex-code>
           <![CDATA[
 \begin{tikzpicture}
   \tikzset{
@@ -474,9 +467,7 @@ the license is included in gfdl.xml.
 
 \end{tikzpicture}
           ]]>
-        </latex-image-code>
-      </image>
-    </sidebyside>
+        </latex-code></p>
 
     <example xml:id="row-reduction-eg-inconsistent">
       <statement>

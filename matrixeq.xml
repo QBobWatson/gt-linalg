@@ -130,13 +130,13 @@ the license is included in gfdl.xml.
     </note>
 
     <warning>
-      <p>We will move back and forth freely between the four ways of writing a linear system, over and over again, for the rest of the semester.</p>
+      <p>We will move back and forth freely between the four ways of writing a linear system, over and over again, for the rest of the book.</p>
     </warning>
 
     <paragraphs>
       <title>Another Way to Compute <m>Ax</m></title>
 
-      <p>The above <xref ref="matrixeq-defn-Ax1"/> is a useful way of defining the product of a matrix with a vector when it comes to understanding the relationship between matrix eqeuations and vector equations.  Here we give a definition that is better-adapted to computations by hand.
+      <p>The above <xref ref="matrixeq-defn-Ax1"/> is a useful way of defining the product of a matrix with a vector when it comes to understanding the relationship between matrix equations and vector equations.  Here we give a definition that is better-adapted to computations by hand.
       </p>
 
       <definition>
@@ -165,12 +165,12 @@ the license is included in gfdl.xml.
           4 5 6;
           7 8 9}
           \vec{1 2 3} =
-          \vec{\mat{4, 5, 6}\vec{1 2 3}
+          \mat{\mat{4, 5, 6}\vec{1 2 3};
           \mat{7 8 9}\vec{1 2 3}}
           = \vec{4\cdot1+5\cdot2+6\cdot3 7\cdot1+8\cdot2+9\cdot3}
           = \vec{32 50}.
         </me>
-        This is the same result as before:
+        This is the same answer as before:
         <me>
         \mat{
         4 5 6;
@@ -224,10 +224,7 @@ the license is included in gfdl.xml.
         \qquad\text{and}\qquad
         \textcolor{seq-blue}{v_2 = \vec{1 0 -1}},</me>
         and the target vector (on the right-hand side of the equation) is <m>\textcolor{seq-green}{w = \vec{0 2 2}}.</m>  The equation <m>Ax=w</m> is consistent if and only if <m>w</m> is contained in the span of the columns of <m>A</m>.  So we draw a picture:
-        </p>
-        <sidebyside>
-          <image>
-            <latex-image-code>
+        <latex-code>
               <![CDATA[
 \begin{tikzpicture}[myxyz, thin border nodes]
   \path[clip, resetxy] (-4,-4) rectangle (4,4);
@@ -274,10 +271,8 @@ the license is included in gfdl.xml.
 
 \end{tikzpicture}
               ]]>
-            </latex-image-code>
-          </image>
-        </sidebyside>
-        <p>It does not appear that <m>w</m> lies in <m>\Span\{v_1,v_2\},</m> so the equation is inconsistent.</p>
+        </latex-code>
+        It does not appear that <m>w</m> lies in <m>\Span\{v_1,v_2\},</m> so the equation is inconsistent.</p>
         <figure>
           <caption>The vector <m>w</m> is not contained in <m>\Span\{v_1,v_2\}</m>, so the equation <m>Ax=b</m> is inconsistent.  (Try moving the sliders to solve the equation.)</caption>
           <mathbox source="demos/spans.html?v1=2,-1,1&amp;v2=1,0,-1&amp;target=0,2,2&amp;range=5" height="500px"/>
@@ -309,10 +304,7 @@ the license is included in gfdl.xml.
         \qquad\text{and}\qquad
         \textcolor{seq-blue}{v_2 = \vec{1 0 -1}},</me>
         and the target vector (on the right-hand side of the equation) is <m>\textcolor{seq-green}{w = \vec{1 -1 2}}.</m>  The equation <m>Ax=w</m> is consistent if and only if <m>w</m> is contained in the span of the columns of <m>A</m>.  So we draw a picture:
-        </p>
-        <sidebyside>
-          <image>
-            <latex-image-code>
+        <latex-code>
               <![CDATA[
 \begin{tikzpicture}[myxyz, thin border nodes]
   \path[clip, resetxy] (-4,-4) rectangle (4,4);
@@ -358,10 +350,8 @@ the license is included in gfdl.xml.
   \point at (0,0,0);
 \end{tikzpicture}
               ]]>
-            </latex-image-code>
-          </image>
-        </sidebyside>
-        <p>It appears that <m>w</m> is indeed contained in the span of the columns of <m>A</m>; in fact, we can see
+        </latex-code>
+        It appears that <m>w</m> is indeed contained in the span of the columns of <m>A</m>; in fact, we can see
         <me>w = v_1 - v_2 \implies x = \vec{1 -1}.</me>
         </p>
         <figure>

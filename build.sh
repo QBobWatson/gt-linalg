@@ -1,24 +1,23 @@
 #!/bin/bash
 
-MAKEFIGS_COMMAND=./makefigs.py
-PRETEX_ALL=
-
-while [[ $# -gt 0 ]]; do
-    case $1 in
-        --recompile-images)
-            MAKEFIGS_COMMAND="$MAKEFIGS_COMMAND --recompile-all"
-            ;;
-        --reprocess-latex)
-            PRETEX_ALL="true"
-            ;;
-    esac
-    shift
-done
-
 die() {
     echo "$@"
     exit 1
 }
+
+PRETEX_ALL=
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --reprocess-latex)
+            PRETEX_ALL="true"
+            ;;
+        *)
+            die "Unknown argument: $1"
+            ;;
+    esac
+    shift
+done
 
 compile_dir="$(cd "$(dirname "$0")"; pwd)"
 base_dir="$compile_dir/.."
@@ -33,7 +32,7 @@ xmllint --xinclude --noout --relaxng "$base_dir/mathbook/schema/pretext.rng" \
         linalg.xml
 if [[ $? == 3 || $? == 4 ]]; then
     echo "Input is not valid MathBook XML; exiting"
-#    exit 1
+    exit 1
 fi
 
 echo "Cleaning up previous build..."
@@ -44,9 +43,6 @@ mkdir -p "$static_dir/js"
 mkdir -p "$static_dir/css"
 mkdir -p "$static_dir/fonts"
 mkdir -p "$static_dir/images"
-
-echo "Making figures..."
-$MAKEFIGS_COMMAND
 
 echo "Copying static files..."
 cp "$base_dir/gt-text-common/css/"*.css "$static_dir/css"
@@ -67,7 +63,7 @@ xsltproc -o "$build_dir/" --xinclude \
 echo "Preprocessing LaTeX..."
 [ -n "$PRETEX_ALL" ] && rm -r pretex-cache
 python3 "$pretex" --preamble "$build_dir/preamble.tex" \
-        --cache-dir pretex-cache \
+        --cache-dir pretex-cache --style-path "$compile_dir"/style \
         "$build_dir"/*.html "$build_dir"/knowl/*.html \
     || die "Can't process html!"
 

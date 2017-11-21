@@ -28,10 +28,8 @@ the license is included in gfdl.xml.
     <definition hide-type="true">
       <title>Points and Vectors</title>
       <statement>
-        <p>A <term>point</term> is an element of <m>\R^n</m>, drawn as a point (a dot).</p>
-        <sidebyside>
-          <image>
-            <latex-image-code>
+        <p>A <term>point</term> is an element of <m>\R^n</m>, drawn as a point (a dot).
+        <latex-code>
               <![CDATA[
     \begin{tikzpicture}[scale=1, every pin/.style={whitebg, thin border}]
     \draw[grid lines] (-1,-1) grid (4, 4);
@@ -42,13 +40,9 @@ the license is included in gfdl.xml.
       -85:the point $(1,3)$}] (x) at (1,3);
     \end{tikzpicture}
               ]]>
-            </latex-image-code>
-          </image>
-        </sidebyside>
-        <p>A <term>vector</term> is an element of <m>\R^n</m>, drawn as an arrow.</p>
-        <sidebyside>
-          <image>
-            <latex-image-code>
+        </latex-code>
+        A <term>vector</term> is an element of <m>\R^n</m>, drawn as an arrow.
+        <latex-code>
               <![CDATA[
     \begin{tikzpicture}[scale=1, every pin/.style={whitebg, thin border}]
     \draw[grid lines] (-1,-1) grid (4, 4);
@@ -57,9 +51,8 @@ the license is included in gfdl.xml.
     \useasboundingbox (6,0);
   \end{tikzpicture}
               ]]>
-            </latex-image-code>
-          </image>
-        </sidebyside>
+        </latex-code>
+        </p>
       </statement>
     </definition>
 
@@ -78,10 +71,7 @@ the license is included in gfdl.xml.
     </p>
 
     <p>Why make the distinction between points and vectors?  A vector need not start at the origin: <em>it can be located anywhere</em>! In other words, an arrow is determined by its length and its direction, not by its location.  For instance, these arrows all represent the vector <m>\color{seq-green}\vec{1 2}</m>.
-    </p>
-    <sidebyside>
-      <image>
-        <latex-image-code>
+    <latex-code>
           <![CDATA[
 \begin{tikzpicture}
   \draw[help lines] (-1,-1) grid (4, 4);
@@ -90,9 +80,7 @@ the license is included in gfdl.xml.
   \draw[thick vector, seq-green] (2,0) -- (3,2);
 \end{tikzpicture}
           ]]>
-        </latex-image-code>
-      </image>
-    </sidebyside>
+    </latex-code></p>
 
     <warning>
       <p>Unless otherwise specified, we will assume that all vectors start at the origin.
@@ -108,11 +96,8 @@ the license is included in gfdl.xml.
     </remark>
 
     <p>Another way to think about a vector is as a <em>difference</em> between two
-points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> is the arrow from <m>(1,1)</m> to <m>(2,3)</m>.
-    </p>
-    <sidebyside>
-      <image>
-        <latex-image-code>
+    points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> is the arrow from <m>(1,1)</m> to <m>(2,3)</m>.
+    <latex-code>
           <![CDATA[
   \begin{tikzpicture}[whitebg nodes, thin border nodes]
   \draw[help lines] (0,0) grid (4,4);
@@ -124,9 +109,7 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
     -- node[below right=1pt] {${1\choose 2}$} (y);
   \end{tikzpicture}
           ]]>
-        </latex-image-code>
-      </image>
-    </sidebyside>
+    </latex-code></p>
 
   </subsection>
 
@@ -169,11 +152,8 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
        </me>
       </p>
       <p>Why? The width of <m>v+w</m> is the sum of the widths, and likewise with
-       the heights.</p>
-
-      <sidebyside>
-        <image>
-          <latex-image-code>
+       the heights.
+       <latex-code>
             <![CDATA[
 \begin{tikzpicture}
   \draw[grid lines] (0,0) grid (5,5);
@@ -199,9 +179,7 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
      node[pos=.5, font=\small, above, rotate=90] {$5 = 2 + 3 = 3 + 2$};
 \end{tikzpicture}
             ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
+      </latex-code></p>
 
       <example hide-type="true">
         <title>Interactive: the parallelogram law for vector addition</title>
@@ -220,11 +198,8 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
        = \vec{-3 2}.
        </me>
       </p>
-      <p>Why? If you add <m>v-w</m> to <m>w</m>, you get <m>v</m>.</p>
-
-      <sidebyside>
-        <image>
-          <latex-image-code>
+      <p>Why? If you add <m>v-w</m> to <m>w</m>, you get <m>v</m>.
+      <latex-code>
             <![CDATA[
 \begin{tikzpicture}
   \draw[grid lines] (0,0) grid (5,5);
@@ -235,9 +210,7 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
   \end{scope}
 \end{tikzpicture}
         ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
+      </latex-code></p>
 
       <example hide-type="true">
         <title>Interactive: vector subtraction</title>
@@ -252,11 +225,7 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
       <title>Scalar Multiplication</title>
 
       <p>A scalar multiple of a vector <m>v</m> has the same (or opposite) direction, but a different length.  For instance, <m>2v</m> is the vector in the direction of <m>v</m> but twice as long, and <m>-\frac 12v</m> is the vector in the opposite direction of <m>v</m>, but half as long.  Note that the set of all scalar multiples of a (nonzero) vector <m>v</m> is a <em>line</em>.
-      </p>
-
-      <sidebyside>
-        <image>
-          <latex-image-code>
+      <latex-code>
             <![CDATA[
   \begin{tikzpicture}
     \draw[grid lines] (-2,-2) grid (3,5);
@@ -273,9 +242,7 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
     \end{scope}
   \end{tikzpicture}
         ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
+      </latex-code></p>
 
       <example hide-type="true">
         <title>Interactive: scalar multiplication</title>
@@ -309,10 +276,7 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
 
     <example xml:id="vectors-eg-lincombo-plane">
       <p>Let <m>v_1 = \vec{1 2}</m> and <m>v_2 = \vec{1 0}</m>.  Here are some linear combinations of <m>v_1</m> and <m>v_2</m>, drawn as points.
-      </p>
-      <sidebyside>
-        <image>
-          <latex-image-code>
+      <latex-code>
             <![CDATA[
   \begin{tikzpicture}[thin border nodes]
     \draw[help lines] (-3,-3) grid (4, 4);
@@ -346,10 +310,8 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
       };
   \end{tikzpicture}
             ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
-      <p>The locations of these points are found using the parallelogram law for vector addition.  Any vector on the plane is a linear combination of <m>v_1</m> and <m>v_2</m>, with suitable coefficients.</p>
+      </latex-code>
+      The locations of these points are found using the parallelogram law for vector addition.  Any vector on the plane is a linear combination of <m>v_1</m> and <m>v_2</m>, with suitable coefficients.</p>
     </example>
 
     <figure>
@@ -371,10 +333,7 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
       <me>v=\vec{1 2},\quad \frac 32v=\vec{3/2 3},\quad -\frac12v = \vec{-1/2 -1},\quad\ldots
       </me>
       The set of all linear combinations is the <em>line through <m>v</m></em>.  (Unless <m>v=0</m>, in which case any scalar multiple of <m>v</m> is again <m>0</m>.)
-      </p>
-      <sidebyside>
-        <image>
-          <latex-image-code>
+      <latex-code>
             <![CDATA[
   \begin{tikzpicture}
     \draw[grid lines] (-3,-3) grid (4, 4);
@@ -384,19 +343,15 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
     \point at (0,0);
   \end{tikzpicture}
             ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
+      </latex-code></p>
     </specialcase>
 
     <specialcase>
       <title>Linear Combinations of Collinear Vectors</title>
       <p>The set of all linear combinations of the vectors
       <me>v_1 = \vec{2 2}\qquad\text{and}\qquad v_2 = \vec{-1 -1}</me>
-      is the <em>line</em> containing both vectors.</p>
-      <sidebyside>
-        <image>
-          <latex-image-code>
+      is the <em>line</em> containing both vectors.
+      <latex-code>
             <![CDATA[
   \begin{tikzpicture}
     \draw[grid lines] (-3,-3) grid (4, 4);
@@ -407,10 +362,8 @@ points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> 
     \point at (0,0);
   \end{tikzpicture}
             ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
-      <p>The difference between this and a previous <xref ref="vectors-eg-lincombo-plane"/> is that both vectors lie on the same line.  Hence any scalar multiples of <m>v_1,v_2</m> lie on that line, as does their sum.
+      </latex-code>
+      The difference between this and a previous <xref ref="vectors-eg-lincombo-plane"/> is that both vectors lie on the same line.  Hence any scalar multiples of <m>v_1,v_2</m> lie on that line, as does their sum.
       </p>
 
     </specialcase>

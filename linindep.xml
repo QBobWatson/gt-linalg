@@ -33,7 +33,7 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
       <image>
         <latex-image-code>
           <![CDATA[
-\begin{tikzpicture}[thin border nodes]
+\begin{tikzpicture}[thin border nodes, scale=.7]
   \draw[grid lines, light gray] (-3,-3) grid (4, 4);
   \path[clip] (-3,-3) rectangle (4, 4);
   \node[seq4] at (.5,2.5) {$\Span\{v,w\}$};
@@ -344,11 +344,8 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
   <subsection>
     <title>Pictures of Linear Independence</title>
 
-    <p>A set containg one vector <m>\{v\}</m> is linearly independent when <m>v\neq 0</m>, since <m>xv = 0</m> implies <m>x=0</m>.</p>
-
-    <sidebyside>
-      <image>
-        <latex-image-code>
+    <p>A set containg one vector <m>\{v\}</m> is linearly independent when <m>v\neq 0</m>, since <m>xv = 0</m> implies <m>x=0</m>.
+    <latex-code>
           <![CDATA[
 \begin{tikzpicture}[thin border nodes, scale=1.5]
   \path[use as bounding box] (-3,-3) rectangle (3,3);
@@ -362,20 +359,13 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
   \draw[thin] (-3,-3) rectangle (3,3);
 \end{tikzpicture}
           ]]>
-        </latex-image-code>
-      </image>
-    </sidebyside>
-
-    <p>A set of two noncollinear vectors <m>\{v,w\}</m> is linearly independent:
+    </latex-code>
+    A set of two noncollinear vectors <m>\{v,w\}</m> is linearly independent:
     <ul>
       <li>Neither is in the span of the other, so we can apply the first <xref ref="linindep-criterion-inspan">Criterion</xref>.</li>
       <li>The span got bigger when we added <m>w</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</li>
     </ul>
-    </p>
-
-    <sidebyside>
-      <image>
-        <latex-image-code>
+    <latex-code>
           <![CDATA[
 \begin{tikzpicture}[thin border nodes, scale=1.5]
   \path[use as bounding box] (-3,-3) rectangle (3,3);
@@ -393,21 +383,14 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
   \draw[thin] (-3,-3) rectangle (3,3);
 \end{tikzpicture}
           ]]>
-        </latex-image-code>
-      </image>
-    </sidebyside>
-
-    <p>The set of three vectors <m>\{v,w,u\}</m> below is linearly dependent:
+        </latex-code>
+    The set of three vectors <m>\{v,w,u\}</m> below is linearly dependent:
     <ul>
       <li><m>u</m> is in <m>\Span\{v,w\}</m>, so we can apply the first <xref ref="linindep-criterion-inspan">Criterion</xref>.</li>
       <li>The span did not increase when we added <m>u</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</li>
     </ul>
     In the picture below, note that <m>v</m> is in <m>\Span\{u,w\}</m>, and <m>w</m> is in <m>\Span\{u,v\}</m>, so we can remove any of the three vectors without shrinking the span.
-    </p>
-
-    <sidebyside>
-      <image>
-        <latex-image-code>
+    <latex-code>
           <![CDATA[
 \begin{tikzpicture}[scale=1.5, thin border nodes]
   \path[use as bounding box] (-3,-3) rectangle (3,3);
@@ -429,22 +412,14 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
   \draw[thin] (-3,-3) rectangle (3,3);
 \end{tikzpicture}
           ]]>
-        </latex-image-code>
-      </image>
-    </sidebyside>
-
-    <p>
-      Two collinear vectors are always linearly dependent:
+    </latex-code>
+    Two collinear vectors are always linearly dependent:
       <ul>
         <li><m>w</m> is in <m>\Span\{v\}</m>, so we can apply the first <xref ref="linindep-criterion-inspan">Criterion</xref>.</li>
         <li>We can remove <m>w</m> without shrinking the span, so we can apply the second <xref ref="linindep-criterion-redundant">Criterion</xref>.</li>
         <li>The span did not increase when we added <m>w</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</li>
       </ul>
-    </p>
-
-    <sidebyside>
-      <image>
-        <latex-image-code>
+      <latex-code>
           <![CDATA[
 \begin{tikzpicture}[scale=1.5, thin border nodes]
   \path[use as bounding box] (-3,-3) rectangle (3,3);
@@ -460,15 +435,9 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
   \draw[thin] (-3,-3) rectangle (3,3);
 \end{tikzpicture}
           ]]>
-        </latex-image-code>
-      </image>
-    </sidebyside>
-
-    <p>These three vectors <m>\{v,w,u\}</m> are linearly dependent: indeed, <m>\{v,w\}</m> is already linearly dependent, so we can use the third <xref ref="linindep-facts">Fact</xref>.</p>
-
-    <sidebyside>
-      <image>
-        <latex-image-code>
+        </latex-code>
+    These three vectors <m>\{v,w,u\}</m> are linearly dependent: indeed, <m>\{v,w\}</m> is already linearly dependent, so we can use the third <xref ref="linindep-facts">Fact</xref>.
+    <latex-code>
           <![CDATA[
 \begin{tikzpicture}[scale=1.5, thin border nodes]
   \path[use as bounding box] (-3,-3) rectangle (3,3);
@@ -486,9 +455,8 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
   \draw[thin] (-3,-3) rectangle (3,3);
 \end{tikzpicture}
           ]]>
-        </latex-image-code>
-      </image>
-    </sidebyside>
+    </latex-code>
+  </p>
 
     <example hide-type="true">
       <title>Interactive: linear independence of two vectors in <m>\R^2</m></title>
@@ -506,11 +474,8 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
       </figure>
     </example>
 
-    <p>The two vectors <m>\{v,w\}</m> below are linearly independent because they are not collinear.</p>
-
-    <sidebyside>
-      <image>
-        <latex-image-code>
+    <p>The two vectors <m>\{v,w\}</m> below are linearly independent because they are not collinear.
+    <latex-code>
           <![CDATA[
 \begin{tikzpicture}[myxyz, thin border nodes, scale=1.25]
   \path[clip, resetxy] (-4,-4) rectangle (4,4);
@@ -550,15 +515,9 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
 
 \end{tikzpicture}
           ]]>
-        </latex-image-code>
-      </image>
-    </sidebyside>
-
-    <p>The three vectors <m>\{v,w,u\}</m> below are linearly independent: the span got bigger when we added <m>w</m>, then again when we added <m>u</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</p>
-
-    <sidebyside>
-      <image>
-        <latex-image-code>
+        </latex-code>
+    The three vectors <m>\{v,w,u\}</m> below are linearly independent: the span got bigger when we added <m>w</m>, then again when we added <m>u</m>, so we can apply the <xref ref="linindep-increasing-span"/>.
+    <latex-code>
           <![CDATA[
 \begin{tikzpicture}[myxyz, scale=1.25, thin border nodes]
   \path[clip, resetxy] (-4,-4) rectangle (4,4);
@@ -615,21 +574,14 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
 
 \end{tikzpicture}
           ]]>
-        </latex-image-code>
-      </image>
-    </sidebyside>
-
-    <p>The three coplanar vectors <m>\{v,w,u\}</m> below are linearly dependent:
+    </latex-code>
+    The three coplanar vectors <m>\{v,w,u\}</m> below are linearly dependent:
     <ul>
       <li><m>u</m> is in <m>\Span\{v,w\}</m>, so we can apply the first <xref ref="linindep-criterion-inspan">Criterion</xref>.</li>
       <li>We can remove <m>u</m> without shrinking the span, so we can apply the second <xref ref="linindep-criterion-redundant">Criterion</xref>.</li>
       <li>The span did not increase when we added <m>u</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</li>
     </ul>
-    </p>
-
-    <sidebyside>
-      <image>
-        <latex-image-code>
+    <latex-code>
           <![CDATA[
 \begin{tikzpicture}[myxyz, scale=1.25, thin border nodes]
   \path[clip, resetxy] (-4,-4) rectangle (4,4);
@@ -686,12 +638,8 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
 
 \end{tikzpicture}
           ]]>
-        </latex-image-code>
-      </image>
-    </sidebyside>
-
-    <p>
-      Note that three vectors are linearly dependent if and only if they are <em>coplanar</em>.  Indeed, <m>\{v,w,u\}</m> is linearly dependent if and only if one vector is in the span of the other two, which is a plane (or a line) (or <m>\{0\}</m>).
+    </latex-code>
+    Note that three vectors are linearly dependent if and only if they are <em>coplanar</em>.  Indeed, <m>\{v,w,u\}</m> is linearly dependent if and only if one vector is in the span of the other two, which is a plane (or a line) (or <m>\{0\}</m>).
     </p>
 
     <p>The four vectors <m>\{v,w,u,x\}</m> below are linearly dependent: they are the columns of a <xref ref="linindep-wide-matrix">wide matrix</xref>.  Note however that <m>u</m> is not contained in <m>\Span\{v,w,x\}</m>.  See this <xref ref="linindep-not-any">Warning</xref>.</p>

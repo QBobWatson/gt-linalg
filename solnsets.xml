@@ -92,10 +92,7 @@ the license is included in gfdl.xml.
         Since <m>x_2</m> is allowed to be anything, this says that the solution set is the set of all scalar multiples of <m>\vec{3 1}</m>, otherwise known as
         <me>\Span\left\{\vec{3 1}\right\}.</me>
         We know how to draw the picture of a span of a vector: it is a line.  Therefore, this is a picture of the the solution set:
-        </p>
-        <sidebyside>
-          <image>
-            <latex-image-code>
+        <latex-code>
               <![CDATA[
 \begin{tikzpicture}
   \path[clip] (-6,-2) rectangle (6,2);
@@ -107,9 +104,8 @@ the license is included in gfdl.xml.
   \draw[vector, seq1] (0,0) -- (3,1);
 \end{tikzpicture}
               ]]>
-            </latex-image-code>
-          </image>
-        </sidebyside>
+        </latex-code>
+        </p>
 
         <figure>
           <caption>Interactive picture of the solution set of <m>Ax=0</m>.  If you drag <m>x</m> along the line spanned by <m>\vec{3 1}</m>, the product <m>Ax</m> is always equal to zero.  This is what it means for <m>\Span\left\{\vec{3 1}\right\}</m> to be the solution set of <m>Ax=0</m>.</caption>
@@ -144,10 +140,7 @@ the license is included in gfdl.xml.
         Since <m>x_2</m> and <m>x_3</m> are allowed to be anything, this says that the solution set is the set of all linear combinations of <m>\vec{1 1 1}</m> and <m>\vec{-2 0 1}</m>.  In other words, the solution set is
         <me>\Span\left\{\vec{1 1 1},\;\vec{-2 0 1}\right\}.</me>
         We know how to draw the span of two noncollinear vectors in <m>\R^3</m>: it is a plane.  Therefore, this is a picture of the solution set:
-        </p>
-        <sidebyside>
-          <image>
-            <latex-image-code>
+        <latex-code>
               <![CDATA[
 \begin{tikzpicture}[myxyz]
   \path[clip, resetxy] (-6,-4) rectangle (6,4);
@@ -190,9 +183,7 @@ the license is included in gfdl.xml.
 
 \end{tikzpicture}
               ]]>
-            </latex-image-code>
-          </image>
-        </sidebyside>
+        </latex-code></p>
 
         <figure>
           <caption>Interactive picture of the solution set of <m>Ax=0</m>.  If you drag <m>x</m> along the red plane, the product <m>Ax</m> is always equal to zero.  This is what it means for the plane to be the solution set of <m>Ax=0</m>.</caption>
@@ -287,10 +278,7 @@ the license is included in gfdl.xml.
         Since <m>x_2</m> is allowed to be anything, this says that the solution set is the set of all scalar multiples of <m>\vec{3 1}</m>, <em>translated</em> by the vector <m>p = \vec{-3 0}</m>.  This is a line which contains <m>p</m> and is parallel to <m>\Span\left\{\vec{3 1}\right\}</m>: it is a <em>translate of a line</em>.  We write the solution set as
         <me>\Span\left\{\vec{3 1}\right\} + \vec{-3 0}.</me>
         Here is a picture of the the solution set:
-        </p>
-        <sidebyside>
-          <image>
-            <latex-image-code>
+        <latex-code>
               <![CDATA[
 \begin{tikzpicture}[thin border nodes]
   \draw[grid lines] (-6,-2) grid (6,3);
@@ -305,9 +293,7 @@ the license is included in gfdl.xml.
   \point at (0,0);
 \end{tikzpicture}
               ]]>
-            </latex-image-code>
-          </image>
-        </sidebyside>
+        </latex-code></p>
 
         <figure>
           <caption>Interactive picture of the solution set of <m>Ax=b</m>.  If you drag <m>x</m> along the red line, the product <m>Ax</m> is always equal to <m>b</m>.  This is what it means for the line to be the solution set of <m>Ax=b</m>.</caption>
@@ -342,10 +328,7 @@ the license is included in gfdl.xml.
         Since <m>x_2</m> and <m>x_3</m> are allowed to be anything, this says that the solution set is the set of all linear combinations of <m>\vec{1 1 1}</m> and <m>\vec{-2 0 1}</m>, <em>translated</em> by the vector <m>p = \vec{1 0 0}</m>.  This is a plane which contains <m>p</m> and is parallel to <m>\Span\left\{\vec{1 1 1},\;\vec{-2 0 1}\right\}</m>: it is a <em>translate of a plane</em>.  We write the solution set as
         <me>\Span\left\{\vec{1 1 1},\;\vec{-2 0 1}\right\} + \vec{1 0 0}.</me>
         Here is a picture of the solution set:
-        </p>
-        <sidebyside>
-          <image>
-            <latex-image-code>
+        <latex-code>
               <![CDATA[
 \begin{tikzpicture}[myxyz]
   \path[clip, resetxy] (-6,-4) rectangle (6,4);
@@ -392,9 +375,7 @@ the license is included in gfdl.xml.
 
 \end{tikzpicture}
               ]]>
-            </latex-image-code>
-          </image>
-        </sidebyside>
+        </latex-code></p>
 
         <figure>
           <caption>Interactive picture of the solution set of <m>Ax=b</m>.  If you drag <m>x</m> along the red plane, the product <m>Ax</m> is always equal to <m>b</m>.  This is what it means for the plane to be the solution set of <m>Ax=b</m>.</caption>
@@ -449,10 +430,7 @@ the license is included in gfdl.xml.
         <p>According to the above <xref ref="solnsets-translate-span">Observation</xref>, this is supposed to be a translate of a span by <m>p</m>.  Indeed, we saw in the first <xref ref="solnsets-eg-no-nontrivial"/> that the only solution of <m>Ax=0</m> is the trivial solution, i.e., that the solution set is the one-point set <m>\{0\}</m>.  The solution set of the inhomogeneous equation <m>Ax=b</m> is
         <me>\{0\} + \vec{-1 -1 1}.</me>
         Note that <m>\{0\} = \Span\{0\}</m>, so the homogeneous solution set is a span.
-        </p>
-        <sidebyside>
-          <image>
-            <latex-image-code>
+        <latex-code>
               <![CDATA[
 \begin{tikzpicture}[myxyz, y={(-.8cm,-.6cm)}, thin border nodes]
   \path[clip, resetxy] (-6,-4) rectangle (6,4);
@@ -474,9 +452,7 @@ the license is included in gfdl.xml.
 
 \end{tikzpicture}
               ]]>
-            </latex-image-code>
-          </image>
-        </sidebyside>
+        </latex-code></p>
       </solution>
     </example>
 

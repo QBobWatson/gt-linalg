@@ -39,7 +39,7 @@ Copyright 2017 Georgia Institute of Technology
 
     \def\R{\mathbf R}
     \let\mathbb=\mathbf
-    \spaligndelims[]
+    \spaligndelims()
     \let\oldvec=\vec
     \let\vec=\spalignvector
     \let\mat=\spalignmat
@@ -81,6 +81,7 @@ Copyright 2017 Georgia Institute of Technology
     \usetikzlibrary{matrix}
     \usetikzlibrary{positioning,fit}
     \usetikzlibrary{shapes,decorations,decorations.pathmorphing}
+    \usetikzlibrary{decorations.markings}
     \usetikzlibrary{calc,arrows.meta,quotes}
     \usepackage{jdr-tikz}
     \usepackage{spalign}

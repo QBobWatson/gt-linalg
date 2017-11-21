@@ -367,4 +367,22 @@
   </exsl:document>
 </xsl:template>
 
+<!-- JDR: pretex can compile (almost) arbitrary latex code! -->
+<!-- This is almost the same as <me>, except it doesn't wrap the result in an
+     equation* environtment. -->
+<xsl:template match="latex-code">
+  <xsl:choose>
+    <xsl:when test="@inline">
+      <script type="text/x-latex-code-inline">
+        <xsl:value-of select="text()" />
+      </script>
+    </xsl:when>
+    <xsl:otherwise>
+      <script type="text/x-latex-code">
+        <xsl:value-of select="text()" />
+      </script>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
 </xsl:stylesheet>

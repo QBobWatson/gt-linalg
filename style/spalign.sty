@@ -1,0 +1,301 @@
+%%
+%% This is file `spalign.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% spalign.dtx  (with options: `package')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright (C) 2016 by Joseph Rabinoff <rabinoff@math.gatech.edu>
+%% 
+%% This file may be distributed and/or modified under the conditions of
+%% the LaTeX Project Public License, either version 1.3 of this license
+%% or (at your option) any later version.  The latest version of this
+%% license is in:
+%% 
+%%    http://www.latex-project.org/lppl.txt
+%% 
+%% and version 1.3 or later is part of all distributions of LaTeX version
+%% 2005/12/01 or later.
+%% 
+\NeedsTeXFormat{LaTeX2e}[2005/12/01]
+\ProvidesPackage{spalign}
+    [2016/09/07 v1.0 aligns delimited by spaces]
+
+\makeatletter
+
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{family=spalign,prefix=spalign@}
+
+\DeclareStringOption[()]{delims}
+\DeclareStringOption[\{.]{sysdelims}
+\DeclareStringOption[\,]{matdelimskip}
+\DeclareStringOption[]{vecdelimskip}
+\DeclareStringOption[\,]{sysdelimskip}
+\DeclareStringOption[1pt]{systabspace}
+\DeclareStringOption[;]{endofrow}
+\DeclareStringOption[,]{separator}
+
+\ProcessLocalKeyvalOptions*
+
+\def\spaligndelims#1#2{%
+  \def\spalign@leftdelim{#1}\def\spalign@rightdelim{#2}}
+\expandafter\spaligndelims\spalign@delims
+\def\spalignsysdelims#1#2{%
+  \def\spalign@sysleftdelim{#1}\def\spalign@sysrightdelim{#2}}
+\expandafter\spalignsysdelims\spalign@sysdelims
+\let\spalignmatdelimskip=\spalign@matdelimskip
+\let\spalignvecdelimskip=\spalign@vecdelimskip
+\let\spalignsysdelimskip=\spalign@sysdelimskip
+\newdimen\spalignsystabspace
+\spalignsystabspace=\spalign@systabspace
+\let\spalignendofrow=\spalign@endofrow
+\let\spalignseparator=\spalign@separator
+\def\spalignendline{\\}
+\def\spalignaligntab{&}
+\begingroup
+\def\\{\global\let\spalign@space= } \\ %
+\endgroup
+\def\spalign@end{\spalign@end}
+\def\spalign@bgroup{\bgroup}
+\newcount\spalign@curcols
+\newif\ifspalign@ignorespaces
+\newif\ifspalign@saw@space
+\def\spalign@gobble@next{%
+  \afterassignment\spalign@gobble@spaces\let\spalign@atoken= }
+\def\spalign@check@space{%
+  \ifx\spalign@nexttok\spalign@space%
+    \spalign@saw@spacetrue%
+    \let\spalign@next=\spalign@gobble@next%
+  \else%
+    \let\spalign@next=\spalign@parsetoks%
+  \fi%
+  \spalign@next%
+  }
+\def\spalign@gobble@spaces{%
+  \futurelet\spalign@nexttok\spalign@check@space}
+\def\spalign@append#1{%
+  \begingroup%
+  \toks255={#1}%
+  \xdef\spalign@settok{%
+    \spaligntoks={\the\spaligntoks\the\toks255}}%
+  \endgroup%
+  \spalign@settok%
+  }
+\def\spalign@addcol{%
+  \expandafter\spalign@append\expandafter{\spalignaligntab}%
+  \advance\spalign@curcols by 1 %
+  }
+\def\spalign@endrow{%
+  \advance\spalign@curcols by 1 %
+  \ifnum\spalign@curcols>\spalignmaxcols%
+    \spalignmaxcols=\spalign@curcols%
+  \fi%
+  \spalign@curcols=0%
+  \spalign@ignorespacestrue%
+  }
+\def\spalign@normaltok{%
+  \ifspalign@saw@space%
+    \ifspalign@ignorespaces%
+    \else%
+      \spalign@addcol%
+    \fi%
+  \fi%
+  \spalign@ignorespacesfalse%
+  }
+\def\spalign@parsetoks#1{%
+  \let\spalign@next=\spalign@gobble@spaces%
+  \def\spalign@arg{#1}%
+  \ifx\spalign@nexttok\bgroup%
+    \spalign@normaltok%
+    \ifx\spalign@arg\spalign@bgroup%
+      \spalign@append{#1}%
+    \else%
+      \spalign@append{{#1}}%
+    \fi%
+  \else%
+    \ifx\spalign@arg\spalignendofrow%
+      \expandafter\spalign@append\expandafter{\spalignendline}%
+      \spalign@endrow%
+    \else%
+      \ifx\spalign@arg\spalignseparator%
+        \spalign@addcol%
+        \spalign@ignorespacestrue%
+      \else%
+        \ifx\spalign@arg\spalign@end%
+          \let\spalign@next=\relax%
+          \spalign@endrow%
+        \else%
+          \spalign@normaltok%
+          \spalign@append{#1}%
+        \fi%
+      \fi%
+    \fi%
+  \fi%
+  \spalign@saw@spacefalse%
+  \spalign@next%
+  }
+\def\spalign@process{%
+  \spaligntoks={}%
+  \spalignmaxcols=0%
+  \spalign@curcols=0%
+  \spalign@ignorespacestrue%
+  \spalign@saw@spacefalse%
+  \spalign@gobble@spaces%
+  }
+\newif\ifspalign@star
+\def\spalign@gobble@one#1{}
+
+\def\spalign@def@star#1{%
+  \def\spalign@cmd{#1}%
+  \edef\spalign@cmd@x{%
+    \csname\expandafter\spalign@gobble@one\string#1@x\endcsname}%
+  \edef\spalign@cmd@star{%
+    \csname\expandafter\spalign@gobble@one\string#1@star\endcsname}%
+  \expandafter\let\spalign@cmd@x=\relax
+  \expandafter\edef\spalign@cmd{%
+    \futurelet\noexpand\spalign@nexttok\spalign@cmd@x}%
+  \def\spalign@mkcmd##1{%
+    \expandafter\def\spalign@cmd@x{%
+      \ifx\spalign@nexttok*%
+        \spalign@startrue%
+        \let\spalign@next=\spalign@gobble@one%
+      \else%
+        \spalign@starfalse%
+        \def\spalign@next{}%
+      \fi%
+      \expandafter##1\spalign@next%
+      }%
+    }%
+  \expandafter\spalign@mkcmd\spalign@cmd@star%
+  \expandafter\def\spalign@cmd@star%
+  }
+\newtoks\spaligntoks
+\newcount\spalignmaxcols
+\def\spalignrun#1#2{%
+  \begingroup%
+  \spalign@process#2\spalign@end%
+  %\showthe\spaligntoks%  For debugging
+  #1%
+  \endgroup%
+  }
+\def\spalignenv#1#2{%
+  \spalignrun{%
+    #1%
+    \the\spaligntoks%
+    #2%
+    }%
+  }
+\def\spalignretokenize#1{%
+  \begingroup%
+  \spalign@process#1\spalign@end%
+  \expandafter\endgroup\the\spaligntoks%
+  }
+\def\spaligntabular#1#2{%
+  \begin{tabular}{#1}\spalignretokenize{#2}\end{tabular}}
+\def\spalign@maybedelim#1#2#3{%
+  \spalignenv%
+    {\ifspalign@star\else\left\spalign@leftdelim#3\fi#1}%
+    {#2\ifspalign@star\else#3\right\spalign@rightdelim\fi}%
+  }
+\spalign@def@star\spalignarray#1{%
+  \spalign@maybedelim%
+    {\begin{array}{#1}}%
+    {\end{array}}%
+    {\hskip-\arraycolsep\spalignmatdelimskip}%
+  }
+\spalign@def@star\spalignvector{}
+\renewcommand\spalignvector@star[2][c]{%
+  \begingroup%
+  \def\spalignaligntab{\\}%
+  \spalign@maybedelim%
+    {\begin{array}{#1}}%
+    {\end{array}}%
+    {\hskip-\arraycolsep\spalignvecdelimskip}%
+    {#2}%
+  \endgroup%
+  }
+\def\spalign@repeat#1#2{%
+  \begingroup%
+  \count255=0 %
+  \toks255={}%
+  \loop\ifnum\count255<#2%
+    \edef\spalign@settok{\toks255={\the\toks255 #1}}%
+    \spalign@settok%
+    \advance\count255 by 1 %
+  \repeat%
+  \xdef\spalign@repeated{\the\toks255}%
+  \endgroup
+  }
+\spalign@def@star\spalignmat{}
+\renewcommand\spalignmat@star[1][c]{%
+  \spalign@maybedelim{%
+    \spalign@repeat{#1}{\spalignmaxcols}%
+    \edef\spalign@barray{\noexpand\begin{array}{%
+        \spalign@repeated}}%
+    \spalign@barray%
+    }{\end{array}%
+    }{\hskip-\arraycolsep\spalignmatdelimskip}%
+  }
+\spalign@def@star\spalignaugmatn{}
+\renewcommand\spalignaugmatn@star[2][r]{%
+  \spalign@maybedelim{%
+    \advance\spalignmaxcols by -#2 %
+    \spalign@repeat{#1}{\spalignmaxcols}%
+    \let\spalign@repeated@one=\spalign@repeated%
+    \spalign@repeat{#1}{#2}%
+    \let\spalign@repeated@two=\spalign@repeated%
+    \edef\spalign@barray{\noexpand\begin{array}{%
+        \spalign@repeated@one|\spalign@repeated@two}}%
+    \spalign@barray%
+    }{\end{array}%
+    }{\hskip-\arraycolsep\spalignmatdelimskip}%
+  }%
+\spalign@def@star\spalignaugmat{}
+\renewcommand\spalignaugmat@star[1][r]{%
+  \spalignaugmatn@star[#1]{1}%
+  }%
+\spalign@def@star\spalignaugmathalf{}
+\renewcommand\spalignaugmathalf@star[1][r]{%
+  \spalign@maybedelim{%
+    \count255=\spalignmaxcols%
+    \divide\spalignmaxcols by 2 %
+    \advance\count255 by -\spalignmaxcols%
+    \spalign@repeat{#1}{\spalignmaxcols}%
+    \let\spalign@repeated@one=\spalign@repeated%
+    \spalignmaxcols=\count255%
+    \spalign@repeat{#1}{\spalignmaxcols}%
+    \let\spalign@repeated@two=\spalign@repeated%
+    \edef\spalign@barray{\noexpand\begin{array}{%
+      \spalign@repeated@one|\spalign@repeated@two}}%
+    \spalign@barray%
+    }{\end{array}%
+    }{\hskip-\arraycolsep\spalignmatdelimskip}%
+  }%
+\spalign@def@star\spalignsys#1{%
+  \ifspalign@star\else%
+    \left\spalign@sysleftdelim\spalignsysdelimskip%
+  \fi%
+  \vcenter{%
+    \def\spalignendline{\cr}%
+    \openup1pt%
+    \tabskip=0pt%
+    \def\+{\mathbin{\phantom{+}}}%
+    \def\={\mathrel{\phantom{=}}}%
+    \def\.{}%
+    \halign{%
+      \tabskip=\spalignsystabspace%
+      &$\hfil##$&${}##{}$\cr%
+      \spalignretokenize{#1}\crcr%
+      }%
+    }\hskip-\spalignsystabspace%
+  \ifspalign@star\else%
+    \spalignsysdelimskip\right\spalign@sysrightdelim%
+  \fi%
+  }
+\makeatother
+\endinput
+%%
+%% End of file `spalign.sty'.
