@@ -15,7 +15,7 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Express the solution set of a matrix equation in parametric vector form.</li>
-      <li>Find a spanning set for the solution set of a homogeneous system.</li>
+      <li>Write the solution set of a homogeneous system as a span.</li>
       <li>Understand the relationship between the solution set of <m>Ax=0</m> and the solution set of <m>Ax=b</m>.</li>
       <li>Understand the geometric picture of solution sets.</li>
       <li>Understand the difference between the solution set and the column span.</li>

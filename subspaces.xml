@@ -12,6 +12,503 @@ the license is included in gfdl.xml.
 <section xml:id="section-subspaces">
   <title>Subspaces</title>
 
-  <p>Definition and examples of subspaces.</p>
+  <objectives>
+    <ol>
+      <li>Learn the definition of a subspace.</li>
+      <li>Learn to determine whether or not a subset is a subspace.</li>
+      <li>Learn the most important examples of subspaces.</li>
+      <li>Vocabulary words: <term>subspace</term>, <term>column space</term>, <term>null space</term>.</li>
+    </ol>
+  </objectives>
+
+  <introduction>
+    <p>
+      In this section we discuss <em>subspaces</em> of <m>\R^n</m>.  A subspace turns out to be exactly the same thing as a span, except we don't have a particular set of spanning vectors in mind.  This change in perspective is quite useful, as it is easy to produce examples of subspaces which are not obviously spans.  For example, the solution set of the equation <m>x + 3y + z = 0</m> is a span because the equation is homogeneous, but we would have to compute the parametric vector form to find a spanning set of vectors.
+      <latex-code>
+          <![CDATA[
+\begin{tikzpicture}[myxyz, scale=.75]
+  \def\v{(2,-1,1)}
+  \def\w{(1,0,-1)}
+
+  \node[coordinate] (X) at \v {};
+  \node[coordinate] (Y) at \w {};
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \fill[seq4!30, nearly opaque] (-1,-1.5) rectangle (1,1.5);
+    \draw[step=.5cm, seq4!50, very thin] (-1,-1.5) grid (1,1.5);
+  \end{scope}
+
+  \node[seq4, resetxy, right] at (4.5, 0) {$x+3y+z=0$};
+
+  \point at (0,0,0);
+\end{tikzpicture}
+          ]]>
+        </latex-code>
+    </p>
+  </introduction>
+
+  <subsection>
+    <title>Subspaces: Definition and Examples</title>
+
+    <definition>
+      <statement>
+        <p>
+          A <term>subspace</term> of <m>\R^n</m> is a subset <m>V</m> of <m>\R^n</m> satisfying:
+          <ol>
+            <li><em>Nonemptiness:</em> The zero vector is in <m>V</m>.</li>
+            <li><em>Closure under addition:</em> If <m>u</m> and <m>v</m> are in <m>V</m>, then <m>u+v</m> is also in <m>V</m>.</li>
+            <li><em>Closure under scalar multiplication:</em> If <m>v</m> is in <m>V</m> and <m>c</m> is in <m>\R</m>, then <m>cv</m> is also in <m>V</m>.</li>
+          </ol>
+        </p>
+      </statement>
+    </definition>
+
+    <p>As a consequence of these properties, we see:
+    <ul>
+      <li>If <m>v</m> is a vector in <m>V</m>, then all scalar multiples of <m>v</m> are in <m>V</m> by the third property.  In other words, the line through <m>v</m> is also contained in <m>V</m>.</li>
+      <li>If <m>u,v</m> are vectors in <m>V</m> and <m>x,y</m> are scalars, then <m>xu,yv</m> are also in <m>V</m> by the third property, so <m>xu+yv</m> is in <m>V</m> by the second property.  Therefore, all of <m>\Span\{u,v\}</m> is contained in <m>V</m></li>
+      <li>Similarly, if <m>v_1,v_2,\ldots,v_n</m> are all in <m>V</m>, then <m>\Span\{v_1,v_2,\ldots,v_n\}</m> is contained in <m>V</m>.  In other words, <em>a subspace contains the span of any vectors in it.</em></li>
+    </ul>
+    If you choose enough vectors, then eventually their span will fill up <m>V</m>, so we already see that a <em>subspace is a span</em>.
+    </p>
+
+    <remark>
+      <p>Suppose that <m>V</m> is a nonempty subset of <m>\R^n</m> that satisfies properties 2 and 3.  Let <m>v</m> be any vector in <m>V</m>.  Then <m>0v = 0</m> is in <m>V</m> by the third property, so <m>V</m> automatically satisfies property 1.  It follows that the only subset of <m>\R^n</m> that satisfies properties 2 and 3 but <em>not</em> property 1 is the empty subset <m>\{\}</m>.  This is why we call the first property "nonemptiness".
+      </p>
+    </remark>
+
+    <specialcase>
+      <p>The set <m>\R^n</m> is a subspace of itself: indeed, it contains zero, and is closed under addition and scalar multiplication.</p>
+    </specialcase>
+
+    <specialcase>
+      <p>The set <m>\{0\}</m> containing only the zero vector is a subspace of <m>\R^n</m>: it contains zero, and if you add zero to itself or multiply it by a scalar, you always get zero.</p>
+    </specialcase>
+
+    <example>
+      <title>A line through the origin</title>
+      <p>A line <m>L</m> through the origin is a subspace.
+      <latex-code>
+  \begin{tikzpicture}
+    \draw[seq4] (-3,-1) -- (3,1);
+    \draw[vector] (0,0) -- (1,1/3);
+    \point at (0,0);
+    \node[seq4] at (0,.5) {$L$};
+  \end{tikzpicture}
+      </latex-code>
+      </p>
+    </example>
+
+    <example>
+      <title>A plane through the origin</title>
+      <p>A plane <m>P</m> through the origin is a subspace.
+      <latex-code>
+  \begin{tikzpicture}[myxyz]
+    \def\v{(2,-1,1)}
+    \def\w{(1,0,-1)}
+
+    \node[coordinate] (X) at \v {};
+    \node[coordinate] (Y) at \w {};
+
+    \begin{scope}[x=(X), y=(Y), transformxy]
+      \fill[seq4!30, nearly opaque] (-1,-1) rectangle (1,1);
+      \draw[step=.5cm, seq4!50, very thin] (-1,-1) grid (1,1);
+    \end{scope}
+
+    \draw[vector] (0,0,0) -- ($.5*(X)$);
+    \draw[vector] (0,0,0) -- ($.5*(Y)$);
+
+    \point at (0,0,0);
+    \node[x=(X),y=(Y),seq4] at (.2,-1.4) {$P$};
+  \end{tikzpicture}
+      </latex-code>
+      </p>
+    </example>
+
+    <example hide-type="true">
+      <title>Non-example (A line not containing the origin)</title>
+      <statement>
+        <p>A line <m>L</m> (or any other subset) that does not contain the origin is not a subspace.  It fails the first defining property: <em>every subspace contains the origin</em> by definition.
+        <latex-code>
+  \begin{tikzpicture}
+    \draw[seq4] (-3,-1) -- (3,1);
+    \point at (0,-.5);
+    \point[red] at (0,-.5);
+  \end{tikzpicture}\hskip 0pt plus .5fill\null
+        </latex-code>
+        </p>
+      </statement>
+    </example>
+
+    <example hide-type="true">
+      <title>Non-example (A circle)</title>
+      <statement>
+        <p>A circle <m>C</m> is not a subspace.  It fails all three defining properties: it does not contain the origin, it is not closed under addition, and it is not closed under scalar multiplication.  In the picture, one red vector is the sum of the two black vectors (which are contained in <m>C</m>), and the other is a scalar multiple of a black vector.
+        <latex-code>
+  \begin{tikzpicture}
+    \draw[seq4] (0,0) circle [radius=2cm];
+    \draw[vector,red] (0,0) -- (2.5,0);
+    \draw[vector] (0,0) -- (0,2);
+    \draw[vector] (0,0) -- (2,0);
+    \draw[vector,red] (0,0) -- (2,2);
+    \point at (0,0);
+    \point[red] at (0,0);
+  \end{tikzpicture}\hskip 0pt plus .5fill\null
+        </latex-code>
+        </p>
+      </statement>
+    </example>
+
+    <example hide-type="true">
+      <title>Non-example (The first quadrant)</title>
+      <statement>
+        <p>The first quadrant in <m>\R^2</m> is not a subspace.  It contains the origin and is closed under addition, but it is not closed under scalar multiplication (by negative numbers).
+        <latex-code>
+  \begin{tikzpicture}
+    \fill[seq4!20] (0,0) rectangle (2,2);
+    \draw[->] (-2,0) -- (2,0);
+    \draw[->] (0,-2) -- (0,2);
+    \draw[vector] (0,0) -- (1,1);
+    \draw[vector,red] (0,0) -- (-1,-1);
+    \point at (0,0);
+  \end{tikzpicture}\hskip 0pt plus .5fill\null
+        </latex-code>
+        </p>
+      </statement>
+    </example>
+
+    <example hide-type="true">
+      <title>Non-example (A line union a plane)</title>
+      <statement>
+        <p>The union of a line and a plane in <m>\R^3</m> is not a subspace.  It contains the origin and is closed under scalar multiplication, but it is not closed under addition: the sum of a vector on the line and a vector on the plane is not contained in the line or in the plane.
+        <latex-code>
+  \begin{tikzpicture}[myxyz]
+    \path[clip, resetxy] (-4,-2) rectangle (4,2);
+
+    \draw[seq4] (-1,-2,-4) -- (0,0,0);
+
+    \begin{scope}[transformxy]
+      \fill[seq4!20, semitransparent] (-1.5,-1.5) rectangle (1.5,1.5);
+      \draw[step=.5cm, grid lines] (-1.5,-1.5) grid (1.5,1.5);
+    \end{scope}
+
+    \draw[seq4] (1,2,4) -- (0,0,0);
+
+    \draw[vector] (0,0,0) -- (.3,.6,1.2);
+    \draw[vector] (0,0,0) -- (1,0,0);
+    \draw[vector,red] (0,0,0) -- (1.3,.6,1.2);
+
+    \point at (0,0,0);
+
+  \end{tikzpicture}\hskip 0pt plus .5fill\null
+        </latex-code>
+        </p>
+      </statement>
+    </example>
+
+    <warning>
+      <title>Subsets versus Subspaces</title>
+      <p>
+        A <term>subset</term> of <m>\R^n</m> is any collection of vectors whatsoever.  For instance, the unit circle
+        <me>C = \bigl\{ (x,y)\text{ in }\R^2 \mid x^2 + y^2 = 1 \bigr\}</me>
+        is a subset of <m>\R^2</m>, but it is not a subspace.  In fact, all of the non-examples above are still subsets of <m>\R^n</m>.  A subspace is a subset that happens to satisfy the three additional defining properties.
+      </p>
+
+      <p>
+        Above we expressed <m>C</m> in set builder notation, which we introduced in this <xref ref="set-builder-notation"/>.
+      </p>
+    </warning>
+
+    <p>
+      In order to verify that a subset of <m>\R^n</m> is in fact a subspace, one has to check the three defining properties.  That is, unless the subset has already been verified to be a subspace: see this <xref ref="subspaces-types-of"/> below.
+    </p>
+
+    <example>
+      <title>Verifying that a subset is a subspace</title>
+      <statement>
+        <p>
+          Let
+          <me> V = \left\{ \vec{a b} \text{ in } \R^2 \bigm| 2a = 3b\right\}.</me>
+          Verify that <m>V</m> is a subspace.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          First we point out that the condition "<m>2a = 3b</m>" defines whether or not a vector is in <m>V</m>: that is, to say <m>{a\choose b}</m> is in <m>V</m> <em>means</em> that <m>2a = 3b</m>.  In other words, a vector is in <m>V</m> if twice its first coordinate equals three times its second coordinate.
+        </p>
+
+        <p>
+          Let us check the first property.  The subset <m>V</m> does contain the zero vector <m>{0\choose 0}</m>, because <m>2\cdot 0 = 3\cdot 0</m>.
+        </p>
+
+        <p>
+          Next we check the second property.  To show that <m>V</m> is closed under addition, we have to check that for <em>any</em> vectors <m>u = {a\choose b}</m> and <m>v = {c\choose d}</m> in <m>V</m>, the sum <m>u+v</m> is in <m>V</m>.  Since we cannot assume anything else about <m>u</m> and <m>v</m>, we must treat them as <em>unknowns</em>.
+        </p>
+        <p>
+          We have
+          <me>\vec{a b} + \vec{c d} = \vec{a+c b+d}.</me>
+          To say that <m>a+c\choose b+d</m> is contained in <m>V</m> means that <m>2(a+c) = 3(b+d)</m>, or <m>2a + 2c = 3b + 3d</m>.  The one thing we are allowed to assume about <m>u</m> and <m>v</m> is that <m>2a = 3b</m> and <m>2c = 3d</m>, so we see that <m>u+v</m> is indeed contained in <m>V</m>.
+        </p>
+
+        <p>
+          Next we check the third property.  To show that <m>V</m> is closed under scalar multiplication, we have to check that for any vector <m>v = {a\choose b}</m> in <m>V</m> and any scalar <m>c</m> in <m>\R</m>, the product <m>cv</m> is in <m>V</m>.  Again, we must treat <m>v</m> and <m>c</m> as unknowns.  We have
+          <me>c\vec{a b} = \vec{ca cb}.</me>
+          To say that <m>ca\choose cb</m> is contained in <m>V</m> means that <m>2(ca) = 3(cb)</m>, i.e., that <m>c\cdot 2a = c\cdot 3b</m>.  The one thing we are allowed to assume about <m>v</m> is that <m>2a = 3b</m>, so <m>cv</m> is indeed contained in <m>V</m>.
+        </p>
+
+        <p>
+          Since <m>V</m> satisfies all three defining properties, it is a subspace.
+          In fact, it is the line through the origin with slope <m>2/3</m>.
+          <latex-code>
+  \begin{tikzpicture}
+    \draw[help lines] (-3, -3) grid (3, 3);
+    \draw[seq4] (-3,-2) -- (3,2);
+    \point at (0,0);
+    \node[seq4] at (1.5,.7) {$V$};
+  \end{tikzpicture}
+          </latex-code>
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <title>Showing that a subset is not a subspace</title>
+      <statement>
+        <p>
+          Let
+          <me>V = \left\{ \vec{a b} \text{ in } \R^2\bigm| ab=0 \right\}.</me>
+          Is <m>V</m> a subspace?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          First we point out that the condition "<m>ab=0</m>" defines whether or not a vector is in <m>V</m>: that is, to say <m>{a\choose b}</m> is in <m>V</m> <em>means</em> that <m>ab=0</m>.  In other words, a vector is in <m>V</m> if the product of its coordinates is zero, i.e., if one (or both) of its coordinates are zero.
+        </p>
+
+        <p>
+          Let us check the first property.  The subset <m>V</m> does contain the zero vector <m>{0\choose 0}</m>, because <m>0\cdot 0=0</m>.
+        </p>
+
+        <p>
+          Next we check the third property.  To show that <m>V</m> is closed under scalar multiplication, we have to check that for <em>any</em> vector <m>v = {a\choose b}</m> in <m>V</m> and <em>any</em> scalar <m>c</m> in <m>\R</m>, the product <m>cv</m> is in <m>V</m>.  Since we cannot assume anything else about <m>v</m> and <m>c</m>, we must treat them as <em>unknowns</em>.
+        </p>
+        <p>
+          We have
+          <me>c\vec{a b} = \vec{ca cb}.</me>
+          To say that <m>ca\choose cb</m> is contained in <m>V</m> means that <m>(ca)(cb)=0</m>.  Rewriting, this means <m>c^2(ab)=0</m>.  The one thing we are allowed to assume about <m>v</m> is that <m>ab=0</m>, so we see that <m>cv</m> is indeed contained in <m>V</m>.
+        </p>
+
+        <p>
+          Next we check the second property.  It turns out that <m>V</m> is not closed under addition; to verify this, we must show that there exists <em>some</em> vectors <m>u,v</m> in <m>V</m> such that <m>u+v</m> is not contained in <m>V</m>.  The easiest way to do so is to produce examples of such vectors.  We can take <m>u={1\choose 0}</m> and <m>v={0\choose 1}</m>; these are contained in <m>V</m> because the products of their coordinates is zero, but
+          <me>\vec{1 0} + \vec{0 1} = \vec{1 1}</me>
+          is not contained in <m>V</m> because <m>1\cdot 1\neq 0</m>.
+        </p>
+
+        <p>
+          Since <m>V</m> does not satisfy the second property (it is not closed under addition), we conclude that <m>V</m> is <em>not</em> a subspace.  Indeed, it is the union of the two coordinate axes, which is not a span.
+          <latex-code>
+\begin{tikzpicture}[scale=3]
+  \draw[grid lines, step=.25] (-1,-1) grid (1,1);
+  \draw[seq4, &lt;->] (-1,0) -- (1,0);
+  \draw[seq4, &lt;->] (0,-1) -- (0,1);
+  \node[seq4] at (.25,.25) {$V$};
+\end{tikzpicture}
+          </latex-code>
+        </p>
+      </solution>
+    </example>
+
+  </subsection>
+
+
+  <subsection>
+    <title>Common Types of Subspaces</title>
+
+    <theorem xml:id="subspaces-spans-are-subspaces">
+      <title>Spans are subspaces</title>
+      <statement>
+        <p>
+          If <m>v_1,v_2,\ldots,v_p</m> are any vectors in <m>\R^n</m>, then <m>\Span\{v_1,v_2,\ldots,v_p\}</m> is a subspace of <m>\R^n</m>.
+        </p>
+      </statement>
+
+      <proof>
+        <p>We have to verify the three defining properties.
+        <ol>
+          <li>The zero vector <m>0 = 0v_1 + 0v_2 + \cdots + 0v_p</m> is in the span.</li>
+          <li>
+            If <m>u = a_1v_1 + a_2v_2 + \cdots + a_pv_p</m> and
+            <m>v = b_1v_1 + b_2v_2 + \cdots + b_pv_p</m> are in <m>\Span\{v_1,v_2,\ldots,v_p\}</m>, then
+            <me>u + v = (a_1+b_1)v_1 + (a_2+b_2)v_2 + \cdots + (a_p+b_p)v_p</me>
+            is also in <m>\Span\{v_1,v_2,\ldots,v_p\}</m>.
+          </li>
+          <li>
+            If <m>v = a_1v_1 + a_2v_2 + \cdots + a_pv_p</m> is in <m>\Span\{v_1,v_2,\ldots,v_p\}</m> and <m>c</m> is a scalar, then
+            <me>cv = ca_1v_1 + ca_2v_2 + \cdots + ca_pv_p</me>
+            is also in <m>\Span\{v_1,v_2,\ldots,v_p\}</m>.
+          </li>
+        </ol>
+        Since <m>\Span\{v_1,v_2,\ldots,v_p\}</m> satisfies the three defining properties of a subspace, it is a subspace.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>If <m>V = \Span\{v_1,v_2,\ldots,v_p\}</m>, we say that <m>V</m> is the subspace <term>spanned by</term> or <term>generated by</term> the vectors <m>v_1,v_2,\ldots,v_p</m>.</p>
+
+    <warning>
+      <p>Every subspace is a span, and every span is a subspace.</p>
+    </warning>
+
+    <p>A matrix naturally gives rise to <em>two</em> subspaces.</p>
+
+    <definition>
+      <statement>
+        <p>Let <m>A</m> be an <m>m\times n</m> matrix.
+        <ul>
+          <li>
+            The <term>column space</term> of <m>A</m> is the subspace of <m>\R^m</m> spanned by the columns of <m>A</m>.  It is written <m>\Col A</m>.
+          </li>
+          <li>
+            The <term>null space</term> of <m>A</m> is the set of all solutions of the homogeneous equation <m>Ax=0</m>:
+            <me>\Nul A = \bigl\{ x \text{ in } \R^n\mid Ax=0 \bigr\}.</me>
+            This is a subspace of <m>\R^n</m>.
+          </li>
+        </ul>
+        </p>
+      </statement>
+    </definition>
+
+    <p>The column space is defined to be a span, so it is a subspace by the above <xref ref="subspaces-spans-are-subspaces"/>.  We need to verify that the null space is a span.
+    </p>
+
+    <proof>
+      <p>
+        We have to verify the three defining properties.  To say that a vector <m>v</m> is in <m>\Nul A</m> <em>means</em> that <m>Av = 0</m>.
+        <ol>
+          <li>
+            The zero vector is in <m>\Nul A</m> because <m>A0=0</m>.
+          </li>
+          <li>
+            Suppose that <m>u,v</m> are in <m>\Nul A</m>.  This means that
+            <m>Au=0</m> and <m>Av=0</m>.  Hence
+            <me> A(u+v) = Au + Av = 0 + 0 = 0 </me>
+            by the <xref ref="matrix-linearity">linearity of the matrix-vector product from</xref>.  Therefore, <m>u+v</m> is in <m>\Nul A</m>.
+          </li>
+          <li>
+            Suppose that <m>v</m> is in <m>\Nul A</m> and <m>c</m> is a scalar.  Then
+            <me>A(cv) = cAv = c\cdot 0 = 0</me>
+            by the <xref ref="matrix-linearity">linearity of the matrix-vector product from</xref>, so <m>cv</m> is also in <m>\Nul A</m>.
+          </li>
+        </ol>
+        Since <m>\Nul A</m> satisfies the three defining properties of a subspace, it is a subspace.
+      </p>
+    </proof>
+
+    <example>
+      <statement>
+        <p>Describe the column space and the null space of<me>A = \mat{1 1; 1 1; 1 1}</me>.</p>
+      </statement>
+      <solution>
+        <p>
+          The column space is the span of the columns of <m>A</m>:
+          <me>\Col A = \Span\left\{\vec{1 1 1},\;\vec{1 1 1}\right\}
+          = \Span\left\{\vec{1 1 1}\right\}.
+          </me>
+          This is a line in <m>\R^3</m>.
+          <latex-code>
+\begin{tikzpicture}[myxyz]
+  \path[clip, resetxy] (-4,-2) rectangle (4,2);
+
+  \draw[seq4] (-4,-4,-4) -- (0,0,0);
+   \begin{scope}[transformxy]
+    \fill[white, semitransparent] (-1.5,-1.5) rectangle (1.5,1.5);
+    \draw[step=1cm, grid lines] (-1.5,-1.5) grid (1.5,1.5);
+  \end{scope}
+
+  \draw[seq4] (4,4,4) -- (0,0,0);
+  \draw[vector] (0,0,0) -- (1,1,1);
+  \draw[densely dotted] (1,1,0) -- (1,1,1);
+  \node[resetxy,seq4] at (1.5,1.5) {$\Col A$};
+  \point at (0,0,0);
+\end{tikzpicture}
+          </latex-code>
+        </p>
+        <p>
+          The null space is the solution set of the homogeneous system <m>Ax=0</m>.  To compute this, we need to row reduce <m>A</m>.  Its reduced row echelon form is
+          <me>\mat{1 1; 0 0; 0 0}.</me>
+          This gives the equation <m>x+y=0</m>, or
+          <me>\syseq{x = -y; y = y}
+          \quad\xrightarrow{\text{parametric vector form}}\quad
+          \vec{x y} = y\vec{-1 1}.
+          </me>
+          Hence the null space is <m>\Span\bigl\{{-1\choose 1}\bigr\}</m>, which is a line in <m>\R^2</m>.
+          <latex-code>
+\begin{tikzpicture}
+  \draw[grid lines] (-3,-3) grid (3,3);
+  \draw[seq4] (3,-3) -- (-3,3);
+  \draw[vector] (0,0) -- (-1,1);
+  \point at (0,0);
+  \node[seq4,fill=white, inner sep=1pt] at (-.7,2) {$\Nul A$};
+\end{tikzpicture}
+          </latex-code>
+        </p>
+        <p>
+          Notice that the column space is a subspace of <m>\R^3</m>, whereas the null space is a subspace of <m>\R^2</m>.  This is because <m>A</m> has three rows and two columns.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      The column space and the null space of a matrix are both subspaces, so they are both spans.  The column space of a matrix <m>A</m> is defined to be the span of the columns of <m>A</m>.  The null space is defined to be the solution set of <m>Ax=0</m>, so this is a good example of a kind of subspace that we can define <em>without any spanning set in mind.</em>  In order to do computations, however, it is usually necessary to find a spanning set.
+    </p>
+
+    <warning>
+      <p>
+        To find a spanning set for <m>\Nul A</m>, compute the parametric vector form of the solution to the homogeneous equation <m>Ax=0</m>.  The vectors attached to the free variables form a spanning set for <m>\Nul A</m>.
+      </p>
+    </warning>
+
+    <example>
+      <statement>
+        <p>Find a spanning set for the null space of the matrix
+        <me>A = \mat{2 3 -8 -5; -1 2 -3 -8}.</me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We compute the parametric vector form of the solution of <m>Ax=0</m>.  The reduced row echelon form of <m>A</m> is
+          <me>\mat{1 0 -1 2; 0 1 -2 -3}.</me>
+          The free variables are <m>x_3</m> and <m>x_4</m>; the parametric form of the solution set is
+          <me>
+            \syseq{x_1 = x_3 - 2x_4; x_2 = 2x_3 + 3x_4; x_3 = x_3; x_4 = \. \+ x_4}
+            \quad\xrightarrow{\text{parametric vector form}}\quad
+            \vec{x_1 x_2 x_3 x_4} = x_3\vec{1 2 1 0} + x_4\vec{-2 3 0 1}.
+          </me>
+          Therefore,
+          <me>\Nul A = \Span\left\{\vec{1 2 1 0},\;\vec{-2 3 0 1}\right\}.</me>
+        </p>
+      </solution>
+    </example>
+
+    <warning xml:id="subspaces-types-of">
+      <title>How do you know if a subset is a subspace?</title>
+      <p>
+        It is rarely necessary to verify the three properties of a subspace directly: most of the verifications were already done in this section.
+        <ul>
+          <li>Is your subset a span?  Can it be written as a span?</li>
+          <li>Can it be written as a the column space of a matrix?</li>
+          <li>Can it be written as a the null space of a matrix?</li>
+          <li>Is it all of <m>\R^n</m> or the zero subspace <m>\{0\}</m>?</li>
+          <li>Can it be written as a type of subspace that we'll learn about later (eigenspace, orthogonal complement, ...)?</li>
+        </ul>
+        If so, then it is automatically a subspace.
+        If all else fails:
+        <ul>
+          <li>Can you verify directly that it satisfies the three defining properties of a subspace?</li>
+        </ul>
+      </p>
+    </warning>
+
+  </subsection>
 
 </section>

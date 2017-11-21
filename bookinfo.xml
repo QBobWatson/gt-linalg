@@ -49,6 +49,8 @@ Copyright 2017 Georgia Institute of Technology
     \newcommand{\leading}[1]{\color{red}#1}
     \newcommand{\setof}[1]{\left\{#1\right\}}
     \def\Span{\operatorname{Span}}
+    \def\Nul{\operatorname{Nul}}
+    \def\Col{\operatorname{Col}}
     \definecolor{ColorEx1}{rgb}{0.2,1,0.1}
     \definecolor{ColorEx2}{rgb}{1,1,0}
     \let\To=\longrightarrow

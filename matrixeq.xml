@@ -66,6 +66,21 @@ the license is included in gfdl.xml.
       </p>
     </warning>
 
+    <p>The following properties are easy to verify.</p>
+
+    <proposition hide-type="true" xml:id="matrix-linearity">
+      <title>Properties of the Matrix-Vector Product</title>
+      <statement>
+        <p>
+          Let <m>A</m> be an <m>m\times n</m> matrix, let <m>u,v</m> be vectors in <m>\R^n</m>, and let <m>c</m> be a scalar.  Then:
+          <ul>
+            <li><m>A(u+v) = Au + Av</m></li>
+            <li><m>A(cu) = cAu</m></li>
+          </ul>
+        </p>
+      </statement>
+    </proposition>
+
     <definition>
       <statement>
         <p>A <term>matrix equation</term> is an equation of the form <m>Ax=b</m>, where <m>A</m> is an <m>m\times n</m> matrix, <m>b</m> is a vector in <m>\R^m</m>, and <m>x</m> is a vector whose coefficients <m>x_1,x_2,\ldots,x_n</m> are unknown.</p>

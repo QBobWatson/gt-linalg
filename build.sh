@@ -60,7 +60,7 @@ xsltproc -o "$build_dir/" --xinclude \
          "$compile_dir/xsl/mathbook-html.xsl" linalg.xml \
     || die "xsltproc failed!"
 
-echo "Preprocessing LaTeX..."
+echo "Preprocessing LaTeX (be patient)..."
 [ -n "$PRETEX_ALL" ] && rm -r pretex-cache
 python3 "$pretex" --preamble "$build_dir/preamble.tex" \
         --cache-dir pretex-cache --style-path "$compile_dir"/style \

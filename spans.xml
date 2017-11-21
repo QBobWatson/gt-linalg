@@ -123,7 +123,7 @@ the license is included in gfdl.xml.
     <p>The above <xref ref="vectors-defn-span"/> is the first of several <em>essential definitions</em> that we will see in this course.  They are essential in that they form the essence of the subject of linear algebra: learning linear algebra means (in part) learning these definitions.  All of the definitions are important, but it is essential that you learn and understand the definitions marked as such.
     </p>
 
-    <note hide-type="true">
+    <note hide-type="true" xml:id="set-builder-notation">
       <title>Set Builder Notation</title>
       <p>The notation
       <me>\bigl\{x_1v_1 + x_2v_2 + \cdots + x_pv_p \mid x_1,x_2,\ldots,x_p \text{ in }\R\bigr\}</me>
