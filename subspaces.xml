@@ -127,7 +127,6 @@ the license is included in gfdl.xml.
 
     <example hide-type="true">
       <title>Non-example (A line not containing the origin)</title>
-      <statement>
         <p>A line <m>L</m> (or any other subset) that does not contain the origin is not a subspace.  It fails the first defining property: <em>every subspace contains the origin</em> by definition.
         <latex-code>
   \begin{tikzpicture}
@@ -137,12 +136,10 @@ the license is included in gfdl.xml.
   \end{tikzpicture}\hskip 0pt plus .5fill\null
         </latex-code>
         </p>
-      </statement>
     </example>
 
     <example hide-type="true">
       <title>Non-example (A circle)</title>
-      <statement>
         <p>The unit circle <m>C</m> is not a subspace.  It fails all three defining properties: it does not contain the origin, it is not closed under addition, and it is not closed under scalar multiplication.  In the picture, one red vector is the sum of the two black vectors (which are contained in <m>C</m>), and the other is a scalar multiple of a black vector.
         <latex-code>
   \begin{tikzpicture}
@@ -156,12 +153,10 @@ the license is included in gfdl.xml.
   \end{tikzpicture}\hskip 0pt plus .5fill\null
         </latex-code>
         </p>
-      </statement>
     </example>
 
     <example hide-type="true">
       <title>Non-example (The first quadrant)</title>
-      <statement>
         <p>The first quadrant in <m>\R^2</m> is not a subspace.  It contains the origin and is closed under addition, but it is not closed under scalar multiplication (by negative numbers).
         <latex-code>
   \begin{tikzpicture}
@@ -174,12 +169,10 @@ the license is included in gfdl.xml.
   \end{tikzpicture}\hskip 0pt plus .5fill\null
         </latex-code>
         </p>
-      </statement>
     </example>
 
     <example hide-type="true">
       <title>Non-example (A line union a plane)</title>
-      <statement>
         <p>The union of a line and a plane in <m>\R^3</m> is not a subspace.  It contains the origin and is closed under scalar multiplication, but it is not closed under addition: the sum of a vector on the line and a vector on the plane is not contained in the line or in the plane.
         <latex-code>
   \begin{tikzpicture}[myxyz]
@@ -203,7 +196,6 @@ the license is included in gfdl.xml.
   \end{tikzpicture}\hskip 0pt plus .5fill\null
         </latex-code>
         </p>
-      </statement>
     </example>
 
     <warning>
@@ -223,7 +215,7 @@ the license is included in gfdl.xml.
       In order to verify that a subset of <m>\R^n</m> is in fact a subspace, one has to check the three defining properties.  That is, unless the subset has already been verified to be a subspace: see this <xref ref="subspaces-types-of"/> below.
     </p>
 
-    <example>
+    <example xml:id="subspaces-eg-byhand">
       <title>Verifying that a subset is a subspace</title>
       <statement>
         <p>
@@ -515,7 +507,7 @@ the license is included in gfdl.xml.
         <ul>
           <li>Is your subset a span?  Can it be written as a span?</li>
           <li>Can it be written as the column space of a matrix?</li>
-          <li>Can it be written as the null space of a matrix?</li>
+          <li>Can it be written as the null space of a matrix?  In other words, is it the solution set of a homogeneous system of equations?</li>
           <li>Is it all of <m>\R^n</m> or the zero subspace <m>\{0\}</m>?</li>
           <li>Can it be written as a type of subspace that we will see later (eigenspace, orthogonal complement, ...)?</li>
         </ul>
@@ -526,6 +518,22 @@ the license is included in gfdl.xml.
         </ul>
       </p>
     </warning>
+
+    <example>
+      <title>Verifying that a subset is a subspace, reprise</title>
+      <statement>
+        <p>
+          Let
+          <me> V = \left\{ \vec{a b} \text{ in } \R^2 \bigm| 2a = 3b\right\}</me>
+          be the subset of a previous <xref ref="subspaces-eg-byhand"/>. Verify that <m>V</m> is a subspace.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The subset <m>V</m> is exactly the solution set of the homogeneous equation <m>2x - 3y = 0</m>.  Hence it is the null space of the matrix <m>\mat{2 -3}</m>, so it is a subspace.
+        </p>
+      </solution>
+    </example>
 
   </subsection>
 

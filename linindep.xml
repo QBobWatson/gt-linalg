@@ -187,7 +187,7 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
       In summary:
     </p>
 
-    <note hide-type="true" xml:id="linindep-matrix-cols">
+    <theorem hide-type="true" xml:id="linindep-matrix-cols">
       <title>Linear independence and matrix columns</title>
       <p>
         <ul>
@@ -195,7 +195,7 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
           <li>Solving the matrix equatiion <m>Ax=0</m> will either verify that the columns <m>v_1,v_2,\ldots,v_p</m> are linearly independent, or will produce a linear dependece relation by substituting any nonzero values for the free variables.</li>
         </ul>
       </p>
-    </note>
+    </theorem>
 
     <p>
       Suppose that <m>A</m> has more columns than rows.  Then <m>A</m> cannot have a pivot in every column (it has at most one pivot per row), so its columns are automatically linearly dependent.
