@@ -23,7 +23,7 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      In this section we discuss <em>subspaces</em> of <m>\R^n</m>.  A subspace turns out to be exactly the same thing as a span, except we don't have a particular set of spanning vectors in mind.  This change in perspective is quite useful, as it is easy to produce examples of subspaces which are not obviously spans.  For example, the solution set of the equation <m>x + 3y + z = 0</m> is a span because the equation is homogeneous, but we would have to compute the parametric vector form to find a spanning set of vectors.
+      In this section we discuss <em>subspaces</em> of <m>\R^n</m>.  A subspace turns out to be exactly the same thing as a span, except we don't have a particular set of spanning vectors in mind.  This change in perspective is quite useful, as it is easy to produce subspaces which are not obviously spans.  For example, the solution set of the equation <m>x + 3y + z = 0</m> is a span because the equation is homogeneous, but we would have to compute the parametric vector form to find a spanning set of vectors.
       <latex-code>
           <![CDATA[
 \begin{tikzpicture}[myxyz, scale=.75]
@@ -143,7 +143,7 @@ the license is included in gfdl.xml.
     <example hide-type="true">
       <title>Non-example (A circle)</title>
       <statement>
-        <p>A circle <m>C</m> is not a subspace.  It fails all three defining properties: it does not contain the origin, it is not closed under addition, and it is not closed under scalar multiplication.  In the picture, one red vector is the sum of the two black vectors (which are contained in <m>C</m>), and the other is a scalar multiple of a black vector.
+        <p>The unit circle <m>C</m> is not a subspace.  It fails all three defining properties: it does not contain the origin, it is not closed under addition, and it is not closed under scalar multiplication.  In the picture, one red vector is the sum of the two black vectors (which are contained in <m>C</m>), and the other is a scalar multiple of a black vector.
         <latex-code>
   \begin{tikzpicture}
     \draw[seq4] (0,0) circle [radius=2cm];
@@ -299,7 +299,7 @@ the license is included in gfdl.xml.
         </p>
 
         <p>
-          Next we check the second property.  It turns out that <m>V</m> is not closed under addition; to verify this, we must show that there exists <em>some</em> vectors <m>u,v</m> in <m>V</m> such that <m>u+v</m> is not contained in <m>V</m>.  The easiest way to do so is to produce examples of such vectors.  We can take <m>u={1\choose 0}</m> and <m>v={0\choose 1}</m>; these are contained in <m>V</m> because the products of their coordinates is zero, but
+          Next we check the second property.  It turns out that <m>V</m> is not closed under addition; to verify this, we must show that there exists <em>some</em> vectors <m>u,v</m> in <m>V</m> such that <m>u+v</m> is not contained in <m>V</m>.  The easiest way to do so is to produce examples of such vectors.  We can take <m>u={1\choose 0}</m> and <m>v={0\choose 1}</m>; these are contained in <m>V</m> because the products of their coordinates are zero, but
           <me>\vec{1 0} + \vec{0 1} = \vec{1 1}</me>
           is not contained in <m>V</m> because <m>1\cdot 1\neq 0</m>.
         </p>
@@ -464,11 +464,12 @@ the license is included in gfdl.xml.
 
     <warning>
       <p>
-        To find a spanning set for <m>\Nul A</m>, compute the parametric vector form of the solution to the homogeneous equation <m>Ax=0</m>.  The vectors attached to the free variables form a spanning set for <m>\Nul A</m>.
+        To find a spanning set for <m>\Nul A</m>, compute the parametric vector form of the solutions to the homogeneous equation <m>Ax=0</m>.  The vectors attached to the free variables form a spanning set for <m>\Nul A</m>.
       </p>
     </warning>
 
     <example>
+      <title>Two free variables</title>
       <statement>
         <p>Find a spanning set for the null space of the matrix
         <me>A = \mat{2 3 -8 -5; -1 2 -3 -8}.</me>
@@ -476,7 +477,7 @@ the license is included in gfdl.xml.
       </statement>
       <solution>
         <p>
-          We compute the parametric vector form of the solution of <m>Ax=0</m>.  The reduced row echelon form of <m>A</m> is
+          We compute the parametric vector form of the solutions of <m>Ax=0</m>.  The reduced row echelon form of <m>A</m> is
           <me>\mat{1 0 -1 2; 0 1 -2 -3}.</me>
           The free variables are <m>x_3</m> and <m>x_4</m>; the parametric form of the solution set is
           <me>
@@ -490,16 +491,33 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
+    <example>
+      <title>No free variables</title>
+      <statement>
+        <p>Find a spanning set for the null space of the matrix
+        <me>A = \mat{1 3; 2 4}.</me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We compute the parametric vector form of the solutions of <m>Ax=0</m>.  The reduced row echelon form of <m>A</m> is
+          <me>\mat{1 0; 0 1}.</me>
+          There are no free variables; hence the only solution of <m>Ax=0</m> is the trivial solution.  In other words,
+          <me>\Nul A = \{0\} = \Span\{0\}.</me>
+        </p>
+      </solution>
+    </example>
+
     <warning xml:id="subspaces-types-of">
       <title>How do you know if a subset is a subspace?</title>
       <p>
         It is rarely necessary to verify the three properties of a subspace directly: most of the verifications were already done in this section.
         <ul>
           <li>Is your subset a span?  Can it be written as a span?</li>
-          <li>Can it be written as a the column space of a matrix?</li>
-          <li>Can it be written as a the null space of a matrix?</li>
+          <li>Can it be written as the column space of a matrix?</li>
+          <li>Can it be written as the null space of a matrix?</li>
           <li>Is it all of <m>\R^n</m> or the zero subspace <m>\{0\}</m>?</li>
-          <li>Can it be written as a type of subspace that we'll learn about later (eigenspace, orthogonal complement, ...)?</li>
+          <li>Can it be written as a type of subspace that we will see later (eigenspace, orthogonal complement, ...)?</li>
         </ul>
         If so, then it is automatically a subspace.
         If all else fails:
