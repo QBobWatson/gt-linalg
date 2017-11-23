@@ -33,7 +33,7 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
       <image>
         <latex-image-code>
           <![CDATA[
-\begin{tikzpicture}[thin border nodes, scale=.7]
+\begin{tikzpicture}[thin border nodes, scale=.7, baseline=.5cm]
   \draw[grid lines, light gray] (-3,-3) grid (4, 4);
   \path[clip] (-3,-3) rectangle (4, 4);
   \node[seq4] at (.5,2.5) {$\Span\{v,w\}$};
@@ -45,7 +45,7 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
   \point at (0,0);
 \end{tikzpicture}
 \qquad
-\begin{tikzpicture}[myxyz, thin border nodes]
+\begin{tikzpicture}[myxyz, thin border nodes, baseline=0cm]
   \path[clip, resetxy] (-4,-3) rectangle (4,3);
 
   \def\v{(2,-1,1)}
