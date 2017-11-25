@@ -52,6 +52,22 @@ the license is included in gfdl.xml.
 
     <definition>
       <statement>
+        <p>A <term>subset</term> of <m>\R^n</m> is any collection of elements of <m>\R^n</m>.</p>
+      </statement>
+    </definition>
+
+    <p>
+      For instance, the unit circle
+      <me>C = \bigl\{ (x,y)\text{ in }\R^2 \bigm| x^2 + y^2 = 1 \bigr\}</me>
+      is a subset of <m>\R^2</m>.
+    </p>
+
+    <p>
+      Above we expressed <m>C</m> in set builder notation, which we introduced in this <xref ref="set-builder-notation"/>.
+    </p>
+
+    <definition>
+      <statement>
         <p>
           A <term>subspace</term> of <m>\R^n</m> is a subset <m>V</m> of <m>\R^n</m> satisfying:
           <ol>
@@ -202,12 +218,8 @@ the license is included in gfdl.xml.
       <title>Subsets versus Subspaces</title>
       <p>
         A <term>subset</term> of <m>\R^n</m> is any collection of vectors whatsoever.  For instance, the unit circle
-        <me>C = \bigl\{ (x,y)\text{ in }\R^2 \mid x^2 + y^2 = 1 \bigr\}</me>
+        <me>C = \bigl\{ (x,y)\text{ in }\R^2 \bigm| x^2 + y^2 = 1 \bigr\}</me>
         is a subset of <m>\R^2</m>, but it is not a subspace.  In fact, all of the non-examples above are still subsets of <m>\R^n</m>.  A subspace is a subset that happens to satisfy the three additional defining properties.
-      </p>
-
-      <p>
-        Above we expressed <m>C</m> in set builder notation, which we introduced in this <xref ref="set-builder-notation"/>.
       </p>
     </warning>
 
@@ -358,11 +370,11 @@ the license is included in gfdl.xml.
         <p>Let <m>A</m> be an <m>m\times n</m> matrix.
         <ul>
           <li>
-            The <term>column space</term> of <m>A</m> is the subspace of <m>\R^m</m> spanned by the columns of <m>A</m>.  It is written <m>\Col A</m>.
+            The <term>column space</term> of <m>A</m> is the subspace of <m>\R^m</m> spanned by the columns of <m>A</m>.  It is written <m>\Col(A)</m>.
           </li>
           <li>
             The <term>null space</term> of <m>A</m> is the set of all solutions of the homogeneous equation <m>Ax=0</m>:
-            <me>\Nul A = \bigl\{ x \text{ in } \R^n\mid Ax=0 \bigr\}.</me>
+            <me>\Nul(A) = \bigl\{ x \text{ in } \R^n\bigm| Ax=0 \bigr\}.</me>
             This is a subspace of <m>\R^n</m>.
           </li>
         </ul>
@@ -375,24 +387,24 @@ the license is included in gfdl.xml.
 
     <proof>
       <p>
-        We have to verify the three defining properties.  To say that a vector <m>v</m> is in <m>\Nul A</m> <em>means</em> that <m>Av = 0</m>.
+        We have to verify the three defining properties.  To say that a vector <m>v</m> is in <m>\Nul(A)</m> <em>means</em> that <m>Av = 0</m>.
         <ol>
           <li>
-            The zero vector is in <m>\Nul A</m> because <m>A0=0</m>.
+            The zero vector is in <m>\Nul(A)</m> because <m>A0=0</m>.
           </li>
           <li>
-            Suppose that <m>u,v</m> are in <m>\Nul A</m>.  This means that
+            Suppose that <m>u,v</m> are in <m>\Nul(A)</m>.  This means that
             <m>Au=0</m> and <m>Av=0</m>.  Hence
             <me> A(u+v) = Au + Av = 0 + 0 = 0 </me>
-            by the <xref ref="matrix-linearity">linearity of the matrix-vector product from</xref>.  Therefore, <m>u+v</m> is in <m>\Nul A</m>.
+            by the <xref ref="matrix-linearity">linearity of the matrix-vector product from</xref>.  Therefore, <m>u+v</m> is in <m>\Nul(A)</m>.
           </li>
           <li>
-            Suppose that <m>v</m> is in <m>\Nul A</m> and <m>c</m> is a scalar.  Then
+            Suppose that <m>v</m> is in <m>\Nul(A)</m> and <m>c</m> is a scalar.  Then
             <me>A(cv) = cAv = c\cdot 0 = 0</me>
-            by the <xref ref="matrix-linearity">linearity of the matrix-vector product from</xref>, so <m>cv</m> is also in <m>\Nul A</m>.
+            by the <xref ref="matrix-linearity">linearity of the matrix-vector product from</xref>, so <m>cv</m> is also in <m>\Nul(A)</m>.
           </li>
         </ol>
-        Since <m>\Nul A</m> satisfies the three defining properties of a subspace, it is a subspace.
+        Since <m>\Nul(A)</m> satisfies the three defining properties of a subspace, it is a subspace.
       </p>
     </proof>
 
@@ -403,7 +415,7 @@ the license is included in gfdl.xml.
       <solution>
         <p>
           The column space is the span of the columns of <m>A</m>:
-          <me>\Col A = \Span\left\{\vec{1 1 1},\;\vec{1 1 1}\right\}
+          <me>\Col(A) = \Span\left\{\vec{1 1 1},\;\vec{1 1 1}\right\}
           = \Span\left\{\vec{1 1 1}\right\}.
           </me>
           This is a line in <m>\R^3</m>.
@@ -420,7 +432,7 @@ the license is included in gfdl.xml.
   \draw[seq4] (4,4,4) -- (0,0,0);
   \draw[vector] (0,0,0) -- (1,1,1);
   \draw[densely dotted] (1,1,0) -- (1,1,1);
-  \node[resetxy,seq4] at (1.5,1.5) {$\Col A$};
+  \node[resetxy,seq4] at (1.5,1.5) {$\Col(A)$};
   \point at (0,0,0);
 \end{tikzpicture}
           </latex-code>
@@ -440,7 +452,7 @@ the license is included in gfdl.xml.
   \draw[seq4] (3,-3) -- (-3,3);
   \draw[vector] (0,0) -- (-1,1);
   \point at (0,0);
-  \node[seq4,fill=white, inner sep=1pt] at (-.7,2) {$\Nul A$};
+  \node[seq4,fill=white, inner sep=1pt] at (-.7,2) {$\Nul(A)$};
 \end{tikzpicture}
           </latex-code>
         </p>
@@ -456,7 +468,7 @@ the license is included in gfdl.xml.
 
     <warning>
       <p>
-        To find a spanning set for <m>\Nul A</m>, compute the parametric vector form of the solutions to the homogeneous equation <m>Ax=0</m>.  The vectors attached to the free variables form a spanning set for <m>\Nul A</m>.
+        To find a spanning set for <m>\Nul(A)</m>, compute the parametric vector form of the solutions to the homogeneous equation <m>Ax=0</m>.  The vectors attached to the free variables form a spanning set for <m>\Nul(A)</m>.
       </p>
     </warning>
 
@@ -478,7 +490,7 @@ the license is included in gfdl.xml.
             \vec{x_1 x_2 x_3 x_4} = x_3\vec{1 2 1 0} + x_4\vec{-2 3 0 1}.
           </me>
           Therefore,
-          <me>\Nul A = \Span\left\{\vec{1 2 1 0},\;\vec{-2 3 0 1}\right\}.</me>
+          <me>\Nul(A) = \Span\left\{\vec{1 2 1 0},\;\vec{-2 3 0 1}\right\}.</me>
         </p>
       </solution>
     </example>
@@ -495,7 +507,7 @@ the license is included in gfdl.xml.
           We compute the parametric vector form of the solutions of <m>Ax=0</m>.  The reduced row echelon form of <m>A</m> is
           <me>\mat{1 0; 0 1}.</me>
           There are no free variables; hence the only solution of <m>Ax=0</m> is the trivial solution.  In other words,
-          <me>\Nul A = \{0\} = \Span\{0\}.</me>
+          <me>\Nul(A) = \{0\} = \Span\{0\}.</me>
         </p>
       </solution>
     </example>

@@ -139,8 +139,12 @@ the license is included in gfdl.xml.
     </note>
 
     <warning>
-      <p>You can chose <em>any value</em> for the free variables in a (consistent) linear system.</p>
-      <p>Free variables come from the <em>columns without pivots</em> in a matrix in row echelon form.</p>
+      <p>
+        <ul>
+          <li>You can chose <em>any value</em> for the free variables in a (consistent) linear system.</li>
+          <li>Free variables come from the <em>columns without pivots</em> in a matrix in row echelon form.</li>
+        </ul>
+      </p>
     </warning>
 
     <example>

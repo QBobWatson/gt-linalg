@@ -74,7 +74,7 @@ the license is included in gfdl.xml.
 
     <specialcase>
       <title>The plane</title>
-      <p>When <m>n=2</m>, we can think of <m>\R^2</m> as the <m>xy</m>-plane.  We can do so because every point on the plane can be represented by an ordered pair of real numebrs, namely, its <m>x</m>- and <m>y</m>-coordinates.
+      <p>When <m>n=2</m>, we can think of <m>\R^2</m> as the <m>xy</m>-plane.  We can do so because every point on the plane can be represented by an ordered pair of real numbers, namely, its <m>x</m>- and <m>y</m>-coordinates.
       <latex-code>
         <![CDATA[
     \begin{tikzpicture}[every node/.append style={whitebg, thin border},
