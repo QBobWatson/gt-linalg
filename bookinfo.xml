@@ -103,7 +103,7 @@ Copyright 2017 Georgia Institute of Technology
         node is bbox/.style={inner sep=0pt, outer sep=0pt, line width=0pt},
         every matrix/.style={ampersand replacement=\&amp;},
         math matrix/.style={matrix of math nodes,
-            left delimiter={[}, right delimiter={]},
+            left delimiter={(}, right delimiter={)},
             inner sep=0pt, inner ysep=2pt, row sep=.4em, column sep=.6666em,
             nodes={inner sep=0}},
     }

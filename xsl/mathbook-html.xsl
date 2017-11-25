@@ -357,6 +357,22 @@
     </xsl:element>
 </xsl:template>
 
+<!-- JDR: remove external dependencies -->
+<xsl:template name="jquery-sagecell">
+    <script type="text/javascript" src="static/js/jquery.min.js"></script>
+    <xsl:if test="$document-root//sage">
+        <script type="text/javascript" src="https://sagecell.sagemath.org/embedded_sagecell.js"></script>
+    </xsl:if>
+</xsl:template>
+
+<xsl:template name="knowl">
+<link href="static/css/knowlstyle.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="static/js/knowl.js"></script>
+</xsl:template>
+
+<!-- JDR: we're using CharterBT -->
+<xsl:template name="fonts">
+</xsl:template>
 
 <!-- JDR: we're precompiling latex -->
 <xsl:template name="mathjax"/>
