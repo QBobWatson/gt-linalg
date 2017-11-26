@@ -461,7 +461,7 @@ the license is included in gfdl.xml.
     <warning><title>Dimension of the solution set</title>
     <p>As in the first <xref ref="solnsets-homog"/>, when there is one free variable in a consistent matrix equation, the solution set is a line<mdash/>this line does not pass through the origin when the system is inhomogeneous<mdash/>when there are two free variables, the solution set is a plane, etc.
     </p>
-    <p>We will develop a rigorous definition of dimension in <xref ref="section-dimension"/>, but for now it is important to note that the "dimension" of the solution set of a consistent system is equal to the number of free variables.
+    <p>We will develop a rigorous definition of dimension in <xref ref="section-dimension"/>, but for now it is important to note that the <q>dimension</q> of the solution set of a consistent system is equal to the number of free variables.
     </p>
     </warning>
 

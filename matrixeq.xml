@@ -28,12 +28,12 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
-      <p>When we say "<m>A</m> is an <m>m\times n</m> matrix," we mean that <m>A</m> has <m>m</m> rows and <m>n</m> columns.
+      <p>When we say <q><m>A</m> is an <m>m\times n</m> matrix,</q> we mean that <m>A</m> has <m>m</m> rows and <m>n</m> columns.
       </p>
     </warning>
 
     <remark>
-      <p>In this book, we do <em>not</em> reserve the letters <m>m</m> and <m>n</m> for the numbers of rows and columns of a matrix.  If we write "<m>A</m> is an <m>n\times m</m> matrix", then <m>n</m> is the number of rows of <m>A</m> and <m>m</m> is the number of columns.</p>
+      <p>In this book, we do <em>not</em> reserve the letters <m>m</m> and <m>n</m> for the numbers of rows and columns of a matrix.  If we write <q><m>A</m> is an <m>n\times m</m> matrix</q>, then <m>n</m> is the number of rows of <m>A</m> and <m>m</m> is the number of columns.</p>
     </remark>
 
     <definition xml:id="matrixeq-defn-Ax1">
@@ -441,7 +441,7 @@ the license is included in gfdl.xml.
       </p>
 
       <warning>
-        <p>Be careful when reading the statement of the above <xref ref="matrixeq-thm-full-span"/>.  The first two conditions look very much like this <xref ref="matrixeq-spans-consistency">Note</xref>, but they are logically quite different because of the quantifier "<em>for all</em> <m>b</m>".
+        <p>Be careful when reading the statement of the above <xref ref="matrixeq-thm-full-span"/>.  The first two conditions look very much like this <xref ref="matrixeq-spans-consistency">Note</xref>, but they are logically quite different because of the quantifier <q><em>for all</em> <m>b</m></q>.
         </p>
       </warning>
 

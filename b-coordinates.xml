@@ -60,7 +60,7 @@ the license is included in gfdl.xml.
   </specialcase>
 
   <p>
-    Given the above example, it makes sense to interpret the coefficients of a linear combination of basis vectors as "coordinates" with respect to that basis.
+    Given the above example, it makes sense to interpret the coefficients of a linear combination of basis vectors as <q>coordinates</q> with respect to that basis.
   </p>
 
   <definition xml:id="dimension-defn-Bcoords">
@@ -75,7 +75,7 @@ the license is included in gfdl.xml.
   </definition>
 
   <p>
-    In the above situation, we will often say that "<m>c_1</m> is the <m>v_1</m>-coordinate of <m>x</m>", and likewise for <m>c_2,\ldots,c_m</m>.
+    In the above situation, we will often say that <q><m>c_1</m> is the <m>v_1</m>-coordinate of <m>x</m></q>, and likewise for <m>c_2,\ldots,c_m</m>.
   </p>
 
   <remark>
@@ -88,7 +88,7 @@ the license is included in gfdl.xml.
     <p>
       Let
       <me>v_1 = \vec[r]{2 -1 1} \quad v_2 = \vec[r]{1 0 -1}.</me>
-      These form a basis <m>\cB</m> for a plane <m>V = \Span\{v_1,v_2\}</m> in <m>\R^3</m>.  We indicate the coordinate system defined by <m>\cB</m> by drawing lines parallel to the "<m>v_1</m>-axis" and "<m>v_2</m>-axis":
+      These form a basis <m>\cB</m> for a plane <m>V = \Span\{v_1,v_2\}</m> in <m>\R^3</m>.  We indicate the coordinate system defined by <m>\cB</m> by drawing lines parallel to the <q><m>v_1</m>-axis</q> and <q><m>v_2</m>-axis</q>:
       <latex-code>
         \begin{tikzpicture}[myxyz, thin border nodes]
         \useasboundingbox[resetxy] (-3,-3) rectangle (3,2.3);

@@ -258,7 +258,7 @@ the license is included in gfdl.xml.
     <p>So what is <m>\R^4</m>?  or <m>\R^5</m>?  or <m>\R^n</m>?
     These are harder to visualize, so you have to go back to the definition: <m>\R^n</m> is the set of all ordered <m>n</m>-tuples of real numbers <m>(x_1,x_2,x_3,\ldots,x_n)</m>.</p>
 
-    <p>They are still "geometric" spaces, in the sense that our intuition for <m>\R^2</m> and <m>\R^3</m> often extends to <m>\R^n</m>.</p>
+    <p>They are still <q>geometric</q> spaces, in the sense that our intuition for <m>\R^2</m> and <m>\R^3</m> often extends to <m>\R^n</m>.</p>
 
     <p>We will make definitions and state theorems that apply to any <m>\R^n</m>, but we will only draw pictures for <m>\R^2</m> and <m>\R^3</m>.</p>
 
@@ -449,7 +449,7 @@ the license is included in gfdl.xml.
         3  1  -1  -2
         }
       </me>
-      Here the notation <m>R_1</m> simply means "the first row", and likewise for <m>R_2,R_3,</m> etc.
+      Here the notation <m>R_1</m> simply means <q>the first row</q>, and likewise for <m>R_2,R_3,</m> etc.
       </li>
       <li><alert>Replacement:</alert> add a multiple of one row to another, replacing the second row with the result.
       <me>

@@ -25,7 +25,7 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      Sometimes the span of a set of vectors is "smaller" than you expect from the
+      Sometimes the span of a set of vectors is <q>smaller</q> than you expect from the
 number of vectors, as in the Figure below.  This means that (at least) one of the vectors is <em>redundant</em>: it can be removed without affecting the span.  In the present section, we formalize this idea in the notion of <em>linear (in)dependence</em>.
     </p>
     <figure xml:id="linindep-intro-pic">
@@ -321,7 +321,7 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
       </statement>
       <proof>
         <p>
-          It is equivalent to show that <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent if and only if <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m> for some <m>j</m>.  The "if" implication is an immediate consequence of the previous <xref ref="linindep-criterion-redundant"/>.  Suppose then that <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent.  This means that some <m>v_j</m> is in the span of the others.  Choose the largest such <m>j</m>.  We claim that this <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m>.  If not, then
+          It is equivalent to show that <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent if and only if <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m> for some <m>j</m>.  The <q>if</q> implication is an immediate consequence of the previous <xref ref="linindep-criterion-redundant"/>.  Suppose then that <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent.  This means that some <m>v_j</m> is in the span of the others.  Choose the largest such <m>j</m>.  We claim that this <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m>.  If not, then
           <me>v_j = x_1v_1 + x_2v_2 + \cdots + x_{j-1}v_{j-1} + x_{j+1}v_{j+1} + \cdots + x_pv_p</me>
           with not all of <m>x_{j+1},\ldots,x_p</m> equal to zero.  Suppose for simplicity that <m>x_p\neq 0</m>.  Then we can rearrange:
           <me>
@@ -734,7 +734,7 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
     <title>Linear Dependence and Free Variables</title>
 
     <p>
-      In light of this <xref ref="linindep-matrix-cols"/> and this <xref ref="linindep-criterion-redundant">Criterion</xref>, it is natural to ask which columns of a matrix are "redundant", i.e., which we can remove without affecting the column span.
+      In light of this <xref ref="linindep-matrix-cols"/> and this <xref ref="linindep-criterion-redundant">Criterion</xref>, it is natural to ask which columns of a matrix are <q>redundant</q>, i.e., which we can remove without affecting the column span.
     </p>
 
     <theorem xml:id="linindep-pivot-cols">

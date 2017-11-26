@@ -23,7 +23,7 @@ the license is included in gfdl.xml.
   <subsection xml:id="subsection-echelon-forms">
     <title>Echelon Forms</title>
 
-    <p>In <xref ref="section-systems-eqns"/> we saw how to translate a system of linear equations into an augmented matrix.  We want to find an <em>algorithm</em> for "solving" such an augmented matrix.  First we must decide what it means for an augmented matrix to be "solved".</p>
+    <p>In <xref ref="section-systems-eqns"/> we saw how to translate a system of linear equations into an augmented matrix.  We want to find an <em>algorithm</em> for <q>solving</q> such an augmented matrix.  First we must decide what it means for an augmented matrix to be <q>solved</q>.</p>
 
     <definition>
       <statement>

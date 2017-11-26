@@ -80,7 +80,7 @@ the license is included in gfdl.xml.
     This means forming the augmented matrix
     <me>\def\r{\color{seq-red}}\def\g{\color{seq-green}}\def\b{\color{seq-blue}}
     \amat{\r1 \g-1 \b8; \r2 \g-2 \b16; \r6 \g-1 \b3}</me>
-    and row reducing.  Note that <em>the columns of the augmented matrix are the vectors from the original vector equation</em>, so it is not actually necessary to write the system of equations: one can go directly from the vector equation to the augmented matrix by "smooshing the vectors together".
+    and row reducing.  Note that <em>the columns of the augmented matrix are the vectors from the original vector equation</em>, so it is not actually necessary to write the system of equations: one can go directly from the vector equation to the augmented matrix by <q>smooshing the vectors together</q>.
     </p>
 
     <warning>
@@ -127,7 +127,7 @@ the license is included in gfdl.xml.
       <title>Set Builder Notation</title>
       <p>The notation
       <me>\bigl\{x_1v_1 + x_2v_2 + \cdots + x_pv_p \mid x_1,x_2,\ldots,x_p \text{ in }\R\bigr\}</me>
-      reads as: "the set of all things of the form <m>x_1v_1 + x_2v_2 + \cdots + x_pv_p</m> such that <m>x_1,x_2,\ldots,x_p</m> are in <m>\R</m>."  The vertical line is "such that"; everything to the left of it is "the set of all things of this form", and everything to the right is the condition that those things must satisfy to be in the set.  Specifying a set in this way is called <term>set builder notation</term>.
+      reads as: <q>the set of all things of the form <m>x_1v_1 + x_2v_2 + \cdots + x_pv_p</m> such that <m>x_1,x_2,\ldots,x_p</m> are in <m>\R</m>.</q>  The vertical line is <q>such that</q>; everything to the left of it is <q>the set of all things of this form</q>, and everything to the right is the condition that those things must satisfy to be in the set.  Specifying a set in this way is called <term>set builder notation</term>.
       </p>
 
       <p>All mathematical notation is only shorthand: any sequence of symbols must translate into a usual sentence.</p>
@@ -205,7 +205,7 @@ the license is included in gfdl.xml.
       <example hide-type="true">
         <title>Interactive: span of two vectors in <m>\R^2</m></title>
         <figure>
-          <caption>Interactive picture of a span of two vectors in <m>\R^2</m>.  Check "Show x.v1 + y.v2" and move the sliders to see how every point in the red region is in fact a linear combination of the two vectors.</caption>
+          <caption>Interactive picture of a span of two vectors in <m>\R^2</m>.  Check <q>Show x.v1 + y.v2</q> and move the sliders to see how every point in the red region is in fact a linear combination of the two vectors.</caption>
           <mathbox source="demos/spans.html?v1=1,2&amp;v2=1,0&amp;showPlane=true&amp;range=5&amp;labels=v,w" height="500px"/>
         </figure>
       </example>
@@ -348,7 +348,7 @@ the license is included in gfdl.xml.
       <example hide-type="true">
         <title>Interactive: span of two vectors in <m>\R^3</m></title>
         <figure>
-          <caption>Interactive picture of a span of two vectors in <m>\R^3</m>.  Check "Show x.v1 + y.v2" and move the sliders to see how every point in the red region is in fact a linear combination of the three vectors.</caption>
+          <caption>Interactive picture of a span of two vectors in <m>\R^3</m>.  Check <q>Show x.v1 + y.v2</q> and move the sliders to see how every point in the red region is in fact a linear combination of the three vectors.</caption>
           <mathbox source="demos/spans.html?v1=3,2,4&amp;v2=-4,2,1&amp;labels=v,w" height="500px"/>
         </figure>
       </example>
@@ -356,7 +356,7 @@ the license is included in gfdl.xml.
       <example hide-type="true">
         <title>Interactive: span of three vectors in <m>\R^3</m></title>
         <figure>
-          <caption>Interactive picture of a span of three vectors in <m>\R^3</m>.  Check "Show x.v1 + y.v2 + z.v3" and move the sliders to see how every point in the red region is in fact a linear combination of the three vectors.</caption>
+          <caption>Interactive picture of a span of three vectors in <m>\R^3</m>.  Check <q>Show x.v1 + y.v2 + z.v3</q> and move the sliders to see how every point in the red region is in fact a linear combination of the three vectors.</caption>
           <mathbox source="demos/spans.html?labels=v,w,u" height="500px"/>
         </figure>
       </example>

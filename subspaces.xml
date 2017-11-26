@@ -89,7 +89,7 @@ the license is included in gfdl.xml.
     </p>
 
     <remark>
-      <p>Suppose that <m>V</m> is a nonempty subset of <m>\R^n</m> that satisfies properties 2 and 3.  Let <m>v</m> be any vector in <m>V</m>.  Then <m>0v = 0</m> is in <m>V</m> by the third property, so <m>V</m> automatically satisfies property 1.  It follows that the only subset of <m>\R^n</m> that satisfies properties 2 and 3 but <em>not</em> property 1 is the empty subset <m>\{\}</m>.  This is why we call the first property "nonemptiness".
+      <p>Suppose that <m>V</m> is a nonempty subset of <m>\R^n</m> that satisfies properties 2 and 3.  Let <m>v</m> be any vector in <m>V</m>.  Then <m>0v = 0</m> is in <m>V</m> by the third property, so <m>V</m> automatically satisfies property 1.  It follows that the only subset of <m>\R^n</m> that satisfies properties 2 and 3 but <em>not</em> property 1 is the empty subset <m>\{\}</m>.  This is why we call the first property <q>nonemptiness</q>.
       </p>
     </remark>
 
@@ -238,7 +238,7 @@ the license is included in gfdl.xml.
       </statement>
       <solution>
         <p>
-          First we point out that the condition "<m>2a = 3b</m>" defines whether or not a vector is in <m>V</m>: that is, to say <m>{a\choose b}</m> is in <m>V</m> <em>means</em> that <m>2a = 3b</m>.  In other words, a vector is in <m>V</m> if twice its first coordinate equals three times its second coordinate.
+          First we point out that the condition <q><m>2a = 3b</m></q> defines whether or not a vector is in <m>V</m>: that is, to say <m>{a\choose b}</m> is in <m>V</m> <em>means</em> that <m>2a = 3b</m>.  In other words, a vector is in <m>V</m> if twice its first coordinate equals three times its second coordinate.
         </p>
 
         <p>
@@ -286,7 +286,7 @@ the license is included in gfdl.xml.
       </statement>
       <solution>
         <p>
-          First we point out that the condition "<m>ab=0</m>" defines whether or not a vector is in <m>V</m>: that is, to say <m>{a\choose b}</m> is in <m>V</m> <em>means</em> that <m>ab=0</m>.  In other words, a vector is in <m>V</m> if the product of its coordinates is zero, i.e., if one (or both) of its coordinates are zero.
+          First we point out that the condition <q><m>ab=0</m></q> defines whether or not a vector is in <m>V</m>: that is, to say <m>{a\choose b}</m> is in <m>V</m> <em>means</em> that <m>ab=0</m>.  In other words, a vector is in <m>V</m> if the product of its coordinates is zero, i.e., if one (or both) of its coordinates are zero.
         </p>
 
         <p>

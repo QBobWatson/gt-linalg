@@ -92,7 +92,7 @@ the license is included in gfdl.xml.
     </remark>
 
     <remark>
-      <p>Some authors use boldface letters to represent vectors, as in "<m>\mathbf v</m>", or use arrows, as in "<m>\oldvec v</m>".  As it is usually clear from context if a letter represents a vector, we do not decorate vectors in this way.</p>
+      <p>Some authors use boldface letters to represent vectors, as in <q><m>\mathbf v</m></q>, or use arrows, as in <q><m>\oldvec v</m></q>.  As it is usually clear from context if a letter represents a vector, we do not decorate vectors in this way.</p>
     </remark>
 
     <p>Another way to think about a vector is as a <em>difference</em> between two
@@ -322,7 +322,7 @@ the license is included in gfdl.xml.
     <example hide-type="true">
       <title>Interactive: linear combinations of three vectors</title>
       <figure>
-        <caption>Linear combinations of three vectors: move the sliders to change the coefficients of <m>v_1,v_2,v_3</m>.  Note how the parallelogram law for addition of three vectors is more of a "parallepiped law".</caption>
+        <caption>Linear combinations of three vectors: move the sliders to change the coefficients of <m>v_1,v_2,v_3</m>.  Note how the parallelogram law for addition of three vectors is more of a <q>parallepiped law</q>.</caption>
         <mathbox source="demos/spans.html?v1=2,-1,1&amp;v2=1,1,-1&amp;v3=-1,1,4&amp;range=5&amp;captions=combo" height="500px"/>
       </figure>
     </example>
@@ -371,7 +371,7 @@ the license is included in gfdl.xml.
     <example hide-type="true">
       <title>Interactive: linear combinations of two collinear vectors</title>
       <figure>
-        <caption>Linear combinations of two collinear vectors in <m>\R^2</m>.  Move the sliders to change the coefficients of <m>v_1,v_2</m>.  Note that there is no way to "escape" the line.</caption>
+        <caption>Linear combinations of two collinear vectors in <m>\R^2</m>.  Move the sliders to change the coefficients of <m>v_1,v_2</m>.  Note that there is no way to <q>escape</q> the line.</caption>
         <mathbox source="demos/spans.html?v1=2,2&amp;v2=-1,-1&amp;range=5&amp;captions=combo&amp;grid=disabled" height="400px"/>
       </figure>
     </example>
