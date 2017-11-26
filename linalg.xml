@@ -47,7 +47,7 @@ Free Documentation License"
       <xi:include href="./linindep.xml" />
       <xi:include href="./subspaces.xml" />
       <xi:include href="./dimension.xml" />
-      <xi:include href="./rank-nullity.xml" />
+      <xi:include href="./b-coordinates.xml" />
     </chapter>
 
     <chapter xml:id="chap-matrices">

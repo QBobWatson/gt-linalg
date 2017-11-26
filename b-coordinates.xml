@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<section xml:id="section-b-coordinates">
+  <title>Bases as coordinate systems</title>
+
+  <objectives>
+    <ol>
+      <li>Learn to view a basis as a coordinate system on a subspace.</li>
+      <li>Compute the coordinates of a vector with respect to a basis.</li>
+      <li>Understand <m>\cB</m>-coordinates geometrically.</li>
+      <li>Vocabulary word: <term><m>\cB</m>-coordinates</term>.</li>
+    </ol>
+  </objectives>
+
+  <p>We start with a <em>lemma</em>, which is like a theorem, but less substantial.</p>
+
+  <lemma xml:id="dimension-unique-coeff">
+    <statement>
+      <p>
+        If <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> is a basis for a subspace <m>V</m>, then any vector <m>x</m> in <m>V</m> can be written as a linear combination
+        <me>x = c_1v_1 + c_2v_2 + \cdots + c_mv_m</me>
+        for <em>unique</em> coefficients <m>c_1,c_2,\ldots,c_m</m>.
+      </p>
+    </statement>
+    <proof>
+      <p>
+        Recall that to say <m>\cB</m> is a <em>basis</em> for <m>V</m> means that <m>\cB</m> spans <m>V</m> and <m>\cB</m> is linearly independent.  Since <m>\cB</m> spans <m>V</m>, we can write any <m>x</m> in <m>V</m> as a linear combination of <m>v_1,v_2,\ldots,v_m</m>.  For uniqueness, suppose that we had two such expressions:
+        <md>
+          <mrow>x &amp;= c_1v_1 + c_2v_2 + \cdots + c_mv_m</mrow>
+          <mrow>x &amp;= c_1'v_1 + c_2'v_2 + \cdots + c_m'v_m.</mrow>
+        </md>
+        Subtracting the first equation from the second yields
+        <me>0 = x-x = (c_1-c_1')v_1 + (c_2-c_2')v_2 + \cdots + (c_m-c_m')v_m.</me>
+        Since <m>\cB</m> is linearly independent, the only solution to the above equation is the trivial solution: all the coefficients must be zero.  It follows that <m>c_i-c_i'</m> for all <m>i</m>, which proves that <m>c_1=c_1',\,c_2=c_2',\ldots,\,c_m=c_m'</m>.
+      </p>
+    </proof>
+  </lemma>
+
+  <specialcase>
+    <p>
+      Consider the standard basis of <m>\R^3</m> from this <xref ref="dimension-eg-Rn"/>:
+      <me>e_1=\vec{1 0 0},\quad e_2=\vec{0 1 0}, \quad e_3=\vec{0 0 1}.</me>
+      According to the above <xref ref="dimension-unique-coeff"/>, every vector in <m>\R^3</m> can be written as a linear combination of <m>e_1,e_2,e_3</m>, with unique coefficients.  For example,
+      <me>v = \vec{\color{seq1}3 \color{seq2}5 \color{seq3}{-2}}
+      = \textcolor{seq1}{3}\vec{1 0 0} + \textcolor{seq2}{5}\vec{0 1 0}
+      \textcolor{seq3}{{}- 2}\vec{0 0 1}
+      = \textcolor{seq1}{3}e_1 + \textcolor{seq2}{5}e_2
+      \textcolor{seq3}{{}- 2}e_3.</me>
+      In this case, <em>the coordinates of <m>v</m> are exactly the coefficients of <m>e_1,e_2,e_3</m>.</em>
+    </p>
+  </specialcase>
+
+  <p>
+    Given the above example, it makes sense to interpret the coefficients of a linear combination of basis vectors as "coordinates" with respect to that basis.
+  </p>
+
+  <definition xml:id="dimension-defn-Bcoords">
+    <statement>
+      <p>
+        Let <m>\cB=\{v_1,v_2,\ldots,v_m\}</m> be a basis of a subspace <m>V</m>, and let
+        <me>x = c_1v_1 + c_2v_2 + \cdots + c_mv_m</me>
+        be a vector in <m>V</m>.  The coefficients <m>c_1,c_2,\ldots,c_m</m> are the <term>coordinates of <m>x</m> with respect to <m>\cB</m></term>.  The <term><m>\cB</m>-coordinate vector of <m>x</m></term> is the vector
+        <me>[x]_\cB = \vec{c_1 c_2 \vdots, c_m} \quad\text{in }\R^m.</me>
+      </p>
+    </statement>
+  </definition>
+
+  <p>
+    In the above situation, we will often say that "<m>c_1</m> is the <m>v_1</m>-coordinate of <m>x</m>", and likewise for <m>c_2,\ldots,c_m</m>.
+  </p>
+
+  <remark>
+    <p>
+      The above <xref ref="dimension-defn-Bcoords"/> gives a way of using <m>\R^m</m> to <em>label</em> the points of a subspace of dimension <m>m</m>: a point is simply labeled by its <m>\cB</m>-coordinate vector.  For instance, if we choose a basis for a plane, we can label the points of that plane with the elements of <m>\R^2</m>.
+    </p>
+  </remark>
+
+  <specialcase>
+    <p>
+      Let
+      <me>v_1 = \vec[r]{2 -1 1} \quad v_2 = \vec[r]{1 0 -1}.</me>
+      These form a basis <m>\cB</m> for a plane <m>V = \Span\{v_1,v_2\}</m> in <m>\R^3</m>.  We indicate the coordinate system defined by <m>\cB</m> by drawing lines parallel to the "<m>v_1</m>-axis" and "<m>v_2</m>-axis":
+      <latex-code>
+        \begin{tikzpicture}[myxyz, thin border nodes]
+        \useasboundingbox[resetxy] (-3,-3) rectangle (3,2.3);
+
+        \def\v{(2,-1,1)}
+        \def\w{(1,0,-1)}
+
+        \node[coordinate] (X) at \v {};
+        \node[coordinate] (Y) at \w {};
+
+        \begin{scope}[x=(X), y=(Y), transformxy]
+        \fill[seq4!10, nearly opaque] (-1,-1) rectangle (1,1);
+        \draw[step=.5cm, seq4!80, thin] (-1,-1) grid (1,1);
+        \end{scope}
+
+        \begin{scope}[x=($.5*(X)$), y=($.5*(Y)$), every label/.append style={fill=none}]
+        \point[minimum size=1.5mm, seq1, "$u_1$" seq1] at (1,1);
+        \point[minimum size=1.5mm, seq2, "$u_2$" seq2] at (-1,.5);
+        \point[minimum size=1.5mm, seq3, "$u_3$" seq3] at (1.5,-.5);
+        \point[minimum size=1.5mm, seq5, "$u_4$" {seq5, right}] at (0,1.5);
+        \end{scope}
+
+        \draw[vector] (0,0,0) to["$v_1$"] ($.5*(X)$);
+        \draw[vector] (0,0,0) to["$v_2$"'] ($.5*(Y)$);
+
+        \node[x=(X),y=(Y),seq-violet] at (0,-1.2) {$V$};
+
+        \point at (0,0,0);
+        \end{tikzpicture}
+      </latex-code>
+      We can see from the picture that the <m>v_1</m>-coordinate of <m>\color{seq-red}u_1</m> is equal to <m>1</m>, as is the <m>v_2</m>-coordinate, so
+      <m>[\textcolor{seq1}{u_1}]_\cB = {1\choose 1}.</m>
+      Similarly, we have
+      <me>
+        [\textcolor{seq2}{u_2}]_\cB
+        = \vec[r]{-1 \frac 12}\qquad
+        [\textcolor{seq3}{u_3}]_\cB
+        = \vec[r]{\frac 32 -\frac 12}\qquad
+        [\textcolor{seq5}{u_4}]_\cB
+        = \vec{0 \frac 32}.
+      </me>
+    </p>
+    <figure xml:id="dimension-coordinates">
+      <caption>Left: the <m>\cB</m>-coordinates of a vector <m>x</m>.  Right: the vector <m>x</m>.  The light red grid on the right is a picture of the coordinate system defined by the basis <m>\cB</m>; one set of lines measures the <m>v_1</m>-coordinate, and the other set measures the <m>v_2</m>-coordinate.  Drag the heads of the vectors <m>x</m> and <m>[x]_\cB</m> to understand the correspondence between <m>x</m> and its <m>\cB</m>-coordinate vector.
+      </caption>
+      <mathbox source="demos/Axequalsb.html?captions=basis&amp;mat=2,1:-1,0:1,-1&amp;range2=5" height="500px"/>
+    </figure>
+  </specialcase>
+
+  <example>
+    <title>A coordinate system on a plane</title>
+    <statement>
+      <p>
+        Define
+        <me>v_1 = \vec{1 0 1},\; v_2 = \vec{1 1 1},\quad
+        \cB = \{v_1,\,v_2\}, \quad V = \Span\{v_1,\,v_2\}.</me>
+        <ol>
+          <li>Verify that <m>\cB</m> is a basis for <m>V</m>.</li>
+          <li>If <m>[w]_\cB = {5\choose 2}</m>, then what is <m>w</m>?</li>
+          <li>Find the <m>\cB</m>-coordinates of
+          <m>v = \vec{5 3 5}.</m>
+          </li>
+        </ol>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        <ol>
+          <li>
+            We need to verify that <m>\cB</m> spans <m>V</m>, and that it is linearly independent.  By definition, <m>V</m> is the span of <m>\cB</m>; since <m>v_1</m> and <m>v_2</m> are not multiples of each other, they are linearly independent.  This shows in particular that <m>V</m> is a <em>plane</em>.
+          </li>
+          <li>
+            To say <m>[w]_\cB={5\choose 2}</m> means that <m>5</m> is the <m>v_1</m>-coordinate of <m>w</m>, and that <m>2</m> is the <m>v_2</m>-coordinate:
+            <me>w = 5v_1 + 2v_2 = 5\vec{1 0 1} + 2\vec{1 1 1} = \vec{7 2 7}.</me>
+          </li>
+          <li>
+            We have to solve the vector equation <m>v=c_1v_1 + c_2v_2</m> in the unknowns <m>c_1,c_2</m>.  We form an augmented matrix and row reduce:
+            <me>\amat{1 1 5; 0 1 3; 1 1 5}
+            \quad\xrightarrow{\text{RREF}}\quad
+            \amat{1 0 2; 0 1 3; 0 0 0}.</me>
+            We have <m>c_1=2</m> and <m>c_2=3</m>, so <m>v = 2v_1+3v_2</m> and
+            <m>[v]_\cB = {2\choose 3}.</m>
+          </li>
+        </ol>
+      </p>
+      <figure xml:id="dimension-coordinates-1">
+        <caption>A picture of the plane <m>V</m> and the basis <m>\cB = \{v_1,v_2\}</m>.  The light red grid is a picture of the coordinate system defined by the basis <m>\cB</m>; one set of lines measures the <m>v_1</m>-coordinate, and the other set measures the <m>v_2</m>-coordinate.  Use the sliders to find the <m>\cB</m>-coordinates of <m>v</m>.</caption>
+        <mathbox source="demos/spans.html?v1=1,0,1&amp;v2=1,1,1&amp;target=5,3,5&amp;range=6&amp;camera=-3,0,2&amp;tlabel=v" height="500px"/>
+      </figure>
+    </solution>
+  </example>
+
+  <example>
+    <title>A coordinate system on another plane</title>
+    <statement>
+      <p>Define
+      <me>v_1 = \vec{2 3 2},\; v_2 = \vec[r]{-1 1 1},\; v_3 = \vec{2 8 6},\quad
+      V = \Span\{v_1,\,v_2,\,v_3\}.
+      </me>
+      <ol>
+        <li>Find a basis <m>\cB</m> for <m>V</m>.</li>
+        <li>Find the <m>\cB</m>-coordinates of <m>x = \vec{4 11 8}</m>.</li>
+      </ol>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        <ol>
+          <li>
+            We write <m>V</m> as the column space of a matrix <m>A</m>, then row reduce to find the pivot columns, as in this <xref ref="dimension-eg-basis-span"/>.
+            <me>A = \mat{2 -1 2; 3 1 8; 2 1 6} \quad\xrightarrow{\text{RREF}}\quad
+            \mat{1 0 2; 0 1 2; 0 0 0}.
+            </me>
+            The first two columns are pivot columns, so we can take <m>\cB=\{v_1,v_2\}</m> as our basis for <m>V</m>.
+          </li>
+          <li>
+            We have to solve the vector equation <m>x = c_1v_1 + c_2v_2</m>.  We form an augmented matrix and row reduce:
+            <me>\amat{2 -1 4; 3 1 11; 2 1 8}
+            \quad\xrightarrow{\text{RREF}}\quad
+            \amat{1 0 3; 0 1 2; 0 0 0}.</me>
+            We have <m>c_1 = 3</m> and <m>c_2 = 2</m>, so
+            <m>x=3v_1 + 2v_2</m>, and thus <m>[x]_\cB = {3\choose 2}.</m>
+          </li>
+        </ol>
+      </p>
+      <figure xml:id="dimension-coordinates-2">
+        <caption>A picture of the plane <m>V</m> and the basis <m>\cB = \{v_1,v_2\}</m>.  The light red grid is a picture of the coordinate system defined by the basis <m>\cB</m>; one set of lines measures the <m>v_1</m>-coordinate, and the other set measures the <m>v_2</m>-coordinate.  Use the sliders to find the <m>\cB</m>-coordinates of <m>x</m>.</caption>
+        <mathbox source="demos/spans.html?v1=2,3,2&amp;v2=-1,1,1&amp;target=4,11,8&amp;tlabel=x&amp;range=12&amp;camera=.5,-3,2&amp;tlabel=x" height="500px"/>
+      </figure>
+    </solution>
+  </example>
+
+  <warning>
+    <title>Summary: <m>\cB</m>-coordinates</title>
+    <p>
+      If <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> is a basis for a subspace <m>V</m> and <m>x</m> is in <m>V</m>, then
+      <me>[x]_\cB = \vec{c_1 c_2 \vdots, c_m} \quad\text{means}\quad
+      x = c_1v_1 + c_2v_2 + \cdots + c_mv_m.
+      </me>
+      Finding the <m>\cB</m>-coordinates of <m>x</m> means solving the vector equation
+      <me>x = c_1v_1 + c_2v_2 + \cdots + c_mv_m</me>
+      in the unknowns <m>c_1,c_2,\ldots,c_m</m>.  This generally means row reducing the augmented matrix
+      <me>\amat[c]{| | ,, | |; v_1 v_2 \cdots, v_m x; | | ,, | |}.</me>
+    </p>
+  </warning>
+
+  <remark>
+    <p>
+      Let <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> be a basis of a subspace <m>V</m>.
+      Finding the <m>\cB</m>-coordinates of a vector <m>x</m> means solving the vector equation
+      <me>x = c_1v_1 + c_2v_2 + \cdots + c_mv_m.</me>
+      If <m>x</m> is <em>not</em> in <m>V</m>, then this equation has no solution, as <m>x</m> is not in <m>V = \Span\{v_1,v_2,\ldots,v_m\}</m>.  In other words, the above equation is <em>inconsistent</em> when <m>x</m> is not in <m>V</m>.
+    </p>
+  </remark>
+
+</section>

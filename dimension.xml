@@ -10,8 +10,512 @@ the license is included in gfdl.xml.
 *********************************************************************-->
 
 <section xml:id="section-dimension">
-  <title>Dimension</title>
+  <title>Basis and Dimension</title>
 
-  <p>Definition of dimension and rank.</p>
+  <objectives>
+    <ol>
+      <li>Understand the definition of a basis for a subspace.</li>
+      <li>Learn to compute bases for spans, column spaces, and null spaces.</li>
+      <li>Important theorems: <em>Rank Theorem</em>, <em>Basis Theorem</em>.</li>
+      <li>Vocabulary word: <term>rank</term>.</li>
+      <li>Essential vocabulary words: <term>basis</term>, <term>dimension</term>.</li>
+    </ol>
+  </objectives>
+
+  <subsection>
+    <title>Basis of a Subspace</title>
+
+    <p>
+      As we discussed in <xref ref="section-subspaces"/>, a subspace is the same as a span, except we do not have a set of spanning vectors in mind.  There are infinitely many choices of spanning sets (except for the zero subspace <m>\{0\}</m>); to avoid reduncancy, usually it is most convenient to choose a spanning set with the <em>minimal</em> number of vectors in it.  This is the idea behind the notion of a basis.
+    </p>
+
+    <essential xml:id="dimension-defn-basis">
+      <statement>
+        <p>Let <m>V</m> be a subspace of <m>\R^n</m>.  A <term>basis</term> of <m>V</m> is a set of vectors <m>\{v_1,v_2,\ldots,v_m\}</m> in <m>V</m> such that:
+        <ol>
+          <li><m>V = \Span\{v_1,v_2,\ldots,v_m\}</m>, and</li>
+          <li>the set <m>\{v_1,v_2,\ldots,v_m\}</m> is linearly independent.</li>
+        </ol>
+        The number of vectors in a basis is the <term>dimension</term> of <m>V</m>, and is written <m>\dim V</m>.
+        </p>
+      </statement>
+    </essential>
+
+    <p>
+      Recall from this <xref ref="linindep-criterion-redundant"/> that a set of vectors is <em>linearly independent</em> if and only if, when you remove any vector from the set, the span shrinks.  In other words, if <m>\{v_1,v_2,\ldots,v_m\}</m> is a basis of a subspace <m>V</m>, then no proper subset of <m>\{v_1,v_2,\ldots,v_m\}</m> will span <m>V</m>: it is a <em>minimal</em> spanning set.
+    </p>
+
+    <warning>
+      <p>A subspace generally has <em>infinitely many</em> different bases, but they all contain the same number of vectors.</p>
+    </warning>
+
+    <p>We leave it as an exercise to prove that any two bases have the same size; one might want to wait until after learning the invertible matrix theorem in <xref ref="section-matrix-inv"/>.</p>
+
+    <example>
+      <statement>
+        <p>Let
+        <me>V = \left\{ \vec{x y z} \text{ in } \R^3\bigm| x + 3y + z = 0 \right\} \qquad
+        \cB = \left\{ \vec{-3 1 0},\;\vec{0 1 -3} \right\}.</me>
+        Verify that <m>V</m> is a subspace, and show directly that <m>\cB</m> is a basis for <m>V</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          First we observe that <m>V</m> is the solution set of the homogeneous equation <m>x + 3y + z = 0</m>, so it is a subspace: see this <xref ref="subspaces-types-of"/>.  To show that <m>\cB</m> is a basis, we really need to verify three things:
+          <ol start="0">
+            <li>Both vectors are in <m>V</m> because
+            <me>\spalignsysdelims..
+            \syseq{
+            (-3) + 3(1) + (0) = 0;
+            (0)  + 3(1) + (-3) = 0\rlap.}
+            </me>
+            </li>
+            <li>
+              <em>Span:</em> suppose that <m>\vec{x y z}</m> is in <m>V</m>.  Since <m>x + 3y + z = 0</m> we have <m>y = -\frac 13(x+z)</m>, so
+              <me>
+                \vec{x y z} = \vec{x -\frac 13(x+z) z}
+                = -\frac x3\vec{-3 1 0} - \frac z3\vec{0 1 -3}.
+              </me>
+              Hence <m>\cB</m> spans <m>V</m>.
+            </li>
+            <li>
+              <em>Linearly independent:</em>
+              <me>c_1\vec{-3 1 0} + c_2\vec{0 1 -3} = 0
+    \implies \vec{-3c_1 c_1+c_2 -3c_2} = \vec{0 0 0}
+              \implies c_1 = c_2 = 0.</me>
+              Alternatively, one can observe that the two vectors are not collinear.
+            </li>
+          </ol>
+          Since <m>V</m> has a basis with two vectors, it has dimension two: it is a <em>plane</em>.
+        </p>
+        <figure xml:id="dimension-figure-basis">
+          <caption>A picture of the plane <m>V</m> and its basis <m>\cB = \{v_1,v_2\}</m>.  Note that <m>\cB</m> spans <m>V</m> and is linearly independent.</caption>
+          <mathbox source="demos/spans.html?v1=-3,1,0&amp;v2=0,1,-3&amp;range=5&amp;captions=indep" height="500px"/>
+        </figure>
+        <p>
+          This example is somewhat contrived, in that we will learn systematic methods for verifying that a subset is a basis.  The intention is to illustrate the defining properties of a basis.
+        </p>
+      </solution>
+    </example>
+
+    <example xml:id="dimension-eg-R2">
+      <title>A basis of <m>\R^2</m></title>
+      <statement>
+        <p>Find a basis of <m>\R^2</m>.</p>
+      </statement>
+
+      <solution>
+        <p>
+          We need to find two vectors in <m>\R^2</m> that span <m>\R^2</m> and are linearly independent.  One such basis is <m>\bigl\{{1\choose 0},{0\choose 1}\bigr\}</m>:
+          <ol>
+            <li>They span because any vector <m>a\choose b</m> can be written as a linear combination of <m>{1\choose 0},{0\choose 1}</m>:
+            <me>\vec{a b} = a\vec{1 0} + b\vec{0 1}.</me>
+            </li>
+            <li>They are linearly independent: if
+            <me>x\vec{1 0} + y\vec{0 1} = \vec{x y} = \vec{0 0}</me>
+            then <m>x=y=0</m>.
+            </li>
+          </ol>
+          This shows that the plane <m>\R^2</m> has dimension 2.
+          <latex-code>
+\begin{tikzpicture}
+  \draw[grid lines] (-2,-2) grid (2,2);
+  \draw[thick vector] (0,0) -- (1,0) node[right,whitebg] {$1\choose 0$};
+  \draw[thick vector] (0,0) -- (0,1) node[above,whitebg] {$0\choose 1$};
+  \point at (0,0);
+\end{tikzpicture}
+          </latex-code>
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <title>All bases of <m>\R^2</m></title>
+      <statement>
+        <p>Find all bases of <m>\R^2</m>.</p>
+      </statement>
+
+      <solution>
+        <p>
+          We know from the previous <xref ref="dimension-eg-R2"/> that <m>\R^2</m> has dimension 2, so any basis of <m>\R^2</m> has two vectors in it.  Let <m>v_1,v_2</m> be vectors in <m>\R^2</m>, and let <m>A</m> be the matrix with columns <m>v_1,v_2</m>.
+          <ol>
+            <li>To say that <m>\{v_1,v_2\}</m> spans <m>\R^2</m> means that <m>A</m> has a pivot in every <em>row</em>: see this <xref ref="matrixeq-thm-full-span"/>.</li>
+            <li>To say that <m>\{v_1,v_2\}</m> is linearly independent means that <m>A</m> has a pivot in every <em>column</em>: see this <xref ref="linindep-matrix-cols"/>.
+            </li>
+          </ol>
+          Since <m>A</m> is a <m>2\times 2</m> matrix, it has a pivot in every row exactly when it has a pivot in every column.  Hence any two noncollinear vectors form a basis of <m>\R^2</m>.  For example,
+          <me>\left\{\vec{1 0},\;\vec{1 1}\right\}</me>
+          is a basis.
+          <latex-code>
+\begin{tikzpicture}
+  \draw[grid lines] (-2,-2) grid (2,2);
+  \draw[thick vector] (0,0) -- (1,0) node[anchor=west,whitebg] {$1\choose 0$};
+  \draw[thick vector] (0,0) -- (1,1) node[anchor=south,whitebg] {$1\choose 1$};
+  \point at (0,0);
+\end{tikzpicture}
+          </latex-code>
+        </p>
+      </solution>
+    </example>
+
+    <example xml:id="dimension-eg-Rn">
+      <title>The standard basis of <m>\R^n</m></title>
+      <p>
+        One shows exactly as in the above <xref ref="dimension-eg-R2"/> that the unit coordinate vectors
+        <me>e_1=\vec{1 0 \vdots, 0 0},\quad e_2=\vec{0 1 \vdots, 0 0}, \quad\ldots,\quad
+        e_{n-1}=\vec{0 0 \vdots, 1 0},\quad e_n=\vec{0 0 \vdots, 0 1}
+        </me>
+        form a basis for <m>\R^n</m>.  This is sometimes known as the <term>standard basis</term>.
+      </p>
+
+      <p>In particular, <m>\R^n</m> has dimension <m>n</m>.</p>
+    </example>
+
+    <specialcase>
+      <p>
+        The previous <xref ref="dimension-eg-Rn"/> implies that any basis for <m>\R^n</m> has <m>n</m> vectors in it.  Let <m>v_1,v_2,\ldots,v_n</m> be vectors in <m>\R^n</m>, and let <m>A</m> be the <m>n\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_n</m>.
+          <ol>
+            <li>To say that <m>\{v_1,v_2,\ldots,v_n\}</m> spans <m>\R^n</m> means that <m>A</m> has a pivot in every <em>row</em>: see this <xref ref="matrixeq-thm-full-span"/>.</li>
+            <li>To say that <m>\{v_1,v_2,\ldots,v_n\}</m> is linearly independent means that <m>A</m> has a pivot in every <em>column</em>: see this <xref ref="linindep-matrix-cols"/>.
+            </li>
+          </ol>
+          Since <m>A</m> is a square matrix, it has a pivot in every row if and only if it has a pivot in every column.
+          We will see in <xref ref="section-matrix-inv"/> that the above two conditions are equivalent to the <em>invertibility</em> of the matrix <m>A</m>.
+      </p>
+    </specialcase>
+
+  </subsection>
+
+  <subsection>
+    <title>Bases for Common Types of Subspaces</title>
+
+    <p>
+      Now we show how to find bases for the types of subspaces we encountered in <xref ref="section-subspaces"/>, namely: a span, the column space of a matrix, and the null space of a matrix.
+    </p>
+
+    <theorem xml:id="dimension-basis-colspace">
+      <statement>
+        <p>The pivot columns of a matrix <m>A</m> form a basis for <m>\Col(A)</m>.</p>
+      </statement>
+      <proof>
+        <p>This is a restatement of a <xref ref="linindep-pivot-cols"/>.</p>
+      </proof>
+    </theorem>
+
+    <warning>
+      <p>
+        The above Theorem is referring to the pivot columns in the <em>original</em> matrix, not its reduced row echelon form.  Indeed, a matrix and its reduced row echelon form generally have different column spaces.  For example, in the matrix <m>A</m> below:
+        <latex-code>
+            <![CDATA[
+\begin{tikzpicture}
+  \tikzset{
+    my matrix/.style={
+      matrix, math matrix,
+      column sep={2.2em,between origins},
+      every node/.append style={anchor=base east}},
+  }
+  \node (symb) {$A=\;\;\null$};
+  \path (symb.east) node[my matrix, right] (A) {
+    1  \&  2 \& 0 \& -1 \\
+    -2 \& -3 \& 4 \&  5 \\
+    2  \&  4 \& 0 \& -2 \\
+  } (A.east) ++(2cm,0) node {$\xrightarrow{\text{RREF}}$}
+    ++(2cm, 0) node[my matrix, right] (B) {
+    1 \& 0 \& -8 \& -7 \\
+    0 \& 1 \&  4 \&  3 \\
+    0 \& 0 \&  0 \&  0 \\
+  };
+  \node[fit=(A-1-1) (A-3-1), draw=orange, rounded corners] (box1) {};
+  \node[fit=(A-1-2) (A-3-2), draw=orange, rounded corners] (box2) {};
+  \path ($(box1.south)!.5!(box2.south)$) ++(0,-1cm)
+      node[blue!50, font=\small,anchor=base] (orig) {pivot columns $=$ basis};
+  \draw[->,blue!50, shorten >=1pt] (orig.north) to[out=90,in=-90] (box1.south);
+  \draw[->,blue!50, shorten >=1pt] (orig.north) to[out=90,in=-90] (box2.south);
+  \path let \p1=($(B-3-1.south)!.5!(B-3-2.south)$) in (\p1 |- orig.base)
+      node[blue!50, font=\small,anchor=base] (rref) {pivot columns in RREF};
+  \draw[->,blue!50, shorten >=1pt] (rref.north) to[out=90,in=-90] (B-3-1.south);
+  \draw[->,blue!50, shorten >=1pt] (rref.north) to[out=90,in=-90] (B-3-2.south);
+  \draw[->,
+        decoration={snake, amplitude=.4mm, segment length=1mm, post length=.5mm},
+        decorate]
+      (rref.west) -- (orig.east);
+
+\end{tikzpicture}
+            ]]>
+        </latex-code>
+        the pivot columns are the first two columns, so a basis for <m>\Col(A)</m> is
+        <me>\left\{\vec{1 -2 2},\;\vec{2 -3 4}\right\}.</me>
+      </p>
+    </warning>
+
+    <p>
+      Computing a basis for a span is the same as computing a basis for a column space.  Indeed, the span of finitely many vectors <m>v_1,v_2,\ldots,v_m</m> <em>is</em> the column space of a matrix, namely, the matrix <m>A</m> whose columns are <m>v_1,v_2,\ldots,v_m</m>:
+      <me>A = \mat{| | ,, |; v_1 v_2 \cdots, v_m; | | ,, |}.</me>
+    </p>
+
+    <example xml:id="dimension-eg-basis-span">
+      <title>A basis for a span</title>
+      <statement>
+        <p>
+          Find a basis of the subspace
+          <me>V = \Span\left\{\vec{1 -2 2},\;\vec{2 -3 4},\;\vec{0 4 0},\;\vec{-1 5 -2}\right\}.</me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The subspace <m>V</m> is the column space of the matrix
+          <me>A = \mat[r]{1 2 0 -1; -2 -3 4 5; 2 4 0 -2}.</me>
+          The reduced row echelon form of this matrix is
+          <me>\mat[r]{1 0 -8 -7; 0 1 4 3; 0 0 0 0}.</me>
+          The first two columns are pivot columns, so a basis for <m>V</m> is
+          <me>\left\{\vec{1 -2 2},\;\vec{2 -3 4}\right\}.</me>
+        </p>
+        <figure xml:id="dimension-figure-basis-2">
+          <caption>A picture of the plane <m>V</m> and its basis <m>\cB = \{v_1,v_2\}</m>.</caption>
+          <mathbox source="demos/spans.html?v1=1,-2,2&amp;v2=2,-3,4&amp;range=6&amp;captions=indep" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <example xml:id="dimension-eg-basis-span2">
+      <title>Another basis for a span</title>
+      <statement>
+        <p>
+          Find a basis of the subspace
+          <me>V = \Span\left\{\vec{1 -2 2},\;\vec{2 -3 4},\;\vec{0 4 0},\;\vec{-1 5 -2}\right\}</me>
+          which does not consist of the first two vectors, as in the previous <xref ref="dimension-eg-basis-span"/>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The point of this example is that the above <xref ref="dimension-basis-colspace"/> gives <em>one</em> basis for <m>V</m>; as always, there are infinitely more.
+        </p>
+        <p>
+          Reordering the vectors, we can express <m>V</m> as the column space of
+          <me>A' = \mat[r]{0 -1 1 2; 4 5 -2 -3; 0 -2 2 4}.</me>
+          The reduced row echelon form of this matrix is
+          <me>\mat{1 0 3/4 7/4; 0 1 -1 -2; 0 0 0 0}.</me>
+          The first two columns are pivot columns, so a basis for <m>V</m> is
+          <me>\left\{\vec{0 4 0},\;\vec{-1 5 -2}\right\}.</me>
+          These are the <em>last</em> two vectors in the given spanning set.
+        </p>
+        <figure xml:id="dimension-figure-basis-3">
+          <caption>A picture of the plane <m>V</m> and its basis <m>\cB = \{v_1,v_2\}</m>.</caption>
+          <mathbox source="demos/spans.html?v1=0,4,0&amp;v2=-1,5,-2&amp;range=6&amp;captions=indep" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <p>In order to compute a basis for the null space of a matrix, one has to find the parametric vector form of the solutions of the homogeneous equation <m>Ax=0</m>.</p>
+
+    <theorem xml:id="dimension-basis-nulspace">
+      <statement>
+        <p>The vectors attached to the free variables in the parametric vector form of the solution set of <m>Ax=0</m> form a basis for <m>\Nul(A)</m>.</p>
+      </statement>
+    </theorem>
+
+    <p>In lieu of a proof, we illustrate the Theorem with an example, and we leave it to the reader to generalize the argument.</p>
+
+    <example xml:id="dimension-eg-basis-nul">
+      <title>A basis for a null space</title>
+      <statement>
+        <p>
+          Find a basis for the null space of the matrix
+          <me>A = \mat[r]{0 -1 1 2; 4 5 -2 -3; 0 -2 2 4}.</me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The reduced row echelon form of <m>A</m> is
+          <me>\mat[r]{1 0 -8 -7; 0 1 4 3; 0 0 0 0}.</me>
+          Hence the parametric form and parametric vector form of the solutions of <m>Ax=0</m> are
+          <me>
+            \syseq{x_1 = 8x_3 + 7x_4; x_2 = -4x_3 - 3x_4; x_3 = x_3; x_4 = \. \+ x_4}
+            \quad\implies\quad
+            x = x_3\vec{8 -4 1 0} + x_4\vec{7 -3 0 1}.
+          </me>
+          Every solution of <m>Ax=0</m> has the above form for some values of <m>x_3,x_4</m>: this is the point of the parametric vector form.  It follows that
+          <me>\Nul(A) = \Span\left\{\vec{8 -4 1 0},\;\vec{7 -3 0 1}\right\}.</me>
+          Next we check linear independence.  Suppose that
+          <me>\vec{0 0 0 0} = x_3\vec{8 -4 1 0} + x_4\vec{7 -3 0 1} = \vec{8x_3+4x_4 -4x_3-3x_4 x_3 x_4}.</me>
+          Comparing the third and fourth coordinates, we see that <m>x_3=x_4=0</m>.
+          It follows that
+          <me>\left\{\vec{8 -4 1 0},\;\vec{7 -3 0 1}\right\}</me>
+          is indeed a basis for <m>\Nul(A)</m>.
+        </p>
+      </solution>
+    </example>
+
+  </subsection>
+
+  <subsection>
+    <title>The Rank Theorem and the Basis Theorem</title>
+
+    <p>In this subsection we present two important general facts about dimensions and bases.</p>
+
+    <definition>
+      <statement>
+        <p>
+          The <term>rank</term> of a matrix <m>A</m>, written <m>\rank(A)</m>, is the dimension of the column space <m>\Col(A)</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      According to this <xref ref="dimension-basis-colspace"/>, the rank of <m>A</m> is equal to the number of columns with pivots.  On the other hand, this <xref ref="dimension-basis-nulspace"/> implies that the dimension of <m>\Nul(A)</m> equals the number of free variables, which is the number of columns without pivots.  To summarize:
+      <md>
+        <mrow>\rank(A) = \dim\Col(A) &amp;= \text{the number of columns with pivots}</mrow>
+        <mrow>\dim\Nul(A) &amp;= \text{the number of free variables}</mrow>
+        <mrow>&amp;= \text{the number of coluns without pivots}</mrow>
+      </md>
+      We have proved the following Theorem.
+    </p>
+
+    <theorem type-name="Rank Theorem" hide-type="true" xml:id="rank-theorem">
+      <title>The Rank Theorem</title>
+      <statement>
+        <p>
+          If <m>A</m> is an <m>m\times n</m> matrix, then
+          <me>\rank(A) + \dim\Nul(A) = n = \text{the number of columns of $A$}.</me>
+        </p>
+      </statement>
+    </theorem>
+
+    <p>
+      In other words, for any consistent system of linear equations,
+      <me>\text{(dim of column span)} + \text{(dim of solution set)} =
+      \text{(number of variables)}.</me>
+    </p>
+
+    <example>
+      <title>The rank is 2 and the dimension of the null space is 2</title>
+      <p>
+        Consider the following matrix and its reduced row echelon form:
+        <latex-code>
+            <![CDATA[
+\begin{tikzpicture}
+  \tikzset{
+    my matrix/.style={
+      matrix, math matrix,
+      column sep={2.2em,between origins},
+      every node/.append style={anchor=base east}},
+  }
+  \node (symb) {$A=\;\;\null$};
+  \path (symb.east) node[my matrix, right] (A) {
+    1  \&  2 \& 0 \& -1 \\
+    -2 \& -3 \& 4 \&  5 \\
+    2  \&  4 \& 0 \& -2 \\
+  } (A.east) ++(2cm,0) node {$\xrightarrow{\text{RREF}}$}
+    ++(2cm, 0) node[my matrix, right] (B) {
+    1 \& 0 \& \llap{$-$}8 \& \llap{$-$}7 \\
+    0 \& 1 \&  4 \&  3 \\
+    0 \& 0 \&  0 \&  0 \\
+  };
+  \node[fit=(A-1-1) (A-3-1), draw=seq-blue, rounded corners] (box1) {};
+  \node[fit=(A-1-2) (A-3-2), draw=seq-blue, rounded corners] (box2) {};
+  \path ($(box1.south)!.5!(box2.south)$) ++(0,-1cm)
+      node[seq-blue, font=\small,anchor=base] (orig) {basis of $\Col(A)$};
+  \draw[->,seq-blue, shorten >=1pt] (orig.north) to[out=90,in=-90] (box1.south);
+  \draw[->,seq-blue, shorten >=1pt] (orig.north) to[out=90,in=-90] (box2.south);
+  \node[fit=(B-1-3) (B-3-3), draw=seq-green, rounded corners]    (box3) {};
+  \node[fit=(B-1-4) (B-3-4), draw=seq-green, rounded corners] (box4) {};
+  \path ($(box3.south)!.5!(box4.south)$) ++(0,-1cm)
+      node[seq-green, font=\small,anchor=base] (free) {free variables};
+  \draw[->,seq-green, shorten >=1pt] (free.north) to[out=90,in=-90] (box3.south);
+  \draw[->,seq-green, shorten >=1pt] (free.north) to[out=90,in=-90] (box4.south);
+\end{tikzpicture}
+            ]]>
+        </latex-code>
+        A basis for <m>\Col(A)</m> is given by the pivot columns:
+        <me>\left\{\vec{1 -2 2},\;\vec{2 -3 4}\right\},</me>
+        so <m>\rank(A) = \dim\Col(A) = 2</m>.
+      </p>
+      <p>
+        Since there are two free variables <m>x_3,x_4</m>, the null space of <m>A</m> has two vectors (see this <xref ref="dimension-eg-basis-nul"/>):
+        <me>\left\{\vec{8 -4 1 0},\;\vec{7 -3 0 1}\right\},</me>
+        so <m>\dim\Nul(A) = 2</m>.
+      </p>
+
+      <p>
+        In this case, the Rank Theorem says that <m>2 + 2 = 4</m>, where 4 is the number of columns.
+      </p>
+    </example>
+
+    <example hide-type="true">
+      <title>Interactive: rank is 1, null space has dimension 2</title>
+      <figure>
+        <caption>This <m>3\times 3</m> matrix has rank 1, and its null space has dimension 2.  The red plane on the left is the null space, and the red line on the right is the column space.</caption>
+        <mathbox source="demos/Axequalsb.html?captions=rankthm" height="500px"/>
+      </figure>
+    </example>
+
+    <example hide-type="true">
+      <title>Interactive: rank is 2, null space has dimension 1</title>
+      <figure>
+        <caption>This <m>3\times 3</m> matrix has rank 2, and its null space has dimension 1.  The red line on the left is the null space, and the red plane on the right is the column space.</caption>
+        <mathbox source="demos/Axequalsb.html?mat=1,-1,2:-1,2,4&amp;captions=rankthm" height="500px"/>
+      </figure>
+    </example>
+
+    <theorem hide-type="true" type-name="Basis Theorem" xml:id="basis-theorem">
+      <title>The Basis Theorem</title>
+      <statement>
+        <p>
+          Let <m>V</m> be a subspace of dimension <m>m</m>.  Then:
+          <ul>
+            <li>Any <m>m</m> linearly independent vectors in <m>V</m> form a basis for <m>V</m>.</li>
+            <li>Any <m>m</m> vectors that span <m>V</m> form a basis for <m>V</m>.</li>
+          </ul>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Suppose that <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> is a set of linearly independent vectors in <m>V</m>.  In order to show that <m>\cB</m> is a basis for <m>V</m>, we must prove that <m>V = \Span\{v_1,v_2,\ldots,v_m\}.</m>  If not, then there exists some vector <m>v_{m+1}</m> in <m>V</m> that is not contained in <m>\Span\{v_1,v_2,\ldots,v_m\}.</m>  By the <xref ref="linindep-increasing-span"/>, the set <m>\{v_1,v_2,\ldots,v_m,v_{m+1}\}</m> is also linearly independent.  Continuing in this way, we keep choosing vectors until we eventually do have a linearly independent spanning set: say <m>V = \Span\{v_1,v_2,\ldots,v_m,\ldots,v_{m+k}\}</m>.  Then <m>\{v_1,v_2,\ldots,v_{m+k}\}</m> is a basis for <m>V</m>, which implies that <m>\dim(V) = m+k > m</m>.  But we were assuming that <m>V</m> has dimension <m>m</m>, so <m>\cB</m> must have already been a basis.
+        </p>
+
+        <p>
+          Now suppose that <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> spans <m>V</m>.  If <m>\cB</m> is not linearly independent, then by this <xref ref="linindep-criterion-redundant"/>, we can remove some number of vectors from <m>\cB</m> without shrinking its span.  After reordering, we can assume that we removed the last <m>k</m> vectors without shrinking the span, and that we cannot remove any more. Now <m>V = \Span\{v_1,v_2,\ldots,v_{m-k}\}</m>, and <m>\{v_1,v_2,\ldots,v_{m-k}\}</m> is a basis for <m>V</m> because it is linearly independent.  This implies that <m>\dim V=m-k &lt; m</m>.  But we were assuming that <m>\dim V = m</m>, so <m>\cB</m> must have already been a basis.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      In other words, if you <em>already</em> know that <m>\dim V = m</m>, and if you have a set of <m>m</m> vectors <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> in <m>V</m>, then you only have to check <em>one</em> of:
+      <ol>
+        <li><m>\cB</m> is linearly independent, <em>or</em></li>
+        <li><m>\cB</m> spans <m>V</m>,</li>
+      </ol>
+      in order for <m>\cB</m> to be a basis of <m>V</m>.  If you did not already know that <m>\dim V = m</m>, then you would have to check <em>both</em> properties.
+    </p>
+
+    <p>For example, if <m>V</m> is a plane, then any two noncollinear vectors in <m>V</m> form a basis.</p>
+
+    <example>
+      <title>Yet another basis for a span</title>
+      <statement>
+        <p>
+          Find a basis of the subspace
+          <me>V = \Span\left\{\vec{1 -2 2},\;\vec{2 -3 4},\;\vec{0 4 0},\;\vec{-1 5 -2}\right\}</me>
+          which is different from the bases in this <xref ref="dimension-eg-basis-span"/> and this <xref ref="dimension-eg-basis-span2"/>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We know from the previous examples that <m>\dim V = 2</m>.  By the <xref ref="basis-theorem"/>, it suffices to find any two noncollinear vectors in <m>V</m>.  We write two linear combinations of the four given spanning vectors, chosen at random:
+          <me>
+            w_1 = \vec{1 -2 2} + \vec{2 -3 4} = \vec{3 -5 6} \qquad
+            w_2 = -\vec{2 -3 4} + \frac 12\vec{0 4 0} = \vec{-2 5 -4}.
+          </me>
+          Since <m>w_1,w_2</m> are not collinear, <m>\cB = \{w_1,w_2\}</m> is a basis for <m>V</m>.
+        </p>
+        <figure xml:id="dimension-figure-basis-4">
+          <caption>A picture of the plane <m>V</m> and its basis <m>\cB = \{w_1,w_2\}</m>.</caption>
+          <mathbox source="demos/spans.html?v1=3,-5,6&amp;v2=-2,5,-4&amp;range=6&amp;captions=indep&amp;labels=w1,w2" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+  </subsection>
+
 
 </section>

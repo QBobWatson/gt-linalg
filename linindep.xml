@@ -737,7 +737,7 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
       In light of this <xref ref="linindep-matrix-cols"/> and this <xref ref="linindep-criterion-redundant">Criterion</xref>, it is natural to ask which columns of a matrix are "redundant", i.e., which we can remove without affecting the column span.
     </p>
 
-    <theorem>
+    <theorem xml:id="linindep-pivot-cols">
       <statement>
         <p>
           Let <m>v_1,v_2,\ldots,v_p</m> be vectors in <m>\R^n</m>, and consider the matrix
@@ -783,6 +783,25 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
         </p>
       </proof>
     </theorem>
+
+    <p>
+      Note that it is necessary to row reduce <m>A</m> to find which are its pivot columns.  However, the span of the columns of the row reduced matrix is generally <em>not</em> equal to the span of the columns of <m>A</m>.  See <xref ref="dimension-basis-colspace"/> for a restatement of the above Theorem.
+    </p>
+
+    <example>
+      <p>
+        The matrix
+        <me>A = \mat[r]{1 2 0 -1; -2 -3 4 5; 2 4 0 -2}</me>
+        has reduced row echelon form
+        <me>\mat[r]{1 0 -8 -7; 0 1 4 3; 0 0 0 0}.</me>
+        Therefore, the first two columns of <m>A</m> are the pivot columns, so we can delete the others without changing the span:
+        <me>
+          \Span\left\{\vec{1 -2 2},\;\vec{2 -3 4}\right\}
+          = \Span\left\{\vec{1 -2 2},\;\vec{2 -3 4},\;\vec{0 4 0},\;\vec{-1 5 -2}\right\}.
+        </me>
+        Moreover, the first two columns are linearly independent.
+      </p>
+    </example>
 
     <warning>
       <title>Pivot Columns and Dimension</title>

@@ -20,6 +20,7 @@ Copyright 2017 Georgia Institute of Technology
   <cross-references text="type-hybrid">
     <type match="example" text="phrase-hybrid"/>
     <type match="theorem" text="phrase-hybrid"/>
+    <type match="lemma" text="phrase-hybrid"/>
     <type match="definition" text="phrase-hybrid"/>
     <type match="essential" text="phrase-hybrid"/>
     <type match="note" text="phrase-hybrid"/>
@@ -51,6 +52,7 @@ Copyright 2017 Georgia Institute of Technology
     \def\Span{\operatorname{Span}}
     \def\Nul{\operatorname{Nul}}
     \def\Col{\operatorname{Col}}
+    \def\rank{\operatorname{rank}}
     \definecolor{ColorEx1}{rgb}{0.2,1,0.1}
     \definecolor{ColorEx2}{rgb}{1,1,0}
     \let\To=\longrightarrow
@@ -80,7 +82,7 @@ Copyright 2017 Georgia Institute of Technology
 
     \usepackage{tikz}
     \usetikzlibrary{backgrounds}
-    \usetikzlibrary{arrows,matrix}
+    \usetikzlibrary{arrows}
     \usetikzlibrary{snakes}
     \usetikzlibrary{matrix}
     \usetikzlibrary{positioning,fit}

@@ -166,9 +166,11 @@ the license is included in gfdl.xml.
 \begin{tikzpicture}[all nodes={font=\small}]
   \tikzset{
     my matrix/.style={
-      matrix, math matrix, every node/.append style={anchor=east, minimum width=1.5em}},
+      matrix, math matrix,
+      every node/.append style={anchor=base east}},
+      column sep={2.5em,between origins},
     blue box/.style={
-      draw,thick,rounded corners,blue!50,fit=#1,inner xsep=0pt}
+      draw,thick,rounded corners,blue!50,fit=#1,inner xsep=.8mm}
     };
 
   \path node[my matrix] (m1) {
