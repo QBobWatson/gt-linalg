@@ -37,6 +37,7 @@ Copyright 2017 Georgia Institute of Technology
   <macros>
     \usepackage{color}
     \usepackage{spalign}
+    \usepackage{calc}
 
     \def\R{\mathbf R}
     \let\mathbb=\mathbf

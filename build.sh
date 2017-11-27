@@ -24,6 +24,7 @@ base_dir="$compile_dir/.."
 base_dir="$(cd "$base_dir"; pwd)"
 build_dir="$base_dir/build"
 static_dir="$build_dir/static"
+figure_img_dir="$build_dir"/figure-images
 pretex="$base_dir/gt-text-common/pretex/processtex.py"
 
 echo "Checking xml..."
@@ -66,6 +67,8 @@ python3 "$pretex" --preamble "$build_dir/preamble.tex" \
         --cache-dir pretex-cache --style-path "$compile_dir"/style \
         "$build_dir"/*.html "$build_dir"/knowl/*.html \
     || die "Can't process html!"
+mkdir "$figure_img_dir"
+cp pretex-cache/*.png "$figure_img_dir"
 
 echo "Build successful!  Open or reload"
 echo "     $build_dir/index.html"
