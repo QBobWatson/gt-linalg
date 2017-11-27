@@ -35,6 +35,7 @@
         <script src="js/demo2.js"></script>
         <script src="lib/dat.gui.min.js"></script>
         <script src="lib/screenfull.min.js"></script>
+    <script src="lib/expreval.js"></script>
 
     
 
@@ -46,10 +47,7 @@
 new Demo({}, function() {
   var cf, clipCube, coeffs, gui, params, subspace, trans, updateCaption, vectors, view;
   window.mathbox = this.mathbox;
-  coeffs = ['y', 'z'];
-  if (this.urlParams.coeffs != null) {
-    coeffs = this.urlParams.coeffs.split(",");
-  }
+  coeffs = this.urlParams.get('coeffs', 'str[]', ['y', 'z']);
   cf = function(i) {
     return params[coeffs[i]];
   };

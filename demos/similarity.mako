@@ -37,28 +37,18 @@
 
 ##################################################
 # Globals
-vectorIn1  = [-1, 1, 3]
+vectorIn1  = urlParams.get 'x', 'float[]', [-1, 1, 3]
 vectorOut1 = [0, 0, 0]
 vectorIn2  = [-1, 1, 3]
 vectorOut2 = [0, 0, 0]
 
-if urlParams.x?
-    vectorIn1 = urlParams.x.split(",").map parseFloat
-
-labels = ['v1', 'v2', 'v3']
-if urlParams.labels?
-    labels = urlParams.labels.split(',')
+labels = urlParams.get 'labels', 'str[]', ['v1', 'v2', 'v3']
 AName = urlParams.AName ? 'A'
 BName = urlParams.BName ? 'B'
 
 # A = CBC^(-1)
-B = [[2, 0], [0, 3]]
-C = [[2, 1], [1, 1]]
-
-if urlParams.B?
-    B = urlParams.B.split(":").map (s) -> s.split(",").map parseFloat
-if urlParams.C?
-    C = urlParams.C.split(":").map (s) -> s.split(",").map parseFloat
+B = urlParams.get 'B', 'matrix', [[2, 0], [0, 3]]
+C = urlParams.get 'C', 'matrix', [[2, 1], [1, 1]]
 
 size = B.length
 if size == 2
@@ -133,9 +123,7 @@ numVecs = 20
 random = ([0, 0, 0] for [0...numVecs])
 randomColors = ([0, 0, 0, 1] for [0...numVecs])
 makeRandom = null
-dynamicsMode = 'off'
-if urlParams.dynamics?
-    dynamicsMode = urlParams.dynamics
+dynamicsMode = urlParams.dynamics ? 'off'
 
 colors = [[1, 1, 0, 1], [.7, .7, 0, .7],
           [.7, 0, 0, .8], [0, .7, 0, .8], [0, .3, .9, .8],
@@ -272,9 +260,7 @@ window.demo1 = new (if size == 3 then Demo else Demo2D) {
 
     ##################################################
     # view, axes
-    @range = 5
-    if @urlParams.range1?
-        @range = parseFloat @urlParams.range1
+    @range = @urlParams.get 'range1', 'float', 5
     r = @range
     view = @view
         name:      'view1'
@@ -509,9 +495,7 @@ window.demo2 = new (if size == 3 then Demo else Demo2D) {
 
     ##################################################
     # view, axes
-    @range = 5
-    if @urlParams.range2?
-        @range = parseFloat @urlParams.range2
+    @range = @urlParams.get 'range2', 'float', 5
     r = @range
     view = @view
         name:      'view2'

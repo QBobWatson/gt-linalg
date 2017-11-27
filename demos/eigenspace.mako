@@ -31,11 +31,9 @@ ${parent.inline_style()}
 
 ##
 
-matrix = [[ 7/2,  0,  3],
-          [-3/2,  2, -3],
-          [-3/2,  0, -1]]
-if urlParams.mat?
-   matrix = urlParams.mat.split(":").map (s) -> s.split(",").map parseFloat
+matrix = urlParams.get 'mat', 'matrix', [[ 7/2,  0,  3],
+                                         [-3/2,  2, -3],
+                                         [-3/2,  0, -1]]
 size = matrix.length
 switch size
     when 2 then matrixT = ([matrix[0][i], matrix[1][i]] for i in [0...size])

@@ -35,6 +35,7 @@
         <script src="js/demo2.js"></script>
         <script src="lib/dat.gui.min.js"></script>
         <script src="lib/screenfull.min.js"></script>
+    <script src="lib/expreval.js"></script>
 
     
 
@@ -58,24 +59,12 @@ window.demo = new Demo2D({
 }, function() {
   var Params, clipCube2, clipCube3, cols, computeOut, computeProduct, folder, folderNames, folders, gridData, gui, hiliteOpts, i, inverseNames, j, labelOpts, makeSurface, matrices, matrix1, matrix1Elt, matrix2, matrix2Elt, matrix3, matrix3Elt, params, paramses, range, updateCaption, vector1, vector2, vector3, vectorOpts, view1, view2, view3, zeroOpts;
   window.mathbox = this.mathbox;
-  range = 3;
-  if (this.urlParams.range != null) {
-    range = parseFloat(this.urlParams.range);
-  }
-  vector1 = [1, 2];
-  if (this.urlParams.vec != null) {
-    vector1 = this.urlParams.vec.split(',').map(parseFloat);
-  }
+  range = this.urlParams.get('range', 'float', 3);
+  vector1 = this.urlParams.get('vec', 'float[]', [1, 2]);
   vector2 = [0, 0];
   vector3 = [0, 0];
-  matrix1 = [1, 0, 0, 1];
-  if (this.urlParams.mat1 != null) {
-    matrix1 = this.urlParams.mat1.split(",").map(parseFloat);
-  }
-  matrix2 = [1, 0, 0, 1];
-  if (this.urlParams.mat2 != null) {
-    matrix2 = this.urlParams.mat2.split(",").map(parseFloat);
-  }
+  matrix1 = this.urlParams.get('mat1', 'float[]', [1, 0, 0, 1]);
+  matrix2 = this.urlParams.get('mat2', 'float[]', [1, 0, 0, 1]);
   matrix3 = [0, 0, 0, 0];
   computeProduct = (function(_this) {
     return function() {

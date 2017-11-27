@@ -42,9 +42,7 @@ ${parent.inline_style()}
 
 ##################################################
 # globals
-vector1 = [1, 2, 2]
-if urlParams.x?
-    vector1 = urlParams.x.split(",").map parseFloat
+vector1 = urlParams.get 'x', 'float[]', [1, 2, 2]
 vector2 = [0, 0, 0]
 vector3 = [0, 0, 0]
 

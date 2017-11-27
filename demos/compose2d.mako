@@ -19,22 +19,14 @@ window.demo = new Demo2D {
 
     ##################################################
     # Demo parameters
-    range = 3
-    if @urlParams.range?
-        range = parseFloat @urlParams.range
+    range = @urlParams.get 'range', 'float', 3
 
-    vector1 = [1, 2]
-    if @urlParams.vec?
-        vector1 = @urlParams.vec.split(',').map parseFloat
+    vector1 = @urlParams.get 'vec', 'float[]', [1, 2]
     vector2 = [0, 0]
     vector3 = [0, 0]
 
-    matrix1 = [1,0,0,1]
-    if @urlParams.mat1?
-        matrix1 = @urlParams.mat1.split(",").map parseFloat
-    matrix2 = [1,0,0,1]
-    if @urlParams.mat2?
-        matrix2 = @urlParams.mat2.split(",").map parseFloat
+    matrix1 = @urlParams.get 'mat1', 'float[]', [1,0,0,1]
+    matrix2 = @urlParams.get 'mat2', 'float[]', [1,0,0,1]
     matrix3 = [0,0,0,0]
     computeProduct = () =>
         matrix3[0] = matrix2[0]*matrix1[0] + matrix2[1]*matrix1[2]

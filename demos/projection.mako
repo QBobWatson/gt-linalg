@@ -1,30 +1,19 @@
 ## -*- coffee -*-
 
-<%! roots=True %>
-
 <%inherit file="base2.mako"/>
 
 <%block name="title">Orthogonal Projection</%block>
 
 ##
 
-range = 10
-if urlParams.range?
-    range = parseFloat urlParams.range
+range = urlParams.get 'range', 'float', 10
 
-vector1 = [1,0,0]
-vector2 = [0,1,0]
-vector  = [1, 1, 0]
+vector1 = urlParams.get 'u1',  'float[]', [1,0,0]
+vector2 = urlParams.get 'u2',  'float[]', [0,1,0]
+vector  = urlParams.get 'vec', 'float[]', [1,1,0]
 numVecs = 2
-
-if urlParams.u1?
-    vector1 = urlParams.u1.split(",").map parseFloat
+if urlParams.u1? and not urlParams.u2?
     numVecs = 1
-if urlParams.u2?
-    vector2 = urlParams.u2.split(",").map parseFloat
-    numVecs = 2
-if urlParams.vec?
-    vector = urlParams.vec.split(",").map parseFloat
 
 size = vector1.length
 vector1[2] ?= 0
@@ -41,15 +30,11 @@ summand1 = [0, 0, 0]
 summand2 = [0, 0, 0]
 summands = [summand1, summand2].slice(0, numVecs)
 
-labels = ['u1', 'u2']
-if urlParams.labels?
-    labels = urlParams.labels.split ','
+labels = urlParams.get 'labels', 'str[]', ['u1', 'u2']
 labels = labels.slice(0, numVecs)
 vecLabel = urlParams.vecLabel ? 'x'
 
-subName = if numVecs == 2 then 'W' else 'L'
-if urlParams.subname
-    subName = urlParams.subname
+subName = urlParams.subname ? (if numVecs == 2 then 'W' else 'L')
 
 # Orthogonalize if necessary
 # if numVecs == 2
@@ -111,20 +96,13 @@ switch mode
         showDistance = true
         showComplement = true
         constrainToW = false
-if urlParams.basis?
-    showBasis = urlParams.basis != 'false'
-if urlParams.grid?
-    showGrid = urlParams.grid != 'false'
-if urlParams.summands?
-    showSummands = urlParams.summands != 'false'
-if urlParams.decomp?
-    showDecomp = urlParams.decomp != 'false'
-if urlParams.distance?
-    showDistance = urlParams.distance != 'false'
-if urlParams.complement?
-    showComplement = urlParams.complement != 'false'
-if urlParams.constrain?
-    constrainToW = urlParams.constrain != 'false'
+showBasis      = urlParams.get 'basis',      'bool', showBasis
+showGrid       = urlParams.get 'grid',       'bool', showGrid
+showSummands   = urlParams.get 'summands',   'bool', showSummands
+showDecomp     = urlParams.get 'decomp',     'bool', showDecomp
+showDistance   = urlParams.get 'distance',   'bool', showDistance
+showComplement = urlParams.get 'complement', 'bool', showComplement
+constrainToW   = urlParams.get 'constrain',  'bool', constrainToW
 
 window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
     window.mathbox = @mathbox

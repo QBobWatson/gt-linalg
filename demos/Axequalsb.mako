@@ -59,10 +59,8 @@ updateCaption = null
 doGrid        = null
 basisMode     = null
 
-matrix = [[ 1, -1,  2],
-          [-2,  2, -4]]
-if urlParams.mat?
-   matrix = urlParams.mat.split(":").map (s) -> s.split(",").map parseFloat
+matrix = urlParams.get 'mat', 'matrix', [[ 1, -1,  2],
+                                         [-2,  2, -4]]
 rows = matrix.length
 cols = matrix[0].length
 
@@ -104,16 +102,12 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
             doGrid     = 'on'
             @urlParams.axes = 'disabled'
 
-    if @urlParams.show? and not basisMode
-        @showSolns = if @urlParams.show == 'false' then false else true
-    if @urlParams.lock? and not basisMode
-        @lockSolns = if @urlParams.lock? then true else false
-    @range = 5
-    if @urlParams.range1?
-        @range = parseFloat @urlParams.range1
+    if not basisMode
+        @showSolns = @urlParams.get 'show', 'bool', true
+        @lockSolns = @urlParams.get 'lock', 'bool', false
+    @range = @urlParams.get 'range1', 'float', 5
 
-    if @urlParams.x?
-        vector = @urlParams.x.split(",").map parseFloat
+    vector = @urlParams.get 'x', 'float[]', vector
     vector[2] ?= 0
     vector[2] = 0 if cols == 2
 
@@ -321,9 +315,7 @@ window.demo2 = new (if rows == 3 then Demo else Demo2D) {
 
     ##################################################
     # view, axes
-    @range = 10
-    if @urlParams.range2?
-        @range = parseFloat @urlParams.range2
+    @range = @urlParams.get 'range2', 'float', 10
     r = @range
     view = @view
         name:       'view2'

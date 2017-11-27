@@ -56,6 +56,7 @@
     % if self.attr.roots:
         <script src="lib/roots.js"></script>
     % endif
+    <script src="lib/expreval.js"></script>
 
     <%block name="extra_js"/>
 

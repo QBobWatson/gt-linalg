@@ -39,6 +39,7 @@
         <script src="js/demo2.js"></script>
         <script src="lib/dat.gui.min.js"></script>
         <script src="lib/screenfull.min.js"></script>
+    <script src="lib/expreval.js"></script>
 
     
 
@@ -65,14 +66,8 @@ window.demo = new Demo2D({
 }, function() {
   var Params, axisOpts, clipCube, computeIn, computeMatrix, computeOut, drag2, eqnElt, folder, gridOpts, gui, hiliteOpts, i, inVec, inverse, j, labelOpts, matrix, numTransforms, outVec, params, paramses, ref1, updateCaption, vectorOpts, view1, view2, zeroOpts;
   window.mathbox = this.mathbox;
-  matrix = [1, 0, 0, 1];
-  if (this.urlParams.mat != null) {
-    matrix = this.urlParams.mat.split(",").map(parseFloat);
-  }
-  numTransforms = 3;
-  if (this.urlParams.num != null) {
-    numTransforms = parseInt(this.urlParams.num);
-  }
+  matrix = this.urlParams.get('mat', 'float[]', [1, 0, 0, 1]);
+  numTransforms = this.urlParams.get('num', 'int', 3);
   inverse = null;
   updateCaption = (function(_this) {
     return function() {

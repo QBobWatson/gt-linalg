@@ -1,6 +1,6 @@
 (function() {
   "use strict";
-  var Animation, Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledVectors, LinearCombo, MathboxAnimation, OrbitControls, Popup, Subspace, View, addEvents, clipFragment, clipShader, decodeQS, eigenvalues, extend, groupControls, makeTvec, orthogonalize, rowReduce, setTvec, urlParams,
+  var Animation, Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledPoints, LabeledVectors, LinearCombo, MathboxAnimation, OrbitControls, Popup, Subspace, URLParams, View, addEvents, clipFragment, clipShader, eigenvalues, evExpr, extend, groupControls, makeTvec, orthogonalize, rowReduce, setTvec, urlParams,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     slice = [].slice,
     extend1 = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
@@ -195,7 +195,7 @@
         Eb.push(x);
       }
       for (i = al = ref28 = lastPivot + 1, ref29 = n; ref28 <= ref29 ? al < ref29 : al > ref29; i = ref28 <= ref29 ? ++al : --al) {
-        if (Math.abs(Eb[i]) > 0.000001) {
+        if (Math.abs(Eb[i]) > ε) {
           return null;
         }
       }
@@ -228,25 +228,6 @@
         return findRoots(1, -a - e - i, a * e + a * i + e * i - b * d - c * g - f * h, -a * e * i - b * f * g - c * d * h + a * f * h + b * d * i + c * e * g);
     }
   };
-
-  urlParams = {};
-
-  decodeQS = function() {
-    var decode, match, pl, query, search;
-    pl = /\+/g;
-    search = /([^&=]+)=?([^&]*)/g;
-    decode = function(s) {
-      return decodeURIComponent(s.replace(pl, " "));
-    };
-    query = window.location.search.substring(1);
-    urlParams = {};
-    while (match = search.exec(query)) {
-      urlParams[decode(match[1])] = decode(match[2]);
-    }
-    return urlParams;
-  };
-
-  decodeQS();
 
   addEvents = function(cls) {
     cls.prototype.on = function(types, callback) {
@@ -302,6 +283,97 @@
   clipShader = "// Enable STPQ mapping\n#define POSITION_STPQ\nvoid getPosition(inout vec4 xyzw, inout vec4 stpq) {\n  // Store XYZ per vertex in STPQ\nstpq = xyzw;\n}";
 
   clipFragment = "// Enable STPQ mapping\n#define POSITION_STPQ\nuniform float range;\nuniform int hilite;\n\nvec4 getColor(vec4 rgba, inout vec4 stpq) {\n    stpq = abs(stpq);\n\n    // Discard pixels outside of clip box\n    if(stpq.x > range || stpq.y > range || stpq.z > range)\n        discard;\n\n    if(hilite != 0 &&\n       (range - stpq.x < range * 0.002 ||\n        range - stpq.y < range * 0.002 ||\n        range - stpq.z < range * 0.002)) {\n        rgba.xyz *= 10.0;\n        rgba.w = 1.0;\n    }\n\n    return rgba;\n}";
+
+  evExpr = function(expr) {
+    var error;
+    try {
+      return exprEval.Parser.evaluate(expr);
+    } catch (error) {
+      return 0;
+    }
+  };
+
+  URLParams = (function() {
+    function URLParams() {
+      this.get = bind(this.get, this);
+      var decode, match, pl, query, search;
+      pl = /\+/g;
+      search = /([^&=]+)=?([^&]*)/g;
+      decode = function(s) {
+        return decodeURIComponent(s.replace(pl, " "));
+      };
+      query = window.location.search.substring(1);
+      while (match = search.exec(query)) {
+        this[decode(match[1])] = decode(match[2]);
+      }
+    }
+
+    URLParams.prototype.get = function(key, type, def) {
+      var val;
+      if (type == null) {
+        type = 'str';
+      }
+      if (def == null) {
+        def = void 0;
+      }
+      val = this[key];
+      if (val != null) {
+        switch (type) {
+          case 'str':
+            return val;
+          case 'str[]':
+            return val.split(',');
+          case 'float':
+            return evExpr(val);
+          case 'float[]':
+            return val.split(',').map(evExpr);
+          case 'int':
+            return parseInt(val);
+          case 'int[]':
+            return val.split(',').map(parseInt);
+          case 'bool':
+            if (val === 'true' || val === 'yes') {
+              return true;
+            }
+            if (val === 'false' || val === 'no') {
+              return false;
+            }
+            if (def != null) {
+              return def;
+            }
+            return false;
+          case 'matrix':
+            return val.split(':').map(function(s) {
+              return s.split(',').map(evExpr);
+            });
+        }
+      } else {
+        if (def != null) {
+          return def;
+        }
+        switch (type) {
+          case 'str':
+            return '';
+          case 'float':
+            return 0.0;
+          case 'int':
+            return 0;
+          case 'str[]':
+          case 'float[]':
+          case 'int[]':
+          case 'matrix':
+            return [];
+          case 'bool':
+            return false;
+        }
+      }
+    };
+
+    return URLParams;
+
+  })();
+
+  urlParams = new URLParams();
 
   OrbitControls = (function() {
     function OrbitControls(camera, domElement) {
@@ -1340,25 +1412,28 @@
             }
           });
       }
-      view.line(lineOpts).point(pointOpts).text({
-        live: true,
-        width: 1,
-        expr: function(emit) {
-          var add, b, cc, ret;
-          ret = c(0).toFixed(2) + labels[0];
-          if (numVecs >= 2) {
-            b = Math.abs(c(1));
-            add = c(1) >= 0 ? "+" : "-";
-            ret += add + b.toFixed(2) + labels[1];
+      view.line(lineOpts).point(pointOpts);
+      if (labels != null) {
+        view.text({
+          live: true,
+          width: 1,
+          expr: function(emit) {
+            var add, b, cc, ret;
+            ret = c(0).toFixed(2) + labels[0];
+            if (numVecs >= 2) {
+              b = Math.abs(c(1));
+              add = c(1) >= 0 ? "+" : "-";
+              ret += add + b.toFixed(2) + labels[1];
+            }
+            if (numVecs >= 3) {
+              cc = Math.abs(c(2));
+              add = c(2) >= 0 ? "+" : "-";
+              ret += add + cc.toFixed(2) + labels[2];
+            }
+            return emit(ret);
           }
-          if (numVecs >= 3) {
-            cc = Math.abs(c(2));
-            add = c(2) >= 0 ? "+" : "-";
-            ret += add + cc.toFixed(2) + labels[2];
-          }
-          return emit(ret);
-        }
-      }).label(labelOpts);
+        }).label(labelOpts);
+      }
       this.combine = combine;
     }
 
@@ -2065,6 +2140,102 @@
 
   })();
 
+  LabeledPoints = (function() {
+    function LabeledPoints(view, opts1) {
+      var colors, i, l, labelOpts, labels, labelsLive, len, live, name, p, point, pointData, pointOpts, points, ref, ref1, ref2, ref3, ref4, ref5;
+      this.opts = opts1;
+      this.show = bind(this.show, this);
+      this.hide = bind(this.hide, this);
+      if (this.opts == null) {
+        this.opts = {};
+      }
+      name = (ref = this.opts.name) != null ? ref : "labeled-points";
+      points = this.opts.points;
+      colors = this.opts.colors;
+      labels = this.opts.labels;
+      live = (ref1 = this.opts.live) != null ? ref1 : true;
+      labelsLive = (ref2 = this.opts.labelsLive) != null ? ref2 : false;
+      pointOpts = {
+        id: name + "-drawn",
+        classes: [name],
+        points: "#" + name + "-points",
+        colors: "#" + name + "-colors",
+        color: "white",
+        size: 15
+      };
+      extend(pointOpts, (ref3 = this.opts.pointOpts) != null ? ref3 : {});
+      labelOpts = {
+        id: name + "-labels",
+        classes: [name],
+        points: "#" + name + "-points",
+        colors: "#" + name + "-colors",
+        color: "white",
+        outline: 2,
+        background: "black",
+        size: 15,
+        offset: [0, 25]
+      };
+      extend(labelOpts, (ref4 = this.opts.labelOpts) != null ? ref4 : {});
+      this.hidden = false;
+      pointData = [];
+      for (l = 0, len = points.length; l < len; l++) {
+        point = points[l];
+        if (point[2] == null) {
+          point[2] = 0;
+        }
+      }
+      for (i = p = 0, ref5 = points.length; 0 <= ref5 ? p < ref5 : p > ref5; i = 0 <= ref5 ? ++p : --p) {
+        pointData.push(points[i]);
+      }
+      view.array({
+        id: name + "-points",
+        channels: 3,
+        width: points.length,
+        data: pointData,
+        live: live
+      }).array({
+        id: name + "-colors",
+        channels: 4,
+        width: colors.length,
+        data: colors,
+        live: live
+      });
+      this.pts = view.point(pointOpts);
+      if (labels != null) {
+        view.text({
+          id: name + "-text",
+          live: labelsLive,
+          width: labels.length,
+          data: labels
+        });
+        this.labels = view.label(labelOpts);
+      }
+    }
+
+    LabeledPoints.prototype.hide = function() {
+      var ref;
+      if (this.hidden) {
+        return;
+      }
+      this.hidden = true;
+      this.pts.set('visible', false);
+      return (ref = this.labels) != null ? ref.set('visible', false) : void 0;
+    };
+
+    LabeledPoints.prototype.show = function() {
+      var ref;
+      if (!this.hidden) {
+        return;
+      }
+      this.hidden = false;
+      this.pts.set('visible', true);
+      return (ref = this.labels) != null ? ref.set('visible', true) : void 0;
+    };
+
+    return LabeledPoints;
+
+  })();
+
   Demo = (function() {
     function Demo(opts1, callback) {
       var cameraOpts, clearColor, clearOpacity, doFullScreen, focusDist, image, key, mathboxOpts, onPreloaded, preload, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, scaleUI, toPreload, value;
@@ -2103,8 +2274,8 @@
         up: [0, 0, 1]
       };
       extend(cameraOpts, (ref3 = this.opts.camera) != null ? ref3 : {});
-      if (((ref4 = this.opts.cameraPosFromQS) != null ? ref4 : true) && (this.urlParams.camera != null)) {
-        cameraOpts.position = this.urlParams.camera.split(",").map(parseFloat);
+      if ((ref4 = this.opts.cameraPosFromQS) != null ? ref4 : true) {
+        cameraOpts.position = this.urlParams.get('camera', 'float[]', cameraOpts.position);
       }
       focusDist = (ref5 = this.opts.focusDist) != null ? ref5 : 1.5;
       scaleUI = (ref6 = this.opts.scaleUI) != null ? ref6 : true;
@@ -2300,7 +2471,7 @@
         opts = {};
       }
       if (this.urlParams.range != null) {
-        r = parseFloat(this.urlParams.range);
+        r = this.urlParams.get('range', 'float');
         if (opts.viewRange == null) {
           opts.viewRange = [[-r, r], [-r, r], [-r, r]];
         }
@@ -2334,6 +2505,10 @@
 
     Demo.prototype.labeledVectors = function(view, opts) {
       return new LabeledVectors(view, opts);
+    };
+
+    Demo.prototype.labeledPoints = function(view, opts) {
+      return new LabeledPoints(view, opts);
     };
 
     Demo.prototype.subspace = function(opts) {
@@ -2428,7 +2603,7 @@
         opts = {};
       }
       if (this.urlParams.range != null) {
-        r = parseFloat(this.urlParams.range);
+        r = this.urlParams.get('range', 'float');
         if (opts.viewRange == null) {
           opts.viewRange = [[-r, r], [-r, r]];
         }

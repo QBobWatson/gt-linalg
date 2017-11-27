@@ -119,7 +119,7 @@ rowReduce = (M, opts) ->
             x += E[j][i] * b[j] for j in [0...m]
             Eb.push x
         for i in [lastPivot+1...n]
-            return null if Math.abs(Eb[i]) > 0.000001
+            return null if Math.abs(Eb[i]) > ε
         ret = (0 for [0...n])
         for [row, col] in pivots
             ret[col] = Eb[row]
@@ -139,18 +139,6 @@ eigenvalues = (mat) ->
             [[a, b, c], [d, e, f], [g, h, i]] = mat
             return findRoots 1, -a-e-i, a*e + a*i + e*i - b*d - c*g - f*h,
                 -a*e*i - b*f*g - c*d*h + a*f*h + b*d*i + c*e*g,
-
-urlParams = {}
-decodeQS = () ->
-    pl = /\+/g
-    search = /([^&=]+)=?([^&]*)/g
-    decode = (s) -> decodeURIComponent s.replace pl, " "
-    query = window.location.search.substring 1
-    urlParams = {}
-    while match = search.exec query
-        urlParams[decode match[1]] = decode match[2]
-    urlParams
-decodeQS()
 
 # Poor man's listen / trigger mix-in
 addEvents = (cls) ->
@@ -221,6 +209,77 @@ clipFragment = \
         return rgba;
     }
     """
+
+
+################################################################################
+# * URL param parsing
+
+evExpr = (expr) ->
+    try return exprEval.Parser.evaluate expr
+    catch
+        0
+
+class URLParams
+    constructor: () ->
+        pl = /\+/g
+        search = /([^&=]+)=?([^&]*)/g
+        decode = (s) -> decodeURIComponent s.replace pl, " "
+        query = window.location.search.substring 1
+        while match = search.exec query
+            @[decode match[1]] = decode match[2]
+
+    # 'type' is for type conversion
+    # Possibilities are:
+    #   str
+    #   str[] (,-separated)
+    #   int
+    #   int[] (,-separated)
+    #   float
+    #   float[] (,-separated)
+    #   matrix (, and :-separated)
+    #   bool (true/yes false/no; other values give the default)
+    get: (key, type='str', def=undefined) =>
+        val = @[key]
+        if val?
+            switch type
+                when 'str'
+                    return val
+                when 'str[]'
+                    return val.split ','
+                when 'float'
+                    return evExpr val
+                when 'float[]'
+                    return val.split(',').map evExpr
+                when 'int'
+                    return parseInt val
+                when 'int[]'
+                    return val.split(',').map parseInt
+                when 'bool'
+                    if val in ['true', 'yes']
+                        return true
+                    if val in ['false', 'no']
+                        return false
+                    if def?
+                        return def
+                    return false
+                when 'matrix'
+                    return val.split(':').map (s) -> s.split(',').map evExpr
+        else
+            if def?
+                return def
+            switch type
+                when 'str'
+                    return ''
+                when 'float'
+                    return 0.0
+                when 'int'
+                    return 0
+                when 'str[]', 'float[]', 'int[]', 'matrix'
+                    return []
+                when 'bool'
+                    return false
+
+urlParams = new URLParams()
 
 
 ################################################################################
@@ -1137,23 +1196,26 @@ class LinearCombo
 
         view
             .line lineOpts
-            # Label
             .point pointOpts
-            .text
-                live:  true
-                width: 1
-                expr: (emit) ->
-                    ret = c(0).toFixed(2) + labels[0]
-                    if numVecs >= 2
-                        b = Math.abs c(1)
-                        add = if c(1) >= 0 then "+" else "-"
-                        ret += add + b.toFixed(2) + labels[1]
-                    if numVecs >= 3
-                        cc = Math.abs c(2)
-                        add = if c(2) >= 0 then "+" else "-"
-                        ret += add + cc.toFixed(2) + labels[2]
-                    emit ret
-            .label labelOpts
+
+        if labels?
+            view
+                # Label
+                .text
+                    live:  true
+                    width: 1
+                    expr: (emit) ->
+                        ret = c(0).toFixed(2) + labels[0]
+                        if numVecs >= 2
+                            b = Math.abs c(1)
+                            add = if c(1) >= 0 then "+" else "-"
+                            ret += add + b.toFixed(2) + labels[1]
+                        if numVecs >= 3
+                            cc = Math.abs c(2)
+                            add = if c(2) >= 0 then "+" else "-"
+                            ret += add + cc.toFixed(2) + labels[2]
+                        emit ret
+                .label labelOpts
 
         @combine = combine
 
@@ -1668,6 +1730,7 @@ class ClipCube
 #     colors: colors to draw the vectors
 #     labels: labels for the vectors
 #     live: if the vectors can move
+#     labelsLive: if the labels can change
 #     vectorOpts: passed to mathbox.vector
 #     labelOpts: passed to mathbox.label
 #     zeroPoints: draw a point when a vector is zero
@@ -1809,6 +1872,97 @@ class LabeledVectors
 
 
 ################################################################################
+# * Labeled points
+
+# Constructs mathbox primitives for points with labels
+# Options:
+#     name: ids begin with "#{name}-"
+#     points: positions of points to draw (dynamic array)
+#     colors: colors to draw the points
+#     labels: labels for the points
+#     live: if the points can move
+#     labelsLive: if the labels can change
+#     pointOpts: passed to mathbox.vector
+#     labelOpts: passed to mathbox.label
+#
+# In 2D, this adds a zero final coordinate to the vectors if necessary
+
+class LabeledPoints
+    constructor: (view, @opts) ->
+        @opts ?= {}
+        name    = @opts.name ? "labeled-points"
+        points  = @opts.points
+        colors  = @opts.colors
+        labels  = @opts.labels
+        live    = @opts.live ? true
+        labelsLive = @opts.labelsLive ? false
+        pointOpts =
+            id:      "#{name}-drawn"
+            classes: [name]
+            points:  "##{name}-points"
+            colors:  "##{name}-colors"
+            color:   "white"
+            size:    15
+        extend pointOpts, @opts.pointOpts ? {}
+        labelOpts =
+            id:         "#{name}-labels"
+            classes:    [name]
+            points:     "##{name}-points"
+            colors:     "##{name}-colors"
+            color:      "white"
+            outline:    2
+            background: "black"
+            size:       15
+            offset:     [0, 25]
+        extend labelOpts, @opts.labelOpts ? {}
+
+        @hidden = false
+
+        pointData = []
+        # Extend to 3D
+        point[2] ?= 0 for point in points
+        for i in [0...points.length]
+            pointData.push points[i]
+
+        # vectors
+        view
+            .array
+                id:       "#{name}-points"
+                channels: 3
+                width:    points.length
+                data:     pointData
+                live:     live
+            .array
+                id:       "#{name}-colors"
+                channels: 4
+                width:    colors.length
+                data:     colors
+                live:     live
+        @pts = view.point pointOpts
+
+        # Labels
+        if labels?
+            view
+                .text
+                    id:    "#{name}-text"
+                    live:  labelsLive
+                    width: labels.length
+                    data:  labels
+            @labels = view.label labelOpts
+
+    hide: () =>
+        return if @hidden
+        @hidden = true
+        @pts.set 'visible', false
+        @labels?.set 'visible', false
+    show: () =>
+        return unless @hidden
+        @hidden = false
+        @pts.set 'visible', true
+        @labels?.set 'visible', true
+
+
+################################################################################
 # * Demo
 
 # Class for constructing components common to the demos
@@ -1848,8 +2002,8 @@ class Demo
             lookAt:   [0, 0, 0]
             up:       [0, 0, 1]
         extend cameraOpts, @opts.camera ? {}
-        if @opts.cameraPosFromQS ? true and @urlParams.camera?
-            cameraOpts.position = @urlParams.camera.split(",").map parseFloat
+        if @opts.cameraPosFromQS ? true
+            cameraOpts.position = @urlParams.get 'camera', 'float[]', cameraOpts.position
         focusDist    = @opts.focusDist  ? 1.5
         scaleUI      = @opts.scaleUI    ? true
         doFullScreen = @opts.fullscreen ? true
@@ -1975,7 +2129,7 @@ class Demo
     view: (opts) ->
         opts ?= {}
         if @urlParams.range?
-            r = parseFloat @urlParams.range
+            r = @urlParams.get 'range', 'float'
             opts.viewRange ?= [[-r, r], [-r, r], [-r, r]]
         new View(@mathbox, opts).view
 
@@ -1986,6 +2140,7 @@ class Demo
     linearCombo: (view, opts) -> new LinearCombo view, opts
     grid: (view, opts) -> new Grid view, opts
     labeledVectors: (view, opts) -> new LabeledVectors view, opts
+    labeledPoints: (view, opts) -> new LabeledPoints view, opts
     subspace: (opts) -> new Subspace opts
 
     animate: (element, opts) =>
@@ -2032,7 +2187,7 @@ class Demo2D extends Demo
     view: (opts) ->
         opts ?= {}
         if @urlParams.range?
-            r = parseFloat @urlParams.range
+            r = @urlParams.get 'range', 'float'
             opts.viewRange ?= [[-r, r], [-r, r]]
         else
             opts.viewRange ?= [[-10, 10], [-10, 10]]

@@ -26,7 +26,7 @@
 
 ##################################################
 # Globals
-vector1 = [-1, 2, 3]
+vector1 = urlParams.get 'x', 'float[]', [-1, 2, 3]
 vector2 = [0, 0, 0]
 vector3 = [0, 0, 0]
 
@@ -34,19 +34,12 @@ color1 = [0, 1, 0, 1]
 color2 = [1, 0, 1, 1]
 color3 = [1, 1, 0, 1]
 
-if urlParams.x?
-    vector1 = urlParams.x.split(",").map parseFloat
-
-matrix1 = [[1, 0, 0],
-           [0, 1, 0],
-           [0, 0, 1]]
-if urlParams.mat1?
-   matrix1 = urlParams.mat1.split(":").map (s) -> s.split(",").map parseFloat
-matrix2 = [[1, 0, 0],
-           [0, 1, 0],
-           [0, 0, 1]]
-if urlParams.mat2?
-   matrix2 = urlParams.mat2.split(":").map (s) -> s.split(",").map parseFloat
+matrix1 = urlParams.get 'mat1', 'matrix', [[1, 0, 0],
+                                           [0, 1, 0],
+                                           [0, 0, 1]]
+matrix2 = urlParams.get 'mat2', 'matrix', [[1, 0, 0],
+                                           [0, 1, 0],
+                                           [0, 0, 1]]
 
 dim1 = matrix1[0].length
 dim2 = matrix2[0].length
@@ -104,10 +97,10 @@ tMatrix2.set matrix2[0][0], matrix2[1][0], matrix2[2][0],
 ##################################################
 # gui
 params =
-    Axes: if urlParams.axes == "false" then false else true
-params["range U"]  = if urlParams.rangeU?  then true else false
-params["range T"]  = if urlParams.rangeT?  then true else false
-params["range TU"] = if urlParams.rangeTU? then true else false
+    Axes: urlParams.get 'axes', 'bool', true
+params["range U"]  = urlParams.get 'rangeU',  'bool', true
+params["range T"]  = urlParams.get 'rangeT',  'bool', true
+params["range TU"] = urlParams.get 'rangeTU', 'bool', true
 
 gui = new dat.GUI()
 gui.add(params, 'Axes').onFinishChange (val) ->
@@ -145,9 +138,7 @@ setupDemo = (opts) ->
 
         ##################################################
         # Demo parameters
-        range = 10.0
-        if urlParams["range#{@index}"]?
-            range = parseFloat urlParams["range#{@index}"]
+        range = urlParams.get "range#{@index}", 'float', 10.0
 
         ##################################################
         # view, axes

@@ -114,6 +114,7 @@ html, body {
         <script src="js/demo2.js"></script>
         <script src="lib/dat.gui.min.js"></script>
         <script src="lib/screenfull.min.js"></script>
+    <script src="lib/expreval.js"></script>
 
     
 
@@ -148,13 +149,7 @@ doGrid = null;
 
 basisMode = null;
 
-matrix = [[1, -1, 2], [-2, 2, -4]];
-
-if (urlParams.mat != null) {
-  matrix = urlParams.mat.split(":").map(function(s) {
-    return s.split(",").map(parseFloat);
-  });
-}
+matrix = urlParams.get('mat', 'matrix', [[1, -1, 2], [-2, 2, -4]]);
 
 rows = matrix.length;
 
@@ -206,19 +201,12 @@ window.demo1 = new (cols === 3 ? Demo : Demo2D)({
       doGrid = 'on';
       this.urlParams.axes = 'disabled';
   }
-  if ((this.urlParams.show != null) && !basisMode) {
-    this.showSolns = this.urlParams.show === 'false' ? false : true;
+  if (!basisMode) {
+    this.showSolns = this.urlParams.get('show', 'bool', true);
+    this.lockSolns = this.urlParams.get('lock', 'bool', false);
   }
-  if ((this.urlParams.lock != null) && !basisMode) {
-    this.lockSolns = this.urlParams.lock != null ? true : false;
-  }
-  this.range = 5;
-  if (this.urlParams.range1 != null) {
-    this.range = parseFloat(this.urlParams.range1);
-  }
-  if (this.urlParams.x != null) {
-    vector = this.urlParams.x.split(",").map(parseFloat);
-  }
+  this.range = this.urlParams.get('range1', 'float', 5);
+  vector = this.urlParams.get('x', 'float[]', vector);
   if (vector[2] == null) {
     vector[2] = 0;
   }
@@ -460,10 +448,7 @@ window.demo2 = new (rows === 3 ? Demo : Demo2D)({
 }, function() {
   var clipCube, colors, computeIn, diff, labels, onDrag, r, snapThreshold, snapped, subspace, tmpVec, vectors, view;
   window.mathbox2 = this.mathbox;
-  this.range = 10;
-  if (this.urlParams.range2 != null) {
-    this.range = parseFloat(this.urlParams.range2);
-  }
+  this.range = this.urlParams.get('range2', 'float', 10);
   r = this.range;
   view = this.view({
     name: 'view2',

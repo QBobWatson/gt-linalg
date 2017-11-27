@@ -27,12 +27,8 @@ window.demo = new Demo2D {
 
     ##################################################
     # Demo parameters
-    matrix = [1,0,0,1]
-    if @urlParams.mat?
-        matrix = @urlParams.mat.split(",").map parseFloat
-    numTransforms = 3
-    if @urlParams.num?
-        numTransforms = parseInt @urlParams.num
+    matrix = @urlParams.get 'mat', 'float[]', [1,0,0,1]
+    numTransforms = @urlParams.get 'num', 'int', 3
 
     ##################################################
     # gui

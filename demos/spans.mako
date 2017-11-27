@@ -80,12 +80,12 @@ window.demo = new (if is2D then Demo2D else Demo) {
     ##################################################
     # Demo parameters: defaults and urlParams
     @numVecs  = 3
-    @vector1  = [5, 3, -2]
-    @vector2  = [3, -4, 1]
-    @vector3  = [-1, 1, 7]
-    @labels   = ['v1', 'v2', 'v3']
-    @coeffs   = ['x', 'y', 'z']
-    @lcstart  = [1.0, 1.0, 1.0]
+    @vector1  = @urlParams.get 'v1', 'float[]', [5, 3, -2]
+    @vector2  = @urlParams.get 'v2', 'float[]', [3, -4, 1]
+    @vector3  = @urlParams.get 'v3', 'float[]', [-1, 1, 7]
+    @labels   = @urlParams.get 'labels', 'str[]', ['v1', 'v2', 'v3']
+    @coeffs   = @urlParams.get 'coeffs', 'str[]', ['x', 'y', 'z']
+    @lcstart  = @urlParams.get 'lcstart', 'float[]', [1.0, 1.0, 1.0]
     @colors   = [[1, 0.3, 1, 1],
                  [0,   1, 0, 1],
                  [1,   1, 0, 1]]
@@ -93,42 +93,34 @@ window.demo = new (if is2D then Demo2D else Demo) {
     @target = null
     @targetColor = [1, 1, 1, 1]
     @doComplement = false
+    @hideSpace = false
 
     if @urlParams.v1?
         @numVecs = 1
-        @vector1 = @urlParams.v1.split(",").map parseFloat
     if @urlParams.v2?
         @numVecs = 2
-        @vector2 = @urlParams.v2.split(",").map parseFloat
     if @urlParams.v3?
         @numVecs = 3
-        @vector3 = @urlParams.v3.split(",").map parseFloat
-    if @urlParams.labels?
-        @labels = @urlParams.labels.split ","
-    if @urlParams.coeffs?
-        @coeffs = @urlParams.coeffs.split ","
-    if @urlParams.lcstart?
-        @lcstart = @urlParams.lcstart.split(",").map parseFloat
     if @urlParams.target?
-        @target = @urlParams.target.split(",").map parseFloat
+        @target = @urlParams.get 'target', 'float[]'
         @doTarget = true
         # Existence of a target by default puts us into "linear combination" mode
         @urlParams.lincombo  ?= 'on'
         @urlParams.captions  ?= 'target'
         @urlParams.nomove    ?= 'true'
         @urlParams.grid      ?= 'on'
-        @urlParams.hidespace ?= 'true'
+        @hideSpace = true
     else if @urlParams.captions == 'combo'
         @urlParams.lincombo  ?= 'on'
         @urlParams.grid      ?= 'on'
-        @urlParams.hidespace ?= 'true'
+        @hideSpace = true
     else if @urlParams.captions == 'orthog'
         @urlParams.lincombo  ?= 'disabled'
         @urlParams.grid      ?= 'disabled'
         @doComplement = true
     @targetLabel = @urlParams.tlabel ? 'w'
 
-    @hideSpace = @urlParams.hidespace? and @urlParams.hidespace != 'false'
+    @hideSpace = @urlParams.get 'hidespace', 'bool', @hideSpace
 
     @vectors = [@vector1, @vector2, @vector3][0...@numVecs]
     @colors  = @colors[0...@numVecs]
@@ -245,7 +237,7 @@ window.demo = new (if is2D then Demo2D else Demo) {
 
     ##################################################
     # Subspace
-    range = if @urlParams.range? then parseFloat @urlParams.range else 10.0
+    range = @urlParams.get 'range', 'float', 10
     snapThreshold = 1.0 * range / 10.0
     zeroThreshold = 0.00001
 

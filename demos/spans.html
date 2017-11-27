@@ -70,6 +70,7 @@
         <script src="js/demo2.js"></script>
         <script src="lib/dat.gui.min.js"></script>
         <script src="lib/screenfull.min.js"></script>
+    <script src="lib/expreval.js"></script>
 
     
 
@@ -91,43 +92,32 @@ window.demo = new (is2D ? Demo2D : Demo)({
     }
   }
 }, function() {
-  var base, base1, base2, base3, base4, base5, base6, base7, base8, base9, c, checkLabel, clipCube, coeff, complElt, complement, complementColor, diff, eqnElt, gui, guiElts, j, k, l, lColors, lLabels, lVectors, labels, len, len1, len2, linCombo, onDrag, params, popup, range, ref1, ref2, ref3, ref4, ref5, ref6, self, snap, snapThreshold, snapped, spaceElt, spanElt, ss0, ss1, ss2, ss3, str, subspace, subspaces, successElt, surfaceColor, types, updateCaption, updateMesh, vec, vectorsElt, view, zeroThreshold;
+  var base, base1, base2, base3, base4, base5, base6, base7, c, checkLabel, clipCube, coeff, complElt, complement, complementColor, diff, eqnElt, gui, guiElts, j, k, l, lColors, lLabels, lVectors, labels, len, len1, len2, linCombo, onDrag, params, popup, range, ref1, ref2, ref3, ref4, ref5, ref6, self, snap, snapThreshold, snapped, spaceElt, spanElt, ss0, ss1, ss2, ss3, str, subspace, subspaces, successElt, surfaceColor, types, updateCaption, updateMesh, vec, vectorsElt, view, zeroThreshold;
   window.mathbox = this.mathbox;
   this.numVecs = 3;
-  this.vector1 = [5, 3, -2];
-  this.vector2 = [3, -4, 1];
-  this.vector3 = [-1, 1, 7];
-  this.labels = ['v1', 'v2', 'v3'];
-  this.coeffs = ['x', 'y', 'z'];
-  this.lcstart = [1.0, 1.0, 1.0];
+  this.vector1 = this.urlParams.get('v1', 'float[]', [5, 3, -2]);
+  this.vector2 = this.urlParams.get('v2', 'float[]', [3, -4, 1]);
+  this.vector3 = this.urlParams.get('v3', 'float[]', [-1, 1, 7]);
+  this.labels = this.urlParams.get('labels', 'str[]', ['v1', 'v2', 'v3']);
+  this.coeffs = this.urlParams.get('coeffs', 'str[]', ['x', 'y', 'z']);
+  this.lcstart = this.urlParams.get('lcstart', 'float[]', [1.0, 1.0, 1.0]);
   this.colors = [[1, 0.3, 1, 1], [0, 1, 0, 1], [1, 1, 0, 1]];
   this.doTarget = false;
   this.target = null;
   this.targetColor = [1, 1, 1, 1];
   this.doComplement = false;
+  this.hideSpace = false;
   if (this.urlParams.v1 != null) {
     this.numVecs = 1;
-    this.vector1 = this.urlParams.v1.split(",").map(parseFloat);
   }
   if (this.urlParams.v2 != null) {
     this.numVecs = 2;
-    this.vector2 = this.urlParams.v2.split(",").map(parseFloat);
   }
   if (this.urlParams.v3 != null) {
     this.numVecs = 3;
-    this.vector3 = this.urlParams.v3.split(",").map(parseFloat);
-  }
-  if (this.urlParams.labels != null) {
-    this.labels = this.urlParams.labels.split(",");
-  }
-  if (this.urlParams.coeffs != null) {
-    this.coeffs = this.urlParams.coeffs.split(",");
-  }
-  if (this.urlParams.lcstart != null) {
-    this.lcstart = this.urlParams.lcstart.split(",").map(parseFloat);
   }
   if (this.urlParams.target != null) {
-    this.target = this.urlParams.target.split(",").map(parseFloat);
+    this.target = this.urlParams.get('target', 'float[]');
     this.doTarget = true;
     if ((base = this.urlParams).lincombo == null) {
       base.lincombo = 'on';
@@ -141,30 +131,26 @@ window.demo = new (is2D ? Demo2D : Demo)({
     if ((base3 = this.urlParams).grid == null) {
       base3.grid = 'on';
     }
-    if ((base4 = this.urlParams).hidespace == null) {
-      base4.hidespace = 'true';
-    }
+    this.hideSpace = true;
   } else if (this.urlParams.captions === 'combo') {
-    if ((base5 = this.urlParams).lincombo == null) {
-      base5.lincombo = 'on';
+    if ((base4 = this.urlParams).lincombo == null) {
+      base4.lincombo = 'on';
     }
-    if ((base6 = this.urlParams).grid == null) {
-      base6.grid = 'on';
+    if ((base5 = this.urlParams).grid == null) {
+      base5.grid = 'on';
     }
-    if ((base7 = this.urlParams).hidespace == null) {
-      base7.hidespace = 'true';
-    }
+    this.hideSpace = true;
   } else if (this.urlParams.captions === 'orthog') {
-    if ((base8 = this.urlParams).lincombo == null) {
-      base8.lincombo = 'disabled';
+    if ((base6 = this.urlParams).lincombo == null) {
+      base6.lincombo = 'disabled';
     }
-    if ((base9 = this.urlParams).grid == null) {
-      base9.grid = 'disabled';
+    if ((base7 = this.urlParams).grid == null) {
+      base7.grid = 'disabled';
     }
     this.doComplement = true;
   }
   this.targetLabel = (ref1 = this.urlParams.tlabel) != null ? ref1 : 'w';
-  this.hideSpace = (this.urlParams.hidespace != null) && this.urlParams.hidespace !== 'false';
+  this.hideSpace = this.urlParams.get('hidespace', 'bool', this.hideSpace);
   this.vectors = [this.vector1, this.vector2, this.vector3].slice(0, this.numVecs);
   this.colors = this.colors.slice(0, this.numVecs);
   this.labels = this.labels.slice(0, this.numVecs);
@@ -297,7 +283,7 @@ window.demo = new (is2D ? Demo2D : Demo)({
   });
   clipCube.installMesh();
   clipCube.uniforms.hilite.value = !params.Grid;
-  range = this.urlParams.range != null ? parseFloat(this.urlParams.range) : 10.0;
+  range = this.urlParams.get('range', 'float', 10);
   snapThreshold = 1.0 * range / 10.0;
   zeroThreshold = 0.00001;
   subspace = this.subspace({

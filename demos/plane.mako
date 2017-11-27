@@ -9,10 +9,7 @@
 new Demo {}, () ->
     window.mathbox = @mathbox
 
-    coeffs = ['y', 'z']
-    if @urlParams.coeffs?
-        coeffs = @urlParams.coeffs.split ","
-
+    coeffs = @urlParams.get 'coeffs', 'str[]', ['y', 'z']
     cf = (i) -> params[coeffs[i]]
 
     updateCaption = () =>
