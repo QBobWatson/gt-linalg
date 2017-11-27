@@ -269,7 +269,7 @@ the license is included in gfdl.xml.
         In the equation <m>Ax=b</m>, the input vector <m>x</m> and the output vector <m>b</m> are both in <m>\R^2</m>.
         First we multiply <m>A</m> by a vector to see what it does:
         <me>A\vec{x y} = \mat{0 -1; 1 0}\vec{x y} = \vec{-y x}.</me>
-        We substitute a few test points in order to understand what this transformation does:
+        We substitute a few test points in order to understand the geometry of the transformation:
         <latex-code>
 \def\arcarrow#1;{
   \pgfmathanglebetweenpoints{\pgfpoint{0cm}{0cm}}{\pgfpointanchor{#1}{center}}
@@ -387,7 +387,7 @@ the license is included in gfdl.xml.
             <m>\R^m</m> is called the <term>codomain</term> of <m>T</m>.
           </li>
           <li>
-            For <m>x</m> in <m>\R^n</m>, the vector <m>T(x)</m> in <m>\R^m</m> is the <term>image</term> of <m>x</m> under <m>T</m>.  The notation <m>x\mapsto y</m> means <q><m>y</m> is the image of <m>x</m> under <m>T</m></q>.
+            For <m>x</m> in <m>\R^n</m>, the vector <m>T(x)</m> in <m>\R^m</m> is the <term>image</term> of <m>x</m> under <m>T</m>.  The notation <m>x\mapsto y</m> means <q><m>y</m> is the image of <m>x</m> under <m>T</m>,</q> i.e., that <m>y = T(x)</m>.
           </li>
           <li>
             The set of all images <m>\{T(x)\mid x\text{ in }\R^n\}</m> is the <term>range</term> of <m>T</m>.
@@ -501,7 +501,7 @@ the license is included in gfdl.xml.
 \end{tikzpicture}
             ]]>
     </latex-code>
-    The elements of the domain <m>\R^n</m> are the <em>inputs</em> of <m>T</m>: this simply means that it makes sense to evaluate <m>T</m> on lists of <m>n</m> numbers.  Likewise, the elements of the codomain <m>\R^m</m> are the <em>outputs</em> of <m>T</m>; this means that the result of evaluating <m>T</m> is always a list of <m>m</m> numbers.
+    The elements of the domain <m>\R^n</m> are the <em>inputs</em> of <m>T</m>: this simply means that it makes sense to evaluate <m>T</m> on lists of <m>n</m> numbers.  Likewise, the elements of the codomain <m>\R^m</m> are the <em>outputs</em> of <m>T</m>: this means that the result of evaluating <m>T</m> is always a list of <m>m</m> numbers.
 </p>
 
 <p>
@@ -511,7 +511,7 @@ the license is included in gfdl.xml.
   <example>
     <title>A Function of one variable</title>
     <p>
-      Most of the functions you may have seen have domain and codomain equal to <m>\R = \R^1</m>.  For example,
+      Most of the functions you may have seen in previous courses have domain and codomain equal to <m>\R = \R^1</m>.  For example,
       <me>\sin\colon\R\To\R \qquad \sin(x) =
   \left(\,\parbox{5cm}{
     the length of the opposite edge over the hypotenuse of a right
@@ -565,7 +565,7 @@ the license is included in gfdl.xml.
   <example>
     <title>A real-word transformation: robotics</title>
     <p>
-      The definition of <em>transformation</em> and its associated vocabulary may seem quite abstract, but transformations are extremely common in real life.  Here is an example from the field of robotics and computer graphics.
+      The definition of <em>transformation</em> and its associated vocabulary may seem quite abstract, but transformations are extremely common in real life.  Here is an example from the fields of robotics and computer graphics.
     </p>
     <p>
       Suppose you are building a robot arm with three joints that can move its hand around a plane, as in the following picture.
@@ -696,7 +696,7 @@ the license is included in gfdl.xml.
 
   <example>
     <p>
-      The definition of a matrix transformation tells us how to evaluate it on any given vector: we multiply the input vector by a matrix.  For instance, let
+      The definition of a matrix transformation <m>T</m> tells us how to evaluate <m>T</m> on any given vector: we multiply the input vector by a matrix.  For instance, let
       <me>
         A = \mat{1 2 3; 4 5 6}
       </me>
@@ -881,9 +881,9 @@ the license is included in gfdl.xml.
           </li>
 
           <li>
-            We want to find a vector <m>v</m> such that <m>b = T(v) = Av</m>.  In other words, we want to solve the system of linear equations <m>Av = b</m>.  We form an augmented matrix and row reduce:
+            We want to find a vector <m>v</m> such that <m>b = T(v) = Av</m>.  In other words, we want to solve the matrix equation <m>Av = b</m>.  We form an augmented matrix and row reduce:
             <me>
-              A v = \vec{7 5 7}
+              \mat{1 1; 0 1; 1 1} v = \vec{7 5 7}
               \;\xrightarrow{\parbox{\widthof{\small augmented}}
               {\small\centering augmented matrix}}\;
               \amat{1 1 7; 0 1 5; 1 1 7}
@@ -901,7 +901,7 @@ the license is included in gfdl.xml.
           </li>
 
           <li>
-            <em>Translation:</em> find a vector <m>w</m> such that <m>Av=w</m> is not consistent.  Notice that if we take
+            <em>Translation:</em> find a vector <m>w</m> such that the matrix equation <m>Av=w</m> is not consistent.  Notice that if we take
             <me>w = \vec{1 2 3}</me>,
             then the matrix equation <m>Av=w</m> translates into the system of equations
             <me>
