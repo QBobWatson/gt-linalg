@@ -1,4 +1,4 @@
-<section xml:id="determinant-volume">
+<section xml:id="determinants-volumes">
   <title>Determinants and volumes </title>
 
   <p>It turns out that determinants are actually an instance of something you already know about: volume. Specifically, the <m>n</m> many columns of a square <m>n\times n</m> matrix <m>A</m> are all vectors in <m>\mathbb R^n</m>.

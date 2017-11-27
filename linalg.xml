@@ -64,9 +64,9 @@ Free Documentation License"
         <p>In this chapter, you will learn about the <em>determinant.</em> The determinant is a special number assigned to any <em>square</em> matrix. As we shall see, this number "detects" invertibility of matrices, one of the key concepts of this course.
 	</p>
       </introduction>
-	  <xi:include href="./determinant-definitions-properties.xml" />
+      <xi:include href="./determinant-definitions-properties.xml" />
       <xi:include href="./determinant-cofactors.xml" />
-	  <xi:include href="./determinant-volume.xml" />
+      <xi:include href="./determinant-volume.xml" />
 
     </chapter>
 

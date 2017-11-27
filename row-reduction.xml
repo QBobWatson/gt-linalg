@@ -9,7 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="section-row-reduction">
+<section xml:id="row-reduction">
   <title>Row Reduction</title>
 
   <objectives>
@@ -20,10 +20,10 @@ the license is included in gfdl.xml.
     </ol>
   </objectives>
 
-  <subsection xml:id="subsection-echelon-forms">
+  <subsection xml:id="row-reduction-echelon-forms">
     <title>Echelon Forms</title>
 
-    <p>In <xref ref="section-systems-eqns"/> we saw how to translate a system of linear equations into an augmented matrix.  We want to find an <em>algorithm</em> for <q>solving</q> such an augmented matrix.  First we must decide what it means for an augmented matrix to be <q>solved</q>.</p>
+    <p>In <xref ref="systems-of-eqns"/> we saw how to translate a system of linear equations into an augmented matrix.  We want to find an <em>algorithm</em> for <q>solving</q> such an augmented matrix.  First we must decide what it means for an augmented matrix to be <q>solved</q>.</p>
 
     <definition>
       <statement>

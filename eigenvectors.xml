@@ -9,7 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="section-eigenvectors">
+<section xml:id="eigenvectors">
   <title>Eigenvalues and Eigenvectors</title>
 
   <p>Definition of eigenvalues and eigenvectors.</p>

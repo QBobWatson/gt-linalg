@@ -9,7 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="section-stochastic">
+<section xml:id="stochastic-matrices">
   <title>Stochastic Matrices</title>
 
   <p>Stochastic matrices and PageRank.</p>

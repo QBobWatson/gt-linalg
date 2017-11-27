@@ -9,7 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="section-diagonalization">
+<section xml:id="diagonalization">
   <title>Diagonalization</title>
 
   <p>Diagonalization of matrices using eigenvalues.</p>
