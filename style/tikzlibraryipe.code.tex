@@ -1,0 +1,241 @@
+
+% Copyright (C) 2016  Joseph Rabinoff
+
+% ipe2tikz is free software; you can redistribute it and/or modify it under
+% the terms of the GNU General Public License as published by the Free
+% Software Foundation; either version 3 of the License, or (at your option)
+% any later version.
+
+% ipe2tikz is distributed in the hope that it will be useful, but WITHOUT ANY
+% WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+% FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+% details.
+
+% You should have received a copy of the GNU General Public License along with
+% ipe2tikz; if not, you can find it at "http://www.gnu.org/copyleft/gpl.html",
+% or write to the Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA
+% 02139, USA.
+
+
+% ipe compatibility TikZ styles
+
+\usetikzlibrary{arrows.meta}
+
+\makeatletter
+
+% These should behave almost exactly like ipe arrows.  They disable correcting
+% for the miter length and line width.  This is important for visual consistency
+% with ipe, since ipe arrows get much larger when the line width is increased.
+% They also use the line join and cap styles from the main path.  These are very
+% simple arrows: there is no harpoon version, and the convex hull computation is
+% sloppy.
+
+\pgfdeclarearrow{
+  name = ipe _linear,
+  defaults = {
+    length = +1bp,
+    width  = +.666bp,
+    line width = +0pt 1,
+  },
+  setup code = {
+    % Control points
+    \pgfarrowssetbackend{0pt}
+    \pgfarrowssetvisualbackend{
+      \pgfarrowlength\advance\pgf@x by-.5\pgfarrowlinewidth}
+    \pgfarrowssetlineend{\pgfarrowlength}
+    \ifpgfarrowreversed
+      \pgfarrowssetlineend{\pgfarrowlength\advance\pgf@x by-.5\pgfarrowlinewidth}
+    \fi
+    \pgfarrowssettipend{\pgfarrowlength}
+    % Convex hull
+    \pgfarrowshullpoint{\pgfarrowlength}{0pt}
+    \pgfarrowsupperhullpoint{0pt}{.5\pgfarrowwidth}
+    % The following are needed in the code:
+    \pgfarrowssavethe\pgfarrowlinewidth
+    \pgfarrowssavethe\pgfarrowlength
+    \pgfarrowssavethe\pgfarrowwidth
+  },
+  drawing code = {
+    \pgfsetdash{}{+0pt}
+    \ifdim\pgfarrowlinewidth=\pgflinewidth\else\pgfsetlinewidth{+\pgfarrowlinewidth}\fi
+    \pgfpathmoveto{\pgfqpoint{0pt}{.5\pgfarrowwidth}}
+    \pgfpathlineto{\pgfqpoint{\pgfarrowlength}{0pt}}
+    \pgfpathlineto{\pgfqpoint{0pt}{-.5\pgfarrowwidth}}
+    \pgfusepathqstroke
+  },
+  parameters = {
+    \the\pgfarrowlinewidth,%
+    \the\pgfarrowlength,%
+    \the\pgfarrowwidth,%
+  },
+}
+
+
+\pgfdeclarearrow{
+  name = ipe _pointed,
+  defaults = {
+    length = +1bp,
+    width  = +.666bp,
+    inset  = +.2bp,
+    line width = +0pt 1,
+  },
+  setup code = {
+    % Control points
+    \pgfarrowssetbackend{0pt}
+    \pgfarrowssetvisualbackend{\pgfarrowinset}
+    \pgfarrowssetlineend{\pgfarrowinset}
+    \ifpgfarrowreversed
+      \pgfarrowssetlineend{\pgfarrowlength}
+    \fi
+    \pgfarrowssettipend{\pgfarrowlength}
+    % Convex hull
+    \pgfarrowshullpoint{\pgfarrowlength}{0pt}
+    \pgfarrowsupperhullpoint{0pt}{.5\pgfarrowwidth}
+    \pgfarrowshullpoint{\pgfarrowinset}{0pt}
+    % The following are needed in the code:
+    \pgfarrowssavethe\pgfarrowinset
+    \pgfarrowssavethe\pgfarrowlinewidth
+    \pgfarrowssavethe\pgfarrowlength
+    \pgfarrowssavethe\pgfarrowwidth
+  },
+  drawing code = {
+    \pgfsetdash{}{+0pt}
+    \ifdim\pgfarrowlinewidth=\pgflinewidth\else\pgfsetlinewidth{+\pgfarrowlinewidth}\fi
+    \pgfpathmoveto{\pgfqpoint{\pgfarrowlength}{0pt}}
+    \pgfpathlineto{\pgfqpoint{0pt}{.5\pgfarrowwidth}}
+    \pgfpathlineto{\pgfqpoint{\pgfarrowinset}{0pt}}
+    \pgfpathlineto{\pgfqpoint{0pt}{-.5\pgfarrowwidth}}
+    \pgfpathclose
+    \ifpgfarrowopen
+      \pgfusepathqstroke
+    \else
+      \ifdim\pgfarrowlinewidth>0pt\pgfusepathqfillstroke\else\pgfusepathqfill\fi
+    \fi
+  },
+  parameters = {
+    \the\pgfarrowlinewidth,%
+    \the\pgfarrowlength,%
+    \the\pgfarrowwidth,%
+    \the\pgfarrowinset,%
+    \ifpgfarrowopen o\fi%
+  },
+}
+
+
+% For correcting minipage width in stretched nodes
+\newdimen\ipeminipagewidth
+\def\ipestretchwidth#1{%
+  \pgfmathsetlength{\ipeminipagewidth}{#1/\ipenodestretch}}
+
+\tikzstyle{ipe import} = [
+  % General ipe defaults
+  x=1bp, y=1bp,
+%
+  % Nodes
+  ipe node stretch/.store in=\ipenodestretch,
+  ipe stretch normal/.style={ipe node stretch=1},
+  ipe stretch normal,
+  ipe node/.style={
+    anchor=base west, inner sep=0, outer sep=0, scale=\ipenodestretch
+  },
+%
+  % Use a special key for the mark scale, so that the default can be overriden.
+  % (This doesn't happen with the scale= key; those accumulate.)
+  ipe mark scale/.store in=\ipemarkscale,
+%
+  ipe mark tiny/.style={ipe mark scale=1.1},
+  ipe mark small/.style={ipe mark scale=2},
+  ipe mark normal/.style={ipe mark scale=3},
+  ipe mark large/.style={ipe mark scale=5},
+%
+  ipe mark normal, % Set default
+%
+  ipe circle/.pic={
+    \draw[line width=0.2*\ipemarkscale]
+      (0,0) circle[radius=0.5*\ipemarkscale];
+    \coordinate () at (0,0);
+  },
+  ipe disk/.pic={
+    \fill (0,0) circle[radius=0.6*\ipemarkscale];
+    \coordinate () at (0,0);
+  },
+  ipe fdisk/.pic={
+    \filldraw[line width=0.2*\ipemarkscale]
+      (0,0) circle[radius=0.5*\ipemarkscale];
+    \coordinate () at (0,0);
+  },
+  ipe box/.pic={
+    \draw[line width=0.2*\ipemarkscale, line join=miter]
+      (-.5*\ipemarkscale,-.5*\ipemarkscale) rectangle
+      ( .5*\ipemarkscale, .5*\ipemarkscale);
+    \coordinate () at (0,0);
+  },
+  ipe square/.pic={
+    \fill
+      (-.6*\ipemarkscale,-.6*\ipemarkscale) rectangle
+      ( .6*\ipemarkscale, .6*\ipemarkscale);
+    \coordinate () at (0,0);
+  },
+  ipe fsquare/.pic={
+    \filldraw[line width=0.2*\ipemarkscale, line join=miter]
+      (-.5*\ipemarkscale,-.5*\ipemarkscale) rectangle
+      ( .5*\ipemarkscale, .5*\ipemarkscale);
+    \coordinate () at (0,0);
+  },
+  ipe cross/.pic={
+    \draw[line width=0.2*\ipemarkscale, line cap=butt]
+      (-.5*\ipemarkscale,-.5*\ipemarkscale) --
+      ( .5*\ipemarkscale, .5*\ipemarkscale)
+      (-.5*\ipemarkscale, .5*\ipemarkscale) --
+      ( .5*\ipemarkscale,-.5*\ipemarkscale);
+    \coordinate () at (0,0);
+  },
+%
+  % Arrow sizes (for TikZ arrows)
+  /pgf/arrow keys/.cd,
+  ipe arrow normal/.style={scale=1},
+  ipe arrow tiny/.style={scale=.4},
+  ipe arrow small/.style={scale=.7},
+  ipe arrow large/.style={scale=1.4},
+  ipe arrow normal,
+  /tikz/.cd,
+%
+  % Approximations to ipe arrows
+  % Put in a style to allow to reset default scale when "ipe arrow normal" is
+  % changed.  I think this is the only way, since all the parameters to arrows
+  % are expanded when the tip is declared.
+  ipe arrows/.style={
+    ipe normal/.tip={
+      ipe _pointed[length=1bp, width=.666bp, inset=0bp,
+                   quick, ipe arrow normal]},
+    ipe pointed/.tip={
+      ipe _pointed[length=1bp, width=.666bp, inset=0.2bp,
+                   quick, ipe arrow normal]},
+    ipe linear/.tip={
+      ipe _linear[length = 1bp, width=.666bp,
+                  ipe arrow normal, quick]},
+    ipe fnormal/.tip={ipe normal[fill=white]},
+    ipe fpointed/.tip={ipe pointed[fill=white]},
+    ipe double/.tip={ipe normal[] ipe normal},
+    ipe fdouble/.tip={ipe fnormal[] ipe fnormal},
+    % These should maybe use [bend], but that often looks bad unless it's on an
+    % actual arc.
+    ipe arc/.tip={ipe normal},
+    ipe farc/.tip={ipe fnormal},
+    ipe ptarc/.tip={ipe pointed},
+    ipe fptarc/.tip={ipe fpointed},
+  },
+  ipe arrows, % Set default sizes
+]
+
+% I'm not sure how to do this in a .style, since the #args get confused.
+\tikzset{
+  rgb color/.code args={#1=#2}{%
+    \definecolor{tempcolor-#1}{rgb}{#2}%
+    \tikzset{#1=tempcolor-#1}%
+  },
+}
+
+\makeatother
+
+\endinput
