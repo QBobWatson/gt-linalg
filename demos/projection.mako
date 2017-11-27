@@ -52,13 +52,13 @@ if urlParams.subname
     subName = urlParams.subname
 
 # Orthogonalize if necessary
-if numVecs == 2
-    dot = vector1[0]*vector2[0] + vector1[1]*vector2[1] + vector1[2]*vector2[2]
-    if dot != 0
-        norm = vector1[0]*vector1[0] + vector1[1]*vector1[1] + vector1[2]*vector1[2]
-        vector2[0] -= vector1[0] * dot / norm
-        vector2[1] -= vector1[1] * dot / norm
-        vector2[2] -= vector1[2] * dot / norm
+# if numVecs == 2
+#     dot = vector1[0]*vector2[0] + vector1[1]*vector2[1] + vector1[2]*vector2[2]
+#     if dot != 0
+#         norm = vector1[0]*vector1[0] + vector1[1]*vector1[1] + vector1[2]*vector1[2]
+#         vector2[0] -= vector1[0] * dot / norm
+#         vector2[1] -= vector1[1] * dot / norm
+#         vector2[2] -= vector1[2] * dot / norm
 
 dot = (vec1, vec2) -> vec1[0]*vec2[0] + vec1[1]*vec2[1] + vec1[2]*vec2[2]
 norm1 = dot vector1, vector1
@@ -71,6 +71,7 @@ switch mode
         showGrid = true
         showSummands = numVecs > 1
         showDecomp = true
+        showProj = false
         showDistance = false
         showComplement = true
         constrainToW = false
@@ -79,6 +80,7 @@ switch mode
         showGrid = false
         showSummands = false
         showDecomp = true
+        showProj = false
         showDistance = false
         showComplement = true
         constrainToW = false
@@ -87,6 +89,16 @@ switch mode
         showGrid = true
         showSummands = numVecs > 1
         showDecomp = false
+        showProj = false
+        showDistance = false
+        showComplement = false
+        constrainToW = true
+    when 'badbasis'
+        showBasis = true
+        showGrid = true
+        showSummands = numVecs > 1
+        showDecomp = false
+        showProj = true
         showDistance = false
         showComplement = false
         constrainToW = true
@@ -95,6 +107,7 @@ switch mode
         showGrid = false
         showSummands = false
         showDecomp = false
+        showProj = false
         showDistance = true
         showComplement = true
         constrainToW = false
@@ -203,7 +216,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
     @labeledVectors view,
         name:       'summands'
         vectors:    summands
-        colors:     [[.7, 0, 0, .9], [.7, 0, 0, .9]].slice(0, numVecs)
+        colors:     [[0.3020,0.6863,0.2902, .9], [0.2157,0.4941,0.7216, .9]].slice(0, numVecs)
         labels:     null
         live:       true
         vectorOpts: zIndex: 3
@@ -217,6 +230,38 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
         live:       true
         vectorOpts: zIndex: 4
         labelOpts:  zIndex: 5
+
+    if showProj
+        @labeledVectors view,
+            name:       'proj'
+            vectors:    [decompProj]
+            colors:     [[1, 0.3, .3, 1]]
+            labels:     ['?']
+            live:       true
+            vectorOpts: zIndex: 4
+            labelOpts:  zIndex: 5
+        view
+            .array
+                width:    2
+                channels: 3
+                items:    4
+                data:
+                    [[summands[0], summands[1], summands[0], summands[1]],
+                     [vector, vector, decompProj, decompProj]]
+            .array
+                width:    2
+                channels: 4
+                items:    4
+                data:
+                    [[[1, 1, 1, .7],              [1, 1, 1, .7],
+                      [0.2157,0.4941,0.7216, .7], [0.3020,0.6863,0.2902, .7]],
+                     [[1, 1, 1, .7],              [1, 1, 1, .7],
+                      [0.2157,0.4941,0.7216, .7], [0.3020,0.6863,0.2902, .7]]]
+            .line
+                width:  2
+                points: "<<"
+                color:  "white"
+                colors: "<"
 
     decompLabels = ['x_W', "1.0"]
     @labeledVectors view,
@@ -299,6 +344,8 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
     hexColorPerp   = "#" + new THREE.Color(0, .8, .8).getHexString()
     hexColorBasis1 = "#" + new THREE.Color(.8, .5, 0).getHexString()
     hexColorBasis2 = "#" + new THREE.Color(.8, 0, .5).getHexString()
+    hexColorSummand1 = '#' + new THREE.Color(0.3020,0.6863,0.2902).getHexString()
+    hexColorSummand2 = '#' + new THREE.Color(0.2157,0.4941,0.7216).getHexString()
 
     switch mode
         when 'full'
@@ -310,7 +357,8 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
                 str += @texVector decompProj, color: hexColorProj
                 str += '='
                 str += @texCombo vectors, coeffs,
-                    colors: [hexColorBasis1, hexColorBasis2].slice(0, numVecs)
+                    colors:      [hexColorSummand1, hexColorSummand2].slice(0, numVecs)
+                    coeffColors: [hexColorSummand1, hexColorSummand2].slice(0, numVecs)
                 katex.render str, sumElt
         when 'decomp'
             @caption '<p><span id="decomp-here"></span></p>'
@@ -352,13 +400,28 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
                 str += @texVector vector
                 str += '='
                 str += @texCombo vectors, coeffs,
-                    colors: [hexColorBasis1, hexColorBasis2].slice(0, numVecs)
+                    colors:      [hexColorSummand1, hexColorSummand2].slice(0, numVecs)
+                    coeffColors: [hexColorSummand1, hexColorSummand2].slice(0, numVecs)
                 katex.render str, comboElt
                 str = '[x]_{\\mathcal B} = '
                 str += '\\big('
                 str += "#{coeffs[0].toFixed 2},\\;#{coeffs[1].toFixed 2}"
                 str += '\\big)'
                 katex.render str, basisElt
+        when 'badbasis'
+            @caption '<p><span id="combo-here"></span></p>' \
+                + '<p><span id="basis-here"></span></p>'
+            comboElt = document.getElementById 'combo-here'
+            updateCaptions = () =>
+                str  = 'x = '
+                str += @texVector vector
+                str += "\\neq"
+                str += @texCombo vectors, coeffs,
+                    colors:      [hexColorSummand1, hexColorSummand2].slice(0, numVecs)
+                    coeffColors: [hexColorSummand1, hexColorSummand2].slice(0, numVecs)
+                str += '='
+                str += @texVector decompProj, color: hexColorProj
+                katex.render str, comboElt
 
     # Project if necessary
     if constrainToW
