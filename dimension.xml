@@ -9,7 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="section-dimension">
+<section xml:id="dimension">
   <title>Basis and Dimension</title>
 
   <objectives>
@@ -17,7 +17,7 @@ the license is included in gfdl.xml.
       <li>Understand the definition of a basis for a subspace.</li>
       <li>Learn to compute bases for spans, column spaces, and null spaces.</li>
       <li>Important theorems: <em>Rank Theorem</em>, <em>Basis Theorem</em>.</li>
-      <li>Vocabulary word: <term>rank</term>.</li>
+      <li>Vocabulary words: <term>rank</term>, <term>nullity</term>.</li>
       <li>Essential vocabulary words: <term>basis</term>, <term>dimension</term>.</li>
     </ol>
   </objectives>
@@ -26,7 +26,7 @@ the license is included in gfdl.xml.
     <title>Basis of a Subspace</title>
 
     <p>
-      As we discussed in <xref ref="section-subspaces"/>, a subspace is the same as a span, except we do not have a set of spanning vectors in mind.  There are infinitely many choices of spanning sets (except for the zero subspace <m>\{0\}</m>); to avoid reduncancy, usually it is most convenient to choose a spanning set with the <em>minimal</em> number of vectors in it.  This is the idea behind the notion of a basis.
+      As we discussed in <xref ref="subspaces"/>, a subspace is the same as a span, except we do not have a set of spanning vectors in mind.  There are infinitely many choices of spanning sets for a nonzero subspace; to avoid reduncancy, usually it is most convenient to choose a spanning set with the <em>minimal</em> number of vectors in it.  This is the idea behind the notion of a basis.
     </p>
 
     <essential xml:id="dimension-defn-basis">
@@ -42,61 +42,22 @@ the license is included in gfdl.xml.
     </essential>
 
     <p>
-      Recall from this <xref ref="linindep-criterion-redundant"/> that a set of vectors is <em>linearly independent</em> if and only if, when you remove any vector from the set, the span shrinks.  In other words, if <m>\{v_1,v_2,\ldots,v_m\}</m> is a basis of a subspace <m>V</m>, then no proper subset of <m>\{v_1,v_2,\ldots,v_m\}</m> will span <m>V</m>: it is a <em>minimal</em> spanning set.
+      Recall that a set of vectors is <em>linearly independent</em> if and only if, when you remove any vector from the set, the span shrinks (<xref ref="linindep-criterion-redundant" text="type-global"/>).  In other words, if <m>\{v_1,v_2,\ldots,v_m\}</m> is a basis of a subspace <m>V</m>, then no proper subset of <m>\{v_1,v_2,\ldots,v_m\}</m> will span <m>V</m>: it is a <em>minimal</em> spanning set.
     </p>
 
     <warning>
       <p>A subspace generally has <em>infinitely many</em> different bases, but they all contain the same number of vectors.</p>
     </warning>
 
-    <p>We leave it as an exercise to prove that any two bases have the same size; one might want to wait until after learning the invertible matrix theorem in <xref ref="section-matrix-inv"/>.</p>
+    <p>We leave it as an exercise to prove that any two bases have the same number of vectors; one might want to wait until after learning the invertible matrix theorem in <xref ref="matrix-inverses"/>.</p>
 
-    <example>
+    <essential xml:id="dimension-defn-dimension">
       <statement>
-        <p>Let
-        <me>V = \left\{ \vec{x y z} \text{ in } \R^3\bigm| x + 3y + z = 0 \right\} \qquad
-        \cB = \left\{ \vec{-3 1 0},\;\vec{0 1 -3} \right\}.</me>
-        Verify that <m>V</m> is a subspace, and show directly that <m>\cB</m> is a basis for <m>V</m>.
+        <p>
+          Let <m>V</m> be a subspace of <m>\R^n</m>.  The number of vectors in any basis of <m>V</m> is called the <term>dimension</term> of <m>V</m>, and is written <m>\dim V</m>.
         </p>
       </statement>
-      <solution>
-        <p>
-          First we observe that <m>V</m> is the solution set of the homogeneous equation <m>x + 3y + z = 0</m>, so it is a subspace: see this <xref ref="subspaces-types-of"/>.  To show that <m>\cB</m> is a basis, we really need to verify three things:
-          <ol start="0">
-            <li>Both vectors are in <m>V</m> because
-            <me>\spalignsysdelims..
-            \syseq{
-            (-3) + 3(1) + (0) = 0;
-            (0)  + 3(1) + (-3) = 0\rlap.}
-            </me>
-            </li>
-            <li>
-              <em>Span:</em> suppose that <m>\vec{x y z}</m> is in <m>V</m>.  Since <m>x + 3y + z = 0</m> we have <m>y = -\frac 13(x+z)</m>, so
-              <me>
-                \vec{x y z} = \vec{x -\frac 13(x+z) z}
-                = -\frac x3\vec{-3 1 0} - \frac z3\vec{0 1 -3}.
-              </me>
-              Hence <m>\cB</m> spans <m>V</m>.
-            </li>
-            <li>
-              <em>Linearly independent:</em>
-              <me>c_1\vec{-3 1 0} + c_2\vec{0 1 -3} = 0
-    \implies \vec{-3c_1 c_1+c_2 -3c_2} = \vec{0 0 0}
-              \implies c_1 = c_2 = 0.</me>
-              Alternatively, one can observe that the two vectors are not collinear.
-            </li>
-          </ol>
-          Since <m>V</m> has a basis with two vectors, it has dimension two: it is a <em>plane</em>.
-        </p>
-        <figure xml:id="dimension-figure-basis">
-          <caption>A picture of the plane <m>V</m> and its basis <m>\cB = \{v_1,v_2\}</m>.  Note that <m>\cB</m> spans <m>V</m> and is linearly independent.</caption>
-          <mathbox source="demos/spans.html?v1=-3,1,0&amp;v2=0,1,-3&amp;range=5&amp;captions=indep" height="500px"/>
-        </figure>
-        <p>
-          This example is somewhat contrived, in that we will learn systematic methods for verifying that a subset is a basis.  The intention is to illustrate the defining properties of a basis.
-        </p>
-      </solution>
-    </example>
+    </essential>
 
     <example xml:id="dimension-eg-R2">
       <title>A basis of <m>\R^2</m></title>
@@ -180,9 +141,56 @@ the license is included in gfdl.xml.
             </li>
           </ol>
           Since <m>A</m> is a square matrix, it has a pivot in every row if and only if it has a pivot in every column.
-          We will see in <xref ref="section-matrix-inv"/> that the above two conditions are equivalent to the <em>invertibility</em> of the matrix <m>A</m>.
+          We will see in <xref ref="matrix-inverses"/> that the above two conditions are equivalent to the <em>invertibility</em> of the matrix <m>A</m>.
       </p>
     </specialcase>
+
+    <example>
+      <statement>
+        <p>Let
+        <me>V = \left\{ \vec{x y z} \text{ in } \R^3\bigm| x + 3y + z = 0 \right\} \qquad
+        \cB = \left\{ \vec{-3 1 0},\;\vec{0 1 -3} \right\}.</me>
+        Verify that <m>V</m> is a subspace, and show directly that <m>\cB</m> is a basis for <m>V</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          First we observe that <m>V</m> is the solution set of the homogeneous equation <m>x + 3y + z = 0</m>, so it is a subspace: see this <xref ref="subspaces-types-of"/>.  To show that <m>\cB</m> is a basis, we really need to verify three things:
+          <ol start="0">
+            <li>Both vectors are in <m>V</m> because
+            <me>\spalignsysdelims..
+            \syseq{
+            (-3) + 3(1) + (0) = 0;
+            (0)  + 3(1) + (-3) = 0\rlap.}
+            </me>
+            </li>
+            <li>
+              <em>Span:</em> suppose that <m>\vec{x y z}</m> is in <m>V</m>.  Since <m>x + 3y + z = 0</m> we have <m>y = -\frac 13(x+z)</m>, so
+              <me>
+                \vec{x y z} = \vec{x -\frac 13(x+z) z}
+                = -\frac x3\vec{-3 1 0} - \frac z3\vec{0 1 -3}.
+              </me>
+              Hence <m>\cB</m> spans <m>V</m>.
+            </li>
+            <li>
+              <em>Linearly independent:</em>
+              <me>c_1\vec{-3 1 0} + c_2\vec{0 1 -3} = 0
+    \implies \vec{-3c_1 c_1+c_2 -3c_2} = \vec{0 0 0}
+              \implies c_1 = c_2 = 0.</me>
+              Alternatively, one can observe that the two vectors are not collinear.
+            </li>
+          </ol>
+          Since <m>V</m> has a basis with two vectors, it has dimension two: it is a <em>plane</em>.
+        </p>
+        <figure xml:id="dimension-figure-basis">
+          <caption>A picture of the plane <m>V</m> and its basis <m>\cB = \{v_1,v_2\}</m>.  Note that <m>\cB</m> spans <m>V</m> and is linearly independent.</caption>
+          <mathbox source="demos/spans.html?v1=-3,1,0&amp;v2=0,1,-3&amp;range=5&amp;captions=indep" height="500px"/>
+        </figure>
+        <p>
+          This example is somewhat contrived, in that we will learn systematic methods for verifying that a subset is a basis.  The intention is to illustrate the defining properties of a basis.
+        </p>
+      </solution>
+    </example>
 
   </subsection>
 
@@ -190,8 +198,13 @@ the license is included in gfdl.xml.
     <title>Bases for Common Types of Subspaces</title>
 
     <p>
-      Now we show how to find bases for the types of subspaces we encountered in <xref ref="section-subspaces"/>, namely: a span, the column space of a matrix, and the null space of a matrix.
+      Now we show how to find bases for the types of subspaces we encountered in <xref ref="subspaces"/>, namely: a span, the column space of a matrix, and the null space of a matrix.
     </p>
+
+    <paragraphs>
+      <title>A basis for the column space</title>
+
+      <p>First we show how to compute a basis for the column space of a matrix.</p>
 
     <theorem xml:id="dimension-basis-colspace">
       <statement>
@@ -245,8 +258,16 @@ the license is included in gfdl.xml.
         </latex-code>
         the pivot columns are the first two columns, so a basis for <m>\Col(A)</m> is
         <me>\left\{\vec{1 -2 2},\;\vec{2 -3 4}\right\}.</me>
+        The first two columns of the reduced row echelon form certainly span a different subspace, as
+        <me>\Span\left\{\vec{1 0 0},\;\vec{0 1 0}\right\}
+        = \left\{\vec{a b 0}\Bigm|a, b \text{ in } \R\right\},</me>
+        but <m>\Col(A)</m> contains vectors whose last coordinate is nonzero.
       </p>
     </warning>
+    </paragraphs>
+
+    <paragraphs>
+      <title>A basis of a span</title>
 
     <p>
       Computing a basis for a span is the same as computing a basis for a column space.  Indeed, the span of finitely many vectors <m>v_1,v_2,\ldots,v_m</m> <em>is</em> the column space of a matrix, namely, the matrix <m>A</m> whose columns are <m>v_1,v_2,\ldots,v_m</m>:
@@ -278,7 +299,7 @@ the license is included in gfdl.xml.
     </example>
 
     <example xml:id="dimension-eg-basis-span2">
-      <title>Another basis for a span</title>
+      <title>Another basis for the same span</title>
       <statement>
         <p>
           Find a basis of the subspace
@@ -305,6 +326,11 @@ the license is included in gfdl.xml.
         </figure>
       </solution>
     </example>
+
+    </paragraphs>
+
+    <paragraphs>
+      <title>A basis for the null space </title>
 
     <p>In order to compute a basis for the null space of a matrix, one has to find the parametric vector form of the solutions of the homogeneous equation <m>Ax=0</m>.</p>
 
@@ -346,6 +372,8 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
+    </paragraphs>
+
   </subsection>
 
   <subsection>
@@ -358,17 +386,20 @@ the license is included in gfdl.xml.
         <p>
           The <term>rank</term> of a matrix <m>A</m>, written <m>\rank(A)</m>, is the dimension of the column space <m>\Col(A)</m>.
         </p>
+        <p>
+          The <term>nullity</term> of a matrix <m>A</m>, written <m>\nullity(A)</m>, is the dimension of the null space <m>\Nul(A)</m>.
+        </p>
       </statement>
     </definition>
 
     <p>
-      According to this <xref ref="dimension-basis-colspace"/>, the rank of <m>A</m> is equal to the number of columns with pivots.  On the other hand, this <xref ref="dimension-basis-nulspace"/> implies that the dimension of <m>\Nul(A)</m> equals the number of free variables, which is the number of columns without pivots.  To summarize:
+      According to this <xref ref="dimension-basis-colspace"/>, the rank of <m>A</m> is equal to the number of columns with pivots.  On the other hand, this <xref ref="dimension-basis-nulspace"/> implies that <m>\nullity(A)</m> equals the number of free variables, which is the number of columns without pivots.  To summarize:
       <md>
         <mrow>\rank(A) = \dim\Col(A) &amp;= \text{the number of columns with pivots}</mrow>
-        <mrow>\dim\Nul(A) &amp;= \text{the number of free variables}</mrow>
-        <mrow>&amp;= \text{the number of coluns without pivots}</mrow>
+        <mrow>\nullity(A) = \dim\Nul(A) &amp;= \text{the number of free variables}</mrow>
+        <mrow>&amp;= \text{the number of columns without pivots}</mrow>
       </md>
-      We have proved the following Theorem.
+      Clearly (the number of columns with pivots) plus (the number of columns without pivots) equals (the number of columns of <m>A</m>), so we have proved the following Theorem.
     </p>
 
     <theorem type-name="Rank Theorem" hide-type="true" xml:id="rank-theorem">
@@ -376,7 +407,7 @@ the license is included in gfdl.xml.
       <statement>
         <p>
           If <m>A</m> is an <m>m\times n</m> matrix, then
-          <me>\rank(A) + \dim\Nul(A) = n = \text{the number of columns of $A$}.</me>
+          <me>\rank(A) + \nullity(A) = n = \text{the number of columns of $A$}.</me>
         </p>
       </statement>
     </theorem>
@@ -388,7 +419,7 @@ the license is included in gfdl.xml.
     </p>
 
     <example>
-      <title>The rank is 2 and the dimension of the null space is 2</title>
+      <title>The rank is 2 and the nullity is 2</title>
       <p>
         Consider the following matrix and its reduced row echelon form:
         <latex-code>
@@ -433,7 +464,7 @@ the license is included in gfdl.xml.
       <p>
         Since there are two free variables <m>x_3,x_4</m>, the null space of <m>A</m> has two vectors (see this <xref ref="dimension-eg-basis-nul"/>):
         <me>\left\{\vec{8 -4 1 0},\;\vec{7 -3 0 1}\right\},</me>
-        so <m>\dim\Nul(A) = 2</m>.
+        so <m>\nullity(A) = 2</m>.
       </p>
 
       <p>
@@ -442,17 +473,17 @@ the license is included in gfdl.xml.
     </example>
 
     <example hide-type="true">
-      <title>Interactive: rank is 1, null space has dimension 2</title>
+      <title>Interactive: rank is 1, nullity is 2</title>
       <figure>
-        <caption>This <m>3\times 3</m> matrix has rank 1, and its null space has dimension 2.  The red plane on the left is the null space, and the red line on the right is the column space.</caption>
+        <caption>This <m>3\times 3</m> matrix has rank 1 and nullity 2.  The red plane on the left is the null space, and the red line on the right is the column space.</caption>
         <mathbox source="demos/Axequalsb.html?captions=rankthm" height="500px"/>
       </figure>
     </example>
 
     <example hide-type="true">
-      <title>Interactive: rank is 2, null space has dimension 1</title>
+      <title>Interactive: rank is 2, nullity is 1</title>
       <figure>
-        <caption>This <m>3\times 3</m> matrix has rank 2, and its null space has dimension 1.  The red line on the left is the null space, and the red plane on the right is the column space.</caption>
+        <caption>This <m>3\times 3</m> matrix has rank 2 and nullity 1.  The red line on the left is the null space, and the red plane on the right is the column space.</caption>
         <mathbox source="demos/Axequalsb.html?mat=1,-1,2:-1,2,4&amp;captions=rankthm" height="500px"/>
       </figure>
     </example>
