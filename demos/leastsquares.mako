@@ -48,9 +48,9 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
     window.mathbox = @mathbox
 
     view = @view
-        axes:  false
-        grid:  false
-        range: [[-range,range],[-range,range],[-range,range]].slice(0, size)
+        axes:      false
+        grid:      false
+        viewRange: [[-range,range],[-range,range],[-range,range]].slice(0, size)
 
     clipCube = @clipCube view,
         draw:   true

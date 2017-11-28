@@ -193,6 +193,7 @@ clipFragment = \
 
     vec4 getColor(vec4 rgba, inout vec4 stpq) {
         stpq = abs(stpq);
+        rgba = getShadedColor(rgba);
 
         // Discard pixels outside of clip box
         if(stpq.x > range || stpq.y > range || stpq.z > range)
@@ -210,6 +211,44 @@ clipFragment = \
     }
     """
 
+noShadeFragment = \
+    """
+    vec4 getShadedColor(vec4 rgba) {
+        return rgba;
+    }
+    """
+
+shadeFragment = \
+    """
+    varying vec3 vNormal;
+    varying vec3 vLight;
+    varying vec3 vPosition;
+
+    vec3 offSpecular(vec3 color) {
+      vec3 c = 1.0 - color;
+      return 1.0 - c * c;
+    }
+
+    vec4 getShadedColor(vec4 rgba) {
+
+      vec3 color = rgba.xyz;
+      vec3 color2 = offSpecular(rgba.xyz);
+
+      vec3 normal = normalize(vNormal);
+      vec3 light = normalize(vLight);
+      vec3 position = normalize(vPosition);
+
+      float side    = gl_FrontFacing ? -1.0 : 1.0;
+      float cosine  = side * dot(normal, light);
+      float diffuse = mix(max(0.0, cosine), .5 + .5 * cosine, .1);
+
+      vec3  halfLight = normalize(light + position);
+    	float cosineHalf = max(0.0, side * dot(normal, halfLight));
+    	float specular = pow(cosineHalf, 16.0);
+
+    	return vec4(color * (diffuse * .9 + .05) + .25 * color2 * specular, rgba.a);
+    }
+    """
 
 ################################################################################
 # * URL param parsing
@@ -1667,6 +1706,8 @@ class Draggable
 #    draw: draw the cube
 #    material: material to draw the cube
 #    color: color for the wireframe cube
+#    shaded: use mesh shading
+#    fragmentShader: use custom fragment shader
 #
 # Works equally well for a 2D view
 
@@ -1677,6 +1718,7 @@ class ClipCube
         pass   = @opts.pass   ? "world"
         hilite = @opts.hilite ? true
         draw   = @opts.draw   ? false
+        shaded = @opts.shaded ? false
 
         @three = @view._context.api.three
         @camera = @view._context.api.select("camera")[0].controller.camera
@@ -1700,11 +1742,17 @@ class ClipCube
                 type: 'i'
                 value: if hilite then 1 else 0
 
+        if @opts.fragmentShader?
+            fragment = @opts.fragmentShader
+        else if shaded
+            fragment = shadeFragment + "\n" + clipFragment
+        else
+            fragment = noShadeFragment + "\n" + clipFragment
         @clipped = @view
             .shader code: clipShader
             .vertex pass: pass
             .shader
-                code: clipFragment
+                code: fragment
                 uniforms: @uniforms
             .fragment()
 

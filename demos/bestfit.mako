@@ -5,6 +5,7 @@
 <%block name="title">Function of Best Fit</%block>
 
 <%block name="inline_style">
+${parent.inline_style()}
   #eqn-here {
     color: red
   }
@@ -18,11 +19,14 @@
 range = urlParams.get 'range', 'float', 10
 
 # urlParams.func has to be of the form A*blah1(x)+B*blah2(x)-C*blah3(x)+D
-# (spaces are not allowed)
-# You may use '$' in place of '%2d' in the URL
+# spaces are replaced by '+' (the reverse happens in urldecode)
 funcStr = urlParams.func ? 'C*x+D'
-funcStr = funcStr.replace /\$/g, '+'
+funcStr = funcStr.replace /\s+/g, '+'
 func = exprEval.Parser.parse funcStr
+# This should work for most TeX functions
+for op of func.unaryOps
+    if op.match /^[a-zA-Z]+$/
+        funcStr = funcStr.replace(new RegExp(op, 'g'), "\\#{op}")
 # x and y are function variables; the rest are parameters
 params = []
 zeroParams = {}
@@ -57,7 +61,7 @@ numTargets = targets.length
 # The matrix has numParams columns, each with numTargets rows
 matrix = ((0 for [0...numTargets]) for [0...numParams])
 bvec = (0 for [0...numTargets])
-xhat = (0 for [0...numParams])
+window.xhat = xhat = (0 for [0...numParams])
 bestfit = (x) -> 0
 bestFitStr = ''
 
@@ -113,16 +117,19 @@ makeString = () ->
             valPlus  = "-#{valAlone}"
             valMinus = "+#{valAlone}"
             valAlone = "-#{valAlone}"
-        bestFitStr = bestFitStr.replace("+#{letter}*", valPlus  + '\\,')
-        bestFitStr = bestFitStr.replace("+#{letter}",  valPlus)
-        bestFitStr = bestFitStr.replace("-#{letter}*", valMinus + '\\,')
-        bestFitStr = bestFitStr.replace("-#{letter}",  valMinus)
-        bestFitStr = bestFitStr.replace( "#{letter}*", valAlone + '\\,')
-        bestFitStr = bestFitStr.replace( "#{letter}",  valAlone)
-        # This should work for most TeX functions
-        for op in func.unaryOps
-            if op.match /^[a-zA-Z]+$/
-                bestFitStr = bestFitStr.replace(op, "\\#{op}")
+        bestFitStr = bestFitStr.replace(
+            new RegExp("\\+#{letter}\\*", 'g'), valPlus + '\\,')
+        bestFitStr = bestFitStr.replace(
+            new RegExp("\\+#{letter}", 'g'), valPlus)
+        bestFitStr = bestFitStr.replace(
+            new RegExp("-#{letter}\\*", 'g'), valMinus + '\\,')
+        bestFitStr = bestFitStr.replace(
+            new RegExp("-#{letter}", 'g'), valMinus)
+        bestFitStr = bestFitStr.replace(
+            new RegExp("#{letter}\\*", 'g'), valAlone + '\\,')
+        bestFitStr = bestFitStr.replace(
+            new RegExp("#{letter}", 'g'), valAlone)
+        bestFitStr = bestFitStr.replace(/\*/g, '')
 
 solve()
 
@@ -131,9 +138,9 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
     window.mathbox = @mathbox
 
     view = @view
-        axes:  true
-        grid:  true
-        range: [[-range,range],[-range,range],[-range,range]].slice(0, size)
+        axes:      true
+        grid:      true
+        viewRange: [[-range,range],[-range,range],[-range,range]].slice(0, size)
 
     ##################################################
     # (Unlabeled) points
@@ -215,12 +222,12 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
                         else
                             emit(x, y, z)
         .line
-            color:  0xaa00dd
-            width:  2
+            color:  0xcc00ff
+            width:  3
             zIndex: 3
 
     ##################################################
-    # Dragging and snapping
+    # Dragging
     @draggable view,
         points:   targets
         postDrag: solve

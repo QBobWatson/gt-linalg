@@ -3,8 +3,9 @@
 # TODO:
 #  * Prune css, javascript
 
-import os
 import itertools
+import os
+import sys
 from subprocess import Popen, PIPE
 
 from mako.template import Template
@@ -84,6 +85,8 @@ def process(path=".", context=None):
             continue
         if filename[:4] == 'base':
             continue
+        if process_files and os.path.realpath(fullpath) not in process_files:
+            continue
 
         context_file = os.path.join(path, filename[:-4] + "yaml")
         output_file = os.path.join(path, filename[:-4] + "html")
@@ -103,5 +106,9 @@ def process(path=".", context=None):
     for subdir in subdirs:
         process(subdir, dir_ctx)
 
+if len(sys.argv) >= 1:
+    process_files = set(os.path.realpath(fname) for fname in sys.argv[1:])
+else:
+    process_files = []
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 process()

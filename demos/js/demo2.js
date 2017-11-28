@@ -1,6 +1,6 @@
 (function() {
   "use strict";
-  var Animation, Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledPoints, LabeledVectors, LinearCombo, MathboxAnimation, OrbitControls, Popup, Subspace, URLParams, View, addEvents, clipFragment, clipShader, eigenvalues, evExpr, extend, groupControls, makeTvec, orthogonalize, rowReduce, setTvec, urlParams,
+  var Animation, Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledPoints, LabeledVectors, LinearCombo, MathboxAnimation, OrbitControls, Popup, Subspace, URLParams, View, addEvents, clipFragment, clipShader, eigenvalues, evExpr, extend, groupControls, makeTvec, noShadeFragment, orthogonalize, rowReduce, setTvec, shadeFragment, urlParams,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     slice = [].slice,
     extend1 = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
@@ -284,7 +284,11 @@
 
   clipShader = "// Enable STPQ mapping\n#define POSITION_STPQ\nvoid getPosition(inout vec4 xyzw, inout vec4 stpq) {\n  // Store XYZ per vertex in STPQ\nstpq = xyzw;\n}";
 
-  clipFragment = "// Enable STPQ mapping\n#define POSITION_STPQ\nuniform float range;\nuniform int hilite;\n\nvec4 getColor(vec4 rgba, inout vec4 stpq) {\n    stpq = abs(stpq);\n\n    // Discard pixels outside of clip box\n    if(stpq.x > range || stpq.y > range || stpq.z > range)\n        discard;\n\n    if(hilite != 0 &&\n       (range - stpq.x < range * 0.002 ||\n        range - stpq.y < range * 0.002 ||\n        range - stpq.z < range * 0.002)) {\n        rgba.xyz *= 10.0;\n        rgba.w = 1.0;\n    }\n\n    return rgba;\n}";
+  clipFragment = "// Enable STPQ mapping\n#define POSITION_STPQ\nuniform float range;\nuniform int hilite;\n\nvec4 getColor(vec4 rgba, inout vec4 stpq) {\n    stpq = abs(stpq);\n    rgba = getShadedColor(rgba);\n\n    // Discard pixels outside of clip box\n    if(stpq.x > range || stpq.y > range || stpq.z > range)\n        discard;\n\n    if(hilite != 0 &&\n       (range - stpq.x < range * 0.002 ||\n        range - stpq.y < range * 0.002 ||\n        range - stpq.z < range * 0.002)) {\n        rgba.xyz *= 10.0;\n        rgba.w = 1.0;\n    }\n\n    return rgba;\n}";
+
+  noShadeFragment = "vec4 getShadedColor(vec4 rgba) {\n    return rgba;\n}";
+
+  shadeFragment = "varying vec3 vNormal;\nvarying vec3 vLight;\nvarying vec3 vPosition;\n\nvec3 offSpecular(vec3 color) {\n  vec3 c = 1.0 - color;\n  return 1.0 - c * c;\n}\n\nvec4 getShadedColor(vec4 rgba) {\n\n  vec3 color = rgba.xyz;\n  vec3 color2 = offSpecular(rgba.xyz);\n\n  vec3 normal = normalize(vNormal);\n  vec3 light = normalize(vLight);\n  vec3 position = normalize(vPosition);\n\n  float side    = gl_FrontFacing ? -1.0 : 1.0;\n  float cosine  = side * dot(normal, light);\n  float diffuse = mix(max(0.0, cosine), .5 + .5 * cosine, .1);\n\n  vec3  halfLight = normalize(light + position);\n	float cosineHalf = max(0.0, side * dot(normal, halfLight));\n	float specular = pow(cosineHalf, 16.0);\n\n	return vec4(color * (diffuse * .9 + .05) + .25 * color2 * specular, rgba.a);\n}";
 
   evExpr = function(expr) {
     var error;
@@ -1903,7 +1907,7 @@
 
   ClipCube = (function() {
     function ClipCube(view1, opts1) {
-      var color, draw, hilite, material, pass, range, ref, ref1, ref2, ref3, ref4, ref5;
+      var color, draw, fragment, hilite, material, pass, range, ref, ref1, ref2, ref3, ref4, ref5, ref6, shaded;
       this.view = view1;
       this.opts = opts1;
       if (this.opts == null) {
@@ -1913,11 +1917,12 @@
       pass = (ref1 = this.opts.pass) != null ? ref1 : "world";
       hilite = (ref2 = this.opts.hilite) != null ? ref2 : true;
       draw = (ref3 = this.opts.draw) != null ? ref3 : false;
+      shaded = (ref4 = this.opts.shaded) != null ? ref4 : false;
       this.three = this.view._context.api.three;
       this.camera = this.view._context.api.select("camera")[0].controller.camera;
       if (draw) {
-        material = (ref4 = this.opts.material) != null ? ref4 : new THREE.MeshBasicMaterial();
-        color = (ref5 = this.opts.color) != null ? ref5 : new THREE.Color(1, 1, 1);
+        material = (ref5 = this.opts.material) != null ? ref5 : new THREE.MeshBasicMaterial();
+        color = (ref6 = this.opts.color) != null ? ref6 : new THREE.Color(1, 1, 1);
         this.mesh = (function(_this) {
           return function() {
             var cube, geo, mesh;
@@ -1940,12 +1945,19 @@
           value: hilite ? 1 : 0
         }
       };
+      if (this.opts.fragmentShader != null) {
+        fragment = this.opts.fragmentShader;
+      } else if (shaded) {
+        fragment = shadeFragment + "\n" + clipFragment;
+      } else {
+        fragment = noShadeFragment + "\n" + clipFragment;
+      }
       this.clipped = this.view.shader({
         code: clipShader
       }).vertex({
         pass: pass
       }).shader({
-        code: clipFragment,
+        code: fragment,
         uniforms: this.uniforms
       }).fragment();
     }

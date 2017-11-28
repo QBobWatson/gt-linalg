@@ -1,4 +1,4 @@
-<% vers = "version=1" %>
+<% vers = "version=2" %>
 
 <%! mathbox=True %>
 <%! katex=True %>
