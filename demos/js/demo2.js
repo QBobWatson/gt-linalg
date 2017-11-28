@@ -184,8 +184,8 @@
       i = noPivots[ai];
       fn();
     }
-    f = function(b) {
-      var Eb, aj, ak, al, am, len2, ref26, ref27, ref28, ref29, ref30, ret, x;
+    f = function(b, ret) {
+      var Eb, aj, ak, al, am, len2, ref26, ref27, ref28, ref29, ref30, x;
       Eb = [];
       for (i = aj = 0, ref26 = m; 0 <= ref26 ? aj < ref26 : aj > ref26; i = 0 <= ref26 ? ++aj : --aj) {
         x = 0;
@@ -199,14 +199,16 @@
           return null;
         }
       }
-      ret = (function() {
-        var am, ref30, results;
-        results = [];
-        for (am = 0, ref30 = n; 0 <= ref30 ? am < ref30 : am > ref30; 0 <= ref30 ? am++ : am--) {
-          results.push(0);
-        }
-        return results;
-      })();
+      if (ret == null) {
+        ret = (function() {
+          var am, ref30, results;
+          results = [];
+          for (am = 0, ref30 = n; 0 <= ref30 ? am < ref30 : am > ref30; 0 <= ref30 ? am++ : am--) {
+            results.push(0);
+          }
+          return results;
+        })();
+      }
       for (am = 0, len2 = pivots.length; am < len2; am++) {
         ref30 = pivots[am], row = ref30[0], col = ref30[1];
         ret[col] = Eb[row];

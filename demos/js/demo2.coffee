@@ -112,7 +112,7 @@ rowReduce = (M, opts) ->
             nulBasis.push vec
     # Function that computes a specific solution
     # Returns null for inconsistent
-    f = (b) ->
+    f = (b, ret) ->
         Eb = []
         for i in [0...m]
             x = 0
@@ -120,7 +120,7 @@ rowReduce = (M, opts) ->
             Eb.push x
         for i in [lastPivot+1...n]
             return null if Math.abs(Eb[i]) > ε
-        ret = (0 for [0...n])
+        ret ?= (0 for [0...n])
         for [row, col] in pivots
             ret[col] = Eb[row]
         ret
