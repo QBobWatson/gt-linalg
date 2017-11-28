@@ -6,6 +6,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,17 +24,17 @@
       
   </style>
 
-  <link rel="stylesheet" href="css/demo.css">
+  <link rel="stylesheet" href="css/demo.css?version=1">
 
 </head>
 <body>
     
 
-        <script src="mathbox/mathbox-bundle.js"></script>
+        <script src="mathbox/mathbox-bundle.js?version=1"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js">
         </script>
         <script src="lib/domready.js"></script>
-        <script src="js/demo2.js"></script>
+        <script src="js/demo2.js?version=1"></script>
         <script src="lib/dat.gui.min.js"></script>
         <script src="lib/screenfull.min.js"></script>
     <script src="lib/expreval.js"></script>
@@ -139,7 +141,7 @@ window.demo = new (size === 2 ? Demo2D : Demo)({}, function() {
   this.labeledVectors(view, {
     name: 'basis',
     vectors: vectors,
-    colors: [[0.8, 0, 0, 0.7], [0.8, 0, 0, 0.7], [0.8, 0, 0, 0.7]].slice(0, numVecs),
+    colors: [[0.9, 0, 0, 0.9], [0.9, 0, 0, 0.9], [0.9, 0, 0, 0.9]].slice(0, numVecs),
     labels: labels,
     live: false,
     vectorOpts: {
@@ -224,7 +226,7 @@ window.demo = new (size === 2 ? Demo2D : Demo)({}, function() {
     return function() {
       var sign;
       a = solution[0].toFixed(2);
-      str = "\\color{#ffff00}{" + a + "}\\, \\color{#aa0000}{" + texLabels[0] + "}";
+      str = "\\color{#ffff00}{" + a + "}\\, \\color{#dd0000}{" + texLabels[0] + "}";
       if (numVecs >= 2) {
         if (solution[1] < 0) {
           sign = '';
@@ -232,7 +234,7 @@ window.demo = new (size === 2 ? Demo2D : Demo)({}, function() {
           sign = '+';
         }
         a = solution[1].toFixed(2);
-        str += sign + "\\color{#ffff00}{" + a + "}\\, \\color{#aa0000}{" + texLabels[1] + "}";
+        str += sign + "\\color{#ffff00}{" + a + "}\\, \\color{#dd0000}{" + texLabels[1] + "}";
       }
       if (numVecs >= 3) {
         if (solution[2] < 0) {
@@ -241,7 +243,7 @@ window.demo = new (size === 2 ? Demo2D : Demo)({}, function() {
           sign = '+';
         }
         a = solution[2].toFixed(2);
-        str += sign + "\\color{#ffff00}{" + a + "}\\, \\color{#aa0000}{" + texLabels[2] + "}";
+        str += sign + "\\color{#ffff00}{" + a + "}\\, \\color{#dd0000}{" + texLabels[2] + "}";
       }
       str += "= \\color{" + hexColorProj + "}{\\hat b}";
       katex.render(str, vectorElt);

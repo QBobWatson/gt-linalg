@@ -78,9 +78,9 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
     @labeledVectors view,
         name:       'basis'
         vectors:    vectors
-        colors:     [[0.8, 0, 0, 0.7],
-                     [0.8, 0, 0, 0.7],
-                     [0.8, 0, 0, 0.7]].slice(0, numVecs)
+        colors:     [[0.9, 0, 0, 0.9],
+                     [0.9, 0, 0, 0.9],
+                     [0.9, 0, 0, 0.9]].slice(0, numVecs)
         labels:     labels
         live:       false
         vectorOpts: zIndex: 2
@@ -160,21 +160,21 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
 
     updateCaptions = () =>
         a = solution[0].toFixed 2
-        str = "\\color{#ffff00}{#{a}}\\, \\color{#aa0000}{#{texLabels[0]}}"
+        str = "\\color{#ffff00}{#{a}}\\, \\color{#dd0000}{#{texLabels[0]}}"
         if numVecs >= 2
             if solution[1] < 0
                 sign = ''
-            else 
+            else
                 sign = '+'
             a = solution[1].toFixed 2
-            str += "#{sign}\\color{#ffff00}{#{a}}\\, \\color{#aa0000}{#{texLabels[1]}}"
+            str += "#{sign}\\color{#ffff00}{#{a}}\\, \\color{#dd0000}{#{texLabels[1]}}"
         if numVecs >= 3
             if solution[2] < 0
                 sign = ''
             else
                 sign = '+'
             a = solution[2].toFixed 2
-            str += "#{sign}\\color{#ffff00}{#{a}}\\, \\color{#aa0000}{#{texLabels[2]}}"
+            str += "#{sign}\\color{#ffff00}{#{a}}\\, \\color{#dd0000}{#{texLabels[2]}}"
         str += "= \\color{#{hexColorProj}}{\\hat b}"
         katex.render str, vectorElt
 

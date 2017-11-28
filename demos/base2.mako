@@ -1,3 +1,5 @@
+<% vers = "version=1" %>
+
 <%! mathbox=True %>
 <%! katex=True %>
 <%! domready=True %>
@@ -27,7 +29,7 @@
       <%block name="inline_style"/>
   </style>
 
-  <link rel="stylesheet" href="css/demo.css">
+  <link rel="stylesheet" href="css/demo.css?${vers}">
 
 </head>
 <body>
@@ -35,7 +37,7 @@
 
     ## JS
     % if self.attr.mathbox:
-        <script src="mathbox/mathbox-bundle.js"></script>
+        <script src="mathbox/mathbox-bundle.js?${vers}"></script>
     % endif
     % if self.attr.katex:
         <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js">
@@ -45,7 +47,7 @@
         <script src="lib/domready.js"></script>
     % endif
     % if self.attr.demojs:
-        <script src="js/demo2.js"></script>
+        <script src="js/demo2.js?${vers}"></script>
     % endif
     % if self.attr.datgui:
         <script src="lib/dat.gui.min.js"></script>
