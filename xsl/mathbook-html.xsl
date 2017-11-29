@@ -385,11 +385,17 @@
 
 <!-- JDR: pretex can compile (almost) arbitrary latex code! -->
 <!-- This is almost the same as <me>, except it doesn't wrap the result in an
-     equation* environtment. -->
+     equation* environtment.  Also, in "bare" mode, commands can be executed in
+     a global context. -->
 <xsl:template match="latex-code">
   <xsl:choose>
-    <xsl:when test="@inline">
+    <xsl:when test="@mode='inline'">
       <script type="text/x-latex-code-inline">
+        <xsl:value-of select="text()" />
+      </script>
+    </xsl:when>
+    <xsl:when test="@mode='bare'">
+      <script type="text/x-latex-code-bare">
         <xsl:value-of select="text()" />
       </script>
     </xsl:when>
