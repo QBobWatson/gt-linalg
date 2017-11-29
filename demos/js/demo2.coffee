@@ -118,7 +118,7 @@ rowReduce = (M, opts) ->
             x = 0
             x += E[j][i] * b[j] for j in [0...m]
             Eb.push x
-        for i in [lastPivot+1...n]
+        for i in [lastPivot+1...m]
             return null if Math.abs(Eb[i]) > ε
         ret ?= (0 for [0...n])
         for [row, col] in pivots

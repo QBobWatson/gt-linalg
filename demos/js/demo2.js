@@ -194,7 +194,7 @@
         }
         Eb.push(x);
       }
-      for (i = al = ref28 = lastPivot + 1, ref29 = n; ref28 <= ref29 ? al < ref29 : al > ref29; i = ref28 <= ref29 ? ++al : --al) {
+      for (i = al = ref28 = lastPivot + 1, ref29 = m; ref28 <= ref29 ? al < ref29 : al > ref29; i = ref28 <= ref29 ? ++al : --al) {
         if (Math.abs(Eb[i]) > ε) {
           return null;
         }
