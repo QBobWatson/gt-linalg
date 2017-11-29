@@ -21,6 +21,7 @@ Copyright 2017 Georgia Institute of Technology
     <type match="example" text="phrase-hybrid"/>
     <type match="theorem" text="phrase-hybrid"/>
     <type match="lemma" text="phrase-hybrid"/>
+    <type match="proposition" text="phrase-hybrid"/>
     <type match="definition" text="phrase-hybrid"/>
     <type match="essential" text="phrase-hybrid"/>
     <type match="note" text="phrase-hybrid"/>

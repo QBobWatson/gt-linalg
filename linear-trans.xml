@@ -12,8 +12,693 @@ the license is included in gfdl.xml.
 <section xml:id="linear-transformations">
   <title>Linear Transformations</title>
 
-  <p>
-    Vocabulary about transformations.  Linear transformations.  The standard matrix.  Examples of linear transformations that don't obviously come from matrices (compositions, rotations).  Characterization of 1-1 and onto linear transformations.
-  </p>
+  <objectives>
+    <ol>
+      <li>Learn how to verify that a transformation is linear, or prove that a transformation is not linear.</li>
+      <li>Understand the relationship between linear transformations and matrix transformations.</li>
+      <li>Learn to compute the matrix of a linear transformation.</li>
+      <li>Notation: the <term>unit coordinate vectors</term> <m>e_1,e_2,\ldots</m>.</li>
+      <li>Vocabulary words: <term>linear transformation</term>, <term>standard matrix</term>.</li>
+    </ol>
+  </objectives>
+
+  <introduction>
+    <p>
+      In <xref ref="matrix-transformations"/>, we studied the geometry of matrices by regarding them as functions, i.e., by considering the associated <em>matrix transformations</em>.  We defined some vocabulary (domain, codomain, range), and asked a number of natural questions about a transformation.  For a matrix transformation, these translate into questions about matrices, which we have many tools to answer.
+    </p>
+    <p>
+      In this section, we make a change in perspective.  Suppose that we are given a <em>transformation</em> that we would like to study.  If our transformation is a matrix transformation, then we can use linear algebra to study it.  This raises two important questions:
+      <ol>
+        <li>
+          How can we tell if a transformation is a matrix transformation?
+        </li>
+        <li>
+          If our transformation is a matrix transformation, how do we find its matrix?
+        </li>
+      </ol>
+      For example, we saw in this <xref ref="matrix-trans-eg-rotation"/> that the matrix transformation
+      <me>T\colon\R^2\To\R^2 \qquad T(x) = \mat{0 -1; 1 0}x</me>
+      is a counterclockwise rotation of the plane by <m>90^\circ</m>.  However, we could have <em>defined</em> <m>T</m> in this way:
+      <me>T\colon\R^2\To\R^2 \qquad T(x) = \text{the counterclockwise rotation of $x$ by $90^\circ$}.</me>
+      Given this definition, it is not at all obvious a priori that <m>T</m> is a matrix transformation, or what matrix it is associated to.
+    </p>
+  </introduction>
+
+  <subsection>
+    <title>Linear Transformations: Definition</title>
+
+    <p>
+      Let <m>T\colon\R^n\to\R^m</m> be a matrix transformation: <m>T(x)=Ax</m> for an <m>m\times n</m> matrix <m>A</m>.  By this <xref ref="matrix-linearity"/>, we have
+      <md>
+        <mrow>T(u + v) = A(u + v) &amp;= Au + Av = T(u) + T(v)</mrow>
+        <mrow>T(cu) = A(cu) &amp;= cAu = cT(u)</mrow>
+      </md>
+      for all vectors <m>u,v</m> in <m>\R^n</m> and all scalars <m>c</m>.  It follows that, if a transformation can be written as a matrix transformation, then that transformation must satisfy the properties above.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+          A <term>linear transformation</term> is a transformation <m>T\colon\R^n\to\R^m</m> satisfying
+          <md>
+            <mrow>T(u + v) &amp;= T(u) + T(v) &amp; \text{(LT1)}</mrow>
+            <mrow>T(cu) &amp;= cT(u) &amp; \text{(LT2)}</mrow>
+          </md>
+          for all vector <m>u,v</m> in <m>\R^n</m> and all scalars <m>c</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      By the above discussion, <em>a matrix transformation is a linear transformation</em>.  We will see in the next <xref ref="linear-trans-is-matrix-trans"/> that a linear transformation is a matrix transformation; we just haven't computed its matrix yet.
+    </p>
+
+    <warning>
+      <p>Matrix transformations are the same as linear transformations.</p>
+    </warning>
+
+    <fact hide-type="true">
+      <title>Facts about linear transformations</title>
+      <statement>
+        <p>
+          Let <m>T\colon\R^n\to\R^m</m> be a linear transformation.  Then:
+          <ol>
+            <li>
+              <m>T(0)=0</m>.
+            </li>
+            <li>
+              For any vectors <m>v_1,v_2,\ldots,v_k</m> in <m>\R^n</m> and scalars <m>c_1,c_2,\ldots,c_k</m>, we have
+              <me>T\bigl( c_1v_1 + c_2v_2 + \cdots + c_kv_k \bigr)
+              = c_1 T(v_1) + c_2 T(v_2) + \cdots + c_k T(v_k).</me>
+            </li>
+          </ol>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          <ol>
+            <li>
+              Since <m>0 = -0</m>, we have
+              <me>T(0) = T(-0) = -T(0)</me>
+              by (LT2).  The only vector <m>w</m> such that <m>w=-w</m> is the zero vector.
+            </li>
+            <li>
+              Let us suppose for simplicity that <m>k=2</m>.  Then
+              <md>
+                <mrow>
+                  T(c_1v_1 + c_2v_2) &amp;= T(c_1v_1) + T(c_2v_2) &amp; \text{(LT1)}
+                </mrow>
+                <mrow>
+                  &amp;= c_1T(v_1) + c_2T(v_2). &amp; \text{(LT2)}
+                </mrow>
+              </md>
+            </li>
+          </ol>
+        </p>
+      </proof>
+    </fact>
+
+    <p>
+      In engineering, the second fact is called the <em>superposition principle</em>.
+      For example, <m>T(cu + dv) = cT(u) + dT(v)</m> for any vectors <m>u,v</m> and any scalars <m>c,d</m>.
+    </p>
+
+    <warning xml:id="linear-trans-T0-0">
+      <p>A linear transformation necessarily takes the zero vector to the zero vector.</p>
+    </warning>
+
+    <example xml:id="linear-trans-eg-T0-non0">
+      <title>A non-linear transformation</title>
+      <statement>
+        <p>
+          Define <m>T\colon\R\to\R</m> by <m>T(x) = x+1</m>.  Is <m>T</m> a linear transformation?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We have <m>T(0) = 0 + 1 = 1</m>.  Since any linear transformation necessarily takes zero to zero by the above <xref ref="linear-trans-T0-0"/>, we conclude that <m>T</m> is <em>not</em> linear.
+        </p>
+        <p>
+          <em>Note:</em> in this case, it was not necessary to check explicitly that <m>T</m> does not satisfy both defining properties (LT1) and (LT2): since <m>T(0)=0</m> is a consequence of these properties, at least one of them must not be satisfied.  (In fact, this <m>T</m> satisfies neither.)
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <title>Verifying linearity: dilation</title>
+      <statement>
+        <p>Define <m>T\colon\R^2\to\R^2</m> by <m>T(x)=1.5x</m>.  Verify that <m>T</m> is linear.</p>
+      </statement>
+      <solution>
+        <p>
+          We have to check the properties (LT1) and (LT2) for <em>all</em> vectors <m>u,v</m> and <em>all</em> scalars <m>c</m>.  In other words, we have to treat <m>u,v,</m> and <m>c</m> as <em>unknowns</em>.  The only thing we are allowed to use is the definition of <m>T</m>.
+          <md>
+            <mrow>
+              T(u + v) &amp;= 1.5(u + v) = 1.5u + 1.5v = T(u) + T(v)
+            </mrow>
+            <mrow>
+              T(cu) &amp;= 1.5(cu) = c(1.5u) = cT(u).
+            </mrow>
+          </md>
+          Since <m>T</m> satisfies both defining properties, <m>T</m> is linear.
+        </p>
+        <p>
+          <em>Note:</em> we know from this <xref ref="matrix-trans-eg-dilation"/> that <m>T</m> is a matrix transformation: in fact,
+          <me>T(x) = \mat{1.5 0; 0 1.5}x.</me>
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <title>Verifying linearity: rotation</title>
+      <statement>
+        <p>
+          Define <m>T\colon\R^2\to\R^2</m> by
+          <me>T(x) = \text{ the vector $x$ rotated counterclockwise by the angle $\theta$}.</me>
+          Verify that <m>T</m> is linear.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Since <m>T</m> is defined geometrically, we give a geometric argument.
+          For the first property, <m>T(u) + T(v)</m> is the sum of the vectors obtained by rotating <m>u</m> and <m>v</m> by <m>\theta</m>.  On the other side of the equation, <m>T(u+v)</m> is the vector obtained by rotating the sum of the vectors <m>u</m> and <m>v</m>.  But it does not matter whether we sum or rotate first, as the following picture shows.
+          <latex-code mode="bare">
+            \usetikzlibrary{angles}
+          </latex-code>
+          <latex-code>
+\begin{tikzpicture}[scale=3, thin border nodes]
+  \draw[->] (-.3,0) -- (1.3,0);
+  \draw[->] (0,-.3) -- (0,1);
+
+  \draw[vector, seq-blue]  (0,0) to["$u$"'] (.8,.2);
+  \draw[vector, seq-green] (.8, .2) to["$v$"'] (1.1, .7);
+  \draw[vector, seq-red] (0, 0) to["$u+v$"] (1.1, .7);
+
+  \draw[->, thick] (1.3, .5) to[bend left, "$T$"] (2.2, .5);
+
+  \begin{scope}[xshift=2.5cm]
+    \draw[->] (-.3,0) -- (1.3,0);
+    \draw[->] (0,-.3) -- (0,1);
+
+    \draw[seq-blue, vector, very thin, opacity=.5] (0, 0) -- (.8, .2);
+
+    \begin{scope}[rotate=24]
+      \coordinate (C) at (.8, .2);
+      \draw[vector, seq-blue]  (0,0) to["$T(u)$"' {whitebg, behind path, pos=.9}] (.8,.2);
+      \draw[vector, seq-green] (.8, .2) to["$T(v)$"'] (1.1, .7);
+      \draw[vector, seq-red] (0, 0) to["$T(u+v)$" {whitebg, behind path}] (1.1, .7);
+    \end{scope}
+
+    \coordinate (A) at (.8, .2);
+    \coordinate (B) at (0, 0);
+
+    \pic[draw, "$\theta$" font=\tiny, angle radius=1cm, angle eccentricity=.8] {angle=A--B--C};
+
+  \end{scope}
+\end{tikzpicture}
+          </latex-code>
+          For the second property, <m>cT(u)</m> is the vector obtained by rotating <m>u</m> by the angle <m>\theta</m>, then changing its length by a factor of <m>c</m> (reversing direction of <m>c&lt;0</m>.  On the other hand, <m>T(cu)</m> first changes the length of <m>c</m>, then rotates.  But it does not matter in which order we do these two operations.
+          <latex-code mode="bare">
+            \usetikzlibrary{angles}
+          </latex-code>
+          <latex-code>
+\begin{tikzpicture}[scale=3, thin border nodes]
+  \draw[->] (-.3,0) -- (1.3,0);
+  \draw[->] (0,-.3) -- (0,.8);
+
+  \draw[vector, seq-blue]  (0,0) to["$u$"] (.8,.2);
+  \draw[vector, seq-red, thin] (0, 0) to["$cu$" {pos=.9, below right=2pt}] ($1.3*(.8, .2)$);
+
+  \draw[->, thick] (1.3, .5) to[bend left, "$T$"] (2.2, .5);
+
+  \begin{scope}[xshift=2.5cm]
+    \draw[->] (-.3,0) -- (1.3,0);
+    \draw[->] (0,-.3) -- (0,.8);
+
+    \draw[seq-blue, vector, very thin, opacity=.5] (0, 0) -- (.8, .2);
+
+    \begin{scope}[rotate=24]
+      \coordinate (C) at (.8, .2);
+      \draw[vector, seq-blue]  (0,0) to["$T(u)$" {whitebg, behind path}] (.8,.2);
+      \draw[vector, seq-red, thin] (0, 0) to["$T(cu)$" {pos=.9, below right}] ($1.3*(.8, .2)$);
+    \end{scope}
+
+    \coordinate (A) at (.8, .2);
+    \coordinate (B) at (0, 0);
+
+    \pic[draw, "$\theta$" font=\tiny, angle radius=1cm, angle eccentricity=.8] {angle=A--B--C};
+
+  \end{scope}
+\end{tikzpicture}
+          </latex-code>
+          This verifies that <m>T</m> is a linear transformation.  We will find its matrix in the next <xref ref="linear-trans-is-matrix-trans"/>.  Note however that it is not at all obvious a priori that <m>T</m> can be expressed as multiplication by a matrix.
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <title>A transformation defined by a formula</title>
+      <statement>
+        <p>
+          Define <m>T\colon\R^2\to\R^3</m> by the formula
+          <me>T\vec{x y} = \vec{3x-y y x}.</me>
+          Verify that <m>T</m> is linear.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We have to check the properties (LT1) and (LT2) for <em>all</em> vectors <m>u,v</m> and <em>all</em> scalars <m>c</m>.  In other words, we have to treat <m>u,v,</m> and <m>c</m> as <em>unknowns</em>; the only thing we are allowed to use is the definition of <m>T</m>.  Since <m>T</m> is defined in terms of the coordinates of <m>u,v</m>, we need to give those names as well; say <m>u={x_1\choose y_1}</m> and <m>v={x_2\choose y_2}</m>.  For the first property, we have
+          <me>
+            \begin{split}
+              T\left(\vec{x_1 y_1} + \vec{x_2 y_2}\right)
+              &amp;= T\vec{x_1+x_2 y_1+y_2}
+              = \vec{3(x_1+x_2)-(y_1+y_2) y_1+y_2 x_1+x_2} \\
+              &amp;= \vec{(3x_1-y_1)+(3x_2-y_2) y_1+y_2 x_1+x_2} \\
+              &amp;= \vec{3x_1-y_1 y_1 x_1} + \vec{3x_2-y_2 y_2 x_2}
+              = T\vec{x_1 y_1} + T\vec{x_2 y_2}.
+            \end{split}
+          </me>
+          For the second property,
+          <me>
+            \begin{split}
+            T\left(c\vec{x_1 y_1}\right)
+            &amp;= T\vec{cx_1 cy_1}
+            = \vec{3(cx_1)-(cy_1) cy_1 cx_1} \\
+            &amp;= \vec{c(3x_1-y_1) cy_1 cx_1}
+            = c\vec{3x_1-y_1 y_1 x_1}
+            = cT\vec{x_1 y_1}.
+            \end{split}
+          </me>
+          Since <m>T</m> satisfies the defining properties (LT1) and (LT2), <m>T</m> is a linear transformation.
+        </p>
+        <p>
+          <em>Note:</em> we will see in this <xref ref="linear-trans-matrix-formula"/> below  that
+          <me>T\vec{x y} = \mat{3 -1; 0 1; 1 0}\vec{x y}.</me>
+          Hence <m>T</m> is in fact a matrix transformation.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      One can show that, if a transformation is defined by formulas in the coordinates as in the above Example, then the transformation is linear if and only if each coordinate is a linear expression in the variables with no constant term.
+    </p>
+
+    <example>
+      <title>A translation</title>
+      <p>
+        Define <m>T\colon\R^3\to\R^3</m> by
+        <me>T(x) = x + \vec{1 2 3}.</me>
+        This kind of transformation is called a <term>translation</term>.
+        As in the previous <xref ref="linear-trans-eg-T0-non0"/>, this <m>T</m>
+        is not linear, because <m>T(0)</m> is not the zero vector.
+      </p>
+    </example>
+
+    <example>
+      <title>More non-linear transformations</title>
+      <statement>
+        <p>
+          Verify that the following transformations from <m>\R^2</m> to <m>\R^2</m> are not linear:
+          <me>
+            T_1\vec{x y} = \vec{|x| y} \qquad
+            T_2\vec{x y} = \vec{xy y} \qquad
+            T_3\vec{x y} = \vec{2x+1 x-2y}.
+          </me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          In order to verify that a transformation <m>T</m> is <em>not</em> linear, we have to show that <m>T</m> does not satisfy <em>at least one</em> of the two properties (LC1), (LC2).  For (LC1), the negation of the statement <q><m>T(u+v)=T(u)+T(v)</m> for all vectors <m>u,v</m></q> is <q>there exists at least one pair of vectors <m>u,v</m> such that <m>T(u+v)\neq T(u)+T(v)</m>.</q>  In other words, it suffices to find <em>one example</em> of a pair of vectors <m>u,v</m> such that <m>T(u+v)\neq T(u)+T(v)</m>.  Likewise, for (LC2), the negation of the statement <q><m>T(cu) = cT(u)</m> for all vectors <m>u</m> and all scalars <m>c</m></q> is <q>there exists some vector <m>u</m> and some scalar <m>c</m> such that <m>T(cu)\neq cT(u)</m>.</q>  In other words, it suffices to find <em>one</em> vector <m>u</m> and <em>one</em> scalar <m>c</m> such that <m>T(cu)\neq cT(u)</m>.
+        </p>
+        <p>
+          For the first transformation, we note that
+          <me>T_1\left(-\vec{1 0}\right) = T_1\vec{-1 0} = \vec{|-1| 0} = \vec{1 0}</me>
+          but that
+          <me>-T_1\vec{1 0} = -\vec{|1| 0} = -\vec{1 0} = \vec{-1 0}.</me>
+          Therefore, this transformation does not satisfy (LC2).
+        </p>
+        <p>
+          For the second transformation, we note that
+          <me>T_2\left(2\vec{1 1}\right) = T_2\vec{2 2} = \vec{2\cdot 2 2} = \vec{4 2}</me>
+          but that
+          <me>2T_2\vec{1 1} = 2\vec{1\cdot 1 1} = 2\vec{1 1} = \vec{2 2}.</me>
+          Therefore, this transformation does not satisfy (LC2).
+        </p>
+        <p>
+          For the third transformation, we observe that
+          <me>T_3\vec{0 0} = \vec{2(0)+1 0-2(0)} = \vec{1 0}\neq\vec{0 0}.</me>
+          Since <m>T_3</m> does not take the zero vector to the zero vector, it cannot be linear.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      When deciding whether a transformation <m>T</m> is linear, generally the first thing to do is to check whether <m>T(0)=0</m>; if not, <m>T</m> is automatically not linear. Note however that the non-linear transformations <m>T_1</m> and <m>T_2</m> of the above Example do take the zero vector to the zero vector.
+    </p>
+
+    <remark type-name="Challenge">
+      <p>
+        Find an example of a transformation that satisfies (LC1) but not (LC2).
+      </p>
+    </remark>
+
+  </subsection>
+
+  <subsection xml:id="linear-trans-is-matrix-trans">
+    <title>The Matrix of a Linear Transformation</title>
+
+    <p>
+      In this subsection, we will prove that every linear transformation is a matrix transformation, and we will show how to compute the matrix.  To begin, we need some notation.
+    </p>
+
+    <warning xml:id="defn-unit-coord-vectors" type-name="Definition">
+      <title>Unit coordinate vectors</title>
+      <p>
+        The <term>unit coordinate vectors in <m>\R^n</m></term> are the <m>n</m> vectors
+        <me>
+          e_1=\vec{1 0 \vdots, 0 0},\quad
+          e_2=\vec{0 1 \vdots, 0 0},\quad\ldots,\quad
+          e_{n-1}=\vec{0 0 \vdots, 1 0},\quad
+          e_n=\vec{0 0 \vdots, 0 1}.
+        </me>
+        The <m>i</m>th entry of <m>e_i</m> is equal to 1, and the other entries are zero.
+      </p>
+      <p>
+        From now on, we will use the symbols <m>e_1,e_2,\ldots</m> to denote the unit coordinate vectors.
+      </p>
+    </warning>
+
+    <p>
+      The unit coordinate vectors in <m>\R^2</m> and <m>\R^3</m> are pictured below.
+      <latex-code>
+\begin{tikzpicture}[thin border nodes]
+  \draw[grid lines] (-2,-2) grid (2,2);
+  \draw[->] (-2,0) -- (2,0);
+  \draw[->] (0,-2) -- (0,2);
+  \draw[vector, seq1] (0,0) to["$e_1$" below=1pt] (1,0);
+  \draw[vector, seq2] (0,0) to["$e_2$"] (0,1);
+  \node[font=\normalsize, above] at (0,2.1) {in $\R^2$};
+  \point at (0,0);
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[myxyz, thin border nodes]
+  \node[font=\normalsize, above] at (0,0,2.1) {in $\R^3$};
+  \draw[grid lines, transformxy] (-2,-2) grid (2,2);
+  \draw[->] (-2,0,0) -- (2,0,0);
+  \draw[->] (0,-2,0) -- (0,2,0);
+  \draw[->] (0,0,-2) -- (0,0,2);
+  \draw[vector, seq1] (0,0,0) to["$e_1$" below=1pt] (1,0,0);
+  \draw[vector, seq2] (0,0,0) to["$e_2$" pos=.8] (0,1,0);
+  \draw[vector, seq3] (0,0,0) to["$e_3$"] (0,0,1);
+  \point at (0,0,0);
+\end{tikzpicture}
+      </latex-code>
+      These are the vectors of length 1 that point in the positive directions of each of the axes.
+    </p>
+
+    <fact hide-type="true">
+      <title>Multiplying a matrix by the unit coordinate vectors</title>
+      <p>
+        If <m>A</m> is an <m>m\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_m</m>, then <m>\color{red}Ae_i = v_i</m> for each <m>i=1,2,\ldots,n</m>:
+        <me>
+          \mat{| | ,, |; v_1 v_2 \cdots, v_n; | | ,, |}e_i = v_i.
+        </me>
+        In other words, multiplying a matrix by <m>e_i</m> simply selects its <m>i</m>th column.
+      </p>
+    </fact>
+
+    <p>
+      For example,
+      <me>\def\A{\mat{1 2 3; 4 5 6; 7 8 9}}
+      \A\vec{1 0 0} = \vec{1 4 7} \quad
+      \A\vec{0 1 0} = \vec{2 5 8} \quad
+      \A\vec{0 0 1} = \vec{3 6 9}.
+      </me>
+    </p>
+
+    <theorem>
+      <title>The matrix of a linear transformation</title>
+      <statement>
+        <p>
+          Let <m>T\colon\R^n\to\R^m</m> be a linear transformation.  Let <m>A</m> be the <m>m\times n</m> matrix
+          <me>A = \mat{| | ,, |; T(e_1) T(e_2) \cdots, T(e_n); | | ,, | }.</me>
+          Then <m>T</m> is the matrix transformation associated with <m>A</m>: that is, <m>T(x) = Ax</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          We suppose for simplicity that <m>T</m> is a transformation from <m>\R^3</m> to <m>\R^2</m>.  Let <m>A</m> be the matrix given in the statement of the Theorem.  Then
+          <me>
+\begin{split}
+  T\vec{x y z} \amp;= T\left( x\vec{1 0 0} + y\vec{0 1 0} + z\vec{0 0 1} \right) \\
+  \amp= T\bigl( xe_1 + ye_2 + ze_3 \bigr) \\
+  \amp= xT(e_1) + yT(e_2) + zT(e_3) \\
+  \amp= \mat{| | |; T(e_1) T(e_2) T(e_3); | | |}\vec{x y z}\\
+  \amp= A\vec{x y z}.
+\end{split}
+          </me>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The matrix <m>A</m> in the above Theorem is called the <term>standard matrix</term> for <m>T</m>.  The columns of <m>A</m> are the vectors obtained by evaluating <m>T</m> on the <m>n</m> unit coordinate vectors in <m>\R^n</m>.
+    </p>
+
+    <warning>
+      <title>Dictionary</title>
+      <p>
+        Linear transformations are the same as matrix transformations, which come from matrices.  The correspondence can be summarized in the following dictionary.
+        <latex-code>
+\parbox{.3\linewidth}{\centering%
+  $T\colon\R^n\to\R^m$\\
+  Linear transformation}%
+\;$\xrightarrow{\phantom{MMM}}$\;
+\hbox to .5\linewidth{$m\times n$ matrix
+\small$A = \mat{| | ,, |; T(e_1) T(e_2) \cdots, T(e_n); | | ,, | }$\hss}\\[1mm]
+\leavevmode
+\hbox to .3\linewidth{\hfil
+  $\begin{aligned}&amp;T\colon\R^n\to\R^m\\&amp;T(x) = Ax\end{aligned}$\hfil}%
+\;$\xleftarrow{\phantom{MMM}}$\;
+\hbox to .5\linewidth{$m\times n$ matrix $A$\hfil}
+        </latex-code>
+      </p>
+    </warning>
+
+    <example>
+      <title>The matrix of a dilation</title>
+      <statement>
+        <p>Define <m>T\colon\R^2\to\R^2</m> by <m>T(x)=1.5x</m>.  Find the standard matrix <m>A</m> for <m>T</m>.</p>
+      </statement>
+      <solution>
+        <p>
+          The columns of <m>A</m> are obtained by evaluating <m>T</m> on the unit coordinate vectors <m>e_1,e_2</m>.
+          <me>
+\left.\begin{aligned}
+    T(e_1) \amp= 1.5e_1 = \vec{1.5 0} \\
+    T(e_2) \amp= 1.5e_2 = \vec{0 1.5}
+\end{aligned}\right\}
+\implies A = \mat{1.5 0; 0 1.5}.
+          </me>
+          This is the matrix we started with in this <xref ref="matrix-trans-eg-dilation"/>.
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <title>The matrix of a rotation</title>
+      <statement>
+        <p>
+          Define <m>T\colon\R^2\to\R^2</m> by
+          <me>T(x) = \text{ the vector $x$ rotated counterclockwise by the angle $\theta$}.</me>
+          Find the standard matrix for <m>T</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The columns of <m>A</m> are obtained by evaluating <m>T</m> on the unit coordinate vectors <m>e_1,e_2</m>.  In order to compute the entries of <m>T(e_1)</m> and <m>T(e_2)</m>, we have to do some trigonometry.
+          <latex-code mode="bare">
+            \usetikzlibrary{math}
+          </latex-code>
+          <latex-code>
+\begin{tikzpicture}[scale=3.25, thin border nodes]
+  \clip (-.5,-.4) rectangle (3.5,1.3);
+
+  \draw[help lines] (0,0) circle[radius=1];
+  \draw[->] (-1.3,0) -- (1.3,0);
+  \draw[->] (0,-1.3) -- (0,1.3);
+
+  \tikzmath{
+    coordinate \c;
+    \x = cos(37);
+    \y = sin(37);
+    \c = (\x,\y);
+  }
+
+  \coordinate (Te) at (\c);
+  \coordinate (cos) at (\cx,0);
+  \point (o) at (0,0);
+  \pic[draw] {right angle=(o)--(cos)--(Te)};
+  \draw[thick vector] (0,0) -- (1,0)
+    node[pos=.9, below=1mm] {$e_1$};
+  \draw[thick vector] (0,0) -- (Te)
+    node[pos=.7, above left] {$T(e_1)$};
+  \draw (.3,0) arc[start angle=0, delta angle=37, radius=.3cm]
+    node[midway, right=.2mm, yshift=.5mm] {$\theta$};
+  \draw[seq1,thick] (Te) -- (\cx,0) node[midway,right] {$\sin(\theta)$};
+  \draw[seq2,thick] (0,0) -- (\cx,0) node[midway,below=1mm] {$\cos(\theta)$};
+
+  \begin{scope}[xshift=3cm]
+    \draw[help lines] (0,0) circle[radius=1];
+    \draw[->] (-1.3,0) -- (1.3,0);
+    \draw[->] (0,-1.3) -- (0,1.3);
+
+    \tikzmath{
+      coordinate \c;
+      \x = -sin(37);
+      \y = cos(37);
+      \c = (\x,\y);
+    }
+
+    \coordinate (Te) at (\c);
+    \coordinate (sin) at (\cx, 0);
+    \point (o) at (0,0);
+    \pic[draw] {right angle=(o)--(sin)--(Te)};
+    \draw[thick vector] (0,0) -- (0,1)
+      node[pos=.6, right] {$e_2$};
+    \draw[thick vector] (0,0) -- (Te)
+      node[pos=1.15, inner sep=1pt] {$T(e_2)$};
+    \draw (0,.3) arc[start angle=90, delta angle=37, radius=.3cm]
+      node[midway, above=.21mm] {$\theta$};
+    \draw[seq2,thick] (Te) -- (\cx,0) node[midway,left] {$\cos(\theta)$};
+    \draw[seq1,thick] (0,0) -- (\cx,0) node[midway,below=1mm] {$\sin(\theta)$};
+
+  \end{scope}
+
+\end{tikzpicture}
+          </latex-code>
+          We see from the picture that
+          <me>
+\left.\begin{aligned}
+    T(e_1) \amp= \vec{\color{seq2}\cos(\theta) \color{seq1}\sin(\theta)} \\
+    T(e_2) \amp= \vec{-\color{seq1}\sin(\theta) \color{seq2}\cos(\theta)}
+\end{aligned}\right\}
+\implies A =
+\mat{\color{seq2}\cos(\theta) -\color{seq1}\sin(\theta);
+     \color{seq1}\sin(\theta) \color{seq2}\cos(\theta)}
+          </me>
+        </p>
+      </solution>
+    </example>
+
+    <example xml:id="linear-trans-matrix-formula">
+      <title>A transformation defined by a formula</title>
+      <statement>
+        <p>
+          Define <m>T\colon\R^2\to\R^3</m> by the formula
+          <me>T\vec{x y} = \vec{3x-y y x}.</me>
+          Find the standard matrix for <m>T</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We substitute the unit coordinate vectors into the formula defining <m>T</m>:
+          <me>
+\left.\begin{aligned}
+    T(e_1) \amp= T\vec{1 0} = \vec{3(1)-0 0 1} = \vec{3 0 1} \\
+    T(e_2) \amp= T\vec{0 1} = \vec{3(0)-1 1 0} = \vec{-1 1 0}
+\end{aligned}\right\}
+\implies A = \mat{3 -1; 0 1; 1 0}.
+          </me>
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <title>The matrix of a composition</title>
+      <statement>
+        <p>
+          Let <m>T\colon\R^3\to\R^3</m> be the linear transformation that reflects over the <m>xy</m>-plane and then projects onto the <m>yz</m>-plane.  What is the standard matrix for <m>T</m>?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          This transformation is described geometrically, in two steps.  To find the columns of <m>A</m>, we need to follow the unit coordinate vectors through each of these steps.
+          <latex-code mode="bare">
+\def\drawarrow#1{
+\begin{tikzpicture}[myxyz, scale=0.8, thin border nodes, baseline]
+  \path[clip, resetxy] (-2,-2) rectangle (2,2);
+
+  \begin{scope}[transformxy]
+    \fill[blue, opacity=.05] (-1.5,-1.5) rectangle (1.5,1.5);
+    \draw[step=1cm, help lines, blue!40!black]
+      (-1.5, -1.5) grid (1.5, 1.5);
+  \end{scope}
+
+  \node[blue!40!black,right] at (-.9,1,-.5) {$xy$};
+
+  \begin{scope}[transformyz]
+    \fill[green, opacity=.05] (-1.5,-1.5) rectangle (1.5,1.5);
+    \draw[step=1cm, help lines, green!40!black]
+      (-1.5, -1.5) grid (1.5, 1.5);
+  \end{scope}
+
+  \node[green!40!black] at (.75,-1,1) {$yz$};
+
+  #1
+
+\end{tikzpicture}
+}
+          </latex-code>
+          <latex-code>
+\drawarrow{\draw[vector] (0,0,0) -- (1,0,0) node[above] {$e_1$};}
+$\xrightarrow{\text{reflect $xy$}}$
+\drawarrow{\draw[vector] (0,0,0) -- (1,0,0);}
+$\xrightarrow{\text{project $yz$}}$
+\drawarrow{\point at (0,0,0);}
+          </latex-code>
+          Since <m>e_1</m> lies on the <m>xy</m>-plane, reflecting over the <m>xy</m>-plane does not move <m>e_1</m>.  Since <m>e_1</m> is perpendicular to the <m>yz</m>-plane, projecting <m>e_1</m> onto the <m>yz</m>-plane sends it to zero.  Therefore,
+          <me>T(e_1) = \vec{0 0 0}.</me>
+          <latex-code>
+\drawarrow{\draw[vector] (0,0,0) -- (0,1,0) node[below right=-.5mm] {$e_2$};}
+$\xrightarrow{\text{reflect $xy$}}$
+\drawarrow{\draw[vector] (0,0,0) -- (0,1,0);}
+$\xrightarrow{\text{project $yz$}}$
+\drawarrow{\draw[vector] (0,0,0) -- (0,1,0);}
+          </latex-code>
+          Since <m>e_2</m> lies on the <m>xy</m>-plane, reflecting over the <m>xy</m>-plane does not move <m>e_2</m>.  Since <m>e_2</m> lies on the <m>yz</m>-plane, projecting onto the <m>yz</m>-plane does not move <m>e_2</m> either.
+          Therefore,
+          <me>T(e_2) = e_2 = \vec{0 1 0}.</me>
+          <latex-code>
+\drawarrow{\draw[vector] (0,0,0) -- (0,0,1) node[right] {$e_3$};}
+$\xrightarrow{\text{reflect $xy$}}$
+\drawarrow{\draw[vector] (0,0,0) -- (0,0,-1);}
+$\xrightarrow{\text{project $yz$}}$
+\drawarrow{\draw[vector] (0,0,0) -- (0,0,-1);}
+          </latex-code>
+          Since <m>e_3</m> is perpendicular to the <m>xy</m>-plane, reflecting over the <m>xy</m>-plane takes <m>e_3</m> to its negative.  Since <m>-e_3</m> lies on the <m>yz</m>-plane, projecting onto the <m>yz</m>-plane does not move it.
+          Therefore,
+          <me>T(e_3) = -e_3 = \vec{0 0 -1}.</me>
+          Now we have computed all three columns of <m>A</m>:
+          <me>
+\left.\begin{aligned}
+  T(e_1) \amp= \vec{0 0 0} \\
+  T(e_2) \amp= \vec{0 1 0} \\
+  T(e_1) \amp= \vec{0 0 -1} \\
+\end{aligned}\right\}
+\implies A = \mat{0 0 0; 0 1 0; 0 0 -1}.
+          </me>
+        </p>
+        <figure>
+          <caption>Illustration of a transformation defined in steps.  Click and drag the vecctor on the left.</caption>
+          <mathbox source="demos/steps.html" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+  </subsection>
+
+  <!-- TODO: rotation-scaling matrices -->
+
 
 </section>

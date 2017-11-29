@@ -189,7 +189,7 @@ the license is included in gfdl.xml.
     </solution>
   </example>
 
-  <example>
+  <example xml:id="matrix-trans-eg-dilation">
     <title>Dilation</title>
     <statement>
       <p>Let <me>A = \mat{1.5 0; 0 1.5}.</me>  Describe the function <m>b=Ax</m> geometrically.</p>
@@ -262,7 +262,7 @@ the license is included in gfdl.xml.
     </solution>
   </example>
 
-  <example>
+  <example xml:id="matrix-trans-eg-rotation">
     <title>Rotation</title>
     <statement>
       <p>Let <me>A = \mat{0 -1; 1 0}.</me>  Describe the function <m>b=Ax</m> geometrically.</p>
