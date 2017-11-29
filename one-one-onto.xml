@@ -1,0 +1,805 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<section xml:id="one-to-one-onto">
+  <title>One-to-one and Onto Transformations</title>
+
+  <objectives>
+    <ol>
+      <li>Understand the definitions of one-to-one and onto transformations.</li>
+      <li>Learn to verify if a matrix transformation is one-to-one and/or onto.</li>
+      <li>Understand the notions of one-to-one and onto transformations geometrically.</li>
+      <li>Vocabulary words: <term>one-to-one</term>, <term>onto</term>.</li>
+    </ol>
+  </objectives>
+
+  <introduction>
+    <p>
+      In this section, we discuss two of the most basic questions one can ask about a transformation: whether it is <em>one-to-one</em> and/or <em>onto.</em>  For a matrix transformation, we translate these questions into the language of matrices.
+    </p>
+  </introduction>
+
+<subsection>
+  <title>One-to-one Transformations</title>
+
+  <definition>
+    <title>One-to-one transformations</title>
+    <statement>
+      <p>
+        A transformation <m>T\colon\R^n\to\R^m</m> is <term>one-to-one</term> if, for every vector <m>b</m> in <m>\R^m</m>, the equation <m>T(x)=b</m> has <em>zero or one</em> solution <m>x</m> in <m>\R^n</m>.
+      </p>
+    </statement>
+  </definition>
+
+  <remark>
+    <p>
+      Other words for <em>one-to-one</em> are <em>injective</em> and <em>into</em>.
+    </p>
+  </remark>
+
+  <p>
+    Here are some equivalent ways of saying <q><m>T</m> is one-to-one:</q>
+    <ul>
+      <li>
+        The transformation <m>T</m> takes different vectors in <m>\R^n</m> to different vectors in <m>\R^m</m>.
+      </li>
+      <li>
+        Different inputs of <m>T</m> have different outputs.
+      </li>
+      <li>
+        If <m>T(u) = T(v)</m> then <m>u=v</m>.
+      </li>
+    </ul>
+    <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=.75]
+  \draw[grid lines] (-3,-3) grid (3,3);
+
+  \node (A) at (0,-3.6) {$\R^n$};
+  \node (B) at (12,-3.6) {$\R^m$};
+  \draw[->] (A) -- (B) node[midway,above=1pt] {$T$};
+
+  \point["$x$" left] (x) at (1,1.5);
+  \point["$y$" left] (y) at (-1,0);
+  \point["$z$" left] (z) at (0,-2);
+
+  \begin{scope}[myxyz, xshift=12cm]
+    \path[clip, resetxy] (-3,-3) rectangle (3,3);
+
+    \def\v{(2,-1,1)}
+    \def\w{(1,0,-1)}
+
+    \node[coordinate] (X) at \v {};
+    \node[coordinate] (Y) at \w {};
+
+    \draw[very thin] (-2,0,0) -- (0,0,0);
+    \draw[very thin] (0,-2,0) -- (0,0,0);
+    \draw[very thin] (0,0,-2) -- (0,0,0);
+
+    \begin{scope}[x=(X), y=(Y), transformxy,
+        every label/.style={font=\small,fill=none,inner sep=.5pt}]
+      \fill[seq4!10, nearly opaque] (-1,-1) rectangle (1,1);
+      \draw[step=.5cm, seq4!30, very thin] (-1,-1) grid (1,1);
+      \point["$T(x)$" above] (Tx) at (.5,-.5);
+      \point["$T(y)$" above] (Ty) at (.5,.5);
+      \point["$T(z)$" above] (Tz) at (-.5,.75);
+      \node[coordinate,
+          pin={[pin edge={very thin,-},
+            pin distance=3mm,anchor=north,text=seq4]-70:range}]
+        at (0.1,1) {};
+    \end{scope}
+
+    \draw[->, very thin] (0,0,0) -- (2,0,0);
+    \draw[->, very thin] (0,0,0) -- (0,2,0);
+    \draw[->, very thin] (0,0,0) -- (0,0,2);
+
+    \draw[resetxy] (-3,-3) rectangle (3,3);
+
+  \end{scope}
+
+  \begin{scope}[arrows={|->}, shorten=.35mm, every to/.style={out=0, in=180}]
+    \draw (x) to (Tx);
+    \draw (y) to (Ty);
+    \draw (z) to (Tz);
+  \end{scope}
+
+  \node[seq-blue] at (6,2.5) {one-to-one};
+
+\end{tikzpicture}
+    </latex-code>
+  </p>
+
+  <p>
+    Here are some equivalent ways of saying <q><m>T</m> is <em>not</em> one-to-one:</q>
+    <ul>
+      <li>
+        There exists some vector <m>b</m> in <m>\R^m</m> such that the equation <m>T(x)=b</m> has <em>more than one</em> solution <m>x</m> in <m>\R^n</m>.
+      </li>
+      <li>
+        There are two different inputs of <m>T</m> with the same output.
+      </li>
+      <li>
+        There exist vectors <m>u,v</m> such that <m>u\neq v</m> but <m>T(u)=T(v)</m>.
+      </li>
+    </ul>
+    <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=.75]
+  \draw[grid lines] (-3,-3) grid (3,3);
+
+  \node (A) at (0,-3.6) {$\R^n$};
+  \node (B) at (12,-3.6) {$\R^m$};
+  \draw[->] (A) -- (B) node[midway,above=1pt] {$T$};
+
+  \point["$x$" left] (x) at (1,1.5);
+  \point["$y$" left] (y) at (-1,0);
+  \point["$z$" left] (z) at (0,-2);
+
+  \begin{scope}[myxyz, xshift=12cm,
+      every label/.style={font=\small, fill=none, inner sep=.5pt}]
+    \path[clip, resetxy] (-3,-3) rectangle (3,3);
+
+    \def\v{(1,-1,2)}
+    \node[coordinate] (V) at \v {};
+
+    \draw[very thin] (-2,0,0) -- (0,0,0);
+    \draw[very thin] (0,-2,0) -- (0,0,0);
+    \draw[very thin] (0,0,-2) -- (0,0,0);
+
+    \draw[seq4] ($-4*(V)$) -- ($4*(V)$);
+    \point[label={[xshift=.25cm,fill=white]above:{$T(x)=T(y)$}}]
+      (Tx) at ($.5*(V)$);
+    \point["$T(z)$" right] (Tz) at ($-1*(V)$);
+    \node[coordinate,
+        pin={[pin edge={very thin,-},
+          pin distance=8mm,anchor=north,text=seq4]-30:range}]
+        at ($-.2*(V)$) {};
+
+    \draw[->, very thin] (0,0,0) -- (2,0,0);
+    \draw[->, very thin] (0,0,0) -- (0,2,0);
+    \draw[->, very thin] (0,0,0) -- (0,0,2);
+
+    \draw[resetxy] (-3,-3) rectangle (3,3);
+
+  \end{scope}
+
+  \begin{scope}[arrows={|->}, shorten=.35mm, every to/.style={out=0, in=180}]
+    \draw (x) to (Tx);
+    \draw[|-] (y) to (Tx);
+    \draw (z) to (Tz);
+  \end{scope}
+
+  \node[seq-blue] at (6,2.5) {not one-to-one};
+
+\end{tikzpicture}
+    </latex-code>
+  </p>
+
+  <example>
+    <title>Functions of one variable</title>
+    <p>
+      The function <m>\sin\colon\R\to\R</m> is not one-to-one.  Indeed, <m>\sin(0) = \sin(\pi) = 0</m>, so the inputs <m>0</m> and <m>\pi</m> have the same output <m>0</m>.  In fact, the equation <m>\sin(x) = 0</m> has infinitely many solutions <m>\ldots,-2\pi,-\pi,0,\pi,2\pi,\ldots</m>.
+    </p>
+
+    <p>
+      The function <m>\exp\colon\R\to\R</m> defined by <m>\exp(x) = e^x</m> is one-to-one.  Indeed, if <m>T(x) = T(y)</m>, then <m>e^x = e^y</m>, so <m>\ln(e^x) = \ln(e^y)</m>, and hence <m>x = y</m>.  The equation <m>T(x) = A</m> has one solution <m>x = \ln(A)</m> if <m>A > 0</m>, and it has zero solutions if <m>A\leq 0</m>.
+    </p>
+
+    <p>
+      The function <m>f\colon\R\to\R</m> defined by <m>f(x)=x^3</m> is one-to-one.  Indeed, if <m>f(x) = f(y)</m> then <m>x^3 = y^3</m>; taking cube roots gives <m>x = y</m>.  In other words, the only solution of <m>f(x) = A</m> is <m>x=\sqrt[3]A</m>.
+    </p>
+
+    <p>
+      The function <m>f\colon\R\to\R</m> defined by <m>f(x)=x^3-x</m> is not one-to-one.   Indeed, <m>f(0) = f(1) = f(-1) = 0</m>, so the inputs <m>0,1,-1</m> all have the same output <m>0</m>.  The solutions of the equation <m>x^3 - x = 0</m> are exactly the roots of <m>f(x) = x(x-1)(x+1)</m>, and this equation has three roots.
+    </p>
+  </example>
+
+  <example xml:id="one-to-one-eg-robot">
+    <title>A real-word transformation: robotics</title>
+    <p>
+      Suppose you are building a robot arm with three joints that can move its hand around a plane, as in this <xref ref="matrix-trans-eg-robot"/>.
+      <latex-code>
+\usetikzlibrary{ipe,angles}
+\tikzstyle{ipe stylesheet} = [
+  ipe import,
+  even odd rule,
+  line join=round,
+  line cap=butt,
+  ipe pen normal/.style={line width=0.4},
+  ipe pen heavier/.style={line width=0.8},
+  ipe pen fat/.style={line width=1.2},
+  ipe pen ultrafat/.style={line width=2},
+  ipe pen normal,
+  ipe mark normal/.style={ipe mark scale=3},
+  ipe mark large/.style={ipe mark scale=5},
+  ipe mark small/.style={ipe mark scale=2},
+  ipe mark tiny/.style={ipe mark scale=1.1},
+  ipe mark normal,
+  /pgf/arrow keys/.cd,
+  ipe arrow normal/.style={scale=7},
+  ipe arrow large/.style={scale=10},
+  ipe arrow small/.style={scale=5},
+  ipe arrow tiny/.style={scale=3},
+  ipe arrow normal,
+  /tikz/.cd,
+  ipe arrows, % update arrows
+  &lt;->/.tip = ipe normal,
+  ipe dash normal/.style={dash pattern=},
+  ipe dash dashed/.style={dash pattern=on 4bp off 4bp},
+  ipe dash dotted/.style={dash pattern=on 1bp off 3bp},
+  ipe dash dash dotted/.style={dash pattern=on 4bp off 2bp on 1bp off 2bp},
+  ipe dash dash dot dotted/.style={dash pattern=on 4bp off 2bp on 1bp off 2bp on 1bp off 2bp},
+  ipe dash normal,
+  ipe node/.append style={font=\normalsize},
+  ipe stretch normal/.style={ipe node stretch=1},
+  ipe stretch normal,
+  ipe opacity 10/.style={opacity=0.1},
+  ipe opacity 30/.style={opacity=0.3},
+  ipe opacity 50/.style={opacity=0.5},
+  ipe opacity 75/.style={opacity=0.75},
+  ipe opacity opaque/.style={opacity=1},
+  ipe opacity opaque,
+]
+\begin{tikzpicture}[ipe stylesheet, scale=.7]
+  \draw[fill=white!80!black]
+    (100, 528) -- (196, 656) -- (220, 656) -- (124, 528) -- cycle;
+  \draw[fill=white!80!black]
+    (208, 664) -- (320, 712) -- (320, 696) -- (208, 648) -- cycle;
+  \begin{scope}[shift={(321.91, 715.847)}, rotate=-9.1623]
+  \draw[fill=white!90!black]
+    (0, 0)
+     -- (48, 12)
+     -- (96, 0)
+     -- (96, -4)
+     -- (20, -4)
+     -- (20, -20)
+     -- (96, -20)
+     -- (96, -24)
+     -- (48, -36)
+     -- (0, -24) -- cycle;
+  \draw[fill=red] (96, -12) circle[radius=1mm]
+     node[right=2mm, red] {$\vec{x y} = f(\theta,\phi,\psi)$};
+  \end{scope}
+  \filldraw[fill=white]
+    (208, 656) circle[radius=16];
+  \filldraw[fill=white]
+    (320, 704) circle[radius=16];
+  \filldraw[fill=white]
+    (112, 528) circle[radius=24];
+  \filldraw[white!20!black]
+    (112, 528) circle[radius=4]
+    (208, 656) circle[radius=4]
+    (320, 704) circle[radius=4];
+  \coordinate (c1) at (112, 528);
+  \coordinate (c2) at (208, 656);
+  \coordinate (c3) at (320, 704);
+  \coordinate (x1) at ($(c1) + (2cm,0)$);
+  \coordinate (x3) at ($(c3) + (2cm,0)$);
+
+  \draw (c1) -- (x1);
+  \draw (c1) -- ($(c1)!2cm!(c2)$);
+  \pic[draw, "$\theta$", angle radius=1cm, angle eccentricity=.8] {angle=x1--c1--c2};
+
+  \draw (c2) -- ($(c2)!2cm!(c1)$);
+  \draw (c2) -- ($(c2)!2cm!(c3)$);
+  \pic[draw, "$\phi$", angle radius=1cm, angle eccentricity=.8] {angle=c1--c2--c3};
+
+  \coordinate (x3p) at ($(c3)!2cm!-9.1623:(x3)$);
+  \draw (c3) -- ($(c3)!2cm!(c2)$);
+  \draw (c3) -- (x3p);
+  \pic[draw, "$\psi$", angle radius=1cm, angle eccentricity=.8] {angle=c2--c3--x3p};
+
+\end{tikzpicture}
+      </latex-code>
+      Define a transformation <m>f\colon\R^3\to\R^2</m> as follows: <m>f(\theta,\phi,\psi)</m> is the <m>(x,y)</m> position of the hand when the joints are rotated by angles <m>\theta, \phi, \psi</m>, respectively.  Asking whether <m>f</m> is one-to-one is the same as asking whether there is more than one way to move the arm in order to reach your coffee cup.  (There is.)
+    </p>
+  </example>
+
+  <theorem xml:id="matrix-trans-one-to-one">
+    <title>One-to-one matrix transformations</title>
+    <statement>
+      <p>
+        Let <m>A</m> be an <m>m\times n</m> matrix, and let <m>T(x)=Ax</m> be the associated matrix transformation.  The following statements are equivalent:
+        <ol>
+          <li><m>T</m> is one-to-one.</li>
+          <li><m>T(x)=b</m> has zero or one solution for every <m>b</m> in <m>\R^m</m>.</li>
+          <li><m>Ax=b</m> has a unique solution or is inconsistent for every <m>b</m> in <m>\R^m</m>.</li>
+          <li><m>Ax=0</m> has <em>only</em> the trivial solution.</li>
+          <li>The columns of <m>A</m> are linearly independent.</li>
+          <li><m>A</m> has a pivot in every column.</li>
+        </ol>
+      </p>
+    </statement>
+    <proof>
+      <p>
+        Statements 1., 2., and 3. are translations of each other.  The equivalence of 3. and 4. follows from this <xref ref="solnsets-translate-span"/>: if <m>Ax=0</m> has only one solution, then <m>Ax=b</m> has only one solution as well, or it is inconsistent.  The equivalence of 4., 5., and 6. is a consequence of this <xref ref="linindep-matrix-cols"/>.
+      </p>
+    </proof>
+  </theorem>
+
+  <p>
+    Recall that <em>equivalent</em> means that, for a given matrix, either all of the statements are true simultaneously, or they are all false.
+  </p>
+
+  <example xml:id="matrix-trans-11-notonto1">
+    <title>A matrix transformation that is one-to-one</title>
+    <statement>
+      <p>
+        Let <m>A</m> be the matrix
+        <me>A = \mat{1 0; 0 1; 1 0},</me>
+        and define <m>T\colon\R^2\to\R^3</m> by <m>T(x) = Ax</m>.  Is <m>T</m> one-to-one?
+      </p>
+    </statement>
+    <solution>
+      <p>
+        The reduced row echelon form of <m>A</m> is
+        <me>\mat{1 0; 0 1; 0 0}.</me>
+        Hence <m>A</m> has a pivot in every column, so <m>T</m> is one-to-one.
+      </p>
+      <figure>
+        <caption>A picture of the matrix transformation <m>T</m>.  As you drag the input vector on the left side, you see that different input vectors yield different output vectors on the right side.</caption>
+        <mathbox source="demos/Axequalsb.html?mat=1,0:0,1:1,0&amp;range2=5&amp;closed=true&amp;show=true" height="500px"/>
+      </figure>
+    </solution>
+  </example>
+
+  <example>
+    <title>A matrix transformation that is not one-to-one</title>
+    <statement>
+      <p>
+        Let
+        <me>A = \mat{1 0 0; 0 1 0; 0 0 0},</me>
+        and define <m>T\colon\R^3\to\R^3</m> by <m>T(x) = Ax</m>.  Is <m>T</m> one-to-one?  If not, find two different vectors <m>u,v</m> such that <m>T(u)=T(v)</m>.
+      </p>
+    </statement>
+    <solution>
+      <p>
+        The matrix <m>A</m> is already in reduced row echelon form.  It does not have a pivot in every column, so <m>T</m> is not one-to-one.  Therefore, we know from the <xref ref="matrix-trans-one-to-one"/> that <m>Ax=0</m> has nontrivial solutions.  If <m>v</m> is a nontrivial (i.e., nonzero) solution of <m>Av = 0</m>, then <m>T(v) = Av = 0 = A0 = T(0)</m>, so <m>0</m> and <m>v</m> are different vectors with the same output.  For instance,
+        <me>T\vec{0 0 1} = \mat{1 0 0; 0 1 0; 0 0 1}\vec{0 0 1} = 0 = T\vec{0 0 0}.</me>
+      </p>
+      <p>
+        Geometrically, <m>T</m> is projection onto the <m>xy</m>-plane.  Any two vectors that lie on the same vertical line will have the same projection.  For <m>b</m> on the <m>xy</m>-plane, the solution set of <m>T(x) = b</m> is the entire vertical line containing <m>b</m>.  In particular, <m>T(x) = b</m> has <em>infinitely many</em> solutions.
+      </p>
+      <figure>
+        <caption>A picture of the matrix transformation <m>T</m>.  The transformation <m>T</m> projects a vector onto the <m>xy</m>-plane.  The red line is the solution set of <m>T(x)=0</m>.  If you drag <m>x</m> along the red line, the output <m>T(x) = Ax</m> does not change.  This demonstrates that <m>T(x)=0</m> has more than one solution, so <m>T</m> is not one-to-one.</caption>
+        <mathbox source="demos/Axequalsb.html?mat=1,0,0:0,1,0:0,0,0&amp;range2=5&amp;closed=true&amp;lock=true&amp;x=0,0,0" height="500px"/>
+      </figure>
+    </solution>
+  </example>
+
+  <example xml:id="one-to-one-not11-onto1">
+    <title>A matrix transformation that is not one-to-one</title>
+    <statement>
+      <p>
+        Let <m>A</m> be the matrix
+        <me>A = \mat{1 1 0; 0 1 1},</me>
+        and define <m>T\colon\R^3\to\R^2</m> by <m>T(x) = Ax</m>.  Is <m>T</m> one-to-one?  If not, find two different vectors <m>u,v</m> such that <m>T(u)=T(v)</m>.
+      </p>
+    </statement>
+    <solution>
+      <p>
+        The reduced row echelon form of <m>A</m> is
+        <me>\mat{1 0 -1; 0 1 1}.</me>
+        There is not a pivot in every row, so <m>T</m> is not one-to-one.  Therefore, we know from the <xref ref="matrix-trans-one-to-one"/> that <m>Ax=0</m> has nontrivial solutions.  If <m>v</m> is a nontrivial (i.e., nonzero) solution of <m>Av = 0</m>, then <m>T(v) = Av = 0 = A0 = T(0)</m>, so <m>0</m> and <m>v</m> are different vectors with the same output.  In order to find a nontrivial solution, we find the parametric form of the solutions of <m>Ax=0</m> using the reduced matrix above:
+        <me>\syseq{x \+ \. - z = 0; \. \+ y + z = 0}
+        \quad\implies\quad
+        \syseq{x = z; y = -z}
+        </me>
+        The free variable is <m>z</m>.  Taking <m>z=1</m> gives the nontrivial solution
+        <me>T\vec{1 -1 1} = \mat{1 1 0; 0 1 1}\vec{1 -1 1} = 0 = T\vec{0 0 0}.</me>
+      </p>
+      <figure>
+        <caption>A picture of the matrix transformation <m>T</m>.  The red line is the null space of <m>A</m>, i.e., solution set of <m>T(x)=0</m>.  If you drag <m>x</m> along the red line, the output <m>T(x) = Ax</m> does not change.  This demonstrates that <m>T(x)=0</m> has more than one solution, so <m>T</m> is not one-to-one.</caption>
+        <mathbox source="demos/Axequalsb.html?mat=1,1,0:0,1,1&amp;range2=5&amp;closed=true&amp;show=true&amp;lock=true&amp;x=0,0,0" height="500px"/>
+      </figure>
+    </solution>
+  </example>
+
+  <example xml:id="one-to-one-eg-neither1">
+    <title>A matrix transformation that is not one-to-one</title>
+    <statement>
+      <p>
+        Let
+        <me>A = \mat{1 -1 2; -2 2 -4},</me>
+        and define <m>T\colon\R^3\to\R^2</m> by <m>T(x) = Ax</m>.
+        Is <m>T</m> one-to-one?  If not, find two different vectors <m>u,v</m> such that <m>T(u)=T(v)</m>.
+      </p>
+    </statement>
+    <solution>
+      <p>
+        The reduced row echelon form of <m>A</m> is
+        <me>\mat{1 -1 2; 0 0 0}</me>.
+        There is not a pivot in every column, so <m>T</m> is not one-to-one.  Therefore, we know from the <xref ref="matrix-trans-one-to-one"/> that <m>Ax=0</m> has nontrivial solutions.  If <m>v</m> is a nontrivial (i.e., nonzero) solution of <m>Av = 0</m>, then <m>T(v) = Av = 0 = A0 = T(0)</m>, so <m>0</m> and <m>v</m> are different vectors with the same output.  In order to find a nontrivial solution, we find the parametric form of the solutions of <m>Ax=0</m> using the reduced matrix above:
+        <me>x - y + 2z = 0 \quad\implies\quad x = y - 2z.</me>
+        The free variables are <m>y</m> and <m>z</m>.  Taking <m>y=1</m> and <m>z=0</m> gives the nontrivial solution
+        <me>T\vec{1 1 0} = \mat{1 -1 2; -2 2 -4}\vec{1 1 0} = 0 = T\vec{0 0 0}.</me>
+      </p>
+      <figure>
+        <caption>A picture of the matrix transformation <m>T</m>.  The red plane is the solution set of <m>T(x)=0</m>.  If you drag <m>x</m> along the red plane, the output <m>T(x) = Ax</m> does not change.  This demonstrates that <m>T(x)=0</m> has more than one solution, so <m>T</m> is not one-to-one.</caption>
+        <mathbox source="demos/Axequalsb.html?show=true&amp;closed=true&amp;lock=true&amp;x=0,0,0" height="500px"/>
+      </figure>
+    </solution>
+  </example>
+
+  <p>
+    The previous three Examples can be summarized as follows.
+    Suppose that <m>T(x)=Ax</m> is a matrix transformation that is <em>not</em> one-to-one.  By the <xref ref="matrix-trans-one-to-one"/>, there is a nontrivial solution of <m>Ax=0</m>.  This means that the null space of <m>A</m> is not the zero space.  All of the vectors in the null space are solutions to <m>T(x)=0</m>.  If you compute a nonzero vector <m>v</m> in the null space (by row reducing and finding the parametric form of the solution set of <m>Ax=0</m>, for instance), then <m>v</m> and <m>0</m> both have the same output: <m>T(v) = Av = 0 = T(0).</m>
+  </p>
+
+  <note hide-type="true" xml:id="one-to-one-wide-matrices">
+    <title>Wide matrices do not have one-to-one transformations</title>
+    <p>
+      If <m>T\colon\R^n\to\R^m</m> is a one-to-one matrix transformation, what can we say about the relative sizes of <m>n</m> and <m>m</m>?
+    </p>
+    <p>
+      The matrix associated to <m>T</m> has <m>n</m> columns and <m>m</m> rows.  Each row and each column can only contain one pivot, so in order for <m>A</m> to have a pivot in every column, it must have <em>at least as many rows</em> as columns: <m>n\leq m</m>.
+    </p>
+    <p>
+      This says that, for instance, <m>\R^3</m> is <q>too big</q> to admit a one-to-one linear transformation into <m>\R^2</m>.
+    </p>
+    <p>
+      Note that there exist tall matrices that are not one-to-one: for example,
+      <me>\mat{1 0 0; 0 1 0; 0 0 0; 0 0 0}</me>
+      does not have a pivot in every column.
+    </p>
+  </note>
+
+</subsection>
+
+<subsection>
+  <title>Onto Transformations</title>
+
+  <definition>
+    <title>Onto transformations</title>
+    <statement>
+      <p>A transformation <m>T\colon\R^n\to\R^m</m> is <term>onto</term> if, for every vector <m>b</m> in <m>\R^m</m>, the equation <m>T(x)=b</m> has <em>at least one</em> solution <m>x</m> in <m>\R^n</m>.</p>
+    </statement>
+  </definition>
+
+  <remark>
+    <p>
+      Another word for <em>onto</em> is <em>surjective</em>.
+    </p>
+  </remark>
+
+  <p>
+    Here are some equivalent ways of saying <q><m>T</m> is onto:</q>
+    <ul>
+      <li>The range of <m>T</m> is equal to the codomain of <m>T</m>.</li>
+      <li>Every vector in the codomain is the output of some input vector.</li>
+    </ul>
+    <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=.75]
+  \draw (-3,-3) rectangle (3,3);
+
+  \draw[->, very thin, myxyz] (-2,0,0) -- (2,0,0);
+  \draw[->, very thin, myxyz] (0,-2,0) -- (0,2,0);
+  \draw[->, very thin, myxyz] (0,0,-2) -- (0,0,2);
+
+  \node (source) at (0,-3.6) {$\R^n$};
+  \point["$x$" above left] (x) at (1,2);
+
+  \begin{scope}[xshift=12cm, every label/.append style={fill=seq4!10}]
+    \fill[seq4!10] (-3,-3) rectangle (3,3);
+    \draw[grid lines] (-3,-3) grid (3,3);
+    \point["$T(x)$" above right] (Tx) at (1,-1);
+    \node[fill=seq4!10, text=seq4]
+      at (0,2) {$\text{range}(T)$};
+
+    \node (target) at (0,-3.6) {$\R^m =$ codomain};
+  \end{scope}
+
+  \draw[->] (source) -- (target) node[midway,above=1pt] {$T$};
+  \draw[|->, shorten=.35mm] (x) to[out=0, in=180] (Tx);
+
+  \node[seq-blue] at (6,2.5) {onto};
+
+\end{tikzpicture}
+    </latex-code>
+  </p>
+
+  <p>
+    Here are some equivalent ways of saying <q><m>T</m> is <em>not</em> onto:</q>
+    <ul>
+      <li>The range of <m>T</m> is smaller than the codomain of <m>T</m>.</li>
+      <li>There exists a vector <m>b</m> in <m>\R^m</m> such that the equation <m>T(x)=b</m> does not have a solution.</li>
+      <li>There is a vector in the codomain which is not the output of any input vector.</li>
+    </ul>
+    <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=.75]
+  \draw (-3,-3) rectangle (3,3);
+
+  \draw[->, very thin, myxyz] (-2,0,0) -- (2,0,0);
+  \draw[->, very thin, myxyz] (0,-2,0) -- (0,2,0);
+  \draw[->, very thin, myxyz] (0,0,-2) -- (0,0,2);
+
+  \node (source) at (0,-3.6) {$\R^n$};
+  \point["$x$" above left] (x) at (1,-2);
+
+  \begin{scope}[xshift=12cm]
+    \draw[grid lines] (-3,-3) grid (3,3);
+    \draw[seq4] (-3,-1.5) -- (3,1.5);
+   \point["$T(x)$" below right] (Tx) at (1,.5);
+    \node[fill=white, text=seq4]
+      at (-1,-1.8) {$\text{range}(T)$};
+
+    \node (target) at (0,-3.6) {$\R^m =$ codomain};
+  \end{scope}
+
+  \draw[->] (source) -- (target) node[midway,above=1pt] {$T$};
+  \draw[|->, shorten=.35mm] (x) to[out=0, in=150] (Tx);
+
+  \node[seq-blue] at (6,2.5) {not onto};
+\end{tikzpicture}
+    </latex-code>
+  </p>
+
+  <example>
+    <title>Functions of one variable</title>
+    <p>
+      The function <m>\sin\colon\R\to\R</m> is not onto.  Indeed, taking <m>b=2</m>, the equation <m>\sin(x)=2</m> has no solution.  The range of <m>\sin</m> is the closed interval <m>[-1,1]</m>, which is smaller than the codomain <m>\R^</m>.
+    </p>
+
+    <p>
+      The function <m>\exp\colon\R\to\R</m> defined by <m>\exp(x) = e^x</m> is not onto.  Indeed, taking <m>b=-1</m>, the equation <m>\exp(x) = e^x = -1</m> has no solution.  The range of <m>\exp</m> is the set <m>(0,\infty)</m> of all <em>positive</em> real numbers.
+    </p>
+
+    <p>
+      The function <m>f\colon\R\to\R</m> defined by <m>f(x)=x^3</m> is onto.  Indeed, the equation <m>f(x) = x^3 = b</m> always has the solution <m>x = \sqrt[3]b</m>.
+    </p>
+
+    <p>
+      The function <m>f\colon\R\to\R</m> defined by <m>f(x)=x^3-x</m> is onto.  Indeed, the solutions of the equation <m>f(x) = x^3 - x = b</m> are the roots of the polynomial <m>x^3 - x - b</m>; as this is a cubic polynomial, it has at least one real root.
+    </p>
+  </example>
+
+  <example>
+    <title>A real-word transformation: robotics</title>
+    <p>
+      The robot arm transformation of <xref ref="one-to-one-eg-robot"/> is not onto.  The robot cannot reach objects that are very far away.
+    </p>
+  </example>
+
+  <theorem>
+    <title>Onto matrix transformations</title>
+    <statement>
+      <p>
+        Let <m>A</m> be an <m>m\times n</m> matrix, and let <m>T(x)=Ax</m> be the associated matrix transformation.  The following statements are equivalent:
+        <ol>
+          <li><m>T</m> is onto.</li>
+          <li><m>T(x)=b</m> at least one solution for every <m>b</m> in <m>\R^m</m>.</li>
+          <li><m>Ax=b</m> is consistent for every <m>b</m> in <m>\R^m</m>.</li>
+          <li>The columns of <m>A</m> span <m>\R^m</m>.</li>
+          <li><m>A</m> has a pivot in every row.</li>
+        </ol>
+      </p>
+    </statement>
+    <proof>
+      <p>
+        Statements 1., 2., and 3. are translations of each other.  The equivalence of 3., 4., and 5. follows from this <xref ref="matrixeq-thm-full-span"/>.
+      </p>
+    </proof>
+  </theorem>
+
+  <example xml:id="one-to-one-not11-onto2">
+    <title>A matrix transformation that is onto</title>
+    <statement>
+      <p>
+        Let <m>A</m> be the matrix
+        <me>A = \mat{1 1 0; 0 1 1},</me>
+        and define <m>T\colon\R^3\to\R^2</m> by <m>T(x) = Ax</m>.  Is <m>T</m> onto?
+      </p>
+    </statement>
+    <solution>
+      <p>
+        The reduced row echelon form of <m>A</m> is
+        <me>\mat{1 0 -1; 0 1 1}.</me>
+        Hence <m>A</m> has a pivot in every row, so <m>T</m> is onto.
+      </p>
+      <figure>
+        <caption>A picture of the matrix transformation <m>T</m>.  Every vector on the right side is the output of <m>T</m> for a suitable input.  If you drag <m>b</m>, the demo will find an input vector <m>x</m> with output <m>b</m>.</caption>
+        <mathbox source="demos/Axequalsb.html?mat=1,1,0:0,1,1&amp;range2=5&amp;closed=true&amp;show=false&amp;x=1,2,.5" height="500px"/>
+      </figure>
+    </solution>
+  </example>
+
+  <example xml:id="matrix-trans-11-notonto2">
+    <title>A matrix transformation that is not onto</title>
+    <statement>
+      <p>
+        Let <m>A</m> be the matrix
+        <me>A = \mat{1 0; 0 1; 1 0},</me>
+        and define <m>T\colon\R^2\to\R^3</m> by <m>T(x) = Ax</m>.  Is <m>T</m> onto?  If not, find a vector <m>b</m> in <m>\R^3</m> such that <m>T(x)=b</m> has no solution.
+      </p>
+    </statement>
+    <solution>
+      <p>
+        The reduced row echelon form of <m>A</m> is
+        <me>\mat{1 0; 0 1; 0 0}.</me>
+        Hence <m>A</m> does not have a pivot in every row, so <m>T</m> is not onto.  In fact, since
+        <me>T\vec{x y} = \mat{1 0; 0 1; 1 0}\vec{x y} = \vec{x y x},</me>
+        we see that for every output vector of <m>T</m>, the third entry is equal to the first.  Therefore, <me>b=(1,2,3)</me> is not in the range of <m>T</m>.
+      </p>
+      <figure>
+        <caption>A picture of the matrix transformation <m>T</m>.  The range of <m>T</m> is the red plane on the right; this is smaller than the codomain <m>\R^3</m>.  If you drag <m>b</m> off of the red plane, then the equation <m>Ax=b</m> becomes inconsistent; this means <m>T(x)=b</m> has no solution.</caption>
+        <mathbox source="demos/Axequalsb.html?mat=1,0:0,1:1,0&amp;range2=5&amp;closed=true&amp;show=false" height="500px"/>
+      </figure>
+    </solution>
+  </example>
+
+  <example xml:id="one-to-one-eg-neither2">
+    <title>A matrix transformation that is not onto</title>
+    <statement>
+      <p>
+        Let
+        <me>A = \mat{1 -1 2; -2 2 -4},</me>
+        and define <m>T\colon\R^3\to\R^2</m> by <m>T(x) = Ax</m>.
+        Is <m>T</m> onto?  If not, find a vector <m>b</m> in <m>\R^2</m> such that <m>T(x)=b</m> has no solution.
+      </p>
+    </statement>
+    <solution>
+      <p>
+        The reduced row echelon form of <m>A</m> is
+        <me>\mat{1 -1 2; 0 0 0}</me>.
+        There is not a pivot in every row, so <m>T</m> is not onto.  The range of <m>T</m> is the column space of <m>A</m>, which is equal to
+        <me>\Span\left\{\vec{1 -2},\;\vec{-1 2},\;\vec{2 -4}\right\}
+        = \Span\left\{\vec{1 -2}\right\},</me>
+        since all three columns of <m>A</m> are collinear.  Therefore, any vector not on the line through <m>1\choose-2</m> is not in the range of <m>T</m>.  For instance, if <m>b={1\choose 1}</m> then <m>T(x)=b</m> has no solution.
+      </p>
+      <figure>
+        <caption>A picture of the matrix transformation <m>T</m>.  The range of <m>T</m> is the red line on the right; this is smaller than the codomain <m>\R^2</m>.  If you drag <m>b</m> off of the red line, then the equation <m>Ax=b</m> becomes inconsistent; this means <m>T(x)=b</m> has no solution.</caption>
+        <mathbox source="demos/Axequalsb.html?show=false&amp;closed=true" height="500px"/>
+      </figure>
+    </solution>
+  </example>
+
+  <p>
+    The previous two Examples illustrate the following observation.  Suppose that <m>T(x)=Ax</m> is a matrix transformation that is <em>not</em> onto.  This mean that <m>\text{range}(T) = \Col(A)</m> is a subspace of <m>\R^m</m> of dimension less than <m>m</m>: perhaps it is a line in the plane, or a line in <m>3</m>-space, or a plane in <m>3</m>-space, etc.  Whatever the case, the range of <m>T</m> is <em>very small</em> compared to the codomain.  To find a vector not in the range of <m>T</m>, choose a random nonzero vector <m>b</m> in <m>\R^m</m>; you have to be extremely unlucky to choose a vector that is in the range of <m>T</m>.  Of course, to check whether a given vector <m>b</m> is in the range of <m>T</m>, you have to solve the matrix equation <m>Ax=b</m> to see whether it is consistent.
+  </p>
+
+  <note hide-type="true" xml:id="one-to-one-tall-matrices">
+    <title>Tall matrices do not have onto transformations</title>
+    <p>
+      If <m>T\colon\R^n\to\R^m</m> is an onto matrix transformation, what can we say about the relative sizes of <m>n</m> and <m>m</m>?
+    </p>
+    <p>
+      The matrix associated to <m>T</m> has <m>n</m> columns and <m>m</m> rows.  Each row and each column can only contain one pivot, so in order for <m>A</m> to have a pivot in every row, it must have <em>at least as many columns</em> as rows: <m>m\leq n</m>.
+    </p>
+    <p>
+      This says that, for instance, <m>\R^2</m> is <q>too small</q> to admit an onto linear transformation to <m>\R^3</m>.
+    </p>
+    <p>
+      Note that there exist wide matrices that are not onto: for example,
+      <me>\mat{1 -1 2; -2 2 -4}</me>
+      does not have a pivot in every row.
+    </p>
+  </note>
+
+</subsection>
+
+
+<subsection>
+  <title>Comparison</title>
+
+  <p>
+    The above expositions of one-to-one and onto transformations were written to mirror each other.  However, <q>one-to-one</q> and <q>onto</q> are complementary notions: neither one implies the other.  Below we have provided a chart for comparing the two.  In the chart, <m>A</m> is an <m>m\times n</m> matrix, and <m>T\colon\R^n\to\R^m</m> is the matrix transformation <m>T(x)=Ax</m>.
+    <latex-code>
+\parbox{2.5in}{\centering%
+  \textbf{$T$ is one-to-one}\\[2mm]
+  $T(x)=b$ has \emph{at most one solution} for every $b$.\\[2mm]
+  The columns of $A$ are linearly independent.\\[2mm]
+  $A$ has a pivot in every column.
+}\qquad\parbox{2.5in}{\centering%
+  \textbf{$T$ is onto}\\[2mm]
+  $T(x)=b$ has \emph{at least one solution} for every $b$.\\[2mm]
+  The columns of $A$ span $\R^m$.\\~\\[2mm]
+  $A$ has a pivot in every row.
+}
+    </latex-code>
+  </p>
+
+  <example>
+    <title>Functions of one variable</title>
+    <p>
+      The function <m>\sin\colon\R\to\R</m> is neither one-to-one nor onto.
+    </p>
+
+    <p>
+      The function <m>\exp\colon\R\to\R</m> defined by <m>\exp(x) = e^x</m> is one-to-one but not onto.
+    </p>
+
+    <p>
+      The function <m>f\colon\R\to\R</m> defined by <m>f(x)=x^3</m> is one-to-one and onto.
+    </p>
+
+    <p>
+      The function <m>f\colon\R\to\R</m> defined by <m>f(x)=x^3-x</m> is onto but not one-to-one.
+    </p>
+  </example>
+
+  <example>
+    <title>A matrix transformation that is neither one-to-one nor onto</title>
+    <p>
+      Let
+      <me>A = \mat{1 -1 2; -2 2 -4},</me>
+      and define <m>T\colon\R^3\to\R^2</m> by <m>T(x) = Ax</m>.  This transformation is neither one-to-one nor onto, as we saw in this <xref ref="one-to-one-eg-neither1"/> and this <xref ref="one-to-one-eg-neither2"/>.
+    </p>
+    <figure>
+      <caption>A picture of the matrix transformation <m>T</m>.  The red plane is the solution set of <m>T(x)=0</m>.  If you drag <m>x</m> along the red plane, the output <m>T(x) = Ax</m> does not change.  This demonstrates that <m>T(x)=0</m> has more than one solution, so <m>T</m> is not one-to-one.   The range of <m>T</m> is the red line on the right; this is smaller than the codomain <m>\R^2</m>.  If you drag <m>b</m> off of the red line, then the equation <m>Ax=b</m> becomes inconsistent; this means <m>T(x)=b</m> has no solution.</caption>
+      <mathbox source="demos/Axequalsb.html?show=true&amp;closed=true" height="500px"/>
+    </figure>
+  </example>
+
+  <example>
+    <title>A matrix transformation that is one-to-one but not onto</title>
+    <p>
+      Let <m>A</m> be the matrix
+      <me>A = \mat{1 0; 0 1; 1 0},</me>
+      and define <m>T\colon\R^2\to\R^3</m> by <m>T(x) = Ax</m>.  This transformation is one-to-one but not onto, as we saw in this <xref ref="matrix-trans-11-notonto1"/> and this <xref ref="matrix-trans-11-notonto2"/>.
+    </p>
+    <figure>
+      <caption>A picture of the matrix transformation <m>T</m>.  The range of <m>T</m> is the red plane on the right; this is smaller than the codomain <m>\R^3</m>.  If you drag <m>b</m> off of the red plane, then the equation <m>Ax=b</m> becomes inconsistent; this means <m>T(x)=b</m> has no solution.  However, for <m>b</m> lying on the red plane, there is a unique vector <m>x</m> such that <m>T(x)=b</m>.</caption>
+      <mathbox source="demos/Axequalsb.html?mat=1,0:0,1:1,0&amp;range2=5&amp;closed=true&amp;show=" height="500px"/>
+    </figure>
+  </example>
+
+  <example>
+    <title>A matrix transformation that is onto but not one-to-one</title>
+    <p>
+      Let <m>A</m> be the matrix
+      <me>A = \mat{1 1 0; 0 1 1},</me>
+      and define <m>T\colon\R^3\to\R^2</m> by <m>T(x) = Ax</m>.  This transformation is onto but not one-to-one, as we saw in this <xref ref="one-to-one-not11-onto2"/> and this <xref ref="one-to-one-not11-onto2"/>.
+    </p>
+    <figure>
+      <caption>A picture of the matrix transformation <m>T</m>.  Every vector on the right side is the output of <m>T</m> for a suitable input.  If you drag <m>b</m>, the demo will find an input vector <m>x</m> with output <m>b</m>.  The red line is the null space of <m>A</m>, i.e., solution set of <m>T(x)=0</m>.  If you drag <m>x</m> along the red line, the output <m>T(x) = Ax</m> does not change.  This demonstrates that <m>T(x)=0</m> has more than one solution, so <m>T</m> is not one-to-one.</caption>
+      <mathbox source="demos/Axequalsb.html?mat=1,1,0:0,1,1&amp;range2=5&amp;closed=true&amp;show=true&amp;x=1,2,.5" height="500px"/>
+    </figure>
+  </example>
+
+  <example xml:id="one-to-one-both-11-onto">
+    <title>Matrix transformations that are both one-to-one and onto</title>
+    <p>
+      In this <xref ref="matrix-trans-matrices-functions"/>, we discussed the transformations defined by several <m>2\times 2</m> matrices, namely:
+      <md>
+        <mrow>
+          \text{Reflection:} &amp;\qquad A=\mat{-1 0; 0 1}
+        </mrow>
+        <mrow>
+          \text{Dilation:} &amp;\qquad A=\mat{1.5 0; 0 1.5}
+        </mrow>
+        <mrow>
+          \text{Identity:} &amp;\qquad A=\mat{1 0; 0 1}
+        </mrow>
+        <mrow>
+          \text{Rotation:} &amp;\qquad A=\mat{0 -1; 1 0}
+        </mrow>
+        <mrow>
+          \text{Shear:} &amp;\qquad A=\mat{1 1; 0 1}.
+        </mrow>
+      </md>
+      In each case, the associated matrix transformation <m>T(x)=Ax</m> is both one-to-one and onto.  A <m>2\times 2</m> matrix <m>A</m> has a pivot in every row if and only if it has a pivot in every column (if and only if it has two pivots), so in this case, the transformation <m>T</m> is one-to-one if and only if it is onto.  One can see geometrically that they are onto (what is the input for a given output?), or that they are one-to-one using the fact that the columns of <m>A</m> are not collinear.
+    </p>
+    <figure>
+      <caption>Counterclockwise rotation by <m>90^\circ</m> is a matrix transformation.  This transformation is onto (if <m>b</m> is a vector in <m>\R^2</m>, then it is the output vector for the input vector which is <m>b</m> rotated <em>clockwise</em> by <m>90^\circ</m>), and it is one-to-one (different vectors rotate to different vectors).</caption>
+      <mathbox source="demos/twobytwo.html?mat=0,-1,1,0&amp;closed=true&amp;pic=theo8.jpg" height="500px"/>
+    </figure>
+  </example>
+
+  <note hide-type="true">
+    <title>One-to-one is the same as onto for square matrices</title>
+    <p>
+      We observed in the previous <xref ref="one-to-one-both-11-onto"/> that a square matrix has a pivot in every row if and only if it has a pivot in every column.  Therefore, a matrix transformation <m>T</m> from <m>\R^n</m> to itself is one-to-one if and only if it is onto: in this case, the two notions are equivalent.
+    </p>
+    <p>
+      Conversely, by this <xref ref="one-to-one-wide-matrices"/> and this <xref ref="one-to-one-tall-matrices"/>, if a matrix transformation <m>T\colon\R^m\to\R^n</m> is both one-to-one and onto, then <m>m=n</m>.</p>
+  </note>
+
+</subsection>
+
+</section>

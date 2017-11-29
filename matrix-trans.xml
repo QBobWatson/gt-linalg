@@ -565,7 +565,7 @@ the license is included in gfdl.xml.
     </p>
   </example>
 
-  <example>
+  <example xml:id="matrix-trans-eg-robot">
     <title>A real-word transformation: robotics</title>
     <p>
       The definition of <em>transformation</em> and its associated vocabulary may seem quite abstract, but transformations are extremely common in real life.  Here is an example from the fields of robotics and computer graphics.

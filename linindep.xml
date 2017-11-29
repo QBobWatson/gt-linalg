@@ -191,7 +191,7 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
       <title>Linear independence and matrix columns</title>
       <p>
         <ul>
-          <li>The vectors <m>\{v_1,v_2,\ldots,v_p\}</m> are linearly independent if and only if the matrix <m>A</m> with columns <m>v_1,v_2,\ldots,v_p</m> has a pivot in every column.</li>
+          <li>The vectors <m>\{v_1,v_2,\ldots,v_p\}</m> are linearly independent if and only if the matrix <m>A</m> with columns <m>v_1,v_2,\ldots,v_p</m> has a pivot in every column, if and only if <m>Ax=0</m> has only the trivial solution.</li>
           <li>Solving the matrix equatiion <m>Ax=0</m> will either verify that the columns <m>v_1,v_2,\ldots,v_p</m> are linearly independent, or will produce a linear dependece relation by substituting any nonzero values for the free variables.</li>
         </ul>
       </p>

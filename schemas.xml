@@ -47,4 +47,5 @@
   <uri resource="row-reduction.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="spans.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="systems-eqns.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="one-one-onto.xml" uri="../mathbook/schema/pretext.rnc"/>
 </locatingRules>

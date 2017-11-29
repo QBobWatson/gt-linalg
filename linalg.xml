@@ -53,6 +53,7 @@ Free Documentation License"
     <chapter xml:id="chap-matrices">
       <title>Linear Transformations and Matrix Algebra</title>
       <xi:include href="./matrix-trans.xml" />
+      <xi:include href="./one-one-onto.xml" />
       <xi:include href="./linear-trans.xml" />
       <xi:include href="./matrix-mult.xml" />
       <xi:include href="./matrix-inv.xml" />
