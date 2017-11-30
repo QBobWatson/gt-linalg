@@ -34,14 +34,14 @@ the license is included in gfdl.xml.
     <title>One-to-one transformations</title>
     <statement>
       <p>
-        A transformation <m>T\colon\R^n\to\R^m</m> is <term>one-to-one</term> if, for every vector <m>b</m> in <m>\R^m</m>, the equation <m>T(x)=b</m> has <em>zero or one</em> solution <m>x</m> in <m>\R^n</m>.
+        A transformation <m>T\colon\R^n\to\R^m</m> is <term>one-to-one</term> if, for every vector <m>b</m> in <m>\R^m</m>, the equation <m>T(x)=b</m> has <em>at most one</em> solution <m>x</m> in <m>\R^n</m>.
       </p>
     </statement>
   </definition>
 
   <remark>
     <p>
-      Other words for <em>one-to-one</em> are <em>injective</em> and <em>into</em>.
+      Another word for <em>one-to-one</em> is <em>injective</em>.
     </p>
   </remark>
 
@@ -198,6 +198,10 @@ the license is included in gfdl.xml.
     <p>
       The function <m>f\colon\R\to\R</m> defined by <m>f(x)=x^3-x</m> is not one-to-one.   Indeed, <m>f(0) = f(1) = f(-1) = 0</m>, so the inputs <m>0,1,-1</m> all have the same output <m>0</m>.  The solutions of the equation <m>x^3 - x = 0</m> are exactly the roots of <m>f(x) = x(x-1)(x+1)</m>, and this equation has three roots.
     </p>
+
+    <p>
+      The function <m>f\colon\R\to\R</m> defined by <m>f(x)=x^2</m> is not one-to-one.  Indeed, <m>f(1) = 1 = f(-1)</m>, so the inputs <m>1</m> and <m>-1</m> have the same outputs.  The function <m>g\colon\R\to\R</m> defined by <m>g(x)=|x|</m> is not one-to-one for the same reason.
+    </p>
   </example>
 
   <example xml:id="one-to-one-eg-robot">
@@ -308,7 +312,7 @@ the license is included in gfdl.xml.
         Let <m>A</m> be an <m>m\times n</m> matrix, and let <m>T(x)=Ax</m> be the associated matrix transformation.  The following statements are equivalent:
         <ol>
           <li><m>T</m> is one-to-one.</li>
-          <li><m>T(x)=b</m> has zero or one solution for every <m>b</m> in <m>\R^m</m>.</li>
+          <li><m>T(x)=b</m> has at most one solution for every <m>b</m> in <m>\R^m</m>.</li>
           <li><m>Ax=b</m> has a unique solution or is inconsistent for every <m>b</m> in <m>\R^m</m>.</li>
           <li><m>Ax=0</m> has <em>only</em> the trivial solution.</li>
           <li>The columns of <m>A</m> are linearly independent.</li>
@@ -318,7 +322,7 @@ the license is included in gfdl.xml.
     </statement>
     <proof>
       <p>
-        Statements 1., 2., and 3. are translations of each other.  The equivalence of 3. and 4. follows from this <xref ref="solnsets-translate-span"/>: if <m>Ax=0</m> has only one solution, then <m>Ax=b</m> has only one solution as well, or it is inconsistent.  The equivalence of 4., 5., and 6. is a consequence of this <xref ref="linindep-matrix-cols"/>.
+        Statements 1, 2, and 3 are translations of each other.  The equivalence of 3 and 4 follows from this <xref ref="solnsets-translate-span"/>: if <m>Ax=0</m> has only one solution, then <m>Ax=b</m> has only one solution as well, or it is inconsistent.  The equivalence of 4, 5, and 6 is a consequence of this <xref ref="linindep-matrix-cols"/>.
       </p>
     </proof>
   </theorem>
@@ -509,7 +513,7 @@ the license is included in gfdl.xml.
     <ul>
       <li>The range of <m>T</m> is smaller than the codomain of <m>T</m>.</li>
       <li>There exists a vector <m>b</m> in <m>\R^m</m> such that the equation <m>T(x)=b</m> does not have a solution.</li>
-      <li>There is a vector in the codomain which is not the output of any input vector.</li>
+      <li>There is a vector in the codomain that is not the output of any input vector.</li>
     </ul>
     <latex-code>
 \begin{tikzpicture}[thin border nodes, scale=.75]
@@ -573,7 +577,7 @@ the license is included in gfdl.xml.
         Let <m>A</m> be an <m>m\times n</m> matrix, and let <m>T(x)=Ax</m> be the associated matrix transformation.  The following statements are equivalent:
         <ol>
           <li><m>T</m> is onto.</li>
-          <li><m>T(x)=b</m> at least one solution for every <m>b</m> in <m>\R^m</m>.</li>
+          <li><m>T(x)=b</m> has at least one solution for every <m>b</m> in <m>\R^m</m>.</li>
           <li><m>Ax=b</m> is consistent for every <m>b</m> in <m>\R^m</m>.</li>
           <li>The columns of <m>A</m> span <m>\R^m</m>.</li>
           <li><m>A</m> has a pivot in every row.</li>
@@ -582,7 +586,7 @@ the license is included in gfdl.xml.
     </statement>
     <proof>
       <p>
-        Statements 1., 2., and 3. are translations of each other.  The equivalence of 3., 4., and 5. follows from this <xref ref="matrixeq-thm-full-span"/>.
+        Statements 1, 2, and 3 are translations of each other.  The equivalence of 3, 4, and 5 follows from this <xref ref="matrixeq-thm-full-span"/>.
       </p>
     </proof>
   </theorem>
@@ -660,7 +664,7 @@ the license is included in gfdl.xml.
   </example>
 
   <p>
-    The previous two Examples illustrate the following observation.  Suppose that <m>T(x)=Ax</m> is a matrix transformation that is <em>not</em> onto.  This mean that <m>\text{range}(T) = \Col(A)</m> is a subspace of <m>\R^m</m> of dimension less than <m>m</m>: perhaps it is a line in the plane, or a line in <m>3</m>-space, or a plane in <m>3</m>-space, etc.  Whatever the case, the range of <m>T</m> is <em>very small</em> compared to the codomain.  To find a vector not in the range of <m>T</m>, choose a random nonzero vector <m>b</m> in <m>\R^m</m>; you have to be extremely unlucky to choose a vector that is in the range of <m>T</m>.  Of course, to check whether a given vector <m>b</m> is in the range of <m>T</m>, you have to solve the matrix equation <m>Ax=b</m> to see whether it is consistent.
+    The previous two Examples illustrate the following observation.  Suppose that <m>T(x)=Ax</m> is a matrix transformation that is <em>not</em> onto.  This means that <m>\text{range}(T) = \Col(A)</m> is a subspace of <m>\R^m</m> of dimension less than <m>m</m>: perhaps it is a line in the plane, or a line in <m>3</m>-space, or a plane in <m>3</m>-space, etc.  Whatever the case, the range of <m>T</m> is <em>very small</em> compared to the codomain.  To find a vector not in the range of <m>T</m>, choose a random nonzero vector <m>b</m> in <m>\R^m</m>; you have to be extremely unlucky to choose a vector that is in the range of <m>T</m>.  Of course, to check whether a given vector <m>b</m> is in the range of <m>T</m>, you have to solve the matrix equation <m>Ax=b</m> to see whether it is consistent.
   </p>
 
   <note hide-type="true" xml:id="one-to-one-tall-matrices">

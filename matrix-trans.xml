@@ -15,7 +15,7 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Learn to view a matrix geometrically as a function.</li>
-      <li>Learn examples of matrix transformations: reflection, dilation, rotation, shear.</li>
+      <li>Learn examples of matrix transformations: reflection, dilation, rotation, shear, projection.</li>
       <li>Understand the vocabulary surrounding transformations: domain, codomain, range.</li>
       <li>Understand the domain, codomain, and range of a matrix transformation.</li>
       <li>Vocabulary words: <term>transformation</term> / <term>function</term>, <term>domain</term>, <term>codomain</term>, <term>range</term>, <term>matrix transformation</term>.</li>
@@ -24,15 +24,19 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      In this section we learn to understand matrices geometrically as <em>functions</em>, or <em>transformations</em>.  We briefly discuss transformations in general, then specialize to matrix transformations, which are transformations that <q>come from</q> matrices.
+      In this section we learn to understand matrices geometrically as <em>functions</em>, or <em>transformations</em>.  We briefly discuss transformations in general, then specialize to matrix transformations, which are transformations that come from matrices.
     </p>
   </introduction>
 
   <subsection xml:id="matrix-trans-matrices-functions">
     <title>Matrices as Functions</title>
 
+    <p>
+      Informally, a <em>function</em> is a rule that accepts inputs and produces outputs.  For instance, <m>f(x) = x^2</m> is a function that accepts one number <m>x</m> as its input, and outputs the square of that number: <m>f(2) = 4</m>.  In this subsection, we interpret matrices as functions.
+    </p>
+
   <p>
-    Let <m>A</m> be a matrix with <m>m</m> rows and <m>n</m> columns.  Consider the matrix equation <m>b=Ax</m>.  If we vary <m>x</m>, then <m>b</m> will also vary; in this way, we think of <m>A</m> as a <em>function</em> with independent variable <m>x</m> and dependent variable <m>b</m>.
+    Let <m>A</m> be a matrix with <m>m</m> rows and <m>n</m> columns.  Consider the matrix equation <m>b=Ax</m> (we write it this way instead of <m>Ax=b</m> to remind the reader of the notation <m>y=f(x)</m>).  If we vary <m>x</m>, then <m>b</m> will also vary; in this way, we think of <m>A</m> as a function with independent variable <m>x</m> and dependent variable <m>b</m>.
     <ul>
       <li>
         The independent variable (the input) is <m>x</m>, which is a vector in <m>\R^n</m>.
@@ -435,15 +439,15 @@ the license is included in gfdl.xml.
     \filldraw[fill=steel!30] (-1.5, -.2)
       -- (-1.5-.5, -.5) -- (-1.5-.5, .5) -- (-1.5, .2);
     \coordinate (-input) at (-1.5-.5, 0);
-    \fill (-1.5-.4, -.05) rectangle (-1.5+.5, .05);
-    \fill (-1.5+.3, -.15) -- (-1.5+.7, 0) -- (-1.5+.3, .15);
+    %\fill (-1.5-.4, -.05) rectangle (-1.5+.5, .05);
+    %\fill (-1.5+.3, -.15) -- (-1.5+.7, 0) -- (-1.5+.3, .15);
     \filldraw[yshift=-.1cm, fill=black!30] (1.5-.2, -.3)
       -- (1.5+.4, -.3)
       arc[radius=.15, start angle=-90, end angle=90]
       -- (1.5-.2,0);
     \draw[yshift=-.1cm] (1.5+.4, -.15) circle[radius=.1];
-    \fill (1.5-.7, -.05) rectangle (1.5+.2, .05);
-    \fill (1.5+.0, -.15) -- (1.5+.4, 0) -- (1.5+.0, .15);
+    %\fill (1.5-.7, -.05) rectangle (1.5+.2, .05);
+    %\fill (1.5+.0, -.15) -- (1.5+.4, 0) -- (1.5+.0, .15);
     \coordinate (-output) at (1.5+.5, 0);
     \pic[transform shape, scale=.4] at (-.4, -.4) {gear={15/.2cm}};
     \pic[transform shape, scale=.4] at ( .4, -.4) {gear={15/.2cm}};
@@ -669,7 +673,7 @@ the license is included in gfdl.xml.
     </p>
 
     <p>
-      It is relatively straightforward to find a formula for <m>f(\theta,\phi,\psi)</m> using some basic trigonometry.  If you want the robot to fetch your coffee cup, however, you have to <em>find</em> the angles <m>\theta,\phi,\psi</m> that will put the hand at the position of your beverage.  It is not at all obvious how to do this, and it is not even clear if the answer is unique!  You can ask yourself: <q>which positions on the table can my robot arm reach?</q>  This is the same as asking: <q>what is the range of <m>f</m>?</q>
+      It is relatively straightforward to find a formula for <m>f(\theta,\phi,\psi)</m> using some basic trigonometry.  If you want the robot to fetch your coffee cup, however, you have to <em>find</em> the angles <m>\theta,\phi,\psi</m> that will put the hand at the position of your beverage.  It is not at all obvious how to do this, and it is not even clear if the answer is unique!  You can ask yourself: <q>which positions on the table can my robot arm reach?</q> or <q>what is the arm's range of motion?</q>  This is the same as asking: <q>what is the range of <m>f</m>?</q>
     </p>
     <p>
       Unfortunately, this kind of function does not come from a matrix, so one cannot use linear algebra to answer these kinds of questions.  In fact, these functions are rather complicated; their study is the subject of <url href="https://en.wikipedia.org/wiki/Inverse_kinematics">inverse kinematics</url>.
@@ -728,10 +732,10 @@ the license is included in gfdl.xml.
       Let <m>A</m> be an <m>m\times n</m> matrix, and let <m>T(x)=Ax</m> be the associated matrix transformation.
       <ul>
         <li>
-          The <em>domain</em> of <m>T</m> is <m>\R^n</m>, which is the number of <em>columns</em> of <m>A</m>.
+          The <em>domain</em> of <m>T</m> is <m>\R^n</m>, where <m>n</m> is the number of <em>columns</em> of <m>A</m>.
         </li>
         <li>
-          The <em>codomain</em> of <m>T</m> is <m>\R^m</m>, which is the number of <em>rows</em> of <m>A</m>.
+          The <em>codomain</em> of <m>T</m> is <m>\R^m</m>, where <m>m</m> is the number of <em>rows</em> of <m>A</m>.
         </li>
         <li>
           The <em>range</em> of <m>T</m> is the <em>column space</em> of <m>A</m>.
