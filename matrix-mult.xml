@@ -42,7 +42,7 @@ the license is included in gfdl.xml.
             <li>
               Let <m>T,U\colon\R^n\to\R^m</m> be two transformations.  Their <term>sum</term> is the transformation <m>T+U\colon\R^n\to\R^m</m> defined by
               <me>(T+U)(x) = T(x) + U(x).</me>
-              Note that addition of transformations is only defined when both transformations have the same domain and codomain.
+              Note that addition of transformations is only defined when both transformations have the same domain and codomain. <em></em><!-- workaround css bug -->
             </li>
             <li>
               Let <m>T\colon\R^n\to\R^m</m> be a transformation, and let <m>c</m> be a scalar.  The <term>scalar product</term> of <m>c</m> with <m>T</m> is the transformation <m>cT\colon\R^n\to\R^m</m> defined by
