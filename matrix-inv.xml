@@ -12,8 +12,913 @@ the license is included in gfdl.xml.
 <section xml:id="matrix-inverses">
   <title>Matrix Inverses</title>
 
-  <p>
-    Computing the inverse matrix.  Relationship with invertible transformations.  The invertible matrix theorem.
-  </p>
+  <objectives>
+    <ol>
+      <li>Understand what it means for a square matrix to be invertible.</li>
+      <li><em>Learn 19 equivalent conditions for a matrix to be invertible.</em></li>
+      <li>Learn how to compute the inverse of a matrix.</li>
+      <li>Learn to solve a linear system of equations with matrix inverses.</li>
+      <li>Learn about invertible transformations, and understand the relationship between invertible matrices and invertible transformations.</li>
+      <li>Vocabulary words: <term>inverse matrix</term>, <term>inverse transformation</term>.</li>
+    </ol>
+  </objectives>
+
+  <introduction>
+    <p>
+      In <xref ref="matrix-transformations"/> we learned to multiply matrices together.  In this section, we learn to <q>divide</q> by a matrix.  This allows us to solve the matrix equation <m>Ax=b</m> in an elegant way:
+      <me>Ax = b \quad\iff\quad x = A\inv b.</me>
+      One has to take care when <q>dividing by matrices</q>, however, because not every matrix has an inverse, and the order of matrix multiplication is important.
+    </p>
+  </introduction>
+
+ <subsection>
+   <title>Invertible Matrices</title>
+
+   <p>The <em>reciprocal</em> or <em>inverse</em> of a nonzero number <m>a</m> is the number <m>b</m> which is characterized by the property that <m>ab = 1</m>.  We use this formulation to define the inverse of a matrix.</p>
+
+   <definition>
+     <statement>
+       <p>
+         Let <m>A</m> be an <m>n\times n</m> (square) matrix.  We say that <m>A</m> is <term>invertible</term> if there is an <m>n\times n</m> matrix <m>B</m> such that
+         <me>AB = I_n \sptxt{and} BA = I_n.</me>
+         In this case, the matrix <m>B</m> is called the <term>inverse</term> of <m>A</m>, and we write <m>B = A\inv</m>.
+       </p>
+     </statement>
+   </definition>
+
+   <p>
+     We have to require <m>AB = I_n</m> <em>and</em> <m>BA = I_n</m> because in general, matrix multiplication is not commutative.  However, we will show in the <xref ref="imt-1"/> that if <m>A</m> and <m>B</m> are <m>n\times n</m> matrices such that <m>AB = I_n</m>, then automatically <m>BA = I_n</m>.
+   </p>
+
+   <warning>
+     <p>
+       If <m>A</m> and <m>B</m> are <m>n\times n</m> matrices, then <m>AB = I_n</m> if and only if <m>BA = I_n</m>.  Therefore, you only have to check one of these equalities to verify that <m>B = A\inv</m>.
+     </p>
+   </warning>
+
+   <example>
+     <statement>
+       <p>
+         Verify that the matrices
+         <me>A = \mat{2 1; 1 1} \sptxt{and} B = \mat{1 -1; -1 2}</me>
+         are inverses.
+       </p>
+     </statement>
+     <solution>
+       <p>
+         We will check that <m>AB = I_2</m> and that <m>BA = I_2</m>.
+         <md>
+           <mrow>AB \amp= \mat{2 1; 1 1}\mat{1 -1; -1 2} = \mat{1 0; 0 1}</mrow>
+           <mrow>BA \amp= \mat{1 -1; -1 2}\mat{2 1; 1 1} = \mat{1 0; 0 1}</mrow>
+         </md>
+         Therefore, <m>A</m> is invertible, with inverse <m>B</m>.
+       </p>
+     </solution>
+   </example>
+
+   <remark>
+     <p>
+       There exist non-square matrices whose product is the identity.  Indeed, if
+       <me>A = \mat{1 0 0; 0 1 0} \sptxt{and} B = \mat{1 0; 0 1; 0 0}</me>
+       then <m>AB = I_2.</m>  However, <m>BA\neq I_3</m>, so <m>B</m> does not deserve to be called the inverse of <m>A</m>.
+     </p>
+     <p>
+       One can show using the ideas in this <xref ref="matrix-inv-linear-transforms"/> that if <m>A</m> is an <m>n\times m</m> matrix for <m>n\neq m</m>, then there is no <m>m\times n</m> matrix <m>B</m> such that <m>AB = I_m</m> and <m>BA = I_n</m>.  For this reason, we restrict ourselves to <em>square</em> matrices when we discuss matrix invertibility.
+     </p>
+   </remark>
+
+   <proposition type-name="fact" hide-type="true">
+     <title>Facts about invertible matrices</title>
+     <statement>
+       <p>
+         Let <m>A</m> and <m>B</m> be invertible <m>n\times n</m> matrices.
+         <ol>
+           <li><m>A\inv</m> is invertible, and its inverse is <m>(A\inv){}\inv = A.</m></li>
+           <li><m>AB</m> is invertible, and its inverse is <m>(AB)\inv = B\inv A\inv</m> (note the order).</li>
+         </ol>
+       </p>
+     </statement>
+     <proof>
+       <p>
+         <ol>
+           <li>
+             Let <m>B</m> be the inverse of <m>A</m>.  Then <m>AB = I_n</m> and <m>BA = I_n</m>, which by definition also means <m>A</m> is the inverse of <m>B</m>.
+           </li>
+           <li>
+             We compute
+             <me>(B\inv A\inv)AB = B\inv(A\inv A)B = B\inv I_n B = B\inv B = I_n.</me>
+             Here we used the associativity of matrix multiplication and the fact that <m>I_n B = B</m>.  This shows that <m>B\inv A\inv</m> is the inverse of <m>AB</m>.
+           </li>
+         </ol>
+       </p>
+     </proof>
+   </proposition>
+
+   <p>
+     In the above Fact, it is instructive to note that there is no reason for
+     <m>A\inv B\inv A B</m> to equal the identity matrix: one cannot switch the order of <m>B\inv</m> and <m>A</m>, so there is nothing to cancel in this expression.
+   </p>
+
+   <p>
+     More generally, the inverse of a product of several invertible matrices is the product of the inverses, in the opposite order.  For instance,
+     <me>(ABC)\inv = C\inv B\inv A\inv.</me>
+   </p>
+
+ </subsection>
+
+ <subsection>
+   <title>Computing the Inverse Matrix</title>
+
+   <p>
+     So far we have defined the inverse matrix without giving any strategy for computing it.  We do so now, beginning with the special case of <m>2\times 2</m> matrices.
+   </p>
+
+   <definition>
+     <statement>
+       <p>
+         The <term>determinant</term> of a <m>2\times 2</m> matrix is the number
+         <me>\det\mat{a b; c d} = ad-bc.</me>
+       </p>
+     </statement>
+   </definition>
+
+   <proposition xml:id="matrix-inv-22">
+     <statement>
+       <p>
+         Let <m>A = \mat{a b; c d}</m>.
+         <ol>
+           <li>
+             If <m>\det(A) \neq 0</m>, then <m>A</m> is invertible, and
+             <me>A\inv = \frac 1{\det(A)}\mat{d -b; -c a}.</me>
+           </li>
+           <li>If <m>\det(A) = 0,</m> then <m>A</m> is not invertible.</li>
+         </ol>
+       </p>
+     </statement>
+     <proof>
+       <p>
+         <ol>
+           <li>
+             Suppose that <m>\det(A)\neq 0</m>.  Define
+             <m>\displaystyle
+               B = \frac 1{\det(A)}\mat{d -b; -c a}.
+             </m>
+             Then
+             <me>
+               AB = \mat{a b; c d}\frac 1{\det(A)}\mat{d -b; -c a}
+               = \frac 1{ad-bc}\mat{ad-bc 0; 0 ad-bc} = I_2.
+             </me>
+             Similarly, one computes that <m>BA = I_2</m>, so <m>A</m> is invertible and <m>B = A\inv</m>.
+           </li>
+           <li>
+             Suppose that <m>\det(A) = ad-bc = 0</m>.  Let <m>T\colon\R^2\to\R^2</m> be the matrix transformation <m>T(x) = Ax</m>.  Then
+             <md>
+               <mrow>
+                 T\vec{-b a} \amp= \mat{a b; c d}\vec{-b a}
+                   = \vec{-ab+ab -bc+ad} = \vec{0 \det(A)} = 0
+               </mrow>
+               <mrow>
+                 T\vec{d -c} \amp= \mat{a b; c d}\vec{d -c}
+                   = \vec{ad-bc cd-cd} = \vec{\det(A) 0} = 0.
+               </mrow>
+             </md>
+             If <m>A</m> is the zero matrix, then it is obviously not invertible.  Otherwise, one of <m>v= {-b\choose a}</m> and <m>v = {d\choose -c}</m> will be a nonzero vector in the null space of <m>A</m>.  Suppose that there were a matrix <m>B</m> such that <m>BA=I_2</m>.  Then
+             <me>v = I_2v = BAv = B0 = 0,</me>
+             which is impossible as <m>v\neq 0</m>.  Therefore, <m>A</m> is not invertible.
+           </li>
+         </ol>
+       </p>
+     </proof>
+   </proposition>
+
+   <example>
+     <p>
+       Let
+       <me>A = \mat{1 2; 3 4}.</me>
+       Then
+       <m>\det(A) = 1\cdot 4 - 2\cdot 3 = -2.</m>
+       By the <xref ref="matrix-inv-22"/>, the matrix <m>A</m> is invertible with inverse
+       <me>\mat{1 2; 3 4}\inv = \frac 1{\det(A)}\mat{4 -2; -3 1} = -\frac 12\mat{4 -2; -3 1}.</me>
+       We check:
+       <me>
+         \mat{1 2; 3 4}\cdot -\frac 12\mat{4 -2; -3 1} =
+         -\frac 12\mat{-2 0; 0 -2} = I_2.
+       </me>
+     </p>
+   </example>
+
+   <p>The following Theorem gives a procedure for computing <m>A\inv</m> in general.</p>
+
+   <theorem xml:id="matrix-inv-how-to-compute">
+     <statement>
+       <p>
+         Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>(\,A\mid I_n\,)</m> be the matrix obtained by augmenting <m>A</m> by the identity matrix.
+         If the reduced row echelon form of <m>(\,A\mid I_n\,)</m> has the form <m>(\,I_n\mid B\,)</m>, then <m>A</m> is invertible and <m>B = A\inv</m>.  Otherwise, <m>A</m> is not invertible.
+       </p>
+     </statement>
+     <proof>
+       <p>
+         First suppose that the reduced row echelon form of <m>(\,A\mid I_n\,)</m> does not have the form <m>(\,I_n\mid B\,)</m>.  This means that fewer than <m>n</m> pivots are contained in the first <m>n</m> columns (the non-augmented part), so <m>A</m> has fewer than <m>n</m> pivots.  It follows that <m>\Nul(A)\neq\{0\}</m> (the equation <m>Ax=0</m> has a free variable), so there exists a nonzero vector <m>v</m> in <m>\Nul(A)</m>.  Suppose that there were a matrix <m>B</m> such that <m>BA=I_n</m>.  Then
+             <me>v = I_nv = BAv = B0 = 0,</me>
+             which is impossible as <m>v\neq 0</m>.  Therefore, <m>A</m> is not invertible.
+       </p>
+       <p>
+         Now suppose that the reduced row echelon form of <m>(\,A\mid I_n\,)</m> has the form <m>(\,I_n\mid B\,)</m>.  In this case, all pivots are contained in the non-augmented part of the matrix, so the augmented part plays no role in the row reduction: the entries of the augmented part do not influence the choice of row operations used.  Hence, row reducing <m>(\,A\mid I_n\,)</m> is equivalent to solving the <m>n</m> systems of linear equations <m>Ax_1 = e_1,\,Ax_2=e_2,\,\ldots,Ax_n=e_n</m>, where <m>e_1,e_2,\ldots,e_n</m> are the <xref ref="defn-unit-coord-vectors">unit coordinate vectors</xref>:
+         <me>
+\def\g{\color{light gray}}\begin{split}
+Ax_1 \amp= \def\o{\textcolor{blue}} \o{e_1}: \qquad
+\hmat{1 0 4 \o1 \g0 \g0; 0 1 2 \o0 \g1 \g0; 0 -3 -4 \o0 \g0 \g1} \\
+Ax_2 \amp= \def\o{\textcolor{red}} \o{e_2}: \qquad
+\hmat{1 0 4 \g1 \o0 \g0; 0 1 2 \g0 \o1 \g0; 0 -3 -4 \g0 \o0 \g1} \\
+Ax_3 \amp= \def\o{\textcolor{green!70!black}} \o{e_3}: \qquad
+\hmat{1 0 4 \g1 \g0 \o0; 0 1 2 \g0 \g1 \o0; 0 -3 -4 \g0 \g0 \o1}.
+\end{split}
+         </me>
+         The columns <m>x_1,x_2,\ldots,x_n</m> of the matrix <m>B</m> in the row reduced form are the solutions to these equations:
+         <me>
+\def\b{\color{blue}}
+\def\r{\color{red}}
+\def\gg{\color{green!70!black}}
+\def\g{\color{light gray}}\begin{split}
+A\b\vec{1 0 0} \amp= e_1: \qquad
+\hmat{1 0 0 \b1 \g-6 \g-2; 0 1 0 \b0 \g-2 \g-1; 0 0 1 \b0 \g3/2 \g1/2} \\
+A\r\vec{-6 -2 3/2} \amp= e_2: \qquad
+\hmat{1 0 0 \g1 \r-6 \g-2; 0 1 0 \g0 \r-2 \g-1; 0 0 1 \g0 \r3/2 \g1/2} \\
+A\gg\vec{-2 -1 1/2} \amp= e_3: \qquad
+\hmat{1 0 0 \g1 \g-6 \gg-2; 0 1 0 \g0 \g-2 \gg-1; 0 0 1 \g0 \g3/2 \gg1/2}.
+\end{split}
+         </me>
+         By this <xref ref="linear-trans-pick-columns"/>, the product <m>Be_i</m> is just the <m>i</m>th column <m>x_i</m> of <m>B</m>, so
+         <me>e_i = Ax_i = ABe_i</me>
+         for all <m>i</m>.  By the same Fact, the <m>i</m>th column of <m>AB</m> is <m>e_i</m>, which means that <m>AB</m> is the identity matrix.  Thus <m>B</m> is the inverse of <m>A</m>.
+       </p>
+     </proof>
+   </theorem>
+
+   <example>
+     <title>An invertible matrix</title>
+     <statement>
+       <p>
+         Find the inverse of the matrix
+         <me>A = \mat[r]{1 0 4; 0 1 2; 0 -3 -4}.</me>
+       </p>
+     </statement>
+     <solution>
+       <p>
+         We augment by the identity and row reduce:
+         <latex-code>
+\def\r{\color{red}}
+\def\rowop#1#2{%
+  \hbox to 2cm{\hss$\xrightarrow{#1}$}\,%
+  \hbox to 4cm{#2\hss}%
+}
+\leavevmode
+\hbox to 4.2cm{$\hmat{1 0 4 1 0 0; 0  1 2 0 1 0; 0 -3 -4 0 0 1}$\hss}%
+\rowop{R_3 = R_3 + 3R_2}{%
+$\hmat{1 0 4 1 0 0; 0 1 2 0 1 0; 0 \r0 \r2 0 \r3 1}$} \\[2mm]
+\leavevmode\hbox to 4.2cm{}\rowop{%
+  \tiny\begin{aligned}R_1\amp=R_1-2R_3\\[-5pt]R_2\amp=R_2-R_3\\[-3pt]\end{aligned}}{%
+$\hmat{1 0 \r0 1 \r-6 \r-2;
+    0 1 \r0 0 \r-2 \r-1;
+    0 0 2 0 3 1}$}\\[2mm]
+\leavevmode\hbox to 4.2cm{}\rowop{R_3 = R_3\div 2}{%
+  $\hmat{1 0 0 1 -6 -2;
+    0 1 0 0 -2 -1;
+    0 0 \r1 0 \r3/2 \r1/2}$.}
+         </latex-code>
+         By the <xref ref="matrix-inv-how-to-compute"/>, the inverse matrix is
+         <me>\mat[r]{1 0 4; 0 1 2; 0 -3 -4}\inv = \mat[r]{1 -6 -2; 0 -2 -1; 0 3/2 1/2}.</me>
+         We check:
+         <me>\mat[r]{1 0 4; 0 1 2; 0 -3 -4}\mat[r]{1 -6 -2; 0 -2 -1; 0 3/2 1/2}
+= \mat{1 0 0; 0 1 0; 0 0 1}.</me>
+       </p>
+     </solution>
+   </example>
+
+   <example>
+     <title>A non-invertible matrix</title>
+     <statement>
+       <p>
+         Is the following matrix invertible?
+         <me>A = \mat[r]{1 0 4; 0 1 2; 0 -3 -6}.</me>
+       </p>
+     </statement>
+     <solution>
+       <p>
+         We augment by the identity and row reduce:
+         <latex-code>
+\def\r{\color{red}}
+\def\rowop#1#2{%
+  \hbox to 2cm{\hss$\xrightarrow{#1}$}\,%
+  \hbox to 4cm{#2\hss}%
+}
+\leavevmode
+\hbox to 4.2cm{$\hmat{1 0 4 1 0 0; 0  1 2 0 1 0; 0 -3 -6 0 0 1}$\hss}%
+\rowop{R_3 = R_3 + 3R_2}{%
+$\hmat{1 0 4 1 0 0; 0 1 2 0 1 0; 0 \r0 \r0 0 3 1}$.}
+         </latex-code>
+         At this point we can stop, because it is clear that the reduced row echelon form will not have <m>I_3</m> in the non-augmented part: it will have a row of zeros.  By the <xref ref="matrix-inv-how-to-compute"/>, the matrix is not invertible.
+       </p>
+     </solution>
+   </example>
+
+ </subsection>
+
+ <subsection>
+   <title>Solving Linear Systems via Inverses</title>
+
+   <p>
+     In this Subsection, we learn to solve <m>Ax=b</m> by <q>dividing by <m>A</m>.</q>
+   </p>
+
+   <theorem xml:id="matrix-inv-solve-system">
+     <statement>
+       <p>
+         Let <m>A</m> be an invertible <m>n\times n</m> matrix, and let <m>b</m> be a vector in <m>\R^n.</m>  Then the matrix equation <m>Ax=b</m> has exactly one solution:
+         <me>x = A\inv b.</me>
+       </p>
+     </statement>
+     <proof>
+       <p>
+         We calculate:
+         <me>
+           \begin{split}
+           Ax = b \quad\implies\amp\quad A\inv(Ax) = A\inv b \\
+           \quad\implies\amp\quad (A\inv A)x = A\inv b \\
+           \quad\implies\amp\quad I_n x = A\inv b \\
+           \quad\implies\amp\quad x = A\inv b.
+           \end{split}
+         </me>
+         Here we used associativity of matrix multiplication, and the fact that <m>I_n x = x</m> for any vector <m>b</m>.
+       </p>
+     </proof>
+   </theorem>
+
+   <example>
+     <title>Solving a <m>2\times 2</m> system using inverses</title>
+     <statement>
+       <p>
+         Solve the matrix equation
+         <me>
+           \mat{1 3; -1 2}x = \vec{1 1}.
+         </me>
+       </p>
+     </statement>
+     <solution>
+       <p>
+         By the <xref ref="matrix-inv-solve-system"/>, the only solution of our linear system is
+         <me>
+x
+  = \mat[r]{1 3; -1 2}\inv\kern-1pt\vec{1 1}
+  = \frac 15\mat[r]{2 -3; 1 1}\vec{1 1}
+  = \frac 15\vec{1 2}.
+         </me>
+         Here we used
+         <me>
+           \det\mat[r]{1 3; -1 2} = 1\cdot 2 - (-1)\cdot 3 = 5.
+         </me>
+       </p>
+     </solution>
+   </example>
+
+   <example>
+     <title>Solving a <m>3\times 3</m> system using inverses</title>
+     <statement>
+       <p>
+         Solve the system of equations
+         <me>
+           \syseq{2x_1 + 3x_2 + 2x_3 = 1;
+                   x_1 \+ \. + 3x_3 = 1;
+                   2x_1 + 2x_2 + 3x_3 = 1\rlap.}
+         </me>
+       </p>
+     </statement>
+     <solution>
+       <p>
+         First we write our system as a matrix equation <m>Ax = b</m>, where
+         <me>A = \mat{2 3 2; 1 0 3; 2 2 3} \sptxt{and} b = \vec{1 1 1}.</me>
+         Next we find the inverse of <m>A</m> by augmenting and row reducing:
+         <latex-code>
+\def\r{\color{red}}
+\def\rowop#1#2{%
+  \hbox to 2cm{\hss$\xrightarrow{#1}$}\,%
+  \hbox to 4cm{#2\hss}%
+}
+\leavevmode
+\hbox to 3.4cm{$\hmat{2 3 2 1 0 0; 1 0 3 0 1 0; 2 2 3 0 0 1}$\hss}%
+\rowop{R_1 \longleftrightarrow R_2}{%
+$\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
+\leavevmode\hbox to 3.4cm{}\rowop{%
+  \tiny\begin{aligned}R_2\amp=R_2-2R_1\\[-5pt]R_3\amp=R_3-2R_1\\[-3pt]\end{aligned}}{%
+  $\hmat{1 0 3 0 1 0;
+    \r0 3 -4 1 -2 0;
+    \r0 2 -3 0 -2 1
+}$}\\[2mm]
+\leavevmode\hbox to 3.4cm{}\rowop{R_2 = R_2 - R_3}{%
+  $\hmat{1 0 3 0 1 0;
+    0 \r1 -1 1 0 -1;
+    0 2 -3 0 -2 1
+  }$}\\[2mm]
+\leavevmode\hbox to 3.4cm{}\rowop{R_3 = R_3 - 2R_2}{%
+  $\hmat{1 0 3 0 1 0;
+    0 1 -1 1 0 -1;
+    0 \r0 -1 -2 -2 3
+  }$}\\[2mm]
+\leavevmode\hbox to 3.4cm{}\rowop{R_3 = -R_3}{%
+  $\hmat{1 0 3 0 1 0;
+    0 1 -1 1 0 -1;
+    0 0 \r1 2 2 -3
+  }$}\\[2mm]
+\leavevmode\hbox to 3.4cm{}\rowop{
+  \tiny\begin{aligned}R_1\amp=R_1-3R_3\\[-5pt]R_2\amp=R_2+R_3\\[-3pt]\end{aligned}}{%
+  $\hmat{1 0 \r0 -6 -5 9;
+    0 1 \r0 3 2 -4;
+    0 0 1 2 2 -3
+  }$.}
+         </latex-code>
+         By the <xref ref="matrix-inv-solve-system"/>, the only solution of our linear system is
+         <me>
+\vec{x_1 x_2 x_3}
+  = \mat{2 3 2; 1 0 3; 2 2 3}\inv\kern-1pt\vec{1 1 1}
+  = \mat[r]{-6 -5 9; 3 2 -4; 2 2 -3}\vec{1 1 1}
+  = \vec{-2 1 1}.
+         </me>
+       </p>
+     </solution>
+   </example>
+
+   <p>
+     The advantage of solving a linear system using inverses is that it becomes much faster to solve the matrix equation <m>Ax=b</m> for other, or even unknown, values of <m>b</m>.  For instance, in the above Example, the solution of the system of equations
+         <me>
+           \syseq{2x_1 + 3x_2 + 2x_3 = b_1;
+                   x_1 \+ \. + 3x_3 = b_2;
+                   2x_1 + 2x_2 + 3x_3 = b_3\rlap{,}}
+         </me>
+         where <m>b_1,b_2,b_3</m> are unknowns, is
+         <me>
+           \vec{x_1 x_2 x_3} = \mat{2 3 2; 1 0 3; 2 2 3}\inv\kern-1pt\vec{b_1 b_2 b_3}
+           =\mat[r]{-6 -5 9; 3 2 -4; 2 2 -3}\vec{b_1 b_2 b_3}
+           =\vec{-6b_1-5b_2+9b_3 \phantom-3b_1+2b_2-4b_3 \phantom-2b_1+2b_2-3b_3}.
+         </me>
+   </p>
+
+ </subsection>
+
+  <subsection xml:id="matrix-inv-linear-transforms">
+    <title>Invertible linear transformations</title>
+
+    <p>
+      As with matrix multiplication, it is helpful to understand matrix inversion as an operation on linear transformations.
+    </p>
+
+    <definition xml:id="matrix-inv-trans-inv-def">
+      <statement>
+        <p>A transformation <m>T\colon\R^n\to\R^n</m> is <term>invertible</term> if there exists a transformation <m>U\colon\R^n\to\R^n</m> such that <m>T\circ U = \Id_{\R^n}</m> and <m>U\circ T = \Id_{\R^n}</m>.  In this case, the transformation <m>U</m> is called the <term>inverse</term> of <m>T</m>, and we write <m>U = T\inv</m>.</p>
+      </statement>
+    </definition>
+
+    <p>
+      The inverse <m>U</m> of <m>T</m> <q>undoes</q> whatever <m>T</m> did.  We have
+      <me>T\circ U(x) = x \sptxt{and} U\circ T(x) = x</me>
+      for all vectors <m>x</m>.  This means that if you apply <m>T</m> to <m>x</m>, then you apply <m>U</m>, you get the vector <m>x</m> back, and likewise in the other order.
+    </p>
+
+    <example>
+      <title>Functions of one variable</title>
+      <p>
+        Define <m>f\colon\R\to\R</m> by <m>f(x) = 2x</m>.  This is an invertible transformation, with inverse <m>g(x) = x/2</m>.  Indeed,
+        <me>f\circ g(x) = f(g(x)) = f\biggl(\frac x2\biggr) = 2\biggl(\frac x2\biggr) = x</me>
+        and
+        <me>g\circ f(x) = g(f(x)) = g(2x) = \frac{2x}2 = x.</me>
+        In other words, dividing by <m>2</m> undoes the transformation that multiplies by <m>2</m>.
+      </p>
+      <p>
+        Define <m>f\colon\R\to\R</m> by <m>f(x) = x^3</m>.  This is an invertible transformation, with inverse <m>g(x) = \sqrt[3]x</m>.  Indeed,
+        <me>f\circ g(x) = f(g(x)) = f(\sqrt[3]x) = \bigl(\sqrt[3]x\bigr)^3 = x</me>
+        and
+        <me>g\circ f(x) = g(f(x)) = g(x^3) = \sqrt[3]{x^3} = x.</me>
+        In other words, taking the cube root undoes the transformation that takes a number to its cube.
+      </p>
+      <p>
+        Define <m>f\colon\R\to\R</m> by <m>f(x) = x^2</m>.  This is <em>not</em> an invertible function.  Indeed, we have <m>f(2) = 2 = f(-2)</m>, so there is no way to undo <m>f</m>: the inverse transformation would not know if it should send <m>2</m> to <m>2</m> or <m>-2</m>.  More formally, if <m>g\colon\R\to\R</m> satisfies <m>g(f(x)) = x</m>, then
+        <me>2 = g(f(2)) = g(2) \sptxt{and} -2 = g(f(-2)) = g(2),</me>
+        which is impossible: <m>g(2)</m> is a number, so it cannot be equal to <m>2</m> and <m>-2</m> at the same time.
+      </p>
+      <p>
+        Define <m>f\colon\R\to\R</m> by <m>f(x) = e^x</m>.  This is <em>not</em> an invertible function.  Indeed, if there were a function <m>g\colon\R\to\R</m> such that <m>f\circ g = \Id_\R</m>, then we would have
+        <me>-1 = f\circ g(-1) = f(g(-1)) = e^{g(-1)}.</me>
+        But <m>e^x</m> is a <em>positive</em> number for every <m>x</m>, so this is impossible.
+      </p>
+    </example>
+
+   <example>
+     <title>Dilation</title>
+     <statement>
+       <p>Let <m>T\colon\R^2\to\R^2</m> be dilation by a factor of <m>3/2</m>: that is, <m>T(x) = 3/2x</m>.  Is <m>T</m> invertible?  If so, what is <m>T\inv</m>?</p>
+     </statement>
+     <solution>
+       <p>
+         Let <m>U\colon\R^2\to\R^2</m> be dilation by a factor of <m>2/3</m>: that is, <m>U(x) = 2/3x</m>.  Then
+         <me>T\circ U(x) = T\biggl(\frac 23x\biggr) = \frac 32\cdot\frac 23x = x</me>
+         and
+         <me>U\circ T(x) = U\biggl(\frac 32x\biggr) = \frac 23\cdot\frac 32x = x.</me>
+         Hence <m>T\circ U = \Id_{\R^2}</m> and <m>U\circ T = \Id_{\R^2}</m>, so <m>T</m> is invertible, with inverse <m>U</m>.  In other words, <em>shrinking</em> by a factor of <m>2/3</m> undoes <em>stretching</em> by a factor of <em>3/2</em>.
+         <latex-code>
+\def\theo{\includegraphics[width=3cm]{theo6.jpg}}
+\begin{tikzpicture}[scale=1.3]
+  \begin{scope}
+    \node (theo1) at (0,0) {\theo};
+  \end{scope}
+  \draw[->,opacity=.3] (-1.2,0) -- (1.2,0);
+  \draw[->,opacity=.3] (0,-1.2) -- (0,1.2);
+
+  \begin{scope}[xshift=4cm]
+  \begin{scope}
+    \node[scale=2/3] at (0,0) {\theo};
+    \node[minimum size={3cm+.2em}] (theo2) at (0,0) {};
+  \end{scope}
+  \draw[->,opacity=.3] (-1.2,0) -- (1.2,0);
+  \draw[->,opacity=.3] (0,-1.2) -- (0,1.2);
+  \end{scope}
+
+  \draw[->] (theo1.20) to["$U$", out=20, in=160] (theo2.160);
+
+  \begin{scope}[xshift=8cm]
+  \begin{scope}
+    \node (theo3) at (0,0) {\theo};
+  \end{scope}
+  \draw[->,opacity=.3] (-1.2,0) -- (1.2,0);
+  \draw[->,opacity=.3] (0,-1.2) -- (0,1.2);
+  \end{scope}
+
+  \draw[->] (theo2.20) to["$T$", out=20, in=160] (theo3.160);
+  \useasboundingbox (9.2,0);
+  \end{tikzpicture}
+         </latex-code>
+       </p>
+       <figure>
+         <caption>Shrinking by a factor of <m>2/3</m> followed by scaling by a factor of <m>3/2</m> is the identity transformation.</caption>
+         <mathbox source="demos/compose2d.html?closed&amp;mat1=2/3,0,0,2/3&amp;mat2=1.5,0,0,1.5&amp;show1" height="500px"/>
+       </figure>
+       <figure>
+         <caption>Scaling by a factor of <m>3/2</m> followed by shrinking by a factor of <m>2/3</m> is the identity transformation.</caption>
+         <mathbox source="demos/compose2d.html?closed&amp;mat2=2/3,0,0,2/3&amp;mat1=1.5,0,0,1.5&amp;show1&amp;names=U,T" height="500px"/>
+       </figure>
+     </solution>
+   </example>
+
+   <example>
+     <title>Rotation</title>
+     <statement>
+       <p>Let <m>T\colon\R^2\to\R^2</m> be counterclockwise rotation by <m>45^\circ</m>.  Is <m>T</m> invertible?  If so, what is <m>T\inv</m>?</p>
+     </statement>
+     <solution>
+       <p>
+         Let <m>U\colon\R^2\to\R^2</m> be <em>clockwise</em> rotation by <m>45^\circ</m>.  Then <m>T\circ U</m> first rotates clockwise by <m>45^\circ</m>, then counterclockwise by <m>45^\circ</m>, so the composition rotates by zero degrees: it is the identity transformation.  Likewise, <m>U\circ T</m> first rotates counterclockwise, then clockwise by the same amount, so it is the identity transformation.  In other words, <em>clockwise</em> rotation by <m>45^\circ</m> undoes <em>counterclockwise</em> rotation by <m>45^\circ</m>.
+         <latex-code>
+\def\theo{\includegraphics[width=3cm]{theo10.jpg}}
+\begin{tikzpicture}[scale=1.3]
+  \begin{scope}
+    \clip (0,0) circle[radius={1.5cm/1.3}];
+    \node (theo1) at (0,0) {\theo};
+  \end{scope}
+  \draw[->,opacity=.3] (-1.2,0) -- (1.2,0);
+  \draw[->,opacity=.3] (0,-1.2) -- (0,1.2);
+
+  \begin{scope}[xshift=4cm]
+  \begin{scope}
+    \clip (0,0) circle[radius={1.5cm/1.3}];
+    \node[rotate=45] at (0,0) {\theo};
+    \node[minimum size=3cm] (theo2) at (0,0) {};
+  \end{scope}
+  \draw[->,opacity=.3] (-1.2,0) -- (1.2,0);
+  \draw[->,opacity=.3] (0,-1.2) -- (0,1.2);
+  \end{scope}
+
+  \draw[->] (theo1.20) to["$T$", out=20, in=160] (theo2.160);
+
+  \begin{scope}[xshift=8cm]
+  \begin{scope}
+    \clip (0,0) circle[radius={1.5cm/1.3}];
+    \node (theo3) at (0,0) {\theo};
+  \end{scope}
+  \draw[->,opacity=.3] (-1.2,0) -- (1.2,0);
+  \draw[->,opacity=.3] (0,-1.2) -- (0,1.2);
+  \end{scope}
+
+  \draw[->] (theo2.20) to["$U$", out=20, in=160] (theo3.160);
+  \useasboundingbox (9.2,0);
+\end{tikzpicture}
+         </latex-code>
+       </p>
+       <figure>
+         <caption>Counterclockwise rotation by <m>45^\circ</m> followed by clockwise rotation by <m>45^\circ</m> is the identity transformation.</caption>
+         <mathbox source="demos/compose2d.html?closed&amp;mat1=1/sqrt(2),-1/sqrt(2),1/sqrt(2),1/sqrt(2)&amp;mat2=1/sqrt(2),1/sqrt(2),-1/sqrt(2),1/sqrt(2)&amp;show1&amp;names=U,T" height="500px"/>
+       </figure>
+       <figure>
+         <caption>Clockwise rotation by <m>45^\circ</m> followed by counterclockwise rotation by <m>45^\circ</m> is the identity transformation.</caption>
+         <mathbox source="demos/compose2d.html?closed&amp;mat2=1/sqrt(2),-1/sqrt(2),1/sqrt(2),1/sqrt(2)&amp;mat1=1/sqrt(2),1/sqrt(2),-1/sqrt(2),1/sqrt(2)&amp;show1" height="500px"/>
+       </figure>
+     </solution>
+   </example>
+
+   <example>
+     <title>Reflection</title>
+     <statement>
+       <p>Let <m>T\colon\R^2\to\R^2</m> be the reflection over the <m>y</m>-axis.  Is <m>T</m> invertible?  If so, what is <m>T\inv</m>?</p>
+     </statement>
+     <solution>
+       <p>
+         The transformation <m>T</m> is invertible; in fact, it is equal to its own inverse.  Reflecting a vector <m>x</m> over the <m>y</m>-axis twice brings the vector back to where it started, so <m>T\circ T = \Id_{\R^2}</m>.
+         <latex-code>
+\def\theo{\includegraphics[width=3cm]{theo2.jpg}}
+\begin{tikzpicture}[scale=1.3]
+  \begin{scope}
+    \node (theo1) at (0,0) {\theo};
+  \end{scope}
+  \draw[->,opacity=.3] (-1.2,0) -- (1.2,0);
+  \draw[->,opacity=.3] (0,-1.2) -- (0,1.2);
+
+  \begin{scope}[xshift=4cm]
+  \begin{scope}
+    \node[xscale=-1] (theo2) at (0,0) {\theo};
+  \end{scope}
+  \draw[->,opacity=.3] (-1.2,0) -- (1.2,0);
+  \draw[->,opacity=.3] (0,-1.2) -- (0,1.2);
+  \end{scope}
+
+  \draw[->] (theo1.20) to["$T$", out=20, in=160] (theo2.20);
+
+  \begin{scope}[xshift=8cm]
+  \begin{scope}
+    \node (theo3) at (0,0) {\theo};
+  \end{scope}
+  \draw[->,opacity=.3] (-1.2,0) -- (1.2,0);
+  \draw[->,opacity=.3] (0,-1.2) -- (0,1.2);
+  \end{scope}
+
+  \draw[->] (theo2.160) to["$T$", out=20, in=160] (theo3.160);
+  \useasboundingbox (9.2,0);
+  \end{tikzpicture}
+         </latex-code>
+       </p>
+       <figure>
+         <caption>The transformation <m>T</m> is equal to its own inverse: applying <m>T</m> twice takes a vector back to where it started.</caption>
+         <mathbox source="demos/compose2d.html?closed=true&amp;mat1=-1,0,0,1&amp;mat2=-1,0,0,1&amp;show1&amp;names=T,T%20" height="500px"/>
+       </figure>
+     </solution>
+   </example>
+
+   <example type-name="Non-example">
+     <title>Projection</title>
+     <statement>
+       <p>Let <m>T\colon\R^3\to\R^3</m> be the projection onto the <m>xy</m>-plane, introduced in this <xref ref="matrix-trans-eg-projection"/>.  Is <m>T</m> invertible?</p>
+     </statement>
+     <solution>
+       <p>
+         The transformation <m>T</m> is <em>not</em> invertible.  Every vector on the <m>z</m>-axis projects onto the zero vector, so there is no way to undo what <m>T</m> did: the inverse transformation would not know which vector on the <m>z</m>-axis it should send the zero vector to.  More formally, suppose there were a transformation <m>U\colon\R^3\to\R^3</m> such that <m>U\circ T = \Id_{\R^3}</m>.  Then
+         <me>0 = U\circ T(0) = U(T(0)) = U(0)</me>
+         and
+         <me>\vec{0 0 1} = U\circ T\vec{0 0 1}
+         = U\left(T\vec{0 0 1}\right) = U(0).</me>
+         But <m>U(0)</m> is as single vector in <m>\R^3</m>, so it cannot be equal to <m>0</m> and to <m>(0, 0, 1)</m> at the same time.
+       </p>
+      <figure>
+        <caption>Projection onto the <m>xy</m>-plane is not an invertible transformation: all points on each vertical line are sent to the same point by <m>T</m>, so there is no way to undo <m>T</m>.</caption>
+        <mathbox source="demos/Axequalsb.html?mat=1,0,0:0,1,0:0,0,0&amp;range2=5&amp;closed=true&amp;show=true" height="500px"/>
+      </figure>
+     </solution>
+   </example>
+
+   <proposition xml:id="matrix-inv-11-onto">
+     <statement>
+       <p>
+         <ol>
+           <li>
+             A transformation <m>T\colon\R^n\to\R^n</m> is invertible if and only if it is both one-to-one and onto.
+           </li>
+           <li>
+             If <m>T</m> is already known to be invertible, then <m>U\colon\R^n\to\R^n</m> is the inverse of <m>T</m> provided that <em>either</em> <m>T\circ U = \Id_{\R^n}</m> or <m>U\circ T = \Id_{\R^n}</m>: it is only necessary to verify one.
+           </li>
+         </ol>
+       </p>
+     </statement>
+     <proof>
+       <p>
+         To say that <m>T</m> is one-to-one and onto means that <m>T(x)=b</m> has <em>exactly one</em> solution for every <m>b</m> in <m>\R^n</m>.
+       </p>
+       <p>
+         Suppose that <m>T</m> is invertible.  Then <m>T(x)=b</m> always has the unique solution <m>x = T\inv(b)</m>: indeed, applying <m>T\inv</m> to both sides of <m>T(x)=b</m> gives
+         <me>x = T\inv(T(x)) = T\inv(b),</me>
+         and applying <m>T</m> to both sides of <m>x = T\inv(b)</m> gives
+         <me>T(x) = T(T\inv(b)) = b.</me>
+       </p>
+       <p>
+         Conversely, suppose that <m>T</m> is one-to-one and onto.  Let <m>b</m> be a vector in <m>\R^n</m>, and let <m>x = U(b)</m> be the unique solution of <m>T(x)=b</m>.  Then <m>U</m> defines a transformation from <m>\R^n</m> to <m>\R^n</m>.  For any <m>x</m> in <m>\R^n</m>, we have <m>U(T(x)) = x</m>, because <m>x</m> is the unique solution of the equation <m>T(x) = b</m> for <m>b = T(x)</m>.  For any <m>b</m> in <m>\R^n</m>, we have <m>T(U(b)) = b</m>, because <m>x = U(b)</m> is the unique solution of <m>T(x)=b</m>.  Therefore, <m>U</m> is the inverse of <m>T</m>, and <m>T</m> is invertible.
+       </p>
+       <p>
+         Suppose now that <m>T</m> is an invertible transformation, and that <m>U</m> is another transformation such that <m>T\circ U = \Id_{\R^n}</m>.  We must show that <m>U = T\inv</m>, i.e., that <m>U\circ T = \Id_{\R^n}</m>.  We compose both sides of the equality <m>T\circ U = \Id_{\R^n}</m> on the left by <m>T\inv</m> and on the right by <m>T</m> to obtain
+         <me>T\inv\circ T\circ U\circ T = T\inv\circ\Id_{\R^n}\circ T.</me>
+         We have <m>T\inv\circ T = \Id_{\R^n}</m> and <m>\Id_{\R^n}\circ U = U</m>, so the left side of the above equation is <m>U\circ T</m>.  Likewise, <m>\Id_{\R^n}\circ T = T</m> and <m>T\inv\circ T = \Id_{\R^n}</m>, so our equality simplifies to <m>U\circ T = \Id_{\R^n}</m>, as desired.
+       </p>
+       <p>
+         If instead we had assumed only that <m>U\circ T = \Id_{\R^n}</m>, then the proof that <m>T\circ U = \Id_{\R^n}</m> proceeds similarly.
+       </p>
+     </proof>
+   </proposition>
+
+   <remark>
+     <p>
+       It makes sense in the above <xref ref="matrix-inv-trans-inv-def"/> to define the inverse of a transformation <m>T\colon\R^n\to\R^m</m>, for <m>m\neq n</m>, to be a transformation <m>U\colon\R^m\to\R^n</m> such that <m>T\circ U = \Id_{\R^m}</m> and <m>U\circ T = \Id_{\R^n}</m>.  In fact, there exist invertible transformations <m>T\colon\R^n\to\R^m</m> for any <m>m</m> and <m>n</m>.
+     </p>
+     <p>
+       However, if <m>T</m> is a <em>linear</em> transformation, then it can only be invertible when <m>m = n</m>, i.e., when its domain is equal to its codomain.  Indeed, if <m>T\colon\R^n\to\R^m</m> is one-to-one, then <m>n\leq m</m> by this <xref ref="one-to-one-wide-matrices"/>, and if <m>T</m> is onto, then <m>m\leq n</m> by this <xref ref="one-to-one-tall-matrices"/>.  Therefore, when discussing invertibility we restrict ourselves to the case <m>m=n</m>.
+     </p>
+   </remark>
+
+   <theorem xml:id="matrix-inv-matrix-inv-comp">
+     <statement>
+       <p>
+         Let <m>T\colon\R^n\to\R^n</m> be a linear transformation with standard matrix <m>A</m>.  Then <m>T</m> is invertible if and only if <m>A</m> is invertible, in which case <m>T\inv</m> is linear with standard matrix <m>A\inv</m>.
+       </p>
+     </statement>
+     <proof>
+       <p>
+         Suppose that <m>T</m> is invertible.  Let <m>U\colon\R^n\to\R^n</m> be the inverse of <m>T</m>.  We claim that <m>U</m> is linear.  We need to check the defining properties (LC1) and (LC2).  Let <m>u,v</m> be vectors in <m>\R^n</m>.  Then
+         <me>u + v = T(U(u)) + T(U(v)) = T(U(u) + U(v))</me>
+         by linearity of <m>T</m>.  Applying <m>U</m> to both sides gives
+         <me>U(u + v) = U\bigl(T(U(u) + U(v))\bigr) = U(u) + U(v).</me>
+         Let <m>c</m> be a scalar.  Then
+         <me>cu = cT(U(u)) = T(cU(u))</me>
+         by linearity of <m>T</m>.  Applying <m>U</m> to both sides gives
+         <me>U(cu) = U\bigl(T(cU(u))\bigr) = cU(u).</me>
+         Since <m>U</m> satisfies (LC1) and (LC2), it is a linear transformation.
+       </p>
+       <p>
+         Now that we know that <m>U</m> is linear, we know that it has a standard matrix <m>B</m>.  By the <xref ref="matrix-mult-comp-is-prod">compatibility of matrix multiplication and composition</xref>, the matrix for <m>T\circ U</m> is <m>AB</m>.  But <m>T\circ U</m> is the identity transformation <m>\Id_{\R^n},</m> and the standard matrix for <m>\Id_{\R^n}</m> is <m>I_n</m>, so <m>AB = I_n</m>.  One shows similarly that <m>BA = I_n</m>.  Hence <m>A</m> is invertible and <m>B = A\inv</m>.
+       </p>
+       <p>
+         Conversely, suppose that <m>A</m> is invertible.  Let <m>B = A\inv</m>, and define <m>U\colon\R^n\to\R^n</m> by <m>U(x) = Bx</m>.  By the <xref ref="matrix-mult-comp-is-prod">compatibility of matrix multiplication and composition</xref>, the matrix for <m>T\circ U</m> is <m>AB = I_n</m>, and the matrix for <m>U\circ T</m> is <m>BA = I_n</m>.  Therefore,
+         <me>
+           T\circ U(x) = ABx = I_nx = x \sptxt{and}
+           U\circ T(x) = BAx = I_nx = x,
+         </me>
+         which shows that <m>T</m> is invertible with inverse transformation <m>U</m>.
+       </p>
+     </proof>
+   </theorem>
+
+   <example>
+     <title>Dilation</title>
+     <statement>
+       <p>Let <m>T\colon\R^2\to\R^2</m> be dilation by a factor of <m>3/2</m>: that is, <m>T(x) = 3/2x</m>.  Is <m>T</m> invertible?  If so, what is <m>T\inv</m>?</p>
+     </statement>
+     <solution>
+       <p>
+         In this <xref ref="matrix-trans-eg-dilation"/> we showed that the matrix for <m>T</m> is
+         <me>A = \mat{3/2 0; 0 3/2}.</me>
+         The determinant of <m>A</m> is <m>9/4\neq 0</m>, so <m>A</m> is invertible with inverse
+         <me>A\inv = \frac 1{9/4}\mat{3/2 0; 0 3/2} = \mat{2/3 0; 0 2/3}.</me>
+         By the <xref ref="matrix-inv-matrix-inv-comp"/>, <m>T</m> is invertible, and its inverse is the matrix transformation for <m>A\inv</m>:
+         <me>T\inv(x) = \mat{2/3 0; 0 2/3}x.</me>
+         We recognize this as a dilation by a factor of <m>2/3</m>.
+       </p>
+     </solution>
+   </example>
+
+   <example>
+     <title>Rotation</title>
+     <statement>
+       <p>Let <m>T\colon\R^2\to\R^2</m> be counterclockwise rotation by <m>45^\circ</m>.  Is <m>T</m> invertible?  If so, what is <m>T\inv</m>?</p>
+     </statement>
+     <solution>
+       <p>
+         In this <xref ref="linear-trans-rotation-matrix"/>, we showed that the standard matrix for the counterclockwise rotation of the plane by an angle of <m>\theta</m> is
+         <me>\mat{\cos(\theta) -\sin(\theta); \sin(\theta) \cos(\theta)}.</me>
+         Therefore, the standard matrix <m>A</m> for <m>T</m> is
+         <me>A = \frac 1{\sqrt 2}\mat{1 -1; 1 1},</me>
+         where we have used the trigonometric identities
+         <me>\cos(45^\circ) = \frac 1{\sqrt2} \qquad
+         \sin(45^\circ) = \frac 1{\sqrt2}.</me>
+         The determinant of <m>A</m> is
+         <me>\det(A) = \frac 1{\sqrt2}\cdot\frac 1{\sqrt2} - \frac 1{\sqrt2}\frac{-1}{\sqrt2} = \frac 12 + \frac 12 = 1,</me>
+         so the inverse is
+         <me>A\inv = \frac 1{\sqrt2}\mat{1 1; -1 1}.</me>
+         By the <xref ref="matrix-inv-matrix-inv-comp"/>, <m>T</m> is invertible, and its inverse is the matrix transformation for <m>A\inv</m>:
+         <me>T\inv(x) = \frac 1{\sqrt2}\mat{1 1; -1 1}x.</me>
+         We recognize this as a clockwise rotation by <m>45^\circ</m>, using the trigonometric identities
+         <me>\cos(-45^\circ) = \frac 1{\sqrt2} \qquad
+         \sin(-45^\circ) = -\frac 1{\sqrt2}.</me>
+       </p>
+     </solution>
+   </example>
+
+   <example>
+     <title>Reflection</title>
+     <statement>
+       <p>Let <m>T\colon\R^2\to\R^2</m> be the reflection over the <m>y</m>-axis.  Is <m>T</m> invertible?  If so, what is <m>T\inv</m>?</p>
+     </statement>
+     <solution>
+       <p>
+         In this <xref ref="matrix-trans-eg-reflection"/> we showed that the matrix for <m>T</m> is
+         <me>A = \mat{-1 0; 0 1}.</me>
+         This matrix has determinant <m>-1</m>, so it is invertible, with inverse
+         <me>A\inv = -\mat{1 0; 0 -1} = \mat{-1 0; 0 1} = A.</me>
+         By the <xref ref="matrix-inv-matrix-inv-comp"/>, <m>T</m> is invertible, and it is equal to its own inverse: <m>T\inv = T</m>.  This is another way of saying that a reflection <q>undoes</q> itself.
+       </p>
+     </solution>
+   </example>
+
+ </subsection>
+
+ <subsection>
+   <title>Characterizing Invertible Matrices</title>
+
+   <p>This section consists of a single important theorem, with many equivalent conditions for a matrix to be invertible.  This is one of the most important theorems in the course.  We will append more criteria later on, as we develop them.</p>
+
+   <theorem type-name="Invertible Matrix Theorem" hide-type="true" xml:id="imt-1">
+     <title>The Invertible Matrix Theorem</title>
+     <statement>
+       <p>
+         Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>T\colon\R^n\to\R^n</m> be the matrix transformation <m>T(x) = Ax</m>.  The following statements are equivalent:
+         <ol>
+           <li><m>A</m> is invertible.</li>
+           <li><m>T</m> is invertible.</li>
+           <li>The reduced row echelon form of <m>A</m> is the identity matrix <m>I_n</m>.</li>
+           <li><m>A</m> has <m>n</m> pivots.</li>
+           <li><m>Ax=0</m> has only the trivial solution (and no others).</li>
+           <li><m>\Nul(A) = \{0\}</m>.</li>
+           <li><m>\nullity(A) = 0</m>.</li>
+           <li>The columns of <m>A</m> are linearly independent.</li>
+           <li>The columns of <m>A</m> are a basis for <m>\R^n</m>.</li>
+           <li><m>T</m> is one-to-one.</li>
+           <li><m>Ax=b</m> is consistent for all <m>b</m> in <m>\R^n</m>.</li>
+           <li><m>Ax=b</m> has a unique solution for all <m>b</m> in <m>\R^n</m>.</li>
+           <li>The columns of <m>A</m> span <m>\R^n</m>.</li>
+           <li><m>\Col(A) = \R^n.</m></li>
+           <li><m>\dim\Col(A) = n.</m></li>
+           <li><m>\rank(A) = n.</m></li>
+           <li><m>T</m> is onto.</li>
+           <li>There is a matrix <m>B</m> such that <m>AB = I_n</m>.</li>
+           <li>There is a matrix <m>B</m> such that <m>BA = I_n</m>.</li>
+         </ol>
+       </p>
+     </statement>
+     <proof>
+       <p>
+         <m>(1\iff 2)</m>: This was established in a previous <xref ref="matrix-inv-matrix-inv-comp"/>.
+       </p>
+       <p>
+         <m>(3\iff 4)</m>: The only reduced row echelon form matrix with <m>n</m> pivots is <m>I_n</m>.
+       </p>
+       <p>
+         <m>(5 \iff 6 \iff 7 \iff 8 \iff 9 \iff 10)</m>: The first three are translations of each other, because <m>\Nul(A)</m> is the set of solutions of <m>Ax=0</m>, and <m>\nullity(A)</m> is the dimension of <m>\Nul(A)</m>.  The equivalence of 5 and 8 results from this <xref ref="linindep-matrix-cols"/>, and the equivalence of 5 and 10 results from this <xref ref="matrix-trans-one-to-one"/>.  The <xref ref="basis-theorem"/> implies the equivalence of 8 and 9, since any set of <m>n</m> linearly independent vectors in <m>\R^n</m> forms a basis.
+       </p>
+       <p>
+         <m>(11 \iff 13 \iff 14 \iff 15 \iff 16 \iff 17)</m>:
+         Assertions 13, 14, and 17 are translations of each other, because <m>\Col(A)</m> is the span of the columns of <m>A</m>, which is equal to the range of <m>T</m>.  The equivalence of 11 and 13 follows from this <xref ref="matrixeq-thm-full-span"/>.  Since <m>\dim(\R^n)=n</m>, the only <m>n</m>-dimensional subspace of <m>\R^n</m> is all of <m>\R^n</m>, so 14, 15, and 16 are equivalent.
+       </p>
+       <p>
+         <m>(4 \iff 8)\text{ and }(4 \iff 13)</m>: Since <m>A</m> has <m>n</m> rows and columns, it has a pivot in every row (resp. column) if and only if it has <m>n</m> pivots.  By this <xref ref="linindep-matrix-cols"/>, there is a pivot in every column if and only if the columns are linearly independent, and by this <xref ref="matrixeq-thm-full-span"/>, there is a pivot in every row if and only if the rows span <m>\R^n</m>.
+       </p>
+       <p>
+         <m>(2 \iff 10 \iff 17)</m>: By this <xref ref="matrix-inv-11-onto"/>, the transformation <m>T</m> is invertible if and only if it is both one-to-one and onto, so 2 is equivalent to (10 and 17).  We have already shown <m>(10 \iff 8 \iff 4 \iff 13 \iff 17)</m>, so <m>10</m> and <m>17</m> are equivalent to each other; thus they are both equivalent to 2.
+       </p>
+       <p>
+         At this point, we have demonstrated the equivalence of assertions 1<ndash/>17.
+       </p>
+       <p>
+         <m>(1\implies 18\implies 17)</m>:
+         Invertibility of <m>A</m> means there exists a matrix <m>B</m> such that <m>AB = I_n</m> and <m>BA=I_n</m>, so 1 implies 18.  Now we prove directly that <m>T</m> is onto.  Let <m>b</m> be a vector in <m>\R^n</m>, and let <m>x = Bb</m>.  Then
+         <me>T(x) = Ax = ABb = I_nb = b,</me>
+         so <m>T(x) = b</m> has at least one solution.
+       </p>
+       <p>
+         <m>(1\implies 19\implies 10)</m>:
+         Invertibility of <m>A</m> means there exists a matrix <m>B</m> such that <m>AB = I_n</m> and <m>BA=I_n</m>, so 1 implies 19.  Now we prove directly that <m>T</m> is one-to-one.  Suppose that <m>x</m> and <m>y</m> are vectors such that <m>T(x) = T(y)</m>.
+         <me>T(x) = T(y) \;\implies\; Ax = Ay \;\implies\; BAx = BAy \;\implies\; I_nx = I_ny \;\implies\; x = y.</me>
+         Therefore, <m>T(x)=T(y)\implies x=y</m>, so <m>T</m> is one-to-one.
+       </p>
+       <p>Since 10 and 17 both imply 1, we have finished the proof.</p>
+     </proof>
+   </theorem>
+
+   <warning>
+     <p>
+       There are two kinds of <em>square</em> matrices:
+       <ol>
+         <li>invertible matrices, and</li>
+         <li>non-invertible matrices.</li>
+       </ol>
+     </p>
+     <p>
+       For invertible matrices, all of the statements of the Invertible Matrix Theorem are true.
+     </p>
+     <p>
+       For non-invertible matrices, all of the statements of the Invertible Matrix Theorem are false.
+     </p>
+   </warning>
+
+ </subsection>
 
 </section>
