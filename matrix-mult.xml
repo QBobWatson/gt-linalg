@@ -453,7 +453,7 @@ the license is included in gfdl.xml.
     </definition>
 
     <p>
-      In other words, matrix multiplication is defined column-by-column, or  <q>distributes over the columns of <m>B</m>.</q>  See this <xref ref="matrix-mult-row-column">Fact</xref> for an alternate definition of matrix multiplication that is better-adapted to computations by hand.
+      In other words, matrix multiplication is defined column-by-column, or  <q>distributes over the columns of <m>B</m>.</q>  See this <xref ref="matrix-mult-row-column">Procedure</xref> for an alternate definition of matrix multiplication that is better-adapted to computations by hand.
     </p>
 
     <example xml:id="matrix-mult-eg-mult1">
@@ -497,6 +497,134 @@ the license is included in gfdl.xml.
       <me>A^2 = AA \qquad A^3 = AAA \qquad \text{etc.}</me>
     </p>
 
+    <paragraphs>
+      <title>The row-column rule for matrix multiplication</title>
+      <p>
+        Recall from this <xref ref="matrixeq-row-column-prod"/> that the product of a row vector and a column vector is the scalar
+        <me>\mat{a_1 a_2 \cdots, a_n} \vec{x_1 x_2 \vdots, x_n}
+        = a_1x_1 + a_2x_2 + \cdots + a_nx_n.</me>
+        The following procedure for finding the matrix product is much better adapted to computations by hand; the previous <xref ref="matrix-mult-defn-of"/> is more suitable for proving the <xref ref="matrix-mult-comp-is-prod"/> below.
+      </p>
+
+      <warning xml:id="matrix-mult-row-column">
+        <title>The row-column rule for matrix multiplication</title>
+        <p>
+          Let <m>A</m> be an <m>m\times n</m> matrix, let <m>B</m> be an <m>n\times p</m> matrix, and let <m>C = AB</m>.  Then the <m>ij</m> entry of <m>C</m> is the <m>i</m>th row of <m>A</m> times the <m>j</m>th column of <m>B</m>:
+          <me>c_{ij} = a_{i1}b_{1j} + a_{i2}b_{2j} + \cdots + a_{in}b_{nj}.</me>
+          Here is a diagram:
+          <me>
+            <![CDATA[
+\def\spvdots{\vphantom{\vbox{\hbox{(}\kern0pt}}\smash{\vdots}}
+\begin{tikzpicture}[baseline, scale=.95]
+  \matrix[math matrix]  (aij)
+    {
+      a_{11} \& \cdots \& a_{1k} \& \cdots \& a_{1n} \\
+      \spvdots \&        \& \spvdots \&        \& \spvdots \\
+      a_{i1} \& \cdots \& a_{ik} \& \cdots \& a_{in} \\
+      \spvdots \&        \& \spvdots \&        \& \spvdots \\
+      a_{m1} \& \cdots \& a_{mk} \& \cdots \& a_{mn} \\
+    };
+  \node[fit=(aij-3-1) (aij-3-5), inner sep=2pt,
+      draw=green!70!black, thick, rounded corners] (row) {};
+  \node[text=green!70!black, rotate=90, anchor=north, yshift=1.1mm, font=\small]
+      at (row.east) {$i$th row};
+\end{tikzpicture}
+\begin{tikzpicture}[baseline, scale=.95]
+  \matrix[math matrix]  (bij)
+    {
+      b_{11} \& \cdots \& b_{1j} \& \cdots \& b_{1p} \\
+      \spvdots \&        \& \spvdots \&        \& \spvdots \\
+      b_{k1} \& \cdots \& b_{kj} \& \cdots \& b_{kp} \\
+      \spvdots \&        \& \spvdots \&        \& \spvdots \\
+      b_{n1} \& \cdots \& b_{nj} \& \cdots \& b_{np} \\
+    };
+  \node[fit=(bij-1-3) (bij-5-3), inner sep=2pt,
+      draw=blue!50, thick, rounded corners,
+      label={[text=blue!50]below:\small$j$th column}] {};
+\end{tikzpicture}
+=\hskip-4pt
+\begin{tikzpicture}[baseline, scale=.95]
+  \matrix[math matrix,
+      label=below:$\textcolor{green!70!black}i\textcolor{blue!50}j$ entry]
+        (cij)
+    {
+      c_{11} \& \cdots \& c_{1j} \& \cdots \& c_{1p} \\
+      \spvdots \&        \& \spvdots \&        \& \spvdots \\
+      c_{i1} \& \cdots \& c_{ij} \& \cdots \& c_{ip} \\
+      \spvdots \&        \& \spvdots \&        \& \spvdots \\
+      c_{m1} \& \cdots \& c_{mj} \& \cdots \& c_{mp} \\
+    };
+  \draw[thick, green!70!black]
+    (cij-3-3.center) circle[radius=1.35ex];
+  \draw[thick, blue!50]
+    (cij-3-3.center) circle[radius=1.35ex+\pgflinewidth];
+\end{tikzpicture}
+            ]]>
+          </me>
+        </p>
+      </warning>
+
+      <proof>
+        <p>
+          The <xref ref="matrixeq-row-column">row-column rule for matrix-vector multiplication</xref> says that if <m>A</m> has rows <m>r_1,r_2,\ldots,r_m</m> and <m>x</m> is a vector, then
+          <me>Ax = \mat[c]{ \matrow{r_1};
+          \matrow{r_2};
+          \vdots ;
+          \matrow{r_m}}
+          x
+          = \vec{r_1x r_2x \vdots, r_mx}.
+          </me>
+          The <xref ref="matrix-mult-defn-of">Definition of matrix multiplication</xref> is
+          <me>A\mat{| | ,, |; c_1 c_2 \cdots, c_p; | | ,, |} =
+          \mat{| | ,, |; Ac_1 Ac_2 \cdots, Ac_p; | | ,, |}.</me>
+          It follows that
+          <me>
+            \mat[c]{ \matrow{r_1};
+            \matrow{r_2};
+            \vdots ;
+            \matrow{r_m}}
+            \mat{| | ,, |; c_1 c_2 \cdots, c_p; | | ,, |}
+            = \mat{ r_1c_1 r_1c_2 \cdots, r_1c_p;
+            r_2c_1 r_2c_2 \cdots, r_2c_p;
+            \vdots, \vdots, , \vdots;
+            r_mc_1 r_mc_2 \cdots, r_mc_p}.
+          </me>
+        </p>
+      </proof>
+
+      <example>
+        <p>
+          The row-column rule allows us to compute the product matrix one entry at a time:
+          <me>
+            \def\g{\textcolor{green!70!black}}
+            \def\b{\textcolor{blue!50}}
+            \begin{aligned}
+            \mat{\g1 \g2 \g3; 4 5 6}
+            \mat{\b1 -3; \b2 -2; \b3 -1}
+            \amp= \mat{\g1\cdot\b1+\g2\cdot\b2+\g3\cdot\b3 \fbox{\phantom 8};
+            \fbox{\phantom 8} \fbox{\phantom 8}}
+            = \mat{14 \fbox{\phantom 8}; \fbox{\phantom 8} \fbox{\phantom 8}} \\
+            \mat{1 2 3; \g4 \g5 \g6}
+            \mat{\b1 -3; \b2 -2; \b3 -1}
+            \amp= \mat{\fbox{\phantom 8} \fbox{\phantom 8};
+            \g4\cdot\b1+\g5\cdot\b2+\g6\cdot\b3 \fbox{\phantom 8}}
+            = \mat{\fbox{\phantom 8} \fbox{\phantom 8}; 32 \fbox{\phantom 8}}
+            \end{aligned}
+          </me>
+        </p>
+      </example>
+
+    </paragraphs>
+
+  </subsection>
+
+  <subsection>
+    <title>Composition and Matrix Multiplication</title>
+
+    <p>
+      The point of this Subsection is to show that matrix multiplication corresponds to composition of transformations.
+    </p>
+
     <theorem xml:id="matrix-mult-comp-is-prod">
       <statement>
         <p>Let <m>T\colon\R^n\to\R^m</m> and <m>U\colon\R^p\to\R^n</m> be linear transformations, and let <m>A</m> and <m>B</m> be their standard matrices, respectively, so <m>A</m> is an <m>m\times n</m> matrix and <m>B</m> is an <m>n\times p</m> matrix.  Then <m>T\circ U\colon\R^p\to\R^n</m> is a linear transformation, and its standard matrix is the product <m>AB</m>.</p>
@@ -531,7 +659,7 @@ the license is included in gfdl.xml.
     <warning>
       <title>Products and compositions</title>
       <p>
-        The matrix of the composition of two transformations is the product of the matrices of the transformations.
+        The matrix of the composition of two linear transformations is the product of the matrices of the transformations.
       </p>
     </warning>
 
@@ -763,121 +891,6 @@ $\xrightarrow{\text{reflect $xy$}}$
       </p>
       <p>
         Therefore, matrix multiplication happens in the same order as composition of transformations.  In other words, <em>both matrices and transformations are written in the order opposite from the order in which they act.</em>  But matrix multiplication and composition of transformations are written in the same order as each other: the matrix for <m>T\circ U</m> is <m>AB</m>.
-      </p>
-    </example>
-
-    <p>
-      Recall from this <xref ref="matrixeq-row-column-prod"/> that the product of a row vector and a column vector is the scalar
-      <me>\mat{a_1 a_2 \cdots, a_n} \vec{x_1 x_2 \vdots, x_n}
-      = a_1x_1 + a_2x_2 + \cdots + a_nx_n.</me>
-      The following procedure for finding the matrix product is much better adapted to computations by hand; the previous <xref ref="matrix-mult-defn-of"/> is more suitable for proving the above <xref ref="matrix-mult-comp-is-prod"/>.
-    </p>
-
-    <warning xml:id="matrix-mult-row-column">
-      <title>The row-column rule for matrix multiplication</title>
-      <p>
-        Let <m>A</m> be an <m>m\times n</m> matrix, let <m>B</m> be an <m>n\times p</m> matrix, and let <m>C = AB</m>.  Then the <m>ij</m> entry of <m>C</m> is the <m>i</m>th row of <m>A</m> times the <m>j</m>th column of <m>B</m>:
-        <me>c_{ij} = a_{i1}b_{1j} + a_{i2}b_{2j} + \cdots + a_{in}b_{nj}.</me>
-        Here is a diagram:
-        <me>
-            <![CDATA[
-\def\spvdots{\vphantom{\vbox{\hbox{(}\kern0pt}}\smash{\vdots}}
-\begin{tikzpicture}[baseline, scale=.95]
-  \matrix[math matrix]  (aij)
-    {
-      a_{11} \& \cdots \& a_{1k} \& \cdots \& a_{1n} \\
-      \spvdots \&        \& \spvdots \&        \& \spvdots \\
-      a_{i1} \& \cdots \& a_{ik} \& \cdots \& a_{in} \\
-      \spvdots \&        \& \spvdots \&        \& \spvdots \\
-      a_{m1} \& \cdots \& a_{mk} \& \cdots \& a_{mn} \\
-    };
-  \node[fit=(aij-3-1) (aij-3-5), inner sep=2pt,
-      draw=green!70!black, thick, rounded corners] (row) {};
-  \node[text=green!70!black, rotate=90, anchor=north, yshift=1.1mm, font=\small]
-      at (row.east) {$i$th row};
-\end{tikzpicture}
-\begin{tikzpicture}[baseline, scale=.95]
-  \matrix[math matrix]  (bij)
-    {
-      b_{11} \& \cdots \& b_{1j} \& \cdots \& b_{1p} \\
-      \spvdots \&        \& \spvdots \&        \& \spvdots \\
-      b_{k1} \& \cdots \& b_{kj} \& \cdots \& b_{kp} \\
-      \spvdots \&        \& \spvdots \&        \& \spvdots \\
-      b_{n1} \& \cdots \& b_{nj} \& \cdots \& b_{np} \\
-    };
-  \node[fit=(bij-1-3) (bij-5-3), inner sep=2pt,
-      draw=blue!50, thick, rounded corners,
-      label={[text=blue!50]below:\small$j$th column}] {};
-\end{tikzpicture}
-=\hskip-4pt
-\begin{tikzpicture}[baseline, scale=.95]
-  \matrix[math matrix,
-      label=below:$\textcolor{green!70!black}i\textcolor{blue!50}j$ entry]
-        (cij)
-    {
-      c_{11} \& \cdots \& c_{1j} \& \cdots \& c_{1p} \\
-      \spvdots \&        \& \spvdots \&        \& \spvdots \\
-      c_{i1} \& \cdots \& c_{ij} \& \cdots \& c_{ip} \\
-      \spvdots \&        \& \spvdots \&        \& \spvdots \\
-      c_{m1} \& \cdots \& c_{mj} \& \cdots \& c_{mp} \\
-    };
-  \draw[thick, green!70!black]
-    (cij-3-3.center) circle[radius=1.35ex];
-  \draw[thick, blue!50]
-    (cij-3-3.center) circle[radius=1.35ex+\pgflinewidth];
-\end{tikzpicture}
-            ]]>
-        </me>
-      </p>
-    </warning>
-
-    <proof>
-      <p>
-        The <xref ref="matrixeq-row-column">row-column rule for matrix-vector multiplication</xref> says that if <m>A</m> has rows <m>r_1,r_2,\ldots,r_m</m> and <m>x</m> is a vector, then
-        <me>Ax = \mat[c]{ \matrow{r_1};
-        \matrow{r_2};
-        \vdots ;
-        \matrow{r_m}}
-        x
-        = \vec{r_1x r_2x \vdots, r_mx}.
-        </me>
-        The <xref ref="matrix-mult-defn-of">Definition of matrix multiplication</xref> is
-        <me>A\mat{| | ,, |; c_1 c_2 \cdots, c_p; | | ,, |} =
-        \mat{| | ,, |; Ac_1 Ac_2 \cdots, Ac_p; | | ,, |}.</me>
-        It follows that
-        <me>
-          \mat[c]{ \matrow{r_1};
-          \matrow{r_2};
-          \vdots ;
-          \matrow{r_m}}
-          \mat{| | ,, |; c_1 c_2 \cdots, c_p; | | ,, |}
-          = \mat{ r_1c_1 r_1c_2 \cdots, r_1c_p;
-         r_2c_1 r_2c_2 \cdots, r_2c_p;
-         \vdots, \vdots, , \vdots;
-        r_mc_1 r_mc_2 \cdots, r_mc_p}.
-        </me>
-      </p>
-    </proof>
-
-    <example>
-      <p>
-        The row-column rule allows us to compute the product matrix one entry at a time:
-        <me>
-  \def\g{\textcolor{green!70!black}}
-  \def\b{\textcolor{blue!50}}
-  \begin{aligned}
-    \mat{\g1 \g2 \g3; 4 5 6}
-    \mat{\b1 -3; \b2 -2; \b3 -1}
-    \amp= \mat{\g1\cdot\b1+\g2\cdot\b2+\g3\cdot\b3 \fbox{\phantom 8};
-      \fbox{\phantom 8} \fbox{\phantom 8}}
-    = \mat{14 \fbox{\phantom 8}; \fbox{\phantom 8} \fbox{\phantom 8}} \\
-    \mat{1 2 3; \g4 \g5 \g6}
-    \mat{\b1 -3; \b2 -2; \b3 -1}
-    \amp= \mat{\fbox{\phantom 8} \fbox{\phantom 8};
-      \g4\cdot\b1+\g5\cdot\b2+\g6\cdot\b3 \fbox{\phantom 8}}
-    = \mat{\fbox{\phantom 8} \fbox{\phantom 8}; 32 \fbox{\phantom 8}}
-  \end{aligned}
-        </me>
       </p>
     </example>
 
