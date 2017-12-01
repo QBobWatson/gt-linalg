@@ -261,7 +261,7 @@ the license is included in gfdl.xml.
       <title>The solution set is a line</title>
       <statement>
         <p>What is the solution set of <m>Ax=b</m>, where
-        <me>A = \mat{1 -3; 2 -6} \quad\text{and}\quad b = \vec{-3 -6}?</me>
+        <me>A = \mat{1 -3; 2 -6} \sptxt{and} b = \vec{-3 -6}?</me>
         (Compare this <xref ref="solnsets-eg-line"/>.)
         </p>
       </statement>
@@ -311,7 +311,7 @@ the license is included in gfdl.xml.
       <title>The solution set is a plane</title>
       <statement>
         <p>What is the solution set of <m>Ax=b</m>, where
-        <me>A = \mat{1 -1 2; -2 2 -4}\quad\text{and}\quad b = \vec{1 -2}?</me>
+        <me>A = \mat{1 -1 2; -2 2 -4} \sptxt{and} b = \vec{1 -2}?</me>
         (Compare this <xref ref="solnsets-eg-plane"/>.)
         </p>
       </statement>
@@ -416,7 +416,7 @@ the license is included in gfdl.xml.
       <title>The solution set is a point</title>
       <statement>
         <p>What is the solution set of <m>Ax=b</m>, where
-        <me>A = \mat{1 3 4; 2 -1 2; 1 0 1} \quad\text{and}\quad b = \vec{0 1 0}?</me></p>
+        <me>A = \mat{1 3 4; 2 -1 2; 1 0 1} \sptxt{and} b = \vec{0 1 0}?</me></p>
       </statement>
       <solution>
         <p>We form an augmented matrix and row reduce:

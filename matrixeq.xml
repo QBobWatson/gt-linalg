@@ -93,7 +93,7 @@ the license is included in gfdl.xml.
       <me>x_1v_1 + x_2v_2 + \cdots + x_nv_n = b.</me>
       This is equivalent to the matrix equation <m>Ax=b</m>, where
       <me>A = \mat{ | | {} |; v_1 v_2 \cdots, v_n; | | {} |}
-      \qquad\text{and}\qquad
+      \sptxt{and}
       x = \vec{x_1 x_2 \vdots, x_n}.
       </me>
       Conversely, if <m>A</m> is any <m>m\times n</m> matrix, then
@@ -239,7 +239,7 @@ the license is included in gfdl.xml.
       <solution>
         <p>First we answer the question geometrically.  The columns of <m>A</m> are
         <me>\textcolor{seq-red}{v_1 = \vec{2 -1 1}}
-        \qquad\text{and}\qquad
+        \sptxt{and}
         \textcolor{seq-blue}{v_2 = \vec{1 0 -1}},</me>
         and the target vector (on the right-hand side of the equation) is <m>\textcolor{seq-green}{w = \vec{0 2 2}}.</m>  The equation <m>Ax=w</m> is consistent if and only if <m>w</m> is contained in the span of the columns of <m>A</m>.  So we draw a picture:
         <latex-code>
@@ -319,7 +319,7 @@ the license is included in gfdl.xml.
       <solution>
         <p>First we answer the question geometrically.  The columns of <m>A</m> are
         <me>\textcolor{seq-red}{v_1 = \vec{2 -1 1}}
-        \qquad\text{and}\qquad
+        \sptxt{and}
         \textcolor{seq-blue}{v_2 = \vec{1 0 -1}},</me>
         and the target vector (on the right-hand side of the equation) is <m>\textcolor{seq-green}{w = \vec{1 -1 2}}.</m>  The equation <m>Ax=w</m> is consistent if and only if <m>w</m> is contained in the span of the columns of <m>A</m>.  So we draw a picture:
         <latex-code>
@@ -384,7 +384,7 @@ the license is included in gfdl.xml.
         </me>
         This gives us <m>x=1</m> and <m>y=-1</m>, which is consistent with the picture:
         <me>1\vec{2 -1 1} -1\vec{1 0 -1} = \vec{1 -1 2}
-        \qquad\text{or}\qquad
+        \sptxt{or}
         A\vec{1 -1} = \vec{1 -1 2}.</me>
         </p>
 

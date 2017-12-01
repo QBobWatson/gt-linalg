@@ -239,7 +239,7 @@ the license is included in gfdl.xml.
       <title>Interactive: a composition of matrix transformations</title>
       <p>
         Define <m>T\colon\R^3\to\R^2</m> and <m>U\colon\R^2\to\R^3</m> by
-        <me>T(x) = \mat{1 1 0; 0 1 1}x \quad\text{ and }\quad
+        <me>T(x) = \mat{1 1 0; 0 1 1}x \sptxt{and}
         U(x) = \mat{1 0; 0 1; 1 0}x.</me>
         Their composition is a transformation <m>T\circ U\colon\R^2\to\R^2</m>; it turns out to be the matrix transformation associated to the matrix <m>\bigl(\begin{smallmatrix}1\amp1\\1\amp0\end{smallmatrix}\bigr)</m>.
       </p>
@@ -315,7 +315,7 @@ the license is included in gfdl.xml.
       <title>Non-commutative composition of transformations</title>
       <p>
         Define matrix transformations <m>T,U\colon\R^2\to\R^2</m> by
-        <me>T(x) = \mat{1 1; 0 1}x \quad\text{ and }\quad
+        <me>T(x) = \mat{1 1; 0 1}x \sptxt{and}
         U(x) = \mat{1 0; 1 1}x.</me>
         Geometrically, <m>T</m> is a shear in the <m>x</m>-direction, and <m>U</m> is a shear in the <m>Y</m>-direction.  We evaluate
         <me>T\circ U\vec{1 0} = T\vec{1 1} = \vec{2 1}</me>
@@ -715,7 +715,7 @@ the license is included in gfdl.xml.
       <title>Interactive: a composition of matrix transformations</title>
       <p>
         Define <m>T\colon\R^3\to\R^2</m> and <m>U\colon\R^2\to\R^3</m> by
-        <me>T(x) = \mat{1 1 0; 0 1 1}x \quad\text{ and }\quad
+        <me>T(x) = \mat{1 1 0; 0 1 1}x \sptxt{and}
         U(x) = \mat{1 0; 0 1; 1 0}x.</me>
         Their composition is a linear transformation <m>T\circ U\colon\R^2\to\R^2</m>.  By the <xref ref="matrix-mult-comp-is-prod"/>, its standard matrix is
         <me> \mat{1 1 0; 0 1 1}\mat{1 0; 0 1; 1 0} = \mat{1 1; 1 1},</me>
@@ -808,7 +808,7 @@ $\xrightarrow{\text{reflect $xy$}}$
       <title>Non-commutative multiplication of matrices</title>
       <p>
         Define matrix transformations <m>T,U\colon\R^2\to\R^2</m> by
-        <me>T(x) = \mat{1 1; 0 1}x \quad\text{ and }\quad
+        <me>T(x) = \mat{1 1; 0 1}x \sptxt{and}
         U(x) = \mat{1 0; 1 1}x,</me>
         as in this <xref ref="matrix-mult-compose-noncom"/>.
         The matrix for <m>T\circ U</m> is

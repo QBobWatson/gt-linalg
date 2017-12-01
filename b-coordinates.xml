@@ -225,7 +225,7 @@ the license is included in gfdl.xml.
     <title>Summary: <m>\cB</m>-coordinates</title>
     <p>
       If <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> is a basis for a subspace <m>V</m> and <m>x</m> is in <m>V</m>, then
-      <me>[x]_\cB = \vec{c_1 c_2 \vdots, c_m} \quad\text{means}\quad
+      <me>[x]_\cB = \vec{c_1 c_2 \vdots, c_m} \sptxt{means}
       x = c_1v_1 + c_2v_2 + \cdots + c_mv_m.
       </me>
       Finding the <m>\cB</m>-coordinates of <m>x</m> means solving the vector equation

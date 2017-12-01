@@ -695,14 +695,14 @@ the license is included in gfdl.xml.
     The above expositions of one-to-one and onto transformations were written to mirror each other.  However, <q>one-to-one</q> and <q>onto</q> are complementary notions: neither one implies the other.  Below we have provided a chart for comparing the two.  In the chart, <m>A</m> is an <m>m\times n</m> matrix, and <m>T\colon\R^n\to\R^m</m> is the matrix transformation <m>T(x)=Ax</m>.
     <latex-code>
 \parbox{2.5in}{\centering%
-  \textbf{$T$ is one-to-one}\\[2mm]
-  $T(x)=b$ has \emph{at most one solution} for every $b$.\\[2mm]
-  The columns of $A$ are linearly independent.\\[2mm]
+  \textbf{$T$ is one-to-one}\\[3mm]
+  $T(x)=b$ has \emph{at most one solution} for every $b$.\\[3mm]
+  The columns of $A$ are linearly independent.\\[3mm]
   $A$ has a pivot in every column.
 }\qquad\parbox{2.5in}{\centering%
-  \textbf{$T$ is onto}\\[2mm]
-  $T(x)=b$ has \emph{at least one solution} for every $b$.\\[2mm]
-  The columns of $A$ span $\R^m$.\\~\\[2mm]
+  \textbf{$T$ is onto}\\[3mm]
+  $T(x)=b$ has \emph{at least one solution} for every $b$.\\[3mm]
+  The columns of $A$ span $\R^m$.\\~\\[3mm]
   $A$ has a pivot in every row.
 }
     </latex-code>
@@ -803,6 +803,10 @@ the license is included in gfdl.xml.
     <p>
       Conversely, by this <xref ref="one-to-one-wide-matrices"/> and this <xref ref="one-to-one-tall-matrices"/>, if a matrix transformation <m>T\colon\R^m\to\R^n</m> is both one-to-one and onto, then <m>m=n</m>.</p>
   </note>
+
+  <p>
+    Note that in general, a transformation <m>T</m> is both one-to-one and onto if and only if <m>T(x)=b</m> has <em>exactly one</em> solution for all <m>b</m> in <m>\R^m</m>.
+  </p>
 
 </subsection>
 

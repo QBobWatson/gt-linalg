@@ -28,7 +28,7 @@ the license is included in gfdl.xml.
     <men xml:id="vectors-vec-eqn-consistent">x\vec{1 2 6} + y \vec{-1 -2 -1} = \vec{8 16 3}</men>
     simplifies to
     <me>\vec{ x 2x 6x} + \vec{-y -2y -y} = \vec{8 16 3}
-\qquad\text{or}\qquad
+\sptxt{or}
 \spalignsysdelims()\syseq{ x - y; 2x - 2y; 6x - y} = \vec{8 16 3}.
     </me>
     For two vectors to be equal, all of their coordinates must be equal, so this is just the system of linear equations

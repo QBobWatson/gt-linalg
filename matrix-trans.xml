@@ -707,7 +707,7 @@ the license is included in gfdl.xml.
       <p>
         Let <m>A</m> be an <m>m\times n</m> matrix.  The <term>matrix transformation</term> associated to <m>A</m> is the transformation
         <me>
-          T\colon \R^n\To\R^m \quad\text{defined by}\quad T(x) = Ax.
+          T\colon \R^n\To\R^m \sptxt{defined by} T(x) = Ax.
         </me>
         This is the transformation that takes a vector <m>x</m> in <m>\R^n</m> to the vector <m>Ax</m> in <m>\R^m</m>.
       </p>

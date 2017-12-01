@@ -137,7 +137,7 @@ the license is included in gfdl.xml.
 
     <example>
       <p><me>
-        \vec{ 1 2 3} + \vec{ 4 5 6} = \vec{ 5 7 9} \quad\text{and}\quad
+        \vec{ 1 2 3} + \vec{ 4 5 6} = \vec{ 5 7 9} \sptxt{and}
         -2\vec{ 1 2 3} = \vec{-2 -4 -6}.
       </me></p>
     </example>
@@ -349,7 +349,7 @@ the license is included in gfdl.xml.
     <specialcase>
       <title>Linear Combinations of Collinear Vectors</title>
       <p>The set of all linear combinations of the vectors
-      <me>v_1 = \vec{2 2}\qquad\text{and}\qquad v_2 = \vec{-1 -1}</me>
+      <me>v_1 = \vec{2 2} \sptxt{and} v_2 = \vec{-1 -1}</me>
       is the <em>line</em> containing both vectors.
       <latex-code>
             <![CDATA[
