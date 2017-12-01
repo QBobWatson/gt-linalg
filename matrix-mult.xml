@@ -366,7 +366,7 @@ the license is included in gfdl.xml.
     </definition>
 
     <p>
-      In other words, matrix multiplication is defined column-by-column, or  <q>distributes over the columns of <m>B</m></q>.  See TODO:xref for an alternate definition of matrix multiplication that is better-adapted to computations by hand.
+      In other words, matrix multiplication is defined column-by-column, or  <q>distributes over the columns of <m>B</m>.</q>  See this <xref ref="matrix-mult-row-column">Fact</xref> for an alternate definition of matrix multiplication that is better-adapted to computations by hand.
     </p>
 
     <p>
@@ -681,7 +681,7 @@ $\xrightarrow{\text{reflect $xy$}}$
       The following procedure for finding the matrix product is much better adapted to computations by hand; the previous <xref ref="matrix-mult-defn-of"/> is more suitable for proving the above <xref ref="matrix-mult-comp-is-prod"/>.
     </p>
 
-    <warning>
+    <warning xml:id="matrix-mult-row-column">
       <title>The row-column rule for matrix multiplication</title>
       <p>
         Let <m>A</m> be an <m>m\times n</m> matrix, let <m>B</m> be an <m>n\times p</m> matrix, and let <m>C = AB</m>.  Then the <m>ij</m> entry of <m>C</m> is the <m>i</m>th row of <m>A</m> times the <m>j</m>th column of <m>B</m>:
