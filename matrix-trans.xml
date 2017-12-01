@@ -18,7 +18,7 @@ the license is included in gfdl.xml.
       <li>Learn examples of matrix transformations: reflection, dilation, rotation, shear, projection.</li>
       <li>Understand the vocabulary surrounding transformations: domain, codomain, range.</li>
       <li>Understand the domain, codomain, and range of a matrix transformation.</li>
-      <li>Vocabulary words: <term>transformation</term> / <term>function</term>, <term>domain</term>, <term>codomain</term>, <term>range</term>, <term>matrix transformation</term>.</li>
+      <li>Vocabulary words: <term>transformation</term> / <term>function</term>, <term>domain</term>, <term>codomain</term>, <term>range</term>, <term>identity transformation</term>, <term>matrix transformation</term>.</li>
     </ol>
   </objectives>
 
@@ -568,6 +568,20 @@ the license is included in gfdl.xml.
       In other words, <m>f</m> takes a vector with three entries, then rotates it; hence the ouput of <m>f</m> also has three entries.  In this case, we have defined <m>f</m> by a geometric rule.
     </p>
   </example>
+
+  <definition xml:id="matrix-trans-identity">
+    <statement>
+      <p>
+        <latex-code mode="bare">\def\Id{\operatorname{Id}}</latex-code>
+        The <term>identity transformation</term> <m>\Id_{\R^n}\colon\R^n\to\R^n</m> is the transformation defined by the rule
+        <me>\Id_{\R^n}(x) = x \qquad\text{for all $x$ in $\R^n$}.</me>
+      </p>
+    </statement>
+  </definition>
+
+  <p>
+    In other words, the identity transformation does not move its input vector: the output is the same as the input.  Its domain and codomain are both <m>\R^n</m>, and its range is <m>\R^n</m> as well, since every vector in <m>\R^n</m> is the output of itself.
+  </p>
 
   <example xml:id="matrix-trans-eg-robot">
     <title>A real-word transformation: robotics</title>

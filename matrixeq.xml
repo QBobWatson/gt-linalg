@@ -154,9 +154,9 @@ the license is included in gfdl.xml.
       <p>The above <xref ref="matrixeq-defn-Ax1"/> is a useful way of defining the product of a matrix with a vector when it comes to understanding the relationship between matrix equations and vector equations.  Here we give a definition that is better-adapted to computations by hand.
       </p>
 
-      <definition>
+      <definition xml:id="matrixeq-row-column-prod">
         <statement>
-          <p>A <term>row vector</term> is a matrix with one row.  The product of a row vector of length <m>n</m> and a (column) vector of length <m>n</m> is
+          <p>A <term>row vector</term> is a matrix with one row.  The <term>product</term> of a row vector of length <m>n</m> and a (column) vector of length <m>n</m> is
           <me>\mat{a_1 a_2 \cdots, a_n} \vec{x_1 x_2 \vdots, x_n}
           = a_1x_1 + a_2x_2 + \cdots + a_nx_n.</me>
           This is a scalar.
@@ -164,15 +164,18 @@ the license is included in gfdl.xml.
         </statement>
       </definition>
 
-      <p>If <m>A</m> is an <m>m\times n</m> matrix with rows <m>r_1,r_2,\ldots,r_m</m>, and <m>x</m> is a vector in <m>\R^n</m>, then
-      <me>Ax = \mat[c]{ \matrow{r_1};
-      \matrow{r_2};
-      \vdots ;
-      \matrow{r_m}}
-      x
-      = \vec{r_1x r_2x \vdots, r_mx}.
-      </me>
-      </p>
+      <warning xml:id="matrixeq-row-column">
+        <title>The row-column rule for matrix-vector multiplication</title>
+        <p>If <m>A</m> is an <m>m\times n</m> matrix with rows <m>r_1,r_2,\ldots,r_m</m>, and <m>x</m> is a vector in <m>\R^n</m>, then
+        <me>Ax = \mat[c]{ \matrow{r_1};
+        \matrow{r_2};
+        \vdots ;
+        \matrow{r_m}}
+        x
+        = \vec{r_1x r_2x \vdots, r_mx}.
+        </me>
+        </p>
+      </warning>
 
       <example>
         <p><me>

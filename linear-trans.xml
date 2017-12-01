@@ -18,7 +18,7 @@ the license is included in gfdl.xml.
       <li>Understand the relationship between linear transformations and matrix transformations.</li>
       <li>Learn to compute the matrix of a linear transformation.</li>
       <li>Notation: the <term>unit coordinate vectors</term> <m>e_1,e_2,\ldots</m>.</li>
-      <li>Vocabulary words: <term>linear transformation</term>, <term>standard matrix</term>.</li>
+      <li>Vocabulary words: <term>linear transformation</term>, <term>standard matrix</term>, <term>identity matrix</term>.</li>
     </ol>
   </objectives>
 
@@ -416,7 +416,7 @@ the license is included in gfdl.xml.
       These are the vectors of length 1 that point in the positive directions of each of the axes.
     </p>
 
-    <fact hide-type="true">
+    <fact hide-type="true" xml:id="linear-trans-pick-columns">
       <title>Multiplying a matrix by the unit coordinate vectors</title>
       <p>
         If <m>A</m> is an <m>m\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_m</m>, then <m>\color{red}Ae_i = v_i</m> for each <m>i=1,2,\ldots,n</m>:
@@ -436,7 +436,7 @@ the license is included in gfdl.xml.
       </me>
     </p>
 
-    <theorem>
+    <theorem xml:id="matrix-of-transformation">
       <title>The matrix of a linear transformation</title>
       <statement>
         <p>
@@ -505,7 +505,7 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
-    <example>
+    <example xml:id="linear-trans-rotation-matrix">
       <title>The matrix of a rotation</title>
       <statement>
         <p>
@@ -591,6 +591,11 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
+    <p>
+      We saw in the above Example that the matrix for counterclockwise rotation of the plane by an angle of <m>\theta</m> is
+      <me>A = \mat{\cos(\theta) -\sin(\theta); \sin(\theta) \cos(\theta)}.</me>
+    </p>
+
     <example xml:id="linear-trans-matrix-formula">
       <title>A transformation defined by a formula</title>
       <statement>
@@ -614,7 +619,7 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
-    <example>
+    <example xml:id="linear-trans-in-steps">
       <title>The matrix of a composition</title>
       <statement>
         <p>
@@ -695,6 +700,53 @@ $\xrightarrow{\text{project $yz$}}$
         </figure>
       </solution>
     </example>
+
+    <p>
+      Recall from this <xref ref="matrix-trans-identity"/> that the <em>identity transformation</em> is the transformation <m>\operatorname{Id}_{\R^n}\colon\R^n\to\R^n</m> defined by <m>\operatorname{Id}_{\R^n}(x) = x</m> for every vector <m>x</m>.
+    </p>
+
+    <example xml:id="linear-trans-matrix-of-id">
+      <title>The standard matrix of the identity transformation</title>
+      <statement>
+        <p>Verify that the identity transformation <m>\operatorname{Id}_{\R^n}\colon\R^n\to\R^n</m> is linear, and compute its standard matrix.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          <latex-code mode="bare">\def\Id{\operatorname{Id}}</latex-code>
+          We verify the two defining properties (LC1) and (LC2) of linear transformations.  Let <m>u,v</m> be vectors in <m>\R^n</m>.  Then
+          <me>\Id_{\R^n}(u+v) = u+v = \Id_{\R^n}(u) + \Id_{\R^n}(v).</me>
+          If <m>c</m> is a scalar, then
+          <me>\Id_{\R^n}(cu) = cu = c\Id_{\R^n}(u).</me>
+          Since <m>\Id_{\R^n}</m> satisfies the two defining properties, it is a linear transformation.
+        </p>
+        <p>
+          <latex-code mode="bare">\def\Id{\operatorname{Id}}</latex-code>
+          Now that we know that <m>\Id_{\R^n}</m> is linear, it makes sense to compute its standard matrix.
+          For each unit coordinate vector <m>e_i</m>, we have <m>\Id_{R^n}(e_i) = e_i</m>.  In other words, the columns of the standard matrix of <m>\Id_{\R^n}</m> are the unit coordinate vectors, so the standard matrix is
+          <me>\mat{1 0 \cdots, 0 0; 0 1 \cdots, 0 0;
+          \vdots, \vdots, \ddots, \vdots, \vdots;
+          0 0 \cdots, 1 0; 0 0 \cdots, 0 1}.</me>
+        </p>
+      </solution>
+    </example>
+
+    <definition xml:id="linear-trans-identity-mat">
+      <statement>
+        <p>
+          The <term><m>n\times n</m> identity matrix</term> is the matrix <m>I_n</m> whose columns are the <m>n</m> unit coordinate vectors in <m>\R^n</m>:
+          <me>I_n = \mat{1 0 \cdots, 0 0; 0 1 \cdots, 0 0;
+          \vdots, \vdots, \ddots, \vdots, \vdots;
+          0 0 \cdots, 1 0; 0 0 \cdots, 0 1}.</me>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      We computed in <xref ref="linear-trans-matrix-of-id"/> that the matrix of the identity transform is the identity matrix: for every <m>x</m> in <m>\R^n</m>,
+      <me>x = \operatorname{Id}_{\R^n}(x) = I_nx.</me>
+      Therefore, <m>I_nx=x</m> for all vectors <m>x</m>: the product of the identity matrix and a vector is the same vector.
+    </p>
 
   </subsection>
 
