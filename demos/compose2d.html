@@ -59,10 +59,22 @@ window.demo = new Demo2D({
   },
   vertical: 3.0
 }, function() {
-  var Params, clipCube2, clipCube3, cols, computeOut, computeProduct, folder, folderNames, folders, gridData, gui, hiliteOpts, i, inverseNames, j, labelOpts, makeSurface, matrices, matrix1, matrix1Elt, matrix2, matrix2Elt, matrix3, matrix3Elt, params, paramses, range, transforms, updateCaption, vector1, vector2, vector3, vectorOpts, view1, view2, view3, zeroOpts;
+  var Params, clipCube2, clipCube3, cols, computeOut, computeProduct, folder, folderNames, folders, gridData, gui, hiliteOpts, i, inverseNames, j, labelOpts, makeSurface, matrices, matrix1, matrix1Elt, matrix2, matrix2Elt, matrix3, matrix3Elt, names, params, paramses, range, s, strip, transforms, updateCaption, vector1, vector2, vector3, vectorOpts, view1, view2, view3, zeroOpts;
   window.mathbox = this.mathbox;
   range = this.urlParams.get('range', 'float', 3);
   transforms = this.urlParams.get('names', 'str[]', ['T', 'U']);
+  strip = function(s) {
+    return s.replace(/^\s+|\s+$/g, '');
+  };
+  names = (function() {
+    var j, len, results;
+    results = [];
+    for (j = 0, len = transforms.length; j < len; j++) {
+      s = transforms[j];
+      results.push(strip(s));
+    }
+    return results;
+  })();
   vector1 = this.urlParams.get('vec', 'float[]', [1, 2]);
   vector2 = [0, 0];
   vector3 = [0, 0];
@@ -145,7 +157,7 @@ window.demo = new Demo2D({
     };
 
     Params.prototype.doRotate = function() {
-      var c, s;
+      var c;
       this.xscale = this.yscale = 1.0;
       this.xshear = this.yshear = 0.0;
       c = Math.cos(this.rotate);
@@ -290,7 +302,7 @@ window.demo = new Demo2D({
     name: 'labeled2',
     vectors: [vector2],
     colors: [[1, 0, 1, 1]],
-    labels: [transforms[1] + "(x)"],
+    labels: [names[1] + "(x)"],
     live: true,
     zeroPoints: true,
     zeroThreshold: 0.3,
@@ -302,7 +314,7 @@ window.demo = new Demo2D({
     name: 'labeled3',
     vectors: [vector3],
     colors: [[1, 1, 0, 1]],
-    labels: [transforms[0] + "(" + transforms[1] + "(x))"],
+    labels: [names[0] + "(" + names[1] + "(x))"],
     live: true,
     zeroPoints: true,
     zeroThreshold: 0.3,
@@ -326,7 +338,7 @@ window.demo = new Demo2D({
   updateCaption = (function(_this) {
     return function() {
       var str;
-      str = transforms[1] + "(\\color{#00ff00}{x}) = ";
+      str = names[1] + "(\\color{#00ff00}{x}) = ";
       str += _this.texMatrix(cols(matrix1));
       str += _this.texVector(vector1, {
         color: '#00ff00'
@@ -336,7 +348,7 @@ window.demo = new Demo2D({
         color: '#ff00ff'
       });
       katex.render(str, matrix1Elt);
-      str = transforms[0] + "(\\color{#ff00ff}{" + transforms[1] + "(x)}) = ";
+      str = names[0] + "(\\color{#ff00ff}{" + names[1] + "(x)}) = ";
       str += _this.texMatrix(cols(matrix2));
       str += _this.texVector(vector2, {
         color: '#ff00ff'
@@ -346,7 +358,7 @@ window.demo = new Demo2D({
         color: '#ffff00'
       });
       katex.render(str, matrix2Elt);
-      str = transforms[0] + "\\circ " + transforms[1] + "(\\color{#00ff00}{x}) = ";
+      str = names[0] + "\\circ " + names[1] + "(\\color{#00ff00}{x}) = ";
       str += _this.texMatrix(cols(matrix3));
       str += _this.texVector(vector1, {
         color: '#00ff00'

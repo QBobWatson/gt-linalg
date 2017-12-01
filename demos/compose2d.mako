@@ -22,6 +22,8 @@ window.demo = new Demo2D {
     range = @urlParams.get 'range', 'float', 3
 
     transforms = @urlParams.get 'names', 'str[]', ['T', 'U']
+    strip = (s) -> s.replace /^\s+|\s+$/g, ''
+    names = (strip s for s in transforms)
 
     vector1 = @urlParams.get 'vec', 'float[]', [1, 2]
     vector2 = [0, 0]
@@ -233,7 +235,7 @@ window.demo = new Demo2D {
         name:          'labeled2'
         vectors:       [vector2]
         colors:        [[1, 0, 1, 1]]
-        labels:        ["#{transforms[1]}(x)"]
+        labels:        ["#{names[1]}(x)"]
         live:          true
         zeroPoints:    true
         zeroThreshold: 0.3
@@ -245,7 +247,7 @@ window.demo = new Demo2D {
         name:          'labeled3'
         vectors:       [vector3]
         colors:        [[1, 1, 0, 1]]
-        labels:        ["#{transforms[0]}(#{transforms[1]}(x))"]
+        labels:        ["#{names[0]}(#{names[1]}(x))"]
         live:          true
         zeroPoints:    true
         zeroThreshold: 0.3
@@ -276,19 +278,19 @@ window.demo = new Demo2D {
         [[mat[0], mat[2]], [mat[1], mat[3]]]
 
     updateCaption = () =>
-        str  = "#{transforms[1]}(\\color{#00ff00}{x}) = "
+        str  = "#{names[1]}(\\color{#00ff00}{x}) = "
         str += @texMatrix cols(matrix1)
         str += @texVector vector1, color: '#00ff00'
         str += "="
         str += @texVector vector2, color: '#ff00ff'
         katex.render str, matrix1Elt
-        str  = "#{transforms[0]}(\\color{#ff00ff}{#{transforms[1]}(x)}) = "
+        str  = "#{names[0]}(\\color{#ff00ff}{#{names[1]}(x)}) = "
         str += @texMatrix cols(matrix2)
         str += @texVector vector2, color: '#ff00ff'
         str += "="
         str += @texVector vector3, color: '#ffff00'
         katex.render str, matrix2Elt
-        str  = "#{transforms[0]}\\circ #{transforms[1]}(\\color{#00ff00}{x}) = "
+        str  = "#{names[0]}\\circ #{names[1]}(\\color{#00ff00}{x}) = "
         str += @texMatrix cols(matrix3)
         str += @texVector vector1, color: '#00ff00'
         str += "="
