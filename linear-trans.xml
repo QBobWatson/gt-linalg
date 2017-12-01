@@ -702,18 +702,17 @@ $\xrightarrow{\text{project $yz$}}$
     </example>
 
     <p>
-      Recall from this <xref ref="matrix-trans-identity"/> that the <em>identity transformation</em> is the transformation <m>\operatorname{Id}_{\R^n}\colon\R^n\to\R^n</m> defined by <m>\operatorname{Id}_{\R^n}(x) = x</m> for every vector <m>x</m>.
+      Recall from this <xref ref="matrix-trans-identity"/> that the <em>identity transformation</em> is the transformation <m>\Id_{\R^n}\colon\R^n\to\R^n</m> defined by <m>\Id_{\R^n}(x) = x</m> for every vector <m>x</m>.
     </p>
 
     <example xml:id="linear-trans-matrix-of-id">
       <title>The standard matrix of the identity transformation</title>
       <statement>
-        <p>Verify that the identity transformation <m>\operatorname{Id}_{\R^n}\colon\R^n\to\R^n</m> is linear, and compute its standard matrix.
+        <p>Verify that the identity transformation <m>\Id_{\R^n}\colon\R^n\to\R^n</m> is linear, and compute its standard matrix.
         </p>
       </statement>
       <solution>
         <p>
-          <latex-code mode="bare">\def\Id{\operatorname{Id}}</latex-code>
           We verify the two defining properties (LC1) and (LC2) of linear transformations.  Let <m>u,v</m> be vectors in <m>\R^n</m>.  Then
           <me>\Id_{\R^n}(u+v) = u+v = \Id_{\R^n}(u) + \Id_{\R^n}(v).</me>
           If <m>c</m> is a scalar, then
@@ -721,7 +720,6 @@ $\xrightarrow{\text{project $yz$}}$
           Since <m>\Id_{\R^n}</m> satisfies the two defining properties, it is a linear transformation.
         </p>
         <p>
-          <latex-code mode="bare">\def\Id{\operatorname{Id}}</latex-code>
           Now that we know that <m>\Id_{\R^n}</m> is linear, it makes sense to compute its standard matrix.
           For each unit coordinate vector <m>e_i</m>, we have <m>\Id_{R^n}(e_i) = e_i</m>.  In other words, the columns of the standard matrix of <m>\Id_{\R^n}</m> are the unit coordinate vectors, so the standard matrix is
           <me>\mat{1 0 \cdots, 0 0; 0 1 \cdots, 0 0;
@@ -744,7 +742,7 @@ $\xrightarrow{\text{project $yz$}}$
 
     <p>
       We computed in <xref ref="linear-trans-matrix-of-id"/> that the matrix of the identity transform is the identity matrix: for every <m>x</m> in <m>\R^n</m>,
-      <me>x = \operatorname{Id}_{\R^n}(x) = I_nx.</me>
+      <me>x = \Id_{\R^n}(x) = I_nx.</me>
       Therefore, <m>I_nx=x</m> for all vectors <m>x</m>: the product of the identity matrix and a vector is the same vector.
     </p>
 

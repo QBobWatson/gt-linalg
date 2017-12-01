@@ -111,7 +111,7 @@ the license is included in gfdl.xml.
     </figure>
   </example>
 
-  <example>
+  <example xml:id="matrix-trans-eg-projection">
     <title>Projection onto the <m>xy</m>-plane</title>
     <statement>
       <p>Let <me>A = \mat{1 0 0; 0 1 0; 0 0 0}.</me>  Describe the function <m>b=Ax</m> geometrically.</p>
@@ -157,7 +157,7 @@ the license is included in gfdl.xml.
     </solution>
   </example>
 
-  <example>
+  <example xml:id="matrix-trans-eg-reflection">
     <title>Reflection</title>
     <statement>
       <p>Let <me>A = \mat{-1 0; 0 1}.</me>  Describe the function <m>b=Ax</m> geometrically.</p>
@@ -230,7 +230,7 @@ the license is included in gfdl.xml.
     </solution>
   </example>
 
-  <example>
+  <example xml:id="matrix-trans-eg-identity">
     <title>Identity</title>
     <statement>
       <p>Let <me>A = \mat{1 0; 0 1}.</me>  Describe the function <m>b=Ax</m> geometrically.</p>
@@ -572,7 +572,6 @@ the license is included in gfdl.xml.
   <definition xml:id="matrix-trans-identity">
     <statement>
       <p>
-        <latex-code mode="bare">\def\Id{\operatorname{Id}}</latex-code>
         The <term>identity transformation</term> <m>\Id_{\R^n}\colon\R^n\to\R^n</m> is the transformation defined by the rule
         <me>\Id_{\R^n}(x) = x \qquad\text{for all $x$ in $\R^n$}.</me>
       </p>
