@@ -21,6 +21,8 @@ window.demo = new Demo2D {
     # Demo parameters
     range = @urlParams.get 'range', 'float', 3
 
+    transforms = @urlParams.get 'names', 'str[]', ['T', 'U']
+
     vector1 = @urlParams.get 'vec', 'float[]', [1, 2]
     vector2 = [0, 0]
     vector3 = [0, 0]
@@ -100,8 +102,8 @@ window.demo = new Demo2D {
     paramses = []
     gui = new dat.GUI()
     gui.closed = @urlParams.closed?
-    folderNames = ['U', 'T']
-    inverseNames = ['T inverse', 'U inverse']
+    folderNames = [transforms[1], transforms[0]]
+    inverseNames = ["#{transforms[0]} inverse", "#{transforms[1]} inverse"]
     folders = []
     for i in [0...2]
         folder = gui.addFolder(folderNames[i])
@@ -231,7 +233,7 @@ window.demo = new Demo2D {
         name:          'labeled2'
         vectors:       [vector2]
         colors:        [[1, 0, 1, 1]]
-        labels:        ['U(x)']
+        labels:        ["#{transforms[1]}(x)"]
         live:          true
         zeroPoints:    true
         zeroThreshold: 0.3
@@ -243,7 +245,7 @@ window.demo = new Demo2D {
         name:          'labeled3'
         vectors:       [vector3]
         colors:        [[1, 1, 0, 1]]
-        labels:        ['T(U(x))']
+        labels:        ["#{transforms[0]}(#{transforms[1]}(x))"]
         live:          true
         zeroPoints:    true
         zeroThreshold: 0.3
@@ -274,19 +276,19 @@ window.demo = new Demo2D {
         [[mat[0], mat[2]], [mat[1], mat[3]]]
 
     updateCaption = () =>
-        str  = "U(\\color{#00ff00}{x}) = "
+        str  = "#{transforms[1]}(\\color{#00ff00}{x}) = "
         str += @texMatrix cols(matrix1)
         str += @texVector vector1, color: '#00ff00'
         str += "="
         str += @texVector vector2, color: '#ff00ff'
         katex.render str, matrix1Elt
-        str  = "T(\\color{#ff00ff}{U(x)}) = "
+        str  = "#{transforms[0]}(\\color{#ff00ff}{#{transforms[1]}(x)}) = "
         str += @texMatrix cols(matrix2)
         str += @texVector vector2, color: '#ff00ff'
         str += "="
         str += @texVector vector3, color: '#ffff00'
         katex.render str, matrix2Elt
-        str  = "T\\circ U(\\color{#00ff00}{x}) = "
+        str  = "#{transforms[0]}\\circ #{transforms[1]}(\\color{#00ff00}{x}) = "
         str += @texMatrix cols(matrix3)
         str += @texVector vector1, color: '#00ff00'
         str += "="

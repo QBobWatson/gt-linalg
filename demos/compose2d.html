@@ -59,9 +59,10 @@ window.demo = new Demo2D({
   },
   vertical: 3.0
 }, function() {
-  var Params, clipCube2, clipCube3, cols, computeOut, computeProduct, folder, folderNames, folders, gridData, gui, hiliteOpts, i, inverseNames, j, labelOpts, makeSurface, matrices, matrix1, matrix1Elt, matrix2, matrix2Elt, matrix3, matrix3Elt, params, paramses, range, updateCaption, vector1, vector2, vector3, vectorOpts, view1, view2, view3, zeroOpts;
+  var Params, clipCube2, clipCube3, cols, computeOut, computeProduct, folder, folderNames, folders, gridData, gui, hiliteOpts, i, inverseNames, j, labelOpts, makeSurface, matrices, matrix1, matrix1Elt, matrix2, matrix2Elt, matrix3, matrix3Elt, params, paramses, range, transforms, updateCaption, vector1, vector2, vector3, vectorOpts, view1, view2, view3, zeroOpts;
   window.mathbox = this.mathbox;
   range = this.urlParams.get('range', 'float', 3);
+  transforms = this.urlParams.get('names', 'str[]', ['T', 'U']);
   vector1 = this.urlParams.get('vec', 'float[]', [1, 2]);
   vector2 = [0, 0];
   vector3 = [0, 0];
@@ -161,8 +162,8 @@ window.demo = new Demo2D({
   paramses = [];
   gui = new dat.GUI();
   gui.closed = this.urlParams.closed != null;
-  folderNames = ['U', 'T'];
-  inverseNames = ['T inverse', 'U inverse'];
+  folderNames = [transforms[1], transforms[0]];
+  inverseNames = [transforms[0] + " inverse", transforms[1] + " inverse"];
   folders = [];
   for (i = j = 0; j < 2; i = ++j) {
     folder = gui.addFolder(folderNames[i]);
@@ -289,7 +290,7 @@ window.demo = new Demo2D({
     name: 'labeled2',
     vectors: [vector2],
     colors: [[1, 0, 1, 1]],
-    labels: ['U(x)'],
+    labels: [transforms[1] + "(x)"],
     live: true,
     zeroPoints: true,
     zeroThreshold: 0.3,
@@ -301,7 +302,7 @@ window.demo = new Demo2D({
     name: 'labeled3',
     vectors: [vector3],
     colors: [[1, 1, 0, 1]],
-    labels: ['T(U(x))'],
+    labels: [transforms[0] + "(" + transforms[1] + "(x))"],
     live: true,
     zeroPoints: true,
     zeroThreshold: 0.3,
@@ -325,7 +326,7 @@ window.demo = new Demo2D({
   updateCaption = (function(_this) {
     return function() {
       var str;
-      str = "U(\\color{#00ff00}{x}) = ";
+      str = transforms[1] + "(\\color{#00ff00}{x}) = ";
       str += _this.texMatrix(cols(matrix1));
       str += _this.texVector(vector1, {
         color: '#00ff00'
@@ -335,7 +336,7 @@ window.demo = new Demo2D({
         color: '#ff00ff'
       });
       katex.render(str, matrix1Elt);
-      str = "T(\\color{#ff00ff}{U(x)}) = ";
+      str = transforms[0] + "(\\color{#ff00ff}{" + transforms[1] + "(x)}) = ";
       str += _this.texMatrix(cols(matrix2));
       str += _this.texVector(vector2, {
         color: '#ff00ff'
@@ -345,7 +346,7 @@ window.demo = new Demo2D({
         color: '#ffff00'
       });
       katex.render(str, matrix2Elt);
-      str = "T\\circ U(\\color{#00ff00}{x}) = ";
+      str = transforms[0] + "\\circ " + transforms[1] + "(\\color{#00ff00}{x}) = ";
       str += _this.texMatrix(cols(matrix3));
       str += _this.texVector(vector1, {
         color: '#00ff00'

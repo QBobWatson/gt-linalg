@@ -338,10 +338,10 @@
           case 'int[]':
             return val.split(',').map(parseInt);
           case 'bool':
-            if (val === 'true' || val === 'yes') {
+            if (val === 'true' || val === 'yes' || val === 'on') {
               return true;
             }
-            if (val === 'false' || val === 'no') {
+            if (val === 'false' || val === 'no' || val === 'off') {
               return false;
             }
             if (def != null) {

@@ -111,22 +111,24 @@ setupDemo = (opts) ->
                 fill:    false
                 opacity: 0.75
 
+inLabel = urlParams.in ? 'u'
 window.demo1 = setupDemo
     index:  1
     vector: vector1
     color:  [0, 1, 0, 1]
-    label:  'u'
+    label:  inLabel
 
 window.demo2 = setupDemo
     index:  2
     vector: vector2
     color:  [1, 0, 1, 1]
 
+outLabel = urlParams.out ? 'T'
 window.demo3 = setupDemo
     index:  3
     vector: vector3
     color:  [1, 1, 0, 1]
-    label:  'T(u)'
+    label:  "#{outLabel}(#{inLabel})"
 
 ##################################################
 # dragging

@@ -184,6 +184,8 @@ params["range TU"] = urlParams.get('rangeTU', 'bool', true);
 
 gui = new dat.GUI();
 
+gui.closed = urlParams.closed != null;
+
 gui.add(params, 'Axes').onFinishChange(function(val) {
   var i, k, results;
   results = [];

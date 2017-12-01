@@ -276,7 +276,7 @@ class URLParams
     #   float
     #   float[] (,-separated)
     #   matrix (, and :-separated)
-    #   bool (true/yes false/no; other values give the default)
+    #   bool (true/yes/on false/no/off; other values give the default)
     get: (key, type='str', def=undefined) =>
         val = @[key]
         if val?
@@ -294,9 +294,9 @@ class URLParams
                 when 'int[]'
                     return val.split(',').map parseInt
                 when 'bool'
-                    if val in ['true', 'yes']
+                    if val in ['true', 'yes', 'on']
                         return true
-                    if val in ['false', 'no']
+                    if val in ['false', 'no', 'off']
                         return false
                     if def?
                         return def

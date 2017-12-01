@@ -103,6 +103,7 @@ params["range T"]  = urlParams.get 'rangeT',  'bool', true
 params["range TU"] = urlParams.get 'rangeTU', 'bool', true
 
 gui = new dat.GUI()
+gui.closed = urlParams.closed?
 gui.add(params, 'Axes').onFinishChange (val) ->
     for i in [0...3]
         demos[i].mathbox.select(".view#{i+1}-axes").set 'visible', val
