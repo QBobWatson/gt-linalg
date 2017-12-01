@@ -339,7 +339,7 @@ the license is included in gfdl.xml.
   <subsection>
     <title>Matrix algebra</title>
 
-    <p>In this Subsection, we translate the algebra of matrix transformations from the previous Subsection into the language of matrices.  First we need some terminology.</p>
+    <p>In this Subsection, we translate the algebra of linear transformations from the previous Subsection into the language of matrices.  First we need some terminology.</p>
 
     <definition type-name="Notation">
       <statement>

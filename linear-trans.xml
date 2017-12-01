@@ -16,7 +16,7 @@ the license is included in gfdl.xml.
     <ol>
       <li>Learn how to verify that a transformation is linear, or prove that a transformation is not linear.</li>
       <li>Understand the relationship between linear transformations and matrix transformations.</li>
-      <li>Learn to compute the matrix of a linear transformation.</li>
+      <li><em>Learn to compute the matrix of a linear transformation.</em></li>
       <li>Notation: the <term>unit coordinate vectors</term> <m>e_1,e_2,\ldots</m>.</li>
       <li>Vocabulary words: <term>linear transformation</term>, <term>standard matrix</term>, <term>identity matrix</term>.</li>
     </ol>
@@ -27,7 +27,7 @@ the license is included in gfdl.xml.
       In <xref ref="matrix-transformations"/>, we studied the geometry of matrices by regarding them as functions, i.e., by considering the associated <em>matrix transformations</em>.  We defined some vocabulary (domain, codomain, range), and asked a number of natural questions about a transformation.  For a matrix transformation, these translate into questions about matrices, which we have many tools to answer.
     </p>
     <p>
-      In this section, we make a change in perspective.  Suppose that we are given a <em>transformation</em> that we would like to study.  If our transformation is a matrix transformation, then we can use linear algebra to study it.  This raises two important questions:
+      In this section, we make a change in perspective.  Suppose that we are given a <em>transformation</em> that we would like to study.  If we can prove that our transformation is a matrix transformation, then we can use linear algebra to study it.  This raises two important questions:
       <ol>
         <li>
           How can we tell if a transformation is a matrix transformation?
@@ -48,12 +48,7 @@ the license is included in gfdl.xml.
     <title>Linear Transformations: Definition</title>
 
     <p>
-      Let <m>T\colon\R^n\to\R^m</m> be a matrix transformation: <m>T(x)=Ax</m> for an <m>m\times n</m> matrix <m>A</m>.  By this <xref ref="matrix-linearity"/>, we have
-      <md>
-        <mrow>T(u + v) = A(u + v) &amp;= Au + Av = T(u) + T(v)</mrow>
-        <mrow>T(cu) = A(cu) &amp;= cAu = cT(u)</mrow>
-      </md>
-      for all vectors <m>u,v</m> in <m>\R^n</m> and all scalars <m>c</m>.  It follows that, if a transformation can be written as a matrix transformation, then that transformation must satisfy the properties above.
+      In this section, we introduce the class of transformations that come from matrices.
     </p>
 
     <definition>
@@ -64,18 +59,23 @@ the license is included in gfdl.xml.
             <mrow>T(u + v) &amp;= T(u) + T(v) &amp; \text{(LT1)}</mrow>
             <mrow>T(cu) &amp;= cT(u) &amp; \text{(LT2)}</mrow>
           </md>
-          for all vector <m>u,v</m> in <m>\R^n</m> and all scalars <m>c</m>.
+          for all vectors <m>u,v</m> in <m>\R^n</m> and all scalars <m>c</m>.
         </p>
       </statement>
     </definition>
 
     <p>
-      By the above discussion, <em>a matrix transformation is a linear transformation</em>.  We will see in the next <xref ref="linear-trans-is-matrix-trans"/> that a linear transformation is a matrix transformation; we just haven't computed its matrix yet.
+      Let <m>T\colon\R^n\to\R^m</m> be a matrix transformation: <m>T(x)=Ax</m> for an <m>m\times n</m> matrix <m>A</m>.  By this <xref ref="matrix-linearity"/>, we have
+      <md>
+        <mrow>T(u + v) = A(u + v) &amp;= Au + Av = T(u) + T(v)</mrow>
+        <mrow>T(cu) = A(cu) &amp;= cAu = cT(u)</mrow>
+      </md>
+      for all vectors <m>u,v</m> in <m>\R^n</m> and all scalars <m>c</m>.  Since a matrix transformation satisfies properties (LC1) and (LC2), it is a linear transformation
     </p>
 
-    <warning>
-      <p>Matrix transformations are the same as linear transformations.</p>
-    </warning>
+    <p>
+      We will see in the next <xref ref="linear-trans-is-matrix-trans"/> that a linear transformation is a matrix transformation; we just haven't computed its matrix yet.
+    </p>
 
     <fact hide-type="true">
       <title>Facts about linear transformations</title>
@@ -119,8 +119,8 @@ the license is included in gfdl.xml.
     </fact>
 
     <p>
-      In engineering, the second fact is called the <em>superposition principle</em>.
-      For example, <m>T(cu + dv) = cT(u) + dT(v)</m> for any vectors <m>u,v</m> and any scalars <m>c,d</m>.
+      In engineering, the second Fact is called the <em>superposition principle</em>.
+      For example, <m>T(cu + dv) = cT(u) + dT(v)</m> for any vectors <m>u,v</m> and any scalars <m>c,d</m>.  To restate the first Fact:
     </p>
 
     <warning xml:id="linear-trans-T0-0">
@@ -165,6 +165,7 @@ the license is included in gfdl.xml.
         <p>
           <em>Note:</em> we know from this <xref ref="matrix-trans-eg-dilation"/> that <m>T</m> is a matrix transformation: in fact,
           <me>T(x) = \mat{1.5 0; 0 1.5}x.</me>
+          Since a matrix transformation is a linear transformation, this is another proof that <m>T</m> is linear.
         </p>
       </solution>
     </example>
@@ -251,7 +252,7 @@ the license is included in gfdl.xml.
   \end{scope}
 \end{tikzpicture}
           </latex-code>
-          This verifies that <m>T</m> is a linear transformation.  We will find its matrix in the next <xref ref="linear-trans-is-matrix-trans"/>.  Note however that it is not at all obvious a priori that <m>T</m> can be expressed as multiplication by a matrix.
+          This verifies that <m>T</m> is a linear transformation.  We will find its matrix in the next <xref ref="linear-trans-is-matrix-trans"/>.  Note however that it is not at all obvious that <m>T</m> can be expressed as multiplication by a matrix.
         </p>
       </solution>
     </example>
@@ -309,7 +310,7 @@ the license is included in gfdl.xml.
         Define <m>T\colon\R^3\to\R^3</m> by
         <me>T(x) = x + \vec{1 2 3}.</me>
         This kind of transformation is called a <term>translation</term>.
-        As in the previous <xref ref="linear-trans-eg-T0-non0"/>, this <m>T</m>
+        As in a previous <xref ref="linear-trans-eg-T0-non0"/>, this <m>T</m>
         is not linear, because <m>T(0)</m> is not the zero vector.
       </p>
     </example>
@@ -364,14 +365,14 @@ the license is included in gfdl.xml.
 
   </subsection>
 
-  <subsection xml:id="linear-trans-is-matrix-trans">
-    <title>The Matrix of a Linear Transformation</title>
+  <subsection>
+    <title>The Unit Coordinate Vectors</title>
 
     <p>
-      In this subsection, we will prove that every linear transformation is a matrix transformation, and we will show how to compute the matrix.  To begin, we need some notation.
+      In the next Subsection, we will present the relationship between linear transformations and matrix transformations.  Before doing so, we need the following important notation.
     </p>
 
-    <warning xml:id="defn-unit-coord-vectors" type-name="Definition">
+    <warning xml:id="defn-unit-coord-vectors" type-name="Notation">
       <title>Unit coordinate vectors</title>
       <p>
         The <term>unit coordinate vectors in <m>\R^n</m></term> are the <m>n</m> vectors
@@ -384,9 +385,15 @@ the license is included in gfdl.xml.
         The <m>i</m>th entry of <m>e_i</m> is equal to 1, and the other entries are zero.
       </p>
       <p>
-        From now on, we will use the symbols <m>e_1,e_2,\ldots</m> to denote the unit coordinate vectors.
+        <em>From now on,</em> for the rest of the book, we will use the symbols <m>\color{red}e_1,e_2,\ldots</m> to denote the unit coordinate vectors.
       </p>
     </warning>
+
+    <p>
+      There is an ambiguity in this notation: one has to know from context that <m>e_1</m> is meant to have <m>n</m> entries.  That is, the vectors
+      <me>\vec{1 0} \quad\text{ and }\quad \vec{1 0 0}</me>
+      may both be denoted <m>e_1</m>, depending on whether we are discussing vectors in <m>\R^2</m> or in <m>\R^3</m>.
+    </p>
 
     <p>
       The unit coordinate vectors in <m>\R^2</m> and <m>\R^3</m> are pictured below.
@@ -436,6 +443,30 @@ the license is included in gfdl.xml.
       </me>
     </p>
 
+    <definition xml:id="linear-trans-identity-mat">
+      <statement>
+        <p>
+          The <term><m>n\times n</m> identity matrix</term> is the matrix <m>I_n</m> whose columns are the <m>n</m> unit coordinate vectors in <m>\R^n</m>:
+          <me>I_n = \mat{1 0 \cdots, 0 0; 0 1 \cdots, 0 0;
+          \vdots, \vdots, \ddots, \vdots, \vdots;
+          0 0 \cdots, 1 0; 0 0 \cdots, 0 1}.</me>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      We will see in this <xref ref="linear-trans-matrix-of-id"/> below that the identity matrix is the matrix of the identity transformation.
+    </p>
+
+  </subsection>
+
+  <subsection xml:id="linear-trans-is-matrix-trans">
+    <title>The Matrix of a Linear Transformation</title>
+
+    <p>
+      Now we can prove that every linear transformation is a matrix transformation, and we will show how to compute the matrix.
+    </p>
+
     <theorem xml:id="matrix-of-transformation">
       <title>The matrix of a linear transformation</title>
       <statement>
@@ -462,10 +493,14 @@ the license is included in gfdl.xml.
     </theorem>
 
     <p>
-      The matrix <m>A</m> in the above Theorem is called the <term>standard matrix</term> for <m>T</m>.  The columns of <m>A</m> are the vectors obtained by evaluating <m>T</m> on the <m>n</m> unit coordinate vectors in <m>\R^n</m>.
+      The matrix <m>A</m> in the above Theorem is called the <term>standard matrix</term> for <m>T</m>.  The columns of <m>A</m> are the vectors obtained by evaluating <m>T</m> on the <m>n</m> unit coordinate vectors in <m>\R^n</m>.  To summarize the Theorem:
     </p>
 
     <warning>
+      <p>Matrix transformations are the same as linear transformations.</p>
+    </warning>
+
+    <note hide-type="true">
       <title>Dictionary</title>
       <p>
         Linear transformations are the same as matrix transformations, which come from matrices.  The correspondence can be summarized in the following dictionary.
@@ -475,7 +510,7 @@ the license is included in gfdl.xml.
   Linear transformation}%
 \;$\xrightarrow{\phantom{MMM}}$\;
 \hbox to .5\linewidth{$m\times n$ matrix
-\small$A = \mat{| | ,, |; T(e_1) T(e_2) \cdots, T(e_n); | | ,, | }$\hss}\\[1mm]
+\small$A = \mat{| | ,, |; T(e_1) T(e_2) \cdots, T(e_n); | | ,, | }$\hss}\\[3mm]
 \leavevmode
 \hbox to .3\linewidth{\hfil
   $\begin{aligned}&amp;T\colon\R^n\to\R^m\\&amp;T(x) = Ax\end{aligned}$\hfil}%
@@ -483,7 +518,7 @@ the license is included in gfdl.xml.
 \hbox to .5\linewidth{$m\times n$ matrix $A$\hfil}
         </latex-code>
       </p>
-    </warning>
+    </note>
 
     <example>
       <title>The matrix of a dilation</title>
@@ -620,7 +655,7 @@ the license is included in gfdl.xml.
     </example>
 
     <example xml:id="linear-trans-in-steps">
-      <title>The matrix of a composition</title>
+      <title>A transformation defined in steps</title>
       <statement>
         <p>
           Let <m>T\colon\R^3\to\R^3</m> be the linear transformation that reflects over the <m>xy</m>-plane and then projects onto the <m>yz</m>-plane.  What is the standard matrix for <m>T</m>?
@@ -721,27 +756,16 @@ $\xrightarrow{\text{project $yz$}}$
         </p>
         <p>
           Now that we know that <m>\Id_{\R^n}</m> is linear, it makes sense to compute its standard matrix.
-          For each unit coordinate vector <m>e_i</m>, we have <m>\Id_{R^n}(e_i) = e_i</m>.  In other words, the columns of the standard matrix of <m>\Id_{\R^n}</m> are the unit coordinate vectors, so the standard matrix is
-          <me>\mat{1 0 \cdots, 0 0; 0 1 \cdots, 0 0;
+          For each unit coordinate vector <m>e_i</m>, we have <m>\Id_{R^n}(e_i) = e_i</m>.  In other words, the columns of the standard matrix of <m>\Id_{\R^n}</m> are the unit coordinate vectors, so the standard matrix is the identity matrix
+          <me>I_n = \mat{1 0 \cdots, 0 0; 0 1 \cdots, 0 0;
           \vdots, \vdots, \ddots, \vdots, \vdots;
           0 0 \cdots, 1 0; 0 0 \cdots, 0 1}.</me>
         </p>
       </solution>
     </example>
 
-    <definition xml:id="linear-trans-identity-mat">
-      <statement>
-        <p>
-          The <term><m>n\times n</m> identity matrix</term> is the matrix <m>I_n</m> whose columns are the <m>n</m> unit coordinate vectors in <m>\R^n</m>:
-          <me>I_n = \mat{1 0 \cdots, 0 0; 0 1 \cdots, 0 0;
-          \vdots, \vdots, \ddots, \vdots, \vdots;
-          0 0 \cdots, 1 0; 0 0 \cdots, 0 1}.</me>
-        </p>
-      </statement>
-    </definition>
-
     <p>
-      We computed in <xref ref="linear-trans-matrix-of-id"/> that the matrix of the identity transform is the identity matrix: for every <m>x</m> in <m>\R^n</m>,
+      We computed in this <xref ref="linear-trans-matrix-of-id"/> that the matrix of the identity transform is the identity matrix: for every <m>x</m> in <m>\R^n</m>,
       <me>x = \Id_{\R^n}(x) = I_nx.</me>
       Therefore, <m>I_nx=x</m> for all vectors <m>x</m>: the product of the identity matrix and a vector is the same vector.
     </p>
