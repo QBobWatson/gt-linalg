@@ -34,7 +34,7 @@ the license is included in gfdl.xml.
  <subsection>
    <title>Invertible Matrices</title>
 
-   <p>The <em>reciprocal</em> or <em>inverse</em> of a nonzero number <m>a</m> is the number <m>b</m> which is characterized by the property that <m>ab = 1</m>.  We use this formulation to define the inverse of a matrix.</p>
+   <p>The <em>reciprocal</em> or <em>inverse</em> of a nonzero number <m>a</m> is the number <m>b</m> which is characterized by the property that <m>ab = 1</m>.  For instance, the inverse of <m>7</m> is <m>1/7</m>.  We use this formulation to define the inverse of a matrix.</p>
 
    <definition>
      <statement>
@@ -49,12 +49,6 @@ the license is included in gfdl.xml.
    <p>
      We have to require <m>AB = I_n</m> <em>and</em> <m>BA = I_n</m> because in general, matrix multiplication is not commutative.  However, we will show in the <xref ref="imt-1"/> that if <m>A</m> and <m>B</m> are <m>n\times n</m> matrices such that <m>AB = I_n</m>, then automatically <m>BA = I_n</m>.
    </p>
-
-   <warning>
-     <p>
-       If <m>A</m> and <m>B</m> are <m>n\times n</m> matrices, then <m>AB = I_n</m> if and only if <m>BA = I_n</m>.  Therefore, you only have to check one of these equalities to verify that <m>B = A\inv</m>.
-     </p>
-   </warning>
 
    <example>
      <statement>
@@ -102,7 +96,7 @@ the license is included in gfdl.xml.
        <p>
          <ol>
            <li>
-             Let <m>B</m> be the inverse of <m>A</m>.  Then <m>AB = I_n</m> and <m>BA = I_n</m>, which by definition also means <m>A</m> is the inverse of <m>B</m>.
+             The proof of this fact is left to the reader.
            </li>
            <li>
              We compute
@@ -115,12 +109,13 @@ the license is included in gfdl.xml.
    </proposition>
 
    <p>
-     In the above Fact, it is instructive to note that there is no reason for
-     <m>A\inv B\inv A B</m> to equal the identity matrix: one cannot switch the order of <m>B\inv</m> and <m>A</m>, so there is nothing to cancel in this expression.
+     Why is the inverse of <m>AB</m> not equal to <m>A\inv B\inv</m>?  If it were, then we would have
+     <me>I_n = (AB)(A\inv B\inv) = ABA\inv B\inv.</me>
+     But there is no reason for <m>ABA\inv B\inv</m> to equal the identity matrix: one cannot switch the order of <m>A\inv</m> and <m>B</m>, so there is nothing to cancel in this expression.
    </p>
 
    <p>
-     More generally, the inverse of a product of several invertible matrices is the product of the inverses, in the opposite order.  For instance,
+     More generally, the inverse of a product of several invertible matrices is the product of the inverses, in the opposite order; the proof is the same.  For instance,
      <me>(ABC)\inv = C\inv B\inv A\inv.</me>
    </p>
 
@@ -133,7 +128,7 @@ the license is included in gfdl.xml.
      So far we have defined the inverse matrix without giving any strategy for computing it.  We do so now, beginning with the special case of <m>2\times 2</m> matrices.
    </p>
 
-   <definition>
+   <definition xml:id="matrix-inv-def-det">
      <statement>
        <p>
          The <term>determinant</term> of a <m>2\times 2</m> matrix is the number
@@ -168,7 +163,7 @@ the license is included in gfdl.xml.
                AB = \mat{a b; c d}\frac 1{\det(A)}\mat{d -b; -c a}
                = \frac 1{ad-bc}\mat{ad-bc 0; 0 ad-bc} = I_2.
              </me>
-             Similarly, one computes that <m>BA = I_2</m>, so <m>A</m> is invertible and <m>B = A\inv</m>.
+             The reader can check that <m>BA = I_2</m>, so <m>A</m> is invertible and <m>B = A\inv</m>.
            </li>
            <li>
              Suppose that <m>\det(A) = ad-bc = 0</m>.  Let <m>T\colon\R^2\to\R^2</m> be the matrix transformation <m>T(x) = Ax</m>.  Then
@@ -468,7 +463,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
     <title>Invertible linear transformations</title>
 
     <p>
-      As with matrix multiplication, it is helpful to understand matrix inversion as an operation on linear transformations.
+      As with matrix multiplication, it is helpful to understand matrix inversion as an operation on linear transformations.  Recall that the <xref text="title" ref="matrix-trans-identity">identity transformation</xref> on <m>\R^n</m> is denoted <m>\Id_{\R^n}</m>.
     </p>
 
     <definition xml:id="matrix-inv-trans-inv-def">
@@ -729,10 +724,10 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
 
    <remark>
      <p>
-       It makes sense in the above <xref ref="matrix-inv-trans-inv-def"/> to define the inverse of a transformation <m>T\colon\R^n\to\R^m</m>, for <m>m\neq n</m>, to be a transformation <m>U\colon\R^m\to\R^n</m> such that <m>T\circ U = \Id_{\R^m}</m> and <m>U\circ T = \Id_{\R^n}</m>.  In fact, there exist invertible transformations <m>T\colon\R^n\to\R^m</m> for any <m>m</m> and <m>n</m>.
+       It makes sense in the above <xref ref="matrix-inv-trans-inv-def"/> to define the inverse of a transformation <m>T\colon\R^n\to\R^m</m>, for <m>m\neq n</m>, to be a transformation <m>U\colon\R^m\to\R^n</m> such that <m>T\circ U = \Id_{\R^m}</m> and <m>U\circ T = \Id_{\R^n}</m>.  In fact, there exist invertible transformations <m>T\colon\R^n\to\R^m</m> for any <m>m</m> and <m>n</m>, but they are not linear, or even continuous.
      </p>
      <p>
-       However, if <m>T</m> is a <em>linear</em> transformation, then it can only be invertible when <m>m = n</m>, i.e., when its domain is equal to its codomain.  Indeed, if <m>T\colon\R^n\to\R^m</m> is one-to-one, then <m>n\leq m</m> by this <xref ref="one-to-one-wide-matrices"/>, and if <m>T</m> is onto, then <m>m\leq n</m> by this <xref ref="one-to-one-tall-matrices"/>.  Therefore, when discussing invertibility we restrict ourselves to the case <m>m=n</m>.
+       If <m>T</m> is a <em>linear</em> transformation, then it can only be invertible when <m>m = n</m>, i.e., when its domain is equal to its codomain.  Indeed, if <m>T\colon\R^n\to\R^m</m> is one-to-one, then <m>n\leq m</m> by this <xref ref="one-to-one-wide-matrices"/>, and if <m>T</m> is onto, then <m>m\leq n</m> by this <xref ref="one-to-one-tall-matrices"/>.  Therefore, when discussing invertibility we restrict ourselves to the case <m>m=n</m>.
      </p>
    </remark>
 
@@ -834,7 +829,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
  <subsection>
    <title>Characterizing Invertible Matrices</title>
 
-   <p>This section consists of a single important theorem, with many equivalent conditions for a matrix to be invertible.  This is one of the most important theorems in the course.  We will append more criteria later on, as we develop them.</p>
+   <p>This Subsection consists of a single important theorem, with many equivalent conditions for a matrix to be invertible.  This is one of the most important theorems in the course.  We will append more criteria later on, as we develop them.</p>
 
    <theorem type-name="Invertible Matrix Theorem" hide-type="true" xml:id="imt-1">
      <title>The Invertible Matrix Theorem</title>
@@ -846,14 +841,14 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
            <li><m>T</m> is invertible.</li>
            <li>The reduced row echelon form of <m>A</m> is the identity matrix <m>I_n</m>.</li>
            <li><m>A</m> has <m>n</m> pivots.</li>
-           <li><m>Ax=0</m> has only the trivial solution (and no others).</li>
+           <li><m>Ax=0</m> has no solutions other than the trivial one.</li>
            <li><m>\Nul(A) = \{0\}</m>.</li>
            <li><m>\nullity(A) = 0</m>.</li>
            <li>The columns of <m>A</m> are linearly independent.</li>
-           <li>The columns of <m>A</m> are a basis for <m>\R^n</m>.</li>
+           <li>The columns of <m>A</m> form a basis for <m>\R^n</m>.</li>
            <li><m>T</m> is one-to-one.</li>
            <li><m>Ax=b</m> is consistent for all <m>b</m> in <m>\R^n</m>.</li>
-           <li><m>Ax=b</m> has a unique solution for all <m>b</m> in <m>\R^n</m>.</li>
+           <li><m>Ax=b</m> has a unique solution for each <m>b</m> in <m>\R^n</m>.</li>
            <li>The columns of <m>A</m> span <m>\R^n</m>.</li>
            <li><m>\Col(A) = \R^n.</m></li>
            <li><m>\dim\Col(A) = n.</m></li>
@@ -918,6 +913,64 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
        For non-invertible matrices, all of the statements of the Invertible Matrix Theorem are false.
      </p>
    </warning>
+
+   <example>
+     <statement>
+       <p>
+         Is this matrix invertible?
+         <me>A = \mat{1 2 -1; 2 4 7; -2 -4 1}</me>
+       </p>
+     </statement>
+     <solution>
+       <p>
+         The second column is a multiple of the first.  The columns are linearly dependent, so <m>A</m> does not satisfy condition 8 of the <xref ref="imt-1"/>.  Therefore, <m>A</m> is not invertible.
+       </p>
+     </solution>
+   </example>
+
+   <example>
+     <statement>
+       <p>
+         Let <m>A</m> be an <m>n\times n</m> matrix and let <m>T(x) = Ax</m>.  Suppose that the range of <m>T</m> is <m>\R^n</m>.  Show that the columns of <m>A</m> are linearly independent.
+       </p>
+     </statement>
+     <solution>
+       <p>
+         The range of <m>T</m> is the column space of <m>A</m>, so <m>A</m> satisfies condition 14 of the <xref ref="imt-1"/>.  Therefore, <m>A</m> also satisfies condition 8, which says that the columns of <m>A</m> are linearly independent.
+       </p>
+     </solution>
+   </example>
+
+   <example>
+     <statement>
+       <p>
+         Let <m>A</m> be a <m>3\times 3</m> matrix such that
+         <me>A\vec{1 7 0} = A\vec{2 0 -1}.</me>
+         Show that the rank of <m>A</m> is at most <m>2</m>.
+       </p>
+     </statement>
+     <solution>
+       <p>
+         If we set
+         <me>b = A\vec{1 7 0} = A\vec{2 0 -1},</me>
+         then <m>Ax=b</m> has multiple solutions, so it does not satisfy condition 12 of the <xref ref="imt-1"/>.  Therefore, it does not satisfy condition 16, so the rank of <m>A</m> is not <m>3</m>.  But <m>\rank(A)=\dim\Col(A)</m> and <m>\Col(A)</m> is a subspace of <m>\R^3</m>, so its rank cannot exceed <m>3</m>.  Therefore, the rank is at most <m>2</m>.
+       </p>
+     </solution>
+   </example>
+
+   <example>
+     <statement>
+       <p>
+         Suppose that <m>A</m> is an <m>n\times n</m> matrix such that <m>Ax=b</m> is inconsistent some vector <m>b</m>.  Show that <m>Ax=b</m> has infinitely many solutions for some (other) vector <m>b</m>.
+       </p>
+     </statement>
+     <solution>
+       <p>
+         By hypothesis, <m>A</m> does not satisfy condition 11 of the <xref ref="imt-1"/>.  Therefore, it does not satisfy condition <m>5</m>, so if we take <m>b=0</m>, then the equation <m>Ax=b</m> has infinitely many solutions.
+       </p>
+     </solution>
+   </example>
+
 
  </subsection>
 
