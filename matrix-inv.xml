@@ -92,11 +92,11 @@ the license is included in gfdl.xml.
          </ol>
        </p>
      </statement>
-     <proof>
+     <proof visible="true">
        <p>
          <ol>
            <li>
-             The proof of this fact is left to the reader.
+             The equations <m>AA^{-1}=I_n</m> and <m>A^{-1}A = I_n</m> at the same time exhibit <m>A^{-1}</m> as the inverse of <m>A</m> and <m>A</m> as the inverse of <m>A^{-1}.</m>
            </li>
            <li>
              We compute

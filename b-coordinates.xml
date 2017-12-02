@@ -21,14 +21,14 @@ the license is included in gfdl.xml.
     </ol>
   </objectives>
 
-  <p>We start with a <em>lemma</em>, which is like a theorem, but less substantial.</p>
+  <p>We start with a <em>lemma</em>, which is a small assertion that must be proved.</p>
 
   <lemma xml:id="dimension-unique-coeff">
     <statement>
       <p>
         If <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> is a basis for a subspace <m>V</m>, then any vector <m>x</m> in <m>V</m> can be written as a linear combination
         <me>x = c_1v_1 + c_2v_2 + \cdots + c_mv_m</me>
-        for <em>unique</em> coefficients <m>c_1,c_2,\ldots,c_m</m>.
+        in exactly one way.
       </p>
     </statement>
     <proof>
@@ -83,6 +83,65 @@ the license is included in gfdl.xml.
       The above <xref ref="dimension-defn-Bcoords"/> gives a way of using <m>\R^m</m> to <em>label</em> the points of a subspace of dimension <m>m</m>: a point is simply labeled by its <m>\cB</m>-coordinate vector.  For instance, if we choose a basis for a plane, we can label the points of that plane with the elements of <m>\R^2</m>.
     </p>
   </remark>
+
+  <example>
+    <title>A nonstandard coordinate system on <m>\R^2</m></title>
+    <statement>
+      <p>
+        Define
+        <me>v_1 = \vec{1 1},\; v_2 = \vec{1 -1},\quad \cB = \{v_1,\,v_2\}.</me>
+        <ol>
+          <li>Verify that <m>\cB</m> is a basis for <m>\R^2</m>.</li>
+          <li>If <m>[w]_\cB = {1\choose 2}</m>, then what is <m>w</m>?</li>
+          <li>Find the <m>\cB</m>-coordinates of <m>v = {5\choose 3}.</m>
+          </li>
+        </ol>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        <ol>
+          <li>
+            By the <xref ref="basis-theorem"/>, any two linearly independent vectors form a basis for <m>\R^2</m>.  Clearly <m>v_1,v_2</m> are not multiples of each other, so they are linearly independent.
+          </li>
+          <li>
+            To say <m>[w]_\cB={1\choose 2}</m> means that <m>1</m> is the <m>v_1</m>-coordinate of <m>w</m>, and that <m>2</m> is the <m>v_2</m>-coordinate:
+            <me>w = v_1 + 2v_2 = \vec{1 1} + 2\vec{1 -1} = \vec{3 -1}.</me>
+          </li>
+          <li>
+            We have to solve the vector equation <m>v=c_1v_1 + c_2v_2</m> in the unknowns <m>c_1,c_2</m>.  We form an augmented matrix and row reduce:
+            <me>\amat{1 1 5; 1 -1 3}
+            \quad\xrightarrow{\text{RREF}}\quad
+            \amat{1 0 4; 0 1 1}.</me>
+            We have <m>c_1=4</m> and <m>c_2=1</m>, so <m>v = 4v_1+v_2</m> and
+            <m>[v]_\cB = {4\choose1}.</m>
+          </li>
+        </ol>
+        In the following picture, we indicate the coordinate system defined by <m>\cB</m> by drawing lines parallel to the <q><m>v_1</m>-axis</q> and <q><m>v_2</m>-axis</q>.  Using this grid it is easy to see that the <m>\cB</m>-coordinates of <m>v</m> are <m>{5\choose 1}</m>, and that the <m>\cB</m>-coordinates of <m>w</m> are <m>{1\choose 2}</m>.
+        <latex-code>
+\begin{tikzpicture}[scale=.7, thin border nodes]
+
+  \draw (-6, -6) rectangle (6, 6);
+  \clip (-6, -6) rectangle (6, 6);
+
+  \draw[scale={sqrt(2)}, rotate=45, help lines] (-7, -7) grid (7, 7);
+  \draw[vector, seq-green] (0, 0) to["$v_1$" above left] (1, 1);
+  \draw[vector, seq-blue] (0, 0) to["$v_2$" below left] (1, -1);
+
+  \point[seq-red, "$w$" {above,text=seq-red}] at (3, -1);
+  \point[seq-orange, "$v$" {above,text=seq-orange}] at (5, 3);
+
+  \point at (0, 0);
+
+\end{tikzpicture}
+        </latex-code>
+      </p>
+      <figure>
+        <caption>A picture of the basis <m>\cB = \{v_1,v_2\}</m> of <m>\R^2</m>.  The grid indicates the coordinate system defined by the basis <m>\cB</m>; one set of lines measures the <m>v_1</m>-coordinate, and the other set measures the <m>v_2</m>-coordinate.  Use the sliders to find the <m>\cB</m>-coordinates of <m>v</m>.</caption>
+        <mathbox source="demos/spans.html?v1=1,1&amp;v2=1,-1&amp;target=5,3&amp;range=6&amp;&amp;tlabel=v" height="500px"/>
+      </figure>
+    </solution>
+  </example>
 
   <specialcase>
     <p>

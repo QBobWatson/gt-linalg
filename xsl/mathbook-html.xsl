@@ -123,6 +123,18 @@
     <xsl:text>false</xsl:text>
 </xsl:template>
 
+<!-- JDR: un-hide a proof -->
+<xsl:template match="proof" mode="is-hidden">
+    <xsl:choose>
+        <xsl:when test="@visible='true'">
+            <xsl:value-of select="false()" />
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:value-of select="$html.knowl.proof = 'yes'" />
+        </xsl:otherwise>
+    </xsl:choose>
+</xsl:template>
+
 <!-- JDR: "special case" is just a non-hidden example -->
 <xsl:template match="specialcase" mode="is-hidden">
     <xsl:text>false</xsl:text>
