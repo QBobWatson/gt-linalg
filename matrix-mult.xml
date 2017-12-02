@@ -260,6 +260,17 @@ the license is included in gfdl.xml.
       </figure>
     </example>
 
+    <example hide-type="true">
+      <title>Interactive: a transformation defined in steps</title>
+      <p>
+        Let <m>S\colon\R^3\to\R^3</m> be the linear transformation that first projects onto the <m>xy</m>-plane, and then projects onto the <m>xz</m>-plane.  The transformation <m>S</m> is the composition <m>T\circ U</m>, where <m>U\colon\R^3\to\R^3</m> is the transformation that projects onto the <m>xy</m>-plane, and <m>T\colon\R^3\to\R^3</m> is the transformation that projects onto the <m>xz</m>-plane.
+      </p>
+      <figure>
+        <caption>Illustration of a transformation defined in steps.  Note that projecting onto the <m>xy</m>-plane, followed by projecting onto the <m>xz</m>-plane, is the projection onto the <m>x</m>-axis.</caption>
+        <mathbox source="demos/compose3d.html?mat1=1,0,0:0,1,0:0,0,0&amp;mat2=1,0,0:0,0,0:0,0,1&amp;rangeT=off&amp;rangeU=off&amp;rangeTU=off&amp;range=5&amp;closed=true" height="500px"/>
+      </figure>
+    </example>
+
     <p>
       Recall from this <xref ref="matrix-trans-identity"/> that the <em>identity transformation</em> is the transformation <m>\operatorname{Id}_{\R^n}\colon\R^n\to\R^n</m> defined by <m>\operatorname{Id}_{\R^n}(x) = x</m> for every vector <m>x</m>.
     </p>
@@ -453,7 +464,7 @@ the license is included in gfdl.xml.
     </definition>
 
     <p>
-      In other words, matrix multiplication is defined column-by-column, or  <q>distributes over the columns of <m>B</m>.</q>  See this <xref ref="matrix-mult-row-column">Procedure</xref> for an alternate definition of matrix multiplication that is better-adapted to computations by hand.
+      In other words, matrix multiplication is defined column-by-column, or  <q>distributes over the columns of <m>B</m>.</q>
     </p>
 
     <example xml:id="matrix-mult-eg-mult1">
@@ -489,7 +500,7 @@ the license is included in gfdl.xml.
     </warning>
 
     <p>
-      If <m>B</m> has only one column, then <m>AB</m> also has one column.  But a matrix with one column is the same as a vector, so the definition of the matrix product generalizes the definition of the matrix-vector product.
+      If <m>B</m> has only one column, then <m>AB</m> also has one column.  A matrix with one column is the same as a vector, so the definition of the matrix product generalizes the definition of the matrix-vector product.
     </p>
 
     <p>
@@ -564,6 +575,9 @@ the license is included in gfdl.xml.
         </p>
       </warning>
 
+      <!-- If we don't end <paragraphs> here then the proof shows up twice... -->
+    </paragraphs>
+
       <proof>
         <p>
           The <xref ref="matrixeq-row-column">row-column rule for matrix-vector multiplication</xref> says that if <m>A</m> has rows <m>r_1,r_2,\ldots,r_m</m> and <m>x</m> is a vector, then
@@ -614,8 +628,6 @@ the license is included in gfdl.xml.
         </p>
       </example>
 
-    </paragraphs>
-
   </subsection>
 
   <subsection>
@@ -653,7 +665,7 @@ the license is included in gfdl.xml.
     </theorem>
 
     <p>
-      The Theorem justifies our choice of definition of the matrix product.  This is the one and only reason that matrix products are defined in this way.
+      The Theorem justifies our choice of definition of the matrix product.  This is the one and only reason that matrix products are defined in this way.  To rephrase:
     </p>
 
     <warning>
@@ -854,7 +866,7 @@ $\xrightarrow{\text{reflect $xy$}}$
     </note>
 
     <p>
-      Most of the above properties are easily verified directly from the definitions.  The <em>associativity</em> property <m>(AB)C=A(BC)</m>, however, is not (try it!).  It is much easier to prove as we did: by relating matrix multiplication to composition of transformations, and using the obvious fact that composition of transformations is associative.
+      Most of the above properties are easily verified directly from the definitions.  The <em>associativity</em> property <m>(AB)C=A(BC)</m>, however, is not (try it!).  It is much easier to prove by relating matrix multiplication to composition of transformations, and using the obvious fact that composition of transformations is associative.
     </p>
 
     <p>
