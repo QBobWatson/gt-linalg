@@ -62,8 +62,17 @@ Free Documentation License"
     <chapter xml:id="chap-determinant">
       <title>Determinants</title>
       <introduction>
-        <p>In this chapter, you will learn about the <em>determinant.</em> The determinant is a special number assigned to any <em>square</em> matrix. As we shall see, this number "detects" invertibility of matrices, one of the key concepts of this course.
-	</p>
+        <p>
+          We begin by recalling three primary goals of this course:
+        </p>
+
+        <p>
+          <ol>
+            <li> Solving systems of linear equations, a.k.a. solving the matrix equation <m>Ax=b</m>.</li>
+            <li>Solving the matrix equation <m>Ax=\lambda x</m>, where <m>\lambda</m> is a number.</li>
+            <li> <q>Almost solving</q> the matrix equation <m>Ax=b</m>.</li>
+          </ol>
+        </p>
       </introduction>
       <xi:include href="./determinant-definitions-properties.xml" />
       <xi:include href="./determinant-cofactors.xml" />
