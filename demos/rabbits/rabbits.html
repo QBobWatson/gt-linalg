@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Rabbits</title>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="rabbits.css">
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    </style>
+</head>
+
+<body>
+
+    <div id="problem">
+        In a population of rabbits...
+        <ul>
+            <li>half of the new born rabbits survive their first year</li>
+            <li>of those, half survive their second year</li>
+            <li>the maximum life span is three years</li>
+            <li>rabbits produce 0, 6, 8 rabbits in their first, second, and third years</li>
+        </ul>
+    </div>
+
+    <div id="wrapper">
+
+    <div id="info">
+    <p id="year">Year 0</p>
+    <!-- <p id="power-of-two"></p> -->
+    <p id="ratio1"></p>
+    <p id="ratio2"></p>
+    <p id="puzzle">Iterate to see what happens with the rabbit population over time. Notice that the number of one-year olds and the number of babies converges to a nice limit. Notice also that the number is babies grows at the same rate as the powers of 2. Why?</p>
+</div>
+
+    <div id="answer">The process is described by the matrix <span id="matrix"></span>, whose eigenvalues are 2 and -1 (with multiplicity 2). Under iteration, the direction of our vector is closer and closer to the direction of the eigenvector corresponding to the largest eigenvalue, which is 2. This eigenvector is <span id="vector"></span>, and the ratio of the first and second coordinates is 4. This is why the ratio of 1-year olds and babies is converging to 4. Since our vector is eventually very close to the eigenvector, its entries are increase approximately by a factor of two under every iteration.</div>
+
+    <div id='zero' class='age-wrapper'>
+        <div>Age 0-1</div>
+        <div></div>
+        <div class='death-multiplier'>0.5x</div>
+        <div class='corpses'></div>
+    </div>
+
+    <div id='one' class='age-wrapper'>
+        <div>Age 1-2</div>
+        <div></div>
+        <div class='birth-multiplier'>6x</div>
+        <div class='babies'></div>
+        <div class='death-multiplier'>0.5x</div>
+        <div class='corpses'></div>
+    </div>
+
+    <div id='two' class='age-wrapper'>
+        <div>Age 2-3</div>
+        <div></div>
+        <div class='birth-multiplier'>8x</div>
+        <div class='babies'></div>
+        <div class='death-multiplier'>0x</div>
+        <div class='corpses'></div>
+    </div>
+
+    <div id="message"></div>
+</div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script> -->
+    <!-- <script src="tictactoe.js"></script>     -->
+    <script src="../lib/dat.gui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js">
+    </script>
+    <script>
+        function show(data) {
+            $("#zero div:nth-child(2)").text(data[0]);
+            $("#one div:nth-child(2)").text(data[1]);
+            $("#two div:nth-child(2)").text(data[2]);
+        }
+
+        function animate(data) {
+            $(".birth-multiplier").show();
+            var one_babies = $("#one div.babies");
+            var two_babies = $("#two div.babies");
+            var zero_corpses = $("#zero div.corpses");
+            var one_corpses = $("#one div.corpses");
+            var two_corpses = $("#two div.corpses");
+
+            $("#message").text("Baby rabbits are born");
+            $("#message").css({"background-color": "rgb(125, 125, 243)"});
+            $("#message").show();
+
+            one_babies.text("+" + 6 * data[1]);
+            two_babies.text("+" + 8 * data[2]);
+            one_babies.show();
+            two_babies.show();
+            var id = setInterval(animate_all, 20);
+            var pos = 0;
+            var delay = 0;
+
+            function animate_all() {
+                if (pos == 300) {
+                    clearInterval(id);
+                    $(".birth-multiplier").hide();
+                    one_babies.hide();
+                    two_babies.hide();
+                    $("#zero div:nth-child(2)").css({left: "25%"}); 
+                    $("#one div:nth-child(2)").css({left: "50%"});
+                    new_data = [6 * data[1]+ 8 * data[2], data[0]/2, data[1]/2];
+                    data[0] = new_data[0];
+                    data[1] = new_data[1];
+                    data[2] = new_data[2];
+                    show(data);
+                    $("#two div:nth-child(2)").show();
+                } else {
+                    pos++;
+                    if (pos < 100) {
+                        hor_goal = 25;
+                        one_perc = 50 - pos / 4
+                        two_perc = 75 - pos / 2
+                        one_babies.css({ left: one_perc + "%", top: pos / 2 + "%" });
+                        two_babies.css({ left: two_perc + "%", top: 15 + pos / 2 + "%" });
+                    } else if (pos == 100) {
+                        delay++;
+                        if (delay == 50) {
+                            $("#message").text("Some rabbits do not survive");
+                            $("#message").css({"background-color": "rgb(145, 209, 151)"});
+                        $(".birth-multiplier").hide();
+                        zero_corpses.text("-" + data[0] / 2);
+                        one_corpses.text("-" + data[1] / 2);
+                        two_corpses.text("-" + data[2]);
+                        zero_corpses.show();
+                        one_corpses.show();
+                        two_corpses.show();
+                        delay = 0;
+                        } else if (delay < 50) {
+                            pos--;
+                        };
+                    } else if (pos < 200) {
+                        translate_by = 200 - pos
+                        zero_corpses.css({ transform: "translate(0," + translate_by + "%)" });
+                        one_corpses.css({ transform: "translate(0," + translate_by + "%)" });
+                        two_corpses.css({ transform: "translate(0," + translate_by + "%)" });
+                    } else if (pos == 200) {
+                        delay++;
+                        if (delay == 1) {
+                        // $(".death-multiplier").hide();
+                        // zero_corpses.fadeOut('slow');
+                        // one_corpses.fadeOut('slow');
+                        // two_corpses.fadeOut('slow');
+                        $("#message").hide();
+                        zero_corpses.hide();
+                        one_corpses.hide();
+                        two_corpses.hide();
+                        $("#zero div:nth-child(2)").text(data[0] / 2);
+                        $("#one div:nth-child(2)").text(data[1] / 2);
+                        $("#two div:nth-child(2)").text(0);
+                        pos--;
+                    } else if (delay < 50) {
+                        pos--;
+                    };
+                    } else if (pos < 300) {
+                        $("#two div:nth-child(2)").fadeOut();
+                        v_start_one = 65;
+                        v_start_two = 50;
+                        one_babies.css({ left: one_perc + "%", top: (300-pos)*v_start_one/100 + (pos-200)*5 / 100 + "%" });
+                        two_babies.css({ left: one_perc + "%", top: (300-pos)*v_start_two/100 + (pos-200)*5 / 100 + "%" });
+                        $("#zero div:nth-child(2)").css({left: (300-pos)*25/100 + (pos-200)*50 / 100 + "%" }); 
+                        $("#one div:nth-child(2)").css({left: (300-pos)*50/100 + (pos-200)*75 / 100 + "%" });
+                    }
+                }
+
+            }
+        }
+
+
+        var Population = function () {
+            this.data = [4, 0, 0];
+            this.year = 0;
+            this.iterate = function () {
+                if (this.animate)
+                    animate(this.data);
+                else {
+                    data = this.data;
+                    this.data = [6 * data[1]+ 8 * data[2], data[0]/2, data[1]/2];
+                    show(this.data);
+                }
+                this.year++;
+                $("#year").text("Year "+this.year);
+                // var element = document.getElementById("power-of-two");
+                // katex.render("2^{" + this.year +"} = " + Math.pow(2,this.year), element);
+                var element = document.getElementById("ratio1");
+                katex.render("\\frac{" + this.data[0] +"}{" + this.data[1] + "} = " + Math.round(this.data[0]/this.data[1]* 100000)/100000, element);  
+                var element = document.getElementById("ratio2");
+                katex.render("\\frac{2^{" + this.year +"}}{" + this.data[0] + "} = " + Math.round(Math.pow(2,this.year)/this.data[0]* 100000)/100000, element);                
+            };
+            this.animate = false;
+            this.showAnswer = false;
+            this.toggleAnswer = function () {
+                this.showAnswer = !this.showAnswer;
+                if (this.showAnswer) {
+                    $("#answer").show();
+                } else {
+                    $("#answer").hide();
+                }
+
+            };
+        }
+
+        $(document).ready(function () {
+            katex.render("\\begin{pmatrix} 0 & 6 & 8 \\\\ -1/2 & 0 & 0 \\\\ 0 & -1/2 & 0 \\end{pmatrix}", $("#matrix")[0]);
+            katex.render("\\begin{pmatrix} 16 \\\\ 4 \\\\ 1 \\end{pmatrix}", $("#vector")[0]);
+
+            var pop = new Population();
+            show(pop.data);
+
+            var gui = new dat.GUI();
+            gui.add(pop, 'iterate');
+            gui.add(pop, 'animate');
+            gui.add(pop, 'toggleAnswer');
+        })
+    </script>
+</body>
+
+
+</html>

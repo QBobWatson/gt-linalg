@@ -1,0 +1,102 @@
+#wrapper {
+    position: relative;
+    height: 50vh;
+}
+
+#problem {
+    border: solid;
+    padding: 2px;
+    margin-bottom: 10px;
+    background-color: rgb(149, 192, 212);
+}
+
+.age-wrapper div {
+    position: absolute;    
+}
+
+.age-wrapper div:nth-child(1) {
+    text-align: center; 
+}
+
+.age-wrapper div:nth-child(2) {
+    font-size: 5em;
+    /* border:solid; */
+    top: 5%;
+}
+
+#zero div {
+    left: 25%;      
+}
+
+#one div{
+    left: 50%;        
+}
+
+#two div {
+    left: 75%;        
+}
+
+#message {
+    position: absolute;
+    padding: 0.5em;
+    font-size: 3em;
+    left: 50%;
+    top: 50%;
+    display: none;
+}
+
+#info {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 25%;
+}
+
+#year {
+    font-size: 2em;    
+}
+
+#power-of-two, #ratio {
+    font-size: 1.5em;    
+}
+
+#puzzle {
+    font-size: 1em;
+}
+
+#answer {
+    position: absolute;
+    left:30%;
+    top: 40%;
+    width: 60%;
+    display: none;
+    background-color: rgb(235, 199, 102);
+    padding: 1em;
+    border: solid;
+}
+
+
+.birth-multiplier, .death-multiplier{
+    /* border:solid; */
+    color: red;
+    top: 5%;    
+    font-size: 5em;
+    display: none;
+    -ms-transform: translate(-100%, 0); /* IE 9 */
+    -webkit-transform: translate(-100%, 0); /* Safari */
+    transform: translate(-100%, 0);
+}
+
+div.babies {
+    color: blue;
+    font-size: 5em;
+    top: 5%;        
+    display: none;
+}
+
+div.corpses {
+    color: rgb(51, 255, 0);
+    top: 5%;        
+    font-size: 5em;
+    display: none;
+}
