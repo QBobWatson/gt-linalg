@@ -433,7 +433,7 @@ the license is included in gfdl.xml.
       3  1  -1  -2
       }.
     </me>
-    This is called an <term>augmented matrix</term>.  In this notation, our three valid ways of manipulating our equations become <term>elementary row operations</term>:
+    This is called an <term>augmented matrix</term>.  In this notation, our three valid ways of manipulating our equations become <term>row operations</term>:
     <ul>
       <li><alert>Scaling:</alert> multiply all entries in a row by a nonzero number.
       <me>
@@ -486,7 +486,7 @@ the license is included in gfdl.xml.
 
     <example>
       <statement>
-        <p>Solve <xref ref="systems-eqns-example"/> using elementary row operations.</p>
+        <p>Solve <xref ref="systems-eqns-example"/> using row operations.</p>
       </statement>
       <solution>
         <p>
@@ -582,7 +582,7 @@ the license is included in gfdl.xml.
 
     <definition>
       <statement>
-        <p>Two matrices are called <term>row equivalent</term> if one can be obtained from the other by doing some number of elementary row operations.</p>
+        <p>Two matrices are called <term>row equivalent</term> if one can be obtained from the other by doing some number of row operations.</p>
       </statement>
     </definition>
 

@@ -63,16 +63,24 @@ Free Documentation License"
       <title>Determinants</title>
       <introduction>
         <p>
-          We begin by recalling three primary goals of this course:
-        </p>
-
-        <p>
+          We begin by recalling the three primary goals of this course:
           <ol>
-            <li> Solving systems of linear equations, a.k.a. solving the matrix equation <m>Ax=b</m>.</li>
+            <li> Solving systems of linear equations, i.e., solving the matrix equation <m>Ax=b</m>.</li>
             <li>Solving the matrix equation <m>Ax=\lambda x</m>, where <m>\lambda</m> is a number.</li>
             <li> <q>Almost solving</q> the matrix equation <m>Ax=b</m>.</li>
           </ol>
+          At this point we have said all we will say about the first goal.  This chapter  belongs primarily to the second main topic of the course.
         </p>
+        <p>
+          The <em>determinant</em> of a square matrix <m>A</m> is a number <m>\det(A)</m>.  In <xref ref="determinants-definitions-properties"/>, we will define the determinant in terms of its behavior with respect to row operations.  The determinant satisfies many wonderful properties: for instance, <m>\det(A) \neq 0</m> if and only if <m>A</m> is invertible.  We will discuss some of these properties in <xref ref="determinants-definitions-properties"/> as well.
+        </p>
+        <p>
+          In <xref ref="determinants-cofactors"/>, we will give a recursive formula for the determinant of a matrix.  This formula is very useful, for instance, when taking the determinant of a matrix with unknown entries; this will be important in <xref ref="chap-eigenvalues"/>.
+        </p>
+        <p>
+          Finally, in <xref ref="determinants-volumes"/>, we will relate determinants to volumes.  This gives a geometric interpretation for determinants, and explains why the determinant is defined the way it is.  This interpretation of determinants is a crucial ingredient in the change-of-variables formula in multivariable calculus.
+        </p>
+
       </introduction>
       <xi:include href="./determinant-definitions-properties.xml" />
       <xi:include href="./determinant-cofactors.xml" />

@@ -1,251 +1,1011 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
 <section xml:id="determinants-definitions-properties">
-  <title>Definition and properties of determinants</title>
-  <p>
-    We begin by recalling three primary goals of this course:
-  </p>
+  <title>Determinants: Theory</title>
 
-  <p>
+  <objectives>
     <ol>
-      <li> Solving systems of linear equations, a.k.a. solving the matrix equation <m>Ax=b</m> (we've studied this problem in detail).</li>
-      <li>Solving the matrix equation <m>Ax=\lambda x</m>, where <m>\lambda</m> is a number (the eigenvalue problem).</li>
-      <li> "Almost solving" the matrix equation <m>Ax=b</m> (we will study this problem).</li>
+      <li>Learn the definition of the determinant.</li>
+      <li>Learn to compute the determinant using row and column operations.</li>
+      <li>Learn some ways to eyeball a matrix with zero determinant, and how to compute determinants of upper- and lower-triangular matrices.</li>
+      <li>Learn the basic properties of the determinant, and how to apply them.</li>
+      <li>Vocabulary words: <term>diagonal</term>, <term>upper-triangular</term>, <term>lower-triangular</term>, <term>transpose</term>.</li>
+      <li>Essential vocabulary word: <term>determinant</term>.</li>
     </ol>
-  </p>
+  </objectives>
 
-
-  <p>As we have seen that solving matrix equations <m>Ax=b</m> are much easier if we can find an inverse matrix <m>A^{-1}</m>, it is interesting to know when matrices are invertible. The theory of <em>determinants</em> will give an efficient method for determining when a given matrix is invertible. Specifically, we will see that the determinant is a special number attached to any square matrix (we already know that non-square matrices are automatically non-invertible). We will give two different ways to describe this number, which will seem different, but which surprisingly end up giving the same result.
+  <introduction>
+    <p>
+      In this section, we define the determinant, and we present one way to compute it.  Then we discuss some of the many wonderful properties the determinant enjoys.
     </p>
-  <p>
-	  To get the ball rolling, let's give one way to define the determinant. The determinant is a <em>function</em> which assigns a real number <m>\det A</m> to any square matrix <m>A</m>. This number is defined by the following properties.
-  </p>
-	  <definition xml:id="DeterminantRowRedFacts">
-		  <statement>
+
+  </introduction>
+
+  <subsection>
+    <title>The Definition of the Determinant</title>
+
+    <p>
+      The determinant of a square matrix <m>A</m> is a real number <m>\det(A)</m>.  More precisely, <m>\det</m> is a function from the set of square matrices to the real numbers.  It is in some sense a very complicated function<mdash/>one can give a closed formula for the determinant, but in the case of a <m>10\times10</m> matrix, this formula has <m>3,628,800</m> terms<mdash/>so instead of defining the determinant using a formula, we will define it via its behavior with respect to row operations.
+    </p>
+
+    <essential xml:id="det-defn-the-defn">
+      <statement>
 	<p>
-		 The <term>determinant</term> of an <m>n\times n</m> square matrix <m>A</m> is a number, denoted by <m>\det A</m>.
-		Specifically, the determinant is the unique function from square <m>n\times n</m> matrices to real numbers which satisfies the following properties:
-		<ol>
-			<li>
-				Multiplying a row of a matrix <m>A</m> by a constant <m>c</m> gives a new matrix with determinant <m>c\det A</m>.
-			</li>
-			<li>
-				Swapping two rows of a matrix multiplies the determinant by <m>-1</m>.
-			</li>
-			<li>
-				Adding a multiple of one row to a different row leaves the determinant unchanged.
-			</li>
-			<li>
-				The determinant of the identity matrix <m>I_n</m> is <m>1</m>.
-			</li>
-		</ol>
+	  The <term>determinant</term> is a function
+          <me>\det\colon \bigl\{n\times n\text{ matrices}\bigr\}\To\R</me>
+          satisfying the following properties:
+	  <ol>
+	    <li>
+	      Doing a row replacement on <m>A</m> does not change <m>\det(A)</m>.
+	    </li>
+            <li>
+              Scaling a row of <m>A</m> by a scalar <m>c</m> multiplies the determinant by <m>c</m>.
+	    </li>
+	    <li>
+	      Swapping two rows of a matrix multiplies the determinant by <m>-1</m>.
+	    </li>
+	    <li>
+	      The determinant of the identity matrix <m>I_n</m> is equal to <m>1</m>.
+	    </li>
+	  </ol>
 	</p>
-</statement>
-</definition>
-  <p>
-	  It is not immediately clear that these properties are sufficient to define exactly one number associated to any square matrix. However,  this is a true fact, and in particular, we have the following.</p>
-	  <theorem xml:id="DeterminantUniqueMultilinAlt">
-	  	<statement>
-	  		<p>
-	  			The determinant is the <em>only</em> function from square matrices to the real numbers which satisfies the four properties of <xref ref="DeterminantRowRedFacts"/>.
-	  		</p>
-	  	</statement>
-	  </theorem>
-	  <p>
-		  The idea of why this is true is that the first three properties determine what happens under elementary row operations, and one can keep track of what happens to the determinant when we compute the reduced ecehlon form (which is the identity, with determinant <m>1</m>, if and only if the matrix is invertible). To illustrate this, we compute what the determinant must be for two simple matrices.
-  </p>
-  <example>
-	  <statement>
-		  <p>
-			  Let <m>A=\spalignmat{1,0;0,3}</m>. By parts 1 and 4 of <xref ref="DeterminantRowRedFacts"/>, we find that <m>\det A=3</m>. Specifically, since <m>A</m> is obtained from <m>I_n</m> by multiplying the second row by the constant <m>3</m>, we have <m>\det A=3\det I_n=3\cdot 1=3</m>.
-		  </p>
-	  </statement>
-  </example>
-  <example>
-	  <statement>
-		  <p>
-			  Suppose that <m>A=\spalignmat{1,0,0;0,0,1;5,1,0}</m>. Then if we switch the second and third rows, we obtain the matrix <m>B=\spalignmat{1,0,0;5,1,0;0,0,1}</m>. Adding <m>-5</m> times the first row to the second row of <m>B</m> gives the identity <m>I_3</m>. Working backwards from <m>I_3</m> and using properties 2, 3, and 4 of <xref ref="DeterminantRowRedFacts"/>, we have
-			  <me>
-				  1=\det I_n=\det B=-\det A
-				  ,
-			  </me>
-			  and so <m>\det A=-1</m>.
-		  </p>
-	  </statement>
-  </example>
-	    <p>
-	  We can turn the above abstract definition into a concrete formula as follows.
-	  We can always transform the matrix to its reduced echelon form. In doing so, we use elementary row operations. A careful analysis of this procedure shows that the determinant has the following formula.
-  </p>
-  <fact xml:id="DeterminantDefnREF">
-	  <statement>
-		  <p>
-			 Given a square matrix <m>A</m>, let <m>B</m> denote its reduced echelon form. Then
-			  <me>
-				  \det A=(-1)^r\cdot\frac{\text{product of pivot entries of } B}{\text{product of scaling factors used}}.
-			  </me>
-			  That is, the determinant is the product of diagonal entries of the reduced echelon form of <m>A</m>, times a factor of  <m>\pm1</m> coming from the number of row flips we made, divided by the scaling factors used in the row reduction.
-		  </p>
-	  </statement>
-  </fact>
-  <remark>
-	  <p>
-		  You may be wondering what happens when we find the reduced echelon form of a matrix using two different sequences of row operations. It turns out that no matter what steps you take, as long as you end up in reduced echelon form, this formula always gives you the same answer.
-	  </p>
-  </remark>
-  <p>
-	For example, the determinant of any upper triangular matrix is the product of its diagonal entries. For instance,
-	  <me>\det \spalignmat{1,2,3; 0,4,5;0,0,6}=1\cdot4\cdot6=24,</me> and <me>\det \spalignmat{-20,\pi,100;0,0,3;0,0,-7}=0.</me>
-  </p>
-  <p>
-	  This formula directly implies that determinant of a matrix is non-zero if and only if its reduced echelon form has no zeros on the diagonal. But we have seen before that is the same as saying that the matrix is invertible! Thus, the following  key result is true.
-</p>
-<fact>
+      </statement>
+    </essential>
+
+    <p>
+      In each of the first three cases, doing a row operation on a matrix scales the determinant by a <em>nonzero</em> number.  (Multiplying a row by zero is not a row operation.)  Therefore, doing row operations on a square matrix <m>A</m> does not change whether or not the determinant is zero.
+    </p>
+
+
+    <example>
+      <statement>
+	<p>Compute <m>\det\mat{1 0; 0 3}.</m></p>
+      </statement>
+      <solution>
+        <p>
+	  Let <m>A=\mat{1 0; 0 3}</m>. Since <m>A</m> is obtained from <m>I_2</m> by multiplying the second row by the constant <m>3</m>, we have
+          <me>\det(A)=3\det(I_2)=3\cdot 1=3.</me>
+	</p>
+      </solution>
+    </example>
+
+    <example>
+      <statement>
 	<p>
-		A square matrix <m>A</m> is invertible if and only if <m>\det A\neq0.</m>
+          Compute <m>\det\mat{1 0 0;0 0 1;5 1 0}.</m>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          First we row reduce, then we compute the determinant in the opposite order:
+          <md>
+            <mrow>
+  \mat{1 0 0;0 0 1;5 1 0}
+  \amp\;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_2\longleftrightarrow R_3$\hss}}\;
+    \mat{1 0 0;5 1 0; 0 0 1} \amp \strut\det \amp= -1
+            </mrow>
+            <mrow>
+  \amp\;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_2 = R_2 - 5R_1$\hss}}\;
+    \mat{1 0 0; 0 1 0; 0 0 1} \amp \strut\det \amp= 1
+            </mrow>
+          </md>
+          The reduced row echelon form is <m>I_3</m>, which has determinant <m>1</m>.
+          Working backwards from <m>I_3</m> and using the four <xref ref="det-defn-the-defn">defining properties</xref>, we see that the second matrix also has determinant <m>1</m> (it differs from <m>I_3</m> by a row replacement), and the first matrix has determinant <m>-1</m> (it differs from the second by a row swap).
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <statement>
+        <p>Compute <m>\det\mat{2 1; 1 4}.</m></p>
+      </statement>
+      <solution>
+        <p>
+          First we row reduce, then we compute the determinant in the opposite order:
+          <md>
+            <mrow>
+  \mat{2 1; 1 4}
+  \amp\;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_1\longleftrightarrow R_2$\hss}}\;
+    \mat{1 4; 2 1} \amp \strut\det \amp= 7
+            </mrow>
+            <mrow>
+  \amp\;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_2 = R_2 - 2R_1$\hss}}\;
+    \mat{1 4; 0 -7} \amp \strut\det \amp= -7
+            </mrow>
+            <mrow>
+  \amp\;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_2 = R_2 \div -7$\hss}}\;
+    \mat{1 4; 0 1} \amp \strut\det \amp= 1
+            </mrow>
+            <mrow>
+  \amp\;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_1 = R_1 - 4R_2$\hss}}\;
+    \mat{1 0; 0 1} \amp \strut\det \amp= 1
+            </mrow>
+          </md>
+          The reduced row echelon form of the matrix is the identity matrix <m>I_2</m>, so its determinant is <m>1</m>.  The second-last step in the row reduction was a row replacement, so the second-final matrix also has determinant <m>1</m>.  The previous step in the row reduction was a row scaling by <m>-1/7</m>; since (the determinant of the second matrix times <m>-1/7</m>) is <m>1</m>, the determinant of the second matrix must be <m>-7</m>.  The first step in the row reduction was a row swap, so the determinant of the first matrix is negative the determinant of the second.  Thus, the determinant of the original matrix is <m>7</m>.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      Our definition of the determinant really is a definition, in that it is a rule that produces a real number for every square matrix<mdash/>just row reduce and work backwards, as in the examples.  Actually, this is not quite true: we do not yet know that you compute the same number by row reducing in two different ways!  We have an existential quandary: we have not proved that it makes mathematical sense to define the determinant in terms of its behavior under row operations.
+    </p>
+    <p>
+      The resolution to this quandary is the non-obvious and surprising fact that you do indeed compute the same number no matter <em>how</em> you row reduce the matrix.  The proof is beyond the scope of this book.
+    </p>
+
+    <theorem xml:id="det-defn-unique">
+      <title>Existence of the determinant</title>
+      <statement>
+	<p>
+	  There is one and only function from the set of square matrices to the real numbers, that satisfies the four <xref ref="det-defn-the-defn">defining properties</xref>.
 	</p>
-</fact>
-<p>
-	Let's try using this formula to compute a few determinants.
-</p>
+      </statement>
+    </theorem>
 
+    <p>
+      Again, the real content of the Theorem is:
+    </p>
 
-<example>
-  <statement>
-    <p>Consider the matrix <m>A=\spalignmat{1,2,3;2,-1,1;3,0,-1}</m>. After subtracting twice the first row from the second row and three times the first row from the third row, we obtain <m>\spalignmat{1,2,3;0,-5,-5;0,-6,-10}</m>. Since we didn't flip any rows or multiply a row by a constant, there is no data picked up to keep track of when we compute the determinant using the formula above (that is, this new matrix has the <em>same</em> determinant as <m>A</m>). Continuing in our row reduction, we factor out a <m>-5</m> from the second row, giving <m>\spalignmat{1,2,3;0,1,1;0,-6,-10}</m>. We keep track of the scaling factor we multiplied by in this step, namely <m>-1/5</m> ,for later. Continuing, we add six times the second row to the third row, giving <m>\spalignmat{1,2,3;0,1,1;0,0,-4}</m>. At this point, we are already in reduced ecehlon form, so we stop. The product of the diagonal entries in this reduced form is <m>1\cdot1\cdot(-4)=-4</m>. We made <m>0</m> row flips, and only once multiplied a row by a constant factor, which was <m>-1/5</m>. Thus,
-	<me>\det A=(-1)^0\cdot\frac{-4}{-\frac15}=20.</me>
-  </p>
-  </statement>
-</example>
-<example>
-	<statement>
-		<p>
-			The determinant of the matrix <m>\spalignmat{1,2,3;4,5,6;2,4,6}</m> is <m>0</m>, as it can be reduced by row operations to give <m>\spalignmat{1,2,3;0,-3,-6;0,0,0},</m>
-			which has a zero on the diagonal.
-		</p>
-	</statement>
-</example>
+    <warning>
+      <p>
+        No matter which row operations you do, you will always compute the same value of the determinant.
+      </p>
+    </warning>
 
-<p>
-Based on these examples, we can infer that the definition of the determinant shows that it automatically satisfies several key properties.
-</p>
+    <p>
+      Next we will compute some determinants of matrices with special properties, but before doing so, we need some terminology involving matrices.
+    </p>
 
+    <definition>
+      <statement>
+        <p>
+          <ul>
+            <li>
+              The <term>diagonal</term> entries of a  matrix <m>A</m> are the entries <m>a_{11},a_{22},\ldots</m>:
+              <latex-code>
+            <![CDATA[
+\tikzstyle{circle entry} = [draw,rounded corners,thick,blue!50,inner sep=2pt]
+  \begin{tikzpicture}
+    \matrix[math matrix, nodes={minimum width=1em, minimum height=1em}] (mat1)
+      {
+        \node[circle entry]{a_{11}}; \& a_{12} \& a_{13} \& a_{14} \\
+        a_{21} \& \node[circle entry]{a_{22}}; \& a_{23} \& a_{24} \\
+        a_{31} \& a_{32} \& \node[circle entry]{a_{33}}; \& a_{34} \\
+    };
+    \matrix[math matrix, nodes={minimum width=1em, minimum height=1em}, xshift=4.75cm] (mat2)
+      {
+        \node[circle entry]{a_{11}}; \& a_{12} \& a_{13} \\
+        a_{21} \& \node[circle entry]{a_{22}}; \& a_{23} \\
+        a_{31} \& a_{32} \& \node[circle entry]{a_{33}}; \\
+        a_{41} \& a_{42} \& a_{43} \\
+      };
+    \node[circle entry] at (4.75/2, 1.6) {diagonal entries};
+  \end{tikzpicture}
+            ]]>
+              </latex-code>
+            </li>
+            <li>
+              A square matrix is called <term>upper-triangular</term> if its nonzero entries all lie above the diagonal, and it is called <term>lower-triangular</term> if its nonzero entries all lie below the diagonal.  It is called <term>diagonal</term> if all of its nonzero entries lie on the diagonal, i.e., if it is both upper-triangular and lower-triangular.
+              <latex-code>
+                <![CDATA[
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+\begin{tikzpicture}
 
-<p>
-	To illustrate <xref ref="DeterminantRowRedFacts"/> further, let's see what happens in the case of an arbitrary <m>2\times2</m> matrix.
-	Let <m>A=\spalignmat{a,b;c,d}</m>. If <m>a=0</m>, then <m>A=\spalignmat{0,b;c,d}</m>, and so
+  \node[math matrix, nodes={minimum width=1em,minimum height=1em}] (ut) {
+    \star \& \star \& \star \& \star \\
+        0 \& \star \& \star \& \star \\
+        0 \&     0 \& \star \& \star \\
+        0 \&     0 \&     0 \& \star \\
+  };
+
+  \node[above] at (ut.north) {upper-triangular};
+
+  \begin{pgfonlayer}{background}
+  \fill[fill=seq-green!20!white, rounded corners=1.4mm]
+    ($(ut-1-1.west)+(-1mm,0)$)
+    -- (ut-1-1.north west)
+    -- (ut-1-4.north east)
+    -- (ut-4-4.south east)
+    -- ($(ut-4-4.south)+(0,-1mm)$)
+    -- cycle;
+  \end{pgfonlayer}
+
+\end{tikzpicture}
+\qquad\qquad
+\begin{tikzpicture}
+
+  \node[math matrix, nodes={minimum width=1em,minimum height=1em}] (lt) {
+    \star \&     0 \&     0 \&     0 \\
+    \star \& \star \&     0 \&     0 \\
+    \star \& \star \& \star \&     0 \\
+    \star \& \star \& \star \& \star \\
+  };
+
+  \node[above] at (lt.north) {lower-triangular};
+
+  \begin{pgfonlayer}{background}
+  \fill[fill=seq-green!20!white, rounded corners=1.4mm]
+    ($(lt-1-1.north)+(0,1mm)$)
+    -- (lt-1-1.north west)
+    -- (lt-4-1.south west)
+    -- (lt-4-4.south east)
+    -- ($(lt-4-4.east)+(1mm,0)$)
+    -- cycle;
+  \end{pgfonlayer}
+
+\end{tikzpicture}
+\qquad\qquad
+\begin{tikzpicture}
+
+  \node[math matrix, nodes={minimum width=1em,minimum height=1em}] (diag) {
+    \star \&     0 \&     0 \&     0 \\
+        0 \& \star \&     0 \&     0 \\
+        0 \&     0 \& \star \&     0 \\
+        0 \&     0 \&     0 \& \star \\
+  };
+
+  \node[above] at (diag.north) {diagonal};
+
+  \begin{pgfonlayer}{background}
+  \fill[fill=seq-green!20!white, rounded corners=2mm]
+    ($(diag-1-1.west)+(-1mm,0)$)
+    -- ($(diag-1-1.north)+(0,1mm)$)
+    -- ($(diag-4-4.east)+(1mm,0)$)
+    -- ($(diag-4-4.south)+(0,-1mm)$) -- cycle;
+  \end{pgfonlayer}
+
+\end{tikzpicture}
+                ]]>
+              </latex-code>
+            </li>
+          </ul>
+        </p>
+      </statement>
+    </definition>
+
+    <proposition xml:id="defn-det-special-case">
+      <statement>
+        <p>
+          Let <m>A</m> be an <m>n\times n</m> matrix.
+          <ol>
+            <li>
+              If <m>A</m> has a zero row or column, then <m>\det(A) = 0.</m>
+            </li>
+            <li>
+              If <m>A</m> is upper-triangular or lower-triangular, then <m>\det(A)</m> is the product of its diagonal entries.
+            </li>
+          </ol>
+        </p>
+      </statement>
+      <proof visible="true">
+        <p>
+          <ol>
+            <li>
+              <p>
+                Suppose that <m>A</m> has a zero row.  Let <m>B</m> be the matrix obtained by negating the zero row.  Then <m>\det(A) = -\det(B)</m> by the second <xref ref="det-defn-the-defn">defining property</xref>.  But <m>A = B</m>, so <m>\det(A) = \det(B)</m>:
+                <me>
+                  \mat{1 2 3; 0 0 0; 7 8 9}
+                  \;\xrightarrow{R_2 = -R_2}\;
+                  \mat{1 2 3; 0 0 0; 7 8 9}.
+                </me>
+                Putting these together yields <m>\det(A) = -\det(A)</m>, so <m>\det(A)=0</m>.
+              </p>
+              <p>
+                Now suppose that <m>A</m> has a zero column.  Then <m>A</m> is not invertible by the <xref ref="imt-1"/>, so its reduced row echelon form has a zero row.  Since row operations do not change whether the determinant is zero, we conclude <m>\det(A)=0</m>.
+              </p>
+            </li>
+            <li>
+              <p>
+                First suppose that <m>A</m> is upper-triangular, and that one of the diagonal entries is zero, say <m>a_{ii}=0</m>.  We can perform row operations to clear the entries above the nonzero diagonal entries:
+                <me>
+                  \mat{a_{11} \star, \star, \star;
+                     0 a_{22} \star, \star; 0 0 0 \star; 0 0 0 a_{44}}
+                  \;\xrightarrow{\phantom{MMM}}\;
+                  \mat{a_{11} 0, \star, 0;
+                     0 a_{22} \star, 0; 0 0 0 0; 0 0 0 a_{44}}
+                </me>
+                In the resulting matrix, the <m>i</m>th row is zero, so <m>\det(A) = 0</m> by the first part.
+              </p>
+              <p>
+                Still assuming that <m>A</m> is upper-triangular, now suppose that all of the diagonal entries of <m>A</m> are nonzero.  Then <m>A</m> can be transformed to the identity matrix by scaling the diagonal entries and then doing row replacements:
+                <me>
+\begin{split} \amp\mat{a \star, \star; 0 b \star; 0 0 c}
+    \;\xrightarrow{%
+    \begin{minipage}{1.8cm}%
+      \tiny\centering scale by\\$a\inv,b\inv,c\inv$%
+    \end{minipage}}\;
+    \mat{1 \star, \star; 0 1 \star; 0 0 1}
+    \;\xrightarrow{%
+    \begin{minipage}{1.6cm}%
+      \tiny\centering row\\replacements%
+    \end{minipage}}\;
+    \mat{1 0 0; 0 1 0; 0 0 1} \\
+    \amp
+    \hbox to 2.1cm{\hss$\det=abc$\hss} \;\xleftarrow{\hbox to 1.8cm{\hss}}\;
+    \hbox to 2.1cm{\hss$\det=1$\hss} \;\xleftarrow{\hbox to 1.6cm{\hss}}\;
+    \hbox to 1.8cm{\hss$\det=1$}
+\end{split}
+                </me>
+                Since <m>\det(I_n) = 1</m> and we scaled by the reciprocals of the diagonal entries, this implies <m>\det(A)</m> is the product of the diagonal entries.
+              </p>
+              <p>
+                The same argument works for lower triangular matrices, except that the the row replacements go down instead of up.
+              </p>
+            </li>
+          </ol>
+        </p>
+      </proof>
+    </proposition>
+
+    <example>
+      <statement>
+        <p>
+          Compute the determinants of these matrices:
+          <me>
+            \mat{1 2 3; 0 4 5; 0 0 6} \qquad
+            \mat{-20 0 0; \pi, 0 0; 100 3 -7} \qquad
+            \mat{17 -3 4; 0 0 0; 11/2 1 e}.
+          </me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The first matrix is upper-triangular, the second is lower-triangular, and the third has a zero row:
+          <md>
+            <mrow>
+              \det\mat{1 2 3; 0 4 5; 0 0 6} \amp= 1 \cdot 4 \cdot 6 = 24
+            </mrow>
+            <mrow>
+              \mat{-20 0 0; \pi, 0 0; 100 3 -7} \amp= -20 \cdot 0 \cdot -7 = 0
+            </mrow>
+            <mrow>
+              \det\mat{17 -3 4; 0 0 0; 11/2 1 e} \amp= 0.
+            </mrow>
+          </md>
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      A matrix can always be transformed into row echelon form by a series of  row operations, and a matrix in row echelon form is upper-triangular.  Therefore, we have a systematic way of computing the determinant:
+    </p>
+
+    <theorem xml:id="det-defn-ref-compute" hide-type="true">
+      <title>Computing determinants by row reducing</title>
+      <statement>
+	<p>
+          Let <m>A</m> be a square matrix.  Suppose that you do some number of row operations on <m>A</m> to obtain a matrix <m>B</m> in row echelon form.  Then
+	  <me>
+	    \det(A) = (-1)^r\cdot
+            \frac{\text{(product of the diagonal entries of $B$)}}
+            {\text{(product of scaling factors used)}},
+	  </me>
+          where <m>r</m> is the number of row swaps performed.
+	</p>
+      </statement>
+    </theorem>
+
+    <p>
+      In other words, the determinant of <m>A</m> is the product of diagonal entries of the row echelon form <m>B</m>, times a factor of <m>\pm1</m> coming from the number of row swaps you made, divided by the product of the scaling factors used in the row reduction.
+    </p>
+
+    <remark>
+      <p>
+        This is an efficient way of computing the determinant of a large matrix, either by hand or by computer.  The computational complexity of row reduction is <m>O(n^3)</m>; by contrast, the cofactor expansion algorithm we will learn in <xref ref="determinants-cofactors"/> has complexity <m>O(n!)\approx O(n^n\sqrt n)</m>, which is much larger.
+      </p>
+    </remark>
+
+    <example>
+      <statement>
+        <p>Compute <m>\det\mat{0 -7 -4; 2 4 6; 3 7 -1}.</m></p>
+      </statement>
+      <solution>
+        <p>
+          We row reduce the matrix, keeping track of the number of row swaps and of the scaling factors used.
+          <latex-code>
+\def\rowop#1#2#3{%
+  \hbox to 4.2cm{\hss$\xrightarrow{#1}$\;}%
+  \hbox to 3cm{#2\hss}%
+  \hbox to 3cm{\hskip3mm\begin{minipage}{3.3cm}#3\end{minipage}\hss}%
+  }
+\leavevmode\rlap{\hbox{$\mat{0 -7 -4; 2 4 6; 3 7 -1}$}}%
+\rowop{R_1\longleftrightarrow R_2}{$\mat{2 4 6; 0 -7 -4; 3 7 -1}$}{$r=1$}\\
+\rowop{R_1 = R_1 \div 2}{$\mat{1 2 3; 0 -7 -4; 3 7 -1}$}{scaling factors${}=\frac 12$}\\
+\rowop{R_3 = R_3 - 3R_1}{$\mat{1 2 3; 0 -7 -4; 0 1 -10}$}{}\\
+\rowop{R_2\longleftrightarrow R_3}{$\mat{1 2 3; 0 1 -10; 0 -7 -4}$}{$r=2$}\\
+\rowop{R_3 = R_3 + 7R_2}{$\mat{1 2 3; 0 1 -10; 0 0 -74}$}{}
+          </latex-code>
+          We made two row swaps and scaled once by a factor of <m>1/2</m>, so the <xref ref="det-defn-ref-compute"/> says that
+          <me>\det\mat{0 -7 -4; 2 4 6; 3 7 -1} = (-1)^2\cdot\frac{1\cdot 1\cdot -74}{1/2} = -148.</me>
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <statement>
+        <p>Compute <m>\det\mat{1 2 3;2 -1 1;3 0 1}.</m></p>
+      </statement>
+      <solution>
+        <p>
+          We row reduce the matrix, keeping track of the number of row swaps and of the scaling factors used.
+          <latex-code>
+\def\rowop#1#2#3#4{%
+  \hbox to 4.5cm{\hss$\xrightarrow[#2]{#1}$\;}%
+  \hbox to 2.7cm{#3\hss}%
+  \hbox to 3cm{\hskip3mm\begin{minipage}{10cm}#4\end{minipage}\hss}%
+  }
+\leavevmode\rlap{\hbox{$\mat{1 2 3; 2 -1 1; 3 0 1}$}}%
+\rowop{R_2=R_2-2R_1}{R_3=R_3-3R_1}{$\mat{1 2 3; 0 -5 -5; 0 -6 -8}$}{}\\
+\rowop{R_2=R_2\div-5}{}{$\mat{1 2 3; 0 1 1; 0 -6 -8}$}{scaling factors${}=-\frac 15$}\\
+\rowop{R_3=R_3+6R_2}{}{$\mat{1 2 3; 0 1 1; 0 0 -2}$}{}
+          </latex-code>
+          We did not make any row swaps, and we scaled once by a factor of <m>-1/5</m>, so the <xref ref="det-defn-ref-compute"/> says that
+          <me>\det\mat{1 2 3; 2 -1 1; 3 0 1} = \frac{1\cdot 1\cdot -2}{-1/5} = 10.</me>
+        </p>
+      </solution>
+    </example>
+
+    <specialcase>
+      <title>The determinant of a <m>2\times 2</m> matrix</title>
+      <p>
+        Let us use the <xref ref="det-defn-ref-compute"/> to compute the determinant of a general <m>2\times 2</m> matrix <m>A = \mat{a b; c d}</m>.
+        <ul>
+          <li>
+            If <m>a = 0</m>, then
+            <me>
+              \det\mat{a b; c d} = \det\mat{0 b; c d} = -\det\mat{c d; 0 b} = -bc.
+            </me>
+          </li>
+          <li>
+            If <m>a\neq 0</m>, then
+            <me>
+              \begin{split}
+                \det\mat{a b; c d} \amp= a\cdot\det\mat{1 b/a; c d}
+                = a\cdot\det\mat{1 b/a; 0 d-c\cdot b/a} \\
+                \amp= a\cdot 1\cdot(d-bc/a) = ad-bc.
+              \end{split}
+            </me>
+          </li>
+        </ul>
+        In either case, we recover the formula from this <xref ref="matrix-inv-def-det"/>:
+        <me>\det\mat{a b; c d} = ad-bc.</me>
+      </p>
+    </specialcase>
+
+  </subsection>
+
+  <subsection>
+    <title>Magical Properties of the Determinant</title>
+
+    <p>
+      In this Subsection, we will discuss a number of the amazing properties enjoyed by the determinant.
+    </p>
+
+    <proposition hide-type="true" xml:id="det-defn-invert-prop">
+      <title>Invertibility Property</title>
+      <statement>
+        <p>A square matrix is invertible if and only if <m>\det(A)\neq 0</m>.</p>
+      </statement>
+      <proof>
+        <p>
+          If <m>A</m> is invertible, then its reduced row echelon form is the identity matrix by the <xref ref="imt-1"/>.  Since row operations do not change whether the determinant is zero, and since <m>\det(I_n) = 1</m>, this implies <m>\det(A)\neq 0.</m>  Conversely, if <m>A</m> is not invertible, then it is row equivalent to a matrix with a zero row.  Again, row operations do not change whether the determinant is nonzero, so in this case <m>\det(A) = 0.</m>
+        </p>
+      </proof>
+    </proposition>
+
+    <p>
+      By the invertibility property, a matrix that does not satisfy any of the properties of the <xref ref="imt-1"/> has zero determinant.
+    </p>
+
+    <corollary>
+      <statement>
+        <p>
+          Let <m>A</m> be a square matrix.  If the rows or columns of <m>A</m> are linearly dependent, then <m>\det(A)=0</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          If the columns of <m>A</m> are linearly dependent, then <m>A</m> is not invertible by statement 8 of the <xref ref="imt-1"/>.  Suppose now that the rows of <m>A</m> are linearly dependent.  If <m>r_1,r_2,\ldots,r_n</m> are the rows of <m>A</m>, then one of the rows is in the span of the others, so we have an equation like
+          <me>r_2 = 3r_1 - r_3 + 2r_4.</me>
+          If we perform the following row operations on <m>A</m>:
+          <me>
+            R_2 = R_2 - 3R_1;\quad
+            R_2 = R_2 +  R_3;\quad
+            R_2 = R_2 - 2R_4
+          </me>
+          then the second row of the resulting matrix is zero.  Hence <m>A</m> is not invertible in this case either.
+        </p>
+        <p>
+          Alternatively, if the rows of <m>A</m> are linearly dependent, then one can combine statement 8 of the <xref ref="imt-1"/> and the <xref ref="det-defn-trans-prop">transpose property</xref> below to conclude that <m>\det(A)=0</m>.
+        </p>
+      </proof>
+    </corollary>
+
+    <p>
+      In particular, if two rows/columns of <m>A</m> are multiples of each other, then <m>\det(A)=0.</m>  We also recover the fact that a matrix with a row or column of zeros has determinant zero.
+    </p>
+
+    <example>
+      <p>
+	The following matrices all have zero determinant:
 	<me>
-		\det A=-\det\spalignmat{c,d;0,b}=-bc.
-	</me>
-	Now suppose <m>a\neq0</m>. Then
-	<me>
-		\det A=a\det\spalignmat{1,\frac ba;c,d}=a\det\spalignmat{1,\frac ba;0,d-\frac{bc}a},
-	</me>
-	which equals
-	<me>
-		a\cdot1\cdot\left(d-\frac{bc}a\right)=ad-bc.
-	</me>
-	In either case (i.e., regardless of whether <m>\det A</m> is zero or non-zero), we find that
-	<me>
-		\det \spalignmat{a,b;c,d}=ad-bc
-		.
-	</me>
-	This formula, which you may have seen before, comes up often enough that you should memorize it.
-	For future reference, we record this formula as a fact.
-</p>
-<fact>
-	<statement>
-		<p>
-			The determinants of <m>2\times2</m> matrices are determined by the formula
-			<me>
-				\det \spalignmat{a,b;c,d}=ad-bc
-				.
-			</me>
-		</p>
-	</statement>
-</fact>
+          \mat{0 2 -1; 0 5 10; 0 -7 3},\quad
+          \mat{5 -15 11; 3 -9 2; 2 -6 16},\quad
+          \mat{3 1 2 4; 0 0 0 0; 4 2 5 12; -1 3 4 8},\quad
+          \mat{\pi, e 11; 3\pi, 3e 33; 12 -7 2}.
+        </me>
+      </p>
+    </example>
 
-<p>
-	<xref ref="DeterminantRowRedFacts"/> also implies several useful facts about determinants. Firstly, if a matrix has a row of all zeros, then multiplying that row by <m>-1</m> doesn't change the row, and hence this row operation doesn't change the matrix at all, but property 1 above implies that the "new" matrix's determinant is <m>-1</m> times the determinant of the original matrix. This means that the following is true.
-</p>
-<fact>
-	<p>
-		If a matrix has a row of all zeros, then its determinant is zero. In particular, the matrix is non-invertible.
-	</p>
-</fact>
-<p>
-	By combining this fact with the third property of determinants above, we see that if one row of a matrix is a multiple of another, say if row <m>i</m> is the constant <m>c</m> times row <m>j</m>, then adding <m>-c</m> times row <m>j</m> to row <m>i</m> gives a row of zeros. <xref ref="DeterminantRowRedFacts"/> implies that this new matrix has the same determinant, which has to be zero by the last fact. For example, in <m>A=\spalignmat{-2,3;4,-6}</m>, we can add twice the first row to the second row to obtain <m>\spalignmat{-2,3;0,0}</m>, which has the same determinant as <m>A</m>. This means that <m>\det A=0</m>. That is, we have shown that the following is true.
-</p>
-<fact>
-	<p>
-		If one row of a matrix is a constant multiple of another row, then that matrix has determinant zero.
-	</p>
-</fact>
-	<p>
-		One more surprising fact which is sometimes handy is that instead of using row operations to define determinants, if you used "column operations" instead of row operations, you would get the same numbers. In practical terms, this means that the following analogue of the row reduction properties of the determinant also holds. At this point, this fact should seem like magic, and we will simply take this as a pleasant surprise for the time-being.
-	</p>
-	<fact>
-	<p>
-		The determinant satisfies the following properties under "column operations."
-		<ol>
-			<li>
-				Multiplying a column of a matrix <m>A</m> by a constant <m>c</m> gives a new matrix with determinant <m>c\det A</m>.
-			</li>
-			<li>
-				Swapping two columns of a matrix multiplies the determinant by <m>-1</m>.
-			</li>
-			<li>
-				Adding a multiple of one column to a different column leaves the determinant unchanged.
-			</li>
-		</ol>
-	</p>
-</fact>
-<p>
-	In particular, by the same reasoning as for row operations, we find the following.
-</p>
-<fact>
-	<p>
-		If one column of a matrix is a constant multiple of another column, then that matrix has determinant zero. In particular, if some column of a matrix has all zeros, then that matrix has determinant zero.
-	</p>
-</fact>
-<example>
-	<statement>
-		<p>
-			The following matrices all have determinant zero, and hence are non-invertible:
-			<me>\spalignmat{0,2,-1;0,5,10;0,-7,3},\quad\spalignmat{5,-15;3,-9},\quad\spalignmat{3,1,2,4;0,0,0,0;4,2,5,12;-1,3,4,8},\spalignmat{\pi,e;3\pi,3e}.</me>
-		</p>
-	</statement>
-</example>
+    <p>
+      The proofs of the <xref ref="det-defn-mult-prop">multiplicativity property</xref> and the <xref ref="det-defn-trans-prop">transpose property</xref> follow the same strategy: define another function <m>d\colon\{\text{$n\times n$ matrices}\} \to \R</m>, and prove that <m>d</m> satisfies the same four defining properties as the determinant.  By the <xref ref="det-defn-unique">existence theorem</xref>, <em>the function <m>d</m> is equal to the determinant</em>.  This is an advantage of defining a function via its properties: in order to prove it is equal to another function, one only has to check the defining properties.
+    </p>
 
-<p>
-There is one more key property of determinants which is a little strange-looking at first, but very important. This is a type of multiplicative property of determinants, and will be a special fact that we'll assume to be true for the moment (to see how surprising this is, try it on a few examples yourself!).
-</p>
-<fact>
-	<p>
-	If <m>A</m> and <m>B</m> are <m>n\times n</m> matrices, then
-	<me>
-		\det(AB)=\det A\cdot \det B.
-	</me>
-</p>
-</fact>
-<p>
-	We illustrate this property in the next example.
-</p>
-<example>
-	<statement>
-		<p>
-			If <m>A</m> and <m>B</m> are both invertible, then <m>\det A\neq0</m> and <m>\det B\neq0</m>. Thus, <m>\det(AB)=\det(A)\cdot\det(B)\neq0</m>, and so the product <m>AB</m> is invertible as well. Explicitly, by the socks and shoes property, we know that this inverse is <m>B^{-1}A^{-1}</m>.
-		</p>
-		<p>
-			If <m>I_n</m> is the identity matrix, then since it is upper triangular, its determinant is the product of its diagonal entries, which is <m>1</m>. This is constistent with the multiplicative property of determinants, as <m>I_nA=AI_n=A</m> for any <m>n\times n</m> matrix <m>A</m>, and so it is true that <m>\det(I_nA)=\det(AI_n)=1\cdot\det(A)=\det(A)\cdot1=\det(A)</m>.
-		</p>
-	</statement>
-</example>
+    <proposition hide-type="true" xml:id="det-defn-mult-prop">
+      <title>Multiplicativity Property</title>
+      <statement>
+        <p>
+          If <m>A</m> and <m>B</m> are <m>n\times n</m> matrices, then
+          <me>\det(AB) = \det(A)\det(B).</me>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          In this proof, we need to use the notion of an <term>elementary matrix</term>.  This is a matrix obtained by doing one row operation to the identity matrix.  There are three kinds of elementary matrices: those arising from row replacement, row scaling, and row swaps:
+          <me>
+            \begin{split}
+               \mat{1 0 0;  0 1 0; 0 0 1} \xrightarrow{\parbox{2cm}{\tiny\centering$R_2 = R_2 - 2R_1$}}\amp
+               \mat{1 0 0; -2 1 0; 0 0 1} \\
+               \mat{1 0 0;  0 1 0; 0 0 1} \xrightarrow{\parbox{2cm}{\tiny\centering$R_1 = 3R_1$}}\amp
+               \mat{3 0 0;  0 1 0; 0 0 1} \\
+               \mat{1 0 0;  0 1 0; 0 0 1} \xrightarrow{\parbox{2cm}{\tiny\centering$R_1 \longleftrightarrow R_2$}}\amp
+               \mat{0 1 0;  1 0 0; 0 0 1}
+            \end{split}
+          </me>
+          The important property of elementary matrices is the following claim.
+        </p>
+        <p>
+          <em>Claim:</em> If <m>E</m> is the elementary matrix for a row operation, then <m>EA</m> is the matrix obtained by performing the same row operation on <m>A</m>.
+        </p>
+        <p>
+          In other words, left-multiplication by an elementary matrix applies a row operation.  For example,
+          <me>
+            \begin{split}
+            \mat{1 0 0; -2 1 0; 0 0 1}
+               \mat{a_{11} a_{12} a_{13}; a_{21} a_{22} a_{23}; a_{31} a_{32} a_{33}}
+               \amp= \mat[l]{a_{11} a_{12} a_{13};
+               a_{21}-2a_{11} a_{22}-2a_{12} a_{23}-2a_{13};
+               a_{31} a_{32} a_{33}} \\
+            \mat{3 0 0; 0 1 0; 0 0 1}
+               \mat{a_{11} a_{12} a_{13}; a_{21} a_{22} a_{23}; a_{31} a_{32} a_{33}}
+               \amp= \mat[r]{3a_{11} 3a_{12} 3a_{13};
+                          a_{21} a_{22} a_{23};
+                          a_{31} a_{32} a_{33}} \\
+               \mat{0 1 0;  1 0 0; 0 0 1}
+               \mat{a_{11} a_{12} a_{13}; a_{21} a_{22} a_{23}; a_{31} a_{32} a_{33}}
+               \amp= \mat{a_{21} a_{22} a_{23}; a_{11} a_{12} a_{13}; a_{31} a_{32} a_{33}}.
+            \end{split}
+          </me>
+          The proof of the Claim is by direct calculation; we leave it to the reader to generalize the above equalities to <m>n\times n</m> matrices.
+        </p>
+        <p>
+          As a consequence of the Claim and the four <xref ref="det-defn-the-defn">defining properties</xref>, we have the following observation.  Let <m>C</m> be any square matrix.
+          <ol>
+            <li>
+              If <m>E</m> is the elementary matrix for a row replacement, then <m>\det(EC) = \det(C).</m>  In other words, <em>left-multiplication by <m>E</m> does not change the determinant.</em>
+            </li>
+            <li>
+              If <m>E</m> is the elementary matrix for a row scale by a factor of <m>c</m>, then <m>\det(EC) = c\det(C).</m>  In other words, <em>left-multiplication by <m>E</m> scales the determinant by a factor of <m>c</m>.</em>
+            </li>
+            <li>
+              If <m>E</m> is the elementary matrix for a row swap, then <m>\det(EC) = -\det(C).</m>  In other words, <em>left-multiplication by <m>E</m> negates the determinant.</em>
+            </li>
+          </ol>
+        </p>
+        <p>
+          Now we turn to the proof of the multiplicativity property. Suppose to begin that <m>B</m> is not invertible.  Then <m>AB</m> is also not invertible: otherwise, <m>(AB)\inv AB = I_n</m> implies <m>B\inv = (AB)\inv A.</m>  By the <xref ref="det-defn-invert-prop">invertibility property</xref>, both sides of the equation <m>\det(AB) = \det(A)\det(B)</m> are zero.
+        </p>
+        <p>
+          Now assume that <m>B</m> is invertible, so <m>\det(B)\neq 0</m>.  Define a function
+          <me>
+            d\colon\bigl\{\text{$n\times n$ matrices}\bigr\} \To \R \sptxt{by}
+            d(C) = \frac{\det(CB)}{\det(B)}.
+          </me>
+          We claim that <m>d</m> satisfies the four defining properties of the determinant.
+          <ol>
+            <li>
+              Let <m>C'</m> be the matrix obtained by doing a row replacement on <m>C</m>, and let <m>E</m> be the elementary matrix for this row replacement, so <m>C' = EC</m>.  Since left-multiplication by <m>E</m> does not change the determinant, we have <m>\det(ECB) = \det(CB)</m>, so
+              <me>
+                d(C') = \frac{\det(C'B)}{\det(B)}
+                = \frac{\det(ECB)}{\det(B)}
+                = \frac{\det(CB)}{\det(B)}
+                = d(C).
+              </me>
+            </li>
+            <li>
+              Let <m>C'</m> be the matrix obtained by scaling a row of <m>C</m> by a factor of <m>c</m>, and let <m>E</m> be the elementary matrix for this row replacement, so <m>C' = EC</m>.  Since left-multiplication by <m>E</m> scales the determinant by a factor of <m>c</m>, we have <m>\det(ECB) = c\det(CB)</m>, so
+              <me>
+                d(C') = \frac{\det(C'B)}{\det(B)}
+                = \frac{\det(ECB)}{\det(B)}
+                = \frac{c\det(CB)}{\det(B)}
+                = c\cdot d(C).
+              </me>
+            </li>
+            <li>
+              Let <m>C'</m> be the matrix obtained by swapping two rows of <m>C</m>, and let <m>E</m> be the elementary matrix for this row replacement, so <m>C' = EC</m>.  Since left-multiplication by <m>E</m> negates the determinant, we have <m>\det(ECB) = -\det(CB)</m>, so
+              <me>
+                d(C') = \frac{\det(C'B)}{\det(B)}
+                = \frac{\det(ECB)}{\det(B)}
+                = \frac{-\det(CB)}{\det(B)}
+                = -d(C).
+              </me>
+            </li>
+            <li>
+              We have
+              <me>d(I_n) = \frac{\det(I_nB)}{\det(B)} = \frac{\det(B)}{\det(B)} = 1.</me>
+            </li>
+          </ol>
+        </p>
+        <p>
+          Since <m>d</m> satisfies the four defining properties of the determinant, <em>it is equal to the determinant</em> by the <xref ref="det-defn-unique">existence theorem</xref>.  In other words, for all matrices <m>A</m>, we have
+          <me>\det(A) = d(A) = \frac{\det(AB)}{\det(B)}.</me>
+          Multiplying through by <m>\det(B)</m> gives <m>\det(A)\det(B)=\det(AB).</m>
+        </p>
+      </proof>
+    </proposition>
 
-<p>
-	In the next two sections, we will give two other ways of thinking about determinants, one of which is useful in many examples for computing, and one which connects determinants to volumes of certain geometric figures.
-</p>
+    <p>
+      Recall that taking a power of a square matrix <m>A</m> means taking products of <m>A</m> with itself:
+      <me>A^2 = AA  \qquad A^3 = AAA \qquad \text{etc.}</me>
+      If <m>A</m> is invertible, then we define
+      <me>A^{-2} = A\inv A\inv \qquad A^{-3} = A\inv A\inv A\inv \qquad \text{etc.}</me>
+      For completeness, we set <m>A^0 = I_n</m>.
+    </p>
 
+    <corollary>
+      <statement>
+        <p>
+          If <m>A</m> is a square matrix, then
+          <me>\det(A^n) = \det(A)^n</me>
+          for all <m>n\geq 1</m>.  If <m>A</m> is invertible, then the equation holds for all <m>n\leq 0</m> as well; in particular,
+          <me>\det(A\inv) = \frac 1{\det(A)}.</me>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Using the <xref ref="det-defn-mult-prop">multiplicativity property</xref>, we compute
+          <me>\det(A^2) = \det(AA) = \det(A)\det(A) = \det(A)^2</me>
+          and
+          <me>\det(A^3) = \det(AAA) = \det(A)\det(AA) = \det(A)\det(A)\det(A) = \det(A)^3;</me>
+          the pattern is clear.
+        </p>
+        <p>
+          We have
+          <me>1 = \det(I_n) = \det(A A\inv) = \det(A)\det(A\inv)</me>
+          by the <xref ref="det-defn-mult-prop">multiplicativity property</xref> and the fourth <xref ref="det-defn-the-defn">defining property</xref>, which shows that <m>\det(A\inv) = \det(A)\inv</m>.  Thus
+          <me>\det(A^{-2}) = \det(A\inv A\inv) = \det(A\inv)\det(A\inv) = \det(A\inv)^2 = \det(A)^{-2},</me>
+          and so on.
+        </p>
+      </proof>
+    </corollary>
 
+    <example>
+      <statement>
+        <p>
+          Compute <m>\det(A^{100}),</m> where
+          <me>A = \mat{4 1; 2 1}.</me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We have <m>\det(A) = 4 - 2 = 2</m>, so
+          <me>\det(A^{100}) = \det(A)^{100} = 2^{100}.</me>
+          Nowhere did we have to compute the <m>100</m>th power of <m>A</m>!  (We will learn to do that in <xref ref="diagonalization"/>.)
+        </p>
+      </solution>
+    </example>
 
+    <p>
+      Here is another application of the <xref ref="det-defn-mult-prop">multiplicativity property</xref>.
+    </p>
 
+    <corollary>
+      <statement>
+        <p>
+          Let <m>A_1,A_2,\ldots,A_p</m> be square matrices.  Then the product <m>A_1A_2\cdots A_p</m> is invertible if and only if each <m>A_i</m> is invertible.
+        </p>
+      </statement>
+      <proof visible="true">
+        <p>
+          The determinant of the product is the product of the determinants by the <xref ref="det-defn-mult-prop">multiplicativity property</xref>:
+          <me>\det(A_1A_2\cdots A_p) = \det(A_1)\det(A_2)\cdots\det(A_p).</me>
+          By the <xref ref="det-defn-invert-prop">invertibility property</xref>, this is nonzero if and only if <m>A_1A_2\cdots A_p</m> is invertible.  On the other hand, <m>\det(A_1)\det(A_2)\cdots\det(A_p)</m> is nonzero if and only if each <m>\det(A_i)\neq0</m>, which means each <m>A_i</m> is invertible.
+        </p>
+      </proof>
+    </corollary>
+
+    <example>
+      <statement>
+        <p>
+          For any number <m>n</m> we define
+          <me>A_n = \mat{1 n; 1 2}.</me>
+          Show that the product
+          <me>A_1 A_2 A_3 A_4 A_5</me>
+          is not invertible.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          When <m>n = 2</m>, the matrix <m>A_2</m> is not invertible, because its rows are identical:
+          <me>A_2 = \mat{1 2; 1 2}.</me>
+          Hence any product involving <m>A_2</m> is not invertible.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      In order to state the transpose property, we need to define the transpose of a matrix.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+          The <term>transpose</term> of an <m>m\times n</m> matrix <m>A</m> is the <m>n\times m</m> matrix <m>A^T</m> whose rows are the columns of <m>A</m>.  In other words, the <m>ij</m> entry of <m>A^T</m> is <m>a_{ji}</m>.
+          <latex-code>
+            <![CDATA[
+  \begin{tikzpicture}[
+      every matrix/.append style={nodes={
+          minimum width=1.5em, minimum height=1.5em},
+          row sep=.3em, column sep=.3em}
+      ]
+    \matrix[math matrix, label={[yshift=1mm]above:$A$}] (aij)
+      {
+        a_{11} \& a_{12} \& a_{13} \& a_{14} \\
+        a_{21} \& a_{22} \& a_{23} \& a_{24} \\
+        a_{31} \& a_{32} \& a_{33} \& a_{34} \\
+      };
+    \matrix[math matrix, right=2.4cm of aij,
+        label={[yshift=1mm]above:$A^T$}] (aijT)
+      {
+        a_{11} \& a_{21} \& a_{31} \\
+        a_{12} \& a_{22} \& a_{32} \\
+        a_{13} \& a_{23} \& a_{33} \\
+        a_{14} \& a_{24} \& a_{34} \\
+      };
+    \draw[->, thick, shorten=6mm] (aij.east) -- (aijT.west);
+    \draw[green!50!black, opacity=.5, shorten >=-8mm]
+      (aij-1-1.north west) -- (aij-3-3.south east)
+      coordinate[pos=1.3, below left=3mm] (left)
+      coordinate[pos=1.3, above right=3mm] (right)
+      node[pos=1.2, below right, opaque] {\small flip};
+    \draw[<->, green!50!black] (left) to[bend left] (right);
+    \draw[green!50!black, opacity=.5, shorten >=-8mm]
+      (aijT-1-1.north west) -- (aijT-3-3.south east);
+  \end{tikzpicture}
+                ]]>
+          </latex-code>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      Like inversion, transposition reverses the order of matrix multiplication.
+    </p>
+
+    <lemma xml:id="det-defn-prod-trans">
+      <statement>
+        <p>
+          Let <m>A</m> be an <m>m\times n</m> matrix, and let <m>B</m> be an <m>n\times p</m> matrix.  Then
+          <me>(AB)^T = B^TA^T.</me>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          First suppose that <m>A</m> is a row vector an <m>B</m> is a column vector, i.e., <m>m = p = 1</m>.  Then
+          <me>
+            \begin{split}
+            AB \amp= \mat{a_1 a_2 \cdots, a_n}\vec{b_1 b_2 \vdots, b_n}
+            = a_1b_1 + a_2b_2 + \cdots + a_nb_n \\
+            \amp= \mat{b_1 b_2 \cdots, b_n}\vec{a_1 a_2 \vdots, a_n}
+            = B^TA^T.
+            \end{split}
+          </me>
+        </p>
+        <p>
+          Now we use the row-column rule for matrix multiplication.  Let <m>r_1,r_2,\ldots,r_m</m> be the rows of <m>A</m>, and let <m>c_1,c_2,\ldots,c_p</m> be the columns of <m>B</m>, so
+          <me>
+            AB =
+            \mat[c]{ \matrow{r_1}; \matrow{r_2}; \vdots ; \matrow{r_m}}
+            \mat{| | ,, |; c_1 c_2 \cdots, c_p; | | ,, |}
+            = \mat{ r_1c_1 r_1c_2 \cdots, r_1c_p;
+              r_2c_1 r_2c_2 \cdots, r_2c_p;
+              \vdots, \vdots, , \vdots;
+              r_mc_1 r_mc_2 \cdots, r_mc_p}.
+          </me>
+          By the case we handled above, we have <m>r_ic_j = c_j^Tr_i^T</m>. Then
+          <me>
+            \begin{split}
+            (AB)^T
+            \amp= \mat{ r_1c_1 r_2c_1 \cdots, r_mc_1;
+              r_1c_2 r_2c_2 \cdots, r_mc_2;
+              \vdots, \vdots, , \vdots;
+              r_1c_p r_2c_p \cdots, r_mc_p} \\
+            \amp= \mat{ c_1^Tr_1^T c_1^Tr_2^T \cdots, c_1^Tr_m^T;
+              c_2^Tr_1^T c_2^Tr_2^T \cdots, c_2^Tr_m^T;
+              \vdots, \vdots, , \vdots;
+              c_p^Tr_1^T c_p^Tr_2^T \cdots, c_p^Tr_m^T} \\
+            \amp= \mat[c]{ \matrow{c_1^T}; \matrow{c_2^T}; \vdots ; \matrow{c_p^T}}
+            \mat{| | ,, |; r_1^T r_2^T \cdots, r_m^T; | | ,, |}
+            = B^TA^T.
+            \end{split}
+          </me>
+        </p>
+      </proof>
+    </lemma>
+
+    <proposition hide-type="true" xml:id="det-defn-trans-prop">
+      <title>Transpose Property</title>
+      <statement>
+        <p>
+          For any square matrix <m>A</m>, we have
+          <me>\det(A) = \det(A^T).</me>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          We follow the same strategy as in the proof of the <xref ref="det-defn-mult-prop">multiplicativity property</xref>: namely, we define
+          <me>d(A) = \det(A^T), </me>
+          and we show that <m>d</m> satisfies the four defining properties of the determinant.  Again we use elementary matrices, also introduced in the proof of the <xref ref="det-defn-mult-prop">multiplicativity property</xref>.
+          <ol>
+            <li>
+              Let <m>C'</m> be the matrix obtained by doing a row replacement on <m>C</m>, and let <m>E</m> be the elementary matrix for this row replacement, so <m>C' = EC</m>.  The elementary matrix for a row replacement is either upper-triangular or lower-triangular, with ones on the diagonal:
+              <me>
+                R_1 = R_1 + 3R_3:\;
+                \mat{1 0 3; 0 1 0 ; 0 0 1}
+                \qquad
+                R_3 = R_3 + 3R_1:\;
+                \mat{1 0 0; 0 1 0 ; 3 0 1}.
+              </me>
+              It follows that <m>E^T</m> is also either upper-triangular or lower-triangular, with ones on the diagonal, so <m>\det(E^T) = 1</m> by this <xref ref="defn-det-special-case"/>.   By the <xref ref="det-defn-prod-trans"/> and the <xref ref="det-defn-mult-prop">multiplicativity property</xref>,
+              <me>
+                \begin{split}
+                d(C') \amp= \det((C')^T) = \det((EC)^T) = \det(C^TE^T) \\
+                \amp= \det(C^T)\det(E^T) = \det(C^T) = d(C).
+                \end{split}
+              </me>
+            </li>
+            <li>
+              Let <m>C'</m> be the matrix obtained by scaling a row of <m>C</m> by a factor of <m>c</m>, and let <m>E</m> be the elementary matrix for this row replacement, so <m>C' = EC</m>.  Then <m>E</m> is a diagonal matrix:
+              <me>
+                R_2 = cR_2:\;\mat{1 0 0; 0 c 0; 0 0 1}.
+              </me>
+              Thus <m>\det(E^T) = c</m>.  By the <xref ref="det-defn-prod-trans"/> and the <xref ref="det-defn-mult-prop">multiplicativity property</xref>,
+              <me>
+                \begin{split}
+                d(C') \amp= \det((C')^T) = \det((EC)^T) = \det(C^TE^T) \\
+                \amp= \det(C^T)\det(E^T) = c\det(C^T) = c\cdot d(C).
+                \end{split}
+              </me>
+            </li>
+            <li>
+              Let <m>C'</m> be the matrix obtained by swapping two rows of <m>C</m>, and let <m>E</m> be the elementary matrix for this row replacement, so <m>C' = EC</m>.  The <m>E</m> is equal to its own transpose:
+              <me>
+                R_1\longleftrightarrow R_2:\;
+                \mat{0 1 0; 1 0 0; 0 0 1} = \mat{0 1 0; 1 0 0; 0 0 1}^T.
+              </me>
+              Since <m>E</m> (hence <m>E^T</m>) is obtained by performing one row swap on the identity matrix, we have <m>\det(E^T) = -1</m>. By the <xref ref="det-defn-prod-trans"/> and the <xref ref="det-defn-mult-prop">multiplicativity property</xref>,
+              <me>
+                \begin{split}
+                d(C') \amp= \det((C')^T) = \det((EC)^T) = \det(C^TE^T) \\
+                \amp= \det(C^T)\det(E^T) = -\det(C^T) = - d(C).
+                \end{split}
+              </me>
+            </li>
+            <li>
+              Since <m>I_n^T = I_n,</m> we have
+              <me>d(I_n) = \det(I_n^T) = det(I_n) = 1.</me>
+            </li>
+          </ol>
+        </p>
+        <p>
+          Since <m>d</m> satisfies the four defining properties of the determinant, <em>it is equal to the determinant</em> by the <xref ref="det-defn-unique">existence theorem</xref>.  In other words, for all matrices <m>A</m>, we have
+          <me>\det(A) = d(A) = \det(A^T).</me>
+        </p>
+      </proof>
+    </proposition>
+
+    <p>
+      The <xref ref="det-defn-trans-prop">transpose property</xref> is very useful.
+      For concreteness, we note that <m>\det(A)=\det(A^T)</m> means, for instance, that
+      <me>\det\mat{1 2 3; 4 5 6; 7 8 9} = \det\mat{1 4 7; 2 5 8; 3 6 9}.</me>
+      This implies that the determinant has the curious feature that it also behaves well with respect to <em>column</em> operations.  Indeed, a column operation on <m>A</m> is the same as a row operation on <m>A^T</m>, and <m>\det(A) = \det(A^T)</m>.
+    </p>
+
+    <corollary>
+      <statement>
+        <p>
+          The determinant satisfies the following properties with respect to column operations:
+	  <ol>
+	    <li>
+	      Doing a column replacement on <m>A</m> does not change <m>\det(A)</m>.
+	    </li>
+            <li>
+              Scaling a column of <m>A</m> by a scalar <m>c</m> multiplies the determinant by <m>c</m>.
+	    </li>
+	    <li>
+	      Swapping two columns of a matrix multiplies the determinant by <m>-1</m>.
+	    </li>
+	  </ol>
+        </p>
+      </statement>
+    </corollary>
+
+    <p>
+      The previous Corollary makes it easier to compute the determinant: one is allowed to do row <em>and</em> column operations when simplifying the matrix.  (Of course, one still has to keep track of how the row and column operations change the determinant.)
+    </p>
+
+    <example>
+      <statement>
+        <p>Compute <m>\det\mat{2 7 4; 3 1 3; 4 0 1}.</m></p>
+      </statement>
+      <solution>
+        <p>
+          It takes fewer column operations than row operations to make this matrix upper-triangular:
+          <latex-code>
+\def\rowop#1#2#3{%
+  \hbox to 4cm{\hss$\xrightarrow{#1}$\;}%
+  \hbox to 3cm{#2\hss}%
+  \hbox to 3cm{\hskip3mm\begin{minipage}{3.3cm}#3\end{minipage}\hss}%
+  }
+\leavevmode\rlap{\hbox{$\mat{2 7 4; 3 1 3; 4 0 1}$}}%
+\rowop{C_1=C_1-4C_3}{$\mat{-14 7 4; -9 1 3; 0 0 1}$}{}\\
+\rowop{C_1=C_1+9C_2}{$\mat{49 7 4; 0 1 3; 0 0 1}$}{}
+          </latex-code>
+          We performed two column replacements, which does not change the determinant; therefore,
+          <me>\det\mat{2 7 4; 3 1 3; 4 0 1} = \det\mat{49 7 4; 0 1 3; 0 0 1} = 49.</me>
+        </p>
+      </solution>
+    </example>
+
+    <warning>
+      <title>Summary: Magical Properties of the Determinant</title>
+      <p>
+        <ol>
+          <li>
+            There is one and only one function <m>\det\colon\{n\times n\text{ matrices}\}\to\R</m> satisfying the four <xref ref="det-defn-the-defn">defining properties</xref>.
+          </li>
+          <li>
+            The determinant of an upper-triangular or lower-triangular matrix is the product of the diagonal entries.
+          </li>
+          <li>
+            A square matrix is invertible if and only if <m>\det(A)\neq 0</m>; in this case,
+            <me>\det(A\inv) = \frac 1{\det(A)}.</me>
+          </li>
+          <li>
+            If <m>A</m> and <m>B</m> are <m>n\times n</m> matrices, then
+            <me>\det(AB) = \det(A)\det(B).</me>
+          </li>
+          <li>
+            For any square matrix <m>A</m>, we have
+            <me>\det(A^T) = \det(A).</me>
+          </li>
+          <li>
+            The determinant can be computed by performing row and/or column operations.
+          </li>
+        </ol>
+      </p>
+    </warning>
+
+  </subsection>
 
 </section>
