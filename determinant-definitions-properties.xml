@@ -722,7 +722,7 @@ the license is included in gfdl.xml.
     <corollary>
       <statement>
         <p>
-          Let <m>A_1,A_2,\ldots,A_p</m> be square matrices.  Then the product <m>A_1A_2\cdots A_p</m> is invertible if and only if each <m>A_i</m> is invertible.
+          Let <m>A_1,A_2,\ldots,A_p</m> be <m>n\times n</m> matrices.  Then the product <m>A_1A_2\cdots A_p</m> is invertible if and only if each <m>A_i</m> is invertible.
         </p>
       </statement>
       <proof visible="true">
