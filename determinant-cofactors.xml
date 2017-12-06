@@ -327,7 +327,7 @@ the license is included in gfdl.xml.
   </theorem>
 
   <p>
-    Note that the Theorem actually gives <m>2n</m> different formulas for the determinant: one for each row and one for each column.  Remember, the determinant is just a number, defined by the four <xref ref="det-defn-the-defn">defining properties</xref>, so to be clear:
+    Note that the Theorem actually gives <m>2n</m> different formulas for the determinant: one for each row and one for each column.  Remember, the determinant of a matrix is just a number, defined by the four <xref ref="det-defn-the-defn">defining properties</xref>, so to be clear:
   </p>
 
   <warning>
