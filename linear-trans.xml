@@ -51,7 +51,7 @@ the license is included in gfdl.xml.
       In this section, we introduce the class of transformations that come from matrices.
     </p>
 
-    <definition>
+    <definition xml:id="linear-trans-defn">
       <statement>
         <p>
           A <term>linear transformation</term> is a transformation <m>T\colon\R^n\to\R^m</m> satisfying

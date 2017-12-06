@@ -19,10 +19,12 @@ Copyright 2017 Georgia Institute of Technology
 
   <cross-references text="type-hybrid">
     <type match="example" text="phrase-hybrid"/>
+    <type match="specialcase" text="phrase-hybrid"/>
     <type match="theorem" text="phrase-hybrid"/>
     <type match="lemma" text="phrase-hybrid"/>
     <type match="proposition" text="phrase-hybrid"/>
     <type match="corollary" text="phrase-hybrid"/>
+    <type match="remark" text="phrase-hybrid"/>
     <type match="definition" text="phrase-hybrid"/>
     <type match="essential" text="phrase-hybrid"/>
     <type match="note" text="phrase-hybrid"/>

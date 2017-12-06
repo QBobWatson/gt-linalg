@@ -136,32 +136,6 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      Our definition of the determinant really is a definition, in that it is a rule that produces a real number for every square matrix<mdash/>just row reduce and work backwards, as in the examples.  Actually, this is not quite true: we do not yet know that you compute the same number by row reducing in two different ways!  We have an existential quandary: we have not proved that it makes mathematical sense to define the determinant in terms of its behavior under row operations.
-    </p>
-    <p>
-      The resolution to this quandary is the non-obvious and surprising fact that you do indeed compute the same number no matter <em>how</em> you row reduce the matrix.  The proof is beyond the scope of this book.
-    </p>
-
-    <theorem xml:id="det-defn-unique">
-      <title>Existence of the determinant</title>
-      <statement>
-	<p>
-	  There is one and only function from the set of square matrices to the real numbers, that satisfies the four <xref ref="det-defn-the-defn">defining properties</xref>.
-	</p>
-      </statement>
-    </theorem>
-
-    <p>
-      Again, the real content of the Theorem is:
-    </p>
-
-    <warning>
-      <p>
-        No matter which row operations you do, you will always compute the same value of the determinant.
-      </p>
-    </warning>
-
-    <p>
       Next we will compute some determinants of matrices with special properties, but before doing so, we need some terminology involving matrices.
     </p>
 
@@ -455,7 +429,7 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
-    <specialcase>
+    <specialcase xml:id="det-defn-22-again">
       <title>The determinant of a <m>2\times 2</m> matrix</title>
       <p>
         Let us use the <xref ref="det-defn-ref-compute"/> to compute the determinant of a general <m>2\times 2</m> matrix <m>A = \mat{a b; c d}</m>.
@@ -481,6 +455,30 @@ the license is included in gfdl.xml.
         <me>\det\mat{a b; c d} = ad-bc.</me>
       </p>
     </specialcase>
+
+    <p>
+      The determinant is uniquely characterized by its <xref ref="det-defn-the-defn">defining properties</xref>, since we can compute the determinant of any matrix using row reduction, as in the above <xref ref="det-defn-ref-compute"/>.  However, we have not yet proved the existence of a function satisfying the defining properties!  Row reducing will compute the determinant <em>if it exists</em>, but we cannot use row reduction to prove existence, because we do not yet know that you compute the same number by row reducing in two different ways.
+    </p>
+
+    <theorem xml:id="det-defn-unique">
+      <title>Existence of the determinant</title>
+      <statement>
+	<p>
+	  There exists one and only function from the set of square matrices to the real numbers, that satisfies the four <xref ref="det-defn-the-defn">defining properties</xref>.
+	</p>
+      </statement>
+    </theorem>
+
+    <p>
+      We will prove the existence theorem in <xref ref="determinants-cofactors"/>, by exhibiting a recursive formula for the determinant.
+      Again, the real content of the existence theorem is:
+    </p>
+
+    <warning>
+      <p>
+        No matter which row operations you do, you will always compute the same value for the determinant.
+      </p>
+    </warning>
 
   </subsection>
 
@@ -548,7 +546,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      The proofs of the <xref ref="det-defn-mult-prop">multiplicativity property</xref> and the <xref ref="det-defn-trans-prop">transpose property</xref> follow the same strategy: define another function <m>d\colon\{\text{$n\times n$ matrices}\} \to \R</m>, and prove that <m>d</m> satisfies the same four defining properties as the determinant.  By the <xref ref="det-defn-unique">existence theorem</xref>, <em>the function <m>d</m> is equal to the determinant</em>.  This is an advantage of defining a function via its properties: in order to prove it is equal to another function, one only has to check the defining properties.
+      The proofs of the <xref ref="det-defn-mult-prop">multiplicativity property</xref> and the <xref ref="det-defn-trans-prop">transpose property</xref>, as well as the <xref ref="det-cofact-expansion">cofactor expansion theorem</xref>, follow the same strategy: define another function <m>d\colon\{\text{$n\times n$ matrices}\} \to \R</m>, and prove that <m>d</m> satisfies the same four defining properties as the determinant.  By the <xref ref="det-defn-unique">existence theorem</xref>, <em>the function <m>d</m> is equal to the determinant</em>.  This is an advantage of defining a function via its properties: in order to prove it is equal to another function, one only has to check the defining properties.
     </p>
 
     <proposition hide-type="true" xml:id="det-defn-mult-prop">
@@ -931,7 +929,7 @@ the license is included in gfdl.xml.
       This implies that the determinant has the curious feature that it also behaves well with respect to <em>column</em> operations.  Indeed, a column operation on <m>A</m> is the same as a row operation on <m>A^T</m>, and <m>\det(A) = \det(A^T)</m>.
     </p>
 
-    <corollary>
+    <corollary xml:id="defn-det-col-ops">
       <statement>
         <p>
           The determinant satisfies the following properties with respect to column operations:
@@ -977,6 +975,168 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
+    <p>
+      We can think of <m>\det</m> as a function of the rows of a matrix:
+      <me>\det(v_1,v_2,\ldots,v_n)
+      = \det\mat{\matrow{v_1}; \matrow{v_2}; \vdots; \matrow{v_n}}.</me>
+    </p>
+
+    <proposition hide-type="true" xml:id="det-defn-linear-prop">
+      <title>Multilinearity Property</title>
+      <statement>
+        <p>
+          Let <m>i</m> be a whole number between <m>1</m> and <m>n</m>, and fix <m>n-1</m> vectors <m>v_1,v_2,\ldots,v_{i-1},v_{i+1},\ldots,v_n</m> in <m>\R^n</m>.  Then the transformation <m>T\colon\R^n\to\R</m> defined by
+          <me>T(x) = \det(v_1,v_2,\ldots,v_{i-1},x,v_{i+1},\ldots,v_n)</me>
+          is <em>linear</em>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          First assume that <m>i=1</m>, so
+          <me>T(x) = \det(x,v_2,\ldots,v_n).</me>
+          We have to show that <m>T</m> satisfies the properties (LC1) and (LC2) of this <xref ref="linear-trans-defn"/>.
+          <ul>
+            <li>
+              By the first <xref ref="det-defn-the-defn">defining property</xref>, scaling any row of a matrix by a number <m>c</m> scales the determinant by a factor of <m>c</m>.  This implies that <m>T</m> satisfies (LC2), i.e., that
+              <me>T(cx) = \det(cx,v_2,\ldots,v_n) = c\det(x,v_2,\ldots,v_n) = cT(x).</me>
+            </li>
+            <li>
+              <p>
+                We claim that <m>T(v+w) = T(v) + T(w)</m>.
+                If <m>w</m> is in <m>\Span\{v,v_2,\ldots,v_n\}</m>, then
+                <me>w = cv + c_2v_2 + \cdots + c_nv_n</me>
+                for some scalars <m>c,c_2,\ldots,c_n</m>.  Let <m>A</m> be the matrix with rows <m>v+w,v_2,\ldots,v_n</m>, so <m>T(v+w) = \det(A).</m>  By performing the row operations
+                <me>
+                  R_1 = R_1 - c_2R_2;\quad R_1 = R_1 - c_3R_3;\quad\ldots\quad
+                  R_1 = R_1 - c_nR_n,
+                </me>
+                the first row of the matrix <m>A</m> becomes
+                <me>v+w-(c_2v_2+\cdots+c_nv_n) = v + cv = (1+c)v.</me>
+                Therefore,
+                <me>
+                  \begin{split}
+                  T(v+w)
+                  = \det(A) \amp= \det((1+c)v,v_2,\ldots,v_n) \\
+                  \amp= (1+c)\det(v,v_2,\ldots,v_n) \\
+                  \amp= T(v) + cT(v) = T(v) + T(cv).
+                  \end{split}
+                </me>
+                Doing the opposite row operations
+                <me>
+                  R_1 = R_1 + c_2R_2;\quad R_1 = R_1 + c_3R_3;\quad\ldots\quad
+                  R_1 = R_1 + c_nR_n
+                </me>
+                to the matrix with rows <m>cv,v_2,\ldots,v_n</m> shows that
+                <me>
+                  \begin{split}
+                  T(cv) \amp= \det(cv,v_2,\ldots,v_n) \\
+                  \amp= \det(cv+c_2v_2+\cdots+c_nv_n,v_2,\ldots,v_n) \\
+                  \amp= \det(w,v_2,\ldots,v_n) = T(w),
+                  \end{split}
+                </me>
+                which finishes the proof of (LC1) in this case.
+              </p>
+              <p>
+                Now suppose that <m>w</m> is not in <m>\Span\{v,v_2,\ldots,v_n\}</m>.  This implies that <m>\{v,v_2,\ldots,v_n\}</m> is linearly <em>dependent</em> (otherwise it would form a basis for <m>\R^n</m>), so <m>T(v)</m> = 0.  If <m>v</m> is not in <m>\Span\{v_2,\ldots,v_n\}</m>, then <m>\{v_2,\ldots,v_n\}</m> is linearly dependent by the <xref ref="linindep-increasing-span"/>, so <m>T(x) = 0</m> for all <m>x</m>, as the matrix with rows <m>x,v_2,\ldots,v_n</m> is not invertible.  Hence we may assume <m>v</m> is in <m>\Span\{v_2,\ldots,v_n\}</m>.   By the above argument with the roles of <m>v</m> and <m>w</m> reversed, we have <m>T(v+w) = T(v)+T(w).</m>
+              </p>
+            </li>
+          </ul>
+        </p>
+        <p>
+          For <m>i\neq 1</m>, we note that
+          <me>
+            \begin{split}
+            T(x) \amp= \det(v_1,v_2,\ldots,v_{i-1},x,v_{i+1},\ldots,v_n) \\
+            \amp= -\det(x,v_2,\ldots,v_{i-1},v_1,v_{i+1},\ldots,v_n).
+            \end{split}
+          </me>
+          By the previously handled case, we know that <m>-T</m> is linear:
+          <me>-T(cx) = -cT(x) \qquad -T(v+w) = -T(v) - T(w).</me>
+          Multiplying both sides by <m>-1</m>, we see that <m>T</m> is linear.
+        </p>
+      </proof>
+    </proposition>
+
+    <p>
+      For example, we have
+      <me>
+  \det\mat{\matrow{\makebox[\widthof{$av+bw$}]{$v_1$}};
+    \matrow{av+bw}; \matrow{\makebox[\widthof{$av+bw$}]{$v_3$}}}
+        = a\det\mat{\matrow{v_1}; \matrow{\makebox[\widthof{$v_1$}]{$v$}}; \matrow{v_3}}
+        + b\det\mat{\matrow{v_1}; \matrow{\makebox[\widthof{$v_1$}]{$w$}}; \matrow{v_3}}
+      </me>
+      By the <xref ref="det-defn-trans-prop">transpose property</xref>, the determinant is also multilinear in the <em>columns</em> of a matrix:
+      <me>
+        \det\mat{| | |; v_1 av+bw v_3; | | |}
+        = a\det\mat{| | |; v_1 v v_3; | | |} + b\det\mat{| | |; v_1 w v_3; | | |}.
+      </me>
+    </p>
+
+    <remark xml:id="det-defn-use-multi">
+      <title>Alternative defining properties</title>
+      <p>
+        In more theoretical treatments of the topic, where row reduction plays a secondary role, the defining properties of the determinant are often taken to be:
+        <ol>
+          <li>
+            The determinant <m>\det(A)</m> is multilinear in the rows of <m>A</m>.
+          </li>
+          <li>
+            If <m>A</m> has two identical rows, then <m>\det(A) = 0</m>.
+          </li>
+          <li>
+            The determinant of the identity matrix is equal to one.
+          </li>
+        </ol>
+        We have already shown that our four <xref ref="det-defn-the-defn">defining properties</xref> imply these three.  Conversely, we will prove that these three alternative properties imply our four, so that both sets of properties are equivalent.
+      </p>
+      <p>
+        Defining property <m>2</m> is just (LC2).  Suppose that the rows of <m>A</m> are <m>v_1,v_2,\ldots,v_n</m>.  If we perform the row replacement <m>R_i = R_i + cR_j</m> on <m>A</m>, then the rows of our new matrix are <m>v_1,v_2,\ldots,v_{i-1},v_i+cv_j,v_{i+1},\ldots,v_n</m>, so by linearity in the <m>i</m>th row,
+        <me>
+          \begin{split}
+          \det(\amp v_1,v_2,\ldots,v_{i-1},v_i+cv_j,v_{i+1},\ldots,v_n) \\
+          \amp= \det(v_1,v_2,\ldots,v_{i-1},v_i,v_{i+1},\ldots,v_n) +
+          c\det(v_1,v_2,\ldots,v_{i-1},v_j,v_{i+1},\ldots,v_n) \\
+          \amp= \det(v_1,v_2,\ldots,v_{i-1},v_i,v_{i+1},\ldots,v_n)
+          = \det(A),
+          \end{split}
+        </me>
+        where <m>\det(v_1,v_2,\ldots,v_{i-1},v_j,v_{i+1},\ldots,v_n)=0</m> because <m>v_j</m> is repeated.  Thus, the alternative defining properties imply our first two defining properties.  For the third, suppose that we want to swap row <m>i</m> with row <m>j</m>.  Using the second alternative defining property and multilinearity in the <m>i</m>th and <m>j</m>th rows, we have
+        <me>
+          \begin{split}
+          0 \amp= \det(v_1,\ldots,v_i+v_j,\ldots,v_i+v_j,\ldots,v_n) \\
+          \amp= \det(v_1,\ldots,v_i,\ldots,v_i+v_j,\ldots,v_n)
+          + \det(v_1,\ldots,v_j,\ldots,v_i+v_j,\ldots,v_n) \\
+          \amp= \det(v_1,\ldots,v_i,\ldots,v_i,\ldots,v_n)
+          + \det(v_1,\ldots,v_i,\ldots,v_j,\ldots,v_n) \\
+          \amp\qquad+\det(v_1,\ldots,v_j,\ldots,v_i,\ldots,v_n)
+          + \det(v_1,\ldots,v_j,\ldots,v_j,\ldots,v_n) \\
+          \amp= \det(v_1,\ldots,v_i,\ldots,v_j,\ldots,v_n)
+          + \det(v_1,\ldots,v_j,\ldots,v_i,\ldots,v_n),
+          \end{split}
+        </me>
+        as desired.
+      </p>
+    </remark>
+
+    <example>
+      <p>
+        We have
+        <me>
+          \vec{-1 2 3} = -\vec{1 0 0} + 2\vec{0 1 0} + 3\vec{0 0 1}.
+        </me>
+        Therefore,
+        <me>
+          \begin{split}
+          \det\amp\mat{-1 7 2; 2 -3 2; 3 1 1}
+          = -\det\mat{1 7 2; 0 -3 2; 0 1 1} \\
+          \amp+ 2\det\mat{0 7 2; 1 -3 2; 0 1 1}
+          + 3\det\mat{0 7 2; 0 -3 2; 1 1 1}.
+          \end{split}
+        </me>
+        This is the basic idea behind cofactor expansions in <xref ref="determinants-cofactors"/>.
+      </p>
+    </example>
+
     <warning>
       <title>Summary: Magical Properties of the Determinant</title>
       <p>
@@ -998,6 +1158,9 @@ the license is included in gfdl.xml.
           <li>
             For any square matrix <m>A</m>, we have
             <me>\det(A^T) = \det(A).</me>
+          </li>
+          <li>
+            The determinant is linear in the rows and the columns of a matrix.
           </li>
           <li>
             The determinant can be computed by performing row and/or column operations.

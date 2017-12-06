@@ -10,142 +10,462 @@ the license is included in gfdl.xml.
 *********************************************************************-->
 
 <section xml:id="determinants-cofactors">
-  <title>Cofactor expansions</title>
+  <title>Cofactor Expansions</title>
 
-
+  <objectives>
+    <ol>
+      <li>Learn to compute the determinant using cofactor expansions.</li>
+      <li>Vocabulary words: <term>minor</term>, <term>cofactor</term>, <term>cofactor expansion</term>.</li>
+    </ol>
+  </objectives>
 
   <p>
-    We now give another description of the determinant which is often useful in computations.
+    In this Section, we give a recursive formula for the determinant of a matrix, called a <em>cofactor expansion</em>.  The formula is recursive in that we will compute the determinant of an <m>n\times n</m> matrix <em>assuming</em> we already know how to compute the determinant of an <m>(n-1)\times(n-1)</m> matrix.
   </p>
 
-  <p>This is called the <em>cofactor expansion</em>  of a matrix, and computes the determinant from the ground up via a recursive procedure. Namely, this method will show how to compute the determinant for <m>n\times n</m> matrices, <em>assuming</em> we already know how to do so for <m>(n-1)\times(n-1)</m> matrices.
+  <p>
+    The beginning of the recursion is the case of <m>1\times 1</m> matrices. The definition of determinant directly implies that
+    <me>\det\mat a=a.</me>
+    To describe cofactor expansions, we need to introduce some notation.
   </p>
 
-  <p>Let's start at the beginning. First, we consider the case of <m>1\times1</m> matrices. The definition of determinant directly implies that
-  <me>\det\mat a=a.</me>
-  To describe cofactor expansions, we first need to introduce a little notation.
-  </p>
-
-  <definition xml:id="Minor-Cofactors-Defn">
+  <definition xml:id="det-cofact-defn-minor">
     <statement>
-      <p>Suppose that <m>A</m> is an <m>n\times n</m> matrix <m>A</m>.
-      </p>
-
-      <p>The <m>(i,j)</m>-th <term>minor,</term> denoted <m>A_{ij}</m>, is the <m>(n-1)\times (n-1)</m> matrix obtained from <m>A</m> by deleting the <m>i</m>-th row and the <m>j</m>-th column.</p>
-
-      <p>The <m>(i,j)</m>-th <term>cofactor </term>  <m>\ C_{ij}</m> is defined in terms of the minor by
-      <me>C_{ij}=(-1)^{i+j}\det A_{ij}.</me>
+      <p>Let <m>A</m> be an <m>n\times n</m> matrix.
+      <ol>
+        <li>
+          The <m>(i,j)</m> <term>minor,</term> denoted <m>A_{ij}</m>, is the <m>(n-1)\times (n-1)</m> matrix obtained from <m>A</m> by deleting the <m>i</m>th row and the <m>j</m>th column.
+        </li>
+        <li>
+          The <m>(i,j)</m> <term>cofactor</term> <m>C_{ij}</m> is defined in terms of the minor by
+      <me>C_{ij}=(-1)^{i+j}\det(A_{ij}).</me>
+        </li>
+      </ol>
       </p>
     </statement>
   </definition>
 
   <p>
-  Note that the signs of the cofactors follow a "checkerboard pattern". Namely, the pattern of plus and minus signs in the <m>(i,j)</m>-th entry of the matrix
-  <me>\def\a{\textcolor{seq-green}{+}} \def\b{\textcolor{seq-blue}{-}}
-\mat{\a,\b,\a,\b ; \b,\a,\b,\a ; \a,\b,\a,\b; \b,\a,\b,\a}</me>
-  is the sign in the definition of <m>C_{ij}</m>.
+    Note that the signs of the cofactors follow a <q>checkerboard pattern.</q> Namely, <m>(-1)^{i+j}</m> is pictured in this matrix:
+    <me>\def\a{\textcolor{seq-green}{+}} \def\b{\textcolor{seq-blue}{-}}
+    \mat{\a,\b,\a,\b ; \b,\a,\b,\a ; \a,\b,\a,\b; \b,\a,\b,\a}.</me>
   </p>
 
-  <example xml:id="FirstMinorCofactorEx">
+  <example>
     <statement>
       <p>
 	For
 	<me>A= \mat{1 2 3;4 5 6;7 8 9},</me>
-	we have
+	compute <m>A_{23}</m> and <m>C_{23}.</m>
       </p>
-      <sidebyside>
-        <image>
-          <latex-image-code><![CDATA[
-          \begin{tikzpicture}[all nodes={}]
-          \node at (0, 0) [anchor=east] {$A_{23} = {}\;$};
-          \matrix (a) at (0, 0) [math matrix, anchor=west] {
-            1 \& 2 \& 3 \\ 4 \& 5 \& 6 \\ 7 \& 8 \& 9 \\
-          };
-          \node at (a.east) [anchor=west] (a23) {$\;{} = \mat{1 2 ; 7 8}$};
-
-          \node at (a23.east) [anchor=west, xshift=1em]
-             {$C_{23} = (-1)^{2+3}\det\mat{1 2; 7 8} = (-1)(-6) = 6$};
-
-          \begin{scope}[every node/.style={
-                seq-green, draw, thick, circle, inner sep=1pt, opacity=1},
-              decoration={zigzag,segment length=1.5mm}, seq-red, thick, opacity=.7,
-              line join=round]
-            \node[fit=(a-2-3)] {};
-            \draw[decorate] (a-2-1.west) -- (a-2-3.east);
-            \draw[decorate] (a-1-3.north) -- (a-3-3.south);
-          \end{scope}
-
-          \end{tikzpicture}
-          ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
     </statement>
+    <solution>
+      <p>
+        <latex-code><![CDATA[
+        \begin{tikzpicture}[all nodes={}]
+        \node at (0, 0) [anchor=east] {$A_{23} = {}\;$};
+        \matrix (a) at (0, 0) [math matrix, anchor=west,
+        every matrix/.append style={nodes={minimum width=.6em, minimum height=.6em}}
+        ] {
+        1 \& 2 \& 3 \\ 4 \& 5 \& 6 \\ 7 \& 8 \& 9 \\
+        };
+        \node at (a.east) [anchor=west] (a23) {$\;{} = \mat{1 2 ; 7 8}$};
+
+        \node at (a23.east) [anchor=west, xshift=1em]
+        {$C_{23} = (-1)^{2+3}\det\mat{1 2; 7 8} = (-1)(-6) = 6$};
+
+        \begin{scope}[every node/.style={
+        seq-green, draw, thick, circle, inner sep=1pt, opacity=1},
+        decoration={zigzag,segment length=1.5mm}, seq-red, thick, opacity=.7,
+        line join=round]
+        \node[fit=(a-2-3)] {};
+        \draw[decorate] (a-2-1.west) -- (a-2-3.east);
+        \draw[decorate] (a-1-3.north) -- (a-3-3.south);
+        \end{scope}
+
+        \end{tikzpicture}
+        ]]>
+        </latex-code>
+      </p>
+    </solution>
   </example>
 
   <p>
-    Using <xref ref="Minor-Cofactors-Defn"/>, we can describe our procedure for computing determinants as follows.
+    The cofactors <m>C_{ij}</m> of an <m>n\times n</m> matrix are determinants of <m>(n-1)\times(n-1)</m> submatrices.  Hence the following Theorem is in fact a recursive procedure for computing the determinant.
   </p>
 
-  <algorithm>
-    <title>Cofactor/Laplace expansion</title>
+  <theorem xml:id="det-cofact-expansion">
+    <title>Cofactor expansion</title>
+    <statement>
+      <p>
+        Let <m>A</m> be an <m>n\times n</m> matrix with entries <m>a_{ij}</m>.
+        <ol>
+	  <li>
+            For any <m>i = 1,2,\ldots,n</m>, we have
+            <me>
+              \det(A) = \sum_{j=1}^n a_{ij}C_{ij}
+              = a_{i1}C_{i1} + a_{i2}C_{i2} + \cdots + a_{in}C_{in}.
+            </me>
+            This is called <term>cofactor expansion along the <m>i</m>th row.</term>
+	  </li>
+          <li>
+            For any <m>j = 1,2,\ldots,n</m>, we have
+            <me>
+              \det(A) = \sum_{i=1}^n a_{ij}C_{ij}
+              = a_{1j}C_{1j} + a_{2j}C_{2j} + \cdots + a_{nj}C_{nj}.
+            </me>
+            This is called <term>cofactor expansion along the <m>j</m>th column.</term>
+	  </li>
+        </ol>
+      </p>
+    </statement>
+    <proof>
+      <p>
+        First we will prove that cofactor expansion along the first column computes the determinant.  Define a function <m>d\colon\{n\times n\text{ matrices}\}\to\R</m> by
+        <me>d(A) = \sum_{i=1}^n (-1)^{i+1} a_{i1}\det(A_{i1}).</me>
+        We want to show that <m>d(A) = \det(A)</m>.  Instead of showing that <m>d</m> satisfies the four <xref ref="det-defn-the-defn">defining properties of the determinant</xref>, we will prove that it satsifies the three <xref ref="det-defn-use-multi">alternative defining properties</xref>, which were shown to be equivalent.
+        <ol>
+          <li>
+            <p>
+            We claim that <m>d</m> is multilinear in the rows of <m>A</m>.  Let <m>A</m> be the matrix with rows <m>v_1,v_2,\ldots,v_{i-1},v+w,v_{i+1},\ldots,v_n</m>:
+            <me>
+              A = \mat{a_{11} a_{12} a_{13};
+                       b_1+c_1 b_2+c_2 b_3+c_3;
+                       a_{31} a_{32} a_{33}}.
+            </me>
+            Here we let <m>b_i</m> and <m>c_i</m> be the entries of <m>v</m> and <m>w</m>, respectively.  Let <m>B</m> and <m>C</m> be the matrices with rows <m>v_1,v_2,\ldots,v_{i-1},v,v_{i+1},\ldots,v_n</m> and <m>v_1,v_2,\ldots,v_{i-1},w,v_{i+1},\ldots,v_n</m>, respectively:
+            <me>
+              B = \mat[r]{a_{11} a_{12} a_{13};
+                       b_1 b_2 b_3;
+                       a_{31} a_{32} a_{33}} \qquad
+              C = \mat{a_{11} a_{12} a_{13};
+                       c_1 c_2 c_3;
+                       a_{31} a_{32} a_{33}}.
+            </me>
+            We wish to show <m>d(A) = d(B) + d(C)</m>.  For <m>i'\neq i</m>, the <m>(i',1)</m>-cofactor of <m>A</m> is the sum of the <m>(i',1)</m>-cofactors of <m>B</m> and <m>C</m>, by multilinearity of the determinants of <m>(n-1)\times(n-1)</m> matrices:
+            <me>
+              \begin{split}
+              (-1)^{3+1}\det(A_{31})
+              \amp= (-1)^{3+1}\det\mat{a_{12} a_{13}; b_2+c_2 b_3+c_3} \\
+              \amp= (-1)^{3+1}\det\mat{a_{12} a_{13}; b_2 b_3}
+              + (-1)^{3+1}\det\mat{a_{12} a_{13}; c_2 c_3} \\
+              \amp= (-1)^{3+1}\det(B_{31}) + (-1)^{3+1}\det(C_{31}).
+              \end{split}
+            </me>
+            On the other hand, the <m>(i,1)</m>-cofactors of <m>A,B,</m> and <m>C</m> are all the same:
+            <me>
+              \begin{split}
+              (-1)^{2+1} \det(A_{21})
+              \amp= (-1)^{2+1} \det\mat{a_{12} a_{13}; a_{32} a_{33}} \\
+              \amp= (-1)^{2+1} \det(B_{21}) = (-1)^{2+1} \det(C_{21}).
+              \end{split}
+            </me>
+            Now we compute
+            <me>
+              \begin{split}
+              d(A) \amp=
+              (-1)^{i+1} (b_i + c_i)\det(A_{i1})
+              + \sum_{i'\neq i} (-1)^{i'+1} a_{i1}\det(A_{i'1}) \\
+              \amp= (-1)^{i+1} b_i\det(B_{i1}) + (-1)^{i+1} c_i\det(C_{i1}) \\
+              \amp\qquad\qquad+ \sum_{i'\neq i} (-1)^{i'+1}
+                a_{i1}\bigl(\det(B_{i'1}) + \det(C_{i'1})\bigr) \\
+              \amp= \left[(-1)^{i+1} b_i\det(B_{i1}) + \sum_{i'\neq i}
+                (-1)^{i'+1} a_{i1}\det(B_{i'1})\right] \\
+                \amp\qquad\qquad+ \left[(-1)^{i+1} c_i\det(C_{i1}) + \sum_{i'\neq i}
+                (-1)^{i'+1} a_{i1}\det(C_{i'1})\right] \\
+              \amp= d(B) + d(C),
+              \end{split}
+            </me>
+            as desired.  This shows that <m>d(A)</m> satisfies (LC1) in the rows of <m>A</m>.
+            </p>
+            <p>
+            We still have to show that <m>d(A)</m> satisfies (LC2) in the rows of <m>A</m>.  Let <m>B</m> be the matrix obtained by scaling the <m>i</m>th row of <m>A</m> by a factor of <m>c</m>:
+            <me>
+              A = \mat{a_{11} a_{12} a_{13}; a_{21} a_{22} a_{23}; a_{31} a_{32} a_{33}}
+              \qquad
+              B = \mat{a_{11} a_{12} a_{13}; ca_{21} ca_{22} ca_{23}; a_{31} a_{32} a_{33}}.
+            </me>
+            We wish to show that <m>d(B) = c\,d(A)</m>.
+            For <m>i'\neq i</m>, the <m>(i',1)</m>-cofactor of <m>B</m> is <m>c</m> times the <m>(i',1)</m>-cofactor of <m>A</m>, by multilinearity of the determinants of <m>(n-1)\times(n-1)</m>-matrices:
+            <me>
+              \begin{split}
+              (-1)^{3+1}\det(B_{31})
+              \amp= (-1)^{3+1}\det\mat{a_{12} a_{13}; ca_{22} ca_{23}} \\
+              \amp= (-1)^{3+1}\cdot c\det\mat{a_{12} a_{13}; a_{22} a_{23}}
+              = (-1)^{3+1}\cdot c\det(A_{31}).
+              \end{split}
+            </me>
+            On the other hand, the <m>(i,1)</m>-cofactors of <m>A</m> and <m>B</m> are the same:
+            <me>
+              (-1)^{2+1} \det(B_{21})
+              = (-1)^{2+1} \det\mat{a_{12} a_{13}; a_{32} a_{33}}
+              = (-1)^{2+1} \det(A_{21}).
+            </me>
+            Now we compute
+            <me>
+              \begin{split}
+              d(B) \amp= (-1)^{i+1}ca_{i1}\det(B_{i1})
+              + \sum_{i'\neq i}(-1)^{i'+1} a_{i'1}\det(B_{i'1}) \\
+              \amp= (-1)^{i+1}ca_{i1}\det(A_{i1})
+              + \sum_{i'\neq i}(-1)^{i'+1} a_{i'1}\cdot c\det(A_{i'1}) \\
+              \amp= c\left[(-1)^{i+1}ca_{i1}\det(A_{i1})
+              + \sum_{i'\neq i}(-1)^{i'+1} a_{i'1} \det(A_{i'1})\right] \\
+              \amp= c\,d(A),
+              \end{split}
+            </me>
+            as desired.  This completes the proof that <m>d(A)</m> is multilinear in the rows of <m>A</m>.
+            </p>
+          </li>
+          <li>
+            Now we show that <m>d(A) = 0</m> if <m>A</m> has two identical rows.  Suppose that rows <m>i_1,i_2</m> of <m>A</m> are identical, with <m>i_1 \lt i_2</m>:
+            <me>
+              A = \mat{a_{11} a_{12} a_{13} a_{14};
+              a_{21} a_{22} a_{23} a_{24};
+              a_{31} a_{32} a_{33} a_{34};
+              a_{11} a_{12} a_{13} a_{14}}.
+            </me>
+            If <m>i\neq i_1,i_2</m> then the <m>(i,1)</m>-cofactor of <m>A</m> is equal to zero, since <m>A_{i1}</m> is an <m>(n-1)\times(n-1)</m> matrix with identical rows:
+            <me>
+              (-1)^{2+1}\det(A_{21}) = (-1)^{2+1}
+              \det\mat{a_{12} a_{13} a_{14};
+              a_{32} a_{33} a_{34};
+              a_{12} a_{13} a_{14}} = 0.
+            </me>
+            The <m>(i_1,1)</m>-minor can be transformed into the <m>(i_2,1)</m>-minor using <m>i_2 - i_1 - 1</m> row swaps:
+            <latex-code><![CDATA[
+\begin{tikzpicture}
+  \matrix[math matrix] (A) {
+    a_{22} \& a_{23} \& a_{24} \\
+    a_{32} \& a_{33} \& a_{34} \\
+    a_{12} \& a_{13} \& a_{14} \\
+  };
+  \draw[<->] ($(A-2-3.east)+(3.5mm,0)$) to[bend left=50] ($(A-3-3.east)+(3.5mm,0)$);
+  \node[draw=seq-green, rounded corners, inner sep=1mm, fit=(A-3-1) (A-3-3)] {};
+  \matrix[math matrix, right=1.5cm of A] (B) {
+    a_{22} \& a_{23} \& a_{24} \\
+    a_{12} \& a_{13} \& a_{14} \\
+    a_{32} \& a_{33} \& a_{34} \\
+  };
+  \draw[<->] ($(B-1-3.east)+(3.5mm,0)$) to[bend left=50] ($(B-2-3.east)+(3.5mm,0)$);
+  \node[draw=seq-green, rounded corners, inner sep=1mm, fit=(B-2-1) (B-2-3)] {};
+  \matrix[math matrix, right=1.5cm of B] (C) {
+    a_{12} \& a_{13} \& a_{14} \\
+    a_{22} \& a_{23} \& a_{24} \\
+    a_{32} \& a_{33} \& a_{34} \\
+  };
+  \node[draw=seq-green, rounded corners, inner sep=1mm, fit=(C-1-1) (C-1-3)] {};
+  \node[left=2mm of A] {$A_{11} = {}$};
+  \node[right=2mm of C] {${} = A_{41}$};
+\end{tikzpicture}
+            ]]></latex-code>
+            Therefore,
+            <me>
+              (-1)^{i_1+1}\det(A_{i_11})
+              = (-1)^{i_1+1}\cdot(-1)^{i_2 - i_1 - 1}\det(A_{i_21})
+              = -(-1)^{i_2+1}\det(A_{i_21}).
+            </me>
+            The two remaining cofactors cancel out, so <m>d(A) = 0</m>, as desired.
+          </li>
+          <li>
+            It remains to show that <m>d(I_n) = 1</m>.  The first is the only one nonzero term in the cofactor expansion of the identity:
+            <me>
+              d(I_n) = 1\cdot(-1)^{1+1}\det(I_{n-1}) = 1.
+            </me>
+          </li>
+        </ol>
+        This proves that <m>\det(A) = d(A)</m>, i.e., that cofactor expansion along the first column computes the determinant.
+      </p>
+      <p>
+        Now we show that cofactor expansion along the <m>j</m>th column also computes the determinant.  By performing <m>j-1</m> column swaps, one can move the <m>j</m>th column of a matrix to the first column, keeping the other columns in order.  For example, here we move the third column to the first, using two column swaps:
+        <latex-code><![CDATA[
+\begin{tikzpicture}
+  \matrix[math matrix] (A) {
+    a_{11} \& a_{12} \& a_{13} \& a_{14} \\
+    a_{21} \& a_{22} \& a_{23} \& a_{24} \\
+    a_{31} \& a_{32} \& a_{33} \& a_{34} \\
+    a_{41} \& a_{42} \& a_{43} \& a_{44} \\
+  };
+  \draw[<->] ($(A-1-2.north)+(0,1.5mm)$) to[bend left=50] ($(A-1-3.north)+(0,1.5mm)$);
+  \node[draw=seq-green, rounded corners, inner sep=1mm, fit=(A-1-3) (A-4-3)] {};
+  \matrix[math matrix, right=1.5cm of A.east] (B) {
+    a_{11} \& a_{13} \& a_{12} \& a_{14} \\
+    a_{21} \& a_{23} \& a_{22} \& a_{24} \\
+    a_{31} \& a_{33} \& a_{32} \& a_{34} \\
+    a_{41} \& a_{43} \& a_{42} \& a_{44} \\
+  };
+  \draw[<->] ($(B-1-1.north)+(0,1.5mm)$) to[bend left=50] ($(B-1-2.north)+(0,1.5mm)$);
+  \node[draw=seq-green, rounded corners, inner sep=1mm, fit=(B-1-2) (B-4-2)] {};
+  \matrix[math matrix, right=1.5cm of B] (C) {
+    a_{13} \& a_{12} \& a_{11} \& a_{14} \\
+    a_{23} \& a_{22} \& a_{21} \& a_{24} \\
+    a_{33} \& a_{32} \& a_{31} \& a_{34} \\
+    a_{43} \& a_{42} \& a_{41} \& a_{44} \\
+  };
+  \node[draw=seq-green, rounded corners, inner sep=1mm, fit=(C-1-1) (C-4-1)] {};
+
+\end{tikzpicture}
+        ]]></latex-code>
+        Let <m>B</m> be the matrix obtained by moving the <m>j</m>th column of <m>A</m> to the first column in this way.  Then the <m>(i,j)</m> minor <m>A_{ij}</m> is equal to the <m>(i,1)</m> minor <m>B_{i1}</m>, since deleting the <m>i</m>th column of <m>A</m> is the same as deleting the first column of <m>B</m>.  By construction, the <m>(i,j)</m>-entry <m>a_{ij}</m> of <m>A</m> is equal to the <m>(i,1)</m>-entry <m>b_{i1}</m> of <m>B</m>.  Since we know that we can compute determinants by expanding along the first column, we have
+        <me>
+          \det(B) = \sum_{i=1}^n (-1)^{i+1} b_{i1}\det(B_{i1})
+          = \sum_{i=1}^n (-1)^{i+1} a_{ij}\det(A_{ij}).
+        </me>
+        Since <m>B</m> was obtained from <m>A</m> by performing <m>j-1</m> column swaps, we have
+        <me>
+        \begin{split}
+        \det(A) = (-1)^{j-1}\det(B) \amp=
+        (-1)^{j-1}\sum_{i=1}^n (-1)^{i+1} a_{ij}\det(A_{ij}) \\
+        \amp= \sum_{i=1}^n (-1)^{i+j} a_{ij}\det(A_{ij}).
+        \end{split}
+        </me>
+        This proves that cofactor expansion along the <m>i</m>th column computes the determinant of <m>A</m>.
+      </p>
+      <p>
+        By the <xref ref="det-defn-trans-prop">transpose property</xref>, the cofactor expansion along the <m>i</m>th row of <m>A</m> is the same as the cofactor expansion along the <m>i</m>th column of <m>A^T</m>.  Again by the transpose property, we have <m>\det(A)=\det(A^T)</m>, so expanding cofactors along a row also computes the determinant.
+      </p>
+    </proof>
+  </theorem>
+
+  <p>
+    Note that the Theorem actually gives <m>2n</m> different formulas for the determinant: one for each row and one for each column.  Remember, the determinant is just a number, defined by the four <xref ref="det-defn-the-defn">defining properties</xref>, so to be clear:
+  </p>
+
+  <warning>
     <p>
-      To compute the determinant of a square matrix, do the following.
-      <ol>
-	<li>
-	  Choose any row or column of <m>A</m>.
-	</li>
-	<li> For each element <m>a_{ij}</m> of this row or column, compute the associated cofactor <m>C_{ij}</m>.</li>
-	<li>
-	  Multiply each cofactor by the associated matrix entry <m>a_{ij}</m>.
-	</li>
-	<li>
-	  <alert>Result:</alert>  The sum of these products is <m>\det A</m>.
-	</li>
-      </ol>
+      You obtain the same number by expanding cofactors along <m>any</m> row or column.
     </p>
-  </algorithm>
+  </warning>
 
   <p>
-    In formulas, this says that if we pick row <m>i</m> to "expand along," then the cofactor expansion formula is
-    <me>\det A=a_{i1}C_{i1}+a_{i2}C_{i2}+\ldots+a_{in}C_{in}.</me>   
-     Similarly, if we pick column <m>j</m> to expand along, then we obtain a formula
-    <me>\det A=a_{1j}C_{1j}+a_{2j}C_{2j}+\ldots+a_{nj}C_{nj}.</me>
-    Note that this gives <m>2n</m> seemingly-different formulas, which all give the same number! We will see why this is true later, and simply assume this for now.
+    Now that we have a recursive formula for the determinant, we can finally prove the <xref ref="det-defn-unique">existence theorem</xref>.
   </p>
 
-  <p>
-    Let's try this out for a general <m>2\times2</m> matrix <m>A=\mat{a b;c d}</m>.     The minors are computed as follows:
-  </p>
+  <proof>
+    <p>
+      Let us review what we actually proved in <xref ref="determinants-definitions-properties"/>.  We showed that if <m>\det\colon\{n\times n\text{ matrices}\}\to\R</m> is any function satisfying the four <xref ref="det-defn-the-defn">defining properties of the determinant</xref> (or the three <xref ref="det-defn-use-multi">alternative defining properties</xref>), then it also satisfies all of the wonderful properties proved in that Section.  In particular, since <m>\det</m> can be computed using row reduction by this <xref ref="det-defn-ref-compute"/>, it is uniquely characterized by the defining properties.  What we did not prove was the existence of such a function, since we did not know that two different row reduction procedures would always compute the same answer.
+    </p>
+    <p>
+      Consider the function <m>d</m> defined by cofactor expansion along the first row:
+      <me>d(A) = \sum_{i=1}^n (-1)^{i+1} a_{i1}\det(A_{i1}).</me>
+      If we assume that the determinant exists for <m>(n-1)\times(n-1)</m> matrices, then there is no question that the function <m>d</m> exists, since we gave a formula for it.  Moreover, we showed in the proof of the <xref ref="det-cofact-expansion"/> above that <m>d</m> satisfies the three alternative defining properties of the determinant, again only assuming that the determinant exists for <m>(n-1)\times(n-1)</m> matrices.  This proves the existence of the determinant for <m>n\times n</m> matrices!
+    </p>
+    <p>
+      This is an example of a proof by <em>mathematical induction.</em>  We start by noticing that <m>\det\mat a = a</m> satisfies the four defining properties of the determinant of a <m>1\times 1</m> matrix.  Then we showed that the determinant of <m>n\times n</m> matrices exists, assuming the determinant of <m>(n-1)\times(n-1)</m> matrices exists.  This implies that all determinants exist, by the following chain of logic:
+      <me>
+        1\times 1\text{ exists} \;\implies\;
+        2\times 2\text{ exists} \;\implies\;
+        3\times 3\text{ exists} \;\implies\; \cdots.
+      </me>
+    </p>
+  </proof>
 
-  <sidebyside>
-    <image>
-      <latex-image-code><![CDATA[
-\begin{tikzpicture}[all nodes={}]
+  <example>
+    <statement>
+      <p>Find the determinant of
+      <me>A= \mat{2 1 3;-1 2 1;-2 2 3}.</me>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        We make the somewhat arbitrary choice to expand along the first row.  The minors and cofactors are
+        <latex-code><![CDATA[
+          \begin{tikzpicture}[every matrix/.append style={nodes={
+      text width=1em, text height=.66em, text depth=.5ex, align=center}}]]
 
-  \node at (0, 0) [anchor=east] {$A_{11} = {}\;$};
+          \matrix (a) at (0, 0) [math matrix, anchor=west] {
+             2 \& 1 \& 3 \\
+            -1 \& 2 \& 1 \\
+            -2 \& 2 \& 3 \\
+          };
+          \node [left=1mm of a] (A11) {$A_{11} = {}\;$};
+          \node [right=1mm of a] (a11)
+             {$\;{} = \mat{2 1; 2 3}$};
+          \node [right=1.5em of a11] (C11)
+             {$C_{11} = +\det\mat{2 1; 2 3} = 4$};
+
+          \matrix (b) at (a.south west) [math matrix, anchor=north west,
+              yshift=-.5em] {
+             2 \& 1 \& 3 \\
+            -1 \& 2 \& 1 \\
+            -2 \& 2 \& 3 \\
+          };
+          \node [left=1mm of b] (A12) {$A_{12} = {}\;$};
+          \node [right=1mm of b] (a12)
+             {$\;{} = \mat{-1 1; -2 3}$};
+          \node at (C11.west |- a12.east) [anchor=west] (C12)
+             {$C_{12} = -\det\mat{-1 1; -2 3} = 1$};
+
+          \matrix (c) at (b.south west) [math matrix, anchor=north west,
+              yshift=-.5em] {
+             2 \& 1 \& 3 \\
+            -1 \& 2 \& 1 \\
+            -2 \& 2 \& 3 \\
+          };
+          \node [left=1mm of c] (A13) {$A_{13} = {}\;$};
+          \node [right=1mm of c] (a13)
+             {$\;{} = \mat{-1 2; -2 2}$};
+          \node at (C12.west |- a13.east) [anchor=west] (C13)
+             {$C_{13} = +\det\mat{-1 2; -2 2} = 2$.};
+
+          \begin{scope}[every node/.style={
+                 seq-green, draw, thick, circle, inner sep=0pt, opacity=1},
+              decoration={zigzag,segment length=2mm, amplitude=.5em}, seq-red, thick, opacity=.7,
+              line join=round]
+            \node[fit=(a-1-1)] {};
+            \draw[decorate] (a-1-1.west) -- (a-1-3.east);
+            \draw[decorate] (a-1-1.north) -- (a-3-1.south);
+
+            \node[fit=(b-1-2)] {};
+            \draw[decorate] (b-1-1.west) -- (b-1-3.east);
+            \draw[decorate] (b-1-2.north) -- (b-3-2.south);
+
+            \node[fit=(c-1-3)] {};
+            \draw[decorate] (c-1-1.west) -- (c-1-3.east);
+            \draw[decorate] (c-1-3.north) -- (c-3-3.south);
+          \end{scope}
+
+          \end{tikzpicture}
+        ]]></latex-code>
+      Thus,
+      <me>\det(A)=a_{11}C_{11}+a_{12}C_{12}+a_{13}C_{13} =(2)(4)+(1)(1)+(3)(2)=15.</me>
+    </p>
+    </solution>
+  </example>
+
+  <specialcase hide-type="true">
+    <title>The determinant of a <m>2\times 2</m> matrix</title>
+    <p>
+      Let us compute (again) the determinant of a general <m>2\times2</m> matrix
+      <me>A=\mat{a b;c d}.</me>
+      The minors are
+      <latex-code><![CDATA[
+\begin{tikzpicture}[all nodes={},
+  every matrix/.append style={nodes={
+      text width=.7em, text height=.66em, text depth=.5ex}}]
+
   \matrix (a) at (0, 0) [math matrix, anchor=west] {
     a \& b \\ c \& d \\
     };
-  \node at (a.east) [anchor=west] (a22) {$\;{} = \mat d$};
+  \node [left=1mm of a] {$A_{11} = {}\;$};
+  \node [right=1mm of a] (a22) {$\;{} = \mat d$};
 
-  \node at (a22.east) [anchor=west, xshift=2em] (A12) {$A_{12} = {}\;$};
-  \matrix (b) at (A12.east) [math matrix, anchor=west] {
+  \matrix (b) [math matrix, right=4cm of a] {
     a \& b \\ c \& d \\
     };
-  \node at (b.east) [anchor=west] {$\;{} = \mat c$};
+  \node [left=1mm of b] (A12) {$A_{12} = {}\;$};
+  \node [right=1mm of b] {$\;{} = \mat c$};
 
   \matrix (c) at (a.south west) [math matrix, anchor=north west, yshift=-1em] {
     a \& b \\ c \& d \\
     };
-  \node at (c.west) [anchor=east] {$A_{21} = {}\;$};
-  \node at (c.east) [anchor=west] (a12) {$\;{} = \mat b$};
+  \node [left=1mm of c] {$A_{21} = {}\;$};
+  \node [right=1mm of c] (a12) {$\;{} = \mat b$};
 
   \matrix (d) at (b.south west) [math matrix, anchor=north west, yshift=-1em] {
     a \& b \\ c \& d \\
     };
-  \node at (d.west) [anchor=east] (A22) {$A_{22} = {}\;$};
-  \node at (d.east) [anchor=west] {$\;{} = \mat a$};
+  \node [left=1mm of d] (A22) {$A_{22} = {}\;$};
+  \node [right=1mm of d] {$\;{} = \mat a$.};
 
   \begin{scope}[every node/.style={
           seq-green, draw, thick, circle, inner sep=1pt, opacity=1},
@@ -169,44 +489,41 @@ the license is included in gfdl.xml.
   \end{scope}
 
 \end{tikzpicture}
+
       ]]>
-      </latex-image-code>
-    </image>
-  </sidebyside>
-
-  <p>
-    They are all just single-entry matrices. As we have seen that the determinant of a <m>1\times1</m> matrix is just the number inside of it, the cofactors are therefore
+      </latex-code>
+      The minors are all <m>1\times 1</m> matrices.  As we have seen that the determinant of a <m>1\times1</m> matrix is just the number inside of it, the cofactors are therefore
     <md>
-      <mrow>C_{11} &amp;= {+\det A_{11} = d} &amp;
-      C_{12} &amp;= {-\det A_{12} = -c}</mrow>
-      <mrow>C_{21} &amp;= {-\det A_{21} = -b} &amp;
-      C_{22} &amp;= {+\det A_{22} = a}</mrow>
+      <mrow>C_{11} &amp;= {+\det(A_{11}) = d} &amp;
+      C_{12} &amp;= {-\det(A_{12}) = -c}</mrow>
+      <mrow>C_{21} &amp;= {-\det(A_{21}) = -b} &amp;
+      C_{22} &amp;= {+\det(A_{22}) = a}</mrow>
     </md>
-    Choosing the first row of <m>A</m> in Step 1 of the cofactor expansion algorithm (when we do this, we also say that we are <em>expanding the determinant along the first row</em>), we find that
-    <me>\det A=aC_{11}+bC_{12} = ad - bc,</me>
-    which is a useful formula we encountered in the last section.
+    Expanding cofactors along the first column, we find that
+    <me>\det(A)=aC_{11}+cC_{21} = ad - bc,</me>
+    which agrees with the formulas in this <xref ref="matrix-inv-def-det"/> and this <xref ref="det-defn-22-again"/>.
   </p>
+  </specialcase>
 
-  <p>
-    We can also use the cofactor expansion to find a formula for the determinant of any <m>3\times 3</m> matrix.
-     Specifically,  we can find the determinant of 
+  <specialcase hide-type="true">
+    <title>The determinant of a <m>3\times 3</m> matrix</title>
+    <p>
+      We can also use cofactor expansions to find a formula for the determinant of a <m>3\times 3</m> matrix. Let is compute the determinant of
       <me>A = \mat{a_{11} a_{12} a_{13}; a_{21} a_{22} a_{23}; a_{31} a_{32} a_{33}}</me>
-      by expanding along the first row.  The minors and cofactors are computed as follows:
-      </p>
-      <sidebyside>
-        <image>
-          <latex-image-code><![CDATA[
-          \begin{tikzpicture}
+      by expanding along the first row.  The minors and cofactors are:
+      <latex-code><![CDATA[
+          \begin{tikzpicture}[every matrix/.append style={nodes={
+      text width=1.2em, text height=.66em, text depth=.5ex}}]]
 
-          \node at (0, 0) [anchor=east] (A11) {$A_{11} = {}\;$};
           \matrix (a) at (0, 0) [math matrix, anchor=west] {
             a_{11} \& a_{12} \& a_{13} \\
             a_{21} \& a_{22} \& a_{23} \\
             a_{31} \& a_{32} \& a_{33} \\
           };
-          \node at (a.east) [anchor=west] (a11)
+          \node [left=1mm of a] (A11) {$A_{11} = {}\;$};
+          \node [right=1mm of a] (a11)
              {$\;{} = \mat{a_{22} a_{23}; a_{32} a_{33}}$};
-          \node at (a11.east) [anchor=west, xshift=1em] (C11)
+          \node [right=1em of a11] (C11)
              {$C_{11} = +\det\mat{a_{22} a_{23}; a_{32} a_{33}}$};
 
           \matrix (b) at (a.south west) [math matrix, anchor=north west,
@@ -215,8 +532,8 @@ the license is included in gfdl.xml.
             a_{21} \& a_{22} \& a_{23} \\
             a_{31} \& a_{32} \& a_{33} \\
           };
-          \node at (b.west) [anchor=east] (A12) {$A_{12} = {}\;$};
-          \node at (b.east) [anchor=west] (a12)
+          \node [left=1mm of b] (A12) {$A_{12} = {}\;$};
+          \node [right=1mm of b] (a12)
              {$\;{} = \mat{a_{21} a_{23}; a_{31} a_{33}}$};
           \node at (C11.west |- a12.east) [anchor=west] (C12)
              {$C_{12} = -\det\mat{a_{21} a_{23}; a_{31} a_{33}}$};
@@ -227,8 +544,8 @@ the license is included in gfdl.xml.
             a_{21} \& a_{22} \& a_{23} \\
             a_{31} \& a_{32} \& a_{33} \\
           };
-          \node at (c.west) [anchor=east] (A13) {$A_{13} = {}\;$};
-          \node at (c.east) [anchor=west] (a13)
+          \node [left=1mm of c] (A13) {$A_{13} = {}\;$};
+          \node [right=1mm of c] (a13)
              {$\;{} = \mat{a_{21} a_{22}; a_{31} a_{32}}$};
           \node at (C12.west |- a13.east) [anchor=west] (C13)
              {$C_{13} = +\det\mat{a_{21} a_{22}; a_{31} a_{32}}$};
@@ -252,172 +569,268 @@ the license is included in gfdl.xml.
 
           \end{tikzpicture}
           ]]>
-          </latex-image-code>
-        </image>
-      </sidebyside>
-
-      <p>
-        The determinant is:
-        <md>
-          <mrow>\det A &amp;= a_{11}C_{11} + a_{12}C_{12} + a_{13}C_{13}</mrow>
-          <mrow>&amp;= a_{11}\det\mat{a_{22} a_{23}; a_{32} a_{33}}
+      </latex-code>
+      The determinant is:
+      <md>
+        <mrow>\det(A) \amp= a_{11}C_{11} + a_{12}C_{12} + a_{13}C_{13}</mrow>
+        <mrow>\amp= a_{11}\det\mat{a_{22} a_{23}; a_{32} a_{33}}
           - a_{12}\det\mat{a_{21} a_{23}; a_{31} a_{33}}
-          + a_{13}\det\mat{a_{21} a_{22}; a_{31} a_{32}},
+          + a_{13}\det\mat{a_{21} a_{22}; a_{31} a_{32}}
+        </mrow>
+        <mrow>\amp=
+        a_{11}(a_{22}a_{33}-a_{23}a_{32})
+	- a_{12}(a_{21}a_{33}-a_{23}a_{31})
+	+ a_{13}(a_{21}a_{32}-a_{22}a_{31})
+        </mrow>
+        <mrow>\amp=
+        a_{11}a_{22}a_{33} + a_{12}a_{23}a_{31} + a_{13}a_{21}a_{32}
+        -a_{13}a_{22}a_{31} - a_{11}a_{23}a_{32} - a_{12}a_{21}a_{33}.
+        </mrow>
+      </md>
+    </p>
+  </specialcase>
+
+  <p>
+    The formula for the determinant of a <m>3\times 3</m> matrix looks too complicated to memorize outright.  Fortunately, there is a useful mnemonic device:
+  </p>
+
+  <fact hide-type="true">
+    <title>Computing the Determinant of a <m>3\times 3</m> Matrix</title>
+    <p>
+      To compute the determinant of a <m>3\times 3</m> matrix, first draw a larger matrix with the first two columns repeated on the right.  Then add the products of the downward diagonals together, and subtract the products of the upward diagonals:
+      <latex-code><![CDATA[
+  \pgfdeclarelayer{background}
+  \pgfsetlayers{background,main}
+  \[
+  \det\mat{a_{11} a_{12} a_{13}; a_{21} a_{22} a_{23}; a_{31} a_{32} a_{33}}
+  = \begin{aligned}
+  \amp\textcolor{seq-green}{
+    a_{11}a_{22}a_{33} + a_{12}a_{23}a_{31} + a_{13}a_{21}a_{32}} \\
+  \amp\quad
+  \textcolor{seq-blue}{
+  -a_{13}a_{22}a_{31} - a_{11}a_{23}a_{32} - a_{12}a_{21}a_{33}}
+  \end{aligned}
+  \]
+  \centering
+  \begin{tikzpicture}[baseline=(a-2-1.base)]
+    \matrix (a) [matrix of math nodes, nodes={minimum width=2em}]
+    { a_{11} \& a_{12} \& a_{13} \& a_{11} \& a_{12} \\
+      a_{21} \& a_{22} \& a_{23} \& a_{21} \& a_{22} \\
+      a_{31} \& a_{32} \& a_{33} \& a_{31} \& a_{32} \\
+    };
+  \begin{pgfonlayer}{background}
+    \draw[seq-green!30!white, line cap=round, line width=1em]
+       ($(-3pt,3pt)+(a-1-1.center)$) -- ($(3pt,-3pt)+(a-3-3.center)$)
+       ($(-3pt,3pt)+(a-1-2.center)$) -- ($(3pt,-3pt)+(a-3-4.center)$)
+       ($(-3pt,3pt)+(a-1-3.center)$) -- ($(3pt,-3pt)+(a-3-5.center)$);
+  \end{pgfonlayer}
+  \node (minus) [right=2mm of a] {$-$};
+  \matrix (b) [matrix of math nodes, nodes={minimum width=2em}, right=2mm of minus]
+    { a_{11} \& a_{12} \& a_{13} \& a_{11} \& a_{12} \\
+      a_{21} \& a_{22} \& a_{23} \& a_{21} \& a_{22} \\
+      a_{31} \& a_{32} \& a_{33} \& a_{31} \& a_{32} \\
+    };
+  \begin{pgfonlayer}{background}
+    \draw[seq-blue!30!white, line cap=round, line width=1em]
+       ($(3pt,3pt)+(b-1-3.center)$) -- ($(-3pt,-3pt)+(b-3-1.center)$)
+       ($(3pt,3pt)+(b-1-4.center)$) -- ($(-3pt,-3pt)+(b-3-2.center)$)
+       ($(3pt,3pt)+(b-1-5.center)$) -- ($(-3pt,-3pt)+(b-3-3.center)$);
+  \end{pgfonlayer}
+
+  \end{tikzpicture}
+      ]]></latex-code>
+    </p>
+  </fact>
+
+  <p>
+    Alternatively, it is not necessary to repeat the first two columns if you allow your diagonals to <q>wrap around</q> the sides of a matrix.
+  </p>
+
+  <example>
+    <statement>
+      <p>
+	Find the determinant of <m>A=\mat{1 3 5; 2 0 -1; 4 -3 1}</m>.
+      </p>
+    </statement>
+    <solution>
+      <p>
+        We repeat the first two columns on the right, then add the products of the downward diagonals and subtract the products of the upward diagonals:
+        <latex-code><![CDATA[
+  \centering
+  \begin{tikzpicture}
+    \matrix (a) [matrix of math nodes, nodes={minimum width=2em}]
+    { 1 \& 3 \& 5 \& 1 \& 3 \\
+      2 \& 0 \& -1 \& 2 \& 0 \\
+      4 \& -3 \& 1 \& 4 \& -3 \\
+    };
+  \begin{pgfonlayer}{background}
+    \draw[seq-green!30!white, line cap=round, line width=1em]
+       ($(-3pt,3pt)+(a-1-1.center)$) -- ($(3pt,-3pt)+(a-3-3.center)$)
+       ($(-3pt,3pt)+(a-1-2.center)$) -- ($(3pt,-3pt)+(a-3-4.center)$)
+       ($(-3pt,3pt)+(a-1-3.center)$) -- ($(3pt,-3pt)+(a-3-5.center)$);
+  \end{pgfonlayer}
+  \node (minus) [right=2mm of a] {$-$};
+  \matrix (b) [matrix of math nodes, nodes={minimum width=2em}, right=2mm of minus]
+    { 1 \& 3 \& 5 \& 1 \& 3 \\
+      2 \& 0 \& -1 \& 2 \& 0 \\
+      4 \& -3 \& 1 \& 4 \& -3 \\
+    };
+  \begin{pgfonlayer}{background}
+    \draw[seq-blue!30!white, line cap=round, line width=1em]
+       ($(3pt,3pt)+(b-1-3.center)$) -- ($(-3pt,-3pt)+(b-3-1.center)$)
+       ($(3pt,3pt)+(b-1-4.center)$) -- ($(-3pt,-3pt)+(b-3-2.center)$)
+       ($(3pt,3pt)+(b-1-5.center)$) -- ($(-3pt,-3pt)+(b-3-3.center)$);
+  \end{pgfonlayer}
+
+  \end{tikzpicture}
+  \[
+  \det\mat{1 3 5; 2 0 -1; 4 -3 1}
+  = \begin{aligned}
+  \amp\textcolor{seq-green}{(1)(0)(1)+(3)(-1)(4)+(5)(2)(-3)} \\
+  \amp\quad\textcolor{seq-blue}{{}-(5)(0)(4)-(1)(-1)(-3)-(3)(2)(1)}
+  \end{aligned}
+  = -51.
+  \]
+  ]]></latex-code>
+      </p>
+    </solution>
+  </example>
+
+
+  <p>
+    Cofactor expansions are most useful when computing the determinant of a matrix that has a row or column with several zero entries.  Indeed, if the <m>(i,j)</m> entry of <m>A</m> is zero, then there is no reason to compute the <m>(i,j)</m> cofactor.
+  </p>
+
+  <example>
+    <statement>
+      <p>Find the determinant of
+      <me>A= \mat{2 5 -3 -2;-2 -3 2 -5;1 3 -2 0;-1 6 4 0}.</me>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        The fourth column has two zero entries.  We expand along the fourth column to find
+        <me>
+          \begin{split}
+          \det(A) \amp= 2\det\mat{-2 -3 2;1 3 -2;-1 6 4}
+          -5 \det \mat{2 5 -3;1 3 -2;-1 6 4} \\
+          \amp\qquad+ 0\det\mat\cdots + 0\det\mat\cdots.
+          \end{split}
+        </me>
+        We only have to compute two cofactors.  We can find these determinants using any method we wish; for the sake of illustration, we will expand cofactors on one and use the formula for the <m>3\times 3</m> determinant on the other.
+      </p>
+      <p>
+        Expanding along the first column, we compute
+        <md>
+          <mrow>
+            &amp; \det \mat{-2 -3 2;1 3 -2;-1 6 4}
+          </mrow>
+          <mrow>
+            &amp; \quad= -2 \det \mat{3 -2;6 4} -\det \mat{-3 2;6 4} -\det \mat{-3 2;3 -2}
+          </mrow>
+          <mrow>
+            &amp; \quad= -2 (24) -(-24) -0=-48+24+0=-24.
           </mrow>
         </md>
-        which is 
-		<me>
-			a_{11}(a_{22}a_{33}-a_{23}a_{32})
-			          - a_{12}(a_{21}a_{33}-a_{23}a_{31})
-			          + a_{13}(a_{21}a_{32}-a_{22}a_{31}).
-		</me>
-		This formula looks too complicated to memorize outright. Fortunately, there is a useful mnemonic device for this formula. Namely, to find the determinant of a <m>3\times3</m> matrix, we copy the first two columns to the right of the matrix, draw a series of upwards and downwards slashes, and add or subtract the products of the entries on the slashes. We illustrate this in an example.
+        Using the formula for the <m>3\times 3</m> determinant, we have
+        <me>
+          \det\mat{2 5 -3; 1 3 -2; -1 6 4}
+          = \begin{aligned}
+          \amp\textcolor{seq-green}{(2)(3)(4) + (5)(-2)(-1)+(-3)(1)(6)} \\
+          \amp\quad\textcolor{seq-blue}{{}-(2)(-2)(6)-(5)(1)(4)-(-3)(3)(-1)}
+          \end{aligned}
+          = 11.
+        </me>
+        Thus, we find that
+        <me>\det(A)= 2(-24)-5(11)=-103.</me>
       </p>
-	  <example>
-		  <statement>
-			  <p>
-				  To find the determinant of <m>A=\mat{1 3 5; 2 0 -1; 4 -3 1}</m>, we draw the diagram
-			  </p>
-	  <sidebyside>
-	    <image>
-	      <latex-image-code><![CDATA[
-	      \begin{tikzpicture}
-	        \matrix (a) [matrix of math nodes, nodes={minimum width=2em}]
-	        { 1 \& 3 \& 5 \& 1\& 3 \\
-	          2 \& 0 \& -1 \& 2 \& 0 \\
-	          4 \& -3 \& 1  \& 4 \& -3 \\
-	        };
-	      \begin{scope}[very thick, opacity=.75]
-	        \draw[seq-green] (a-1-1.north west) -- (a-3-3.south east);
-	        \draw[seq-green] (a-1-2.north west) -- (a-3-4.south east);
-	        \draw[seq-green] (a-1-3.north west) -- (a-3-5.south east);
-	        \draw[seq-blue]  (a-1-3.north east) -- (a-3-1.south west);
-	        \draw[seq-blue]  (a-1-4.north east) -- (a-3-2.south west);
-	        \draw[seq-blue]  (a-1-5.north east) -- (a-3-3.south west);
-	      \end{scope}
-	      \end{tikzpicture}
-	      ]]>
-	      </latex-image-code>
-	    </image>
-	  </sidebyside>
-
-	  <p>
-		  Then, we multiply all the entries on each slash together, and add the products of the downward ones, and subtract the products of the upwards ones. This gives that 
-	  <me>
-	  \begin{aligned}
-	  \det A&amp; = \textcolor{seq-green}{1\cdot0\cdot1+3\cdot(-1)\cdot4+5\cdot2\cdot(-3)}
-	  \\ &amp;\textcolor{seq-blue}{-4\cdot0\cdot5-(-3)\cdot(-1)\cdot1-\cdot(1)\cdot2\cdot3}
-	  \\
-	  &amp;= 0-12-30-0-3-6 = -51.
-	  \end{aligned}
-	  </me>
-	  </p>
-  </statement>
-	  </example>
-	  
-
-
-
+    </solution>
+  </example>
 
   <p>
-    Here is another example of using the cofactor expansion for a particular matrix.
+    Cofactor expansions are also very useful when computing the determinant of a matrix with unknown entries.  Indeed, it is inconvenient to row reduce in this case, because one cannot be sure whether an entry containing an unknown is a pivot or not.
   </p>
 
   <example>
     <statement>
-      <p>We find the determinant of
-      <me>A= \mat{2 1 3;-1 2 1;-2 2 3}.</me>
-      We make the somewhat arbitrary choice to expand along the first row. We compute the minors as
-      <me> A_{11} = \mat{2 1;2 3} \quad\quad A_{12}=\mat{-1 1;2 3} \quad\quad  A_{13}=\mat{-1 2;-2 2}.</me>
-      Computing these <m>2\times 2</m> determinants, we have
-      <me>\det A_{11}=4,\quad\quad \det A_{12}=-1,\quad\quad \det A_{13}=2.</me>
-      By inserting signs, we find that the cofactors are
-      <me>C_{11}=\det A_{11}=4,\quad\quad C_{12}=-\det A_{12}=1,\quad\quad C_{13}=\det A_{13}=2.</me>
-      Thus,
-      <me>\det A=a_{11}C_{11}+a_{12}C_{12}+a_{13}C_{13} =2(4)+(1)+3(2)=15.</me>
+      <p>
+        Compute the determinant of this matrix containing the unknown <m>\lambda</m>:
+        <me>
+          A = \mat{-\lambda, 2 7 12; 3 1-\lambda, 2 -4; 0 1 -\lambda, 7; 0 0 0 2-\lambda}.
+        </me>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        First we expand cofactors along the fourth row:
+        <me>
+  \begin{split}
+    \det(A) \amp= 0\det\mat\cdots + 0\det\mat\cdots + 0\det\mat\cdots \\
+    \amp\qquad+
+    (2-\lambda)\det\mat{-\lambda, 2 7; 3 1-\lambda, 2; 0 1 -\lambda}.
+    \end{split}
+        </me>
+        We only have to compute one cofactor.  To do so, first we clear the <m>(3,3)</m>-entry by performing the column replacement <m>C_3 = C_3 + \lambda C_2</m>, which does not change the determinant:
+        <me>
+          \det\mat{-\lambda, 2 7; 3 1-\lambda, 2; 0 1 -\lambda}
+          = \det\mat{-\lambda, 2 7+2\lambda; 3 1-\lambda, 2+\lambda(1-\lambda); 0 1 0}.
+        </me>
+        Now we expand cofactors along the third row to find
+        <me>
+  \begin{split}
+          \det\mat{-\lambda, 2 7+2\lambda; 3 1-\lambda, 2+\lambda(1-\lambda); 0 1 0}
+          \amp= (-1)^{2+3}\det\mat{-\lambda, 7+2\lambda; 3 2+\lambda(1-\lambda)} \\
+          \amp= -\biggl(-\lambda\bigl(2+\lambda(1-\lambda)\bigr) - 3(7+2\lambda) \biggr) \\
+          \amp= -\lambda^3 + \lambda^2 + 8\lambda + 21.
+  \end{split}
+        </me>
+        Therefore, we have
+        <me>
+          \det(A) = (2-\lambda)(-\lambda^3 + \lambda^2 + 8\lambda + 21)
+          = \lambda^4 - 3\lambda^3 - 6\lambda^2 - 5\lambda + 42.
+        </me>
+      </p>
+    </solution>
+  </example>
+
+  <p>
+    It is often most efficient to use a combination of several techniques when computing the determinant of a matrix.  Indeed, when expanding cofactors on a matrix, one can compute the determinants of the cofactors in whatever way is most convenient.  Or, one can perform row and column operations to clear some entries of a matrix before expanding cofactors, as in the previous example.
+  </p>
+
+  <warning>
+    <title>Summary: methods for computing determinants</title>
+    <p>
+      We have several ways of computing determinants:
+      <ol>
+        <li>
+          <p><em>Special formulas for <m>2\times 2</m> and <m>3\times 3</m> matrices.</em></p>
+          <p>
+            This is usually the best way to compute the determinant of a small matrix, except for a <m>3\times 3</m> matrix with several zero entries.
+          </p>
+        </li>
+        <li>
+          <p><em>Cofactor expansion.</em></p>
+          <p>
+            This is usually most efficient when there is a row or column with several zero entries, or if the matrix has unknown entries.
+          </p>
+        </li>
+        <li>
+          <p><em>Row and column operations.</em></p>
+          <p>
+            This is generally the fastest when presented with a large matrix which does not have a row or column with a lot of zeros in it.
+          </p>
+        </li>
+        <li>
+          <p><em>Any combination of the above.</em></p>
+          <p>
+            Cofactor expansion is recursive, but one can compute the determinants of the minors using whatever method is most convenient.  Or, you can perform row and column operations to clear some entries of a matrix before expanding cofactors.
+          </p>
+        </li>
+      </ol>
+      Remember, <em>all methods for computing the determinant yield the same number.</em>
     </p>
-    </statement>
-  </example>
+  </warning>
 
-  <p>
-    With this method, much larger determinants are also easy to compute, especially when there are lots of zeros in a row or column. Generally speaking, it is a good idea when computing an example to try to expand along a row or column with as many zeros as possible, or at least with the smallest entries possible.
-  </p>
-
-  <example>
-    <statement>
-      <p>We find the determinant of
-      <me>A= \mat{2 5 -3 -2;-2 -3 2 -5;1 3 -2 0;-1 6 4 0}.</me>
-      We expand along the last column to find
-      <me>\det A=2\det\mat{-2 -3 2;1 3 -2;-1 6 4}
-      -5 \det \mat{2 5 -3;1 3 -2;-1 6 4}.</me>
-      We can find these two determinants by expanding them as well. For example, expanding along the first column on the first one, we find that
-      <md>
-        <mrow>
-          &amp; \det \mat{-2 -3 2;1 3 -2;-1 6 4}
-        </mrow>
-        <mrow>
-          &amp; = -2 \det \mat{3 -2;6 4} -\det \mat{-3 2;6 4} -\det \mat{-3 2;3 -2}
-        </mrow>
-        <mrow>
-          &amp; = -2 (24) -(-24) -0=-48+24+0=-24.
-        </mrow>
-      </md>
-      Similarly, by expanding the second <m>3\times 3</m> matrix along the first column, we find that
-      <md>
-        <mrow>
-        &amp;
-        \mat{2 5 -3;1 3 -2;-1 6 4}
-        = 2 \det \mat{3 -2;6 4} -\det \mat{5 -3;6 4} -\det \mat{5 -3;3 -2}
-        </mrow><mrow>
-        &amp; = 2(24) -(38) -(-1) = 11.
-      </mrow>
-      </md>
-      Thus, we find that
-      <me>\det A= 2(-24)-5(11)=-103.</me>
-      </p>
-    </statement>
-  </example>
-
-  <p>
-    Although this technique works reasonably quickly in most small examples, several questions come to mind.
-
-    <ol>
-      <li>
-	Where do these formulas come from?
-      </li>
-      <li>
-	How do we know that these numbers give the same answer <em>regardless</em> of which row or column we choose (that is, this method gives <m>2n</m> different expressions for the same number attached to an <m>n\times n</m> matrix, which we claim are always all equal).
-      </li>
-      <li>
-	How do we know that this procedure gives the same number as in the definition of determinant by row reduction in the last section?
-      </li>
-    </ol>
-  </p>
-
-  <p>
-	  For now, we don't have the tools to answer these questions. However, these "coincidences" show that the existence of a function like the determinant is surprising and very special.
-  </p>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
+  <!-- TODO: cramer's rule -->
 
 </section>
