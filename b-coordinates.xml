@@ -21,7 +21,9 @@ the license is included in gfdl.xml.
     </ol>
   </objectives>
 
-  <p>We start with a <em>lemma</em>, which is a small assertion that must be proved.</p>
+  <p>
+    In this Section, we interpret a basis of a subspace <m>V</m> as a <em>coordinate system</em> on <m>V</m>, and we learn how to write a vector in <m>V</m> in that coordinate system.
+  </p>
 
   <lemma xml:id="dimension-unique-coeff" type-name="Fact">
     <statement>
