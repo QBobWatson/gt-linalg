@@ -800,7 +800,7 @@ the license is included in gfdl.xml.
       Like inversion, transposition reverses the order of matrix multiplication.
     </p>
 
-    <lemma xml:id="det-defn-prod-trans">
+    <lemma xml:id="det-defn-prod-trans" type-name="Fact">
       <statement>
         <p>
           Let <m>A</m> be an <m>m\times n</m> matrix, and let <m>B</m> be an <m>n\times p</m> matrix.  Then

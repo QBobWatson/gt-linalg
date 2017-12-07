@@ -23,7 +23,7 @@ the license is included in gfdl.xml.
 
   <p>We start with a <em>lemma</em>, which is a small assertion that must be proved.</p>
 
-  <lemma xml:id="dimension-unique-coeff">
+  <lemma xml:id="dimension-unique-coeff" type-name="Fact">
     <statement>
       <p>
         If <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> is a basis for a subspace <m>V</m>, then any vector <m>x</m> in <m>V</m> can be written as a linear combination
@@ -60,7 +60,7 @@ the license is included in gfdl.xml.
   </specialcase>
 
   <p>
-    Given the above example, it makes sense to interpret the coefficients of a linear combination of basis vectors as <q>coordinates</q> with respect to that basis.
+    What exactly are coordinates, anyway?  One way to think of coordinates is that they give directions for how to get to a certain point from the origin.  In the above example, the linear combination <m>3e_1+5e_2-2e_3</m> can be thought of as the following list of instructions: start at the origin, travel <m>3</m> units north, then travel <m>5</m> units east, then <m>2</m> units down.
   </p>
 
   <definition xml:id="dimension-defn-Bcoords">
@@ -75,14 +75,17 @@ the license is included in gfdl.xml.
   </definition>
 
   <p>
-    In the above situation, we will often say that <q><m>c_1</m> is the <m>v_1</m>-coordinate of <m>x</m></q>, and likewise for <m>c_2,\ldots,c_m</m>.
+    If we change the basis, then we can still give instructions for how to get to the point <m>(3,5,-2)</m>, but the instructions will be different. Say for example we take the basis
+    <me>v_1=e_1+e_2 = \vec{1,1,0}, \quad v_2=e_2 = \vec{0 1 0},\quad v_3 =e_3 = \vec{0 0 1}.</me>
+    We can write <m>(3,5,-2)</m> in this basis as <m>3v_1+2v_2-2v_3</m>. In other words: start at the origin, travel 3 units northeast, two units east, and 2 units down.
+    In this situation, we can say that <q><m>3</m> is the <m>v_1</m>-coordinate of <m>(3,5,-2)</m>, <m>5</m> is the <m>v_2</m>-coordinate of <m>(3,5,-2)</m>, and <m>-2</m> is the <m>v_3</m>-coordinate of <m>(3,5,-2)</m>.</q>
   </p>
 
-  <remark>
+  <warning>
     <p>
       The above <xref ref="dimension-defn-Bcoords"/> gives a way of using <m>\R^m</m> to <em>label</em> the points of a subspace of dimension <m>m</m>: a point is simply labeled by its <m>\cB</m>-coordinate vector.  For instance, if we choose a basis for a plane, we can label the points of that plane with the elements of <m>\R^2</m>.
     </p>
-  </remark>
+  </warning>
 
   <example>
     <title>A nonstandard coordinate system on <m>\R^2</m></title>
@@ -135,6 +138,7 @@ the license is included in gfdl.xml.
 
 \end{tikzpicture}
         </latex-code>
+        This picture could be the grid of streets in <url href="https://www.google.com/maps/place/Palo+Alto,+CA/@37.4400325,-122.1512543,15.75z/data=!4m5!3m4!1s0x808fb07b9dba1c39:0xe1ff55235f576cf!8m2!3d37.4418834!4d-122.1430195?hl=en">Palo Alto, California</url>.  Residents of Palo Alto refer to northwest as <q>north</q> and to northeast as <q>east</q>.  There is a reason for this: the old road to San Francisco is called El Camino Real, and that road runs from the southeast to the northwest in Palo Alto.  So when a Palo Alto resident says <q>go south two blocks and east one block</q>, they are giving directions from the origin to the Whole Foods at <m>w</m>.
       </p>
       <figure>
         <caption>A picture of the basis <m>\cB = \{v_1,v_2\}</m> of <m>\R^2</m>.  The grid indicates the coordinate system defined by the basis <m>\cB</m>; one set of lines measures the <m>v_1</m>-coordinate, and the other set measures the <m>v_2</m>-coordinate.  Use the sliders to find the <m>\cB</m>-coordinates of <m>v</m>.</caption>
