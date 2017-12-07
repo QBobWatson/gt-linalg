@@ -419,4 +419,30 @@
   </xsl:choose>
 </xsl:template>
 
+<!-- JDR: support for hidden (not knowl-ized!) subsections. -->
+<xsl:template match="subsection">
+    <!-- location info for debugging efforts -->
+    <xsl:apply-templates select="." mode="debug-location" />
+    <!-- Heading, div for this structural subdivision -->
+    <xsl:variable name="ident">
+      <xsl:apply-templates select="." mode="internal-id" />
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="@hidden='true'">
+        <section class="{local-name(.)} hidden-subsection" id="{$ident}">
+          <xsl:apply-templates select="." mode="section-header" />
+          <div class="hidden-subsection-content">
+            <xsl:apply-templates />
+          </div>
+        </section>
+      </xsl:when>
+      <xsl:otherwise>
+        <section class="{local-name(.)}" id="{$ident}">
+          <xsl:apply-templates select="." mode="section-header" />
+          <xsl:apply-templates />
+        </section>
+      </xsl:otherwise>
+    </xsl:choose>
+</xsl:template>
+
 </xsl:stylesheet>

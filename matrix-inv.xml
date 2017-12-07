@@ -121,7 +121,7 @@ the license is included in gfdl.xml.
 
  </subsection>
 
- <subsection>
+ <subsection xml:id="matrix-inv-computing">
    <title>Computing the Inverse Matrix</title>
 
    <p>
