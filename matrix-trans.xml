@@ -686,7 +686,7 @@ the license is included in gfdl.xml.
     </p>
 
     <p>
-      It is relatively straightforward to find a formula for <m>f(\theta,\phi,\psi)</m> using some basic trigonometry.  If you want the robot to fetch your coffee cup, however, you have to <em>find</em> the angles <m>\theta,\phi,\psi</m> that will put the hand at the position of your beverage.  It is not at all obvious how to do this, and it is not even clear if the answer is unique!  You can ask yourself: <q>which positions on the table can my robot arm reach?</q> or <q>what is the arm's range of motion?</q>  This is the same as asking: <q>what is the range of <m>f</m>?</q>
+      It is relatively straightforward to find a formula for <m>f(\theta,\phi,\psi)</m> using some basic trigonometry.  If you want the robot to fetch your coffee cup, however, you have to <em>find</em> the angles <m>\theta,\phi,\psi</m> that will put the hand at the position of your beverage.  It is not at all obvious how to do this, and it is not even clear if the answer is unique!  You can ask yourself: <q>which positions on the table can my robot arm reach?</q> or <q>what is the arm<rsq/>s range of motion?</q>  This is the same as asking: <q>what is the range of <m>f</m>?</q>
     </p>
     <p>
       Unfortunately, this kind of function does not come from a matrix, so one cannot use linear algebra to answer these kinds of questions.  In fact, these functions are rather complicated; their study is the subject of <url href="https://en.wikipedia.org/wiki/Inverse_kinematics">inverse kinematics</url>.

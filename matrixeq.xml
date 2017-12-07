@@ -296,7 +296,7 @@ the license is included in gfdl.xml.
           <mathbox source="demos/spans.html?v1=2,-1,1&amp;v2=1,0,-1&amp;target=0,2,2&amp;range=5" height="500px"/>
         </figure>
 
-        <p>Let's check our geometric answer by solving the matrix equation using row reduction.  We put the system into an augmented matrix and row reduce:
+        <p>Let<rsq/>s check our geometric answer by solving the matrix equation using row reduction.  We put the system into an augmented matrix and row reduce:
         <me>\amat{2 1 0; -1 0 2; 1 -1 2}
         \quad\xrightarrow{\text{RREF}}\quad
         \amat{1 0 0; 0 1 0; 0 0 1}.
@@ -377,7 +377,7 @@ the license is included in gfdl.xml.
           <mathbox source="demos/spans.html?v1=2,-1,1&amp;v2=1,0,-1&amp;target=1,-1,2&amp;range=5" height="500px"/>
         </figure>
 
-        <p>Let's check our geometric answer by solving the matrix equation using row reduction.  We put the system into an augmented matrix and row reduce:
+        <p>Let<rsq/>s check our geometric answer by solving the matrix equation using row reduction.  We put the system into an augmented matrix and row reduce:
         <me>\amat{2 1 1; -1 0 -1; 1 -1 2}
         \quad\xrightarrow{\text{RREF}}\quad
         \amat{1 0 1; 0 1 -1; 0 0 0}.

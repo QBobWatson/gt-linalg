@@ -29,7 +29,7 @@ the license is included in gfdl.xml.
 number of vectors, as in the Figure below.  This means that (at least) one of the vectors is <em>redundant</em>: it can be removed without affecting the span.  In the present section, we formalize this idea in the notion of <em>linear (in)dependence</em>.
     </p>
     <figure xml:id="linindep-intro-pic">
-      <caption>Pictures of sets of vectors that are linearly dependent.  Note that in each case, one vector is in the span of the others<mdash/>so it doesn't make the span bigger.</caption>
+      <caption>Pictures of sets of vectors that are linearly dependent.  Note that in each case, one vector is in the span of the others<mdash/>so it doesn<rsq/>t make the span bigger.</caption>
       <image>
         <latex-image-code>
           <![CDATA[
@@ -1115,7 +1115,7 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
                     \bigl(a_1-2a_2-a_3\bigr){v}_3
                     = 0
           </me>
-          We can certainly make this vector equation true if we can determine values for the <m>a</m>'s such that
+          We can certainly make this vector equation true if we can determine values for the <m>a</m><rsq/>s such that
           <me>
             \syseq{2a_1 + a_2 + a_3 = 0;
                    3a_1 - a_2 + a_3 = 0;
