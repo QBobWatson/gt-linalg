@@ -15,14 +15,14 @@
 
 <body>
 
-    <h4>1. The rules of reproduction</h4>
+    <h4>1. The rules of reproduction (<a href="rabbit_animation.html " target="_blank">Animation</a>)</h4>
     <!-- <div id="problem"> -->
     In a population of rabbits...
     <ul>
         <li>half of the new born rabbits survive their first year</li>
         <li>of those, half survive their second year</li>
         <li>the maximum life span is three years</li>
-        <li>rabbits produce 0, 6, 8 rabbits in their first, second, and third years</li>
+        <li>rabbits produce 0, 6, 8 rabbits in their first, second, and third years.</li>
     </ul>
     <!-- </div> -->
 
@@ -45,20 +45,20 @@
     <!-- <p id="power-of-two"></p> -->
     <!-- <p id="ratio1"></p> -->
     <!-- <p id="ratio2"></p> -->
-    <h4>3. Fastforward in time and see how the ratio of babies, one-year olds and two-year olds change as time goes.</h4>
+    <h4>3. Fastforward in time and see how the ratio of babies, one-year olds and two-year olds change as time goes. (Hover over the bars to see the exact proportions.)</h4>
     <button id="iterate-button" onclick="fastforward()" style="background-color:rgb(255, 187, 0);color:black;">Fastforward 1 year</button>
 </div>
 <div id="plot">
 
-    <h4>4. Can you guess the eigenvector of the matrix <span id="matrix"></span> describing the process?
+    <h4>4. Can you guess limiting proportions? (E.g. 5:7:2)
     </h4>
-    Eigenvector: 
-    <input id="coord1" type="number" style="width:10%">
-    <input id="coord2" type="number" style="width:10%">
-    <input id="coord3" type="number" style="width:10%">
+    <input id="coord1" type="number" style="width:5%">   :    
+    <input id="coord2" type="number" style="width:5%">  :
+    <input id="coord3" type="number" style="width:5%">
     <button id="submit-button" onclick="testAnswer()" style="background-color:rgb(255, 187, 0);color:black;">Submit</button>
     
-    <h4>5. Now try starting from a different starting population and see if the population distribution ends up being the same or not.</h4>
+    <h4>5. Now try starting from a different starting population and see if the we end up with the same proportions.</h4>
+    <h4>6. Also try entering the limiting proportions you've found in #4 as the starting population. How can you describe what happens to the population after one year?</h4>
     <!-- 
     <div id="answer">The process is described by the matrix
         <span id="matrix"></span>, whose eigenvalues are 2 and -1 (with multiplicity 2). Under iteration, the direction of our vector is closer
@@ -82,7 +82,7 @@
         function setData() {
             data[0].x[2] = $("#zero_input").val() / $("#two_input").val();
             data[0].x[1] = $("#one_input").val() / $("#two_input").val();
-            data[0].x[0] = 1
+            data[0].x[0] = 1;
             Plotly.newPlot('plot', data, layout, options);
 
         }
@@ -99,9 +99,9 @@
             var vec = [$("#coord1").val(), $("#coord2").val(), $("#coord3").val()];            
             console.log(vec);
             if (vec[0] == 16*vec[2] && vec[1] == 4*vec[2] && vec[2] != 0) {
-                alert("That's right! Under iteration, the direction of our vector is closer and closer to the direction of the eigenvector corresponding to the largest eigenvalue.");
+                alert("That's right!");
             } else {
-                alert("The answer is not correct. Try again.");
+                alert("Not correct. Try fastforwarding more and read the numbers on the bar diagram.");
             }
         }
 
