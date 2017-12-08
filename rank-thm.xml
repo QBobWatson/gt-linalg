@@ -59,7 +59,7 @@ the license is included in gfdl.xml.
       <statement>
         <p>
           If <m>A</m> is an <m>m\times n</m> matrix, then
-          <me>\rank(A) + \nullity(A) = n = \text{the number of columns of $A$}.</me>
+          <me>\rank(A) + \nullity(A) = n.</me>
         </p>
       </statement>
     </theorem>
