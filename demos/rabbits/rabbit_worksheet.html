@@ -4,19 +4,23 @@
 <head>
     <meta charset="utf-8">
     <title>Rabbits</title>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="rabbit_worksheet.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        html {
+            font-size: 90%;
+        }
+        button {
+            background-color: rgb(255, 187, 0);
+            color: black;
+        }
     </style>
 </head>
 
 <body>
 
-    <h4>1. The rules of reproduction (<a href="rabbit_animation.html " target="_blank">Animation</a>)</h4>
-    <!-- <div id="problem"> -->
+    <h4>1. The rules of reproduction (
+        <a href="rabbit_animation.html " target="_blank">Animation</a>)</h4>
     In a population of rabbits...
     <ul>
         <li>half of the new born rabbits survive their first year</li>
@@ -24,59 +28,42 @@
         <li>the maximum life span is three years</li>
         <li>rabbits produce 0, 6, 8 rabbits in their first, second, and third years.</li>
     </ul>
-    <!-- </div> -->
 
-    <!-- <div id="wrapper"> -->
-
-    <!-- <div id="info"> -->
-    <!-- <p id="year">Year 0</p> -->
     <h4>2. Enter the starting population</h4>
     <div style="display:inline-block">
-    <span>Age 0-1</span>
-    <input id="zero_input" type="number">
-    <br>
-    <span>Age 1-2</span>
-    <input id="one_input" type="number">
-    <br>
-    <span>Age 2-3</span>
-    <input id="two_input" type="number">
-    <br>
+        <span>Age 0-1</span>
+        <input id="zero_input" type="number">
+        <br>
+        <span>Age 1-2</span>
+        <input id="one_input" type="number">
+        <br>
+        <span>Age 2-3</span>
+        <input id="two_input" type="number">
+        <br>
     </div>
-    <!-- <p id="power-of-two"></p> -->
-    <!-- <p id="ratio1"></p> -->
-    <!-- <p id="ratio2"></p> -->
-    <h4>3. Fastforward in time and see how the ratio of babies, one-year olds and two-year olds change as time goes. (Hover over the bars to see the exact proportions.)</h4>
-    <button id="iterate-button" onclick="fastforward()" style="background-color:rgb(255, 187, 0);color:black;">Fastforward 1 year</button>
-</div>
-<div id="plot">
+    <h4>3. Fastforward in time and see how the ratio of babies, one-year olds and two-year olds change as time goes. (Hover over
+        the bars to see the exact proportions.)</h4>
+    <button id="iterate-button" onclick="fastforward()">Fastforward 1 year</button>
+    </div>
+    <div id="plot">
+    </div>
 
     <h4>4. Can you guess limiting proportions? (E.g. 5:7:2)
     </h4>
-    <input id="coord1" type="number" style="width:5%">   :    
-    <input id="coord2" type="number" style="width:5%">  :
+    <input id="coord1" type="number" style="width:5%"> :
+    <input id="coord2" type="number" style="width:5%"> :
     <input id="coord3" type="number" style="width:5%">
-    <button id="submit-button" onclick="testAnswer()" style="background-color:rgb(255, 187, 0);color:black;">Submit</button>
-    
-    <h4>5. Now try starting from a different starting population and see if the we end up with the same proportions.</h4>
-    <h4>6. Also try entering the limiting proportions you've found in #4 as the starting population. How can you describe what happens to the population after one year?</h4>
-    <!-- 
-    <div id="answer">The process is described by the matrix
-        <span id="matrix"></span>, whose eigenvalues are 2 and -1 (with multiplicity 2). Under iteration, the direction of our vector is closer
-        and closer to the direction of the eigenvector corresponding to the largest eigenvalue, which is 2. This eigenvector
-        is
-        <span id="vector"></span>, and the ratio of the first and second coordinates is 4. This is why the ratio of 1-year olds and babies
-        is converging to 4. Since our vector is eventually very close to the eigenvector, its entries are increase approximately
-        by a factor of two under every iteration.</div>
+    <button id="submit-button" onclick="testAnswer()">Submit</button>
+
+    <h4>5. Now try starting from a different starting population and see if the you end up with the same proportions.</h4>
+    <h4>6. Also try entering the limiting proportions you've found in #4 as the starting population. How can you describe what
+        happens to the population after one year?</h4>
 
     <div id="message"></div>
-    </div> -->
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <!-- <script src="../lib/dat.gui.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js">
-    </script>
     <script>
 
         function setData() {
@@ -84,7 +71,6 @@
             data[0].x[1] = $("#one_input").val() / $("#two_input").val();
             data[0].x[0] = 1;
             Plotly.newPlot('plot', data, layout, options);
-
         }
 
         function fastforward() {
@@ -96,9 +82,9 @@
         }
 
         function testAnswer() {
-            var vec = [$("#coord1").val(), $("#coord2").val(), $("#coord3").val()];            
+            var vec = [$("#coord1").val(), $("#coord2").val(), $("#coord3").val()];
             console.log(vec);
-            if (vec[0] == 16*vec[2] && vec[1] == 4*vec[2] && vec[2] != 0) {
+            if (vec[0] == 16 * vec[2] && vec[1] == 4 * vec[2] && vec[2] != 0) {
                 alert("That's right!");
             } else {
                 alert("Not correct. Try fastforwarding more and read the numbers on the bar diagram.");
@@ -116,35 +102,20 @@
             width: 300,
             height: 150,
             margin: {
-                // l: 50,
-                // r: 50,
                 b: 0,
                 t: 0,
-                // pad: 4
             },
         }
         var options = {
-	// scrollZoom: true, // lets us scroll to zoom in and out - works
-	showLink: false, // removes the link to edit on plotly - works
-	modeBarButtonsToRemove: ['toImage', 'zoom2d', 'pan', 'pan2d', 'autoScale2d'],
-	//modeBarButtonsToAdd: ['lasso2d'],
-	displayLogo: false, // this one also seems to not work
-	displayModeBar: false, //this one does work
-};
+            showLink: false, // removes the link to edit on plotly - works
+            modeBarButtonsToRemove: ['toImage', 'zoom2d', 'pan', 'pan2d', 'autoScale2d'],
+            displayLogo: false, // this one also seems to not work
+            displayModeBar: false, //this one does work
+        };
 
 
         $(document).ready(function () {
             setData();
-            katex.render("\\begin{pmatrix} 0 & 6 & 8 \\\\ -1/2 & 0 & 0 \\\\ 0 & -1/2 & 0 \\end{pmatrix}", $("#matrix")[0]);
-            // katex.render("\\begin{pmatrix} 16 \\\\ 4 \\\\ 1 \\end{pmatrix}", $("#vector")[0]);
-
-            // var pop = new Population();
-            // show(pop.data);
-
-            // var gui = new dat.GUI();
-            // gui.add(pop, 'iterate');
-            // gui.add(pop, 'animate');
-            // gui.add(pop, 'toggleAnswer');
         })
     </script>
 </body>

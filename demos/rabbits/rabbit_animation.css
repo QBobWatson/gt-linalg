@@ -52,29 +52,6 @@
     width: 25%;
 }
 
-#year {
-    font-size: 2em;    
-}
-
-#power-of-two, #ratio {
-    font-size: 1.5em;    
-}
-
-#puzzle {
-    font-size: 1em;
-}
-
-#answer {
-    position: absolute;
-    left:30%;
-    top: 40%;
-    width: 60%;
-    display: none;
-    background-color: rgb(235, 199, 102);
-    padding: 1em;
-    border: solid;
-}
-
 
 .birth-multiplier, .death-multiplier{
     /* border:solid; */
@@ -99,4 +76,10 @@ div.corpses {
     top: 5%;        
     font-size: 5em;
     display: none;
+}
+
+button {
+    background-color:rgb(255, 187, 0);
+    color:black;
+    font-size:1.5em;
 }
