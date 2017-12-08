@@ -186,6 +186,10 @@ the license is included in gfdl.xml.
      </proof>
    </proposition>
 
+   <p>
+     There is an analogous formula for the inverse of an <m>n\times n</m> matrix, but it is not as simple, and it is computationally intensive.  The interested reader can find it in <xref ref="det-cofact-cramer-ss"/>.
+   </p>
+
    <example>
      <p>
        Let

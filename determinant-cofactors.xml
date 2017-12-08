@@ -842,7 +842,7 @@ the license is included in gfdl.xml.
 
   </subsection>
 
-  <subsection hidden="true">
+  <subsection hidden="true" xml:id="det-cofact-cramer-ss">
     <title>Cramer<rsq/>s Rule</title>
 
     <p>
