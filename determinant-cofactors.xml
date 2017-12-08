@@ -20,14 +20,20 @@ the license is included in gfdl.xml.
     </ol>
   </objectives>
 
+  <introduction>
+    <p>
+      In this Section, we give a recursive formula for the determinant of a matrix, called a <em>cofactor expansion</em>.  The formula is recursive in that we will compute the determinant of an <m>n\times n</m> matrix <em>assuming</em> we already know how to compute the determinant of an <m>(n-1)\times(n-1)</m> matrix.
+    </p>
+    <p>
+      At the end is a supplementary Subsection on Cramer<rsq/>s rule and a cofactor formula for the inverse matrix.
+    </p>
+  </introduction>
+
   <subsection>
     <title>Cofactor Expansions</title>
-  <p>
-    In this Section, we give a recursive formula for the determinant of a matrix, called a <em>cofactor expansion</em>.  The formula is recursive in that we will compute the determinant of an <m>n\times n</m> matrix <em>assuming</em> we already know how to compute the determinant of an <m>(n-1)\times(n-1)</m> matrix.
-  </p>
 
   <p>
-    The beginning of the recursion is the case of <m>1\times 1</m> matrices. The definition of determinant directly implies that
+    A recursive formula must have a starting point.  For cofactor expansions, the starting point is the case of <m>1\times 1</m> matrices. The definition of determinant directly implies that
     <me>\det\mat a=a.</me>
     To describe cofactor expansions, we need to introduce some notation.
   </p>
