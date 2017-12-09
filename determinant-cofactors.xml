@@ -15,16 +15,25 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Learn to compute the determinant using cofactor expansions.</li>
+      <li>Learn to recognize which methods are best suited to compute the determinant of a given matrix.</li>
       <li>Vocabulary words: <term>minor</term>, <term>cofactor</term>, <term>cofactor expansion</term>.</li>
     </ol>
   </objectives>
 
-  <p>
-    In this Section, we give a recursive formula for the determinant of a matrix, called a <em>cofactor expansion</em>.  The formula is recursive in that we will compute the determinant of an <m>n\times n</m> matrix <em>assuming</em> we already know how to compute the determinant of an <m>(n-1)\times(n-1)</m> matrix.
-  </p>
+  <introduction>
+    <p>
+      In this Section, we give a recursive formula for the determinant of a matrix, called a <em>cofactor expansion</em>.  The formula is recursive in that we will compute the determinant of an <m>n\times n</m> matrix <em>assuming</em> we already know how to compute the determinant of an <m>(n-1)\times(n-1)</m> matrix.
+    </p>
+    <p>
+      At the end is a supplementary Subsection on Cramer<rsq/>s rule and a cofactor formula for the inverse matrix.
+    </p>
+  </introduction>
+
+  <subsection>
+    <title>Cofactor Expansions</title>
 
   <p>
-    The beginning of the recursion is the case of <m>1\times 1</m> matrices. The definition of determinant directly implies that
+    A recursive formula must have a starting point.  For cofactor expansions, the starting point is the case of <m>1\times 1</m> matrices. The definition of determinant directly implies that
     <me>\det\mat a=a.</me>
     To describe cofactor expansions, we need to introduce some notation.
   </p>
@@ -432,7 +441,7 @@ the license is included in gfdl.xml.
     </solution>
   </example>
 
-  <specialcase hide-type="true">
+  <specialcase hide-type="true" xml:id="det-cofactor-22">
     <title>The determinant of a <m>2\times 2</m> matrix</title>
     <p>
       Let us compute (again) the determinant of a general <m>2\times2</m> matrix
@@ -831,6 +840,299 @@ the license is included in gfdl.xml.
     </p>
   </warning>
 
-  <!-- TODO: cramer's rule -->
+  </subsection>
+
+  <subsection hidden="true" xml:id="det-cofact-cramer-ss">
+    <title>Cramer<rsq/>s Rule</title>
+
+    <p>
+      Recall from this <xref ref="matrix-inv-22"/> that one can compute the determinant of a <m>2\times 2</m> matrix using the rule
+      <me>A = \mat{d -b; -c a} \quad\implies\quad
+      A\inv = \frac 1{\det(A)}\mat{d -b; -c a}.</me>
+      We computed the cofactors of a <m>2\times 2</m> matrix in this <xref ref="det-cofactor-22"/>; using <m>C_{11}=d,\,C_{12}=-c,\,C_{21}=-b,\,C_{22}=a</m>, we can rewrite the above formula as
+      <me>A\inv = \frac 1{\det(A)}\mat{C_{11} C_{21}; C_{12} C_{22}}.</me>
+      It turns out that this formula generalizes to <m>n\times n</m> matrices.
+    </p>
+
+    <theorem xml:id="det-cofact-inv-cramer">
+      <statement>
+        <p>
+          Let <m>A</m> be an invertible <m>n\times n</m> matrix, with cofactors <m>C_{ij}</m>.  Then
+          <men xml:id="det-cofact-inv-cramer-fn">
+            A\inv = \frac 1{\det(A)}
+            \mat{C_{11} C_{21} \cdots, C_{n-1,1} C_{n1};
+                 C_{12} C_{22} \cdots, C_{n-1,2} C_{n2};
+                 \vdots, \vdots, \ddots, \vdots, \vdots;
+                 C_{1,n-1} C_{2,n-1} \cdots, C_{n-1,n-1} C_{n,n-1};
+                 C_{1n} C_{2n} \cdots, C_{n-1,n} C_{nn}}.
+          </men>
+        </p>
+      </statement>
+    </theorem>
+
+    <p>
+      The matrix of cofactors is sometimes called the <term>adjugate matrix</term> of <m>A</m>, and is denoted <m>\adj(A)</m>:
+      <me>
+        \adj(A) = \mat{C_{11} C_{21} \cdots, C_{n-1,1} C_{n1};
+                 C_{12} C_{22} \cdots, C_{n-1,2} C_{n2};
+                 \vdots, \vdots, \ddots, \vdots, \vdots;
+                 C_{1,n-1} C_{2,n-1} \cdots, C_{n-1,n-1} C_{n,n-1};
+                 C_{1n} C_{2n} \cdots, C_{n-1,n} C_{nn}}.
+      </me>
+      Note that the <m>(i,j)</m> cofactor <m>C_{ij}</m> goes in the <m>(j,i)</m> entry the adjugate matrix, not the <m>(i,j)</m> entry.
+    </p>
+
+    <remark>
+      <p>
+        In fact, one always has
+        <m>A\cdot\adj(A) = \adj(A)\cdot A = \det(A)I_n,</m>
+        whether or not <m>A</m> is invertible.
+      </p>
+    </remark>
+
+    <example>
+      <statement>
+        <p>
+          Use the <xref ref="det-cofact-inv-cramer"/> to compute <m>A\inv</m>, where
+          <me>A = \mat{1 0 1; 0 1 1; 1 1 0}.</me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The minors are:
+          <latex-code>
+\begin{align*}
+  A_{11} \amp= \mat{1 1; 1 0} \amp
+  A_{12} \amp= \mat{0 1; 1 0} \amp
+  A_{13} \amp= \mat{0 1; 1 1} \\
+  A_{21} \amp= \mat{0 1; 1 0} \amp
+  A_{22} \amp= \mat{1 1; 1 0} \amp
+  A_{23} \amp= \mat{1 0; 1 1} \\
+  A_{31} \amp= \mat{0 1; 1 1} \amp
+  A_{32} \amp= \mat{1 1; 0 1} \amp
+  A_{33} \amp= \mat{1 0; 0 1}
+\end{align*}
+          </latex-code>
+          The cofactors are:
+          <latex-code>
+\begin{align*}
+  C_{11} \amp= -1  \amp  C_{12} \amp=  \phantom-1  \amp  C_{13} \amp= -1 \\
+  C_{21} \amp= \phantom-1  \amp  C_{22} \amp= -1  \amp  C_{23} \amp= -1 \\
+  C_{31} \amp= -1  \amp  C_{32} \amp= -1  \amp  C_{33} \amp=  \phantom-1
+\end{align*}
+          </latex-code>
+          Expanding along the first row, we compute the determinant to be
+          <me>
+            \det(A) = 1\cdot C_{11} + 0\cdot C_{12} + 1\cdot C_{13} = -2.
+          </me>
+          Therefore, the inverse is
+          <me>
+            A\inv = \frac 1{\det(A)}
+            \mat{C_{11} C_{21} C_{31}; C_{12} C_{22} C_{32}; C_{13} C_{23} C_{33}}
+= -\frac12\mat[r]{-1 1 -1; 1 -1 -1; -1 -1 1}.
+          </me>
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      It is clear from the previous Example that <xref ref="det-cofact-inv-cramer-fn"/> is a very inefficient way of computing the inverse of a matrix, compared to augmenting by the identity matrix and row reducing, as in this <xref ref="matrix-inv-computing"/>.  However, it has its uses.
+      <ul>
+        <li>
+          If a matrix has unknown entries, then it is difficult to compute its inverse using row reduction, for the same reason it is difficult to compute the determinant that way: one cannot be sure whether an entry containing an unknown is a pivot or not.
+        </li>
+        <li>
+          This formula is useful for theoretical purposes.  Notice that the only denominators in <xref ref="det-cofact-inv-cramer-fn"/> occur when dividing by the determinant: computing cofactors only involves multiplication and addition, never division.  This means, for instance, that if the determinant is very small, then any measurement error in the entries of the matrix is greatly magnified when computing the inverse.  In this way, <xref ref="det-cofact-inv-cramer-fn"/> is useful in error analysis.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      The proof of the <xref ref="det-cofact-inv-cramer"/> uses an interesting trick called <em>Cramer<rsq/>s Rule</em>, which gives a formula for the entries of the solution of an invertible matrix equation.
+    </p>
+
+    <theorem hide-type="true" xml:id="det-cofact-cramers-rule">
+      <title>Cramer<rsq/>s Rule</title>
+      <statement>
+        <p>
+          Let <m>x = (x_1,x_2,\ldots,x_n)</m> be the solution of <m>Ax=b</m>, where <m>A</m> is an invertible <m>n\times n</m> matrix and <m>b</m> is a vector in <m>\R^n</m>.  Let <m>A_i</m> be the matrix obtained from <m>A</m> by replacing the <m>i</m>th column by <m>b</m>.  Then
+          <me>
+            x_i = \frac{\det(A_i)}{\det(A)}.
+          </me>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          First suppose that <m>A</m> is the identity matrix, so that <m>x = b</m>.  Then the matrix <m>A_i</m> looks like this:
+          <me>
+            \mat{1 0 b_1 0; 0 1 b_2 0; 0 0 b_3 0; 0 0 b_4 1}.
+          </me>
+          Expanding cofactors along the <m>i</m>th row, we see that <m>\det(A_i)=b_i</m>, so in this case,
+          <me>x_i = b_i = \det(A_i) = \frac{\det(A_i)}{\det(A)}.</me>
+        </p>
+        <p>
+          Now let <m>A</m> be a general <m>n\times n</m> matrix.   One way to solve <m>Ax=b</m> is to row reduce the augmented matrix <m>(\,A\mid b\,)</m>; the result is <m>(\,I_n\mid x\,).</m>  By the case we handled above, it is enough to check that the quantity <m>\det(A_i)/\det(A)</m> does not change when we do a row operation to <m>(\,A\mid b\,)</m>, since <m>\det(A_i)/\det(A) = x_i</m> when <m>A = I_n</m>.
+          <ol>
+            <li>
+              Doing a row replacement on <m>(\,A\mid b\,)</m> does the same row replacement on <m>A</m> and on <m>A_i</m>:
+              <me>
+                \begin{split}
+                \amat{a_{11} a_{12} a_{13} b_1;
+                      a_{21} a_{22} a_{23} b_2;
+                      a_{31} a_{32} a_{33} b_3}
+                \amp\;\xrightarrow{R_2 = R_2-2R_3}\;\\
+                \amp\amat[l]{a_{11} a_{12} a_{13} b_1;
+                      a_{21}-2a_{31} a_{22}-2a_{32} a_{23}-2a_{33} b_2-2b_3;
+                      a_{31} a_{32} a_{33} b_3} \\
+                \mat{a_{11} a_{12} a_{13};
+                     a_{21} a_{22} a_{23};
+                     a_{31} a_{32} a_{33}}
+                \amp\;\xrightarrow{R_2 = R_2-2R_3}\;
+                \mat[l]{a_{11} a_{12} a_{13};
+                     a_{21}-2a_{31} a_{22}-2a_{32} a_{23}-2a_{33};
+                     a_{31} a_{32} a_{33}} \\
+                \mat{a_{11} b_1 a_{13};
+                     a_{21} b_2 a_{23};
+                     a_{31} b_3 a_{33}}
+                \amp\;\xrightarrow{R_2 = R_2-2R_3}\;
+                \mat[l]{a_{11} b_1 a_{13};
+                     a_{21}-2a_{31} b_2-2b_3 a_{23}-2a_{33};
+                     a_{31} b_3 a_{33}}.
+                \end{split}
+              </me>
+              In particular, <m>\det(A)</m> and <m>\det(A_i)</m> are unchanged, so <m>\det(A)/\det(A_i)</m> is unchanged.
+            </li>
+            <li>
+              Scaling a row of <m>(\,A\mid b\,)</m> by a factor of <m>c</m> scales the same row of <m>A</m> and of <m>A_i</m> by the same factor:
+              <me>
+                \begin{split}
+                \amat{a_{11} a_{12} a_{13} b_1;
+                      a_{21} a_{22} a_{23} b_2;
+                      a_{31} a_{32} a_{33} b_3}
+                \amp\;\xrightarrow{R_2 = cR_2}\;
+                \amat{a_{11} a_{12} a_{13} b_1;
+                      ca_{21} ca_{22} ca_{23} cb_2;
+                      a_{31} a_{32} a_{33} b_3} \\
+                \mat{a_{11} a_{12} a_{13};
+                     a_{21} a_{22} a_{23};
+                     a_{31} a_{32} a_{33}}
+                \amp\;\xrightarrow{R_2 = cR_2}\;
+                \mat[r]{a_{11} a_{12} a_{13};
+                     ca_{21} ca_{22} ca_{23};
+                     a_{31} a_{32} a_{33}} \\
+                \quad\mat{a_{11} b_1 a_{13};
+                     a_{21} b_2 a_{23};
+                     a_{31} b_3 a_{33}}
+                \amp\;\xrightarrow{R_2 = cR_2}\;
+                \mat[r]{a_{11} b_1 a_{13};
+                     ca_{21} cb_2 ca_{23};
+                     a_{31} b_3 a_{33}}.
+                \end{split}
+              </me>
+              In particular, <m>\det(A)</m> and <m>\det(A_i)</m> are both scaled by a factor of <m>c</m>, so <m>\det(A_i)/\det(A)</m> is unchanged.
+            </li>
+            <li>
+              Swapping two rows of <m>(\,A\mid b\,)</m> swaps the same rows of <m>A</m> and of <m>A_i</m>:
+              <me>
+                \begin{split}
+                \amat{a_{11} a_{12} a_{13} b_1;
+                      a_{21} a_{22} a_{23} b_2;
+                      a_{31} a_{32} a_{33} b_3}
+                \amp\;\xrightarrow{R_1\longleftrightarrow R_2}\;
+                \amat{a_{21} a_{22} a_{23} b_2;
+                      a_{11} a_{12} a_{13} b_1;
+                      a_{31} a_{32} a_{33} b_3} \\
+                \mat{a_{11} a_{12} a_{13};
+                     a_{21} a_{22} a_{23};
+                     a_{31} a_{32} a_{33}}
+                \amp\;\xrightarrow{R_1\longleftrightarrow R_2}\;
+                \mat{a_{21} a_{22} a_{23};
+                     a_{11} a_{12} a_{13};
+                     a_{31} a_{32} a_{33}} \\
+                \quad\mat{a_{11} b_1 a_{13};
+                     a_{21} b_2 a_{23};
+                     a_{31} b_3 a_{33}}
+                \amp\;\xrightarrow{R_1\longleftrightarrow R_2}\;
+                \mat{a_{21} b_2 a_{23};
+                     a_{11} b_1 a_{13};
+                     a_{31} b_3 a_{33}}.
+                \end{split}
+              </me>
+              In particular, <m>\det(A)</m> and <m>\det(A_i)</m> are both negated, so <m>\det(A_i)/\det(A)</m> is unchanged.
+            </li>
+          </ol>
+        </p>
+      </proof>
+    </theorem>
+
+    <example>
+      <statement>
+        <p>
+          Compute the solution of <m>Ax=b</m> using Cramer<rsq/>s rule, where
+          <me>
+            A = \mat{a b; c d} \qquad b = \vec{1 2}.
+          </me>
+          Here the coefficients of <m>A</m> are unknown, but <m>A</m> may be assumed invertible.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          First we compute the determinants of the matrices obtained by replacing the columns of <m>A</m> with <m>b</m>:
+          <md>
+            <mrow>
+              A_1 \amp= \mat{1 b; 2 d} \amp \det(A_1) \amp= d-2b
+            </mrow>
+            <mrow>
+              A_2 \amp= \mat{a 1; c 2} \amp \det(A_2) \amp= 2a-c.
+            </mrow>
+          </md>
+          Now we compute
+          <me>
+            \frac{\det(A_1)}{\det(A)} = \frac{d-2b}{ad-bc}
+            \qquad
+            \frac{\det(A_2)}{\det(A)} = \frac{2a-c}{ad-bc}.
+          </me>
+          It follows that
+          <me>
+            x = \frac 1{ad-bc}\vec{d-2b 2a-c}.
+          </me>
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      Now we use Cramer<rsq/>s rule to prove the first <xref ref="det-cofact-inv-cramer"/> of this Subsection.
+    </p>
+
+    <proof>
+      <p>
+        The <m>j</m>th column of <m>A\inv</m> is <m>x_j = A\inv e_j</m>.  This vector is the solution of the matrix equation
+        <me>Ax = A\bigl(A\inv e_j\bigr) = I_ne_j = e_j.</me>
+        By Cramer<rsq/>s rule, the <m>i</m>th entry of <m>x_j</m> is <m>\det(A_i)/\det(A)</m>, where <m>A_i</m> is the matrix obtained from <m>A</m> by replacing the <m>i</m>th column of <m>A</m> by <m>e_j</m>:
+        <me>
+          A_i = \mat{
+            a_{11} a_{12} 0 a_{14};
+            a_{21} a_{22} 1 a_{24};
+            a_{31} a_{32} 0 a_{34};
+            a_{41} a_{42} 0 a_{44}}
+          \qquad(i = 3,\, j = 2).
+        </me>
+        Expanding cofactors along the <m>i</m>th column, we see the determinant of <m>A_i</m> is exactly the <m>(j,i)</m>-cofactor <m>C_{ji}</m> of <m>A</m>.  Therefore, the <m>j</m>th column of <m>A\inv</m> is
+        <me>
+          x_j = \frac 1{\det(A)}\vec{C_{j1} C_{j2} \vdots, C_{jn}},
+        </me>
+        and thus
+        <me>
+          A\inv = \mat{| | ,, |; x_1 x_2 \cdots, x_n; | | ,, |}
+          = \frac 1{\det(A)}\mat{C_{11} C_{21} \cdots, C_{n-1,1} C_{n1};
+                 C_{12} C_{22} \cdots, C_{n-1,2} C_{n2};
+                 \vdots, \vdots, \ddots, \vdots, \vdots;
+                 C_{1,n-1} C_{2,n-1} \cdots, C_{n-1,n-1} C_{n,n-1};
+                 C_{1n} C_{2n} \cdots, C_{n-1,n} C_{nn}}.
+        </me>
+      </p>
+    </proof>
+
+  </subsection>
 
 </section>

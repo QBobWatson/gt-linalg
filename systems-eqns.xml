@@ -398,7 +398,7 @@ the license is included in gfdl.xml.
           }
           \end{split}
         </me>
-      At this point we've eliminated both <m>x</m> and <m>y</m> from the third equation, and we can solve <m>10z=30</m> to get <m>z=3</m>.  Substituting for <m>z</m> in the second equation gives <m>y+2\cdot3=4</m>, or <m>y=-2</m>.  Substituting for <m>y</m> and <m>z</m> in the first equation gives <m>x + 2\cdot(-2) + 3\cdot3 = 6</m>, or <m>x=3</m>.  Thus the only solution is <m>(x,y,z)=(1,-2,3)</m>.
+      At this point we<rsq/>ve eliminated both <m>x</m> and <m>y</m> from the third equation, and we can solve <m>10z=30</m> to get <m>z=3</m>.  Substituting for <m>z</m> in the second equation gives <m>y+2\cdot3=4</m>, or <m>y=-2</m>.  Substituting for <m>y</m> and <m>z</m> in the first equation gives <m>x + 2\cdot(-2) + 3\cdot3 = 6</m>, or <m>x=3</m>.  Thus the only solution is <m>(x,y,z)=(1,-2,3)</m>.
       </p>
 
       <p>We can check that our solution is correct by substituting <m>(x,y,z)=(1,-2,3)</m> into the original equation:
@@ -525,7 +525,7 @@ the license is included in gfdl.xml.
           }
           \end{split}
         </me>
-        This was made much easier by the fact that the top-left entry is equal to <m>1</m>, so we can simply multiply the first row by the number below and subtract.  In order to eliminate <m>y</m> in the same way, we would like to produce a <m>1</m> in the second column.  We could divide the second row by <m>-7</m>, but this would produce fractions; instead, let's divide the third by <m>-5</m>.
+        This was made much easier by the fact that the top-left entry is equal to <m>1</m>, so we can simply multiply the first row by the number below and subtract.  In order to eliminate <m>y</m> in the same way, we would like to produce a <m>1</m> in the second column.  We could divide the second row by <m>-7</m>, but this would produce fractions; instead, let<rsq/>s divide the third by <m>-5</m>.
         <me>\def\r{\color{red}}
           \begin{split}
           \amat{

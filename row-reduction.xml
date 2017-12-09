@@ -118,7 +118,7 @@ the license is included in gfdl.xml.
       <p>The uniqueness statement is interesting<mdash/>it means that, no matter <em>how</em> you row reduce, you <em>always</em> get the same matrix in reduced row echelon form.</p>
     </warning>
 
-    <p>This assumes, of course, that you only do the three legal row operations, and you don't make any arithmetic errors.</p>
+    <p>This assumes, of course, that you only do the three legal row operations, and you don<rsq/>t make any arithmetic errors.</p>
 
     <p>We will not prove uniqueness, but maybe you can!</p>
 

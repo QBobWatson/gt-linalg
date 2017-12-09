@@ -88,7 +88,7 @@ the license is included in gfdl.xml.
       <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = b</me>
       where <m>v_1,v_2,\ldots,v_p,\,b</m> are vectors in <m>\R^n</m> and <m>x_1,x_2,\ldots,x_p</m> are unknown scalars, has the same solution set as the linear system with augmented matrix
       <me>\amat[c]{| | ,{} , | |; v_1 v_2 \cdots, v_p b; | | ,{} , | |}</me>
-      whose columns are the <m>v_i</m>'s and the <m>b</m>'s.
+      whose columns are the <m>v_i</m><rsq/>s and the <m>b</m><rsq/>s.
       </p>
     </warning>
 
