@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Mixing colors</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .colorbox {
+            width: 10vw;
+            height: 10vw;
+            border: solid;
+        }
+
+        .colorgroup {
+            display: inline-block;
+            margin: 0 2vw;
+        }
+
+        #row1,
+        #row2 {
+            text-align: center;
+        }
+
+        #row1 {
+            margin: 10vh 0;
+        }
+
+        /* #mix {
+            margin: 5vh auto;
+        }
+
+        #one,
+        #two,
+        #three,
+        #four,
+        #five {
+            display: inline-block;
+        } */
+    </style>
+</head>
+
+<body>
+    <div id="row1">
+        <div id="start-color1" class="colorgroup">
+            <div class="colorbox"></div>
+            <div class="caption">Color 1</div>
+        </div>
+        <div id="mix" class="colorgroup">
+            <div class="colorbox"></div>
+            <div class="caption">Mix</div>
+        </div>
+        <div id="start-color2" class="colorgroup">
+            <div class="colorbox"></div>
+            <div class="caption">Color 2</div>
+        </div>
+    </div>
+    <div id="row2">
+        <div id="one" class="colorgroup">
+            <div class="colorbox"></div>
+            <div class="caption">Answer 1</div>
+        </div>
+        <div id="two" class="colorgroup">
+            <div class="colorbox"></div>
+            <div class="caption">Answer 2</div>
+        </div>
+        <div id="three" class="colorgroup">
+            <div class="colorbox"></div>
+            <div class="caption">Answer 3</div>
+        </div>
+        <div id="four" class="colorgroup">
+            <div class="colorbox"></div>
+            <div class="caption">Answer 4</div>
+        </div>
+        <div id="five" class="colorgroup">
+            <div class="colorbox"></div>
+            <div class="caption">Answer 5</div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../lib/dat.gui.min.js"></script>
+    <script src="w3color.js"></script>
+    <script>
+        var params = {
+            'a': 18,
+            'b': 67
+        }
+
+        var color1 = [100, 100, 0, 0];
+        var color2 = [0, 0, 100, 0];
+        var mix = [0, 0, 0, 0];
+        var answers = [
+            [0, 34, 2, 0],
+            [0, 34, 2, 0],
+            [0, 34, 2, 0],
+            [0, 34, 2, 0],
+            [0, 34, 2, 0]
+        ]
+        var gui = new dat.GUI();
+        gui.add(params, 'a', 0, 100).step(1).onChange(updateMix);
+        gui.add(params, 'b', 0, 100).step(1).onChange(updateMix);
+
+        function addColor(elem, array) {
+            $(elem).attr({ 'data-w3-color': `cmyk(${array[0]}%,${array[1]}%,${array[2]}%,${array[3]}%)` });
+        }
+
+        function initColors() {
+            var ls = [
+                ["#start-color1 div.colorbox", color1],
+                ["#start-color2 div.colorbox", color2],
+                ["#one div.colorbox", answers[0]],
+                ["#two div.colorbox", answers[1]],
+                ["#three div.colorbox", answers[2]],
+                ["#four div.colorbox", answers[3]],
+                ["#five div.colorbox", answers[4]]
+            ];
+
+            for (const item of ls) {
+                addColor(item[0], item[1]);
+            }
+        }
+
+        function updateMix() {
+            mix = [
+                params['a'] * color1[0] /100 + (100-params['a']) * color2[0] /100,
+                params['a'] * color1[1] /100 + (100-params['a']) * color2[1] /100,
+                params['a'] * color1[2] /100 + (100-params['a']) * color2[2] /100,
+                params['a'] * color1[3] /100 + (100-params['a']) * color2[3] /100
+            ];
+            console.log(mix);
+            console.log(params);
+            console.log(color1);
+            console.log(color2);
+            addColor("#mix div.colorbox", mix);
+            w3SetColorsByAttribute();
+        }
+
+        $(document).ready(function () {
+            initColors();
+            updateMix();
+            w3SetColorsByAttribute();
+        })
+    </script>
+</body>
+
+
+</html>
