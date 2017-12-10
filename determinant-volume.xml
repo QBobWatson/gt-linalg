@@ -1,38 +1,124 @@
-<section xml:id="determinants-volumes">
-  <title>Determinants and volumes </title>
+<?xml version="1.0" encoding="UTF-8"?>
 
-  <p>It turns out that determinants are actually an instance of something you already know about: volume. Specifically, the <m>n</m> many columns of a square <m>n\times n</m> matrix <m>A</m> are all vectors in <m>\mathbb R^n</m>.
-  These <m>n</m> vectors determine a parallelepiped in <m>\R^n</m>, which we will call the <em>parallelepiped for <m>A</m>.</em>
-  In particular, if <m>n=2</m>, then we obtain a <em>parallelogram</em>.
-  For example, if <m>A</m> is a <m>2\times2</m> matrix whose columns are non-zero vectors <m>v</m> and <m>w</m>, that is, if <m>A=\spalignmat{v; w}</m>, then we have the parallelogram determined by <m>v</m> and <m>w</m>:
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<section xml:id="determinants-volumes">
+  <title>Determinants and Volumes</title>
+
+  <objectives>
+    <ol>
+      <li>Understand the relationship between the determinant of a matrix and the volume of a parallelepiped.</li>
+      <li>Learn to use determinants to compute volumes of parallelograms and triangles.</li>
+      <li>Learn to use determinants to compute the volume of some curvy shapes like ellipses.</li>
+      <li>Vocabulary word: <term>parallelepiped</term>.</li>
+      <li>Important theorem: <em>Determinants and volumes</em>.</li>
+    </ol>
+  </objectives>
+
+  <introduction>
+    <p>
+      In this Section we give a geometric interpretation of determinants, in terms of <em>volumes.</em>  This will shed light on the reason behind three of the four <xref ref="det-defn-the-defn">defining properties</xref>.  It is also a crucial ingredient in the change-of-variables formula in multivariable calculus.
+    </p>
+  </introduction>
+
+  <subsection>
+    <title>Parallelograms and Paralellepipeds</title>
+
+    <p>
+      The determinant computes the volume of the following kind of geometric object.
+    </p>
+
+  <definition>
+    <statement>
+      <p>
+        The <term>paralellepiped</term> determined by <m>n</m> vectors <m>v_1,v_2,\ldots,v_n</m> in <m>\R^n</m> is the subset
+        <me>
+          P = \bigl\{a_1x_1 + a_2x_2 + \cdots + a_nx_n \bigm| 0\leq a_1,a_2,\ldots,a_n\leq 1\bigr\}.
+        </me>
+      </p>
+    </statement>
+  </definition>
+
+  <p>
+    In other words, a parallelepiped is the set of all linear combinations of <m>n</m> vectors with coefficients in <m>[0,1]</m>.  We can draw parallelepipeds using the parallelogram law for vector addition.
   </p>
 
-  <figure xml:id="PicPar2Vec">
-    <caption>The parallelgram determined by two vectors <m>v_1</m> and <m>v_2</m> in <m>\R^2</m></caption>
-    <image>
-      <latex-image-code><![CDATA[
-\begin{tikzpicture}[thin border nodes, scale=1.8]
+  <specialcase>
+    <title>The unit cube</title>
+    <p>
+      The parallelepiped determined by the unit coordinate vectors <m>e_1,e_2,\ldots,e_n</m> is the unit <m>n</m>-dimensional cube.
+      <latex-code mode="bare">
+              \usetikzlibrary{math}
+      </latex-code>
+      <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=2]
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+  \draw[vector] (0,0) -- node[auto]{$e_2$} (0,1);
+  \draw[vector, opacity=.75] (0,0) -- node[auto,swap]{$e_1$} (1,0);
+\end{tikzpicture}
+\qquad\qquad
+\begin{tikzpicture}[thin border nodes, myxyz, scale=2, baseline=-1cm]
+  \def\va{(1,0,0)}
+  \def\vb{(0,1,0)}
+  \def\vc{(0,0,1)}
+  \tikzmath{
+    coordinate \vab;
+    coordinate \vac;
+    coordinate \vbc;
+    \vab = \va + \vb;
+    \vac = \va + \vc;
+    \vbc = \vb + \vc;
+  }
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- \vb -- (\vbc) -- \vc -- cycle;
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- \vb -- (\vab) -- \va -- cycle;
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- \va -- (\vac) -- \vc -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={\vb}, very thin]
+    (0,0,0) -- \va -- (\vac) -- \vc -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={\va}, very thin]
+    (0,0,0) -- \vb -- (\vbc) -- \vc -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={\vc}, very thin]
+    (0,0,0) -- \vb -- (\vab) -- \va -- cycle;
+  \draw[vector, opacity=.4] (0,0,0) -- node[auto,swap] {$e_1$} \va;
+  \draw[vector, opacity=.4] (0,0,0) -- node[auto] {$e_2$} \vb;
+  \draw[vector, opacity=.4] (0,0,0) -- node[auto,pos=.3] {$e_3$} \vc;
+\end{tikzpicture}
+      </latex-code>
+    </p>
+  </specialcase>
+
+  <specialcase>
+    <title>Parallelograms</title>
+    <p>
+      When <m>n = 2</m>, a paralellepiped is just a paralellogram in <m>\R^2</m>.  Note that the edges come in parallel pairs.
+      <latex-code><![CDATA[
+\begin{tikzpicture}[thin border nodes, scale=1.3]
   \filldraw[fill=seq-orange, fill opacity=.2, very thin]
     (0,0) -- (1,2) -- (3,3) -- (2,1) -- cycle;
-  \draw[vector] (0,0) -- node[auto]{$v_1$} (1,2);
-  \draw[vector] (0,0) -- node[auto,swap]{$v_2$} (2,1);
+  \draw[vector] (0,0) -- node[auto]{$v_2$} (1,2);
+  \draw[vector] (0,0) -- node[auto,swap]{$v_1$} (2,1);
   \node at (1.5,1.5) {$P$};
 \end{tikzpicture}
       ]]>
-      </latex-image-code>
-    </image>
-  </figure>
+      </latex-code>
+    </p>
+  </specialcase>
 
-  <p>
-    Similarly, if <m>A</m> is a <m>3\times3</m> matrix, then we obtain three vectors in <m>\R^3</m>, which define a parallelepiped:
-  </p>
-
-  <figure xml:id="PicPar3Vec">
-    <caption>The parallelepiped determined by three vectors in
-    <m>\R^3</m></caption>
-    <image>
-      <latex-image-code><![CDATA[
-\begin{tikzpicture}[thin border nodes, myxyz, scale=3]
+  <specialcase>
+    <p>
+      When <m>n=3</m>, a parallelepiped is a kind of a skewed cube.  Note that the faces come in parallel pairs.
+      <latex-code><![CDATA[
+\begin{tikzpicture}[thin border nodes, myxyz, scale=2]
   \filldraw[fill=seq-orange, opacity=.2, very thin]
     (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
   \filldraw[fill=seq-orange, opacity=.2, very thin]
@@ -51,110 +137,587 @@
   \node at (1.2,0,1.2) {$P$};
 \end{tikzpicture}
       ]]>
-      </latex-image-code>
-    </image>
-  </figure>
-
-  <paragraphs>
-    <title>Key Observation</title>
-    <p>
-      The matrix <m>A</m> is invertible if and only if the parallelepiped for <m>A</m> has non-zero volume, i.e., if and only if the parallelepiped is not "flat".
+      </latex-code>
     </p>
-  </paragraphs>
+  </specialcase>
 
   <p>
-    This is not too hard to believe, especially in low-dimensional cases.
-    For example, if <m>A</m> is a <m>2\times2</m> matrix whose columns are non-zero vectors <m>v</m> and <m>w</m>, then we know that the matrix is invertible exactly when <m>v</m> and <m>w</m> are linearly independent, which happens exactly when they don't lie on the same line (neither is a scalar multiple of the other). But this occurs exactly when the parallelogram for <m>A</m> in <xref ref="PicPar2Vec"/> isn't "squashed."
+    When does a parallelepiped have zero volume?  This can happen only if the parallelepiped is <q>flat</q>, i.e., it is <q>squashed</q> into a lower dimension.
+    <latex-code>
+\begin{tikzpicture}[thin border nodes, baseline=0]
+  \draw[line width=1mm, seq-orange] (-1,-.5) to["$P$"' black] (2,1);
+  \draw[vector, opacity=.75] (0,0) to["$v_1$" opacity=1] (2,1);
+  \draw[vector, opacity=.75] (0,0) to["$v_2$"' opacity=1] (-1,-.5);
+  \point at (0,0);
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[thin border nodes, baseline=0]
+  \node[coordinate] (X) at (1,.2) {};
+  \node[coordinate] (Y) at (-.7,-1) {};
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \draw[help lines, step=.5, opacity=.75] (-2,-1.5) grid (4,1.5);
+  \end{scope}
+
+  \def\va{(2,1)}
+  \def\vb{(1.5,-.5)}
+  \def\vc{(-1.5,0)}
+
+  \coordinate (v1) at ($4/2*(X) - 1/2*(Y)$);
+  \coordinate (v2) at ($3/2*(X) + 1*(Y)$);
+  \coordinate (v3) at ($-3/2*(X) - 1/2*(Y)$);
+
+  \filldraw[fill=seq-orange, opacity=.2, draw opacity=1, very thin]
+    (v1) -- ($(v1) + (v2)$) -- (v2) -- ($(v2) + (v3)$) -- (v3) -- ($(v3) + (v1)$) -- cycle;
+  \draw[vector] (0,0) to["$v_1$"] (v1);
+  \draw[vector] (0,0) to["$v_2$"] (v2);
+  \draw[vector] (0,0) to["$v_3$"'] (v3);
+  \node at ($1/2*(v1) + 1/2*(v2)$) {$P$};
+  \point at (0,0);
+\end{tikzpicture}
+    </latex-code>
+    This means exactly that <m>\{v_1,v_2,\ldots,v_n\}</m> is <em>linearly dependent,</em> which by this <xref ref="det-defn-dep-det0"/> means that the matrix with rows <m>v_1,v_2,\ldots,v_n</m> has determinant zero.  To summarize:
   </p>
 
-  <p>
-	  This type of thinking leads us to the following fact.
-  </p>
-  <fact xml:id="DeterminantSignedVolume">
-	  <p>
-		 The determinant of a <m>n\times n</m> matrix with rows <m>v_1,\ldots,v_n</m> is <m>\pm1</m> times the volume of the parallelepiped spanned by the vectors <m>v_1,\ldots,v_n</m> in <m>\mathbb R^n</m>.
-	  </p>
-  </fact>
-  <proof>
-  <p>Why should <xref ref="DeterminantSignedVolume"/> be true? Well, we saw in <xref ref="det-defn-unique"/> that the properties of having the value <m>1</m> on the identity matrix and satisfying the properties of <xref ref="det-defn-the-defn"/> <em>uniquely</em> determine the determinant. Thus, you just have to check that the volume of the parallelepiped for a matrix <m>A</m> is also a function on square matrices which satisfies these properties. Firstly, re-scaling a row of a matrix by a constant multiple re-scales the parallelepiped by that multiple in the direction of the corresponding row vector. In particular, you can think of that row as being the one giving the height of the parallelepiped, the base doesn’t change, but the height gets scaled by the same amount you scaled the row. Swapping rows swaps the ordering of the sides of the parallelepiped, but this just changes labelling, and hence doesn't change volume, while in the determinant it only changes the volume by a fator of <m>\pm 1</m> (technically, the determinant give the <em>signed volume</em> of the parallelepiped with a fixed ordering on the row vectors; this is similar to the signed area you saw that integrals give in calculus). Moreover, if you perform a row replacement on a matrix changes neither the base nor the height of the corresponding  parallelepiped (thinking of the replaced row as giving the height), and so the volume is left the same, as is the determinant. Finally, the parallelepiped for the identity matrix is the unit <m>n</m>-dimensional cube, which has volume <m>1=\det I_n</m>.
-  </p>
-</proof>
-
-
-  <p>For example, if <m>n=1</m> and <m>A=\spalignmat{a}</m>, we can think of <m>1</m>-dimensional "volume" as length, and the "parallelepiped for <m>A</m>" is just the vector <m>a</m> in <m>\R^1</m>. Moreover, the length of this vector is <m>|a|</m>, which is <m>\pm a=\pm\det A</m>.
-  </p>
-
-  <p>
-  In the case of a <m>2\times2</m> matrix <m> A=\mat{a b; c d}</m>, we have
-  <me>\det A =ad-bc.</me>
-  It may seem that this formula has little to do with volume. However, it is a fun geometry problem to show that the parallelogram for <m>A</m> in <xref ref="PicPar2Vec"/> has area <m>|ad-bc|</m> (first think about the case when the first column of <m>A</m> lies on the <m>x</m>-axis). As another fun problem, one can perform row reduction directly on <m>A</m> to find that the reduced row echelon form of <m>A</m> is the identity matrix <m>I_2</m> exactly when <m>ad-bc\neq0</m> (although we omit the calculation here).
-  </p>
-
-
-
-  <p>
-	  Now suppose that <m>T_A\colon\mathbb R^n\rightarrow\mathbb R^n</m> is the linear transformation associated to an invertible <m>n\times n</m> matrix <m>A</m>. We think of <m>T_A</m> as some operation that you do to <m>\mathbb R^n</m>. We’ve seen examples of this before, for instance when <m>T_A</m> is a reflection, a projection, a rotation, a stretch or a shear. Of course, in general, <m>T_A</m> can be some complicated combination of these.
-  </p>
-  <p>
-	  What does <m>T_A</m> do to <m>\mathbb R^n</m>? It turns out that it transforms finite-volume regions in <m>\mathbb R^n</m> to regions with predictable volumes.
-  </p>
-  <fact>
+  <note type-name="Key Observation">
     <p>
-      If <m>T_A</m> is a linear transformation of <m>\mathbb R^n</m> associated to an <m>n\times n</m> matrix <m>A</m> and <m>S</m> is a region in <m>\mathbb R^n</m>, then
+      The parallelepiped defined by <m>v_1,v_2,\ldots,v_n</m> has zero volume if and only if the matrix with rows <m>v_1,v_2,\ldots,v_n</m> has zero determinant.
+    </p>
+  </note>
+
+  </subsection>
+  <subsection>
+    <title>Determinants and Volumes</title>
+
+    <p>
+      The Key Observation above is only the beginning of the story:
+      the volume of a parallelepiped is <em>always</em> a determinant.
+    </p>
+
+    <theorem xml:id="det-is-volume">
+      <title>Determinants and volumes</title>
+    <statement>
+      <p>
+        Let <m>v_1,v_2,\ldots,v_n</m> be vectors in <m>\R^n</m>, let <m>P</m> be the parallelepiped determined by these vectors, and let <m>A</m> be the matrix with rows <m>v_1,v_2,\ldots,v_n</m>.  Then the absolute value of the determinant of <m>A</m> is the volume of <m>P</m>:
+        <me>
+          |\det(A)| = \vol(P).
+        </me>
+      </p>
+    </statement>
+    <proof visible="true">
+      <p>
+        Since the four <xref ref="det-defn-the-defn">defining properties</xref> characterize the determinant, they also characterize the absolute value of the determinant.  Explicitly, <m>|\det|</m> is a function on square matrices which satisfies these properties:
+	<ol>
+	  <li>
+	    Doing a row replacement on <m>A</m> does not change <m>|\det(A)|</m>.
+	  </li>
+          <li>
+            Scaling a row of <m>A</m> by a scalar <m>c</m> multiplies <m>|\det(A)|</m> by <m>|c|</m>.
+	  </li>
+	  <li>
+	    Swapping two rows of a matrix does not change <m>|\det(A)|</m>.
+	  </li>
+	  <li>
+	    The determinant of the identity matrix <m>I_n</m> is equal to <m>1</m>.
+	  </li>
+	</ol>
+        The absolute value of the determinant is the <em>only</em> such function: indeed, by this <xref ref="det-defn-ref-compute"/>, if you do some number of row operations on <m>A</m> to obtain a matrix <m>B</m> in row echelon form, then
+	  <me>
+	    |\det(A)| =
+            \left|\frac{\text{(product of the diagonal entries of $B$)}}
+            {\text{(product of scaling factors used)}}\right|.
+	  </me>
+      </p>
+      <p>
+        For a square matrix <m>A</m>, we abuse notation and let <m>\vol(A)</m> denote the volume of the paralellepiped determined by the rows of <m>A</m>.  Then we can regard <m>\vol</m> as a function from the set of square matrices to the real numbers.  We will show that <m>\vol</m> also satisfies the above four properties.
+        <ol>
+          <li>
+            For simplicity, we consider a row replacement of the form <m>R_n = R_n + cR_i</m>.  The volume of a paralellepiped is the volume of its base, times its height: here the <q>base</q> is the paralellepiped determined by <m>v_1,v_2,\ldots,v_{n-1}</m>, and the <q>height</q> is the perpendicular distance of <m>v_n</m> from the base.
+            <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1.3]
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (1,2) -- (3,3) -- (2,1) -- cycle;
+  \draw[line width=1mm, seq-blue] (0,0) to["base"' pos=.3] (2,1);
+  \draw[vector] (0,0) -- node[auto]{$v_2$} (1,2);
+  \draw[vector, opacity=.75] (0,0) -- node[auto,swap,opacity=1,pos=.7]{$v_1$} (2,1);
+  \draw[dashed, very thick, seq-red] (1,2) to["height"] (8/5,4/5);
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[thin border nodes, myxyz, scale=2]
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-blue, opacity=.5, very thin]
+    (0,0,0) -- (0,-1,0) -- (1,-.8,0) -- (1,.2,0) -- cycle;
+  \node[seq-blue] at (.5,-.4,0) {base};
+  \filldraw[fill=seq-orange, opacity=.2, shift={(0,-1,0)}, very thin]
+    (0,0,0) -- (1,.2,0) -- (1.3,.2,1) -- (.3,0,1) -- cycle;
+  \draw[dashed, very thick, seq-red] (.3,0,1) to["height" pos=.55] (.2,-.2,0);
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0,0) -- (1,.2,0) -- (1.3,.2,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={(1,.2,0)}, very thin]
+    (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={(.3,0,1)}, very thin]
+    (0,0,0) -- (0,-1,0) -- (1,-.8,0) -- (1,.2,0) -- cycle;
+  \draw[vector] (0,0,0) -- node[auto,swap] {$v_1$} (1,.2,0);
+  \draw[vector, opacity=.4] (0,0,0) -- node[auto,pos=.4] {$v_2$} (0,-1,0);
+  \draw[vector] (0,0,0) -- node[auto] {$v_3$} (.3,0,1);
+\end{tikzpicture}
+            </latex-code>
+            Translating <m>v_n</m> by a multiple of <m>v_i</m> moves <m>v_n</m> in a direction parallel to the base.  This changes neither the base nor the height!  Thus, <m>\vol(A)</m> is unchanged by row replacements.
+            <latex-code mode="bare">
+              \usetikzlibrary{math}
+            </latex-code>
+            <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1.3]
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (0,3/2) -- (2,5/2) -- (2,1) -- cycle;
+  \draw[line width=1mm, seq-blue] (0,0) to["base"' pos=.3] (2,1);
+  \draw[vector, opacity=.5] (0,0) -- node[auto,swap,pos=.8]{$v_2$} (1,2);
+  \draw[vector] (0,0) -- node[auto]{$v_2-.5v_1$} (0,3/2);
+  \draw[vector, opacity=.75] (0,0) -- node[auto,swap,opacity=1,pos=.7]{$v_1$} (2,1);
+  \draw[dashed, very thick, seq-red] (0,3/2) to["height"] (3/5,3/10);
+\end{tikzpicture}
+\qquad\qquad
+\begin{tikzpicture}[thin border nodes, myxyz, scale=2]
+  \def\va{(1,.2,0)}
+  \def\vb{(0,-1,0)}
+  \def\vc{(.8,.1,1)}
+  \tikzmath{
+    coordinate \vab;
+    coordinate \vac;
+    coordinate \vbc;
+    \vab = \va + \vb;
+    \vac = \va + \vc;
+    \vbc = \vb + \vc;
+  }
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- \vb -- (\vbc) -- \vc -- cycle;
+  \filldraw[fill=seq-blue, opacity=.5, very thin]
+    (0,0,0) -- \vb -- (\vab) -- \va -- cycle;
+  \node[seq-blue] at (.35,-.25,0) {base};
+  \filldraw[fill=seq-orange, opacity=.2, shift={\vb}, very thin]
+    (0,0,0) -- \va -- (\vac) -- \vc -- cycle;
+  \draw[dashed, very thick, seq-red] \vc to["height" pos=.55] ($(.2,-.2,0)+.5*(1,.2,0)$);
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0,0) -- \va -- (\vac) -- \vc -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={\va}, very thin]
+    (0,0,0) -- \vb -- (\vbc) -- \vc -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={\vc}, very thin]
+    (0,0,0) -- \vb -- (\vab) -- \va -- cycle;
+  \draw[vector] (0,0,0) -- node[auto,swap] {$v_1$} \va;
+  \draw[vector, opacity=.4] (0,0,0) -- node[auto,pos=.8] {$v_2$} \vb;
+  \draw[vector] (0,0,0) -- \vc node[above] {$v_3+.5v_1$};
+  \draw[vector, opacity=.5] (0,0,0) -- node[auto,pos=.5] {$v_3$} (.3,0,1);
+\end{tikzpicture}
+            </latex-code>
+          </li>
+          <li>
+            For simplicity, we consider a row scale of the form <m>R_n = cR_n.</m>  This scales the length of <m>v_n</m> by a factor of <m>|c|</m>, which also scales the perpendicular distance of <m>v_n</m> from the base by a factor of <m>|c|</m>.  Thus, <m>\vol(A)</m> is scaled by <m>|c|</m>.
+            <latex-code mode="bare">
+              \usetikzlibrary{math}
+            </latex-code>
+            <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1.3]
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (.75,1.5) -- (2.75,2.5) -- (2,1) -- cycle;
+  \draw[line width=1mm, seq-blue] (0,0) to["base"' pos=.3] (2,1);
+  \draw[vector, opacity=.5] (0,0) -- (1,2);
+  \draw[vector] (0,0) -- node[auto]{$\frac34v_2$} (.75,1.5);
+  \draw[vector, opacity=.75] (0,0) -- node[auto,swap,opacity=1,pos=.7]{$v_1$} (2,1);
+  \draw[dashed, very thick, seq-red] (.75,1.5) to["$\frac34$\small height"] ($.75*(8/5,4/5)$);
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[thin border nodes, myxyz, scale=2, baseline=-.2]
+  \def\va{(1,.2,0)}
+  \def\vb{(0,-1,0)}
+  \def\vc{(.4,0,4/3)}
+  \tikzmath{
+    coordinate \vab;
+    coordinate \vac;
+    coordinate \vbc;
+    \vab = \va + \vb;
+    \vac = \va + \vc;
+    \vbc = \vb + \vc;
+  }
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- \vb -- (\vbc) -- \vc -- cycle;
+  \filldraw[fill=seq-blue, opacity=.5, very thin]
+    (0,0,0) -- \vb -- (\vab) -- \va -- cycle;
+  \node[seq-blue] at (.5,-.4,0) {base};
+  \filldraw[fill=seq-orange, opacity=.2, shift={\vb}, very thin]
+    (0,0,0) -- \va -- (\vac) -- \vc -- cycle;
+  \draw[dashed, very thick, seq-red] \vc to["$\frac43$\small height" pos=.55] ($4/3*(.2,-.2,0)$);
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0,0) -- \va -- (\vac) -- \vc -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={\va}, very thin]
+    (0,0,0) -- \vb -- (\vbc) -- \vc -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={\vc}, very thin]
+    (0,0,0) -- \vb -- (\vab) -- \va -- cycle;
+  \draw[vector] (0,0,0) -- node[auto,swap] {$v_1$} \va;
+  \draw[vector, opacity=.4] (0,0,0) -- node[auto,pos=.5] {$v_2$} \vb;
+  \draw[vector] (0,0,0) -- node[auto,pos=.8] {$\frac 43v_3$} \vc;
+  \draw[vector, black!50!white] (0,0,0) -- (.3,0,1);
+\end{tikzpicture}
+            </latex-code>
+          </li>
+          <li>
+            Swapping two rows of <m>A</m> just reorders the vectors <m>v_1,v_2,\ldots,v_n</m>, hence has no effect on the parallelepiped determined by those vectors.  Thus, <m>\vol(A)</m> is unchanged by row swaps.
+            <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1.3]
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (1,2) -- (3,3) -- (2,1) -- cycle;
+  \draw[vector] (0,0) -- node[auto]{$v_1$} (1,2);
+  \draw[vector] (0,0) -- node[auto,swap]{$v_2$} (2,1);
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[thin border nodes, myxyz, scale=2]
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- (0,-1,0) -- (1,-.8,0) -- (1,.2,0) -- cycle;
+  \filldraw[fill=seq-orange, opacity=.2, shift={(0,-1,0)}, very thin]
+    (0,0,0) -- (1,.2,0) -- (1.3,.2,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0,0) -- (1,.2,0) -- (1.3,.2,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={(1,.2,0)}, very thin]
+    (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={(.3,0,1)}, very thin]
+    (0,0,0) -- (0,-1,0) -- (1,-.8,0) -- (1,.2,0) -- cycle;
+  \draw[vector] (0,0,0) -- node[auto,swap] {$v_1$} (1,.2,0);
+  \draw[vector, opacity=.4] (0,0,0) -- node[auto] {$v_3$} (0,-1,0);
+  \draw[vector] (0,0,0) -- node[auto] {$v_2$} (.3,0,1);
+\end{tikzpicture}
+            </latex-code>
+          </li>
+          <li>
+            The rows of the identity matrix <m>I_n</m> are the unit coordinate vectors <m>e_1,e_2,\ldots,e_n</m>.  The associated paralellepiped is the unit cube, which has volume <m>1</m>.  Thus, <m>\vol(I_n) = 1</m>.
+          </li>
+        </ol>
+        Since <m>|\det|</m> is the only function satisfying these properties, we have
+        <me>\vol(P) = \vol(A) = |\det(A)|.</me>
+      </p>
+    </proof>
+  </theorem>
+
+  <p>
+    Since <m>\det(A) = \det(A^T)</m> by the <xref ref="det-defn-trans-prop">transpose property</xref>, the absolute value of <m>\det(A)</m> is also equal to the volume of the paralellepiped determined by the <em>columns</em> of <m>A</m> as well.
+  </p>
+
+  <specialcase>
+    <title>Length</title>
+    <p>
+      A <m>1\times 1</m> matrix <m>A</m> is just a number <m>\mat a</m>.  In this case, the parallelepiped <m>P</m> determined by its one row is just the interval <m>[0,a]</m> (or <m>[a,0]</m> if <m>a\lt0</m>).  The <q>volume</q> of a region in <m>\R^1 = \R</m> is just its length, so it is clear in this case that <m>\vol(P) = |a|</m>.
+      <latex-code>
+\begin{tikzpicture}
+  \draw[very thick, draw=seq-orange] (0,0) -- node[above] {$\vol(\textcolor{seq-orange}{P}) = |a|$} (3,0);
+  \draw       (0,.15) -- (0,-.15) node[below] {$0$}
+              (3,.15) -- (3,-.15) node[below] {$a$};
+\end{tikzpicture}
+      </latex-code>
+    </p>
+  </specialcase>
+
+  <specialcase>
+    <title>Area</title>
+    <p>
+      When <m>A</m> is a <m>2\times 2</m> matrix, its rows determine a parallelogram in <m>\R^2</m>.  The <q>volume</q> of a region in <m>\R^2</m> is its area, so we obtain a formula for the area of a parallelogram: it is the determinant of the matrix whose rows are the vectors forming two adjacent sides of the parallelogram.
+      <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1.3]
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (1,2) -- (3,3) -- (2,1) -- cycle;
+  \draw[vector] (0,0) -- node[auto]{$\vec{a b}$} (1,2);
+  \draw[vector] (0,0) -- node[auto,swap,opacity=1]{$\vec{c d}$} (2,1);
+  \node at (6, 1.5) {area${}=\left|\det\mat{a b; c d}\right| = |ad-bc|$};
+\end{tikzpicture}
+      </latex-code>
+      It is fun geometry problem to prove this formula by hand.  [Hint: first think about the case when the first row of <m>A</m> lies on the <m>x</m>-axis.]
+    </p>
+  </specialcase>
+
+  <example>
+    <statement>
+      <p>
+        Find the area of the parallelogram with sides <m>(1,3)</m> and <m>(2,-3)</m>.
+        <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1]
+  \draw[help lines] (-1,-4) grid (4,4);
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (1,3) -- (3,0) -- (2,-3) -- cycle;
+  \draw[vector] (0,0) -- (1,3);
+  \draw[vector] (0,0) -- (2,-3);
+\end{tikzpicture}
+        </latex-code>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        The area is
+        <me>
+          \left|\det\mat{1 3; 2 -3}\right| = |-3-6| = 9.
+        </me>
+      </p>
+    </solution>
+  </example>
+
+  <example>
+    <statement>
+      <p>
+        Find the area of the parallelogram in the picture.
+        <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1]
+  \draw[help lines] (-3,-1) grid (2,6);
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (-2,1) -- (-1,5) -- (1,4) -- cycle;
+\end{tikzpicture}
+        </latex-code>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        We choose two adjacent sides to be the rows of a matrix.  We choose the top two:
+        <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1]
+  \draw[help lines] (-3,-1) grid (2,6);
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (-2,1) -- (-1,5) -- (1,4) -- cycle;
+  \draw[vector] (-1,5) -- node[auto,whitebg,behind path] {$\vec{2 -1}$} (1,4);
+  \draw[vector] (-1,5) -- node[auto,swap,whitebg,behind path] {$\vec{-1 -4}$} (-2,1);
+\end{tikzpicture}
+        </latex-code>
+        Note that we do not need to know where the origin is in the picture: vectors are determined by their length and direction, not where they start.  The area is
+        <me>
+          \left|\det\mat{-1 -4; 2 -1}\right| = |1+8| = 9.
+        </me>
+      </p>
+    </solution>
+  </example>
+
+  <example>
+    <title>Area of a triangle</title>
+    <statement>
+      <p>
+        Find the area of the triangle with vertices
+        <m>(-1,-2),\,(2,-1),\,(1,3).</m>
+        <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1]
+  \draw[help lines] (-2,-3) grid (3,4);
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (-1,-2) -- (2,-1) -- (1,3) -- cycle;
+\end{tikzpicture}
+        </latex-code>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        Doubling a triangle makes a paralellogram.  We choose two of its sides to be the rows of a matrix.
+        <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1]
+  \draw[help lines] (-2,-3) grid (5,5);
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (-1,-2) -- (2,-1) -- (1,3) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.1, very thin, dashed]
+    (2,-1) -- (4,4) -- (1,3);
+  \draw[vector] (-1,-2) -- node[auto,whitebg,swap,behind path] {$\vec{3 1}$} (2,-1);
+  \draw[vector] (-1,-2) -- node[auto,whitebg,behind path] {$\vec{2 5}$} (1,3);
+\end{tikzpicture}
+        </latex-code>
+        The area of the parallelogram is
+        <me>
+          \left|\det\mat{2 5; 3 1}\right| = |2-15| = 13,
+        </me>
+        so the area of the triangle is <m>13/2</m>.
+      </p>
+    </solution>
+  </example>
+
+  <remark>
+    <title>Signed volumes</title>
+    <p>
+      The <xref ref="det-is-volume"/> on determinants and volumes tells us that the <em>absolute value</em> of the determinant is the volume of a paralellepiped.  This raises the question of whether the sign of the determinant has any geometric meaning.
+    </p>
+    <p>
+      A <m>1\times 1</m> matrix <m>A</m> is just a number <m>\mat a</m>.  In this case, the parallelepiped <m>P</m> determined by its one row is just the interval <m>[0,a]</m> if <m>a \geq 0</m>, and it is <m>[a,0]</m> if <m>a\lt0</m>.  In this case, the sign of the determinant determines whether the interval is to the left or the right of the origin.
+    </p>
+    <p>
+      For a <m>2\times 2</m> matrix with rows <m>v_1,v_2</m>, the sign of the determinant determines whether <m>v_2</m> is counterclockwise or clockwise from <m>v_1</m>.  That is, if the counterclockwise angle from <m>v_1</m> to <m>v_2</m> is less than <m>180^\circ</m>, then the determinant is positive; otherwise it is negative (or zero).
+      <latex-code>
+        <![CDATA[
+\usetikzlibrary{angles}
+\begin{tikzpicture}[thin border nodes, scale=1.3]
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (1,2) -- (3,3) -- (2,1) -- cycle;
+  \draw[vector] (0,0) -- node[auto]{$v_2$} (1,2);
+  \draw[vector] (0,0) -- node[auto,swap]{$v_1$} (2,1);
+  \coordinate (o) at (0,0);
+  \coordinate (v1) at (2,1);
+  \coordinate (v2) at (1,2);
+  \pic[draw, ->, angle radius=1cm] {angle=v1--o--v2};
+  \node at (1.5,-.7) {$\det\mat{\matrow{v_1}; \matrow{v_2}} > 0$};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[thin border nodes, scale=1.3]
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (1,2) -- (3,3) -- (2,1) -- cycle;
+  \draw[vector] (0,0) -- node[auto]{$v_1$} (1,2);
+  \draw[vector] (0,0) -- node[auto,swap]{$v_2$} (2,1);
+  \coordinate (o) at (0,0);
+  \coordinate (v1) at (2,1);
+  \coordinate (v2) at (1,2);
+  \pic[draw, <-, angle radius=1cm] {angle=v1--o--v2};
+  \node at (1.5,-.7) {$\det\mat{\matrow{v_1}; \matrow{v_2}} < 0$};
+  \end{tikzpicture}
+        ]]>
+      </latex-code>
+      For example, if <m>v_1 = {a\choose b}</m>, then the counterclockwise rotation of <m>v_1</m> by <m>90^\circ</m> is <m>v_2 = {-b\choose a}</m> by this <xref ref="linear-trans-rotation-matrix"/>, and
       <me>
-	\text{volume}(T_A(S))=|\det A\,|\cdot\text{volume}(S).
+        \det\mat{a b; -b a} = a^2 + b^2 > 0.
+      </me>
+      On the other hand, the <em>clockwise</em> rotation of <m>v_1</m> by <m>90^\circ</m> is <m>b\choose -a</m>, and
+      <me>
+        \det\mat{a b; b -a} = -a^2 - b^2 \lt 0.
       </me>
     </p>
-  </fact>
+    <p>
+      For a <m>3\times 3</m> matrix with rows <m>v_1,v_2,v_3</m>, the <em>right-hand rule</em> determines the sign of the determinant.  If you point the index finger of your right hand in the direction of <m>v_1</m> and your middle finger in the direction of <m>v_2</m>, then the determinant is positive if your thumb points roughly in the direction of <m>v_3</m>, and it is negative otherwise.
+      <latex-code>
+\begin{tikzpicture}[thin border nodes, myxyz, scale=2]
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- (0,-1,0) -- (1,-.8,0) -- (1,.2,0) -- cycle;
+  \filldraw[fill=seq-orange, opacity=.2, shift={(0,-1,0)}, very thin]
+    (0,0,0) -- (1,.2,0) -- (1.3,.2,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0,0) -- (1,.2,0) -- (1.3,.2,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={(1,.2,0)}, very thin]
+    (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={(.3,0,1)}, very thin]
+    (0,0,0) -- (0,-1,0) -- (1,-.8,0) -- (1,.2,0) -- cycle;
+  \draw[vector] (0,0,0) -- node[auto,swap] {$v_1$} (1,.2,0);
+  \draw[vector, opacity=.4] (0,0,0) -- node[auto] {$v_2$} (0,-1,0);
+  \draw[vector] (0,0,0) -- node[auto] {$v_3$} (.3,0,1);
+  \node[resetxy] at (1,-.75) {$\det\mat{\matrow{v_1};\matrow{v_2};\matrow{v_3}}>0$};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[thin border nodes, myxyz, scale=2]
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- (0,-1,0) -- (1,-.8,0) -- (1,.2,0) -- cycle;
+  \filldraw[fill=seq-orange, opacity=.2, shift={(0,-1,0)}, very thin]
+    (0,0,0) -- (1,.2,0) -- (1.3,.2,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0,0) -- (1,.2,0) -- (1.3,.2,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={(1,.2,0)}, very thin]
+    (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={(.3,0,1)}, very thin]
+    (0,0,0) -- (0,-1,0) -- (1,-.8,0) -- (1,.2,0) -- cycle;
+  \draw[vector] (0,0,0) -- node[auto,swap] {$v_2$} (1,.2,0);
+  \draw[vector, opacity=.4] (0,0,0) -- node[auto] {$v_1$} (0,-1,0);
+  \draw[vector] (0,0,0) -- node[auto] {$v_3$} (.3,0,1);
+  \node[resetxy] at (1,-.75) {$\det\mat{\matrow{v_1};\matrow{v_2};\matrow{v_3}}\lt0$};
+\end{tikzpicture}
+      </latex-code>
+    </p>
+    <p>
+      In higher dimensions, the notion of signed volume is still important, but it is usually <em>defined</em> in terms of the sign of a determinant.
+    </p>
+  </remark>
 
-  <p>Why should this be true? Well, we know that <m>T_A</m> takes the standard basis vectors <m>e_1,\ldots,e_n</m> to the columns of <m>A</m>. It follows that the standard unit cube spanned by <m>e_1,\ldots,e_n</m> gets taken to the parallelepiped spanned by the columns of <m>A</m>. What is the volume of this parallelepiped? Well, since <m>\det A = \det A^T</m> (can you see why?),the volume of the parallelepiped is <m>|det A|</m> by <xref ref="DeterminantSignedVolume"/>. In summary, <m>T_A</m> changes the volume of the standard cube by <m>det A</m>. Now we know something about what <m>T_A</m> does.
-  </p>
-  <p>Actually, we know more. If we take the cube <m>\varepsilon e_1,\ldots, \varepsilon e_n</m> where <m>\varepsilon</m> is a small  real number (wait, are we doing Calculus now?), then since <m>T_A</m> is linear, the image of this cube—which has (signed) volume <m>\varepsilon^n</m>—will have volume <m>\left|\det A\varepsilon^n\right|</m>. What does that buy us? Well now take any shape <m>S</m> in <m>\mathbb R^n</m> that has finite volume. Fill it as best you can with <m>\varepsilon</m>-cubes. The total volume of the <m>\varepsilon</m>-cubes is approximately volume<m>(S)</m>. Now apply <m>T_A</m>. What is the volume of <m>T_A(S)</m>? We just said that each of the little cubes gets its volume stretched by <m>\det A</m>. Since that’s true, all of <m>S</m> gets its volume stretched by <m>\det A</m>.
-  </p>
+  </subsection>
+  <subsection>
+    <title>Volumes of Regions</title>
 
-  <p>  Let's illustrate this by a visual example in <m>\mathbb R^2</m>:
-  </p>
-
-  <sidebyside>
-    <image>
-      <latex-image-code><![CDATA[
-\begin{tikzpicture}[scale=1, thin border nodes]
-  \draw[help lines, black!25] (-2,-2) grid (2,2);
-  \draw[vector] (0,0) to["$e_1$\strut"'] (1,0);
-  \draw[vector] (0,0) to["$e_2$"] (0,1);
+    <p>
+      Let <m>A</m> be an <m>n\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_n</m>, and let <m>T\colon\R^n\to\R^n</m> be the associated <xref ref="matrix-trans-defn-of" text="title">matrix transformation</xref> <m>T(x)=Ax</m>.  Then <m>T(e_1)=v_1</m> and <m>T(e_2)=v_2</m>, so <m>T</m> takes the unit cube to the parallelepiped determined by <m>v_1,v_2,\ldots,v_n</m>:
+      <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1.3]
+  \begin{scope}[scale=1.7, yshift=.3cm]
   \filldraw[fill=seq-orange, fill opacity=.2, very thin]
     (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
-  \node at (.5,.5) {$S$};
-  \node[fill=white] at (0,-1) {$\vol(S)=1$};
-  \point at (0,0);
-
-  \draw[->, thick] (2.1,.5) to[bend left, "$T$" above=1mm]
-     node[align=center, below=2mm] {$A = \mat{1 1; -1 1}$\\[1mm]$\det(A)=2$}
-     (10-2.1,.5);
-
-  \begin{scope}[xshift=10cm]
-    \draw[help lines, black!25] (-2,-2) grid (2,2);
-    \draw[vector] (0,0) to["$T(e_1)$"'] (1,-1);
-    \draw[vector] (0,0) to["$T(e_2)$"] (1,1);
-    \filldraw[fill=seq-orange, fill opacity=.2, very thin]
-      (0,0) -- (1,-1) -- (2,0) -- (1,1) -- cycle;
-    \node at (1,0) {$T(S)$};
-    \node[fill=white,anchor=center] at (0,-1.5) {$\vol(T(S)) = 2$};
-    \point at (0,0);
+  \draw[vector] (0,0) -- node[auto]{$e_2$} (0,1);
+  \draw[vector, opacity=.75] (0,0) -- node[auto,swap]{$e_1$} (1,0);
+  \coordinate (a) at (1.2, .5);
   \end{scope}
-    \end{tikzpicture}
-    ]]>
-      </latex-image-code>
-    </image>
-  </sidebyside>
 
-  <p>
-    For curvy shapes, the idea described above it the usual one from calculus; you break <m>S</m> up into a bunch of tiny cubes.  Each one is
-    scaled by <m>|\det A|</m>.
-  </p>
-  <sidebyside>
-    <image>
-      <latex-image-code><![CDATA[
+  \draw[->, thick] (a) to[bend left]
+      node[above=2pt] {$T$}
+      node[below=4pt] {$\mat{| |; v_1 v_2; | |}$}
+      ($(a) + (2.8cm,0)$);
+
+  \begin{scope}[xshift=5cm]
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (1,2) -- (3,3) -- (2,1) -- cycle;
+  \draw[vector] (0,0) -- node[auto]{$v_2$} (1,2);
+  \draw[vector] (0,0) -- node[auto,swap]{$v_1$} (2,1);
+  \end{scope}
+\end{tikzpicture}
+      </latex-code>
+      Since the unit cube has volume <m>1</m> and its image has volume <m>|\det(A)|</m>, the transformation <m>T</m> scaled the volume of the cube by a factor of <m>|\det(A)|</m>.
+    </p>
+
+    <p>
+      In fact, <m>T</m> scales the volume of <em>any</em> region in <m>\R^n</m> by the same factor, even for <q>curvy</q> regions.
+    </p>
+
+    <theorem>
+      <statement>
+        <p>
+          Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>T\colon\R^n\to\R^n</m> be the associated matrix transformation <m>T(x)=Ax</m>.  If <m>S</m> is any region in <m>\R^n</m>, then
+          <me>
+	    \vol(T(S))=|\det(A)|\cdot\vol(S).
+          </me>
+        </p>
+      </statement>
+      <proof visible="true">
+        <p>
+          Let <m>C</m> be the unit cube, let <m>v_1,v_2,\ldots,v_n</m> be the columns of <m>A</m>, and let <m>P</m> be the paralellepiped determined by these vectors, so <m>T(C) = P</m> and <m>\vol(P) = |\det(A)|</m>.  For <m>\epsilon > 0</m> we let <m>\epsilon C</m> be the cube with side lengths <m>\epsilon</m>, i.e., the paralellepiped determined by the vectors <m>\epsilon e_1,\epsilon e_2,\ldots,\epsilon e_n</m>, and we define <m>\epsilon P</m> similarly.  By the scalar multiplication property (LC2), <m>T</m> takes <m>\epsilon C</m> to <m>\epsilon P</m>.  The volume of <m>\epsilon C</m> is <m>\epsilon^n</m> (we scaled each of the <m>n</m> unit vectors by a factor of <m>\epsilon</m>) and the volume of <m>\epsilon P</m> is <m>\epsilon^n|\det(A)|</m> (for the same reason), so we have shown that <m>T</m> scales the volume of <m>\epsilon C</m> by <m>|\det(A)|</m>.
+          <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1.3]
+  \begin{scope}[scale=1.7, yshift=.3cm]
+  \filldraw[very thin, black!50!white, fill=seq-orange!10!white]
+    (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (.6,0) -- (.6,.6) -- (0,.6) -- cycle;
+  \draw[vector, black!50!white] (0, 0) -- (1, 0);
+  \draw[vector, black!50!white] (0, 0) -- (0, 1);
+  \draw[vector] (0,0) -- node[auto]{$\epsilon e_2$} (0,.6);
+  \draw[vector, opacity=.75] (0,0) -- node[auto,swap]{$\epsilon e_1$} (.6,0);
+  \node at (.3, .3) {$\epsilon C$};
+  \coordinate (a) at (1.2, .5);
+  \end{scope}
+
+  \node at (1.7/2, -.5) {$\vol(\epsilon C) = \epsilon^n$};
+
+  \draw[->, thick] (a) to[bend left]
+      node[above=2pt] {$T$}
+      node[below=4pt] {$\mat{| |; v_1 v_2; | |}$}
+      ($(a) + (2.8cm,0)$);
+
+  \begin{scope}[xshift=5cm]
+  \filldraw[black!50!white, fill=seq-orange!10!white, very thin]
+    (0,0) -- (1,2) -- (3,3) -- (2,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (.6,1.2) -- (1.8,1.8) -- (1.2,.6) -- cycle;
+  \draw[vector, black!50!white] (0, 0) -- (1,2);
+  \draw[vector, black!50!white] (0, 0) -- (2,1);
+  \draw[vector] (0,0) -- node[auto]{$\epsilon v_2$} (.6,1.2);
+  \draw[vector] (0,0) -- node[auto,swap]{$\epsilon v_1$} (1.2,.6);
+  \node at (.9,.9) {$\epsilon P$};
+  \end{scope}
+
+  \node at (6.3, -.5) {$\vol(\epsilon P) = \epsilon^n|\det(A)|$};
+\end{tikzpicture}
+          </latex-code>
+        </p>
+        <p>
+          By the additivity property (LC1), the image of a translate of <m>\epsilon C</m> is a translate of <m>\epsilon P</m>:
+          <me>T(x + \epsilon C) = T(x) + \epsilon T(C) = T(x) + \epsilon P.</me>
+          Since a translation does not change volumes, this proves that <m>T</m> scales the volume of a translate of <m>\epsilon C</m> by <m>|\det(A)|</m>.
+        </p>
+        <p>
+          At this point, we need to use techniques from multivariable calculus, so we only give an idea of the rest of the proof.  Any region <m>S</m> can be approximated by a collection of very small cubes of the form <m>x + \epsilon C</m>.  The image <m>T(S)</m> is then approximated by the image of this collection of cubes, which is a collection of very small paralellepipeds of the form <m>T(x) + \epsilon P</m>.
+          <latex-code>
 \def\curvy{(-37.3333, 2.6667)
      .. controls (-37.3333, -5.3333) and (-26.6667, -10.6667) .. (-16, -24)
      .. controls (-5.3333, -37.3333) and (5.3333, -58.6667) .. (18.6667, -48)
@@ -166,35 +729,141 @@
 \begin{tikzpicture}[scale=1, thin border nodes]
   \draw[help lines, black!25] (-2,-2) rectangle (2,2);
   \begin{scope}[fill=seq-orange, fill opacity=.2, thin,
-      x=.7bp, y=.7bp]
+      x=1.7*.7bp, y=1.7*.7bp, yshift=.4cm, xshift=-.2cm]
     \expandafter\filldraw\curvy;
     \expandafter\clip\curvy;
-    \draw[very thin, step=4] (-60,-60) grid (60,60);
+    \fill[seq-red, opacity=.5, shift={(2*4,-4*4)}] (0,0) rectangle (4,4);
+    \coordinate (a) at (2*4,-4*4);
+    \draw[very thin, black!70!white, step=4] (-60,-60) grid (60,60);
   \end{scope}
 
-  \node at (0,.7) {$S$};
-  \point at (0,0);
+  \draw[thin] (-1.2, -1.2) node[below] {$x + \epsilon C$} -- (a);
+
+  \node at (0,1.2) {$S$};
+  %\point at (0,0);
 
   \draw[->, thick] (2.1,0) to[bend left, "$T$" above=1mm]
-    node[below=5mm] {$\vol(T(S)) = 2\vol(S)$}
-    (10-2.1,0);
+    (8-2.1,0);
 
-  \begin{scope}[xshift=10cm]
+  \begin{scope}[xshift=8cm]
     \draw[help lines, black!25] (-2,-2) rectangle (2,2);
-    \begin{scope}[cm={1,-1,1,1,(0,0)}, x=.7bp, y=.7bp,
+    \begin{scope}[cm={1,2,2,1,(.5,0)}, x=.7bp, y=.7bp,
         fill=seq-orange, fill opacity=.2, thin]
       \expandafter\filldraw\curvy;
       \expandafter\clip\curvy;
-      \draw[very thin, step=4] (-60,-60) grid (60,60);
-    \end{scope}
+      \fill[seq-red, opacity=.5, shift={(2*4,-4*4)}] (0,0) rectangle (4,4);
+      \draw[very thin, black!70!white, step=4] (-60,-60) grid (60,60);
+    \coordinate (b) at (2*4,-3*4);
+  \end{scope}
 
-    \node at (.8,.5) {$T(S)$};
-    \point at (0,0);
+  \draw[thin] (1,-1.5) node[below] {$T(x) + \epsilon P$} -- (b);
+
+  \node at (-.5,1.2) {$T(S)$};
+  % \point at (0,0);
   \end{scope}
 \end{tikzpicture}
-    ]]>
-      </latex-image-code>
-    </image>
-  </sidebyside>
+          </latex-code>
+          The volume of <m>S</m> is closely approximated by the sum of the volumes of the cubes; in fact, as <m>\epsilon</m> goes to zero, the limit of this sum is precisely <m>\vol(S)</m>.  Likewise, the volume of <m>T(S)</m> is equal to the sum of the volumes of the paralellepipeds, take in the limit as <m>\epsilon\to 0</m>.  The key point is that <em>the volume of each cube is scaled by <m>|\det(A)|</m>.</em>  Therefore, the sum of the volumes of the paralellepipeds is <m>|\det(A)|</m> times the sum of the volumes of the cubes.  This proves that <m>\vol(T(S)) = |\det(A)|\vol(S).</m>
+        </p>
+      </proof>
+    </theorem>
+
+    <example>
+      <statement>
+        <p>
+          Let <m>S</m> be a half-circle of radius <m>1</m>, let
+          <me>A = \mat{1 2; 2 1},</me>
+          and define <m>T\colon\R^2\to\R^2</m> by <m>T(x)=Ax</m>.  What is the area of <m>T(S)</m>?
+          <latex-code>
+\begin{tikzpicture}
+  \begin{scope}[yshift=-.3cm]
+    \draw[grid lines] (-1.5,-.5) grid (1.5, 1.5);
+    \filldraw[fill=seq-orange, fill opacity=.2, thin]
+      (1,0) arc[start angle=0, end angle=180, radius=1] -- cycle;
+    \node at (0,.5) {$S$};
+  \end{scope}
+
+  \draw[->, thick] (2.1,0) to[bend left, "$T$" above=1mm]
+    node[below=1mm]{$\mat{1 2; 2 1}$} (7-2.1,0);
+
+  \begin{scope}[xshift=7cm]
+    \draw[grid lines] (-1.5,-2.5) grid (2.5, 2.5);
+    \begin{scope}[cm={1,2,2,1,(0,0)}]
+      \filldraw[fill=seq-orange, fill opacity=.2, thin]
+        (1,0) arc[start angle=0, end angle=180, radius=1] -- cycle;
+      \node at (0,.5) {$T(S)$};
+    \end{scope}
+  \end{scope}
+
+\end{tikzpicture}
+          </latex-code>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The area of the unit circle is <m>\pi</m>, so the are of <m>S</m> is <m>\pi/2</m>.  The transformation <m>T</m> scales areas by a factor of <m>|\det(A)| = |1 - 4| = 3</m>, so
+          <me>\vol(T(S)) = 3\vol(S) = \frac{3\pi}2.</me>
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <title>Area of an ellipse</title>
+      <statement>
+        <p>
+          Find the area of the interior <m>E</m> of the ellipse defined by the equation
+          <me>\left(\frac{2x-y}{2}\right)^2 + \left(\frac{y+3x}{3}\right)^2 = 1.</me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          This ellipse is obtained from the unit circle <m>X^2+Y^2=1</m> by the linear change of coordinates
+          <me>
+            \begin{split}
+            X \amp= \frac{2x-y}2 \\
+            Y \amp= \frac{y+3x}3.
+            \end{split}
+          </me>
+          In other words, if we define a linear transformation <m>T\colon\R^2\to\R^2</m> by
+          <me>
+            T\vec{x y} = \vec{(2x-y)/2 (y+3x)/3},
+          </me>
+          then <m>T{x\choose y}</m> lies on the unit circle <m>C</m> whenever <m>x\choose y</m> lies on <m>E</m>.
+          <latex-code>
+\begin{tikzpicture}
+  \begin{scope}[xshift=7cm]
+    \draw[grid lines] (-1.5,-1.5) grid (1.5, 1.5);
+    \filldraw[fill=seq-orange, fill opacity=.2, thin]
+      (0,0) circle[radius=1];
+    \node at (0,0) {$C$};
+  \end{scope}
+
+  \draw[->, thick] (2.1,0) to[bend left, "$T$" above=1mm]
+    node[below=2mm]{$\mat{1 -1/2; 1 1/3}$} (7-2.1,0);
+
+  \begin{scope}[xshift=0cm]
+    \draw[grid lines] (-1.5,-2.5) grid (1.5, 2.5);
+    \begin{scope}[cm={2/5,-6/5,3/5,6/5,(0,0)}]
+      \filldraw[fill=seq-orange, fill opacity=.2, thin]
+        (0,0) circle[radius=1];
+      \node at (0,0) {$E$};
+    \end{scope}
+  \end{scope}
+
+\end{tikzpicture}
+          </latex-code>
+          We compute the standard matrix <m>A</m> for <m>T</m> by evaluating on the unit coordinate vectors:
+          <me>
+            T\vec{1 0} = \vec{1 1} \qquad T\vec{0 1} = \vec{-1/2 1/3}
+            \quad\implies\quad A = \mat{1 -1/2; 1 1/3}.
+          </me>
+          Therefore, <m>T</m> scales areas by a factor of <m>|\det(A)| = |\frac13+\frac12| = \frac56.</m>  The area of the unit circle is <m>\pi</m>, so
+          <me>\pi = \vol(C) = \vol(T(E)) = |\det(A)|\cdot\vol(E) = \frac56\vol(E),</me>
+          and thus the area of <m>E</m> is <m>6\pi/5</m>.
+        </p>
+      </solution>
+    </example>
+
+  </subsection>
 
 </section>

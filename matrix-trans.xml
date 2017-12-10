@@ -702,7 +702,7 @@ the license is included in gfdl.xml.
     Now we specialize the general notions and vocabulary from the previous <xref ref="matrix-trans-transformations"/> to the functions defined by matrices that we considered in the first <xref ref="matrix-trans-matrices-functions"/>.
   </p>
 
-  <definition>
+  <definition xml:id="matrix-trans-defn-of">
     <statement>
       <p>
         Let <m>A</m> be an <m>m\times n</m> matrix.  The <term>matrix transformation</term> associated to <m>A</m> is the transformation

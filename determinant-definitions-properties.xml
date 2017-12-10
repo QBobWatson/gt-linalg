@@ -65,6 +65,10 @@ the license is included in gfdl.xml.
       In each of the first three cases, doing a row operation on a matrix scales the determinant by a <em>nonzero</em> number.  (Multiplying a row by zero is not a row operation.)  Therefore, doing row operations on a square matrix <m>A</m> does not change whether or not the determinant is zero.
     </p>
 
+    <p>
+      The reason behind using these particular defining properties is geometric.
+      See <xref ref="determinants-volumes"/>.
+    </p>
 
     <example>
       <statement>
@@ -505,7 +509,7 @@ the license is included in gfdl.xml.
       By the invertibility property, a matrix that does not satisfy any of the properties of the <xref ref="imt-1"/> has zero determinant.
     </p>
 
-    <corollary>
+    <corollary xml:id="det-defn-dep-det0">
       <statement>
         <p>
           Let <m>A</m> be a square matrix.  If the rows or columns of <m>A</m> are linearly dependent, then <m>\det(A)=0</m>.
