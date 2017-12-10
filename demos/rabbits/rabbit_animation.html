@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Rabbits</title>
+    <link rel="stylesheet" href="rabbit_animation.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    </style>
+</head>
+
+<body>
+
+    <div id="problem">
+        In a population of rabbits...
+        <ul>
+            <li>half of the new born rabbits survive their first year</li>
+            <li>of those, half survive their second year</li>
+            <li>the maximum life span is three years</li>
+            <li>rabbits produce 0, 6, 8 rabbits in their first, second, and third years</li>
+        </ul>
+    </div>
+
+    <div id="wrapper">
+
+        <div id="info">
+            <button id="fastforward-btn" onclick="continueAnim()">Fastforward 1 year</button>
+        </div>
+
+        <div id='zero' class='age-wrapper'>
+            <div>Age 0-1</div>
+            <div></div>
+            <div class='death-multiplier'>0.5x</div>
+            <div class='corpses'></div>
+        </div>
+
+        <div id='one' class='age-wrapper'>
+            <div>Age 1-2</div>
+            <div></div>
+            <div class='birth-multiplier'>6x</div>
+            <div class='babies'></div>
+            <div class='death-multiplier'>0.5x</div>
+            <div class='corpses'></div>
+        </div>
+
+        <div id='two' class='age-wrapper'>
+            <div>Age 2-3</div>
+            <div></div>
+            <div class='birth-multiplier'>8x</div>
+            <div class='babies'></div>
+            <div class='death-multiplier'>0x</div>
+            <div class='corpses'></div>
+        </div>
+
+        <div id="message"></div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </script>
+    <script>
+
+        var data = [4, 0, 0];
+        var nextStage = 'babies';
+
+        function displayData() {
+            $("#zero div:nth-child(2)").text(data[0]);
+            $("#one div:nth-child(2)").text(data[1]);
+            $("#two div:nth-child(2)").text(data[2]);
+        }
+
+        function continueAnim() {
+            if (nextStage == 'babies') {
+                $("#fastforward-btn").prop("disabled", true).text("Continue");
+                animateBabies();
+                nextStage = 'deaths';
+            }
+            else if (nextStage == 'deaths') {
+                $("#fastforward-btn").prop("disabled", true);
+                animateDeaths();
+                nextStage = 'summary';
+            } else if (nextStage == 'summary') {
+                $("#fastforward-btn").prop("disabled", true).text("Fastforward 1 year");
+                animateSummary();
+                nextStage = 'babies';
+            }
+        }
+
+        function animateBabies() {
+            $(".birth-multiplier").show();
+            var one_babies = $("#one div.babies");
+            var two_babies = $("#two div.babies");
+
+            $("#message").text("Baby rabbits are born");
+            $("#message").css({ "background-color": "rgb(125, 125, 243)" });
+            $("#message").show();
+
+            one_babies.text("+" + 6 * data[1]);
+            two_babies.text("+" + 8 * data[2]);
+            one_babies.show();
+            two_babies.show();
+            var id = setInterval(animate, 5);
+            var pos = 0;
+            var MAX_POS = 400;
+
+            function animate() {
+                if (pos == MAX_POS) {
+                    clearInterval(id);
+                    $("#fastforward-btn").prop("disabled", false);
+                } else {
+                    pos++;
+                    hor_goal = 25;
+                    one_perc = 50 - 25 * pos / MAX_POS;
+                    two_perc = 75 - 50 * pos / MAX_POS;
+                    one_babies.css({ left: one_perc + "%", top: 50*pos / MAX_POS + "%" });
+                    two_babies.css({ left: two_perc + "%", top: 20 + 50*pos / MAX_POS + "%" });
+                }
+            }
+        }
+
+        function animateDeaths() {
+            var zero_corpses = $("#zero div.corpses");
+            var one_corpses = $("#one div.corpses");
+            var two_corpses = $("#two div.corpses");
+
+            $("#message").text("Some rabbits do not survive");
+            $("#message").css({ "background-color": "rgb(145, 209, 151)" });
+            $(".birth-multiplier").hide();
+            zero_corpses.text("-" + data[0] / 2).show();
+            one_corpses.text("-" + data[1] / 2).show();
+            two_corpses.text("-" + data[2]).show();
+
+            var id = setInterval(animate, 5);
+            var pos = 0;
+            var MAX_POS = 400;
+
+            function animate() {
+                if (pos == MAX_POS) {
+                    clearInterval(id);
+                    $("#fastforward-btn").prop("disabled", false);
+                    zero_corpses.hide();
+                    one_corpses.hide();
+                    two_corpses.hide();
+                    $("#zero div:nth-child(2)").text(data[0] / 2);
+                    $("#one div:nth-child(2)").text(data[1] / 2);
+                    $("#two div:nth-child(2)").text(0);
+                } else {
+                    pos++;
+                    translate_by = (MAX_POS - pos) / MAX_POS * 100;
+                    zero_corpses.css({ transform: "translate(0," + translate_by + "%)" });
+                    one_corpses.css({ transform: "translate(0," + translate_by + "%)" });
+                    two_corpses.css({ transform: "translate(0," + translate_by + "%)" });
+                }
+            }
+
+
+
+
+        }
+
+
+        function animateSummary() {
+            $("#two div:nth-child(2)").fadeOut();
+            $("#message").hide();            
+            var one_babies = $("#one div.babies");
+            var two_babies = $("#two div.babies");
+
+            var id = setInterval(animate, 5);
+            var pos = 0;
+            var MAX_POS = 400;
+
+            function animate() {
+                if (pos == MAX_POS) {
+                    clearInterval(id);
+                    $("#fastforward-btn").prop("disabled", false);
+                    $(".birth-multiplier").hide();
+                    one_babies.hide();
+                    two_babies.hide();
+                    $("#zero div:nth-child(2)").css({ left: "25%" });
+                    $("#one div:nth-child(2)").css({ left: "50%" });
+                    new_data = [6 * data[1] + 8 * data[2], data[0] / 2, data[1] / 2];
+                    data[0] = new_data[0];
+                    data[1] = new_data[1];
+                    data[2] = new_data[2];
+                    displayData(data);
+                    $("#two div:nth-child(2)").show();
+                } else {
+                    pos++;
+                    var v_start_one = 65;
+                    var v_start_two = 50;
+                    one_babies.css({ left: one_perc + "%", top: (MAX_POS - pos) * v_start_one / MAX_POS + pos * 5 / MAX_POS + "%" });
+                    two_babies.css({ left: one_perc + "%", top: (MAX_POS - pos) * v_start_two / MAX_POS + pos * 5 / MAX_POS + "%" });
+                    $("#zero div:nth-child(2)").css({ left: (MAX_POS - pos) * 25 / MAX_POS + pos * 50 / MAX_POS + "%" });
+                    $("#one div:nth-child(2)").css({ left: (MAX_POS - pos) * 50 / MAX_POS + pos * 75 / MAX_POS + "%" });
+                }
+            }
+        }
+
+
+        $(document).ready(function () {
+            displayData(data);
+        })
+    </script>
+</body>
+
+
+</html>
