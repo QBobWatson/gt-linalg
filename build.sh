@@ -63,10 +63,17 @@ xsltproc -o "$build_dir/" --xinclude \
 
 echo "Preprocessing LaTeX (be patient)..."
 [ -n "$PRETEX_ALL" ] && rm -r pretex-cache
-python3 "$pretex" --preamble "$build_dir/preamble.tex" \
-        --cache-dir pretex-cache --style-path "$compile_dir"/style \
-        "$build_dir"/*.html "$build_dir"/knowl/*.html \
-    || die "Can't process html!"
+files=("$build_dir"/*.html "$build_dir"/knowl/*.html)
+# Run pretex in chunks to prevent crashes
+while [ ${#files[@]} -gt 0 ]; do
+    chunk=("${files[@]:0:500}")
+    files=("${files[@]:500}")
+    echo "Processing ${#chunk[@]} files (${#files[@]} remaining)"
+    python3 "$pretex" --preamble "$build_dir/preamble.tex" \
+            --cache-dir pretex-cache --style-path "$compile_dir"/style \
+            "${chunk[@]}" \
+        || die "Can't process html!"
+done
 mkdir "$figure_img_dir"
 cp pretex-cache/*.png "$figure_img_dir"
 
