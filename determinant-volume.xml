@@ -38,7 +38,7 @@ the license is included in gfdl.xml.
   <definition>
     <statement>
       <p>
-        The <term>paralellepiped</term> determined by <m>n</m> vectors <m>v_1,v_2,\ldots,v_n</m> in <m>\R^n</m> is the subset
+        The <term>paralellepiped</term> determined by <m>n</m> vectors <m>v_1, v_2,\ldots,v_n</m> in <m>\R^n</m> is the subset
         <me>
           P = \bigl\{a_1x_1 + a_2x_2 + \cdots + a_nx_n \bigm| 0\leq a_1,a_2,\ldots,a_n\leq 1\bigr\}.
         </me>
@@ -739,7 +739,7 @@ the license is included in gfdl.xml.
 
   \draw[thin] (-1.2, -1.2) node[below] {$x + \epsilon C$} -- (a);
 
-  \node at (0,1.2) {$S$};
+  \node at (0,1.5) {$S$};
   %\point at (0,0);
 
   \draw[->, thick] (2.1,0) to[bend left, "$T$" above=1mm]
@@ -747,18 +747,18 @@ the license is included in gfdl.xml.
 
   \begin{scope}[xshift=8cm]
     \draw[help lines, black!25] (-2,-2) rectangle (2,2);
-    \begin{scope}[cm={1,2,2,1,(.5,0)}, x=.7bp, y=.7bp,
+    \begin{scope}[cm={2,1,1,2,(0,.5)}, x=.7bp, y=.7bp,
         fill=seq-orange, fill opacity=.2, thin]
       \expandafter\filldraw\curvy;
       \expandafter\clip\curvy;
       \fill[seq-red, opacity=.5, shift={(2*4,-4*4)}] (0,0) rectangle (4,4);
       \draw[very thin, black!70!white, step=4] (-60,-60) grid (60,60);
-    \coordinate (b) at (2*4,-3*4);
+    \coordinate (b) at (3*4,-4*4);
   \end{scope}
 
-  \draw[thin] (1,-1.5) node[below] {$T(x) + \epsilon P$} -- (b);
+  \draw[thin] (.9,-1.3) node[below] {$T(x) + \epsilon P$} -- (b);
 
-  \node at (-.5,1.2) {$T(S)$};
+  \node at (-.7,1.5) {$T(S)$};
   % \point at (0,0);
   \end{scope}
 \end{tikzpicture}
@@ -801,7 +801,7 @@ the license is included in gfdl.xml.
       </statement>
       <solution>
         <p>
-          The area of the unit circle is <m>\pi</m>, so the are of <m>S</m> is <m>\pi/2</m>.  The transformation <m>T</m> scales areas by a factor of <m>|\det(A)| = |1 - 4| = 3</m>, so
+          The area of the unit circle is <m>\pi</m>, so the area of <m>S</m> is <m>\pi/2</m>.  The transformation <m>T</m> scales areas by a factor of <m>|\det(A)| = |1 - 4| = 3</m>, so
           <me>\vol(T(S)) = 3\vol(S) = \frac{3\pi}2.</me>
         </p>
       </solution>
