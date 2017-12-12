@@ -6,11 +6,16 @@ die() {
 }
 
 PRETEX_ALL=
+CHUNKSIZE="500"
 
 while [[ $# -gt 0 ]]; do
     case $1 in
         --reprocess-latex)
             PRETEX_ALL="true"
+            ;;
+        --chunk)
+            shift
+            CHUNKSIZE=$1
             ;;
         *)
             die "Unknown argument: $1"
@@ -66,9 +71,10 @@ echo "Preprocessing LaTeX (be patient)..."
 files=("$build_dir"/*.html "$build_dir"/knowl/*.html)
 # Run pretex in chunks to prevent crashes
 while [ ${#files[@]} -gt 0 ]; do
-    chunk=("${files[@]:0:500}")
-    files=("${files[@]:500}")
+    chunk=("${files[@]:0:$CHUNKSIZE}")
+    files=("${files[@]:$CHUNKSIZE}")
     echo "Processing ${#chunk[@]} files (${#files[@]} remaining)"
+    #python3 -m cProfile -o profile.log "$pretex" --preamble "$build_dir/preamble.tex" \
     python3 "$pretex" --preamble "$build_dir/preamble.tex" \
             --cache-dir pretex-cache --style-path "$compile_dir"/style \
             "${chunk[@]}" \
