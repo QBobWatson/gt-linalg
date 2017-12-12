@@ -6,7 +6,7 @@ die() {
 }
 
 PRETEX_ALL=
-CHUNKSIZE="500"
+CHUNKSIZE="50"
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -30,7 +30,7 @@ base_dir="$(cd "$base_dir"; pwd)"
 build_dir="$base_dir/build"
 static_dir="$build_dir/static"
 figure_img_dir="$build_dir"/figure-images
-pretex="$base_dir/gt-text-common/pretex/processtex.py"
+pretex="$base_dir/gt-text-common/pretex/pretex.py"
 
 echo "Checking xml..."
 cd "$compile_dir"
@@ -68,18 +68,10 @@ xsltproc -o "$build_dir/" --xinclude \
 
 echo "Preprocessing LaTeX (be patient)..."
 [ -n "$PRETEX_ALL" ] && rm -r pretex-cache
-files=("$build_dir"/*.html "$build_dir"/knowl/*.html)
-# Run pretex in chunks to prevent crashes
-while [ ${#files[@]} -gt 0 ]; do
-    chunk=("${files[@]:0:$CHUNKSIZE}")
-    files=("${files[@]:$CHUNKSIZE}")
-    echo "Processing ${#chunk[@]} files (${#files[@]} remaining)"
-    #python3 -m cProfile -o profile.log "$pretex" --preamble "$build_dir/preamble.tex" \
-    python3 "$pretex" --preamble "$build_dir/preamble.tex" \
-            --cache-dir pretex-cache --style-path "$compile_dir"/style \
-            "${chunk[@]}" \
-        || die "Can't process html!"
-done
+python3 "$pretex" --chunk-size $CHUNKSIZE --preamble "$build_dir/preamble.tex" \
+        --cache-dir pretex-cache --style-path "$compile_dir"/style \
+        "$build_dir"/*.html "$build_dir"/knowl/*.html \
+    || die "Can't process html!"
 mkdir "$figure_img_dir"
 cp pretex-cache/*.png "$figure_img_dir"
 
