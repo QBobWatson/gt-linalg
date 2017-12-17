@@ -259,7 +259,9 @@ window.demo = new (size === 2 ? Demo2D : Demo)({
   for (j = o = 0, len2 = eigenvals.length; o < len2; j = ++o) {
     ref2 = eigenvals[j], eigenvalue = ref2[0], mult = ref2[1];
     eigenval = eigenvalue.toFixed(2);
-    if (this.urlParams.nomult != null) {
+    if (this.urlParams.nospace != null) {
+      str += '';
+    } else if (this.urlParams.nomult != null) {
       str += ("<p>This is the <span class=\"espace-" + j + "\">") + (eigenval + "-eigenspace</span></p>");
     } else {
       str += ("<p>The <span class=\"espace-" + j + "\">") + (eigenval + "-eigenspace</span> ") + ("has algebraic multiplicity " + mult + " ") + ("and geometric multiplicity " + eigenspaces[j].dim) + "</p>";

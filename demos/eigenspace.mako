@@ -167,7 +167,9 @@ window.demo = new (if size == 2 then Demo2D else Demo) {
     evalStrings = []
     for [eigenvalue, mult], j in eigenvals
         eigenval = eigenvalue.toFixed(2)
-        if @urlParams.nomult?
+        if @urlParams.nospace?
+            str += ''
+        else if @urlParams.nomult?
             str += "<p>This is the <span class=\"espace-#{j}\">" +
                    "#{eigenval}-eigenspace</span></p>"
         else
