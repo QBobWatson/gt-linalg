@@ -40,7 +40,7 @@ the license is included in gfdl.xml.
       <p>
         The <term>paralellepiped</term> determined by <m>n</m> vectors <m>v_1, v_2,\ldots,v_n</m> in <m>\R^n</m> is the subset
         <me>
-          P = \bigl\{a_1x_1 + a_2x_2 + \cdots + a_nx_n \bigm| 0\leq a_1,a_2,\ldots,a_n\leq 1\bigr\}.
+          P = \bigl\{a_1x_1 + a_2x_2 + \cdots + a_nx_n \bigm| 0 \leq a_1,a_2,\ldots,a_n\leq 1\bigr\}.
         </me>
       </p>
     </statement>
@@ -497,7 +497,7 @@ the license is included in gfdl.xml.
     <statement>
       <p>
         Find the area of the triangle with vertices
-        <m>(-1,-2),\,(2,-1),\,(1,3).</m>
+        <m>(-1,-2), \,(2,-1),\,(1,3).</m>
         <latex-code>
 \begin{tikzpicture}[thin border nodes, scale=1]
   \draw[help lines] (-2,-3) grid (3,4);
@@ -660,7 +660,7 @@ the license is included in gfdl.xml.
       In fact, <m>T</m> scales the volume of <em>any</em> region in <m>\R^n</m> by the same factor, even for <q>curvy</q> regions.
     </p>
 
-    <theorem>
+    <theorem xml:id="det-vol-regions">
       <statement>
         <p>
           Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>T\colon\R^n\to\R^n</m> be the associated matrix transformation <m>T(x)=Ax</m>.  If <m>S</m> is any region in <m>\R^n</m>, then
@@ -863,6 +863,26 @@ the license is included in gfdl.xml.
         </p>
       </solution>
     </example>
+
+    <remark>
+      <title>Multiplicativity of <m>|\det|</m></title>
+    <p>
+      The above <xref ref="det-vol-regions"/> also gives a geometric reason for multiplicativity of the (absolute value of the) determinant.  Indeed, let <m>A</m> and <m>B</m> be <m>n\times n</m> matrices, and let <m>T,U\colon\R^n\to\R^n</m> be the corresponding matrix transformations.  If <m>C</m> is the unit cube, then
+      <me>
+        \begin{split}
+        \vol\bigl(T\circ U(C)\bigr) = \vol\bigl(T(U(C))\bigr)
+        \amp= |\det(A)|\vol(U(C)) \\
+        \amp= |\det(A)|\cdot|\det(B)|\vol(C) \\
+        \amp= |\det(A)|\cdot|\det(B)|.
+        \end{split}
+      </me>
+      On the other hand, the matrix for the composition <m>T\circ U</m> is the product <m>AB</m>, so
+      <me>
+        \vol\bigl(T\circ U(C)\bigr) = |\det(AB)|\vol(C) = |\det(AB)|.
+      </me>
+      Thus <m>|\det(AB)| = |\det(A)|\cdot|\det(B)|</m>.
+    </p>
+    </remark>
 
   </subsection>
 
