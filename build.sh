@@ -6,7 +6,7 @@ die() {
 }
 
 PRETEX_ALL=
-CHUNKSIZE="50"
+CHUNKSIZE="250"
 
 while [[ $# -gt 0 ]]; do
     case $1 in
