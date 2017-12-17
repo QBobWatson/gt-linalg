@@ -730,7 +730,7 @@ $\xrightarrow{\text{project $yz$}}$
           </me>
         </p>
         <figure>
-          <caption>Illustration of a transformation defined in steps.  Click and drag the vecctor on the left.</caption>
+          <caption>Illustration of a transformation defined in steps.  Click and drag the vector on the left.</caption>
           <mathbox source="demos/steps.html" height="500px"/>
         </figure>
       </solution>
