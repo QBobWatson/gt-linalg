@@ -29,7 +29,9 @@ Copyright 2017 Georgia Institute of Technology
     </index>
 
     <colophon>
-        <p>This book was authored in MathBook XML.</p>
+        <p>
+          This book was authored in MathBook XML, with major modifications by Joe Rabinoff.
+        </p>
     </colophon>
 
 </backmatter>

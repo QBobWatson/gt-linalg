@@ -12,6 +12,766 @@ the license is included in gfdl.xml.
 <section xml:id="eigenvectors">
   <title>Eigenvalues and Eigenvectors</title>
 
-  <p>Definition of eigenvalues and eigenvectors.</p>
+  <objectives>
+    <ol>
+      <li>Learn the definition of eigenvector and eigenvalue.</li>
+      <li>Learn to find eigenvectors and eigenvalues geometrically.</li>
+      <li>Learn to decide if a number is an eigenvalue of a matrix, and if so, how to find an associated eigenvector.</li>
+      <li><em>Recipe:</em> find a basis for the <m>\lambda</m>-eigenspace.</li>
+      <li><em>Picture:</em> whether or not a vector is an eigenvector.</li>
+      <li><em>Vocabulary word:</em> <term>eigenspace</term>.</li>
+      <li><em>Essential vocabulary words:</em> <term>eigenvector</term>, <term>eigenvalue</term>.</li>
+    </ol>
+  </objectives>
+
+  <introduction>
+    <p>
+      In this Section, we define eigenvalues and eigenvectors.  These form the most important facet of the structure theory of square matrices.  As such, eigenvalues and eigenvectors tend to play a key role in the real-life applications of linear algebra.
+    </p>
+  </introduction>
+
+  <subsection>
+    <title>Eigenvalues and Eigenvectors</title>
+
+    <p>
+      Here is the most important definition in this text.
+    </p>
+
+    <essential>
+      <statement>
+        <p>
+          Let <m>A</m> be an <m>n\times n</m> matrix.
+          <ol>
+            <li>
+              An <term>eigenvector</term> of <m>A</m> is a <em>nonzero</em> vector <m>v</m> in <m>\R^n</m> such that <m>Av=\lambda v</m>, for some scalar <m>\lambda</m>.
+            </li>
+            <li>
+              An <term>eigenvalue</term> of <m>A</m> is a scalar <m>\lambda</m> such that the equation <m>Av=\lambda v</m> has a <em>nontrivial</em> solution.
+            </li>
+          </ol>
+          If <m>Av = \lambda v</m> for <m>v\neq 0</m>, we say that <m>\lambda</m> is the <term>eigenvalue for</term> <m>v</m>, and that <m>v</m> is an <term>eigenvector for</term> <m>\lambda</m>.
+        </p>
+      </statement>
+    </essential>
+
+    <p>
+      The German prefix <q>eigen</q> roughly translates to <q>self</q>.  An eigenvector of <m>A</m> is a vector that is taken to a multiple of itself, which partially explains the terminology.
+    </p>
+
+    <note>
+      <p>
+        Eigenvalues and eigenvectors are only for square matrices.
+      </p>
+    </note>
+
+    <warning>
+      <p>
+        Eigenvectors are <em>by definition nonzero</em>.  Eigenvalues may be equal to zero.
+      </p>
+    </warning>
+
+    <p>
+      We cannot consider the zero vector to be an eigenvector: since <m>A0 = 0 = \lambda 0</m> for <em>every</em> scalar <m>\lambda</m>, the associated eigenvalue would be undefined.
+    </p>
+
+    <example>
+      <title>Verifying eigenvectors</title>
+      <p>
+        Let
+        <me>
+          A = \mat{2 2; -4 8} \qquad v = \vec{1 1}  \qquad w = \vec{1 2}.
+        </me>
+        One product is
+        <me>
+          Av = \mat{2 2; -4 8}\vec{1 1} = \vec{4 4} = 4v.
+        </me>
+        Hence, <m>v</m> is an eigenvector of <m>A</m>, with eigenvalue <m>\lambda = 4</m>.  On the other hand,
+        <me>
+          Aw = \mat{2 2; -4 8}\vec{2 1} = \vec{6 0}.
+        </me>
+        which is not a scalar multiple of <m>w</m>.  Hence, <m>w</m> is not an eigenvector of <m>A</m>.
+        <latex-code>
+\begin{tikzpicture}[thin border nodes, baseline=1.2cm, scale=.5]
+  \draw[grid lines] (-1, -1) grid (7, 6);
+  \draw[seq-red] (-1, -1) -- (6, 6);
+  \draw[seq-blue] (-1/2, -1) -- (3, 6);
+  \point[seq-red, "$v$" below right] at (1, 1);
+  \point[seq-red, "$Av$" below right] at (4, 4);
+  \point[seq-blue, "$w$" above left] at (1, 2);
+  \point[seq-blue, "$Aw$"] at (6, 0);
+  \point at  (0,0);
+\end{tikzpicture}\qquad
+\begin{minipage}[c]{.3\linewidth}
+  $\color{seq-red}v$ is an eigenvector\\[5mm]
+  $\color{seq-blue}w$ is not an eigenvector
+\end{minipage}
+        </latex-code>
+      </p>
+    </example>
+
+    <example>
+      <title>Verifying eigenvectors</title>
+      <p>
+        Let
+        <me>
+          A = \mat{0 6 8; \frac 12 0 0; 0 \frac 12 0}
+  \qquad v = \vec{16 4 1} \qquad w = \vec{2 2 2}.
+        </me>
+        One product is
+        <me>
+          Av = \mat{0 6 8; \frac 12 0 0; 0 \frac 12 0}\vec{16 4 1}
+    = \vec{32 8 2} = 2v.
+        </me>
+        Hence, <m>v</m> is an eigenvector of <m>A</m>, with eigenvalue <m>\lambda = 2</m>.  On the other hand,
+        <me>
+          Aw = \mat{0 6 8; \frac 12 0 0; 0 \frac 12 0}\vec{2 2 2}
+          = \vec{28 1 1},
+        </me>
+        which is not a scalar multiple of <m>w</m>.  Hence, <m>w</m> is not an eigenvector of <m>A</m>.
+      </p>
+    </example>
+
+    <example>
+      <title>An eigenvector with eigenvalue zero</title>
+      <statement>
+        <p>
+          Let
+          <me>
+            A = \mat{1 3; 2 6} \qquad v = \vec{-3 1}.
+          </me>
+          Is <m>v</m> an eigenvector of <m>A</m>?  If so, what is its eigenvalue?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The product is
+          <me>Av = \mat{1 3; 2 6}\vec{-3 1} = \vec{0 0} = 0v.</me>
+          Hence, <m>v</m> is an eigenvector with eigenvalue <em>zero</em>.
+        </p>
+        <p>
+          As noted above, an eigen<em>value</em> is allowed to be zero, but an eigen<em>vector</em> is not.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+    To say that <m>Av=\lambda v</m> means that <m>Av</m> and <m>\lambda v</m> are <em>collinear</em>.  So, an eigenvector of <m>A</m> is a nonzero vector <m>v</m> such that <m>Av</m> and <m>v</m> lie on the same line through the origin.  In this case, <m>Av</m> is a scalar multiple of <m>A</m>; the eigenvalue is the scaling factor.
+    <latex-code>
+\begin{tikzpicture}[thin border nodes, baseline]
+  \draw[grid lines] (-2,-2) rectangle (2,2);
+  \clip (-2,-2) rectangle (2,2);
+  \coordinate (v) at (1/2,1/3);
+  \draw[seq-red!70] ($-5*(v)$) -- ($5*(v)$);
+  \point[seq-red, "$v$"] at (v);
+  \point[seq-red, "$Av$"] at ($2.5*(v)$);
+  \coordinate (w) at (-1/3,1);
+  \draw[seq-blue!70] ($-5*(w)$) -- ($5*(w)$);
+  \point[seq-blue, "$w$" above right] (w) at (w);
+  \point[seq-blue, "$Aw$"] at (-1.2, 1);
+  \point at  (0,0);
+\end{tikzpicture}\qquad
+\begin{minipage}[c]{.3\linewidth}
+  $\color{seq-red}v$ is an eigenvector\\[5mm]
+  $\color{seq-blue}w$ is not an eigenvector
+\end{minipage}
+    </latex-code>
+    For matrices that arise as the standard matrix of a linear transformation, it is often best to draw a picture, then eyeball the eigenvectors and eigenvalues geometrically in this way.  For a transformation that is defined geometrically, it is not necessary even to compute its matrix.
+    </p>
+
+    <example xml:id="evec-eg-reflection">
+      <title>Reflection</title>
+      <statement>
+        <p>
+          Let <m>T\colon\R^2\to\R^2</m> be the linear transformation that reflects over the line <m>L</m> defined by <m>y=-x</m>, and let <m>A</m> be the matrix for <m>T</m>.  Find the eigenvalues and eigenvectors of <m>A</m> without doing any computations.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          This transformation is defined geometrically, so we draw a picture.
+          <latex-code><![CDATA[
+\begin{tikzpicture}[thin border nodes, scale=1, baseline]
+  \draw[grid lines] (-2,-2) grid (2,2);
+  \draw[very thin, seq-violet, dashed] (-2,2) to["$L$" near end] (2,-2);
+  \draw[<->, seq-violet!70] (1.5,-1.05) to[bend left] (1.05,-1.5);
+
+  \begin{scope}[arrows={|->}, shorten=2pt, font=\small]
+  \draw[seq1!50, -, shorten=0pt, thick] (0,2) -- (0,-2);
+  \point[seq1, "$u$" {left,text=seq1}] (a) at (0,-1);
+  \point[seq1, "$Au$" {above right, text=seq1}] (Ta) at (1,0);
+  \draw (a) -- (Ta);
+  \end{scope}
+
+\end{tikzpicture}
+  ]]>
+          </latex-code>
+          The vector <m>\color{seq-red}u</m> is not an eigenvector, because <m>Au</m> is not collinear with <m>u</m>.
+          <latex-code><![CDATA[
+\begin{tikzpicture}[thin border nodes, scale=1, baseline]
+  \draw[grid lines] (-2,-2) grid (2,2);
+  \draw[very thin, seq-violet, dashed] (-2,2) to["$L$" near end] (2,-2);
+  \draw[<->, seq-violet!70] (1.5,-1.05) to[bend left] (1.05,-1.5);
+
+  \begin{scope}[arrows={|->}, shorten=2pt, font=\small]
+  \draw[seq6!50, -, shorten=0pt, thick] (2/3,2) -- (-2/3,-2);
+  \point[seq6, "$z$" {right, text=seq6}] (a) at (.5,1.5);
+  \point[seq6, "$Az$" {below right, text=seq6}] (Ta) at (-1.5,-.5);
+  \draw (a) -- (Ta);
+  \end{scope}
+
+\end{tikzpicture}
+  ]]>
+          </latex-code>
+          The vector <m>\color{seq6}z</m> is not an eigenvector either.
+          <latex-code><![CDATA[
+\begin{tikzpicture}[thin border nodes, scale=1, baseline]
+  \draw[grid lines] (-2,-2) grid (2,2);
+  \draw[very thin, seq-violet, dashed] (-2,2) to["$L$" near end] (2,-2);
+  \draw[<->, seq-violet!70] (1.5,-1.05) to[bend left] (1.05,-1.5);
+
+  \begin{scope}[arrows={|->}, shorten=2pt, font=\small]
+  \draw[seq2!50, -, shorten=0pt, thick] (2,2) -- (-2,-2);
+  \point[seq2, "$v$" {above left, text=seq2}] (b) at (1,1);
+  \point[seq2, "$Av$" {text=seq2, below right}] (Tb) at (-1,-1);
+  \draw (b) -- (Tb);
+  \end{scope}
+
+\end{tikzpicture}
+  ]]>
+          </latex-code>
+          The vector <m>\color{seq2}v</m> is an eigenvector because <m>Av</m> is collinear with <m>v</m>.  The vector <m>Av</m> has the same length as <m>v</m>, but the opposite direction, so the associated eigenvalue is <m>-1</m>.
+          <latex-code><![CDATA[
+\begin{tikzpicture}[thin border nodes, scale=1, baseline]
+  \draw[grid lines] (-2,-2) grid (2,2);
+  \draw[very thin, seq-violet, dashed] (-2,2) to["$L$" near end] (2,-2);
+  \draw[<->, seq-violet!70] (1.5,-1.05) to[bend left] (1.05,-1.5);
+
+  \begin{scope}[arrows={|->}, shorten=2pt, font=\small]
+  \draw[seq3!50, -, shorten=0pt, thick] (-2,2) -- (2,-2);
+  \point[seq3, "$w$" {text=seq3,inner sep=3pt, anchor=270}] (c) at (-1,1);
+  \point[seq3, "$Aw$" {text=seq3,inner sep=3pt, anchor=180}] (c) at (-1,1);
+  \draw (c) to[out=190, in=260, looseness=40] (c);
+  \end{scope}
+
+\end{tikzpicture}
+  ]]>
+          </latex-code>
+          The vector <m>\color{seq3}w</m> is an eigenvector because <m>Aw</m> is collinear with <m>w</m>: indeed, <m>Aw</m> is equal to <m>w</m>!  This means that <m>w</m> is an eigenvector with eigenvalue <m>1</m>.
+        </p>
+        <p>
+          It appears that all eigenvectors lie either on <m>L</m>, or on the line perpendicular to <m>L</m>.  The vectors on <m>L</m> have eigenvalue <m>1</m>, and the vectors perpendicular to <m>L</m> have eigenvalue <m>-1</m>.
+        </p>
+        <figure>
+          <caption>An eigenvector of <m>A</m> is a vector <m>x</m> such that <m>Ax</m> is collinear with <m>x</m>.  Click and drag the head of <m>x</m> to convince yourself that all such vectors lie either on <m>L</m>, or on the line perpendicular to <m>L</m>.</caption>
+          <mathbox source="demos/eigenspace.html?mat=0,-1:-1,0&amp;nospace" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <example>
+      <title>Projection</title>
+      <statement>
+        <p>
+          Let <m>T\colon\R^2\to\R^2</m> be the linear transformation that projects a vector vertically onto the <m>x</m>-axis, and let <m>A</m> be the matrix for <m>T</m>.  Find the eigenvalues and eigenvectors of <m>A</m> without doing any computations.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          This transformation is defined geometrically, so we draw a picture.
+          <latex-code><![CDATA[
+\begin{tikzpicture}[thin border nodes, scale=1, baseline]
+  \draw[grid lines] (-2,-2) grid (2,2);
+  \draw[seq-violet, dashed, thick] (-2,0) to (2,0);
+
+  \begin{scope}[arrows={|->}, shorten=2pt, font=\small]
+  \draw[seq1!50, -, shorten=0pt, thick] (2,-2) -- (-2,2);
+  \point[seq1, "$u$" {left,text=seq1}] (a) at (1,-1);
+  \point[seq1, "$Au$" {above right, text=seq1}] (Ta) at (1,0);
+  \draw (a) -- (Ta);
+  \end{scope}
+
+\end{tikzpicture}
+  ]]>
+          </latex-code>
+          The vector <m>\color{seq-red}u</m> is not an eigenvector, because <m>Au</m> is not collinear with <m>u</m>.
+          <latex-code><![CDATA[
+\begin{tikzpicture}[thin border nodes, scale=1, baseline]
+  \draw[grid lines] (-2,-2) grid (2,2);
+  \draw[seq-violet, dashed, thick] (-2,0) to (2,0);
+
+  \begin{scope}[arrows={|->}, shorten=2pt, font=\small]
+  \draw[seq6!50, -, shorten=0pt, thick] (2/3,2) -- (-2/3,-2);
+  \point[seq6, "$z$" {right, text=seq6}] (a) at (-.5,-1.5);
+  \point[seq6, "$Az$" {above, text=seq6}] (Ta) at (-.5,0);
+  \draw (a) -- (Ta);
+  \end{scope}
+
+\end{tikzpicture}
+  ]]>
+          </latex-code>
+          The vector <m>\color{seq6}z</m> is not an eigenvector either.
+          <latex-code><![CDATA[
+\begin{tikzpicture}[thin border nodes, scale=1, baseline]
+  \draw[grid lines] (-2,-2) grid (2,2);
+  \draw[seq-violet, dashed, thick] (-2,0) to (2,0);
+
+  \begin{scope}[arrows={|->}, shorten=2pt, font=\small]
+  \draw[seq2!50, -, shorten=0pt, thick] (0,2) -- (0,-2);
+  \point[seq2, "$v$" {above left, text=seq2}] (b) at (0,1);
+  \point[seq2, "$Av$" {text=seq2, below right}] (Tb) at (0,0);
+  \draw (b) -- (Tb);
+  \end{scope}
+
+\end{tikzpicture}
+  ]]>
+          </latex-code>
+          The vector <m>\color{seq2}v</m> is an eigenvector.  Indeed, <m>Av</m> is the zero vector, which is collinear with <m>v</m>; since <m>Av = 0v</m>, the associated eigenvalue is <m>0</m>.
+          <latex-code><![CDATA[
+\begin{tikzpicture}[thin border nodes, scale=1, baseline]
+  \draw[grid lines] (-2,-2) grid (2,2);
+  \draw[seq-violet, dashed, thick] (-2,0) to (2,0);
+
+  \begin{scope}[arrows={|->}, shorten=2pt, font=\small]
+  \point[seq3, "$w$" {text=seq3,inner sep=3pt, anchor=-35}] (c) at (1,0);
+  \point[seq3, "$Aw$" {text=seq3,inner sep=3pt, anchor=-145}] (c) at (1,0);
+  \draw (c) to[out=-125, in=-55, looseness=40] (c);
+  \end{scope}
+
+\end{tikzpicture}
+]]>
+          </latex-code>
+          The vector <m>\color{seq3}w</m> is an eigenvector because <m>Aw</m> is collinear with <m>w</m>: indeed, <m>Aw</m> is equal to <m>w</m>!  This means that <m>w</m> is an eigenvector with eigenvalue <m>1</m>.
+        </p>
+        <p>
+          It appears that all eigenvectors lie on the <m>x</m>-axis or the <m>y</m>-axis.  The vectors on the <m>x</m>-axis have eigenvalue <m>1</m>, and the vectors on the <m>y</m>-axis have eigenvalue <m>0</m>.
+        </p>
+        <figure>
+          <caption>An eigenvector of <m>A</m> is a vector <m>x</m> such that <m>Ax</m> is collinear with <m>x</m>.  Click and drag the head of <m>x</m> to convince yourself that all such vectors lie on the coordinate axes.</caption>
+          <mathbox source="demos/eigenspace.html?mat=1,0:0,0&amp;nospace" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <example>
+      <title>Identity</title>
+      <statement>
+        <p>
+          Find all eigenvalues and eigenvectors of the identity matrix <m>I_n</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The identity matrix has the property that <m>I_nv = v</m> for all vectors <m>v</m> in <m>\R^n</m>.  We can write this as <m>I_n v = 1\cdot v</m>, so <em>every</em> nonzero vector is an eigenvector with eigenvalue <m>1</m>.
+        </p>
+        <figure>
+          <caption>Every nonzero vector is an eigenvector of the identity matrix.</caption>
+          <mathbox source="demos/eigenspace.html?mat=1,0:0,1&amp;nospace" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <example>
+      <title>Dilation</title>
+      <statement>
+        <p>
+          Let <m>T\colon\R^2\to\R^2</m> be the linear transformation that dilates by a factor of <m>1.5</m>, and let <m>A</m> be the matrix for <m>T</m>.  Find the eigenvalues and eigenvectors of <m>A</m> without doing any computations.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We have
+          <me>
+            Av = T(v) = 1.5v
+          </me>
+          for every vector <m>v</m> in <m>\R^2</m>.  Therefore, by definition every nonzero vector is an eigenvector with eigenvalue <m>1.5.</m>
+          <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1, baseline]
+  \draw[grid lines] (-2,-2) grid (2,2);
+
+  \draw[seq2] (-1,-2) -- (1,2);
+  \point[seq2, "$v$" {left, text=seq2}] (b) at (.5,1);
+  \point[seq2, "$Av$" {text=seq2, right}] (Tb) at (.75,1.5);
+  \point at (0,0);
+\end{tikzpicture}
+          </latex-code>
+        </p>
+        <figure>
+          <caption>Every nonzero vector is an eigenvector of a dilation matrix.</caption>
+          <mathbox source="demos/eigenspace.html?mat=1.5,0:0,1.5&amp;nospace" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <example>
+      <title>Shear</title>
+      <statement>
+        <p>
+          Let
+          <me>A = \mat{1 1; 0 1}</me>
+          and let <m>T(x) = Ax</m>, so <m>T</m> is a shear in the <m>x</m>-direction.  Find the eigenvalues and eigenvectors of <m>A</m> without doing any computations.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          In equations, we have
+          <me>
+            A\vec{x y} = \mat{1 1; 0 1}\vec{x y} = \vec{x+y y}.
+          </me>
+          This tells us that a shear takes a vector and adds its <m>y</m>-coordinate to its <m>x</m>-coordinate.  Since the <m>x</m>-coordinate changes but not the <m>y</m>-coordinate, this tells us that any vector <m>v</m> with nonzero <m>y</m>-coordinate cannot be collinear with <m>Av</m>.
+          <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1, baseline]
+  \draw[grid lines] (-2,-2) grid (2,2);
+
+  \draw[seq2] (-1,-2) -- (1,2);
+  \point[seq2, "$v$" {above left, text=seq2}] (b) at (.5,1);
+  \point[seq2, "$Av$" {text=seq2, below}] (Tb) at (1.5,1);
+  \draw[|->, shorten=2pt] (b) -- (Tb);
+  \point at (0,0);
+\end{tikzpicture}
+          </latex-code>
+          On the other hand, any vector <m>v</m> on the <m>x</m>-axis has zero <m>y</m>-coordinate, so it is not moved by <m>A</m>.  Hence <m>v</m> is an eigenvector with eigenvalue <m>1</m>.
+          <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1, baseline]
+  \draw[grid lines] (-2,-2) grid (2,2);
+  \draw[seq3, thick] (-2,0) to (2,0);
+
+  \begin{scope}[arrows={|->}, shorten=2pt, font=\small]
+  \point[seq3, "$w$" {text=seq3,inner sep=3pt, anchor=-35}] (c) at (1,0);
+  \point[seq3, "$Aw$" {text=seq3,inner sep=3pt, anchor=-145}] (c) at (1,0);
+  \draw (c) to[out=-125, in=-55, looseness=40] (c);
+  \point at (0,0);
+  \end{scope}
+
+\end{tikzpicture}
+          </latex-code>
+          Accordingly, all eigenvectors of <m>A</m> lie on the <m>x</m>-axis, and have eigenvalue <m>1</m>.
+        </p>
+        <figure>
+          <caption>All eigenvectors of a shear lie on the <m>x</m>-axis.</caption>
+          <mathbox source="demos/eigenspace.html?mat=1,1:0,1&amp;nospace" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <example>
+      <title>Rotation</title>
+      <statement>
+        <p>
+          Let <m>T\colon\R^2\to\R^2</m> be the linear transformation that rotates counterclockwise by <m>90^\circ</m>, and let <m>A</m> be the matrix for <m>T</m>.  Find the eigenvalues and eigenvectors of <m>A</m> without doing any computations.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          If <m>v</m> is any nonzero vector, then <m>Av</m> is rotated by an angle of <m>90^\circ</m> from <m>v</m>.  Therefore, <m>Av</m> is not on the same line as <m>v</m>, so <m>v</m> is not an eigenvector.  And of course, the zero vector is never an eigenvector.
+          <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1, baseline]
+  \draw[grid lines] (-2,-2) grid (2,2);
+
+  \draw[seq2] (-1,-2) -- (1,2);
+  \point[seq2, "$v$" {below right, text=seq2}] (b) at (.5,1);
+  \point[seq2, "$Av$" {text=seq2, below}] (Tb) at (-1, .5);
+  \draw[|->, shorten=3pt] (b) arc[radius={sqrt(5/4)}, start angle={atan2(2,1)}, delta angle=90] (Tb);
+  \point at (0,0);
+\end{tikzpicture}
+          </latex-code>
+          Therefore, this matrix <em>has no eigenvectors and eigenvalues.</em>
+        </p>
+        <figure>
+          <caption>This rotation matrix has no eigenvectors.</caption>
+          <mathbox source="demos/eigenspace.html?mat=0,-1:1,0&amp;nospace" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <theorem type-name="Fact" xml:id="evecs-linindep">
+      <title>Eigenvectors with distinct eigenvalues are linearly independent</title>
+      <statement>
+        <p>
+          Let <m>v_1,v_2,\ldots,v_k</m> be eigenvectors of a matrix <m>A</m>, and suppose that the corresponding eigenvalues <m>\lambda_1,\lambda_2,\ldots,\lambda_k</m> are <em>distinct</em> (all different from each other).  Then <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly independent.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Suppose that <m>\{v_1,v_2,\ldots,v_k\}</m> were linearly <em>de</em>pendent.  According to the <xref ref="linindep-increasing-span"/>, this means that for some <m>j</m>, the vector <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}.</m>  If we choose the <em>first</em> such <m>j</m>, then <m>\{v_1,v_2,\ldots,v_{j-1}\}</m> is linearly independent.  Note that <m>j > 1</m> since <m>v_1\neq 0</m>.
+        </p>
+        <p>
+          Since <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\},</m>, we can write
+          <me>v_j = c_1v_1 + c_2v_2 + \cdots + c_{j-1}v_{j-1}</me>
+          for some scalars <m>c_1,c_2,\ldots,c_{j-1}</m>.  Multiplying both sides of the above equation by <m>A</m> gives
+          <me>
+            \begin{split}
+            \lambda_jv_j =
+            Av_j \amp= A\bigl(c_1v_1 + c_2v_2 + \cdots + c_{j-1}v_{j-1}\bigr) \\
+            \amp= c_1Av_1 + c_2Av_2 + \cdots + c_{j-1}Av_{j-1} \\
+            \amp= c_1\lambda_1v_1 + c_2\lambda_2v_2 + \cdots + c_{j-1}\lambda_{j-1}v_{j-1}.
+            \end{split}
+          </me>
+          Subtracting <m>\lambda_j</m> times the first equation from the second gives
+          <me>
+            0 = \lambda_jv_j - \lambda_jv_j
+            = c_1(\lambda_1-\lambda_j)v_1 + c_2(\lambda_2-\lambda_j)v_2 + \cdots + c_{j-1}(\lambda_{j-1}-\lambda_j)v_{j-1}.
+          </me>
+          Since <m>\lambda_i\neq\lambda_j</m> for <m>i \lt j</m>, this is an equation of linear dependence among <m>v_1,v_2,\ldots,v_{j-1}</m>, which is impossible because those vectors are linearly independent.  Therefore, <m>\{v_1,v_2,\ldots,v_k\}</m> must have been linearly independent after all.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      When <m>k=2</m>, this says that if <m>v_1,v_2</m> are eigenvectors with eigenvalues <m>\lambda_1\neq\lambda_2</m>, then <m>v_2</m> is not a multiple of <m>v_1</m>.  In fact, any nonzero multiple <m>cv_1</m> of <m>v_1</m> is also an eigenvector with eigenvalue <m>\lambda_1</m>:
+      <me>
+        A(cv_1) = cAv_1 = c(\lambda_1 v_1) = \lambda_1(cv_1).
+      </me>
+    </p>
+
+    <p>
+      As a consequence of the above <xref ref="evecs-linindep"/>, we see that:
+    </p>
+
+    <warning>
+      <p>
+        An <m>n\times n</m> matrix <m>A</m> has at most <m>n</m> eigenvalues.
+      </p>
+    </warning>
+
+  </subsection>
+
+  <subsection>
+    <title>Eigenspaces</title>
+
+    <p>
+      Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>\lambda</m> be a scalar.  The eigenvectors with eigenvalue <m>\lambda</m>, if any, are the nonzero solutions of the equation <m>Av=\lambda v</m>.  We can rewrite this equation as follows:
+      <me>
+        \begin{split}
+        \amp Av = \lambda v \\
+        \iff\quad \amp Av - \lambda v = 0 \\
+        \iff\quad \amp Av - \lambda I_nv = 0 \\
+        \iff\quad \amp(A - \lambda I_n)v = 0.
+        \end{split}
+      </me>
+      Therefore, the eigenvectors of <m>A</m> with eigenvalue <m>\lambda</m>, if any, are the nontrivial solutions of the matrix equation <m>(A-\lambda I_n)v = 0</m>, i.e., the nonzero vectors in <m>\Nul(A-\lambda I_n)</m>.  If this equation has no nontrivial solutions, then <m>\lambda</m> is not an eigenvector of <m>A</m>.
+    </p>
+
+    <p>
+      The above observation is important because it says that <em>finding the eigenvectors for a given eigenvalue means solving a homogeneous system of equations.</em> It also leads to the definition of an eigenspace.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+          Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>\lambda</m> be an eigenvalue of <m>A</m>.  The <term><m>\lambda</m>-eigenspace</term> of <m>A</m> is the subspace <m>\Nul(A-\lambda I_n)</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The <m>\lambda</m>-eigenspace is a subspace because it is the null space of a matrix, namely, the matrix <m>A-\lambda I_n</m>.  This subspace consists of the zero vector and all eigenvectors of <m>A</m> with eigenvalue <m>\lambda</m>.
+    </p>
+
+    <note>
+      <p>
+        Since a nonzero subspace is infinite, <em>every eigenvalue has infinitely many eigenvectors</em>.  (For example, multiplying an eigenvector by a nonzero scalar gives another eigenvector.)  On the other hand, there can be at most <m>n</m> linearly independent eigenvectors of an <m>n\times n</m> matrix, since <m>\R^n</m> has dimension <m>n</m>.
+      </p>
+    </note>
+
+    <example>
+      <title>Computing eigenspaces</title>
+      <statement>
+        <p>
+          For each of the numbers <m>\lambda = -2, 1, 3</m>, decide if <m>\lambda</m> is an eigenvalue of the matrix
+          <me>A = \mat{2 -4; -1 -1},</me>
+          and if so, compute a basis for the <m>\lambda</m>-eigenspace.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The number <m>3</m> is an eigenvalue of <m>A</m> if and only if <m>\Nul(A-3I_2)</m> is nonzero.  Hence, we have to solve the matrix equation <m>(A-3I_2)v = 0</m>.  We have
+          <me>
+            A - 3I_2 = \mat{2 -4; -1 -1} - 3\mat{1 0; 0 1} = \mat{-1 -4; -1 -4}.
+          </me>
+          The reduced row echelon form of this matrix is
+          <me>
+            \mat{1 4; 0 0}
+            \quad\xrightarrow[\text{form}]{\text{parametric}}\quad
+            \syseq{x = -4y; y = y}
+            \quad\xrightarrow[\text{vector form}]{\text{parametric}}\quad
+            \vec{x y} = y\vec{-4 1}.
+          </me>
+          The null space of <m>A-3I_2</m> is nonzero, so <m>3</m> is an eigenvector.  A basis for the <m>3</m>-eigenspace is <m>\bigl\{{-4\choose 1}\bigr\}.</m>
+        </p>
+        <p>
+          Concretely, we have shown that the eigenvectors of <m>A</m> with eigenvalue <m>3</m> are exactly the nonzero multiples of <m>{-4\choose 1}</m>.  In particular, <m>-4\choose 1</m> is an eigenvector, which we can verify:
+          <me>
+            \mat{2 -4; -1 -1}\vec{-4 1} = \vec{-12 3} = 3\vec{-4 1}.
+          </me>
+        </p>
+        <p>
+          The number <m>1</m> is an eigenvalue of <m>A</m> if and only if <m>\Nul(A-I_2)</m> is nonzero.  Hence, we have to solve the matrix equation <m>(A-I_2)v = 0</m>.  We have
+          <me>
+            A - I_2 = \mat{2 -4; -1 -1} - \mat{1 0; 0 1} = \mat{1 -4; -1 -2}.
+          </me>
+          This matrix has determinant <m>-6</m>, so it is invertible.  By the <xref ref="imt-1"/>, we have <m>\Nul(A-I_2) = \{0\}</m>, so <m>1</m> is not an eigenvalue.
+        </p>
+        <p>
+          The eigenvectors of <m>A</m> with eigenvalue <m>-2</m>, if any, are the nonzero solutions of the matrix equation <m>(A+2I_2)v = 0</m>.  We have
+          <me>
+            A + 2I_2 = \mat{2 -4; -1 -1} + 2\mat{1 0; 0 1} = \mat{4 -4; -1 1}.
+          </me>
+          The reduced row echelon form of this matrix is
+          <me>
+            \mat{1 -1; 0 0}
+            \quad\xrightarrow[\text{form}]{\text{parametric}}\quad
+            \syseq{x = y; y = y}
+            \quad\xrightarrow[\text{vector form}]{\text{parametric}}\quad
+            \vec{x y} = y\vec{1 1}.
+          </me>
+          Hence there exist eigenvectors with eigenvalue <m>-2</m>, namely, any nonzero multiple of <m>{1\choose 1}.</m>  A basis for the <m>-2</m>-eigenspace is <m>\bigl\{{1\choose 1}\bigr\}.</m>
+        </p>
+        <figure>
+          <caption>The <m>3</m>-eigenspace is the line spanned by <m>{-4\choose 1}.</m>  This means that <m>A</m> scales every vector in that line by a factor of <m>3</m>.  Likewise, the <m>-2</m>-eigenspace is the line spanned by <m>{1\choose 1}.</m>  Click and drag the vector <m>x</m> around to see how <m>A</m> acts on that vector.</caption>
+          <mathbox source="demos/eigenspace.html?mat=2,-4:-1,-1&amp;nomult" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <example>
+      <title>Computing eigenspaces</title>
+      <statement>
+        <p>
+          For each of the numbers <m>\lambda=0, \frac 12, 2</m>, decide if <m>\lambda</m> is an eigenvector of the matrix
+          <me>A = \mat{7/2 0 3; -3/2 2 -3; -3/2 0 -1},</me>
+          and if so, compute a basis for the <m>\lambda</m>-eigenspace.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The number <m>2</m> is an eigenvalue of <m>A</m> if and only if <m>\Nul(A-2I_3)</m> is nonzero.  Hence, we have to solve the matrix equation <m>(A-2I_3)v = 0</m>.  We have
+          <me>
+            A - 2I_3 = \mat{7/2 0 3; -3/2 2 -3; -3/2 0 1} - 2\mat{1 0 0; 0 1 0; 0 0 1}
+            = \mat{3/2 0 3; -3/2 0 -3; -3/2 0 -3}.
+          </me>
+          The reduced row echelon form of this matrix is
+          <me>
+            \mat{1 0 2; 0 0 0; 0 0 0}
+            \quad\xrightarrow[\text{form}]{\text{parametric}}\quad
+            \syseq{x = -2z; y = y; z = z}
+            \quad\xrightarrow[\text{vector form}]{\text{parametric}}\quad
+            \vec{x y z} = y\vec{0 1 0} + z\vec{-2 0 1}.
+          </me>
+          The null space of <m>A-2I_3</m> is nonzero, so <m>2</m> is an eigenvector.  A basis for the <m>2</m>-eigenspace is
+          <me>\left\{\vec{0 1 0},\,\vec{-2 0 1}\right\}.</me>
+          This is a <em>plane</em> in <m>\R^3</m>.
+        </p>
+        <p>
+          The eigenvectors of <m>A</m> with eigenvalue <m>\frac 12</m>, if any, are the nonzero solutions of the matrix equation <m>(A-\frac 12I_3)v = 0</m>.  We have
+          <me>
+            A - \frac 12I_3 = \mat{7/2 0 3; -3/2 2 -3; -3/2 0 1} - \frac 12\mat{1 0 0; 0 1 0; 0 0 1}
+            = \mat{3 0 3; -3/2 3/2 -3; -3/2 0 -3/2}.
+          </me>
+          The reduced row echelon form of this matrix is
+          <me>
+            \mat{1 0 1; 0 1 -1; 0 0 0}
+            \quad\xrightarrow[\text{form}]{\text{parametric}}\quad
+            \syseq{x = -z; y = z; z = z}
+            \quad\xrightarrow[\text{vector form}]{\text{parametric}}\quad
+            \vec{x y z} = z\vec{-1 1 1}.
+          </me>
+          Hence there exist eigenvectors with eigenvalue <m>\frac 12</m>, so <m>\frac 12</m> is an eigenvalue.  A basis for the <m>\frac 12</m>-eigenspace is
+          <me>\left\{\vec{-1 1 1}\right\}.</me>
+          This is a <em>line</em> in <m>\R^3</m>.
+        </p>
+        <p>
+          The number <m>0</m> is an eigenvalue of <m>A</m> if and only if <m>\Nul(A-0I_3) = \Nul(A)</m> is nonzero.  This is the same as asking whether <m>A</m> is noninvertible, by the <xref ref="imt-1"/>.  The determinant of <m>A</m> is <m>\det(A) = 2\neq 0</m>, so <m>A</m> is invertible by the <xref ref="det-defn-invert-prop">invertibility property</xref>.  It follows that <m>0</m> is not an eigenvalue of <m>A</m>.
+        </p>
+        <figure>
+          <caption>The <m>2</m>-eigenspace is the green plane.  This means that <m>A</m> scales every vector in that plane by a factor of <m>2</m>.  The <m>\frac 12</m>-eigenspace is the red line.  Click and drag the vector <m>x</m> around to see how <m>A</m> acts on that vector.</caption>
+          <mathbox source="demos/eigenspace.html?mat=7/2,0,3:-3/2,2,-3:-3/2,0,-1&amp;nomult" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <example>
+      <title>Reflection</title>
+      <statement>
+        <p>
+          Let <m>T\colon\R^2\to\R^2</m> be the linear transformation that reflects over the line <m>L</m> defined by <m>y=-x</m>, and let <m>A</m> be the matrix for <m>T</m>.  Find all eigenspaces of <m>A</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We showed in this <xref ref="evec-eg-reflection"/> that all eigenvectors with eigenvalue <m>1</m> lie on <m>L</m>, and all eigenvectors with eigenvalue <m>-1</m> lie on the line <m>L^\perp</m> that is perpendicular to <m>L</m>.  Hence, <m>L</m> is the <m>1</m>-eigenspace, and <m>L^\perp</m> is the <m>-1</m>-eigenspace.
+        </p>
+        <p>
+          None of this required any computations, but we can verify our conclusions using algebra.  First we compute the matrix <m>A</m>:
+          <me>
+            T\vec{1 0} = \vec{0 -1} \qquad
+            T\vec{0 1} = \vec{-1 0} \quad\implies\quad
+            A = \mat{0 -1; -1 0}.
+          </me>
+          Computing the <m>1</m>-eigenspace means solving the matrix equation <m>(A-I_2)v=0</m>.  We have
+          <me>
+            A-I_2 = \mat{0 -1; -1 0} - \mat{1 0; 0 1} = \mat{-1 -1; -1 -1}
+            \quad\xrightarrow{\text{RREF}}\quad\mat{1 1; 0 0}.
+          </me>
+          The parametric form of the solution set is <m>x = -y</m>, or equivalently, <m>y = -x</m>, which is exactly the equation for <m>L</m>. Computing the <m>-1</m>-eigenspace menas solving the matrix equation <m>(A+I_2)v=0</m>; we have
+          <me>
+            A+I_2 = \mat{0 -1; -1 0} + \mat{1 0; 0 1} = \mat{1 -1; -1 1}
+            \quad\xrightarrow{\text{RREF}}\quad\mat{1 -1; 0 0}.
+          </me>
+          The parametric form of the solution set is <m>x = y</m>, or equivalently, <m>y = x</m>, which is exactly the equation for <m>L^\perp</m>.
+        </p>
+        <figure>
+          <caption>The green line <m>L</m> is the <m>1</m>-eigenspace, and the red line <m>L^\perp</m> is the <m>-1</m>-eigenspace.</caption>
+          <mathbox source="demos/eigenspace.html?mat=0,-1:-1,0&amp;nomult" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <warning>
+      <title>Summary: eigenspaces</title>
+      <p>
+        Let <m>A</m> be an <m>n\times n</m> matrix and let <m>\lambda</m> be a number.
+        <ol>
+          <li>
+            <m>\lambda</m> is an eigenvalue of <m>A</m> if and only if <m>(A-\lambda I_n)v = 0</m> has a nontrivial solution, if and only if <m>\Nul(A-\lambda I_n)\neq\{0\}.</m>
+          </li>
+          <li>
+            In this case, finding a basis for the <m>\lambda</m>-eigenspace of <m>A</m> means finding a basis for <m>\Nul(A-\lambda I_n)</m>, which can be done by finding the parametric vector form of the solutions of the homogeneous system of equations <m>(A-\lambda I_n)v = 0</m>.
+          </li>
+          <li>
+            The eigenvectors with eigenvalue <m>\lambda</m> are the nonzero vectors in <m>\Nul(A-\lambda I),</m> or equivalently, the nontrivial solutions of <m>(A-\lambda I)v = 0</m>.
+          </li>
+        </ol>
+      </p>
+    </warning>
+
+    <p>
+      We conclude with an observation about the <m>0</m>-eigenspace of a matrix.
+    </p>
+
+    <theorem type-name="Fact" xml:id="evecs-eval0">
+      <statement>
+        <p>
+          Let <m>A</m> be an <m>n\times n</m> matrix.
+          <ol>
+            <li>
+              The number <m>0</m> is an eigenvalue of <m>A</m> if and only if <m>A</m> is not invertible.
+            </li>
+            <li>
+              In this case, the <m>0</m>-eigenspace of <m>A</m> is <m>\Nul(A)</m>.
+            </li>
+          </ol>
+        </p>
+      </statement>
+      <proof visible="true">
+        <p>
+          We know that <m>0</m> is an eigenvalue of <m>A</m> if and only if <m>\Nul(A - 0I_n) = \Nul(A)</m> is nonzero, which is equivalent to the noninvertibility of <m>A</m> by the <xref ref="imt-1"/>.  In this case, the <m>0</m>-eigenspace is by definition <m>\Nul(A-0I_n) = \Nul(A)</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      Concretely, an eigenvector with eigenvalue <m>0</m> is a nonzero vector <m>v</m> such that <m>Av=0v</m>, i.e., such that <m>Av = 0</m>.  These are exactly the nonzero vectors in the null space of <m>A</m>.
+    </p>
+
+  </subsection>
 
 </section>
