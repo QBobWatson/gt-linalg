@@ -16,10 +16,11 @@ the license is included in gfdl.xml.
     <ol>
       <li>Understand the concept of linear independence.</li>
       <li>Learn several criteria for linear independence.</li>
-      <li>Understand linear independence geometrically.</li>
       <li>Understand the relationship between linear independence and pivot columns / free variables.</li>
-      <li>Vocabulary words: <term>linear dependence relation</term> / <term>equation of linear dependence</term>.</li>
-      <li>Essential vocabulary words: <term>linearly independent</term>, <term>linearly dependent</term>.</li>
+      <li><em>Recipe:</em> test if a set of vectors is linearly independent / find an equation of linear dependence.</li>
+      <li><em>Picture:</em> whether a set of vectors in <m>\R^2</m> or <m>\R^3</m> is linearly independent or not.</li>
+      <li><em>Vocabulary words:</em> <term>linear dependence relation</term> / <term>equation of linear dependence</term>.</li>
+      <li><em>Essential vocabulary words:</em> <term>linearly independent</term>, <term>linearly dependent</term>.</li>
     </ol>
   </objectives>
 

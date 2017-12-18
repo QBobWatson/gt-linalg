@@ -15,11 +15,12 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Understand what it means for a square matrix to be invertible.</li>
-      <li><em>Learn 19 equivalent conditions for a matrix to be invertible.</em></li>
-      <li>Learn how to compute the inverse of a matrix.</li>
       <li>Learn to solve a linear system of equations with matrix inverses.</li>
       <li>Learn about invertible transformations, and understand the relationship between invertible matrices and invertible transformations.</li>
-      <li>Vocabulary words: <term>inverse matrix</term>, <term>inverse transformation</term>.</li>
+      <li><em>Recipes:</em> compute the inverse matrix, solve a linear system by taking inverses.</li>
+      <li><em>Picture:</em> the inverse of a transformation.</li>
+      <li><em>Theorem:</em> the Invertible Matrix Theorem.</li>
+      <li><em>Vocabulary words:</em> <term>inverse matrix</term>, <term>inverse transformation</term>.</li>
     </ol>
   </objectives>
 

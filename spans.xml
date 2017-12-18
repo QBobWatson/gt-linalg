@@ -16,8 +16,10 @@ the license is included in gfdl.xml.
     <ol>
       <li>Understand the equivalence between a system of linear equations and a vector equation.</li>
       <li>Learn the definition of <m>\Span\{x_1,x_2,\ldots,x_p\}</m>, and how to draw pictures of spans.</li>
-      <li>Vocabulary word: <term>vector equation</term>.</li>
-      <li>Essential vocabulary word: <term>span</term>.</li>
+      <li><em>Recipe:</em> solve a vector equation using augmented matrices / decide if a vector is in a span.</li>
+      <li><em>Pictures:</em> an inconsistent system of equations, a consistent system of equations, spans in <m>\R^2</m> and <m>\R^3</m>.</li>
+      <li><em>Vocabulary word:</em> <term>vector equation</term>.</li>
+      <li><em>Essential vocabulary word:</em> <term>span</term>.</li>
     </ol>
   </objectives>
 

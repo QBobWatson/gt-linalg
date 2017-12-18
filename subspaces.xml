@@ -17,7 +17,8 @@ the license is included in gfdl.xml.
       <li>Learn the definition of a subspace.</li>
       <li>Learn to determine whether or not a subset is a subspace.</li>
       <li>Learn the most important examples of subspaces.</li>
-      <li>Vocabulary words: <term>subspace</term>, <term>column space</term>, <term>null space</term>.</li>
+      <li><em>Picture:</em> whether a subset of <m>\R^2</m> or <m>\R^3</m> is a subspace or not.</li>
+      <li><em>Vocabulary words:</em> <term>subspace</term>, <term>column space</term>, <term>null space</term>.</li>
     </ol>
   </objectives>
 

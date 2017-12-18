@@ -17,8 +17,9 @@ the license is included in gfdl.xml.
       <li>Understand the relationship between the determinant of a matrix and the volume of a parallelepiped.</li>
       <li>Learn to use determinants to compute volumes of parallelograms and triangles.</li>
       <li>Learn to use determinants to compute the volume of some curvy shapes like ellipses.</li>
-      <li>Vocabulary word: <term>parallelepiped</term>.</li>
-      <li>Important theorem: <em>Determinants and volumes</em>.</li>
+      <li><em>Pictures:</em> parallelepiped, the image of a curvy shape under a linear transformation.</li>
+      <li><em>Theorem:</em> determinants and volumes.</li>
+      <li><em>Vocabulary word:</em> <term>parallelepiped</term>.</li>
     </ol>
   </objectives>
 

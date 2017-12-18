@@ -15,10 +15,10 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Understand compositions of transformations.</li>
-      <li>Learn how to compute the product of matrices in two different ways.</li>
       <li>Understand the relationship between matrix products and compositions of matrix transformations.</li>
       <li>Become comfortable doing basic algebra involving matrices.</li>
-      <li>Vocabulary word: <term>composition</term>.</li>
+      <li><em>Recipe:</em> matrix multiplication (two ways).</li>
+      <li><em>Vocabulary word:</em> <term>composition</term>.</li>
     </ol>
   </objectives>
 
