@@ -18,7 +18,7 @@ the license is included in gfdl.xml.
       <li>Learn to find eigenvectors and eigenvalues geometrically.</li>
       <li>Learn to decide if a number is an eigenvalue of a matrix, and if so, how to find an associated eigenvector.</li>
       <li><em>Recipe:</em> find a basis for the <m>\lambda</m>-eigenspace.</li>
-      <li><em>Picture:</em> whether or not a vector is an eigenvector.</li>
+      <li><em>Pictures:</em> whether or not a vector is an eigenvector, eigenvectors of standard matrix transformations.</li>
       <li><em>Vocabulary word:</em> <term>eigenspace</term>.</li>
       <li><em>Essential vocabulary words:</em> <term>eigenvector</term>, <term>eigenvalue</term>.</li>
     </ol>
@@ -81,7 +81,7 @@ the license is included in gfdl.xml.
         <me>
           A = \mat{2 2; -4 8} \qquad v = \vec{1 1}  \qquad w = \vec{1 2}.
         </me>
-        One product is
+        We have
         <me>
           Av = \mat{2 2; -4 8}\vec{1 1} = \vec{4 4} = 4v.
         </me>
@@ -117,7 +117,7 @@ the license is included in gfdl.xml.
           A = \mat{0 6 8; \frac 12 0 0; 0 \frac 12 0}
   \qquad v = \vec{16 4 1} \qquad w = \vec{2 2 2}.
         </me>
-        One product is
+        We have
         <me>
           Av = \mat{0 6 8; \frac 12 0 0; 0 \frac 12 0}\vec{16 4 1}
     = \vec{32 8 2} = 2v.
@@ -155,7 +155,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-    To say that <m>Av=\lambda v</m> means that <m>Av</m> and <m>\lambda v</m> are <em>collinear</em>.  So, an eigenvector of <m>A</m> is a nonzero vector <m>v</m> such that <m>Av</m> and <m>v</m> lie on the same line through the origin.  In this case, <m>Av</m> is a scalar multiple of <m>A</m>; the eigenvalue is the scaling factor.
+    To say that <m>Av=\lambda v</m> means that <m>Av</m> and <m>\lambda v</m> are <em>collinear</em>.  So, an eigenvector of <m>A</m> is a nonzero vector <m>v</m> such that <m>Av</m> and <m>v</m> lie on the same line through the origin.  In this case, <m>Av</m> is a scalar multiple of <m>v</m>; the eigenvalue is the scaling factor.
     <latex-code>
 \begin{tikzpicture}[thin border nodes, baseline]
   \draw[grid lines] (-2,-2) rectangle (2,2);
@@ -175,7 +175,7 @@ the license is included in gfdl.xml.
   $\color{seq-blue}w$ is not an eigenvector
 \end{minipage}
     </latex-code>
-    For matrices that arise as the standard matrix of a linear transformation, it is often best to draw a picture, then eyeball the eigenvectors and eigenvalues geometrically in this way.  For a transformation that is defined geometrically, it is not necessary even to compute its matrix.
+    For matrices that arise as the standard matrix of a linear transformation, it is often best to draw a picture, then find the eigenvectors and eigenvalues geometrically by studying which vectors are not moved off of their line.  For a transformation that is defined geometrically, it is not necessary even to compute its matrix to find the eigenvectors and eigenvalues.
     </p>
 
     <example xml:id="evec-eg-reflection">
@@ -482,6 +482,10 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
+    <p>
+      Here we mention one basic fact about eigenvectors.
+    </p>
+
     <theorem type-name="Fact" xml:id="evecs-linindep">
       <title>Eigenvectors with distinct eigenvalues are linearly independent</title>
       <statement>
@@ -595,7 +599,7 @@ the license is included in gfdl.xml.
             \quad\xrightarrow[\text{vector form}]{\text{parametric}}\quad
             \vec{x y} = y\vec{-4 1}.
           </me>
-          The null space of <m>A-3I_2</m> is nonzero, so <m>3</m> is an eigenvector.  A basis for the <m>3</m>-eigenspace is <m>\bigl\{{-4\choose 1}\bigr\}.</m>
+          Since <m>y</m> is a free variable, the null space of <m>A-3I_2</m> is nonzero, so <m>3</m> is an eigenvector.  A basis for the <m>3</m>-eigenspace is <m>\bigl\{{-4\choose 1}\bigr\}.</m>
         </p>
         <p>
           Concretely, we have shown that the eigenvectors of <m>A</m> with eigenvalue <m>3</m> are exactly the nonzero multiples of <m>{-4\choose 1}</m>.  In particular, <m>-4\choose 1</m> is an eigenvector, which we can verify:
@@ -656,7 +660,7 @@ the license is included in gfdl.xml.
             \quad\xrightarrow[\text{vector form}]{\text{parametric}}\quad
             \vec{x y z} = y\vec{0 1 0} + z\vec{-2 0 1}.
           </me>
-          The null space of <m>A-2I_3</m> is nonzero, so <m>2</m> is an eigenvector.  A basis for the <m>2</m>-eigenspace is
+          The matrix <m>A-2I_3</m> has two free variables, so the null space of <m>A-2I_3</m> is nonzero, and thus <m>2</m> is an eigenvector.  A basis for the <m>2</m>-eigenspace is
           <me>\left\{\vec{0 1 0},\,\vec{-2 0 1}\right\}.</me>
           This is a <em>plane</em> in <m>\R^3</m>.
         </p>
