@@ -514,7 +514,7 @@ the license is included in gfdl.xml.
   </p>
   </specialcase>
 
-  <specialcase hide-type="true">
+  <specialcase hide-type="true" xml:id="det-cofactor-33">
     <title>The determinant of a <m>3\times 3</m> matrix</title>
     <p>
       We can also use cofactor expansions to find a formula for the determinant of a <m>3\times 3</m> matrix. Let is compute the determinant of

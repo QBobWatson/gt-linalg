@@ -19,6 +19,7 @@ the license is included in gfdl.xml.
       <li>Learn to decide if a number is an eigenvalue of a matrix, and if so, how to find an associated eigenvector.</li>
       <li><em>Recipe:</em> find a basis for the <m>\lambda</m>-eigenspace.</li>
       <li><em>Pictures:</em> whether or not a vector is an eigenvector, eigenvectors of standard matrix transformations.</li>
+      <li><em>Theorem:</em> the expanded Invertible Matrix Theorem.</li>
       <li><em>Vocabulary word:</em> <term>eigenspace</term>.</li>
       <li><em>Essential vocabulary words:</em> <term>eigenvector</term>, <term>eigenvalue</term>.</li>
     </ol>
@@ -775,6 +776,47 @@ the license is included in gfdl.xml.
     <p>
       Concretely, an eigenvector with eigenvalue <m>0</m> is a nonzero vector <m>v</m> such that <m>Av=0v</m>, i.e., such that <m>Av = 0</m>.  These are exactly the nonzero vectors in the null space of <m>A</m>.
     </p>
+
+  </subsection>
+
+  <subsection>
+    <title>The Invertible Matrix Theorem: Addenda</title>
+
+    <p>
+      We now have two new ways of saying that a matrix is invertible, so we add them to the <xref ref="imt-1"/>.
+    </p>
+
+   <theorem type-name="Invertible Matrix Theorem" hide-type="true" xml:id="imt-2">
+     <title>The Invertible Matrix Theorem</title>
+     <statement>
+       <p>
+         Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>T\colon\R^n\to\R^n</m> be the matrix transformation <m>T(x) = Ax</m>.  The following statements are equivalent:
+         <ol>
+           <li><m>A</m> is invertible.</li>
+           <li><m>T</m> is invertible.</li>
+           <li>The reduced row echelon form of <m>A</m> is the identity matrix <m>I_n</m>.</li>
+           <li><m>A</m> has <m>n</m> pivots.</li>
+           <li><m>Ax=0</m> has no solutions other than the trivial one.</li>
+           <li><m>\Nul(A) = \{0\}</m>.</li>
+           <li><m>\nullity(A) = 0</m>.</li>
+           <li>The columns of <m>A</m> are linearly independent.</li>
+           <li>The columns of <m>A</m> form a basis for <m>\R^n</m>.</li>
+           <li><m>T</m> is one-to-one.</li>
+           <li><m>Ax=b</m> is consistent for all <m>b</m> in <m>\R^n</m>.</li>
+           <li><m>Ax=b</m> has a unique solution for each <m>b</m> in <m>\R^n</m>.</li>
+           <li>The columns of <m>A</m> span <m>\R^n</m>.</li>
+           <li><m>\Col(A) = \R^n.</m></li>
+           <li><m>\dim\Col(A) = n.</m></li>
+           <li><m>\rank(A) = n.</m></li>
+           <li><m>T</m> is onto.</li>
+           <li>There is a matrix <m>B</m> such that <m>AB = I_n</m>.</li>
+           <li>There is a matrix <m>B</m> such that <m>BA = I_n</m>.</li>
+           <li><m>\det(A) \neq 0</m>.</li>
+           <li><m>0</m> is not an eigenvalue of <m>A</m>.</li>
+         </ol>
+       </p>
+     </statement>
+   </theorem>
 
   </subsection>
 

@@ -22,6 +22,7 @@
 \def\rank{\operatorname{rank}}
 \def\nullity{\operatorname{nullity}}
 \def\Id{\operatorname{Id}}
+\def\Tr{\operatorname{Tr}}
 \def\adj{\operatorname{adj}}
 \def\inv{^{-1}}
 \let\To=\longrightarrow
@@ -52,6 +53,11 @@
 \definecolor{seq6}{rgb}{0.7000,0.7000,0.0000}
 \definecolor{seq7}{rgb}{0.6510,0.3373,0.1569}
 \definecolor{seq8}{rgb}{0.9686,0.5059,0.7490}
+
+\newenvironment{smm}{\left(\begin{smallmatrix}}
+                    {\end{smallmatrix}\right)}
+\newcommand*\smallmat[4]%
+  {\ensuremath{\begin{smm}#1&#2\\#3&#4\end{smm}}}
 
 \usepackage{tikz}
 \usetikzlibrary{backgrounds}
