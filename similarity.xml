@@ -1,0 +1,1136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<section xml:id="similarity">
+  <title>Similarity</title>
+
+  <objectives>
+    <ol>
+      <li>Learn to interpret similar matrices geoemetrically.</li>
+      <li>Understand the relationship between the eigenvalues, eigenvectors, and characteristic polynomials of similar matrices.</li>
+      <li><em>Picture:</em> the geometry of similar matrices.</li>
+      <li><em>Vocabulary word:</em> <term>similarity</term>.</li>
+    </ol>
+  </objectives>
+
+  <introduction>
+    <p>
+      Some matrices are easy to understand.  For instance, a diagonal matrix just scales the coordinates of a vector:
+      <me>
+        \mat{3 0; 0 -2}\vec{x y} = \vec{3x -2y}
+        \sptxt{or}
+        \mat{3 0; 0 -2}(xe_1 + ye_2) = 3xe_1 - 2ye_2.
+      </me>
+      The purpose of most of the rest of this chapter is to understand complicated-looking matrices by analyzing to what extent they <q>behave like</q> simple matrices.  For instance, the matrix
+      <me>
+        A = \mat{-12 15; -10 13}
+      </me>
+      has eigenvalues <m>3,-2</m>, with corresponding eigenvectors <m>v_1 = {-2\choose 1}</m> and <m>v_2 = {3\choose -1}</m>.  Notice that
+      <me>
+        A(xv_1 + yv_2) = xAv_1 + yAv_2 = 3xv_1 - 2yv_2.
+      </me>
+      Using <m>v_1,v_2</m> instead of the usual coordinates makes <m>A</m> <q>behave</q> like a diagonal matrix.
+    </p>
+    <p>
+      In this Section, we study in detail the situation when two matrices behave similarly with respect to different coordinate systems.
+    </p>
+  </introduction>
+
+  <subsection>
+    <title>Similar Matrices</title>
+
+    <p>
+      We begin with the algebraic definition of similarity.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+          Two <m>n\times n</m> matrices <m>A</m> and <m>B</m> are <term>similar</term> if there exists an invertible <m>n\times n</m> matrix <m>C</m> such that <m>A = CBC\inv</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <example xml:id="similarity-eg1">
+      <p>
+        The matrices
+        <me>
+          \mat{-12 15; -10 13} \sptxt{and} \mat{3 0; 0 -2}
+        </me>
+        are similar because
+        <me>
+          \mat{-12 15; -10 13} = \mat{-2 3; 1 -1} \mat{3 0; 0 -2} \mat{-2 3; 1 -1}\inv,
+        </me>
+        as the reader can verify.
+      </p>
+    </example>
+
+    <example>
+      <p>
+        The matrices
+        <me>
+          \mat{3 0 ; 0 -2} \sptxt{and} \mat{1 0; 0 1}
+        </me>
+        are not similar.  Indeed, the second matrix is the identity matrix <m>I_2</m>, so if <m>C</m> is any invertible <m>2\times 2</m> matrix, then
+        <me>
+          CI_2C\inv = CC\inv = I_2 \neq \mat{3 0; 0 -2}.
+        </me>
+      </p>
+    </example>
+
+    <p>
+      As in the above Example, one can show that <m>I_n</m> is the only matrix that is similar to <m>I_n</m>, and likewise for any scalar multiple of <m>I_n</m>.
+    </p>
+
+    <warning>
+      <p>
+        Similarity is unrelated to row equivalence.  Any invertible matrix is row equivalent to <m>I_n</m>, but <m>I_n</m> is the only matrix similar to <m>I_n</m>.  For instance,
+        <me>\mat{2 1; 0 2} \sptxt{and} \mat{1 0; 0 1}</me>
+        are row equivalent but not similar.
+      </p>
+    </warning>
+
+    <p>
+      As suggested by its name, similarity is what is called an <em>equivalence relation</em>.  This means that it satisfies the following properties.
+    </p>
+
+    <proposition>
+      <statement>
+        <p>
+          Let <m>A,B</m>, and <m>C</m> be <m>n\times n</m> matrices.
+          <ol>
+            <li>
+              <em>Reflexivity:</em> <m>A</m> is similar to itself.
+            </li>
+            <li>
+              <em>Symmetry:</em> if <m>A</m> is similar to <m>B</m>, then <m>B</m> is similar to <m>A</m>.
+            </li>
+            <li>
+              <em>Transitivity:</em> if <m>A</m> is similar to <m>B</m> and <m>B</m> is similar to <m>C</m>, then <m>A</m> is similar to <m>C</m>.
+            </li>
+          </ol>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          <ol>
+            <li>
+              Taking <m>C = I_n = I_n\inv</m>, we have <m>A = I_n A I_n\inv</m>.
+            </li>
+            <li>
+              Suppose that <m>A = CBC\inv.</m>  Multiplying both sides on the left by <m>C\inv</m> and on the right by <m>C</m> gives
+              <me>
+                C\inv A C = C\inv(CBC\inv)C = B.
+              </me>
+              Since <m>(C\inv)\inv = C</m>, we have <m>B = C\inv A (C\inv)\inv</m>, so that <m>B</m> is similar to <m>A</m>.
+            </li>
+            <li>
+              Suppose that <m>A = DBD\inv</m> and <m>B = ECE\inv</m>.  Subsituting for <m>B</m> and remembering that <m>(DE)\inv = E\inv D\inv</m>, we have
+              <me>
+                A = D(ECE\inv)D\inv = (DE)C(DE)\inv,
+              </me>
+              which shows that <m>A</m> is similar to <m>C</m>.
+            </li>
+          </ol>
+        </p>
+      </proof>
+    </proposition>
+
+    <example>
+      <p>
+        The matrices
+        <me>\mat{-12 15; -10 13} \sptxt{and} \mat{3 0; 0 -2}</me>
+        are similar, as we saw in this <xref ref="similarity-eg1"/>.  Likewise, the matrices
+        <me>\mat{-12 15; -10 13} \sptxt{and} \mat{-12 5; -30 13}</me>
+        are similar because
+        <me>
+          \mat{-12 5; -30 13} = \mat{2 -1; 2 1}\mat{-12 15; -10 13}\mat{2 -1; 2 1}\inv.
+        </me>
+        It follows that
+        <me>\mat{-12 5; -30 13} \sptxt{and} \mat{3 0; 0 -2}</me>
+        are similar to each other.
+      </p>
+    </example>
+
+    <p>
+      We conclude with an observation about similarity and powers of matrices.
+    </p>
+
+    <theorem type-name="Fact" xml:id="similarity-powers">
+      <statement>
+        <p>
+          Let <m>A = CBC\inv</m>.  Then for any <m>n\geq 1</m>, we have
+          <me>A^n = CB^n C\inv.</me>
+        </p>
+      </statement>
+      <proof visible="true">
+        <p>
+          First note that
+          <me>
+            A^2 = AA = (CBC\inv)(CBC\inv) = CB(C\inv C)BC\inv = CBI_nBC\inv = CB^2C\inv.
+          </me>
+          Next we have
+          <me>
+            A^3 = A^2A = (CB^2C\inv)(CBC\inv) = CB^2(C\inv C)BC\inv = CB^3C\inv.
+          </me>
+          The pattern is clear.
+        </p>
+      </proof>
+    </theorem>
+
+    <example>
+      <statement>
+        <p>
+          Compute <m>A^{100}</m>, where
+          <me>A = \mat{5 13; -2 -5} = \mat{-2 3; 1 -1}\mat{0 -1; 1 0}\mat{-2 3; 1 -1}\inv.</me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          By the <xref ref="similarity-powers"/>, we have
+          <me>
+            A^{100} = \mat{-2 3; 1 -1}\mat{0 -1; 1 0}^{100}\mat{-2 3; 1 -1}\inv.
+          </me>
+          The matrix <m>\smallmat 0{-1}10</m> is a counterclockwise rotation by <m>90^\circ</m>.  If we rotate by <m>90^\circ</m> four times, then we end up where we started.  Hence rotating by <m>90^\circ</m> one hundred times is the identity transformation, so
+          <me>
+            A^{100} = \mat{-2 3; 1 -1}\mat{1 0; 0 1}\mat{-2 3; 1 -1}\inv
+            = \mat{1 0; 0 1}.
+          </me>
+        </p>
+      </solution>
+    </example>
+
+  </subsection>
+
+  <subsection>
+    <title>Geometry of Similar Matrices</title>
+
+    <p>
+      Similarity is a very interesting construction when viewed geometrically.  We will see that, roughly, <em>similar matrices do the same thing in different coordinate systems.</em>  The reader might want to review <m>\cB</m>-coordinates and nonstandard coordinate grids in <xref ref="bases-as-coord-systems"/> before reading this Subsection.
+    </p>
+
+    <p>
+      By the <xref ref="imt-2"/>, an <m>n\times n</m> matrix <m>C</m> is invertible if and only if its columns <m>v_1,v_2,\ldots,v_n</m> form a basis for <m>\R^n</m>.  This means we can speak of the <m>\cB</m>-coordinates of a vector in <m>\R^n</m>, where <m>\cB</m> is the basis of columns of <m>C</m>.  Recall that
+      <me>
+        [x]_\cB = \vec{c_1 c_2 \vdots, c_n} \sptxt{means}
+        x = c_1v_1 + c_2v_2 + \cdots + c_nv_n
+        = \mat{| | ,, |; v_1 v_2 \cdots, v_n; | | ,, |}\vec{c_1 c_2 \vdots, c_n}.
+      </me>
+      Since <m>C</m> is the matrix with columns <m>v_1,v_2,\ldots,v_n</m>, this says that <m>x = C[x]_\cB</m>.  Multiplying both sides by <m>C\inv</m> gives <m>[x]_\cB = C\inv x.</m>  To summarize:
+    </p>
+
+    <warning>
+      <p>
+        Let <m>C</m> be an invertible <m>n\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_n</m>, and let <m>\cB = \{v_1,v_2,\ldots,v_n\}</m>, a basis for <m>\R^n</m>.  Then for any <m>x</m> in <m>\R^n</m>, we have
+        <me>
+          C[x]_\cB = x \sptxt{and} C\inv x = [x]_\cB.
+        </me>
+        This says that <em><m>C</m> changes from the <m>\cB</m>-coordinates to the usual coordinates</em>, and <em><m>C\inv</m> changes from the usual coordinates to the <m>\cB</m>-coordinates.</em>
+      </p>
+    </warning>
+
+    <p>
+      Suppose that <m>A = CBC\inv.</m>  The above observation gives us another way of computing <m>Ax</m> for a vector <m>x</m> in <m>\R^n</m>.  Recall that
+      <m>CBC\inv x = C(B(C\inv x)),</m>
+      so that multiplying <m>CBC\inv</m> by <m>x</m> means <em>first</em> multiplying by <m>C\inv</m>, <em>then</em> by <m>B</m>, <em>then</em> by <m>C</m>.  See this <xref ref="matrix-mult-order-ops"/>.
+    </p>
+
+    <note hide-type="true">
+      <title>Computing <m>Ax</m> in terms of <m>B</m></title>
+      <p>
+        Suppose that <m>A = CBC\inv,</m> where <m>C</m> is an invertible matrix with columns <m>v_1,v_2,\ldots,v_n.</m>  Let <m>\cB = \{v_1,v_2,\ldots,v_n\}</m>, a basis for <m>\R^n</m>.  Let <m>x</m> be a vector in <m>\R^n</m>.  To compute <m>Ax</m>, one does the following:
+        <ol>
+          <li>
+            Multiply <m>x</m> by <m>C\inv</m>, which changes to the <m>\cB</m>-coordinates: <m>[x]_\cB = C\inv x</m>.
+          </li>
+          <li>
+            Multiply this by <m>B</m>: <m>B[x]_\cB = BC\inv x</m>.
+          </li>
+          <li>
+            Interpreting this vector as a <m>\cB</m>-coordinate vector, we multiply it by <m>C</m> to change back to the usual coordinates:
+            <m>Ax = CBC\inv x = CB[x]_\cB.</m>
+          </li>
+        </ol>
+        <latex-code>
+\begin{tikzpicture}[scale=.8, thin border nodes]
+  \draw[help lines] (-3,-3) grid (3,3);
+  \node at (0, 3.5) {$\cB$-coordinates};
+
+  \draw[seq-green, vector] (0, 0) to["{$[x]_\cB$}" above right] (-2, 1);
+  \draw[seq-red, vector] (0, 0) to["{$B[x]_\cB$}"] (-2, -1);
+
+  \draw[->, shorten=2mm, thick] (9, 1) to[bend right]
+     node[above=1mm] {multiply by $C\inv$} (3, 1);
+  \draw[->, shorten=2mm, thick] (3, -1) to[bend right]
+     node[below=1mm] {multiply by $C$} (9, -1);
+
+  \point at (0, 0);
+
+  \begin{scope}[xshift=12cm]
+    \draw[help lines] (-3,-3) grid (3,3);
+    \node at (0, 3.5) {usual coordinates};
+
+    \draw[seq-green, vector] (0, 0) to["$x$" below right] (1, 2);
+    \draw[seq-red, vector] (0, 0) to["$Ax$"] (-1, 2);
+
+    \point at (0, 0);
+
+  \end{scope}
+
+\end{tikzpicture}
+        </latex-code>
+      </p>
+    </note>
+
+    <warning>
+      <p>
+        If <m>A = CBC\inv</m>, then <m>A</m> and <m>B</m> do the same thing, only in different coordinate systems.
+      </p>
+    </warning>
+
+    <p>
+      The following example is the heart of this Section.
+    </p>
+
+    <specialcase xml:id="similarity-worked-eg">
+      <p>
+        Consider the matrices
+        <me>
+          A = \mat{1/2 3/2; 3/2 1/2} \qquad
+          B = \mat{2 0; 0 -1} \qquad
+          C = \mat{1 1; 1 -1}.
+        </me>
+        One can verify that <m>A = CBC\inv.</m>  Let <m>v_1 = {1\choose 1}</m> and <m>v_2 = {1\choose -1}</m>, the columns of <m>C</m>, and let <m>\cB = \{v_1,v_2\}</m>, a basis of <m>\R^2</m>.
+      </p>
+      <p>
+        The matrix <m>B</m> is diagonal: it scales the <m>x</m>-direction by a factor of <m>2</m> and the <m>y</m>-direction by a factor of <m>-1</m>.
+        <latex-code>
+\def\theo{\includegraphics[width=6cm]{theo11.jpg}}
+
+\begin{tikzpicture}[scale=.8, thin border nodes]
+
+  \node[transform shape] at (0, 0) {\theo};
+  \draw[seq-violet, opacity=1, vector] (0,0) -- (1,0) node[right] {$e_1$};
+  \draw[seq-blue,   opacity=1, vector] (0,0) -- (0,1) node[above] {$e_2$};
+
+  \point at (0, 0);
+
+  \begin{scope}[xshift=10cm, xscale=2, yscale=-1]
+    \clip (-1.5, -3) rectangle (1.5, 3);
+
+    \node[transform shape] at (0, 0) {\theo};
+
+    \draw[seq-violet, opacity=1, vector] (0,0) -- (1, 0) node[right] {$Be_1$};
+    \draw[seq-blue,   opacity=1, vector] (0,0) -- (0, 1) node[below] {$Be_2$};
+
+    \point at (0, 0);
+  \end{scope}
+
+  \draw (-3, -3) rectangle (3, 3);
+  \draw[xshift=10cm] (-3, -3) rectangle (3, 3);
+
+  \draw[->, shorten=2mm, thick] (3, 1) to[bend left, "$B$" above=.5mm] (7, 1);
+
+\end{tikzpicture}
+        </latex-code>
+        To compute <m>Ax</m>, first we multiply by <m>C\inv</m> to find the <m>\cB</m>-coordinates of <m>x</m>, then we multiply by <m>B</m>, then we multiply by <m>C</m> again.  For instance, let <m>\textcolor{seq-green}x = {0\choose -2}</m>.
+        <ol>
+          <li>
+            We see from the <m>\cB</m>-coordinate grid below that
+            <m>\textcolor{seq-green}x = -\textcolor{seq-violet}{v_1} + \textcolor{seq-blue}{v_2}</m>.  Therefore, <m>C\inv\textcolor{seq-green}x = \textcolor{seq-green}{[x]_\cB} = {-1\choose 1}.</m>
+          </li>
+          <li>
+            Multiplying by <m>B</m> scales the coordinates: <m>\textcolor{seq-red}{B[x]_\cB} = {-2\choose -1}</m>.
+          </li>
+          <li>
+            Interpreting <m>{-2\choose -1}</m> as a <m>\cB</m>-coordinate vector, we multiply by <m>C</m> to get
+            <me>
+              \textcolor{seq-red}{Ax} = C\vec{-2 -1} = -2\textcolor{seq-violet}{v_1} - \textcolor{seq-blue}{v_2} = \vec{-3 -1}.
+            </me>
+            Of course, this vector lies at <m>(-2, -1)</m> on the <m>\cB</m>-coordinate grid.
+          </li>
+        </ol>
+        <latex-code>
+\begin{tikzpicture}[scale=.85, thin border nodes]
+  \draw[help lines] (-3,-3) grid (3,3);
+  \node at (0, 3.5) {$\cB$-coordinates};
+
+  \draw[seq-violet, vector, opacity=.5] (0,0) -- (1,0);
+  \draw[seq-blue,   vector, opacity=.5] (0,0) -- (0,1);
+
+  \draw[seq-green, vector] (0, 0) to["{$[x]_\cB$}" {above left, pos=1}] (-1, 1);
+  \draw[seq-red, vector] (0, 0) to["{$B[x]_\cB$}"] (-2, -1);
+
+  \draw[->, shorten=2mm, thick] (9, 1) to[bend right]
+     node[above=1mm] {multiply by $C\inv$} (3, 1);
+  \node[align=center] (A) at (6, 0)
+     {scale $x$ by $2$\\scale $y$ by $-1$};
+  \draw[->, shorten >=2mm, thick] (A) -- (3, 0);
+  \draw[->, shorten=2mm, thick] (3, -1) to[bend right]
+     node[below=1mm] {multiply by $C$} (9, -1);
+
+  \point at (0, 0);
+
+  \begin{scope}[xshift=12cm]
+    \node at (0, 3.5) {usual coordinates};
+    \draw[help lines] (-3, -3) rectangle (3, 3);
+    \path[clip] (-3, -3) rectangle (3, 3);
+    \begin{scope}[cm={(1,1,1,-1,(0,0))}, scale=.7]
+      \draw[help lines] (-5,-5) grid (5,5);
+
+      \draw[seq-violet, vector, opacity=.5] (0,0) -- (1,0);
+      \draw[seq-blue,   vector, opacity=.5] (0,0) -- (0,1);
+
+      \draw[seq-green, vector] (0, 0) to["$x$" left] (-1, 1);
+      \draw[seq-red, vector] (0, 0) to["$Ax$" above left] (-2, -1);
+
+    \end{scope}
+
+    \point at (0, 0);
+
+  \end{scope}
+
+\end{tikzpicture}
+        </latex-code>
+        Now let <m>\textcolor{seq-green}x = \frac 12{5\choose -3}</m>.
+        <ol>
+          <li>
+            We see from the <m>\cB</m>-coordinate grid that
+            <m>\textcolor{seq-green}x = \frac 12\textcolor{seq-violet}{v_1} + 2\textcolor{seq-blue}{v_2}</m>.  Therefore, <m>C\inv\textcolor{seq-green}x = \textcolor{seq-green}{[x]_\cB} = {1/2\choose 2}.</m>
+          </li>
+          <li>
+            Multiplying by <m>B</m> scales the coordinates: <m>\textcolor{seq-red}{B[x]_\cB} = {1\choose -2}</m>.
+          </li>
+          <li>
+            Interpreting <m>{1\choose -2}</m> as a <m>\cB</m>-coordinate vector, we multiply by <m>C</m> to get
+            <me>
+              \textcolor{seq-red}{Ax} = C\vec{1 -2} = \textcolor{seq-violet}{v_1} - 2\textcolor{seq-blue}{v_2} = \vec{-1 3}.
+            </me>
+            This vector lies at <m>(1, -2)</m> on the <m>\cB</m>-coordinate grid.
+          </li>
+        </ol>
+        <latex-code>
+\begin{tikzpicture}[scale=.85, thin border nodes]
+  \draw[help lines] (-3,-3) grid (3,3);
+  \node at (0, 3.5) {$\cB$-coordinates};
+
+  \draw[seq-violet, vector, opacity=.5] (0,0) -- (1,0);
+  \draw[seq-blue,   vector, opacity=.5] (0,0) -- (0,1);
+
+  \draw[seq-green, vector] (0, 0) to["{$[x]_\cB$}" {above left, pos=1}] (1/2, 2);
+  \draw[seq-red, vector] (0, 0) to["{$B[x]_\cB$}" pos=.7] (1, -2);
+
+  \draw[->, shorten=2mm, thick] (9, 1) to[bend right]
+     node[above=1mm] {multiply by $C\inv$} (3, 1);
+  \node[align=center] (A) at (6, 0)
+     {scale $x$ by $2$\\scale $y$ by $-1$};
+  \draw[->, shorten >=2mm, thick] (A) -- (3, 0);
+  \draw[->, shorten=2mm, thick] (3, -1) to[bend right]
+     node[below=1mm] {multiply by $C$} (9, -1);
+
+  \point at (0, 0);
+
+  \begin{scope}[xshift=12cm]
+    \node at (0, 3.5) {usual coordinates};
+    \draw[help lines] (-3, -3) rectangle (3, 3);
+    \path[clip] (-3, -3) rectangle (3, 3);
+    \begin{scope}[cm={(1,1,1,-1,(0,0))}, scale=.7]
+      \draw[help lines] (-5,-5) grid (5,5);
+
+      \draw[seq-violet, vector, opacity=.5] (0,0) -- (1,0);
+      \draw[seq-blue,   vector, opacity=.5] (0,0) -- (0,1);
+
+      \draw[seq-green, vector] (0, 0) to["$x$" {above right, pos=.7}] (1/2, 2);
+      \draw[seq-red, vector] (0, 0) to["$Ax$" left] (1, -2);
+
+    \end{scope}
+
+    \point at (0, 0);
+
+  \end{scope}
+
+\end{tikzpicture}
+        </latex-code>
+        To summarize:
+        <ul>
+          <li>
+            <m>B</m> scales the <m>e_1</m>-direction by <m>2</m> and the <m>e_2</m>-direction by <m>-1</m>.
+          </li>
+          <li>
+            <m>A</m> scales the <m>v_1</m>-direction by <m>2</m> and the <m>v_2</m>-direction by <m>-1</m>.
+          </li>
+        </ul>
+        <latex-code>
+\def\theo{\includegraphics[width=6cm]{theo11.jpg}}
+
+\begin{tikzpicture}[scale=.8, thin border nodes]
+
+  \node[transform shape] at (0, 0) {\theo};
+  \draw[seq-violet, opacity=1, vector] (0,0) -- (1,0) node[right] {$e_1$};
+  \draw[seq-blue,   opacity=1, vector] (0,0) -- (0,1) node[above] {$e_2$};
+
+  \point at (0, 0);
+
+  \begin{scope}[xshift=9cm, xscale=2, yscale=-1]
+    \clip (-1.5, -3) rectangle (1.5, 3);
+
+    \node[transform shape] at (0, 0) {\theo};
+
+    \draw[seq-violet, opacity=1, vector] (0,0) -- (1, 0) node[right] {$Be_1$};
+    \draw[seq-blue,   opacity=1, vector] (0,0) -- (0, 1) node[below] {$Be_2$};
+
+    \point at (0, 0);
+  \end{scope}
+
+  \begin{scope}[yshift=-9cm]
+    \clip (-3, -3) rectangle (3, 3);
+    \begin{scope}[cm={(1,1,1,-1,(0,0))}]
+      \node[transform shape] at (0, 0) {\theo};
+      \draw[seq-violet, opacity=1, vector] (0,0) -- (1,0) node[right] {$v_1$};
+      \draw[seq-blue,   opacity=1, vector] (0,0) -- (0,1) node[right] {$v_2$};
+    \end{scope}
+
+    \point at (0, 0);
+  \end{scope}
+
+  \begin{scope}[yshift=-9cm, xshift=9cm]
+    \clip (-3, -3) rectangle (3, 3);
+    \begin{scope}[cm={(1,1,1,-1,(0,0))}]
+    \begin{scope}[xscale=2, yscale=-1]
+      \node[transform shape] at (0, 0) {\theo};
+      \draw[seq-violet, opacity=1, vector] (0,0) -- (1,0) node[right] {$Av_1$};
+      \draw[seq-blue,   opacity=1, vector] (0,0) -- (0,1) node[left] {$Av_2$};
+    \end{scope}
+    \end{scope}
+
+    \point at (0, 0);
+  \end{scope}
+
+  \draw (-3, -3) rectangle (3, 3);
+  \draw[xshift=9cm] (-3, -3) rectangle (3, 3);
+  \draw[yshift=-9cm] (-3, -3) rectangle (3, 3);
+  \draw[xshift=9cm, yshift=-9cm] (-3, -3) rectangle (3, 3);
+
+  \draw[->, shorten=2mm, thick] (3, 1) to[bend left, "$B$" above=.5mm] (6, 1);
+  \draw[->, shorten=2mm, thick, yshift=-9cm]
+    (3, -1) to[bend right, "$A$" above=.5mm] (6, -1);
+  \draw[->, shorten=2mm, thick] (-1, -6) to[bend left, "$C\inv$" right=.5mm] (-1, -3);
+  \draw[->, shorten=2mm, thick, xshift=9cm]
+    (1, -3) to[bend left, "$C$" left=.5mm] (1, -6);
+
+\end{tikzpicture}
+        </latex-code>
+      </p>
+      <figure>
+        <caption>The geometric relationship between the similar matrices <m>A</m> and <m>B</m> acting on <m>\R^2</m>.  Click and drag the heads of <m>x</m> and <m>[x]_\cB</m>.  Study this picture until you can reliably predict where the other three vectors will be after moving one of them: this is the essence of the geometry of similar matrices.</caption>
+        <mathbox source="demos/similarity.html?B=2,0:0,-1&amp;C=1,1:1,-1&amp;closed" height="600px"/>
+      </figure>
+    </specialcase>
+
+    <example hide-type="true" xml:id="similarity-another-matrix">
+      <title>Interactive: another matrix similar to <m>B</m></title>
+      <p>
+        Consider the matrices
+        <me>
+          A' = \frac 15\mat{-8 -9; 6 13} \qquad
+          B = \mat{2 0; 0 -1} \qquad
+          C' = \frac 12\mat{-1 -3; 2 1}.
+        </me>
+        Then <m>A' = C'B(C')\inv</m>, as one can verify.  Let <m>v_1'=\frac 12{-1\choose 2}</m> and <m>v_2' = \frac 12{-3\choose 1}</m>, the columns of <m>C'</m>, and let <m>\cB' = \{v_1',v_2'\}</m>.  Then <m>A'</m> does the same thing as <m>B</m>, as in the previous <xref ref="similarity-worked-eg"/>, except <m>A'</m> uses the <m>\cB'</m>-coordinate system.  In other words:
+        <ul>
+          <li>
+            <m>B</m> scales the <m>e_1</m>-direction by <m>2</m> and the <m>e_2</m>-direction by <m>-1</m>.
+          </li>
+          <li>
+            <m>A'</m> scales the <m>v_1'</m>-direction by <m>2</m> and the <m>v_2'</m>-direction by <m>-1</m>.
+          </li>
+        </ul>
+        <latex-code>
+\def\theo{\includegraphics[width=6cm]{theo6.jpg}}
+
+\begin{tikzpicture}[scale=.8, thin border nodes]
+
+  \node[transform shape] at (0, 0) {\theo};
+  \draw[seq-violet, opacity=1, vector] (0,0) -- (1,0) node[right] {$e_1$};
+  \draw[seq-blue,   opacity=1, vector] (0,0) -- (0,1) node[above] {$e_2$};
+
+  \point at (0, 0);
+
+  \begin{scope}[xshift=9cm, xscale=2, yscale=-1]
+    \clip (-1.5, -3) rectangle (1.5, 3);
+
+    \node[transform shape] at (0, 0) {\theo};
+
+    \draw[seq-violet, opacity=1, vector] (0,0) -- (1, 0) node[right] {$Be_1$};
+    \draw[seq-blue,   opacity=1, vector] (0,0) -- (0, 1) node[below] {$Be_2$};
+
+    \point at (0, 0);
+  \end{scope}
+
+  \begin{scope}[yshift=-9cm]
+    \clip (-3, -3) rectangle (3, 3);
+    \begin{scope}[cm={(-1/2,1,-3/2,1/2,(0,0))}]
+      \node[transform shape] at (0, 0) {\theo};
+      \draw[seq-violet, opacity=1, vector] (0,0) -- (1,0) node[above] {$v_1'$};
+      \draw[seq-blue,   opacity=1, vector] (0,0) -- (0,1) node[left] {$v_2'$};
+    \end{scope}
+
+    \point at (0, 0);
+  \end{scope}
+
+  \begin{scope}[yshift=-9cm, xshift=9cm]
+    \clip (-3, -3) rectangle (3, 3);
+    \begin{scope}[cm={(-1/2,1,-3/2,1/2,(0,0))}]
+    \begin{scope}[xscale=2, yscale=-1]
+      \node[transform shape] at (0, 0) {\theo};
+      \draw[seq-violet, opacity=1, vector] (0,0) -- (1,0) node[above=-1mm] {$A'v_1'$};
+      \draw[seq-blue,   opacity=1, vector] (0,0) -- (0,1) node[right] {$A'v_2'$};
+    \end{scope}
+    \end{scope}
+
+    \point at (0, 0);
+  \end{scope}
+
+  \draw (-3, -3) rectangle (3, 3);
+  \draw[xshift=9cm] (-3, -3) rectangle (3, 3);
+  \draw[yshift=-9cm] (-3, -3) rectangle (3, 3);
+  \draw[xshift=9cm, yshift=-9cm] (-3, -3) rectangle (3, 3);
+
+  \draw[->, shorten=2mm, thick] (3, 1) to[bend left, "$B$" above=.5mm] (6, 1);
+  \draw[->, shorten=2mm, thick, yshift=-9cm]
+    (3, -1) to[bend right, "$A'$" above=.5mm] (6, -1);
+  \draw[->, shorten=2mm, thick] (-1, -6) to[bend left, "$(C')\inv$" right=.5mm] (-1, -3);
+  \draw[->, shorten=2mm, thick, xshift=9cm]
+    (1, -3) to[bend left, "$C'$" left=.5mm] (1, -6);
+
+\end{tikzpicture}
+        </latex-code>
+      </p>
+      <figure>
+        <caption>The geometric relationship between the similar matrices <m>A'</m> and <m>B</m> acting on <m>\R^2</m>.  Click and drag the heads of <m>x</m> and <m>[x]_{\cB'}</m>.</caption>
+        <mathbox source="demos/similarity.html?B=2,0:0,-1&amp;C=-1/2,-3/2:1,1/2&amp;closed" height="600px"/>
+      </figure>
+    </example>
+
+    <example>
+      <title>A matrix similar to a rotation matrix</title>
+      <p>
+        Consider the matrices
+        <me>
+          A = \frac 16\mat{7 -17; 5 -7} \qquad
+          B = \mat{0 -1; 1 0} \qquad
+          C = \mat{2 -1/2; 1 1/2}.
+        </me>
+        One can verify that <m>A = CBC\inv.</m>  Let <m>v_1 = {2\choose 1}</m> and <m>v_2 = \frac 12{-1\choose 1}</m>, the columns of <m>C</m>, and let <m>\cB = \{v_1,v_2\}</m>, a basis of <m>\R^2</m>.
+      </p>
+      <p>
+        The matrix <m>B</m> rotates the plane counterclockwise by <m>90^\circ</m>.
+        <latex-code>
+\def\theo{\includegraphics[width=6cm]{theo10.jpg}}
+
+\begin{tikzpicture}[scale=.8, thin border nodes]
+
+  \node[transform shape] at (0, 0) {\theo};
+  \draw[seq-violet, opacity=1, vector] (0,0) -- (1,0) node[right] {$e_1$};
+  \draw[seq-blue,   opacity=1, vector] (0,0) -- (0,1) node[above] {$e_2$};
+
+  \point at (0, 0);
+
+  \begin{scope}[xshift=10cm]
+    \clip (-3, -3) rectangle (3, 3);
+
+    \begin{scope}[rotate=90]
+      \node[transform shape] at (0, 0) {\theo};
+
+      \draw[seq-violet, opacity=1, vector] (0,0) -- (1, 0) node[above] {$Be_1$};
+      \draw[seq-blue,   opacity=1, vector] (0,0) -- (0, 1) node[left] {$Be_2$};
+    \end{scope}
+
+    \point at (0, 0);
+  \end{scope}
+
+  \draw (-3, -3) rectangle (3, 3);
+  \draw[xshift=10cm] (-3, -3) rectangle (3, 3);
+
+  \draw[->, shorten=2mm, thick] (3, 1) to[bend left, "$B$" above=.5mm] (7, 1);
+
+\end{tikzpicture}
+        </latex-code>
+        To compute <m>Ax</m>, first we multiply by <m>C\inv</m> to find the <m>\cB</m>-coordinates of <m>x</m>, then we multiply by <m>B</m>, then we multiply by <m>C</m> again.  For instance, let <m>\textcolor{seq-green}x = \frac 32{1\choose 1}</m>.
+        <ol>
+          <li>
+            We see from the <m>\cB</m>-coordinate grid below that
+            <m>\textcolor{seq-green}x = \textcolor{seq-violet}{v_1} + \textcolor{seq-blue}{v_2}</m>.  Therefore, <m>C\inv\textcolor{seq-green}x = \textcolor{seq-green}{[x]_\cB} = {1\choose 1}.</m>
+          </li>
+          <li>
+            Multiplying by <m>B</m> rotates by <m>90^\circ</m>: <m>\textcolor{seq-red}{B[x]_\cB} = {-1\choose 1}</m>.
+          </li>
+          <li>
+            Interpreting <m>{-1\choose 1}</m> as a <m>\cB</m>-coordinate vector, we multiply by <m>C</m> to get
+            <me>
+              \textcolor{seq-red}{Ax} = C\vec{-1 1} = -\textcolor{seq-violet}{v_1} + \textcolor{seq-blue}{v_2} = \frac 12\vec{-5 -1}.
+            </me>
+            Of course, this vector lies at <m>(-1, 1)</m> on the <m>\cB</m>-coordinate grid.
+          </li>
+        </ol>
+        <latex-code>
+\begin{tikzpicture}[scale=.75, thin border nodes]
+  \node at (0, 3.5) {$\cB$-coordinates};
+
+  \begin{scope}[scale=3/2, arrows={[line width=.6pt]}]
+    \draw[help lines] (-2,-2) grid (2, 2);
+    \draw[help lines, seq-yellow] (0, 0) circle[radius=1];
+    \draw[seq-violet, vector, opacity=.5] (0,0) -- (1,0);
+    \draw[seq-blue,   vector, opacity=.5] (0,0) -- (0,1);
+
+    \draw[|->, shorten=1.5mm, dashed]
+        (1,1) arc[radius=sqrt(2), start angle=45, delta angle=90];
+    \draw[seq-green, vector] (0, 0) -- (1, 1) node[above right] {$[x]_\cB$};
+    \draw[seq-red, vector] (0, 0) -- (-1, 1) node[above left] {$B[x]_\cB$};
+  \end{scope}
+
+  \draw[->, shorten=2mm, thick] (9, 1) to[bend right]
+     node[above=1mm] {multiply by $C\inv$} (3, 1);
+  \node (A) at (6, 0) {rotate by $90^\circ$};
+  \draw[->, shorten >=2mm, thick] (A) -- (3, 0);
+  \draw[->, shorten=2mm, thick] (3, -1) to[bend right]
+     node[below=1mm] {multiply by $C$} (9, -1);
+
+  \point at (0, 0);
+
+  \begin{scope}[xshift=12cm]
+    \node at (0, 3.5) {usual coordinates};
+    \draw[help lines] (-3, -3) rectangle (3, 3);
+    \path[clip] (-3, -3) rectangle (3, 3);
+    \begin{scope}[cm={(2,1,-1/2,1/2,(0,0))}, arrows={[line width=.6pt]}]
+      \draw[help lines] (-10,-10) grid (10, 10);
+      \draw[help lines, seq-yellow] (0, 0) circle[radius=1];
+
+      \draw[seq-violet, vector, opacity=.5] (0,0) -- (1,0);
+      \draw[seq-blue,   vector, opacity=.5] (0,0) -- (0,1);
+      \draw[|->, dashed, shorten=1.5mm]
+          (1,1) arc[radius=sqrt(2), start angle=45, delta angle=90];
+
+      \draw[seq-green, vector] (0, 0) -- (1, 1) node[above right] {$x$};
+      \draw[seq-red, vector] (0, 0) -- (-1, 1) node[below=1mm, xshift=1mm] {$Ax$};
+
+    \end{scope}
+
+    \point at (0, 0);
+
+  \end{scope}
+
+\end{tikzpicture}
+        </latex-code>
+        Now let <m>\textcolor{seq-green}x = \frac 12{-1\choose -2}</m>.
+        <ol>
+          <li>
+            We see from the <m>\cB</m>-coordinate grid that
+            <m>\textcolor{seq-green}x = -\frac 12\textcolor{seq-violet}{v_1} - \textcolor{seq-blue}{v_2}</m>.  Therefore, <m>C\inv\textcolor{seq-green}x = \textcolor{seq-green}{[x]_\cB} = {-1/2\choose -1}.</m>
+          </li>
+          <li>
+            Multiplying by <m>B</m> rotates by <m>90^\circ</m>: <m>\textcolor{seq-red}{B[x]_\cB} = {1\choose -1/2}</m>.
+          </li>
+          <li>
+            Interpreting <m>{1\choose -1/2}</m> as a <m>\cB</m>-coordinate vector, we multiply by <m>C</m> to get
+            <me>
+              \textcolor{seq-red}{Ax} = C\vec{1 -1/2} = \textcolor{seq-violet}{v_1} - \frac 12\textcolor{seq-blue}{v_2} = \frac 14\vec{9 3}.
+            </me>
+            This vector lies at <m>(1, -\frac 12)</m> on the <m>\cB</m>-coordinate grid.
+          </li>
+        </ol>
+        <latex-code>
+\begin{tikzpicture}[scale=.75, thin border nodes]
+  \node at (0, 3.5) {$\cB$-coordinates};
+
+  \begin{scope}[scale=3/2, arrows={[line width=.6pt]}]
+    \draw[help lines] (-2,-2) grid (2, 2);
+    \draw[help lines, seq-yellow] (0, 0) circle[radius=1];
+    \draw[seq-violet, vector, opacity=.5] (0,0) -- (1,0);
+    \draw[seq-blue,   vector, opacity=.5] (0,0) -- (0,1);
+
+    \draw[|->, shorten=1.5mm, dashed]
+        (-1/2,-1) arc[radius=sqrt(5/4), start angle={atan2(-1,-1/2)}, delta angle=90];
+    \draw[seq-green, vector] (0, 0) -- (-1/2, -1) node[below left=-1mm] {$[x]_\cB$};
+    \draw[seq-red, vector] (0, 0) -- (1, -1/2) node[right] {$B[x]_\cB$};
+  \end{scope}
+
+  \draw[->, shorten=2mm, thick] (9, 1) to[bend right]
+     node[above=1mm] {multiply by $C\inv$} (3, 1);
+  \node (A) at (6, 0) {rotate by $90^\circ$};
+  \draw[->, shorten >=2mm, thick] (A) -- (3, 0);
+  \draw[->, shorten=2mm, thick] (3, -1) to[bend right]
+     node[below=1mm] {multiply by $C$} (9, -1);
+
+  \point at (0, 0);
+
+  \begin{scope}[xshift=12cm]
+    \node at (0, 3.5) {usual coordinates};
+    \draw[help lines] (-3, -3) rectangle (3, 3);
+    \path[clip] (-3, -3) rectangle (3, 3);
+    \begin{scope}[cm={(2,1,-1/2,1/2,(0,0))}, arrows={[line width=.6pt]}]
+      \draw[help lines] (-10,-10) grid (10, 10);
+      \draw[help lines, seq-yellow] (0, 0) circle[radius=1];
+
+      \draw[seq-violet, vector, opacity=.5] (0,0) -- (1,0);
+      \draw[seq-blue,   vector, opacity=.5] (0,0) -- (0,1);
+
+      \draw[|->, shorten=1.5mm, dashed]
+          (-1/2,-1) arc[radius=sqrt(5/4), start angle={atan2(-1,-1/2)}, delta angle=90];
+      \draw[seq-green, vector] (0, 0) -- (-1/2,-1) node[below] {$x$};
+      \draw[seq-red, vector] (0, 0) -- (1, -1/2) node[right] {$Ax$};
+
+    \end{scope}
+
+    \point at (0, 0);
+
+  \end{scope}
+
+\end{tikzpicture}
+        </latex-code>
+        To summarize:
+        <ul>
+          <li>
+            <m>B</m> rotates counterclockwise around the circle centered at the origin and passing through <m>e_1</m> and <m>e_2</m>.
+          </li>
+          <li>
+            <m>A</m> rotates counterclockwise around the ellipse centered at the origin and passing through <m>v_1</m> and <m>v_2</m>.
+          </li>
+        </ul>
+        <latex-code>
+\def\theo{\includegraphics[width=6cm]{theo10.jpg}}
+
+\begin{tikzpicture}[scale=.75, thin border nodes]
+
+  \node[transform shape] at (0, 0) {\theo};
+  \draw[seq-yellow, opacity=.5] (0,0) circle[radius=1];
+  \draw[seq-violet, opacity=1, vector] (0,0) -- (1,0) node[right] {$e_1$};
+  \draw[seq-blue,   opacity=1, vector] (0,0) -- (0,1) node[above] {$e_2$};
+
+  \point at (0, 0);
+
+  \begin{scope}[xshift=9cm, rotate=90]
+    \clip (-3, -3) rectangle (3, 3);
+
+    \node[transform shape] at (0, 0) {\theo};
+
+    \draw[seq-yellow, opacity=.5] (0,0) circle[radius=1];
+    \draw[seq-violet, opacity=1, vector] (0,0) -- (1, 0) node[right] {$Be_1$};
+    \draw[seq-blue,   opacity=1, vector] (0,0) -- (0, 1) node[below] {$Be_2$};
+
+    \point at (0, 0);
+  \end{scope}
+
+  \begin{scope}[yshift=-9cm]
+    \clip (-3, -3) rectangle (3, 3);
+    \begin{scope}[cm={(2,1,-1/2,1/2,(0,0))}]
+      \node[transform shape] at (0, 0) {\theo};
+      \draw[seq-yellow, opacity=.5] (0,0) circle[radius=1];
+      \draw[seq-violet, opacity=1, vector] (0,0) -- (1,0) node[above] {$v_1$};
+      \draw[seq-blue,   opacity=1, vector] (0,0) -- (0,1) node[left] {$v_2$};
+    \end{scope}
+    \point at (0, 0);
+
+  \end{scope}
+
+  \begin{scope}[yshift=-9cm, xshift=9cm]
+    \clip (-3, -3) rectangle (3, 3);
+    \begin{scope}[cm={(2,1,-1/2,1/2,(0,0))}, rotate=90]
+      \node[transform shape] at (0, 0) {\theo};
+      \draw[seq-yellow, opacity=.5] (0,0) circle[radius=1];
+      \draw[seq-violet, opacity=1, vector] (0,0) -- (1,0) node[above] {$Av_1$};
+      \draw[seq-blue,   opacity=1, vector] (0,0) -- (0,1) node[below] {$Av_2$};
+    \end{scope}
+    \point at (0, 0);
+
+  \end{scope}
+
+  \draw (-3, -3) rectangle (3, 3);
+  \draw[xshift=9cm] (-3, -3) rectangle (3, 3);
+  \draw[yshift=-9cm] (-3, -3) rectangle (3, 3);
+  \draw[xshift=9cm, yshift=-9cm] (-3, -3) rectangle (3, 3);
+
+  \draw[->, shorten=2mm, thick] (3, 1) to[bend left, "$B$" above=.5mm] (6, 1);
+  \draw[->, shorten=2mm, thick, yshift=-9cm]
+    (3, -1) to[bend right, "$A'$" above=.5mm] (6, -1);
+  \draw[->, shorten=2mm, thick] (-1, -6) to[bend left, "$(C')\inv$" right=.5mm] (-1, -3);
+  \draw[->, shorten=2mm, thick, xshift=9cm]
+    (1, -3) to[bend left, "$C'$" left=.5mm] (1, -6);
+
+\end{tikzpicture}
+        </latex-code>
+      </p>
+      <figure>
+        <caption>The geometric relationship between the similar matrices <m>A</m> and <m>B</m> acting on <m>\R^2</m>.  Click and drag the heads of <m>x</m> and <m>[x]_\cB</m>.  Try enabling <q>dynamics</q> to watch an animation of the actions of <m>A</m> and <m>B</m>.</caption>
+        <mathbox source="demos/similarity.html?B=0,-1:1,0&amp;C=2,-1/2:1,1/2&amp;snap=off" height="600px"/>
+      </figure>
+    </example>
+
+    <example hide-type="true" xml:id="similarity-33-eg">
+      <title>Interactive: similar <m>3\times 3</m> matrices</title>
+      <p>
+        Consider the matrices
+        <me>
+          A = \mat{-1 0 0; -1 0 2; -1 1 1} \qquad
+          B = \mat{-1 0 0; 0 -1 0; 0 0 2} \qquad
+          C = \mat{-1 1 0; 1 1 1; -1 0 1}.
+        </me>
+        Then <m>A = CBC\inv</m>, as one can verify.  Let <m>v_1,v_2,v_3</m> be the columns of <m>C</m>, and let <m>\cB = \{v_1,v_2,v_3\}</m>, a basis of <m>\R^3</m>.  Then <m>A</m> does the same thing as <m>B</m>, except <m>A</m> uses the <m>\cB</m>-coordinate system.  In other words:
+        <ul>
+          <li>
+            <m>B</m> scales the <m>e_1,e_2</m>-plane by <m>-1</m> and the <m>e_3</m>-direction by <m>2</m>.
+          </li>
+          <li>
+            <m>A</m> scales the <m>v_1,v_2</m>-plane by <m>-1</m> and the <m>v_3</m>-direction by <m>2</m>.
+          </li>
+        </ul>
+      </p>
+      <figure>
+        <caption>The geometric relationship between the similar matrices <m>A</m> and <m>B</m> acting on <m>\R^3</m>.  Click and drag the heads of <m>x</m> and <m>[x]_\cB</m>.</caption>
+        <mathbox source="demos/similarity.html?B=-1,0,0:0,-1,0:0,0,2&amp;C=-1,1,0:1,1,1:-1,0,1&amp;closed" height="600px"/>
+      </figure>
+    </example>
+  </subsection>
+
+  <subsection>
+    <title>Eigenvalues of Similar Matrices</title>
+
+    <p>
+      Since similar matrices behave in the same way with respect to different coordinate systems, we should expect their eigenvalues and eigenvectors to be closely related.
+    </p>
+
+    <theorem type-name="Fact" xml:id="similarity-charpoly">
+      <statement>
+        <p>Similar matrices have the same characteristic polynomial.</p>
+      </statement>
+      <proof visible="true">
+        <p>
+          Suppose that <m>A = CBC\inv</m>, where <m>A,B,C</m> are <m>n\times n</m> matrices.  We calculate
+          <me>
+            \begin{split}
+            A - \lambda I_n
+            \amp= CBC\inv - \lambda CC\inv
+            = CBC\inv - C\lambda C\inv \\
+            \amp= CBC\inv - C\lambda I_n C\inv
+            = C(B-\lambda I_n)C\inv.
+            \end{split}
+          </me>
+          Therefore,
+          <me>
+            \det(A-\lambda I_n) = \det(C(B-\lambda I_n)C\inv)
+            = \det(C)\det(B-\lambda I_n)\det(C)\inv
+            = \det(B-\lambda I_n).
+          </me>
+          Here we have used the <xref ref="det-defn-mult-prop">multiplicativity property</xref> and its <xref ref="det-defn-power-prop">corollary</xref>.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      Since the eigenvalues of a matrix are the roots of its characteristic polynomial, we have shown:
+    </p>
+
+    <warning>
+      <p>
+        Similar matrices have the same eigenvalues.
+      </p>
+    </warning>
+
+    <note>
+      <p>
+        The converse of the <xref ref="similarity-charpoly"/> is false.  Indeed, the matrices
+        <me>\mat{1 1; 0 1} \sptxt{and} \mat{1 0 ; 0 1}</me>
+        both have characteristic polynomial <m>f(\lambda) = (\lambda-1)^2</m>, but they are not similar, because the only matrix that is similar to <m>I_2</m> is <m>I_2</m> itself.
+      </p>
+    </note>
+
+    <p>
+      Given that similar matrices have the same eigenvalues, one might guess that they have the same eigen<em>vectors</em> as well.  Upon reflection, this is not what one should expect: indeed, the eigenvectors should only match up after changing from one coordinate system to another.  This is the content of the next Fact, remembering that <m>C</m> and <m>C\inv</m> change between the usual coordinates and the <m>\cB</m>-coordinates.
+    </p>
+
+    <theorem type-name="Fact" xml:id="similarity-evecs">
+      <statement>
+        <p>
+          Suppose that <m>A = CBC\inv</m>.  Then
+          <me>
+            \begin{split}
+            v \text{ is an eigenvector of } A
+            \amp\quad\implies\quad C\inv v \text{ is an eigenvector of } B \\
+            v \text{ is an eigenvector of } B
+            \amp\quad\implies\quad C v \text{ is an eigenvector of } A. \\
+            \end{split}
+          </me>
+          The eigenvalues of <m>v</m> / <m>C\inv v</m> or <m>v</m> / <m>Cv</m> are the same.
+        </p>
+      </statement>
+      <proof visible="true">
+        <p>
+          Suppose that <m>v</m> is an eigenvector of <m>A</m> with eigenvalue <m>\lambda</m>, so that <m>Av = \lambda v</m>.  Then
+          <me>B(C\inv v) = C\inv(CBC\inv v) = C\inv(Av) = C\inv\lambda v = \lambda(C\inv v),</me>
+          so that <m>C\inv v</m> is an eigenvector of <m>B</m> with eigenvalue <m>\lambda</m>.  Likewise if <m>v</m> is an eigenvector of <m>B</m> with eigenvalue <m>\lambda</m>, then <m>Bv = \lambda v</m>, and we have
+          <me>A(Cv) = (CBC\inv)Cv = CBv = C(\lambda v) = \lambda(Cv),</me>
+          so that <m>Cv</m> is an eigenvalue of <m>A</m> with eigenvalue <m>\lambda</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <warning>
+      <p>
+        If <m>A = CBC\inv</m>, then <m>C\inv</m> takes the <m>\lambda</m>-eigenspace of <m>A</m> to the <m>\lambda</m>-eigenspace of <m>B</m>, and <m>C</m> takes the <m>\lambda</m>-eigenspace of <m>B</m> to the <m>\lambda</m>-eigenspace of <m>A</m>.
+      </p>
+    </warning>
+
+    <specialcase>
+      <p>
+        We continue with the above <xref ref="similarity-worked-eg"/>: let
+        <me>
+          A = \mat{1/2 3/2; 3/2 1/2} \qquad
+          B = \mat{2 0; 0 -1} \qquad
+          C = \mat{1 1; 1 -1},
+        </me>
+        so <m>A = CBC\inv.</m>  Let <m>v_1 = {1\choose 1}</m> and <m>v_2 = {1\choose -1}</m>, the columns of <m>C</m>.  Recall that:
+        <ul>
+          <li>
+            <m>B</m> scales the <m>e_1</m>-direction by <m>2</m> and the <m>e_2</m>-direction by <m>-1</m>.
+          </li>
+          <li>
+            <m>A</m> scales the <m>v_1</m>-direction by <m>2</m> and the <m>v_2</m>-direction by <m>-1</m>.
+          </li>
+        </ul>
+        This means that the <m>x</m>-axis is the <m>2</m>-eigenspace of <m>B</m>, and the <m>y</m>-axis is the <m>-1</m>-eigenspace of <m>B</m>; likewise, the <q><m>v_1</m>-axis</q> is the <m>2</m>-eigenspace of <m>A</m>, and the <q><m>v_2</m>-axis</q> is the <m>-1</m>-eigenspace of <m>A</m>.  This is consistent with the <xref ref="similarity-evecs"/>, as multiplication by <m>C</m> changes <m>e_1</m> into <m>Ce_1 = v_1</m> and <m>e_2</m> into <m>Ce_2 = v_2</m>.
+        <latex-code>
+\def\theo{\includegraphics[width=6cm]{theo11.jpg}}
+
+\begin{tikzpicture}[scale=.8, thin border nodes]
+
+  \node[transform shape] at (0, 0) {\theo};
+  \draw[seq-violet, opacity=1] (-3,0) -- (3,0)
+      node[below,pos=.75,font=\small] {$2$-eigenspace};
+  \draw[seq-blue,   opacity=1] (0,-3) -- (0,3)
+      node[above,pos=.25, rotate=90, font=\small] {$-1$-eigenspace};
+
+  \point at (0, 0);
+
+  \begin{scope}[xshift=9cm]
+    \clip (-3, -3) rectangle (3, 3);
+    \begin{scope}[cm={(1,1,1,-1,(0,0))}]
+      \node[transform shape] at (0, 0) {\theo};
+      \draw[seq-violet, opacity=1] (-3,0) -- (3,0)
+          node[above,pos=.75, rotate=45, font=\small] {$2$-eigenspace};
+      \draw[seq-blue,   opacity=1] (0,-3) -- (0,3)
+          node[above,pos=.25, rotate=-45, font=\small] {$-1$-eigenspace};
+    \end{scope}
+
+    \point at (0, 0);
+  \end{scope}
+
+  \draw (-3, -3) rectangle (3, 3);
+  \draw[xshift=9cm] (-3, -3) rectangle (3, 3);
+
+  \draw[->, shorten=2mm, thick] (3, 1) to[bend left, "$C$" above=.5mm] (6, 1);
+
+\end{tikzpicture}
+        </latex-code>
+      </p>
+      <figure>
+        <caption>The eigenspaces of <m>A</m> are the lines through <m>v_1</m> and <m>v_2</m>.  These are the images under <m>C</m> of the coordinate axes, which are the eigenspaces of <m>B</m>.</caption>
+        <mathbox source="demos/eigenspace.html?mat=1/2,3/2:3/2,1/2&amp;nomult" height="600px"/>
+      </figure>
+    </specialcase>
+
+    <example hide-type="true">
+      <title>Interactive: another matrix similar to <m>B</m></title>
+      <p>
+        Continuing with this <xref ref="similarity-another-matrix"/>, let
+        <me>
+          A' = \frac 15\mat{-8 -9; 6 13} \qquad
+          B = \mat{2 0; 0 -1} \qquad
+          C' = \frac 12\mat{-1 -3; 2 1},
+        </me>
+        so <m>A' = C'B(C')\inv</m>.  Let <m>v_1'=\frac 12{-1\choose 2}</m> and <m>v_2' = \frac 12{-3\choose 1}</m>, the columns of <m>C'</m>.  Then:
+        <ul>
+          <li>
+            <m>B</m> scales the <m>e_1</m>-direction by <m>2</m> and the <m>e_2</m>-direction by <m>-1</m>.
+          </li>
+          <li>
+            <m>A'</m> scales the <m>v_1'</m>-direction by <m>2</m> and the <m>v_2'</m>-direction by <m>-1</m>.
+          </li>
+        </ul>
+        As before, the <m>x</m>-axis is the <m>2</m>-eigenspace of <m>B</m>, and the <m>y</m>-axis is the <m>-1</m>-eigenspace of <m>B</m>; likewise, the <q><m>v_1'</m>-axis</q> is the <m>2</m>-eigenspace of <m>A'</m>, and the <q><m>v_2'</m>-axis</q> is the <m>-1</m>-eigenspace of <m>A'</m>.  This is consistent with the <xref ref="similarity-evecs"/>, as multiplication by <m>C'</m> changes <m>e_1</m> into <m>C'e_1 = v_1'</m> and <m>e_2</m> into <m>C'e_2 = v_2'</m>.
+        <latex-code>
+\def\theo{\includegraphics[width=6cm]{theo6.jpg}}
+
+\begin{tikzpicture}[scale=.8, thin border nodes]
+
+  \node[transform shape] at (0, 0) {\theo};
+  \draw[seq-violet, opacity=1] (-3,0) -- (3,0)
+      node[below,pos=.75,font=\small] {$2$-eigenspace};
+  \draw[seq-blue,   opacity=1] (0,-3) -- (0,3)
+      node[above,pos=.25, rotate=90, font=\small] {$-1$-eigenspace};
+
+  \point at (0, 0);
+
+  \begin{scope}[xshift=9cm]
+    \clip (-3, -3) rectangle (3, 3);
+    \begin{scope}[cm={(-1/2,1,-3/2,1/2,(0,0))}]
+      \node[transform shape] at (0, 0) {\theo};
+      \draw[seq-violet, opacity=1] (-3,0) -- (3,0)
+          node[above,pos=.72, rotate={atan2(-1,1/2)}, font=\small] {$2$-eigenspace};
+      \draw[seq-blue,   opacity=1] (0,-3) -- (0,3)
+          node[below,pos=.315, rotate={atan2(-1/2,3/2)}, font=\small] {$-1$-eigenspace};
+    \end{scope}
+
+    \point at (0, 0);
+  \end{scope}
+
+  \draw (-3, -3) rectangle (3, 3);
+  \draw[xshift=9cm] (-3, -3) rectangle (3, 3);
+
+  \draw[->, shorten=2mm, thick] (3, 1) to[bend left, "$C$" above=.5mm] (6, 1);
+
+\end{tikzpicture}
+        </latex-code>
+      </p>
+      <figure>
+        <caption>The eigenspaces of <m>A'</m> are the lines through <m>v_1'</m> and <m>v_2'</m>.  These are the images under <m>C'</m> of the coordinate axes, which are the eigenspaces of <m>B</m>.</caption>
+        <mathbox source="demos/eigenspace.html?mat=-8/5,-9/5:6/5,13/5&amp;nomult" height="600px"/>
+      </figure>
+    </example>
+
+    <example hide-type="true">
+      <title>Interactive: similar <m>3\times 3</m> matrices</title>
+      <p>
+        Continuing with this <xref ref="similarity-33-eg"/>, let
+        <me>
+          A = \mat{-1 0 0; -1 0 2; -1 1 1} \qquad
+          B = \mat{-1 0 0; 0 -1 0; 0 0 2} \qquad
+          C = \mat{-1 1 0; 1 1 1; -1 0 1},
+        </me>
+        so <m>A = CBC\inv</m>.  Let <m>v_1,v_2,v_3</m> be the columns of <m>C</m>.  Then:
+        <ul>
+          <li>
+            <m>B</m> scales the <m>e_1,e_2</m>-plane by <m>-1</m> and the <m>e_3</m>-direction by <m>2</m>.
+          </li>
+          <li>
+            <m>A</m> scales the <m>v_1,v_2</m>-plane by <m>-1</m> and the <m>v_3</m>-direction by <m>2</m>.
+          </li>
+        </ul>
+        In other words, the <m>xy</m>-plane is the <m>-1</m>-eigenspace of <m>B</m>, and the <m>z</m>-axis is the <m>2</m>-eigenspace of <m>B</m>; likewise, the <q><m>v_1,v_2</m>-plane</q> is the <m>-1</m>-eigenspace of <m>A</m>, and the <q><m>v_3</m>-axis</q> is the <m>2</m>-eigenspace of <m>A</m>.  This is consistent with the <xref ref="similarity-evecs"/>, as multiplication by <m>C</m> changes <m>e_1</m> into <m>Ce_1 = v_1</m>, <m>e_2</m> into <m>Ce_2 = v_2</m>, and <m>e_3</m> into <m>Ce_3 = v_3</m>.
+      </p>
+      <figure>
+        <caption>The <m>-1</m>-eigenspace of <m>A</m> is the red plane, and the <m>2</m>-eigenspace of <m>A</m> is the green line.  These are the images under <m>C</m> of the <m>xy</m>-plane and the <m>z</m>-axis, respectively, which are the eigenspaces of <m>B</m>.</caption>
+        <mathbox source="demos/eigenspace.html?mat=-1,0,0:-1,0,2:-1,1,1&amp;nomult" height="600px"/>
+      </figure>
+    </example>
+
+  </subsection>
+
+</section>

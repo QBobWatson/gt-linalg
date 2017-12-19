@@ -21,6 +21,7 @@
   <uri resource="diagonalization.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="dimension.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="eigenvectors.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="similarity.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="frontmatter.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="gfdl.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="gramschmidt.xml" uri="../mathbook/schema/pretext.rnc"/>

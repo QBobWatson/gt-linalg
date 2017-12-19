@@ -893,7 +893,7 @@ $\xrightarrow{\text{reflect $xy$}}$
       </p>
     </warning>
 
-    <example hide-type="true">
+    <example hide-type="true" xml:id="matrix-mult-order-ops">
       <title>Order of Operations</title>
       <p>
         Let <m>T\colon\R^n\to\R^m</m> and <m>U\colon\R^p\to\R^n</m> be linear transformations, and let <m>A</m> and <m>B</m> be their standard matrices, respectively.  Recall that <m>T\circ U(x)</m> is the vector obtained by first applying <m>U</m> to <m>x</m>, and then <m>T</m>.

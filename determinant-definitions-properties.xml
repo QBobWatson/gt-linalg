@@ -675,7 +675,7 @@ the license is included in gfdl.xml.
       For completeness, we set <m>A^0 = I_n</m>.
     </p>
 
-    <corollary>
+    <corollary xml:id="det-defn-power-prop">
       <statement>
         <p>
           If <m>A</m> is a square matrix, then
