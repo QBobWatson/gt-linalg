@@ -861,6 +861,9 @@ window.demo2 = new (size === 3 ? Demo : Demo2D)({
   onDrag = (function(_this) {
     return function(vec) {
       var k, len, results, subspace;
+      if (!snap) {
+        return;
+      }
       results = [];
       for (k = 0, len = subspaces.length; k < len; k++) {
         subspace = subspaces[k];

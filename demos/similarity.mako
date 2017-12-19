@@ -635,6 +635,7 @@ window.demo2 = new (if size == 3 then Demo else Demo2D) {
 
     # Snap to coordinate axes
     onDrag = (vec) =>
+        return unless snap
         for subspace in subspaces
             subspace.project vec, snapped
             diff.copy(vec).sub snapped
