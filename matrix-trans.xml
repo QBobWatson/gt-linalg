@@ -339,7 +339,7 @@ the license is included in gfdl.xml.
     </solution>
   </example>
 
-  <example>
+  <example xml:id="matrix-trans-shear">
     <title>Shear</title>
     <statement>
       <p>Let <me>A = \mat{1 1; 0 1}.</me>  Describe the function <m>b=Ax</m> geometrically.</p>

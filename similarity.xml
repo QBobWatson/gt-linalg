@@ -308,7 +308,7 @@ the license is included in gfdl.xml.
           B = \mat{2 0; 0 -1} \qquad
           C = \mat{1 1; 1 -1}.
         </me>
-        One can verify that <m>A = CBC\inv.</m>  Let <m>v_1 = {1\choose 1}</m> and <m>v_2 = {1\choose -1}</m>, the columns of <m>C</m>, and let <m>\cB = \{v_1,v_2\}</m>, a basis of <m>\R^2</m>.
+        One can verify that <m>A = CBC\inv</m>: see this <xref ref="diagonal-eg-22"/>.  Let <m>v_1 = {1\choose 1}</m> and <m>v_2 = {1\choose -1}</m>, the columns of <m>C</m>, and let <m>\cB = \{v_1,v_2\}</m>, a basis of <m>\R^2</m>.
       </p>
       <p>
         The matrix <m>B</m> is diagonal: it scales the <m>x</m>-direction by a factor of <m>2</m> and the <m>y</m>-direction by a factor of <m>-1</m>.

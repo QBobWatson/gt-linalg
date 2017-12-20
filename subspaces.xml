@@ -467,6 +467,22 @@ the license is included in gfdl.xml.
       The column space and the null space of a matrix are both subspaces, so they are both spans.  The column space of a matrix <m>A</m> is defined to be the span of the columns of <m>A</m>.  The null space is defined to be the solution set of <m>Ax=0</m>, so this is a good example of a kind of subspace that we can define <em>without any spanning set in mind.</em>  In order to do computations, however, it is usually necessary to find a spanning set.
     </p>
 
+    <p>
+      To be clear: the null space is the solution set of a (homogeneous) system of equations.  For example, the null space of the matrix
+      <me>
+        A = \mat{1 7 2; -2 1 3; 4 -2 -3}
+      </me>
+      is the solution set of <m>Ax=0</m>, i.e., the solution set of the system of equations
+      <me>
+        \syseq{
+        x + 7y + 2z = 0;
+        -2x + y + 3z = 0;
+        4x - 2y - 3z = 0\rlap.
+        }
+      </me>
+      To find a spanning set for the null space, one has to solve this system of equations.
+    </p>
+
     <warning>
       <p>
         To find a spanning set for <m>\Nul(A)</m>, compute the parametric vector form of the solutions to the homogeneous equation <m>Ax=0</m>.  The vectors attached to the free variables form a spanning set for <m>\Nul(A)</m>.
