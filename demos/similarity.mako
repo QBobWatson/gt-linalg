@@ -76,6 +76,7 @@ tB4.set B[0][0], B[1][0], B[2][0], 0,
         B[0][1], B[1][1], B[2][1], 0,
         B[0][2], B[1][2], B[2][2], 0,
         0, 0, 0, 1
+tB4inv = new THREE.Matrix4().getInverse tB4
 tBinv = new THREE.Matrix3().getInverse tB4
 
 tC = new THREE.Matrix3()
@@ -118,17 +119,9 @@ Ce1 = C[0]
 Ce2 = C[1]
 Ce3 = C[2]
 
-# Random vectors
-numVecs = 20
-random = ([0, 0, 0] for [0...numVecs])
-randomColors = ([0, 0, 0, 1] for [0...numVecs])
-makeRandom = null
-dynamicsMode = urlParams.dynamics ? 'off'
-
 colors = [[1, 1, 0, 1], [.7, .7, 0, .7],
           [.7, 0, 0, .8], [0, .7, 0, .8], [0, .3, .9, .8],
           ][0...size+2]
-
 updateCaption = null
 resetMode = null
 computeOut = null
@@ -147,111 +140,387 @@ if urlParams.snap != 'disabled'
         snap = val
     snap = params["Snap axes"]
 
-if dynamicsMode != 'disabled'
-    tmpVec2 = new THREE.Vector3()
 
-    # Reference: circle or hyperbola
-    reference = urlParams.reference ? null
-    refData = null
-    makeRefData = () ->
-    switch reference
-        when 'circle'
-            makeRefData = () ->
-                refData = ([Math.cos(2*π*i/50), Math.sin(2*π*i/50), 0] for i in [0..50])
-            updateRefData = (mat) ->
-                newData = []
-                for vec in refData
-                    tmpVec2.set.apply(tmpVec2, vec).applyMatrix3 mat
-                    newData.push [tmpVec2.x, tmpVec2.y, tmpVec2.z]
-                newData
-            referenceItems = 1
-        when 'hyperbola'
-            makeRefData = () ->
-                # Four lines, so four items
-                refData = ([[2**(i/3),  2**(-i/3), 0], [-2**(i/3),  2**(-i/3), 0],
-                            [2**(i/3), -2**(-i/3), 0], [-2**(i/3), -2**(-i/3), 0]] \
-                           for i in [-25..25])
-            # TODO: this only works when the product of the eigenvals is 1...
-            updateRefData = (mat) ->
-            referenceItems = 4
-    makeRefData()
+##################################################
+# Dynamics
+dynamicsMode = urlParams.dynamics ? 'off'
 
-    # gui
-    inFolder = gui?
-    gui ?= new dat.GUI
-    gui.closed = urlParams.closed?
-    iteration = 0
-    folder = gui.addFolder("Dynamics")
-    folder.open() if dynamicsMode == 'on'
-    params.Enable = dynamicsMode == 'on'
-    params.Reset = () ->
+# Lots of different ways to interpolate.  Run in a shader for speed.
+
+shaderCode = '''
+#define M_PI 3.1415926535897932384626433832795
+
+uniform float pos;
+uniform mat4 start;
+uniform mat4 end;
+uniform float scale;
+uniform int which;
+
+vec4 animateLinear(vec4 xyzw) {
+    vec4 endpos = end * xyzw;
+    xyzw = start * xyzw;
+    return pos * endpos + (1.0 - pos) * xyzw;
+}
+
+vec4 animateScaleSteps(vec4 xyzw) {
+    vec4 startpos, endpos;
+    float pos2;
+    if(pos < 0.5) {
+        startpos = start * xyzw;
+        endpos = startpos;
+        endpos.x *= end[0][0] / start[0][0];
+        pos2 = pos * 2.0;
+    } else {
+        startpos = start * xyzw;
+        startpos.x *= end[0][0] / start[0][0];
+        endpos = end * xyzw;
+        pos2 = (pos - 0.5) * 2.0;
+    }
+    return pos2 * endpos + (1.0 - pos2) * startpos;
+}
+
+vec4 animateExponential(vec4 xyzw) {
+    vec4 endpos = end * xyzw;
+    xyzw = start * xyzw;
+    if(pos == 0.0)
+        return xyzw;
+    if(pos == 1.0)
+        return endpos;
+    // pos is in (0, 1)
+    return pow(abs(xyzw), vec4(1.0 - pos)) * pow(abs(endpos), vec4(pos)) * sign(xyzw);
+}
+
+vec4 rotate(vec4 xyzw, float pos2) {
+    float startangle = atan(start[0][1], start[0][0]);
+    float endangle   = atan(end[0][1],   end[0][0]);
+    // Go around the short way
+    if(abs(endangle - startangle) > M_PI) {
+        if(endangle > startangle)
+            endangle -= 2.0*M_PI;
+        else
+            endangle += 2.0*M_PI;
+    }
+    endangle -= startangle;
+    float angle = pos2 * endangle;
+    float c = cos(angle);
+    float s = sin(angle);
+    return vec4(xyzw.x * c - xyzw.y * s, xyzw.x * s + xyzw.y * c, xyzw.z, xyzw.w);
+}
+
+vec4 animateRotation(vec4 xyzw) {
+    if(pos == 0.0)
+        return start * xyzw;
+    return rotate(start * xyzw, pos);
+}
+
+vec4 animateRotateScale(vec4 xyzw) {
+    if(pos == 0.0)
+        return start * xyzw;
+    if(pos < 0.5)
+        return rotate(start * xyzw, pos * 2.0);
+    float pos2 = (pos - 0.5) * 2.0;
+    xyzw = end * xyzw;
+    xyzw.xy *= ((1.0 - pos2) / scale + pos2 * 1.0);
+    return xyzw;
+}
+
+vec4 animateSpiral(vec4 xyzw) {
+    if(pos == 0.0)
+        return start * xyzw;
+    xyzw = rotate(start * xyzw, pos);
+    xyzw.xy *= ((1.0 - pos) * 1.0 + pos * scale);
+    return xyzw;
+}
+
+vec4 animate(vec4 xyzw, inout vec4 stpq) {
+    if(which == 0)
+        return animateLinear(xyzw);
+    if(which == 1)
+        return animateScaleSteps(xyzw);
+    if(which == 2)
+        return animateExponential(xyzw);
+    if(which == 3)
+        return animateRotation(xyzw);
+    if(which == 4)
+        return animateRotateScale(xyzw);
+    if(which == 5)
+        return animateSpiral(xyzw);
+}
+'''
+
+shaders =
+    linear:      0
+    scaleSteps:  1
+    exponential: 2
+    rotation:    3
+    rotateScale: 4
+    spiral:      5
+
+
+# Special-purpose animations run on the gpu
+class ShaderAnimation extends Animation
+    constructor: (opts) ->
+        opts ?= {}
+        @startTime = null
+        @duration = opts.duration ? 1
+        @startMat = new THREE.Matrix4()
+        @endMat = new THREE.Matrix4()
+        super
+    install: (view, shader) =>
+        @uniforms =
+            start: { type: 'm4', value: @startMat }
+            end:   { type: 'm4', value: @endMat }
+            scale: { type: 'f',  value: 1 }
+            which: { type: 'i',  value: shader }
+        @animShader = view
+            .shader { code: shaderCode, uniforms: @uniforms }, { pos: @pos }
+        @vertex = view
+            .vertex
+                shader: @animShader
+                pass:   'data'
+    pos: (t) =>
+        # Animation position, between 0 and 1
+        if not @running
+            return 0
+        if @startTime == null
+            # Just started
+            @startTime = t
+            return 0
+        pos = (t - @startTime) / @duration
+        if pos >= 1
+            @done()
+            return 0
+        return pos
+    setShader: (shader) =>
+        @uniforms.which.value = shader
+    resetMat: () =>
+        @startMat.identity()
+        @endMat.identity()
+    updateMat: (newMat) =>
+        @endMat.multiply newMat
+    stop: () =>
+        @startMat.copy @endMat
+        @uniforms.scale.value = 1
+        @startTime = null
+        super
+    done: () =>
+        @startMat.copy @endMat
+        @uniforms.scale.value = 1
+        @startTime = null
+        super
+
+
+class Dynamics
+    constructor: (@range) ->
+        # Vectors: array of numVecs x numVecs
+        @numVecs = urlParams.get 'numvecs', 'int', 500*5*5
+        @vecs = ([0, 0, 0] for [0...@numVecs])
+        col = () -> Math.random() * .5 + .5
+        @colors = ([col(), col(), col(), 1] for [0...@numVecs])
+        @makeVecs()
+
+        # For the caption
+        @captionColors = ([col(), col(), col(), 1] for [0...15])
+
+        # installed mathbox elements
+        @points      = []
+        @pointsData  = []
+        @refDataElts = []
+        @refLines    = []
+        @animations  = []
+
+        @tmpVec = new THREE.Vector3()
+        # TODO
+        @reference = null # = urlParams.reference ? null
+        @refData = null
+
+        # decide if this is a rotation-scaling matrix, a diagonalizable matrix,
+        # or none of the above
+        if B[0][0] == B[1][1] and B[1][0] == -B[0][1]
+            @matType = 'rot-scale'
+        else if B[0][1] == 0 and B[1][0] == 0
+            @matType = 'diag'
+        else
+            @matType = 'none'
+        @mat = tB4
+        @matInv = tB4inv
+
+        # gui
+        gui ?= new dat.GUI
+        gui.closed = urlParams.closed?
+        @iteration = 0
+        folder = gui.addFolder("Dynamics")
+        folder.open() if dynamicsMode == 'on'
+        params.Enable = dynamicsMode == 'on'
+        params.Reset = @reset
+        params.Iterate = () => @iterate(1)
+        params.UnIterate = () => @iterate(-1)
+
+        switch @matType
+            when 'rot-scale'
+                params.Motion = 'rotation'
+                possible = ['linear', 'rotateScale']
+                det = B[0][0]*B[1][1] + B[0][1] * B[0][1]
+                if det == 1
+                    possible[1] = 'rotation'
+                else
+                    params.Motion = 'spiral'
+                    possible.push 'spiral'
+            when 'diag'
+                if B[0][0] == 1 or B[1][1] == 1
+                    params.Motion = 'linear'
+                    possible = false
+                else if B[0][0] < 0 or B[1][1] < 0
+                    params.Motion = 'scaleSteps'
+                    possible = ['linear', 'scaleSteps']
+                else
+                    params.Motion = 'exponential'
+                    possible = ['linear', 'scaleSteps', 'exponential']
+            else
+                params.Motion = 'linear'
+                possible = false
+
+        folder.add(params, 'Enable').onFinishChange (val) ->
+            dynamicsMode = if val then 'on' else 'off'
+            resetMode()
+            updateCaption()
+        if possible
+            folder.add(params, 'Motion', possible).onFinishChange (val) =>
+                for anim in @animations
+                    anim.setShader shaders[val]
+        folder.add(params, 'Reset')
+        folder.add(params, 'Iterate')
+        folder.add(params, 'UnIterate')
+
+    install: (view) =>
+        animation = new ShaderAnimation()
+        animation.install view, shaders[params.Motion]
+        @animations.push animation
+
+        colors = view
+            .array
+                channels: 4
+                width:    @numVecs
+                data:     @colors
+                live:     false
+        pointsData = animation.vertex
+            .array
+                channels: 3
+                width:    @numVecs
+                data:     @vecs
+                live:     false
+        points = pointsData
+            .point
+                colors:   colors
+                color:    "white"
+                size:     10
+                zIndex:   3
+        @pointsData.push pointsData
+        @points.push points
+
+        # TODO
+        if @reference
+            refData = animation.vertex
+                .array
+                    channels: 3
+                    width:    refData.length
+                    data:     refData
+                    items:    referenceItems
+                    live:     true
+            refLines = view
+                .line
+                    color:   "rgb(0, 80, 255)"
+                    width:   4
+                    opacity: .75
+                    zBias:   2
+                    closed:  true
+            @refDataElts.push refData
+            @refLines.push refLines
+
+    show: () =>
+        for elt in @points
+            elt.set 'visible', true
+        if @reference
+            for elt in @refLines
+                elt.set 'visible', true
+
+    hide: () =>
+        for elt in @points
+            elt.set 'visible', false
+        if @reference
+            for elt in @refLines
+                elt.set 'visible', false
+
+    makeVecs: () =>
+        r = 5*@range
+        for i in [0...@numVecs]
+            @vecs[i][0] = Math.random() * 2 * r - r
+            @vecs[i][1] = Math.random() * 2 * r - r
+
+    reset: () =>
         return unless params.Enable
-        makeRandom()
-        makeRefData()
+        for anim in @animations
+            anim.resetMat()
+        @makeVecs()
+        @makeRef()
         for demo in [demo1, demo2]
             demo.stopAll()
-            demo.pointsData.set 'data', random
-            if reference
-                demo.refData.set 'data', refData
-        iteration = 0
+        @iteration = 0
         resetMode()
         updateCaption()
 
-    iterate = (mat, iter) ->
+    iterate: (direction) =>
+        iter = @iteration + direction
+        mat = if direction > 0 then @mat else @matInv
         for demo in [demo1, demo2]
             demo.stopAll()
-            demo.pointsData.set 'data', random
 
-        # Compute next points
-        newRandom = []
-        for vec in random
-            tmpVec2.set.apply(tmpVec2, vec).applyMatrix3 mat
-            newRandom.push [tmpVec2.x, tmpVec2.y, tmpVec2.z]
-        if reference
-            newData = updateRefData mat
-
-        for demo in [demo1, demo2]
-            demo.animate demo.pointsData,
-                ease: 'linear'
-                script:
-                    0:   props: data: random
-                    .75: props: data: newRandom
-            if reference
-                demo.animate demo.refData,
+        # Animate
+        for demo, i in [demo1, demo2]
+            @animations[i].updateMat mat
+            if @matType == 'rot-scale'
+                me = mat.elements
+                @animations[i].uniforms.scale.value = Math.sqrt(me[0]*me[0]+me[1]*me[1])
+            demo.animate animation: @animations[i]
+            # TODO
+            if @reference
+                demo.animate demo.refDataElts,
                     ease: 'linear'
                     script:
                         0:   props: data: refData
                         .75: props: data: newData
 
-        random = newRandom
-        if reference
-            refData = newData
-
-        if iter == 1
-            document.getElementById('mult-factor').innerText =
-                'Random vectors multiplied by'
+        document.getElementById('mult-factor').innerText =
+            'Vectors multiplied by'
         katex.render "#{BName}^{#{iter}} " +
             "\\quad\\text{resp.}\\quad #{AName}^{#{iter}}",
             document.getElementById('An-here')
 
-    params.Iterate = () ->
-        return unless params.Enable
-        iteration++
-        iterate(tB, iteration)
-    params.UnIterate = () ->
-        return unless params.Enable
-        iteration--
-        iterate(tBinv, iteration)
+        @iteration = iter
 
-    folder.add(params, 'Enable').onFinishChange (val) ->
-        dynamicsMode = if val then 'on' else 'off'
-        resetMode()
-        updateCaption()
-    folder.add(params, 'Reset')
-    folder.add(params, 'Iterate')
-    folder.add(params, 'UnIterate')
+    makeRef: () =>
+        switch @reference
+            when 'circle'
+                makeRefData = () ->
+                    refData = ([Math.cos(2*π*i/50), Math.sin(2*π*i/50), 0] for i in [0..50])
+                updateRefData = (mat) ->
+                    newData = []
+                    for vec in refData
+                        tmpVec2.set.apply(tmpVec2, vec).applyMatrix3 mat
+                        newData.push [tmpVec2.x, tmpVec2.y, tmpVec2.z]
+                    newData
+                referenceItems = 1
+            when 'hyperbola'
+                makeRefData = () ->
+                    # Four lines, so four items
+                    refData = ([[2**(i/3),  2**(-i/3), 0], [-2**(i/3),  2**(-i/3), 0],
+                                [2**(i/3), -2**(-i/3), 0], [-2**(i/3), -2**(-i/3), 0]] \
+                               for i in [-25..25])
+                # TODO: this only works when the product of the eigenvals is 1...
+                updateRefData = (mat) ->
+                referenceItems = 4
 
-
+dynamics = null
 
 window.demo1 = new (if size == 3 then Demo else Demo2D) {
     mathbox: element: document.getElementById "mathbox1"
@@ -282,65 +551,10 @@ window.demo1 = new (if size == 3 then Demo else Demo2D) {
         zeroOpts:      zIndex: 3
 
     ##################################################
-    # random points
+    # Dynamics
     if dynamicsMode != 'disabled'
-        makeRandom = () =>
-            for vec in random
-                vec[0] = Math.random() * @range * 2 - @range
-                vec[1] = Math.random() * @range * 2 - @range
-                if size == 3
-                    vec[2] = Math.random() * @range * 2 - @range
-            for col in randomColors
-                col[0] = Math.random() * .5 + .5
-                col[1] = Math.random() * .5 + .5
-                col[2] = Math.random() * .5 + .5
-            switch reference
-                # Put points on the reference line
-                when 'circle'
-                    for i in [0...5]
-                        θ = Math.random() * 2*π
-                        random[i][0] = Math.cos(θ)
-                        random[i][1] = Math.sin(θ)
-                when 'hyperbola'
-                    for i in [0...5]
-                        x = Math.random() * (@range - 1/@range) + 1/@range
-                        sign1 = if Math.random() > 0.5 then 1 else -1
-                        sign2 = if Math.random() > 0.5 then 1 else -1
-                        random[i][0] = sign1*x
-                        random[i][1] = sign2/x
-        makeRandom()
-        view
-            .array
-                channels: 4
-                width:    randomColors.length
-                data:     randomColors
-        @pointsData = view
-            .array
-                channels: 3
-                width:    random.length
-                data:     random
-        @points = view
-            .point
-                colors:   "<<"
-                color:    "white"
-                size:     20
-                zIndex:   3
-
-        if reference
-            @refData = view
-                .array
-                    channels: 3
-                    width:    refData.length
-                    data:     refData
-                    items:    referenceItems
-                    live:     true
-            @reference = view
-                .line
-                    color:   "rgb(0, 80, 255)"
-                    width:   4
-                    opacity: .75
-                    zBias:   2
-                    closed:  true
+        dynamics = new Dynamics(@range)
+        dynamics.install view
 
     ##################################################
     # Clip cube
@@ -435,22 +649,20 @@ window.demo1 = new (if size == 3 then Demo else Demo2D) {
             # Don't update caption on drag in dynamics mode
             updateCaption = () ->
             str = '<p class="dots">'
-            for col in randomColors
+            for col in dynamics.captionColors
                 hexColor = "#" + new THREE.Color(col[0], col[1], col[2]).getHexString()
                 str += """
                     <span style="color:#{hexColor}">&#x25cf;</span>
                 """
             str += '</p>'
             document.getElementsByClassName('overlay-text')[0].innerHTML = str + '''
-                <p id="mult-factor">Original random vectors</p>
+                <p id="mult-factor">Original vectors</p>
                 <p class="matrix-powers">
                     <span id="An-here"></span>
                 </p>
                 '''
+            dynamics.show()
             for demo in [demo1, demo2]
-                demo.points.set 'visible', true
-                if reference
-                    demo.reference.set 'visible', true
                 demo.mathbox.select('.labeled').set 'visible', false
         else
             document.getElementsByClassName('overlay-text')[0].innerHTML = '''
@@ -480,11 +692,9 @@ window.demo1 = new (if size == 3 then Demo else Demo2D) {
                 str += '='
                 str += @texVector vectorOut2, {dim: size, color: "#880088"}
                 katex.render str, eq2Elt
-            if dynamicsMode != 'disabled'
+            if dynamics
+                dynamics.hide()
                 for demo in [demo1, demo2]
-                    demo.points.set 'visible', false
-                    if reference
-                        demo.reference.set 'visible', false
                     demo.mathbox.select('.labeled').set 'visible', true
 
 
@@ -572,40 +782,9 @@ window.demo2 = new (if size == 3 then Demo else Demo2D) {
             zBias:    1
 
     ##################################################
-    # random points
-    if dynamicsMode != 'disabled'
-        @transformed
-            .array
-                channels: 4
-                width:    randomColors.length
-                data:     randomColors
-        @pointsData = @transformed
-            .array
-                channels: 3
-                width:    random.length
-                data:     random
-        @points = @transformed
-            .point
-                colors:   "<<"
-                color:    "white"
-                size:     20
-                zIndex:   3
-
-        if reference
-            @refData = @transformed
-                .array
-                    channels: 3
-                    width:    refData.length
-                    data:     refData
-                    items:    referenceItems
-                    live:     true
-            @reference = @transformed
-                .line
-                    color:   "rgb(0, 80, 255)"
-                    width:   4
-                    opacity: .75
-                    zBias:   2
-                    closed:  true
+    # Dynamics
+    if dynamics
+        dynamics.install @transformed
 
     ##################################################
     # Dragging
