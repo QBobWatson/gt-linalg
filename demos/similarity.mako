@@ -360,7 +360,7 @@ class Dynamics
             when 'rot-scale'
                 motions = ['linear', 'rotateScale']
                 det = B[0][0]*B[1][1] + B[0][1]*B[0][1]
-                if det == 1
+                if Math.abs(det - 1) < 1e-6
                     params.Motion ?= 'rotation'
                     motions[1] = 'rotation'
                     params.Reference ?= 'circle'
@@ -472,7 +472,7 @@ class Dynamics
 
     makeRefData: () =>
         scale = Math.sqrt(B[0][0]*B[1][1] + B[0][1]*B[0][1])
-        if scale == 1
+        if Math.abs(scale - 1) < 1e-6
             scale = Math.sqrt(2)
         switch params.Reference
             when 'circle'

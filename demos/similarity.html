@@ -444,7 +444,7 @@ Dynamics = (function() {
       case 'rot-scale':
         motions = ['linear', 'rotateScale'];
         det = B[0][0] * B[1][1] + B[0][1] * B[0][1];
-        if (det === 1) {
+        if (Math.abs(det - 1) < 1e-6) {
           if (params.Motion == null) {
             params.Motion = 'rotation';
           }
@@ -622,7 +622,7 @@ Dynamics = (function() {
   Dynamics.prototype.makeRefData = function() {
     var i, j, k, l, len, m, n, o, p, ref3, ref4, ref5, ref6, ref7, results, results1, results2, results3, row, s, scale, scaleX, scaleY, sx, sy, t, θ;
     scale = Math.sqrt(B[0][0] * B[1][1] + B[0][1] * B[0][1]);
-    if (scale === 1) {
+    if (Math.abs(scale - 1) < 1e-6) {
       scale = Math.sqrt(2);
     }
     switch (params.Reference) {
