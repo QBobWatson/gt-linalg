@@ -248,7 +248,7 @@ if (urlParams.snap !== 'disabled') {
 
 dynamicsMode = (ref2 = urlParams.dynamics) != null ? ref2 : 'off';
 
-shaderCode = '#define M_PI 3.1415926535897932384626433832795\n\nuniform float pos;\nuniform mat4 start;\nuniform mat4 end;\nuniform float scale;\nuniform int which;\n\nvec4 animateLinear(vec4 xyzw) {\n    vec4 endpos = end * xyzw;\n    xyzw = start * xyzw;\n    return pos * endpos + (1.0 - pos) * xyzw;\n}\n\nvec4 animateScaleSteps(vec4 xyzw) {\n    vec4 startpos, endpos;\n    float pos2;\n    if(pos < 0.5) {\n        startpos = start * xyzw;\n        endpos = startpos;\n        endpos.x *= end[0][0] / start[0][0];\n        pos2 = pos * 2.0;\n    } else {\n        startpos = start * xyzw;\n        startpos.x *= end[0][0] / start[0][0];\n        endpos = end * xyzw;\n        pos2 = (pos - 0.5) * 2.0;\n    }\n    return pos2 * endpos + (1.0 - pos2) * startpos;\n}\n\nvec4 animateExponential(vec4 xyzw) {\n    vec4 endpos = end * xyzw;\n    xyzw = start * xyzw;\n    if(pos == 0.0)\n        return xyzw;\n    if(pos == 1.0)\n        return endpos;\n    // pos is in (0, 1)\n    return pow(abs(xyzw), vec4(1.0 - pos)) * pow(abs(endpos), vec4(pos)) * sign(xyzw);\n}\n\nvec4 rotate(vec4 xyzw, float pos2) {\n    float startangle = atan(start[0][1], start[0][0]);\n    float endangle   = atan(end[0][1],   end[0][0]);\n    // Go around the short way\n    if(abs(endangle - startangle) > M_PI) {\n        if(endangle > startangle)\n            endangle -= 2.0*M_PI;\n        else\n            endangle += 2.0*M_PI;\n    }\n    endangle -= startangle;\n    float angle = pos2 * endangle;\n    float c = cos(angle);\n    float s = sin(angle);\n    return vec4(xyzw.x * c - xyzw.y * s, xyzw.x * s + xyzw.y * c, xyzw.z, xyzw.w);\n}\n\nvec4 animateRotation(vec4 xyzw) {\n    if(pos == 0.0)\n        return start * xyzw;\n    return rotate(start * xyzw, pos);\n}\n\nvec4 animateRotateScale(vec4 xyzw) {\n    if(pos == 0.0)\n        return start * xyzw;\n    if(pos < 0.5)\n        return rotate(start * xyzw, pos * 2.0);\n    float pos2 = (pos - 0.5) * 2.0;\n    xyzw = end * xyzw;\n    xyzw.xy *= ((1.0 - pos2) / scale + pos2 * 1.0);\n    return xyzw;\n}\n\nvec4 animateSpiral(vec4 xyzw) {\n    if(pos == 0.0)\n        return start * xyzw;\n    xyzw = rotate(start * xyzw, pos);\n    xyzw.xy *= ((1.0 - pos) * 1.0 + pos * scale);\n    return xyzw;\n}\n\nvec4 animate(vec4 xyzw, inout vec4 stpq) {\n    if(which == 0)\n        return animateLinear(xyzw);\n    if(which == 1)\n        return animateScaleSteps(xyzw);\n    if(which == 2)\n        return animateExponential(xyzw);\n    if(which == 3)\n        return animateRotation(xyzw);\n    if(which == 4)\n        return animateRotateScale(xyzw);\n    if(which == 5)\n        return animateSpiral(xyzw);\n}';
+shaderCode = '#define M_PI 3.1415926535897932384626433832795\n\nuniform float pos;\nuniform mat4 start;\nuniform mat4 end;\nuniform float scale;\nuniform int which;\n\nvec4 animateLinear(vec4 xyzw) {\n    vec4 endpos = end * xyzw;\n    xyzw = start * xyzw;\n    return pos * endpos + (1.0 - pos) * xyzw;\n}\n\nvec4 animateScaleSteps(vec4 xyzw) {\n    vec4 startpos, endpos;\n    float pos2;\n    if(pos < 0.5) {\n        startpos = start * xyzw;\n        endpos = startpos;\n        endpos.x *= end[0][0] / start[0][0];\n        pos2 = pos * 2.0;\n    } else {\n        startpos = start * xyzw;\n        startpos.x *= end[0][0] / start[0][0];\n        endpos = end * xyzw;\n        pos2 = (pos - 0.5) * 2.0;\n    }\n    return pos2 * endpos + (1.0 - pos2) * startpos;\n}\n\nvec4 animateExponential(vec4 xyzw) {\n    vec4 endpos = end * xyzw;\n    xyzw = start * xyzw;\n    if(pos == 0.0)\n        return xyzw;\n    if(pos == 1.0)\n        return endpos;\n    // pos is in (0, 1)\n    return pow(abs(xyzw), vec4(1.0 - pos)) * pow(abs(endpos), vec4(pos)) * sign(xyzw);\n}\n\nvec4 rotate(vec4 xyzw, float pos2) {\n    float startangle = atan(start[0][1], start[0][0]);\n    float endangle   = atan(end[0][1],   end[0][0]);\n    // Go around the short way\n    if(abs(endangle - startangle) > M_PI) {\n        if(endangle > startangle)\n            endangle -= 2.0*M_PI;\n        else\n            endangle += 2.0*M_PI;\n    }\n    endangle -= startangle;\n    float angle = pos2 * endangle;\n    float c = cos(angle);\n    float s = sin(angle);\n    return vec4(xyzw.x * c - xyzw.y * s, xyzw.x * s + xyzw.y * c, xyzw.z, xyzw.w);\n}\n\nvec4 animateRotation(vec4 xyzw) {\n    if(pos == 0.0)\n        return start * xyzw;\n    return rotate(start * xyzw, pos);\n}\n\nvec4 animateRotateScale(vec4 xyzw) {\n    if(pos == 0.0)\n        return start * xyzw;\n    if(pos < 0.5)\n        return rotate(start * xyzw, pos * 2.0);\n    float pos2 = (pos - 0.5) * 2.0;\n    xyzw = end * xyzw;\n    xyzw.xy *= ((1.0 - pos2) / scale + pos2 * 1.0);\n    return xyzw;\n}\n\nvec4 animateSpiral(vec4 xyzw) {\n    if(pos == 0.0)\n        return start * xyzw;\n    xyzw = rotate(start * xyzw, pos);\n    xyzw.xy *= pow(scale, pos);\n    return xyzw;\n}\n\nvec4 animate(vec4 xyzw, inout vec4 stpq) {\n    if(which == 0)\n        return animateLinear(xyzw);\n    if(which == 1)\n        return animateScaleSteps(xyzw);\n    if(which == 2)\n        return animateExponential(xyzw);\n    if(which == 3)\n        return animateRotation(xyzw);\n    if(which == 4)\n        return animateRotateScale(xyzw);\n    if(which == 5)\n        return animateSpiral(xyzw);\n}';
 
 shaders = {
   linear: 0,
@@ -362,11 +362,12 @@ ShaderAnimation = (function(superClass) {
 
 Dynamics = (function() {
   function Dynamics(range) {
-    var col, det, folder, possible;
+    var col, det, folder, motions, references;
     this.range = range;
-    this.makeRef = bind(this.makeRef, this);
     this.iterate = bind(this.iterate, this);
     this.reset = bind(this.reset, this);
+    this.updateReferences = bind(this.updateReferences, this);
+    this.makeRefData = bind(this.makeRefData, this);
     this.makeVecs = bind(this.makeVecs, this);
     this.hide = bind(this.hide, this);
     this.show = bind(this.show, this);
@@ -406,7 +407,6 @@ Dynamics = (function() {
     this.refLines = [];
     this.animations = [];
     this.tmpVec = new THREE.Vector3();
-    this.reference = null;
     this.refData = null;
     if (B[0][0] === B[1][1] && B[1][0] === -B[0][1]) {
       this.matType = 'rot-scale';
@@ -438,41 +438,73 @@ Dynamics = (function() {
         return _this.iterate(-1);
       };
     })(this);
+    params.Motion = urlParams.motion;
+    params.Reference = urlParams.reference;
     switch (this.matType) {
       case 'rot-scale':
-        params.Motion = 'rotation';
-        possible = ['linear', 'rotateScale'];
+        motions = ['linear', 'rotateScale'];
         det = B[0][0] * B[1][1] + B[0][1] * B[0][1];
         if (det === 1) {
-          possible[1] = 'rotation';
+          if (params.Motion == null) {
+            params.Motion = 'rotation';
+          }
+          motions[1] = 'rotation';
+          if (params.Reference == null) {
+            params.Reference = 'circle';
+          }
+          references = ['none', 'circle'];
         } else {
-          params.Motion = 'spiral';
-          possible.push('spiral');
+          if (params.Motion == null) {
+            params.Motion = 'spiral';
+          }
+          motions.push('spiral');
+          if (params.Reference == null) {
+            params.Reference = 'spiral';
+          }
+          references = ['none', 'circle', 'spiral'];
         }
         break;
       case 'diag':
         if (B[0][0] === 1 || B[1][1] === 1) {
-          params.Motion = 'linear';
-          possible = false;
+          if (params.Motion == null) {
+            params.Motion = 'linear';
+          }
+          motions = false;
+          if (params.Reference == null) {
+            params.Reference = 'lines';
+          }
+          references = ['none', 'lines'];
         } else if (B[0][0] < 0 || B[1][1] < 0) {
-          params.Motion = 'scaleSteps';
-          possible = ['linear', 'scaleSteps'];
+          if (params.Motion == null) {
+            params.Motion = 'scaleSteps';
+          }
+          motions = ['linear', 'scaleSteps'];
+          references = false;
         } else {
-          params.Motion = 'exponential';
-          possible = ['linear', 'scaleSteps', 'exponential'];
+          if (params.Motion == null) {
+            params.Motion = 'exponential';
+          }
+          motions = ['linear', 'scaleSteps', 'exponential'];
+          if (params.Reference == null) {
+            params.Reference = 'exp';
+          }
+          references = ['none', 'exp'];
         }
         break;
       default:
-        params.Motion = 'linear';
-        possible = false;
+        if (params.Motion == null) {
+          params.Motion = 'linear';
+        }
+        motions = false;
+        references = false;
     }
     folder.add(params, 'Enable').onFinishChange(function(val) {
       dynamicsMode = val ? 'on' : 'off';
       resetMode();
       return updateCaption();
     });
-    if (possible) {
-      folder.add(params, 'Motion', possible).onFinishChange((function(_this) {
+    if (motions) {
+      folder.add(params, 'Motion', motions).onFinishChange((function(_this) {
         return function(val) {
           var anim, k, len, ref3, results;
           ref3 = _this.animations;
@@ -485,13 +517,16 @@ Dynamics = (function() {
         };
       })(this));
     }
+    if (references) {
+      folder.add(params, 'Reference', references).onFinishChange(this.updateReferences);
+    }
     folder.add(params, 'Reset');
     folder.add(params, 'Iterate');
     folder.add(params, 'UnIterate');
   }
 
   Dynamics.prototype.install = function(view) {
-    var animation, points, pointsData, refData, refLines;
+    var animation, points, pointsData, refDataElt, refLine;
     animation = new ShaderAnimation();
     animation.install(view, shaders[params.Motion]);
     this.animations.push(animation);
@@ -515,23 +550,25 @@ Dynamics = (function() {
     });
     this.pointsData.push(pointsData);
     this.points.push(points);
-    if (this.reference) {
-      refData = animation.vertex.array({
+    if (params.Reference) {
+      this.makeRefData();
+      refDataElt = view.array({
         channels: 3,
-        width: refData.length,
-        data: refData,
-        items: referenceItems,
-        live: true
+        width: this.refData.length,
+        items: this.refData[0].length,
+        data: this.refData,
+        live: false
       });
-      refLines = view.line({
+      refLine = view.line({
         color: "rgb(0, 80, 255)",
         width: 4,
         opacity: .75,
         zBias: 2,
-        closed: true
+        closed: true,
+        visible: params.Reference !== 'none'
       });
-      this.refDataElts.push(refData);
-      return this.refLines.push(refLines);
+      this.refDataElts.push(refDataElt);
+      return this.refLines.push(refLine);
     }
   };
 
@@ -542,7 +579,7 @@ Dynamics = (function() {
       elt = ref3[k];
       elt.set('visible', true);
     }
-    if (this.reference) {
+    if (params.Reference) {
       ref4 = this.refLines;
       results = [];
       for (l = 0, len1 = ref4.length; l < len1; l++) {
@@ -560,7 +597,7 @@ Dynamics = (function() {
       elt = ref3[k];
       elt.set('visible', false);
     }
-    if (this.reference) {
+    if (params.Reference) {
       ref4 = this.refLines;
       results = [];
       for (l = 0, len1 = ref4.length; l < len1; l++) {
@@ -582,6 +619,158 @@ Dynamics = (function() {
     return results;
   };
 
+  Dynamics.prototype.makeRefData = function() {
+    var i, j, k, l, len, m, n, o, p, ref3, ref4, ref5, ref6, ref7, results, results1, results2, results3, row, s, scale, scaleX, scaleY, sx, sy, t, θ;
+    scale = Math.sqrt(B[0][0] * B[1][1] + B[0][1] * B[0][1]);
+    if (scale === 1) {
+      scale = Math.sqrt(2);
+    }
+    switch (params.Reference) {
+      case 'circle':
+        this.refData = (function() {
+          var k, results;
+          results = [];
+          for (k = 0; k <= 50; k++) {
+            results.push((function() {
+              var l, results1;
+              results1 = [];
+              for (l = -5; l <= 5; l++) {
+                results1.push([0, 0, 0]);
+              }
+              return results1;
+            })());
+          }
+          return results;
+        })();
+        results = [];
+        for (j = k = -5; k <= 5; j = ++k) {
+          s = Math.pow(scale, j);
+          results.push((function() {
+            var l, results1;
+            results1 = [];
+            for (i = l = 0; l <= 50; i = ++l) {
+              this.refData[i][j + 5][0] = Math.cos(2 * π * i / 50) * s;
+              results1.push(this.refData[i][j + 5][1] = Math.sin(2 * π * i / 50) * s);
+            }
+            return results1;
+          }).call(this));
+        }
+        return results;
+        break;
+      case 'spiral':
+        θ = Math.atan2(B[0][1], B[0][0]);
+        this.refData = [];
+        results1 = [];
+        for (t = l = ref3 = -5 * π, ref4 = 5 * π, ref5 = π / 36; ref5 > 0 ? l < ref4 : l > ref4; t = l += ref5) {
+          s = Math.pow(scale, t / θ);
+          results1.push(this.refData.push((function() {
+            var m, ref6, ref7, results2;
+            results2 = [];
+            for (j = m = 0, ref6 = 2 * π, ref7 = π / 4; ref7 > 0 ? m < ref6 : m > ref6; j = m += ref7) {
+              results2.push([s * Math.cos(t + j), s * Math.sin(t + j), 0]);
+            }
+            return results2;
+          })()));
+        }
+        return results1;
+        break;
+      case 'exp':
+        scaleX = B[0][0];
+        scaleY = B[1][1];
+        this.refData = [];
+        results2 = [];
+        for (i = m = -40; m <= 40; i = ++m) {
+          sx = Math.pow(scaleX, i / 6);
+          sy = Math.pow(scaleY, i / 6);
+          row = [];
+          if ((scaleX > 1 && scaleY < 1) || (scaleX < 1 && scaleY > 1)) {
+            for (j = n = ref6 = 1 / 10; n <= 10; j = n += .3) {
+              row.push([sx * j, sy * j, 0]);
+              row.push([-sx * j, sy * j, 0]);
+              row.push([sx * j, -sy * j, 0]);
+              row.push([-sx * j, -sy * j, 0]);
+            }
+          } else {
+            for (j = o = 0.05; o <= 0.96; j = o += .05) {
+              row.push([sx * j, sy * (1 - j), 0]);
+              row.push([-sx * j, sy * (1 - j), 0]);
+              row.push([sx * j, -sy * (1 - j), 0]);
+              row.push([-sx * j, -sy * (1 - j), 0]);
+            }
+          }
+          results2.push(this.refData.push(row));
+        }
+        return results2;
+        break;
+      case 'lines':
+        scaleX = B[0][0];
+        scaleY = B[1][1];
+        this.refData = [];
+        ref7 = [-5 * this.range, 5 * this.range];
+        results3 = [];
+        for (p = 0, len = ref7.length; p < len; p++) {
+          i = ref7[p];
+          if (scaleX === 1) {
+            this.refData.push((function() {
+              var q, ref10, ref8, ref9, results4;
+              results4 = [];
+              for (j = q = ref8 = -2 * this.range, ref9 = 2 * this.range, ref10 = this.range / 10; ref10 > 0 ? q <= ref9 : q >= ref9; j = q += ref10) {
+                results4.push([j, i, 0]);
+              }
+              return results4;
+            }).call(this));
+          }
+          if (scaleY === 1) {
+            results3.push(this.refData.push((function() {
+              var q, ref10, ref8, ref9, results4;
+              results4 = [];
+              for (j = q = ref8 = -2 * this.range, ref9 = 2 * this.range, ref10 = this.range / 10; ref10 > 0 ? q <= ref9 : q >= ref9; j = q += ref10) {
+                results4.push([i, j, 0]);
+              }
+              return results4;
+            }).call(this)));
+          } else {
+            results3.push(void 0);
+          }
+        }
+        return results3;
+        break;
+      case 'none':
+        return this.refData = [[[0, 0, 0]]];
+    }
+  };
+
+  Dynamics.prototype.updateReferences = function(val) {
+    var elt, k, l, len, len1, len2, line, m, ref3, ref4, ref5, results, results1;
+    if (val === 'none') {
+      ref3 = this.refLines;
+      results = [];
+      for (k = 0, len = ref3.length; k < len; k++) {
+        line = ref3[k];
+        results.push(line.set('visible', false));
+      }
+      return results;
+    } else {
+      this.makeRefData();
+      ref4 = this.refDataElts;
+      for (l = 0, len1 = ref4.length; l < len1; l++) {
+        elt = ref4[l];
+        elt.set({
+          width: this.refData.length,
+          items: this.refData[0].length,
+          data: this.refData
+        });
+      }
+      ref5 = this.refLines;
+      results1 = [];
+      for (m = 0, len2 = ref5.length; m < len2; m++) {
+        line = ref5[m];
+        results1.push(line.set('visible', true));
+      }
+      return results1;
+    }
+  };
+
   Dynamics.prototype.reset = function() {
     var anim, demo, k, l, len, len1, ref3, ref4;
     if (!params.Enable) {
@@ -593,7 +782,6 @@ Dynamics = (function() {
       anim.resetMat();
     }
     this.makeVecs();
-    this.makeRef();
     ref4 = [demo1, demo2];
     for (l = 0, len1 = ref4.length; l < len1; l++) {
       demo = ref4[l];
@@ -624,70 +812,10 @@ Dynamics = (function() {
       demo.animate({
         animation: this.animations[i]
       });
-      if (this.reference) {
-        demo.animate(demo.refDataElts, {
-          ease: 'linear',
-          script: {
-            0: {
-              props: {
-                data: refData
-              }
-            },
-            .75: {
-              props: {
-                data: newData
-              }
-            }
-          }
-        });
-      }
     }
     document.getElementById('mult-factor').innerText = 'Vectors multiplied by';
     katex.render((BName + "^{" + iter + "} ") + ("\\quad\\text{resp.}\\quad " + AName + "^{" + iter + "}"), document.getElementById('An-here'));
     return this.iteration = iter;
-  };
-
-  Dynamics.prototype.makeRef = function() {
-    var makeRefData, referenceItems, updateRefData;
-    switch (this.reference) {
-      case 'circle':
-        makeRefData = function() {
-          var i, refData;
-          return refData = (function() {
-            var k, results;
-            results = [];
-            for (i = k = 0; k <= 50; i = ++k) {
-              results.push([Math.cos(2 * π * i / 50), Math.sin(2 * π * i / 50), 0]);
-            }
-            return results;
-          })();
-        };
-        updateRefData = function(mat) {
-          var k, len, newData, vec;
-          newData = [];
-          for (k = 0, len = refData.length; k < len; k++) {
-            vec = refData[k];
-            tmpVec2.set.apply(tmpVec2, vec).applyMatrix3(mat);
-            newData.push([tmpVec2.x, tmpVec2.y, tmpVec2.z]);
-          }
-          return newData;
-        };
-        return referenceItems = 1;
-      case 'hyperbola':
-        makeRefData = function() {
-          var i, refData;
-          return refData = (function() {
-            var k, results;
-            results = [];
-            for (i = k = -25; k <= 25; i = ++k) {
-              results.push([[Math.pow(2, i / 3), Math.pow(2, -i / 3), 0], [-(Math.pow(2, i / 3)), Math.pow(2, -i / 3), 0], [Math.pow(2, i / 3), -(Math.pow(2, -i / 3)), 0], [-(Math.pow(2, i / 3)), -(Math.pow(2, -i / 3)), 0]]);
-            }
-            return results;
-          })();
-        };
-        updateRefData = function(mat) {};
-        return referenceItems = 4;
-    }
   };
 
   return Dynamics;
@@ -728,15 +856,15 @@ window.demo1 = new (size === 3 ? Demo : Demo2D)({
       zIndex: 3
     }
   });
-  if (dynamicsMode !== 'disabled') {
-    dynamics = new Dynamics(this.range);
-    dynamics.install(view);
-  }
   clipCube = this.clipCube(view, {
     draw: true,
     hilite: size === 3,
     color: new THREE.Color(.75, .75, .75)
   });
+  if (dynamicsMode !== 'disabled') {
+    dynamics = new Dynamics(this.range);
+    dynamics.install(clipCube.clipped);
+  }
   clipCube.clipped.area({
     width: 11,
     height: 11,

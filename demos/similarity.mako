@@ -228,7 +228,7 @@ vec4 animateSpiral(vec4 xyzw) {
     if(pos == 0.0)
         return start * xyzw;
     xyzw = rotate(start * xyzw, pos);
-    xyzw.xy *= ((1.0 - pos) * 1.0 + pos * scale);
+    xyzw.xy *= pow(scale, pos);
     return xyzw;
 }
 
@@ -330,8 +330,6 @@ class Dynamics
         @animations  = []
 
         @tmpVec = new THREE.Vector3()
-        # TODO
-        @reference = null # = urlParams.reference ? null
         @refData = null
 
         # decide if this is a rotation-scaling matrix, a diagonalizable matrix,
@@ -355,39 +353,53 @@ class Dynamics
         params.Reset = @reset
         params.Iterate = () => @iterate(1)
         params.UnIterate = () => @iterate(-1)
+        params.Motion = urlParams.motion
+        params.Reference = urlParams.reference
 
         switch @matType
             when 'rot-scale'
-                params.Motion = 'rotation'
-                possible = ['linear', 'rotateScale']
-                det = B[0][0]*B[1][1] + B[0][1] * B[0][1]
+                motions = ['linear', 'rotateScale']
+                det = B[0][0]*B[1][1] + B[0][1]*B[0][1]
                 if det == 1
-                    possible[1] = 'rotation'
+                    params.Motion ?= 'rotation'
+                    motions[1] = 'rotation'
+                    params.Reference ?= 'circle'
+                    references = ['none', 'circle']
                 else
-                    params.Motion = 'spiral'
-                    possible.push 'spiral'
+                    params.Motion ?= 'spiral'
+                    motions.push 'spiral'
+                    params.Reference ?= 'spiral'
+                    references = ['none', 'circle', 'spiral']
             when 'diag'
                 if B[0][0] == 1 or B[1][1] == 1
-                    params.Motion = 'linear'
-                    possible = false
+                    params.Motion ?= 'linear'
+                    motions = false
+                    params.Reference ?= 'lines'
+                    references = ['none', 'lines']
                 else if B[0][0] < 0 or B[1][1] < 0
-                    params.Motion = 'scaleSteps'
-                    possible = ['linear', 'scaleSteps']
+                    params.Motion ?= 'scaleSteps'
+                    motions = ['linear', 'scaleSteps']
+                    references = false
                 else
-                    params.Motion = 'exponential'
-                    possible = ['linear', 'scaleSteps', 'exponential']
+                    params.Motion ?= 'exponential'
+                    motions = ['linear', 'scaleSteps', 'exponential']
+                    params.Reference ?= 'exp'
+                    references = ['none', 'exp']
             else
-                params.Motion = 'linear'
-                possible = false
+                params.Motion ?= 'linear'
+                motions = false
+                references = false
 
         folder.add(params, 'Enable').onFinishChange (val) ->
             dynamicsMode = if val then 'on' else 'off'
             resetMode()
             updateCaption()
-        if possible
-            folder.add(params, 'Motion', possible).onFinishChange (val) =>
+        if motions
+            folder.add(params, 'Motion', motions).onFinishChange (val) =>
                 for anim in @animations
                     anim.setShader shaders[val]
+        if references
+            folder.add(params, 'Reference', references).onFinishChange @updateReferences
         folder.add(params, 'Reset')
         folder.add(params, 'Iterate')
         folder.add(params, 'UnIterate')
@@ -418,36 +430,37 @@ class Dynamics
         @pointsData.push pointsData
         @points.push points
 
-        # TODO
-        if @reference
-            refData = animation.vertex
+        if params.Reference
+            @makeRefData()
+            refDataElt = view
                 .array
                     channels: 3
-                    width:    refData.length
-                    data:     refData
-                    items:    referenceItems
-                    live:     true
-            refLines = view
+                    width:    @refData.length
+                    items:    @refData[0].length
+                    data:     @refData
+                    live:     false
+            refLine = view
                 .line
                     color:   "rgb(0, 80, 255)"
                     width:   4
                     opacity: .75
                     zBias:   2
                     closed:  true
-            @refDataElts.push refData
-            @refLines.push refLines
+                    visible: params.Reference != 'none'
+            @refDataElts.push refDataElt
+            @refLines.push refLine
 
     show: () =>
         for elt in @points
             elt.set 'visible', true
-        if @reference
+        if params.Reference
             for elt in @refLines
                 elt.set 'visible', true
 
     hide: () =>
         for elt in @points
             elt.set 'visible', false
-        if @reference
+        if params.Reference
             for elt in @refLines
                 elt.set 'visible', false
 
@@ -457,12 +470,79 @@ class Dynamics
             @vecs[i][0] = Math.random() * 2 * r - r
             @vecs[i][1] = Math.random() * 2 * r - r
 
+    makeRefData: () =>
+        scale = Math.sqrt(B[0][0]*B[1][1] + B[0][1]*B[0][1])
+        if scale == 1
+            scale = Math.sqrt(2)
+        switch params.Reference
+            when 'circle'
+                @refData = (([0, 0, 0] for [-5..5]) for [0..50])
+                for j in [-5..5]
+                    s = scale**j
+                    for i in [0..50]
+                        @refData[i][j+5][0] = Math.cos(2*π*i/50) * s
+                        @refData[i][j+5][1] = Math.sin(2*π*i/50) * s
+            when 'spiral'
+                θ = Math.atan2(B[0][1], B[0][0])
+                @refData = []
+                for t in [-5*π...5*π] by π/36
+                    s = Math.pow(scale, t / θ)
+                    @refData.push([s * Math.cos(t+j), s * Math.sin(t+j), 0] \
+                                  for j in [0...2*π] by π/4)
+            when 'exp'
+                scaleX = B[0][0]
+                scaleY = B[1][1]
+                @refData = []
+                for i in [-40..40]
+                    sx = Math.pow(scaleX, i/6)
+                    sy = Math.pow(scaleY, i/6)
+                    row = []
+                    if (scaleX > 1 and scaleY < 1) or (scaleX < 1 and scaleY > 1)
+                        for j in [1/10..10] by .3
+                            row.push [ sx * j,  sy * j, 0]
+                            row.push [-sx * j,  sy * j, 0]
+                            row.push [ sx * j, -sy * j, 0]
+                            row.push [-sx * j, -sy * j, 0]
+                    else
+                        for j in [0.05..0.96] by .05
+                            row.push [ sx * j,  sy * (1-j), 0]
+                            row.push [-sx * j,  sy * (1-j), 0]
+                            row.push [ sx * j, -sy * (1-j), 0]
+                            row.push [-sx * j, -sy * (1-j), 0]
+                    @refData.push row
+            when 'lines'
+                scaleX = B[0][0]
+                scaleY = B[1][1]
+                @refData = []
+                for i in [-5*@range, 5*@range]
+                    if scaleX == 1
+                        @refData.push([j, i, 0] \
+                                      for j in [-2*@range..2*@range] by @range/10)
+                    if scaleY == 1
+                        @refData.push([i, j, 0] \
+                                      for j in [-2*@range..2*@range] by @range/10)
+            when 'none'
+                @refData = [[[0, 0, 0]]]
+
+    updateReferences: (val) =>
+        if val == 'none'
+            for line in @refLines
+                line.set 'visible', false
+        else
+            @makeRefData()
+            for elt in @refDataElts
+                elt.set
+                    width: @refData.length
+                    items: @refData[0].length
+                    data:  @refData
+            for line in @refLines
+                line.set 'visible', true
+
     reset: () =>
         return unless params.Enable
         for anim in @animations
             anim.resetMat()
         @makeVecs()
-        @makeRef()
         for demo in [demo1, demo2]
             demo.stopAll()
         @iteration = 0
@@ -482,13 +562,6 @@ class Dynamics
                 me = mat.elements
                 @animations[i].uniforms.scale.value = Math.sqrt(me[0]*me[0]+me[1]*me[1])
             demo.animate animation: @animations[i]
-            # TODO
-            if @reference
-                demo.animate demo.refDataElts,
-                    ease: 'linear'
-                    script:
-                        0:   props: data: refData
-                        .75: props: data: newData
 
         document.getElementById('mult-factor').innerText =
             'Vectors multiplied by'
@@ -498,27 +571,6 @@ class Dynamics
 
         @iteration = iter
 
-    makeRef: () =>
-        switch @reference
-            when 'circle'
-                makeRefData = () ->
-                    refData = ([Math.cos(2*π*i/50), Math.sin(2*π*i/50), 0] for i in [0..50])
-                updateRefData = (mat) ->
-                    newData = []
-                    for vec in refData
-                        tmpVec2.set.apply(tmpVec2, vec).applyMatrix3 mat
-                        newData.push [tmpVec2.x, tmpVec2.y, tmpVec2.z]
-                    newData
-                referenceItems = 1
-            when 'hyperbola'
-                makeRefData = () ->
-                    # Four lines, so four items
-                    refData = ([[2**(i/3),  2**(-i/3), 0], [-2**(i/3),  2**(-i/3), 0],
-                                [2**(i/3), -2**(-i/3), 0], [-2**(i/3), -2**(-i/3), 0]] \
-                               for i in [-25..25])
-                # TODO: this only works when the product of the eigenvals is 1...
-                updateRefData = (mat) ->
-                referenceItems = 4
 
 dynamics = null
 
@@ -551,17 +603,17 @@ window.demo1 = new (if size == 3 then Demo else Demo2D) {
         zeroOpts:      zIndex: 3
 
     ##################################################
-    # Dynamics
-    if dynamicsMode != 'disabled'
-        dynamics = new Dynamics(@range)
-        dynamics.install view
-
-    ##################################################
     # Clip cube
     clipCube = @clipCube view,
         draw:   true
         hilite: size == 3
         color:  new THREE.Color .75, .75, .75
+
+    ##################################################
+    # Dynamics
+    if dynamicsMode != 'disabled'
+        dynamics = new Dynamics(@range)
+        dynamics.install clipCube.clipped
 
     ##################################################
     # Grid
