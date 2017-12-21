@@ -250,7 +250,7 @@ if (urlParams.snap !== 'disabled') {
 
 dynamicsMode = (ref2 = urlParams.dynamics) != null ? ref2 : 'off';
 
-shaderCode = '#define M_PI 3.1415926535897932384626433832795\n\nuniform float pos;\nuniform mat4 start;\nuniform mat4 end;\nuniform float scale;\nuniform int which;\n\nvec4 animateLinear(vec4 a, vec4 b) {\n    return pos * b + (1.0 - pos) * a;\n}\n\nvec4 animateScaleSteps(vec4 a, vec4 b) {\n    float pos2;\n    if(pos < 0.5) {\n        b.yzw = a.yzw;\n        pos2 = pos * 2.0;\n    } else {\n        a.x = b.x;\n        pos2 = (pos - 0.5) * 2.0;\n    }\n    return pos2 * b + (1.0 - pos2) * a;\n}\n\nvec4 animateExponential(vec4 a, vec4 b) {\n    return pow(abs(a), vec4(1.0 - pos)) * pow(abs(b), vec4(pos)) * sign(a);\n}\n\nvec4 rotate(vec4 a, float pos2) {\n    float startangle = atan(start[0][1], start[0][0]);\n    float endangle   = atan(end[0][1],   end[0][0]);\n    // Go around the short way\n    if(abs(endangle - startangle) > M_PI) {\n        if(endangle > startangle)\n            endangle -= 2.0*M_PI;\n        else\n            endangle += 2.0*M_PI;\n    }\n    endangle -= startangle;\n    float angle = pos2 * endangle;\n    float c = cos(angle);\n    float s = sin(angle);\n    return vec4(a.x * c - a.y * s, a.x * s + a.y * c, a.zw);\n}\n\nfloat expLerp(float z1, float z2, float pos2) {\n    if(z1 * z2 < 0.0) // nothing to do except linearly interpolate\n        return z1 * (1.0 - pos) + z2 * pos;\n    return pow(abs(z1), 1.0-pos) * pow(abs(z2), pos) * sign(z1);\n}\n\nvec4 animateRotation(vec4 a, vec4 b) {\n    a = rotate(a, pos);\n    a.z = expLerp(a.z, b.z, pos);\n    return a;\n}\n\nvec4 animateRotateScale(vec4 a, vec4 b) {\n    if(pos < 0.5)\n        return rotate(a, pos * 2.0);\n    float pos2 = (pos - 0.5) * 2.0;\n    b.xy *= pow(1.0/scale, 1.0 - pos2);\n    b.z = expLerp(a.z, b.z, pos2);\n    return b;\n}\n\nvec4 animateSpiral(vec4 a, vec4 b) {\n    a = rotate(a, pos);\n    a.xy *= pow(scale, pos);\n    a.z = expLerp(a.z, b.z, pos);\n    return a;\n}\n\nvec4 animate(vec4 xyzw, inout vec4 stpq) {\n    vec4 a = start * xyzw;\n    if(pos == 0.0)\n        return a;\n    vec4 b = end * xyzw;\n    if(pos == 1.0)\n        return b;\n\n    if(which == 0)\n        return animateLinear(a, b);\n    if(which == 1)\n        return animateScaleSteps(a, b);\n    if(which == 2)\n        return animateExponential(a, b);\n    if(which == 3)\n        return animateRotation(a, b);\n    if(which == 4)\n        return animateRotateScale(a, b);\n    if(which == 5)\n        return animateSpiral(a, b);\n}';
+shaderCode = '#define M_PI 3.1415926535897932384626433832795\n\nuniform float pos;\nuniform mat4 start;\nuniform mat4 end;\nuniform float scale;\nuniform float range;\nuniform int which;\n\nvec4 animateLinear(vec4 a, vec4 b) {\n    return pos * b + (1.0 - pos) * a;\n}\n\nvec4 animateScaleSteps(vec4 a, vec4 b) {\n    float pos2;\n    if(pos < 0.5) {\n        b.yzw = a.yzw;\n        pos2 = pos * 2.0;\n    } else {\n        a.x = b.x;\n        pos2 = (pos - 0.5) * 2.0;\n    }\n    return pos2 * b + (1.0 - pos2) * a;\n}\n\nvec4 animateExponential(vec4 a, vec4 b) {\n    return pow(abs(a), vec4(1.0 - pos)) * pow(abs(b), vec4(pos)) * sign(a);\n}\n\nvec4 rotate(vec4 a, float pos2) {\n    float startangle = atan(start[0][1], start[0][0]);\n    float endangle   = atan(end[0][1],   end[0][0]);\n    // Go around the short way\n    if(abs(endangle - startangle) > M_PI) {\n        if(endangle > startangle)\n            endangle -= 2.0*M_PI;\n        else\n            endangle += 2.0*M_PI;\n    }\n    endangle -= startangle;\n    float angle = pos2 * endangle;\n    float c = cos(angle);\n    float s = sin(angle);\n    return vec4(a.x * c - a.y * s, a.x * s + a.y * c, a.zw);\n}\n\nfloat expLerp(float z1, float z2, float pos2) {\n    if(z1 * z2 < 0.0) // nothing to do except linearly interpolate\n        return z1 * (1.0 - pos) + z2 * pos;\n    return pow(abs(z1), 1.0-pos) * pow(abs(z2), pos) * sign(z1);\n}\n\nvec4 animateRotation(vec4 a, vec4 b) {\n    a = rotate(a, pos);\n    a.z = expLerp(a.z, b.z, pos);\n    return a;\n}\n\nvec4 animateRotateScale(vec4 a, vec4 b) {\n    if(pos < 0.5)\n        return rotate(a, pos * 2.0);\n    float pos2 = (pos - 0.5) * 2.0;\n    b.xy *= pow(1.0/scale, 1.0 - pos2);\n    b.z = expLerp(a.z, b.z, pos2);\n    return b;\n}\n\nvec4 animateSpiral(vec4 a, vec4 b) {\n    a = rotate(a, pos);\n    a.xy *= pow(scale, pos);\n    a.z = expLerp(a.z, b.z, pos);\n    return a;\n}\n\nvec4 animate(vec4 xyzw, inout vec4 stpq) {\n    vec4 a = start * xyzw;\n    if(pos == 0.0)\n        return a;\n    vec4 b = end * xyzw;\n    if(pos == 1.0)\n        return b;\n\n    if(which == 0)\n        return animateLinear(a, b);\n    if(which == 1)\n        return animateScaleSteps(a, b);\n    if(which == 2)\n        return animateExponential(a, b);\n    if(which == 3)\n        return animateRotation(a, b);\n    if(which == 4)\n        return animateRotateScale(a, b);\n    if(which == 5)\n        return animateSpiral(a, b);\n}';
 
 shaders = {
   linear: 0,
@@ -300,6 +300,10 @@ ShaderAnimation = (function(superClass) {
       which: {
         type: 'i',
         value: shader
+      },
+      range: {
+        type: 'f',
+        value: 10
       }
     };
     this.animShader = view.shader({
@@ -528,11 +532,12 @@ Dynamics = (function() {
   }
 
   Dynamics.prototype.install = function(view) {
-    var animation, points, pointsData, refDataElt, refLine;
+    var animation, colorsElt, points, pointsData, refDataElt, refLine;
     animation = new ShaderAnimation();
     animation.install(view, shaders[params.Motion]);
+    animation.uniforms.range.value = this.range;
     this.animations.push(animation);
-    colors = view.array({
+    colorsElt = view.array({
       channels: 4,
       width: this.numVecs,
       data: this.colors,
@@ -545,7 +550,7 @@ Dynamics = (function() {
       live: false
     });
     points = pointsData.point({
-      colors: colors,
+      colors: colorsElt,
       color: "white",
       size: 10,
       zIndex: 3
@@ -627,11 +632,13 @@ Dynamics = (function() {
   };
 
   Dynamics.prototype.makeRefData = function() {
-    var i, j, k, l, len, m, n, o, p, ref3, ref4, ref5, ref6, ref7, results, results1, results2, results3, row, s, scale, scaleX, scaleY, sx, sy, t, θ;
+    var doZ, i, j, k, l, len, m, n, o, p, q, ref3, ref4, ref5, ref6, ref7, ref8, ref9, results, results1, results2, results3, row, s, scale, scaleX, scaleY, scaleZ, sx, sy, t, x, y, zs, θ;
     scale = Math.sqrt(B[0][0] * B[1][1] + B[0][1] * B[0][1]);
     if (Math.abs(scale - 1) < 1e-6) {
       scale = Math.sqrt(2);
     }
+    doZ = is3d && B[0][2] === 0 && B[1][2] === 0 && B[2][0] === 0 && B[2][1] === 0 && B[2][2] > 0;
+    scaleZ = B[2][2];
     switch (params.Reference) {
       case 'circle':
         this.refData = (function() {
@@ -670,14 +677,20 @@ Dynamics = (function() {
         results1 = [];
         for (t = l = ref3 = -5 * π, ref4 = 5 * π, ref5 = π / 36; ref5 > 0 ? l < ref4 : l > ref4; t = l += ref5) {
           s = Math.pow(scale, t / θ);
-          results1.push(this.refData.push((function() {
-            var m, ref6, ref7, results2;
-            results2 = [];
-            for (j = m = 0, ref6 = 2 * π, ref7 = π / 4; ref7 > 0 ? m < ref6 : m > ref6; j = m += ref7) {
-              results2.push([s * Math.cos(t + j), s * Math.sin(t + j), 0]);
+          if (doZ) {
+            zs = Math.pow(scaleZ, t / θ);
+          }
+          row = [];
+          for (j = m = 0, ref6 = 2 * π, ref7 = π / 4; ref7 > 0 ? m < ref6 : m > ref6; j = m += ref7) {
+            x = s * Math.cos(t + j);
+            y = s * Math.sin(t + j);
+            row.push([x, y, 0]);
+            if (doZ) {
+              row.push([x, y, this.range * .05 * zs]);
+              row.push([x, y, -this.range * .05 * zs]);
             }
-            return results2;
-          })()));
+          }
+          results1.push(this.refData.push(row));
         }
         return results1;
         break;
@@ -686,19 +699,19 @@ Dynamics = (function() {
         scaleY = B[1][1];
         this.refData = [];
         results2 = [];
-        for (i = m = -40; m <= 40; i = ++m) {
+        for (i = n = -40; n <= 40; i = ++n) {
           sx = Math.pow(scaleX, i / 6);
           sy = Math.pow(scaleY, i / 6);
           row = [];
           if ((scaleX > 1 && scaleY < 1) || (scaleX < 1 && scaleY > 1)) {
-            for (j = n = ref6 = 1 / 10; n <= 10; j = n += .3) {
+            for (j = o = ref8 = 1 / 10; o <= 10; j = o += .3) {
               row.push([sx * j, sy * j, 0]);
               row.push([-sx * j, sy * j, 0]);
               row.push([sx * j, -sy * j, 0]);
               row.push([-sx * j, -sy * j, 0]);
             }
           } else {
-            for (j = o = 0.05; o <= 0.96; j = o += .05) {
+            for (j = p = 0.05; p <= 0.96; j = p += .05) {
               row.push([sx * j, sy * (1 - j), 0]);
               row.push([-sx * j, sy * (1 - j), 0]);
               row.push([sx * j, -sy * (1 - j), 0]);
@@ -713,15 +726,15 @@ Dynamics = (function() {
         scaleX = B[0][0];
         scaleY = B[1][1];
         this.refData = [];
-        ref7 = [-5 * this.range, 5 * this.range];
+        ref9 = [-5 * this.range, 5 * this.range];
         results3 = [];
-        for (p = 0, len = ref7.length; p < len; p++) {
-          i = ref7[p];
+        for (q = 0, len = ref9.length; q < len; q++) {
+          i = ref9[q];
           if (scaleX === 1) {
             this.refData.push((function() {
-              var q, ref10, ref8, ref9, results4;
+              var ref10, ref11, ref12, results4, u;
               results4 = [];
-              for (j = q = ref8 = -2 * this.range, ref9 = 2 * this.range, ref10 = this.range / 10; ref10 > 0 ? q <= ref9 : q >= ref9; j = q += ref10) {
+              for (j = u = ref10 = -2 * this.range, ref11 = 2 * this.range, ref12 = this.range / 10; ref12 > 0 ? u <= ref11 : u >= ref11; j = u += ref12) {
                 results4.push([j, i, 0]);
               }
               return results4;
@@ -729,9 +742,9 @@ Dynamics = (function() {
           }
           if (scaleY === 1) {
             results3.push(this.refData.push((function() {
-              var q, ref10, ref8, ref9, results4;
+              var ref10, ref11, ref12, results4, u;
               results4 = [];
-              for (j = q = ref8 = -2 * this.range, ref9 = 2 * this.range, ref10 = this.range / 10; ref10 > 0 ? q <= ref9 : q >= ref9; j = q += ref10) {
+              for (j = u = ref10 = -2 * this.range, ref11 = 2 * this.range, ref12 = this.range / 10; ref12 > 0 ? u <= ref11 : u >= ref11; j = u += ref12) {
                 results4.push([i, j, 0]);
               }
               return results4;
@@ -898,7 +911,7 @@ window.demo1 = new (size === 3 ? Demo : Demo2D)({
   }).line({
     color: "white",
     colors: "<<",
-    width: 3,
+    width: 2,
     opacity: 1,
     zBias: 1
   });
@@ -1118,7 +1131,7 @@ window.demo2 = new (size === 3 ? Demo : Demo2D)({
   }).line({
     color: "white",
     colors: "<<",
-    width: 3,
+    width: 2,
     opacity: 1,
     zBias: 1
   });

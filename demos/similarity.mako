@@ -156,6 +156,7 @@ uniform float pos;
 uniform mat4 start;
 uniform mat4 end;
 uniform float scale;
+uniform float range;
 uniform int which;
 
 vec4 animateLinear(vec4 a, vec4 b) {
@@ -270,6 +271,7 @@ class ShaderAnimation extends Animation
             end:   { type: 'm4', value: @endMat }
             scale: { type: 'f',  value: 1 }
             which: { type: 'i',  value: shader }
+            range: { type: 'f',  value: 10 }
         @animShader = view
             .shader { code: shaderCode, uniforms: @uniforms }, { pos: @pos }
         @vertex = view
@@ -405,9 +407,10 @@ class Dynamics
     install: (view) =>
         animation = new ShaderAnimation()
         animation.install view, shaders[params.Motion]
+        animation.uniforms.range.value = @range
         @animations.push animation
 
-        colors = view
+        colorsElt = view
             .array
                 channels: 4
                 width:    @numVecs
@@ -421,7 +424,7 @@ class Dynamics
                 live:     false
         points = pointsData
             .point
-                colors:   colors
+                colors:   colorsElt
                 color:    "white"
                 size:     10
                 zIndex:   3
@@ -474,6 +477,9 @@ class Dynamics
         scale = Math.sqrt(B[0][0]*B[1][1] + B[0][1]*B[0][1])
         if Math.abs(scale - 1) < 1e-6
             scale = Math.sqrt(2)
+        doZ = is3d and B[0][2] == 0 and B[1][2] == 0 and B[2][0] == 0 and B[2][1] == 0 \
+                   and B[2][2] > 0
+        scaleZ = B[2][2]
         switch params.Reference
             when 'circle'
                 @refData = (([0, 0, 0] for [-5..5]) for [0..50])
@@ -487,8 +493,17 @@ class Dynamics
                 @refData = []
                 for t in [-5*π...5*π] by π/36
                     s = Math.pow(scale, t / θ)
-                    @refData.push([s * Math.cos(t+j), s * Math.sin(t+j), 0] \
-                                  for j in [0...2*π] by π/4)
+                    if doZ
+                        zs = Math.pow(scaleZ, t / θ)
+                    row = []
+                    for j in [0...2*π] by π/4
+                        x = s * Math.cos(t+j)
+                        y = s * Math.sin(t+j)
+                        row.push [x, y, 0]
+                        if doZ
+                            row.push [x, y, @range * .05 * zs]
+                            row.push [x, y, -@range * .05 * zs]
+                    @refData.push row
             when 'exp'
                 scaleX = B[0][0]
                 scaleY = B[1][1]
@@ -652,7 +667,7 @@ window.demo1 = new (if size == 3 then Demo else Demo2D) {
         .line
             color:    "white"
             colors:   "<<"
-            width:    3
+            width:    2
             opacity:  1
             zBias:    1
 
@@ -832,7 +847,7 @@ window.demo2 = new (if size == 3 then Demo else Demo2D) {
         .line
             color:    "white"
             colors:   "<<"
-            width:    3
+            width:    2
             opacity:  1
             zBias:    1
 
