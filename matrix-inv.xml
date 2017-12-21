@@ -82,7 +82,7 @@ the license is included in gfdl.xml.
      </p>
    </remark>
 
-   <proposition type-name="fact" hide-type="true">
+   <proposition type-name="Fact" hide-type="true" xml:id="matrix-inv-facts">
      <title>Facts about invertible matrices</title>
      <statement>
        <p>

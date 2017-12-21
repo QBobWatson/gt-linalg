@@ -755,7 +755,7 @@ the license is included in gfdl.xml.
     </example>
 
     <warning>
-      <title>Summary: eigenspaces</title>
+      <title>Summary: Eigenspaces</title>
       <p>
         Let <m>A</m> be an <m>n\times n</m> matrix and let <m>\lambda</m> be a number.
         <ol>
@@ -766,7 +766,10 @@ the license is included in gfdl.xml.
             In this case, finding a basis for the <m>\lambda</m>-eigenspace of <m>A</m> means finding a basis for <m>\Nul(A-\lambda I_n)</m>, which can be done by finding the parametric vector form of the solutions of the homogeneous system of equations <m>(A-\lambda I_n)v = 0</m>.
           </li>
           <li>
-            The eigenvectors with eigenvalue <m>\lambda</m> are the nonzero vectors in <m>\Nul(A-\lambda I),</m> or equivalently, the nontrivial solutions of <m>(A-\lambda I)v = 0</m>.
+            The dimension of the <m>\lambda</m>-eigenspace of <m>A</m> is equal to the number of free variables in the system of equations <m>(A-\lambda I_n)v = 0</m>, which is the number of columns of <m>A - \lambda I_n</m> without pivots.
+          </li>
+          <li>
+            The eigenvectors with eigenvalue <m>\lambda</m> are the nonzero vectors in <m>\Nul(A-\lambda I_n),</m> or equivalently, the nontrivial solutions of <m>(A-\lambda I_n)v = 0</m>.
           </li>
         </ol>
       </p>

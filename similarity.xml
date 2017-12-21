@@ -102,7 +102,7 @@ the license is included in gfdl.xml.
       As suggested by its name, similarity is what is called an <em>equivalence relation</em>.  This means that it satisfies the following properties.
     </p>
 
-    <proposition>
+    <proposition xml:id="similarity-eq-reln">
       <statement>
         <p>
           Let <m>A,B</m>, and <m>C</m> be <m>n\times n</m> matrices.
