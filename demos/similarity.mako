@@ -1,5 +1,4 @@
 ## -*- coffee -*-
-# ?C=-.25062,-.71864,.64864:.93934,-.34258,-.01661:.23415,.60514,.76091&B=1,-1,0:1,1,0:0,0,2&BName=C&dynamics=on&reference=circle&range2=10
 
 <%inherit file="base_diptych.mako"/>
 
