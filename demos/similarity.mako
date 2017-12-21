@@ -1,4 +1,5 @@
 ## -*- coffee -*-
+# ?C=-.25062,-.71864,.64864:.93934,-.34258,-.01661:.23415,.60514,.76091&B=1,-1,0:1,1,0:0,0,2&BName=C&dynamics=on&reference=circle&range2=10
 
 <%inherit file="base_diptych.mako"/>
 
@@ -54,6 +55,7 @@ size = B.length
 if size == 2
     vectorIn1[2] = 0
     vectorIn2[2] = 0
+is3d = size == 3
 
 # Make 3x3, make first coord = column
 transpose = (mat) ->
@@ -156,41 +158,27 @@ uniform mat4 end;
 uniform float scale;
 uniform int which;
 
-vec4 animateLinear(vec4 xyzw) {
-    vec4 endpos = end * xyzw;
-    xyzw = start * xyzw;
-    return pos * endpos + (1.0 - pos) * xyzw;
+vec4 animateLinear(vec4 a, vec4 b) {
+    return pos * b + (1.0 - pos) * a;
 }
 
-vec4 animateScaleSteps(vec4 xyzw) {
-    vec4 startpos, endpos;
+vec4 animateScaleSteps(vec4 a, vec4 b) {
     float pos2;
     if(pos < 0.5) {
-        startpos = start * xyzw;
-        endpos = startpos;
-        endpos.x *= end[0][0] / start[0][0];
+        b.yzw = a.yzw;
         pos2 = pos * 2.0;
     } else {
-        startpos = start * xyzw;
-        startpos.x *= end[0][0] / start[0][0];
-        endpos = end * xyzw;
+        a.x = b.x;
         pos2 = (pos - 0.5) * 2.0;
     }
-    return pos2 * endpos + (1.0 - pos2) * startpos;
+    return pos2 * b + (1.0 - pos2) * a;
 }
 
-vec4 animateExponential(vec4 xyzw) {
-    vec4 endpos = end * xyzw;
-    xyzw = start * xyzw;
-    if(pos == 0.0)
-        return xyzw;
-    if(pos == 1.0)
-        return endpos;
-    // pos is in (0, 1)
-    return pow(abs(xyzw), vec4(1.0 - pos)) * pow(abs(endpos), vec4(pos)) * sign(xyzw);
+vec4 animateExponential(vec4 a, vec4 b) {
+    return pow(abs(a), vec4(1.0 - pos)) * pow(abs(b), vec4(pos)) * sign(a);
 }
 
-vec4 rotate(vec4 xyzw, float pos2) {
+vec4 rotate(vec4 a, float pos2) {
     float startangle = atan(start[0][1], start[0][0]);
     float endangle   = atan(end[0][1],   end[0][0]);
     // Go around the short way
@@ -204,47 +192,57 @@ vec4 rotate(vec4 xyzw, float pos2) {
     float angle = pos2 * endangle;
     float c = cos(angle);
     float s = sin(angle);
-    return vec4(xyzw.x * c - xyzw.y * s, xyzw.x * s + xyzw.y * c, xyzw.z, xyzw.w);
+    return vec4(a.x * c - a.y * s, a.x * s + a.y * c, a.zw);
 }
 
-vec4 animateRotation(vec4 xyzw) {
-    if(pos == 0.0)
-        return start * xyzw;
-    return rotate(start * xyzw, pos);
+float expLerp(float z1, float z2, float pos2) {
+    if(z1 * z2 < 0.0) // nothing to do except linearly interpolate
+        return z1 * (1.0 - pos) + z2 * pos;
+    return pow(abs(z1), 1.0-pos) * pow(abs(z2), pos) * sign(z1);
 }
 
-vec4 animateRotateScale(vec4 xyzw) {
-    if(pos == 0.0)
-        return start * xyzw;
+vec4 animateRotation(vec4 a, vec4 b) {
+    a = rotate(a, pos);
+    a.z = expLerp(a.z, b.z, pos);
+    return a;
+}
+
+vec4 animateRotateScale(vec4 a, vec4 b) {
     if(pos < 0.5)
-        return rotate(start * xyzw, pos * 2.0);
+        return rotate(a, pos * 2.0);
     float pos2 = (pos - 0.5) * 2.0;
-    xyzw = end * xyzw;
-    xyzw.xy *= ((1.0 - pos2) / scale + pos2 * 1.0);
-    return xyzw;
+    b.xy *= pow(1.0/scale, 1.0 - pos2);
+    b.z = expLerp(a.z, b.z, pos2);
+    return b;
 }
 
-vec4 animateSpiral(vec4 xyzw) {
-    if(pos == 0.0)
-        return start * xyzw;
-    xyzw = rotate(start * xyzw, pos);
-    xyzw.xy *= pow(scale, pos);
-    return xyzw;
+vec4 animateSpiral(vec4 a, vec4 b) {
+    a = rotate(a, pos);
+    a.xy *= pow(scale, pos);
+    a.z = expLerp(a.z, b.z, pos);
+    return a;
 }
 
 vec4 animate(vec4 xyzw, inout vec4 stpq) {
+    vec4 a = start * xyzw;
+    if(pos == 0.0)
+        return a;
+    vec4 b = end * xyzw;
+    if(pos == 1.0)
+        return b;
+
     if(which == 0)
-        return animateLinear(xyzw);
+        return animateLinear(a, b);
     if(which == 1)
-        return animateScaleSteps(xyzw);
+        return animateScaleSteps(a, b);
     if(which == 2)
-        return animateExponential(xyzw);
+        return animateExponential(a, b);
     if(which == 3)
-        return animateRotation(xyzw);
+        return animateRotation(a, b);
     if(which == 4)
-        return animateRotateScale(xyzw);
+        return animateRotateScale(a, b);
     if(which == 5)
-        return animateSpiral(xyzw);
+        return animateSpiral(a, b);
 }
 '''
 
@@ -469,6 +467,8 @@ class Dynamics
         for i in [0...@numVecs]
             @vecs[i][0] = Math.random() * 2 * r - r
             @vecs[i][1] = Math.random() * 2 * r - r
+            if is3d
+                @vecs[i][2] = Math.random() * 2 * r - r
 
     makeRefData: () =>
         scale = Math.sqrt(B[0][0]*B[1][1] + B[0][1]*B[0][1])
@@ -571,6 +571,9 @@ class Dynamics
 
         @iteration = iter
 
+
+##################################################################
+# Demos
 
 dynamics = null
 
