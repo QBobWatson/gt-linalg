@@ -533,7 +533,9 @@ Dynamics = (function() {
 
   Dynamics.prototype.install = function(view) {
     var animation, colorsElt, points, pointsData, refDataElt, refLine;
-    animation = new ShaderAnimation();
+    animation = new ShaderAnimation({
+      duration: urlParams.get('dur', 'float', 1)
+    });
     animation.install(view, shaders[params.Motion]);
     animation.uniforms.range.value = this.range;
     this.animations.push(animation);

@@ -394,7 +394,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
     </p>
 
     <example xml:id="diag-eg-shear">
-      <title>A shear is non-diagonalizable matrix</title>
+      <title>A shear is not diagonalizable</title>
       <p>
         Let
         <me>A = \mat{1 1; 0 1},</me>
@@ -413,14 +413,6 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
           <mathbox source="demos/eigenspace.html?mat=1,1:0,1&amp;nomult" height="500px"/>
         </figure>
     </example>
-
-    <remark>
-      <p>
-        As in the above <xref ref="diag-eg-shear"/>, the matrix
-        <me>A_\lambda = \mat{\lambda, 1; 0 \lambda}</me>
-        is not diagonalizable for any number <m>\lambda</m>.  One can show that any non-diagonalizable <m>2\times 2</m> matrix <m>B</m> with eigenvalue <m>\lambda</m> is similar to <m>A_\lambda</m>, so that these are the prototypical examples of non-diagonalizable matrices.
-      </p>
-    </remark>
 
     <example xml:id="diag-eg-33-nondiag">
       <title>A non-diagonalizable <m>3\times 3</m> matrix</title>
@@ -482,6 +474,32 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
         <me>\mat{1 0; 0 1} \qquad \mat{1 0; 0 0} \qquad \mat{1 1; 0 1} \qquad \mat{0 1; 0 0}.</me>
       </p>
     </warning>
+
+    <remark xml:id="diag-rem-all-nondiag">
+      <title>Non-diagonalizable <m>2\times 2</m> matrices with an eigenvalue</title>
+      <p>
+        As in the above <xref ref="diag-eg-shear"/>, one can check that the matrix
+        <me>A_\lambda = \mat{\lambda, 1; 0 \lambda}</me>
+        is not diagonalizable for any number <m>\lambda</m>.  We claim that any non-diagonalizable <m>2\times 2</m> matrix <m>B</m> with a real eigenvalue <m>\lambda</m> is similar to <m>A_\lambda</m>.  Therefore, up to similarity, these are the only such examples.
+      </p>
+      <p>
+        To prove this, let <m>B</m> be such a matrix.  Let <m>v_1</m> be an eigenvector with eigenvalue <m>\lambda</m>, and let <m>v_2</m> be any vector in <m>\R^2</m> that is not collinear with <m>v_1</m>, so that <m>\{v_1,v_2\}</m> forms a basis for <m>\R^2</m>.  Let <m>C</m> be the matrix with columns <m>v_1,v_2</m>, and consider <m>A = C\inv BC</m>.  We have <m>Ce_1=v_1</m> and <m>Ce_2=v_2</m>, so <m>C\inv v_1=e_1</m> and <m>C\inv v_2=e_2</m>.  We can compute the first column of <m>A</m> as follows:
+        <me>
+          Ae_1 = C\inv BC e_1 = C\inv Bv_1 = C\inv\lambda v_1 = \lambda C\inv v_1 = \lambda e_1.
+        </me>
+        Therefore, <m>A</m> has the form
+        <me>A = \mat{\lambda, b; 0 d}.</me>
+        Since <m>A</m> is similar to <m>B</m>, it also has only one eigenvalue <m>\lambda</m>; since <m>A</m> is upper-triangular, this implies <m>d=\lambda</m>, so
+        <me>A = \mat{\lambda, b; 0 \lambda}.</me>
+        As <m>B</m> is not diagonalizable, we know <m>A</m> is not diagonal (<m>B</m> is similar to <m>A</m>), so <m>b\neq 0</m>.  Now we observe that
+        <me>
+          \mat{1/b 0; 0 1}\mat{\lambda, b; 0 \lambda}\mat{1/b 0; 0 1}\inv
+          = \mat{\lambda/b 1; 0 \lambda}\mat{b 0; 0 1}
+          = \mat{\lambda, 1; 0 \lambda} = A_\lambda.
+        </me>
+        We have shown that <m>B</m> is similar to <m>A</m>, which is similar to <m>A_\lambda</m>, so <m>B</m> is similar to <m>A_\lambda</m> by the <xref ref="similarity-eq-reln" text="title">transitivity property</xref> of similar matrices
+      </p>
+    </remark>
 
   </subsection>
 
@@ -793,7 +811,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 
     <warning>
       <p>
-        Diagonalizable matrices are similar if and only if they have the same characteristic polynomial, or equivalently, the same eigenvalues with the same algebraic multiplicities.
+        <em>Diagonalizable</em> matrices are similar if and only if they have the same characteristic polynomial, or equivalently, the same eigenvalues with the same algebraic multiplicities.
       </p>
     </warning>
 
@@ -833,7 +851,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 
   </subsection>
 
-  <subsection>
+  <subsection xml:id="diag-ss-geometry">
     <title>The Geometry of Diagonalizable Matrices</title>
 
     <p>

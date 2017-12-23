@@ -620,7 +620,7 @@ the license is included in gfdl.xml.
       </figure>
     </example>
 
-    <example>
+    <example xml:id="similarity-eg-rotation">
       <title>A matrix similar to a rotation matrix</title>
       <p>
         Consider the matrices

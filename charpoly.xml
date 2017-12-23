@@ -320,7 +320,7 @@ the license is included in gfdl.xml.
       In practice, the roots of the characteristic polynomial are found numerically by computer, for instance using <url href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton<rsq/>s method</url>.  That said, there do exist methods for finding roots by hand.  For instance, we have the following consequence of the <url href="https://en.wikipedia.org/wiki/Rational_root_theorem">rational root theorem</url> (which we also call the rational root theorem):
     </p>
 
-    <fact hide-type="true">
+    <fact hide-type="true" xml:id="rational-root-thm">
       <title>Rational Root Theorem</title>
       <p>
         Suppose that <m>A</m> is an <m>n\times n</m> matrix whose characteristic polynomial <m>f(\lambda)</m> has integer (whole-number) entries.  Then all rational roots of its characteristic polynomial are integer divisors of <m>\det(A)</m>.

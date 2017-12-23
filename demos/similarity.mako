@@ -404,7 +404,8 @@ class Dynamics
         folder.add(params, 'UnIterate')
 
     install: (view) =>
-        animation = new ShaderAnimation()
+        animation = new ShaderAnimation
+            duration: urlParams.get 'dur', 'float', 1
         animation.install view, shaders[params.Motion]
         animation.uniforms.range.value = @range
         @animations.push animation

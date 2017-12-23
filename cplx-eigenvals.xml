@@ -12,6 +12,1389 @@ the license is included in gfdl.xml.
 <section xml:id="complex-eigenvalues">
   <title>Complex Eigenvalues</title>
 
-  <p>Computing with complex eigenvalues; rotation-scaling matrices.</p>
+  <objectives>
+    <ol>
+      <li>Learn to find complex eigenvalues and eigenvectors of a matrix.</li>
+      <li>Learn to recognize a rotation-scaling matrix, and compute by how much the matrix rotates and scales.</li>
+      <li>Understand the geometry of <m>2\times 2</m> and <m>3\times 3</m> matrices with a complex eigenvalue.</li>
+      <li><em>Recipe:</em> a <m>2\times 2</m> matrix is similar to a rotation-scaling matrix.</li>
+      <li><em>Pictures:</em> the geometry of matrices with a complex eigenvalue.</li>
+      <li><em>Theorems:</em> the Rotation-Scaling Theorem, the Block Diagonalization Theorem.</li>
+      <li><em>Vocabulary word:</em> <term>rotation-scaling matrix</term>.</li>
+    </ol>
+  </objectives>
+
+  <introduction>
+    <p>
+      In <xref ref="diagonalization"/>, we saw that a matrix whose characteristic polynomial has distinct real roots is <em>diagonalizable</em>: it is similar to a diagonal matrix, which is much simpler to analyze.  In this Section, we study matrices whose characteristic polynomial has <em>complex</em> roots.  It turns out that such a matrix is similar (in the <m>2\times 2</m> case) to a <em>rotation-scaling matrix</em>, which is also relatively easy to understand.
+    </p>
+    <p>
+      In a certain sense, this whole Section is analogous to <xref ref="diagonalization"/>, with rotation-scaling matrices playing the role of diagonal matrices.
+    </p>
+  </introduction>
+
+  <subsection>
+    <title>Matrices with Complex Eigenvalues</title>
+    <p>
+      As a consequence of the <xref ref="fund-thm-alg"/> as applied to the characteristic polynomial we see that:
+    </p>
+
+    <warning>
+      <p>
+        Every matrix has a complex eigenvalue.
+      </p>
+    </warning>
+
+    <p>
+      We can compute a corresponding (complex) eigenvector in exactly the same way as before: by row reducing the matrix <m>A - \lambda I_n</m>.  Now, however, we have to do arithmetic with complex numbers.
+    </p>
+
+    <example xml:id="cplx-evals-eg22-a">
+      <title>A <m>2\times 2</m> matrix</title>
+      <statement>
+        <p>
+          Find the complex eigenvalues and eigenvectors of the matrix
+          <me>
+            A = \mat{1 -1; 1 1}.
+          </me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The characteristic polynomial of <m>A</m> is
+          <me>
+            f(\lambda) = \lambda^2 - \Tr(A)\lambda + \det(A)
+            = \lambda^2 - 2\lambda + 2.
+          </me>
+          The roots of this polynomial are
+          <me>
+            \lambda = \frac{2\pm\sqrt{4-8}}2 = 1\pm i.
+          </me>
+          First we compute an eigenvector for <m>\lambda = 1+i</m>.  We have
+          <me>
+            A-(1+i) I_2 = \mat{1-(1+i) -1; 1 1-(1+i)} = \mat{-i -1; 1 -i}.
+          </me>
+          Now we row reduce, noting that the second row is <m>i</m> times the first:
+          <me>
+            \mat{-i -1; 1 -i}
+            \;\xrightarrow{R_2=R_2-iR_1}\;
+            \mat{-i -1; 0 0}
+            \;\xrightarrow{R_1=R_1\div -i}\;
+            \mat{1 -i; 0 0}.
+          </me>
+          The parametric form is <m>x = iy</m>, so that an eigenvector is <m>v_1={i\choose 1}</m>.  Next we compute an eigenvector for <m>\lambda=1-i</m>.  We have
+          <me>
+            A-(1-i) I_2 = \mat{1-(1-i) -1; 1 1-(1-i)} = \mat{i -1; 1 i}.
+          </me>
+          Now we row reduce, noting that the second row is <m>-i</m> times the first:
+          <me>
+            \mat{i -1; 1 i}
+            \;\xrightarrow{R_2=R_2+iR_1}\;
+            \mat{i -1; 0 0}
+            \;\xrightarrow{R_1=R_1\div i}\;
+            \mat{1 i; 0 0}.
+          </me>
+          The parametric form is <m>x = -iy</m>, so that an eigenvector is <m>v_2 = {-i\choose 1}</m>.
+        </p>
+        <p>
+          We can verify our answers:
+          <me>
+            \begin{split}
+            \mat{1 -1; 1 1}\vec{i 1} \amp= \vec{i-1 i+1} = (1+i)\vec{i 1} \\
+            \mat{1 -1; 1 1}\vec{-i 1} \amp= \vec{-i-1 -i+1} = (1-i)\vec{-i 1}.
+            \end{split}
+          </me>
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <title>A <m>3\times 3</m> matrix</title>
+      <statement>
+        <p>
+          Find the eigenvalues and eigenvectors, real and complex, of the matrix
+          <me>
+            A = \mat{4/5 -3/5 0; 3/5 4/5 0; 1 2 2}.
+          </me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We compute the characteristic polynomial by expanding cofactors along the third row:
+          <me>
+            f(\lambda) = \det\mat{4/5-\lambda, -3/5 0; 3/5 4-5-\lambda, 0; 1 2 2-\lambda}
+            = (2-\lambda)\left(\lambda^2-\frac 85\lambda+1\right).
+          </me>
+          This polynomial has one real root at <m>2</m>, and two complex roots at
+          <me>
+            \lambda = \frac{8/5\pm\sqrt{64/25-4}}2 = \frac{4\pm 3i}5.
+          </me>
+          Therefore, the eigenvalues are
+          <me>
+            \lambda = 2,\quad \frac{4+3i}5,\quad \frac{4-3i}5.
+          </me>
+          We eyeball that <m>v_1 = e_3</m> is an eigenvector with eigenvalue <m>2</m>, since the third column is <m>2e_3</m>.
+        </p>
+        <p>
+          Next we find an eigenvector with eigenvaluue <m>(4+3i)/5</m>.  We have
+          <me>
+A-\frac{4+3i}5I_3 =
+\mat{-3i/5 -3/5 0; 3/5 -3i/5 0;
+1 2 2-(4+3i)/5}
+\;\xrightarrow[R_2=R_2\times5/3]{R_1=R_1\times -5/3}\;
+\mat{i 1 0; 1 -i 0; 1 2 \frac{6-3i}5}.
+          </me>
+          We row reduce, noting that the second row is <m>-i</m> times the first:
+          <me>
+            \begin{split}
+            \mat{i 1 0; 1 -i 0; 1 2 \frac{6-3i}5}
+            \amp\;\xrightarrow[\hbox to 2cm{}]{R_2=R_2+iR_1}\;
+            \mat{i 1 0; 0 0 0; 1 2 \frac{6-3i}5} \\
+            \amp\;\xrightarrow[\hbox to 2cm{}]{R_3=R_3+iR_1}\;
+            \mat{i 1 0; 0 0 0; 0 2+i \frac{6-3i}5} \\
+            \amp\;\xrightarrow[\hbox to 2cm{}]{R_2\longleftrightarrow R_3}\;
+            \mat{i 1 0; 0 2+i \frac{6-3i}5; 0 0 0} \\
+            \amp\;\xrightarrow[\hbox to 2cm{\tiny\hss$R_2=R_2\div (2+i)$\hss}]{R_1=R_1\div i}\;
+            \mat{1 -i 0; 0 1 \frac{9-12i}{25}; 0 0 0} \\
+            \amp\;\xrightarrow[\hbox to 2cm{}]{R_1=R_1+iR_2}\;
+            \mat{1 0 \frac{12+9i}{25}; 0 1 \frac{9-12i}{25}; 0 0 0}.
+          \end{split}
+          </me>
+          The free variable is <m>z</m>; the parametric form of the solution is
+          <me>
+            \syseq{
+            x = -\dfrac{12+9i}{25}z;
+            y = -\dfrac{9-12i}{25}z\rlap.
+            }
+          </me>
+          Taking <m>z=25</m> gives the eigenvector
+          <me>v_2 = \vec{-12-9i -9+12i 25}.</me>
+          A similar calculation (replacing all occurences of <m>i</m> by <m>-i</m>) shows that an eigenvector with eigenvalue <m>(4-3i)/5</m> is
+          <me>v_3 = \vec{-12+9i -9-12i 25}.</me>
+        </p>
+        <p>
+          We can verify our calculations:
+          <me>
+            \begin{split}
+            \mat{4/5 -3/5 0; 3/5 4/5 0; 1 2 2}
+            \vec{-12+9i -9-12i 25} \amp= \vec{-21/5+72i/5 -72/5-21i/5, 20-15i}
+            = \frac{4+3i}5\vec{-12+9i -9-12i 25} \\
+            \mat{4/5 -3/5 0; 3/5 4/5 0; 1 2 2}
+            \vec{-12-9i -9+12i 25} \amp= \vec{-21/5-72i/5 -72/5+21i/5, 20+15i}
+            = \frac{4-3i}5\vec{-12-9i -9+12i 25}. \\
+            \end{split}
+          </me>
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      If <m>A</m> is a matrix with real entries, then its characteristic polynomial has real coefficients, so this <xref ref="cplx-nums-root-pairs"/> implies that its complex eigenvalues come in conjugate pairs.  In the first Example, we notice that
+      <me>
+        \begin{split}
+        1+i \text{ has an eigenvector }
+        \amp v_1 = \vec{i 1} \\
+        1-i \text{ has an eigenvector }
+        \amp v_2 = \vec{-i 1}.
+        \end{split}
+      </me>
+      In the second Example,
+      <me>
+        \begin{split}
+        \frac{4+3i}5 \text{ has an eigenvector }
+        \amp v_1 = \vec{-12-9i -9+12i 25} \\
+        \frac{4-3i}5 \text{ has an eigenvector }
+        \amp v_2 = \vec{-12+9i -9-12i 25}
+        \end{split}
+      </me>
+      In these cases, an eigenvector for the conjugate eigenvalue is simply the conjugate eigenvector.  This is always true; we leave the verification to the reader.
+    </p>
+
+    <warning>
+      <p>
+        Let <m>A</m> be a matrix with real entries.  If
+        <me>
+          \begin{split}
+          \lambda \text{ is a complex eigenvalue with eigenvector } \amp v, \\
+          \text{then } \bar\lambda
+          \text{ is a complex eigenvalue with eigenvector }\amp\bar v.
+          \end{split}
+        </me>
+        In other words, both eigenvalues and eigenvectors come in conjugate pairs.
+      </p>
+    </warning>
+
+    <p>
+      Since it can be tedious to divide by complex numbers while row reducing, it is useful to learn the following trick.
+    </p>
+
+    <note hide-type="true" xml:id="cplx-evals-22-trick">
+      <title>Eigenvector Trick for <m>2\times 2</m> Matrices</title>
+      <p>
+        Let <m>A</m> be a <m>2\times 2</m> matrix, and let <m>\lambda</m> be a (real or complex) eigenvalue.  Then
+        <me>
+          A - \lambda I_2 = \mat{z w; \star, \star}
+          \quad\implies\quad
+          \vec{-w z}
+          \text{ is an eigenvector with eigenvalue } \lambda,
+        </me>
+        assuming the first row of <m>A</m> is nonzero.
+      </p>
+    </note>
+
+    <p>
+      Indeed, since <m>\lambda</m> is an eigenvalue, we know that <m>A-\lambda I_2</m> is not an invertible matrix.  It follows that the rows are collinear (otherwise the determinant is nonzero), so that the second row is automatically a multiple of the first.  Hence we can perform a row replacement
+      <me>
+        \mat{z w; \star, \star} \;\xrightarrow{R_2 = R_2 - ? R_1}\; \mat{z w; 0 0}.
+      </me>
+      It is obvious that <m>{-w\choose z}</m> is in the null space of this matrix, as is <m>{w\choose -z}</m>, for that matter.  Note that we never had to compute the second row of <m>A-\lambda I_2</m>!
+    </p>
+
+    <example xml:id="cplx-evals-eg22-b">
+      <title>A <m>2\times 2</m> matrix, the easy way</title>
+      <statement>
+        <p>
+          Find the complex eigenvalues and eigenvectors of the matrix
+          <me>
+            A = \mat{1 -1; 1 1}.
+          </me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Since the characteristic polynomial of a <m>2\times 2</m> matrix <m>A</m> is <m>f(\lambda) = \lambda^2-\Tr(A)\lambda + \det(A)</m>, its roots are
+          <me>
+            \lambda = \frac{\Tr(A)\pm\sqrt{\Tr(A)^2-4\det(A)}}2
+            = \frac{2\pm\sqrt{4-8}}2 = 1\pm i.
+          </me>
+          To find an eigenvector with eigenvalue <m>1+i</m>, we compute
+          <me>
+            A - (1+i)I_2 = \mat{-i -1; \star, \star}
+            \;\xrightarrow{\text{eigenvector}}\; v_1 = \vec{1 -i}.
+          </me>
+          The eigenvector for the conjugate eigenvalue is the complex conjugate:
+          <me>v_2 = \bar v_1 = \vec{1 i}.</me>
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      In the above Example, note that
+      <me>
+        -i\vec{i 1} = \vec{1 -i} \qquad i\vec{-i 1} = \vec{1 i}.
+      </me>
+      It follows that the eigenvectors computed in the second <xref ref="cplx-evals-eg22-b"/>
+      are compatible with those computed in the first <xref ref="cplx-evals-eg22-a"/>: we are allowed to scale eigenvectors by <em>complex</em> numbers now.
+    </p>
+
+  </subsection>
+
+  <subsection>
+    <title>Rotation-Scaling Matrices</title>
+
+    <p>
+      The most important examples of matrices with complex eigenvalues are rotation-scaling matrices, i.e., scalar multiples of rotation matrices.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+          A <term>rotation-scaling matrix</term> is a <m>2\times 2</m> matrix of the form
+          <me>\mat{a -b; b a},</me>
+          where <m>a</m> and <m>b</m> are real numbers.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The following Proposition justifies the name.
+    </p>
+
+    <proposition xml:id="cplx-eval-rot-scale">
+      <statement>
+        <p>
+          Let
+          <me>A = \mat{a -b; b a}</me>
+          be a rotation-scaling matrix.  Then:
+          <ol>
+            <li>
+              <m>A</m> is a product of a rotation matrix
+              <me>
+                \mat{\cos\theta, -\sin\theta; \sin\theta, \cos\theta}
+                \sptxt{with a scaling matrix}
+                \mat{r 0; 0 r}.
+              </me>
+            </li>
+            <li>
+              The scaling factor <m>r</m> is
+              <me>r = \sqrt{\det(A)} = \sqrt{a^2+b^2}.</me>
+            </li>
+            <li>
+              The rotation angle <m>\theta</m> is the counterclockwise angle from the positive <m>x</m>-axis to the vector <m>{a\choose b}</m>:
+              <latex-code mode="bare">
+                \usetikzlibrary{angles}
+              </latex-code>
+              <latex-code>
+\begin{tikzpicture}
+  \draw[->] (-2.5,0) -- (2.5,0);
+  \draw[->] (0,-.5) -- (0,2);
+  \draw[vector] (0, 0) -- (-2, 1) node[above] {$\vec{a b}$};
+  \coordinate (v) at (-2,1);
+  \coordinate (o) at (0,0);
+  \coordinate (x) at (1,0);
+  \pic[draw, ->, angle radius=.5cm, angle eccentricity=.5] {angle=x--o--v};
+  \node at (.5, .5) {$\theta$};
+\end{tikzpicture}
+              </latex-code>
+            </li>
+            <li>
+              The eigenvalues of <m>A</m> are
+              <m>\lambda = a \pm bi.</m>
+            </li>
+          </ol>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Set <m>r = \sqrt{\det(A)} = \sqrt{a^2+b^2}</m>.  The point <m>(a/r, b/r)</m> has the property that
+          <me>
+            \left(\frac ar\right)^2 + \left(\frac br\right)^2
+            = \frac{a^2+b^2}{r^2} = 1.
+          </me>
+          In other words <m>(a/r,b/r)</m> lies on the unit circle.  Therefore, it has the form <m>(\cos\theta,\sin\theta)</m>, where <m>\theta</m> is the counterclockwise angle from the positive <m>x</m>-axis to the vector <m>{a/r\choose b/r}</m>, or since it is on the same line, to <m>{a\choose b}</m>:
+              <latex-code mode="bare">
+                \usetikzlibrary{angles}
+              </latex-code>
+          <latex-code>
+\begin{tikzpicture}
+  \draw[->] (-2.5,0) -- (2.5,0);
+  \draw[->] (0,-.5) -- (0,2);
+  \draw[help lines, rotate=-10] (1, 0) arc[radius=1, start angle=0, delta angle=200];
+  \draw[vector] (0, 0) -- (-2, 1) node[above] {$\vec{a b}$};
+  \point (B) at ({-2/sqrt(5)}, {1/sqrt(5)});
+  \coordinate (v) at (-2,1);
+  \coordinate (o) at (0,0);
+  \coordinate (x) at (1,0);
+  \pic[draw, ->, angle radius=.5cm, angle eccentricity=.5] {angle=x--o--v};
+  \node at (.5, .5) {$\theta$};
+  \node[left, inner xsep=1pt] (A) at (-1.5, .3) {$(a/r, b/r)$};
+  \draw[thin, shorten >=1pt] (A.east) -- (B);
+  \node[right] at (1.75, 1.25)
+    {$\vec{a/r b/r} = \vec{\cos\theta, \sin\theta}$.};
+\end{tikzpicture}
+          </latex-code>
+          It follows that
+          <me>
+            A = r\mat{a/r -b/r; b/r a/r}
+            = \mat{r 0; 0 r}\mat{\cos\theta, -\sin\theta; \sin\theta, \cos\theta},
+          </me>
+          as desired.
+        </p>
+        <p>
+          For the last statement, we compute the eigenvalues of <m>A</m> as the roots of the characteristic polynomial:
+          <me>
+            \lambda = \frac{\Tr(A)\pm\sqrt{\Tr(A)^2-4\det(A)}}2
+            = \frac{2a\pm\sqrt{4a^2-4(a^2+b^2)}}2
+            = a\pm bi.
+          </me>
+        </p>
+      </proof>
+    </proposition>
+
+    <p>
+      Geometrically, a rotation-scaling matrix does exactly what the name says: it rotates and scales (in either order).
+    </p>
+
+    <example xml:id="cplx-evals-rot-scale-1">
+      <title>A rotation-scaling matrix</title>
+      <statement>
+        <p>
+          What does the matrix
+          <me>
+            A = \mat{1 -1; 1 1}
+          </me>
+          do geometrically?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          This is a rotation-scaling matrix with <m>a=b=1</m>.  Therefore, it scales by a factor of <m>\sqrt{\det(A)} = \sqrt 2</m> and rotates counterclockwise by <m>45^\circ</m>:
+          <latex-code mode="bare">
+            \usetikzlibrary{angles}
+          </latex-code>
+          <latex-code>
+\begin{tikzpicture}
+  \draw[->] (-.5,0) -- (2.5,0);
+  \draw[->] (0,-.5) -- (0,2);
+  \coordinate (v) at (1,1);
+  \draw[vector] (0, 0) -- (v) node[right] {$\vec{1 1}$};
+  \coordinate (o) at (0,0);
+  \coordinate (x) at (1,0);
+  \pic[draw, ->, "$45^\circ$", angle radius=1cm, angle eccentricity=.67] {angle=x--o--v};
+\end{tikzpicture}
+          </latex-code>
+          Here is a picture of <m>A</m>:
+          <latex-code>
+\def\theo{\includegraphics[width=3.7cm]{theo5.jpg}}
+\begin{tikzpicture}[scale=1.3]
+  \begin{scope}
+    \clip (0,0) circle[radius=1];
+    \node[circle, scale=1/sqrt(2)] (theo1) at (0,0) {\theo};
+  \end{scope}
+
+  \begin{scope}[opacity=.6, black!95]
+    \draw[->] (-1.3,0) -- (1.3,0) node[coordinate] (l) {};
+    \draw[->] (0,-1.3) -- (0,1.3);
+  \end{scope}
+  \draw[->,red] (1.1,0) arc[radius=1.1,start angle=0,delta angle=45];
+
+  \begin{scope}[xshift=7cm]
+    \begin{scope}
+      \clip (0,0) circle[radius=sqrt(2)];
+      \node[circle, rotate=45] (theo2) at (0,0) {\theo};
+    \end{scope}
+
+    \begin{scope}[opacity=.6, black!95]
+      \draw[->] (-1.3,0) node[coordinate] (r) {} -- (1.3,0);
+      \draw[->] (0,-1.3) -- (0,1.3);
+    \end{scope}
+  \end{scope}
+
+  \draw[->, thick] ($(l)+(3mm,3mm)$) to[bend left]
+    node[midway,above] {$A$}
+    node[midway,below=.5cm,align=center]
+    {rotate by $45^\circ$\\scale by $\sqrt 2$}
+    ($(r)+(-3mm,3mm)$);
+
+\end{tikzpicture}
+          </latex-code>
+          An interactive figure is included below.
+        </p>
+      <figure>
+        <caption>Multiplication by the matrix <m>A</m> rotates the plane by <m>45^\circ</m> and dilates by a factor of <m>\sqrt 2</m>.  Move the input vector <m>x</m> to see how the output vector <m>b</m> changes.</caption>
+        <mathbox source="demos/twobytwo.html?mat=1,-1,1,1&amp;closed=true&amp;pic=theo5.jpg" height="500px"/>
+      </figure>
+      </solution>
+    </example>
+
+    <example xml:id="cplx-evals-rot-scale-2">
+      <title>A rotation-scaling matrix</title>
+      <statement>
+        <p>
+          What does the matrix
+          <me>
+            A = \mat{-\sqrt3 -1; 1 -\sqrt3}
+          </me>
+          do geometrically?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          This is a rotation-scaling matrix with <m>a=-\sqrt3</m> and <m>b=1</m>.  Therefore, it scales by a factor of <m>\sqrt{\det(A)}=\sqrt{3+1}=2</m> and rotates counterclockwise by the angle <m>\theta</m> in the picture:
+          <latex-code mode="bare">
+            \usetikzlibrary{angles}
+          </latex-code>
+          <latex-code>
+\begin{tikzpicture}[thin border nodes]
+  \draw[->] (-2.5,0) -- (2.5,0);
+  \draw[->] (0,-.5) -- (0,2);
+  \coordinate (v) at ({-sqrt(3)}, 1);
+  \draw[vector] (0, 0) -- (v) node[above] {$\vec{-\sqrt 3 1}$};
+  \coordinate (o) at (0,0);
+  \coordinate (x) at (1,0);
+  \pic[draw, ->, angle radius=.5cm] {angle=x--o--v};
+  \node at (.5, .5) {$\theta$};
+\end{tikzpicture}
+          </latex-code>
+          To compute this angle, we do a bit of trigonometry:
+          <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1.3]
+  \draw[->] (-2.5,0) -- (1.75,0);
+  \draw[->] (0,-.5) -- (0,2);
+  \coordinate (v) at ({-sqrt(3)}, 1);
+  \draw[vector] (0, 0) -- (v) node[above] {$\vec{-\sqrt 3 1}$};
+  \coordinate (o) at (0,0);
+  \coordinate (x) at (1,0);
+  \pic[draw, ->, angle radius=.5cm] {angle=x--o--v};
+  \node at (.5, .5) {$\theta$};
+  \coordinate (r) at ({-sqrt(3)}, 0);
+  \draw (v) -- node[left] {$1$} (r);
+  \node[below] at ($1/2*(r)$) {$\sqrt 3$};
+  \coordinate (xx) at (-1,0);
+  \pic[draw, "$\varphi$", angle radius=.7cm, angle eccentricity=1.3] {angle=v--o--xx};
+  \pic[draw] {right angle=(o)--(r)--(v)};
+  \node[right, align=left] at (2,.75) {
+    $\varphi = \tan\inv\left(\dfrac1{\sqrt 3}\right) = \dfrac\pi6$\\[1mm]
+    $\theta = \pi - \varphi = \dfrac{5\pi}6.$
+  };
+\end{tikzpicture}
+          </latex-code>
+          Therefore, <m>A</m> rotates counterclockwise by <m>5\pi/6</m> and scales by a factor of <m>2</m>.
+          <latex-code>
+\def\theo{\includegraphics[width=6cm]{theo1.jpg}}
+\begin{tikzpicture}[scale=1.3]
+  \begin{scope}
+    \clip (0,0) circle[radius=1];
+    \node[circle, scale=1/sqrt(2)] (theo1) at (0,0) {\theo};
+  \end{scope}
+
+  \begin{scope}[opacity=.6, black!95]
+    \draw[->] (-1.3,0) -- (1.3,0) node[coordinate] (l) {};
+    \draw[->] (0,-1.3) -- (0,1.3);
+  \end{scope}
+  \draw[->,red] (1.1,0) arc[radius=1.1,start angle=0,delta angle=150];
+
+  \begin{scope}[xshift=7cm]
+    \begin{scope}
+      \clip (0,0) circle[radius=2];
+      \node[circle, rotate=150, scale=sqrt(2)] (theo2) at (0,0) {\theo};
+    \end{scope}
+
+    \begin{scope}[opacity=.6, black!95]
+      \draw[->] (-1.3,0) node[coordinate] (r) {} -- (1.3,0);
+      \draw[->] (0,-1.3) -- (0,1.3);
+    \end{scope}
+  \end{scope}
+
+  \draw[->, thick] ($(l)+(3mm,3mm)$) to[bend left]
+    node[midway,above] {$A$}
+    node[midway,below=.3cm,align=center]
+    {rotate by $\dfrac{5\pi}6$\\[1mm]scale by $2$}
+    ($(r)+(-9mm,3mm)$);
+
+\end{tikzpicture}
+          </latex-code>
+          An interactive figure is included below.
+        </p>
+      <figure>
+        <caption>Multiplication by the matrix <m>A</m> rotates the plane by <m>5\pi/6</m> and dilates by a factor of <m>2</m>.  Move the input vector <m>x</m> to see how the output vector <m>b</m> changes.</caption>
+        <mathbox source="demos/twobytwo.html?mat=-sqrt(3),-1,1,-sqrt(3)&amp;closed=true&amp;pic=theo1.jpg" height="500px"/>
+      </figure>
+      </solution>
+    </example>
+
+    <p>
+      The matrix in the second Example has second column <m>{-\sqrt 3\choose 1}</m>, which is rotated counterclockwise from the positive <m>x</m>-axis by an angle of <m>5\pi/6</m>.  This rotation angle is <em>not</em> equal to
+      <m>\tan\inv(1/(-\sqrt3)) = -\frac\pi 6.</m>
+      The problem is that arctan always outputs values in <m>(-\pi/2,\pi/2)</m>: it does not account for points in the second or third quadrants.  This is why we drew a triangle and used its (positive) edge lengths to compute the angle <m>\varphi</m>:
+      <latex-code mode="bare">
+        \usetikzlibrary{angles}
+      </latex-code>
+      <latex-code>
+\begin{tikzpicture}[thin border nodes, scale=1.3]
+  \draw[->] (-2.5,0) -- (1.75,0);
+  \draw[->] (0,-.5) -- (0,2);
+  \coordinate (v) at ({-sqrt(3)}, 1);
+  \draw[vector] (0, 0) -- (v) node[above] {$\vec{-\sqrt 3 1}$};
+  \coordinate (o) at (0,0);
+  \coordinate (x) at (1,0);
+  \pic[draw, ->, angle radius=.5cm] {angle=x--o--v};
+  \node at (.5, .5) {$\theta$};
+  \coordinate (r) at ({-sqrt(3)}, 0);
+  \draw (v) -- node[left] {$1$} (r);
+  \node[below] at ($1/2*(r)$) {$\sqrt 3$};
+  \coordinate (xx) at (-1,0);
+  \pic[draw, "$\varphi$", angle radius=.7cm, angle eccentricity=1.3] {angle=v--o--xx};
+  \pic[draw] {right angle=(o)--(r)--(v)};
+  \node[right, align=left] at (2,.75) {
+    $\varphi = \tan\inv\left(\dfrac1{\sqrt 3}\right) = \dfrac\pi6$\\[1mm]
+    $\theta = \pi - \varphi = \dfrac{5\pi}6.$
+  };
+\end{tikzpicture}
+      </latex-code>
+      Alternatively, we could have observed that <m>{-\sqrt 3\choose 1}</m> lies in the second quadrant, so that the angle <m>\theta</m> in question is
+      <me>\theta = \tan\inv\left(\frac1{-\sqrt3}\right) + \pi.</me>
+    </p>
+
+    <warning>
+      <p>
+        When finding the rotation angle of a vector <m>{a\choose b}</m>, do not blindly compute <m>\tan\inv(b/a)</m>, since this will give the wrong answer when <m>{a\choose b}</m> is in the second or third quadrant.  Instead, draw a picture.
+      </p>
+    </warning>
+
+  </subsection>
+
+  <subsection>
+    <title>Geometry of <m>2\times 2</m> Matrices with a Complex Eigenvalue</title>
+
+    <p>
+      Let <m>A</m> be a <m>2\times 2</m> matrix with a complex, non-real eigenvalue <m>\lambda</m>.  Then <m>A</m> also has the eigenvalue <m>\bar\lambda\neq\lambda</m>.  In particular, <m>A</m> has distinct eigenvalues, so it is diagonalizable over the complex numbers.  However, the following construction is generally more useful, as it only deals with matrices with <em>real</em> entries.
+    </p>
+
+    <theorem type-name="Rotation-Scaling Theorem" xml:id="cplx-diagonalization-thm">
+      <statement>
+        <p>
+          Let <m>A</m> be a <m>2\times 2</m> real matrix with a complex (non-real) eigenvalue <m>\lambda</m>, and let <m>v</m> be an eigenvector.  Then <m>A = CBC\inv</m> for
+          <me>
+            C = \mat{| |; \Re(v) \Im(v); | |}
+            \sptxt{and}
+            B = \mat{\Re(\lambda) \Im(\lambda); -\Im(\lambda) \Re(\lambda)}.
+          </me>
+          In particular, <m>A</m> is similar to a rotation-scaling matrix that scales by a factor of <m>|\lambda| = \sqrt{\det(B)}.</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          First we need to show that <m>\Re(v)</m> and <m>\Im(v)</m> are linearly independent, since otherwise <m>C</m> is not invertible.  If not, then there exist real numbers <m>x,y,</m> not both equal to zero, such that <m>x\Re(v) + y\Im(v) = 0</m>.  Then
+          <me>
+            \begin{split}
+            (y+ix)v \amp= (y+ix)\bigl(\Re(v)+i\Im(v)\bigr) \\
+            \amp= y\Re(v) - x\Im(v) + \left(x\Re(v) + y\Im(v)\right)i \\
+            \amp= y\Re(v) - x\Im(v).
+            \end{split}
+          </me>
+          Now, <m>(y+ix)v</m> is also an eigenvector of <m>A</m> with eigenvalue <m>\lambda</m>.  But we just showed that <m>(y+ix)v</m> is a vector with real entries, and any <em>real</em> eigenvector of a real matrix has a real eigenvalue.  Therefore, <m>\Re(v)</m> and <m>\Im(v)</m> must be linearly independent after all.
+        </p>
+        <p>
+          Let <m>\lambda = a+bi</m> and <m>v = {x+yi\choose z+wi}</m>.  We observe that
+          <me>
+            \begin{split}
+            Av = \lambda v \amp= (a+bi)\vec{x+yi z+wi} \\
+            \amp= \vec{(ax-by)+(ay+bx)i (az-bw)+(aw+bz)i} \\
+            \amp= \vec{ax-by az-bw} + i\vec{ay+bx aw+bz}.
+            \end{split}
+          </me>
+          On the other hand, we have
+          <me>
+            A\left(\vec{x z} + i\vec{y w}\right)
+            = A\vec{x z} + iA\vec{y w}
+            = A\Re(v) + iA\Im(v).
+          </me>
+          Matching real and imaginary parts gives
+          <me>
+            A\Re(v) = \vec{ax-by az-bw} \qquad
+            A\Im(v) = \vec{ay+bx aw+bz}.
+          </me>
+        </p>
+        <p>
+          Now we compute <m>CBC\inv\Re(v)</m> and <m>CBC\inv\Im(v)</m>.  Since <m>Ce_1 = \Re(v)</m> and <m>Ce_2 = \Im(v)</m>, we have <m>C\inv\Re(v) = e_1</m> and <m>C\inv\Im(v)=e_2</m>, so
+          <me>
+            \begin{split}
+            CBC\inv\Re(v) \amp= CBe_1 = C\vec{a -b} = a\Re(v)-b\Im(v) \\
+            \amp= a\vec{x z} - b\vec{y w}
+            = \vec{ax-by az-bw} = A\Re(v) \\
+            CBC\inv\Im(v) \amp= CBe_2 = C\vec{b a} = b\Re(v)+a\Im(v) \\
+            \amp= b\vec{x z} + a\vec{y w}
+            = \vec{ay+bx aw+bz} = A\Im(v).
+            \end{split}
+          </me>
+          Therefore, <m>A\Re(v) = CBC\inv\Re(v)</m> and <m>A\Im(v) = CBC\inv\Im(v)</m>.
+        </p>
+        <p>
+          Since <m>\Re(v)</m> and <m>\Im(v)</m> are linearly independent, they form a basis for <m>\R^2</m>.  Let <m>w</m> be any vector in <m>\R^2</m>, and write <m>w = c\Re(v) + d\Im(v)</m>.  Then
+          <me>
+            \begin{split}
+            Aw \amp= A\bigl(c\Re(v) + d\Im(v)\bigr) \\
+            \amp= cA\Re(v) + dA\Im(v) \\
+            \amp= cCBC\inv\Re(v) + dCBC\inv\Im(v) \\
+            \amp= CBC\inv\bigl(c\Re(v) + d\Im(v)\bigr) \\
+            \amp= CBC\inv w.
+            \end{split}
+          </me>
+          This proves that <m>A = CBC\inv</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      Here <m>\Re</m> and <m>\Im</m> denote the real and imaginary parts, respectively:
+      <me>
+        \Re(a+bi) = a \quad \Im(a+bi) = b \quad
+        \Re\vec{x+yi z+wi} = \vec{x z} \quad
+        \Im\vec{x+yi z+wi} = \vec{y w}.
+      </me>
+      The rotation-scaling matrix in question is the matrix
+      <me>
+        B = \mat{a -b; b a} \sptxt{with} a = \Re(\lambda),\; b = -\Im(\lambda).
+      </me>
+      One should regard the <xref ref="cplx-diagonalization-thm"/> as a close analogue of the <xref ref="diagonalization-thm"/>, with a rotation-scaling matrix playing the role of a diagonal matrix.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          What does the matrix
+          <me>
+            A = \mat{2 -1; 2 0}
+          </me>
+          do geometrically?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The eigenvalues of <m>A</m> are
+          <me>
+            \lambda = \frac{\Tr(A) \pm \sqrt{\Tr(A)^2-4\det(A)}}2
+            = \frac{2\pm\sqrt{4-8}}2 = 1\pm i.
+          </me>
+          We choose the eigenvalue <m>\lambda = 1-i</m> and find a corresponding eigenvector, using the <xref ref="cplx-evals-22-trick">trick</xref>:
+          <me>
+            A - (1-i)I_2 = \mat{1+i -1; \star, \star}
+            \;\xrightarrow{\text{eigenvector}}\;
+            v = \vec{1 1+i}.
+          </me>
+          According to the <xref ref="cplx-diagonalization-thm"/>, we have <m>A=CBC\inv</m> for
+          <me>
+            \begin{split}
+            C \amp= \mat{\Re\vec{1 1+i} \Im\vec{1 1+i}} = \mat{1 0; 1 1} \\
+            B \amp= \mat{\Re(\lambda) \Im(\lambda); -\Im(\lambda) \Re(\lambda)}
+            = \mat{1 -1; 1 1}.
+            \end{split}
+          </me>
+          The matrix <m>B</m> is the rotation-scaling matrix in the above <xref ref="cplx-evals-rot-scale-1"/>: it rotates counterclockwise by an angle of <m>45^\circ</m> and scales by a factor of <m>\sqrt 2</m>.  The matrix <m>A</m> does the same thing, but with respect to the <m>\Re(v),\Im(v)</m>-coordinate system:
+          <latex-code><![CDATA[
+\def\theo{\includegraphics[width=3.8cm]{theo5.jpg}}
+\def\theoi{\includegraphics[width=2.92cm]{theo5.jpg}}
+\begin{tikzpicture}[scale=1.3]
+  \begin{scope}
+    \clip (0,0) circle[radius=1];
+    \node[circle, scale=1/sqrt(2)] at (0,0) {\theo};
+  \end{scope}
+
+  \begin{scope}[opacity=.6, black!95]
+    \draw[->] (-1.3,0) -- (1.3,0) node[coordinate] (l) {};
+    \draw[->] (0,-1.3) -- (0,1.3);
+  \end{scope}
+  \draw[->,red] (1.1,0) arc[radius=1.1,start angle=0,delta angle=45];
+
+  \begin{scope}[xshift=7cm]
+    \begin{scope}
+      \clip (0,0) circle[radius=sqrt(2)];
+      \node[circle, rotate=45] at (0,0) {\theo};
+    \end{scope}
+
+    \begin{scope}[opacity=.6, black!95]
+      \draw[->] (-1.3,0) node[coordinate] (r) {} -- (1.3,0);
+      \draw[->] (0,-1.3) -- (0,1.3);
+    \end{scope}
+
+    \coordinate (d2) at (0, -1.3);
+  \end{scope}
+
+  \coordinate (d1) at (0,-1.3);
+
+  \draw[->, thick] ($(l)+(3mm,3mm)$) to[bend left]
+    node[midway,above] {$B$}
+    node[midway,below=.3cm,align=center]
+    {rotate by $45^\circ$\\scale by $\sqrt 2$}
+    ($(r)+(-3mm,3mm)$);
+
+  \begin{scope}[yshift=-5cm]
+    \begin{scope}[cm={1,1,0,1,(0,0)}]
+      \draw[->,red] (1.1,0) arc[radius=1.1,start angle=0,delta angle=45];
+      \begin{scope}
+        \clip (0,0) circle[radius=1];
+        \node[circle, scale=1/sqrt(2), transform shape] at (0,0) {\theoi};
+      \end{scope}
+      \begin{scope}[opacity=.6, black!95]
+        \draw[->] (-1.3,0) -- (1.3,0);
+        \draw[->] (0,-1.3) -- (0,1.3);
+      \end{scope}
+    \end{scope}
+
+    \coordinate (l2) at (1.3, 0);
+    \coordinate (u1) at (0,1.3);
+
+    \begin{scope}[xshift=7cm]
+      \begin{scope}[cm={1,1,0,1,(0,0)}]
+        \begin{scope}
+          \clip (0,0) circle[radius=sqrt(2)];
+          \node[circle, rotate=45, transform shape] at (0,0) {\theoi};
+        \end{scope}
+        \begin{scope}[opacity=.6, black!95]
+          \draw[->] (-1.3,0) -- (1.3,0);
+          \draw[->] (0,-1.3) -- (0,1.3);
+        \end{scope}
+      \end{scope}
+
+      \coordinate (r2) at (-1.3, 0);
+      \coordinate (u2) at (0,1.3);
+
+    \end{scope}
+
+    \draw[->, thick] ($(l2)+(3mm,-3mm)$) to[bend right]
+      node[midway,below] {$A$}
+      node[midway,above=.3cm,align=center]
+      {rotate by $45^\circ$\\``around an ellipse''\\scale by $\sqrt 2$}
+      ($(r2)+(-3mm,-3mm)$);
+
+    \draw[->, thick, shorten=5mm] (u1) to[bend left] node[left] {$C\inv$} (d1);
+    \draw[<-, thick, shorten=5mm] (u2) to[bend right] node[right] {$C$} (d2);
+
+  \end{scope}
+
+\end{tikzpicture}
+]]>
+          </latex-code>
+          To summarize:
+          <ul>
+            <li>
+              <m>B</m> rotates around the circle centered at the origin and passing through <m>e_1</m> and <m>e_2</m>, in the direction from <m>e_1</m> to <m>e_2</m>, then scales by <m>\sqrt 2</m>.
+            </li>
+            <li>
+              <m>A</m> rotates around the ellipse centered at the origin and passing through <m>\Re(v)</m> and <m>\Im(v)</m>, in the direction from <m>\Re(v)</m> to <m>\Im(v)</m>, then scales by <m>\sqrt 2</m>.
+            </li>
+          </ul>
+          The reader might want to refer back to this <xref ref="similarity-eg-rotation"/>.
+        </p>
+        <figure>
+          <caption>The geometric action of <m>A</m> and <m>B</m> on the plane.  Click <q>iterate</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
+          <mathbox source="demos/similarity.html?B=1,-1:1,1&amp;C=1,0:1,1&amp;snap=off&amp;dynamics=on&amp;motion=rotateScale&amp;reference=circle" height="600px"/>
+        </figure>
+        <p>
+          If instead we had chosen <m>\bar\lambda = 1+i</m> as our eigenvalue, then we would have found the eigenvector <m>\bar v = {1\choose 1-i}</m>.  In this case we would have <m>A=C'B'(C')\inv</m>, where
+          <me>
+            \begin{split}
+            C' \amp= \mat{\Re\vec{1 1-i} \Im\vec{1 1-i}} = \mat{1 0; 1 -1} \\
+            B' \amp= \mat{\Re(\bar\lambda) \Im(\bar\lambda);
+                         -\Im(\bar\lambda) \Re(\bar\lambda)}
+            = \mat{1 1; -1 1}.
+            \end{split}
+          </me>
+          So, <m>A</m> is also similar to a <em>clockwise</em> rotation by <m>45^\circ</m>, followed by a scale by <m>\sqrt 2</m>.
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <statement>
+        <p>
+          What does the matrix
+          <me>
+            A = \mat{-\sqrt3+1 -2; 1 -\sqrt3-1}
+          </me>
+          do geometrically?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The eigenvalues of <m>A</m> are
+          <me>
+            \lambda = \frac{\Tr(A) \pm \sqrt{\Tr(A)^2-4\det(A)}}2
+            = \frac{-2\sqrt 3\pm\sqrt{12-16}}2 = -\sqrt3\pm i.
+          </me>
+          We choose the eigenvalue <m>\lambda = -\sqrt3-i</m> and find a corresponding eigenvector, using the <xref ref="cplx-evals-22-trick">trick</xref>:
+          <me>
+            A - (-\sqrt3-i)I_2 = \mat{1+i -2; \star, \star}
+            \;\xrightarrow{\text{eigenvector}}\;
+            v = \vec{2 1+i}.
+          </me>
+          According to the <xref ref="cplx-diagonalization-thm"/>, we have <m>A=CBC\inv</m> for
+          <me>
+            \begin{split}
+            C \amp= \mat{\Re\vec{2 1+i} \Im\vec{2 1+i}} = \mat{2 0; 1 1} \\
+            B \amp= \mat{\Re(\lambda) \Im(\lambda); -\Im(\lambda) \Re(\lambda)}
+            = \mat{-\sqrt3 -1; 1 -\sqrt3}.
+            \end{split}
+          </me>
+          The matrix <m>B</m> is the rotation-scaling matrix in the above <xref ref="cplx-evals-rot-scale-2"/>: it rotates counterclockwise by an angle of <m>5\pi/6</m> and scales by a factor of <m>2</m>.  The matrix <m>A</m> does the same thing, but with respect to the <m>\Re(v),\Im(v)</m>-coordinate system:
+          <latex-code><![CDATA[
+\def\theo{\includegraphics[width=6cm]{theo1.jpg}}
+\def\theoi{\includegraphics[width=4.615cm]{theo1.jpg}}
+\begin{tikzpicture}[scale=1.3]
+  \begin{scope}[scale={1/sqrt(2)}]
+    \clip (0,0) circle[radius=1];
+    \node[circle, scale=1/sqrt(2), transform shape] at (0,0) {\theoi};
+  \end{scope}
+
+  \begin{scope}[opacity=.6, black!95]
+    \draw[->] (-1.3,0) -- (1.3,0) node[coordinate] (l) {};
+    \draw[->] (0,-1.3) -- (0,1.3);
+  \end{scope}
+  \draw[->,red] ({1/sqrt(2)+.1},0) arc[radius={1/sqrt(2)+.1},start angle=0,delta angle=150];
+
+  \begin{scope}[xshift=6cm]
+    \begin{scope}
+      \clip (0,0) circle[radius=sqrt(2)];
+      \node[circle, rotate=150] at (0,0) {\theo};
+    \end{scope}
+
+    \begin{scope}[opacity=.6, black!95]
+      \draw[->] (-1.3,0) node[coordinate] (r) {} -- (1.3,0);
+      \draw[->] (0,-1.3) -- (0,1.3);
+    \end{scope}
+
+    \coordinate (d2) at (0, -1.3);
+  \end{scope}
+
+  \coordinate (d1) at (0,-1.3);
+
+  \draw[->, thick] ($(l)+(3mm,3mm)$) to[bend left]
+    node[midway,above] {$B$}
+    node[midway,below=.3cm,align=center]
+    {rotate by $5\pi/6$\\scale by $2$}
+    ($(r)+(-3mm,3mm)$);
+
+  \begin{scope}[yshift=-5cm]
+    \begin{scope}[cm={2,1,0,1,(0,0)}]
+      \draw[->,red] ({1/sqrt(2)+.1},0)
+        arc[radius={1/sqrt(2)+.1},start angle=0,delta angle=150];
+      \begin{scope}[scale={1/sqrt(2)}]
+        \clip (0,0) circle[radius=1];
+        \node[circle, scale=1/sqrt(2), transform shape] at (0,0) {\theoi};
+      \end{scope}
+      \begin{scope}[opacity=.6, black!95]
+        \draw[->] (-.8,0) -- (1.3,0);
+        \draw[->] (0,-1.3) -- (0,1.3);
+      \end{scope}
+    \end{scope}
+
+    \coordinate (l2) at (1.3, 0);
+    \coordinate (u1) at (0,1.3);
+
+    \begin{scope}[xshift=6cm]
+      \begin{scope}[cm={2,1,0,1,(0,0)}]
+        \begin{scope}
+          \clip (0,0) circle[radius=sqrt(2)];
+          \node[circle, rotate=150, transform shape] at (0,0) {\theoi};
+        \end{scope}
+        \begin{scope}[opacity=.6, black!95]
+          \draw[->] (-1.3,0) -- (1.3,0);
+          \draw[->] (0,-1.3) -- (0,1.3);
+        \end{scope}
+      \end{scope}
+
+      \coordinate (r2) at (-1.3, 0);
+      \coordinate (u2) at (0,1.3);
+
+    \end{scope}
+
+    \draw[->, thick] ($(l2)+(3mm,-3mm)$) to[bend right]
+      node[midway,below] {$A$}
+      node[midway,above=.3cm,align=center]
+      {rotate by $5\pi/6$\\``around an ellipse''\\scale by $2$}
+      ($(r2)+(-3mm,-3mm)$);
+
+    \draw[->, thick, shorten=5mm] (u1) to[bend left] node[left] {$C\inv$} (d1);
+    \draw[<-, thick, shorten=5mm] (u2) to[bend right] node[right] {$C$} (d2);
+
+  \end{scope}
+
+\end{tikzpicture}
+          ]]>
+          </latex-code>
+          To summarize:
+          <ul>
+            <li>
+              <m>B</m> rotates around the circle centered at the origin and passing through <m>e_1</m> and <m>e_2</m>, in the direction from <m>e_1</m> to <m>e_2</m>, then scales by <m>2</m>.
+            </li>
+            <li>
+              <m>A</m> rotates around the ellipse centered at the origin and passing through <m>\Re(v)</m> and <m>\Im(v)</m>, in the direction from <m>\Re(v)</m> to <m>\Im(v)</m>, then scales by <m>2</m>.
+            </li>
+          </ul>
+          The reader might want to refer back to this <xref ref="similarity-eg-rotation"/>.
+        </p>
+        <figure>
+          <caption>The geometric action of <m>A</m> and <m>B</m> on the plane.  Click <q>iterate</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
+          <mathbox source="demos/similarity.html?B=-sqrt(3),-1:1,-sqrt(3)&amp;C=2,0:1,1&amp;snap=off&amp;dynamics=on&amp;motion=rotateScale&amp;reference=circle&amp;dur=2" height="600px"/>
+        </figure>
+        <p>
+          If instead we had chosen <m>\bar\lambda = -\sqrt3-i</m> as our eigenvalue, then we would have found the eigenvector <m>\bar v = {2\choose 1-i}</m>.  In this case we would have <m>A=C'B'(C')\inv</m>, where
+          <me>
+            \begin{split}
+            C' \amp= \mat{\Re\vec{2 1-i} \Im\vec{2 1-i}} = \mat{2 0; 1 -1} \\
+            B' \amp= \mat{\Re(\bar\lambda) \Im(\bar\lambda);
+                         -\Im(\bar\lambda) \Re(\bar\lambda)}
+            = \mat{-\sqrt3 1; -1 -\sqrt3}.
+            \end{split}
+          </me>
+          So, <m>A</m> is also similar to a <em>clockwise</em> rotation by <m>5\pi/6</m>, followed by a scale by <m>2</m>.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      We saw in the above Examples that the <xref ref="cplx-diagonalization-thm"/> can be applied in two different ways to any given matrix: one has to choose one of the two conjugate eigenvalues to work with.  Replacing <m>\lambda</m> by <m>\bar\lambda</m> has the effect of replacing <m>v</m> by <m>\bar v</m>, which just negates all imaginary parts, so we also have <m>A=C'B'(C')\inv</m> for
+      <me>
+        C' = \mat{| |; \Re(v) -\Im(v); | |}
+        \sptxt{and}
+        B' = \mat{\Re(\lambda) -\Im(\lambda); \Im(\lambda) \Re(\lambda)}.
+      </me>
+      The matrices <m>B</m> and <m>B'</m> are similar to each other.  The only difference between them is the direction of rotation, since <m>{\Re(\lambda)\choose -\Im(\lambda)}</m> and <m>{\Re(\lambda)\choose \Im(\lambda)}</m> are mirror images of each other over the <m>x</m>-axis:
+      <latex-code mode="bare">
+        \usetikzlibrary{angles}
+      </latex-code>
+      <latex-code><![CDATA[
+\begin{tikzpicture}
+  \draw[->] (-2.5,0) -- (2.5,0);
+  \draw[->] (0,-1.5) -- (0,1.5);
+  \draw[vector] (0, 0) -- (-2, 1) node[left] {$\vec{\Re(\lambda) \Im(\lambda)}$};
+  \coordinate (v) at (-2,1);
+  \coordinate (o) at (0,0);
+  \coordinate (x) at (1,0);
+  \pic[draw, ->, angle radius=.5cm] {angle=x--o--v};
+  \node at (.5, .5) {$\theta$};
+  \draw[vector] (0, 0) -- (-2, -1) node[left] {$\vec{\Re(\lambda) -\Im(\lambda)}$};
+  \coordinate (vv) at (-2,-1);
+  \pic[draw, <-, angle radius=.6cm] {angle=vv--o--x};
+  \node at (.6, -.6) {$-\theta$};
+\end{tikzpicture}
+      ]]></latex-code>
+    </p>
+
+    <p>
+      The discussion that follows is closely analogous to the exposition in this <xref ref="diag-ss-geometry"/>, in which we studied the dynamics of diagonalizable <m>2\times 2</m> matrices.
+    </p>
+
+    <note hide-type="true">
+      <title>Dynamics of a <m>2\times 2</m> Matrix with a Complex Eigenvalue</title>
+      <p>
+        Let <m>A</m> be a <m>2\times 2</m> matrix with a complex (non-real) eigenvalue <m>\lambda</m>.  By the <xref ref="cplx-diagonalization-thm"/>, the matrix <m>A</m> is similar to a matrix that rotates by some amount and scales by <m>|\lambda|</m>.  Hence, <m>A</m> rotates around an ellipse and scales by <m>|\lambda|</m>.  There are three different cases.
+      </p>
+      <p>
+        <m>\color{seq-red}|\lambda| > 1</m>: when the scaling factor is greater than <m>1</m>, then vectors tend to get longer, i.e., farther from the origin.  In this case, repeatedly multiplying a vector by <m>A</m> makes the vector <q>spiral out</q>.  For example,
+        <me>
+          A = \frac 1{\sqrt 2}\mat{\sqrt3+1 -2; 1 \sqrt3-1}
+          \qquad
+          \lambda = \frac{\sqrt3-i}{\sqrt 2}
+          \qquad
+          |\lambda| = \sqrt 2 > 1
+        </me>
+        gives rise to the following picture:
+        <latex-code><![CDATA[
+\pgfmathsetmacro{\sqrtii}{sqrt(2)}
+\begin{tikzpicture}[scale=1, samples at={0,.25,...,4.25},
+    smooth, tension=.5, thin border nodes=2pt]
+  \draw[dashed, cm={1,1,-1,0,(0,0)}] (0,0) ellipse[radius=10/4];
+  \draw[->, very thin] (-4,0) -- (4,0);
+  \draw[->, very thin] (0,-4) -- (0,4);
+  \begin{scope}[cm={1,1,-1,0,(0,0)}, <->/.tip={Stealth}]
+  \foreach \rot in {0,60,...,359} {
+    \draw[seq-blue,rotate=\rot]
+      plot ({\sqrtii^\x*cos(\x*30)},{\sqrtii^\x*sin(\x*30)});
+    % Can't use decorations.markings for this; it exceeds TeX's limited
+    % capacity for numerical calculations.
+    \foreach \x in {0,3,4.25} {
+      \draw[seq-blue,->,rotate=\rot]
+        ({\sqrtii^\x*cos(\x*30)},{\sqrtii^\x*sin(\x*30)}) --
+        ({\sqrtii^(\x+.1)*cos((\x+.1)*30)},{\sqrtii^(\x+.1)*sin((\x+.1)*30)});
+    }
+  }
+  \foreach \x in {0,1,2,3} {
+    \pgfmathsetmacro{\y}{\x+1.1}
+    \coordinate (v\x) at ({\sqrtii^\y*cos(\y*30+180)},{\sqrtii^\y*sin(\y*30+180)});
+    \draw[vector,seq-green] (0,0) -- (v\x)
+      node[point,seq-green,scale=.5] {};
+  }
+  \end{scope}
+  \foreach \x in {0,1,2,3} {
+    \pgfmathanglebetweenpoints{\pgfpoint{0cm}{0cm}}{\pgfpointanchor{v\x}{center}}
+    \node[anchor={\pgfmathresult+180},seq-green] at (v\x)
+      {$\ifnum\x>0\ifnum\x>1A^\x\else A\fi\fi v$};
+  }
+  \point at (0,0);
+\end{tikzpicture}
+        ]]></latex-code>
+      </p>
+      <p>
+        <m>\color{seq-red}|\lambda| = 1</m>: when the scaling factor is equal to <m>1</m>, then vectors do not tend to get longer or shorter.  In this case, repeatedly multiplying a vector by <m>A</m> simply <q>rotates around an ellipse</q>.  For example,
+        <me>
+          A = \frac 12\mat{\sqrt3+1 -2; 1 \sqrt3-1}
+          \qquad
+          \lambda = \frac{\sqrt3-i}2
+          \qquad
+          |\lambda| = 1
+        </me>
+        gives rise to the following picture:
+        <latex-code><![CDATA[
+\pgfmathsetmacro{\sqrtii}{sqrt(2)}
+\begin{tikzpicture}[scale=.25, thin border nodes=2pt,
+    decoration={markings, mark=between positions 0 and .75 step .25
+      with {\arrow{Stealth}}}]
+  \draw[->, very thin] (-16,0) -- (16,0);
+  \draw[->, very thin] (0,-16) -- (0,16);
+  \draw[postaction=decorate, seq-blue, cm={1,1,-1,0,(0,0)}]
+    (0,0) ellipse[radius=10];
+  \foreach \x in {0,...,3} {
+    \pgfmathsetmacro{\y}{\x-.4}
+    \begin{scope}[cm={1,1,-1,0,(0,0)}]
+    \coordinate (v\x) at ({10*cos(\y*30)},{10*sin(\y*30)});
+    \draw[vector,seq-green]
+      (0,0) -- (v\x)
+        node[point,seq-green,scale=.5] {};
+    \end{scope}
+    \pgfmathanglebetweenpoints{\pgfpoint{0cm}{0cm}}{\pgfpointanchor{v\x}{center}}
+    \node[anchor={\pgfmathresult+180},seq-green] at (v\x)
+      {$\ifnum\x>0\ifnum\x>1A^\x\else A\fi\fi v$};
+  }
+  \point at (0,0);
+\end{tikzpicture}
+        ]]></latex-code>
+      </p>
+      <p>
+        <m>\color{seq-red}|\lambda| \lt 1</m>: when the scaling factor is less than <m>1</m>, then vectors tend to get shorter, i.e., closer to the origin.  In this case, repeatedly multiplying a vector by <m>A</m> makes the vector <q>spiral in</q>.  For example,
+        <me>
+          A = \frac 1{2\sqrt 2}\mat{\sqrt3+1 -2; 1 \sqrt3-1}
+          \qquad
+          \lambda = \frac{\sqrt3-i}{2\sqrt 2}
+          \qquad
+          |\lambda| = \frac 1{\sqrt 2} \lt 1
+        </me>
+        gives rise to the following picture:
+        <latex-code><![CDATA[
+\pgfmathsetmacro{\sqrtii}{sqrt(2)}
+\begin{tikzpicture}[scale=1, samples at={0,.25,...,4.25},
+    smooth, tension=.5, thin border nodes=2pt]
+  \draw[dashed, cm={1,1,-1,0,(0,0)}] (0,0) ellipse[radius=10/4];
+  \draw[->, very thin] (-4,0) -- (4,0);
+  \draw[->, very thin] (0,-4) -- (0,4);
+  \begin{scope}[cm={1,1,-1,0,(0,0)}, <->/.tip={Stealth}]
+  \foreach \rot in {0,60,...,359} {
+    \draw[seq-blue,rotate=\rot]
+      plot ({-\sqrtii^\x*cos(\x*30)},{\sqrtii^\x*sin(\x*30)});
+    % Can't use decorations.markings for this; it exceeds TeX's limited
+    % capacity for numerical calculations.
+    \foreach \x in {0,3,4.25} {
+      \draw[seq-blue,<-,rotate=\rot]
+        ({-\sqrtii^\x*cos(\x*30)},{\sqrtii^\x*sin(\x*30)}) --
+        ({-\sqrtii^(\x+.1)*cos((\x+.1)*30)},{\sqrtii^(\x+.1)*sin((\x+.1)*30)});
+    }
+  }
+  \foreach \x in {3,2,1,0} {
+    \pgfmathsetmacro{\y}{(3-\x)+1.1}
+    \coordinate (v\x) at (-{\sqrtii^\y*cos(\y*30-120)},{\sqrtii^\y*sin(\y*30-120)});
+    \draw[vector,seq-green] (0,0) -- (v\x)
+      node[point,seq-green,scale=.5] {};
+  }
+  \end{scope}
+  \foreach \x in {3,2,1,0} {
+    \pgfmathanglebetweenpoints{\pgfpoint{0cm}{0cm}}{\pgfpointanchor{v\x}{center}}
+    \node[anchor={\pgfmathresult+180},seq-green] at (v\x)
+      {$\ifnum\x>0\ifnum\x>1A^\x\else A\fi\fi v$};
+  }
+  \point at (0,0);
+\end{tikzpicture}
+        ]]></latex-code>
+      </p>
+    </note>
+
+    <example hide-type="true">
+      <title>Interactive: <m>|\lambda|>1</m></title>
+      <p>
+        <me>
+          A = \frac 1{\sqrt 2}\mat{\sqrt3+1 -2; 1 \sqrt3-1}
+          \qquad
+          B = \frac 1{\sqrt 2}\mat{\sqrt3 -1; 1 \sqrt3}
+        </me>
+        <me>
+          \lambda = \frac{\sqrt3-i}{\sqrt 2} \qquad |\lambda| = \sqrt 2 > 1
+        </me>
+      </p>
+      <figure>
+        <caption>The geometric action of <m>A</m> and <m>B</m> on the plane.  Click <q>iterate</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
+        <mathbox source="demos/similarity.html?B=sqrt(3/2),-1/sqrt(2):1/sqrt(2),sqrt(3/2)&amp;C=2,0:1,1&amp;snap=off&amp;dynamics=on&amp;range2=8&amp;dur=1.5" height="600px"/>
+      </figure>
+    </example>
+
+    <example hide-type="true">
+      <title>Interactive: <m>|\lambda|=1</m></title>
+      <p>
+        <me>
+          A = \frac 12\mat{\sqrt3+1 -2; 1 \sqrt3-1}
+          \qquad
+          B = \frac 12\mat{\sqrt3 -1; 1 \sqrt3}
+        </me>
+        <me>
+          \lambda = \frac{\sqrt3-i}2 \qquad |\lambda| = 1
+        </me>
+      </p>
+      <figure>
+        <caption>The geometric action of <m>A</m> and <m>B</m> on the plane.  Click <q>iterate</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
+        <mathbox source="demos/similarity.html?B=sqrt(3)/2,-1/2:1/2,sqrt(3)/2&amp;C=2,0:1,1&amp;snap=off&amp;dynamics=on&amp;range2=8&amp;dur=1.5" height="600px"/>
+      </figure>
+    </example>
+
+    <example hide-type="true">
+      <title>Interactive: <m>|\lambda|\lt1</m></title>
+      <p>
+        <me>
+          A = \frac 1{2\sqrt 2}\mat{\sqrt3+1 -2; 1 \sqrt3-1}
+          \qquad
+          B = \frac 1{2\sqrt 2}\mat{\sqrt3 -1; 1 \sqrt3}
+        </me>
+        <me>
+          \lambda = \frac{\sqrt3-i}{2\sqrt 2} \qquad |\lambda| = \frac 1{\sqrt 2} \lt 1
+        </me>
+      </p>
+      <figure>
+        <caption>The geometric action of <m>A</m> and <m>B</m> on the plane.  Click <q>iterate</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
+        <mathbox source="demos/similarity.html?B=sqrt(3/8),-1/sqrt(8):1/sqrt(8),sqrt(3/8)&amp;C=2,0:1,1&amp;snap=off&amp;dynamics=on&amp;range2=8&amp;dur=1.5" height="600px"/>
+      </figure>
+    </example>
+
+    <remark>
+      <title>Classification of <m>2\times 2</m> matrices up to similarity</title>
+      <p>
+        At this point, we can write down the <q>simplest</q> possible matrix which is similar to any given <m>2\times 2</m> matrix <m>A</m>.  There are four cases:
+        <ol>
+          <li>
+            <m>A</m> has two real eigenvalues <m>\lambda_1,\lambda_2</m>.  In this case, <m>A</m> is diagonalizable, so <m>A</m> is similar to the matrix
+            <me>\mat{\lambda_1 0; 0 \lambda_2}.</me>
+            This representation is unique up to reordering the eigenvalues.
+          </li>
+          <li>
+            <m>A</m> has one real eigenvalue <m>\lambda</m> of geometric multiplicity <m>2</m>.  In this case, we saw in this <xref ref="diag-cases-22"/> that <m>A</m> is <em>equal</em> to the matrix
+            <me>\mat{\lambda, 0; 0 \lambda}.</me>
+          </li>
+          <li>
+            <m>A</m> has one real eigenvalue <m>\lambda</m> of geometric multiplicity <m>1</m>.   In this case, <m>A</m> is not diagonalizable, and we saw in this <xref ref="diag-rem-all-nondiag"/> that <m>A</m> is similar to the matrix
+            <me>\mat{\lambda, 1; 0 \lambda}.</me>
+          </li>
+          <li>
+            <m>A</m> has no real eigenvalues.  In this case, <m>A</m> has a complex eigenvalue <m>\lambda</m>, and <m>A</m> is similar to the rotation-scaling matrix
+            <me>
+              \mat{\Re(\lambda) \Im(\lambda); -\Im(\lambda) \Re(\lambda)}
+            </me>
+            by the <xref ref="cplx-diagonalization-thm"/>.  By this <xref ref="cplx-eval-rot-scale"/>, the eigenvalues of a rotation-scaling matrix <m>\smallmat a{-b}ba</m> are <m>a\pm bi</m>, so that two rotation-scaling matrices <m>\smallmat a{-b}ba</m> and <m>\smallmat c{-d}dc</m> are similar if and only if <m>a=c</m> and <m>b=\pm d</m>.
+          </li>
+        </ol>
+      </p>
+    </remark>
+
+  </subsection>
+
+  <subsection>
+    <title>Block Diagonalization</title>
+
+    <p>
+      For matrices larger than <m>2\times 2</m>, there is a theorem that combines the <xref ref="diagonalization-thm"/> and the <xref ref="cplx-diagonalization-thm"/>.  It says essentially that a matrix is similar to a matrix with parts that look like a diagonal matrix, and parts that look like a rotation-scaling matrix.
+    </p>
+
+    <theorem type-name="Block-Diagonalization Theorem" xml:id="block-diag-thm">
+      <statement>
+        <p>
+          Let <m>A</m> be a real <m>n\times n</m> matrix.  Suppose that for each (real or complex) eigenvalue, the algebraic multiplicity equals the geometric multiplicity.  Then <m>A = CBC\inv</m>, where <m>B</m> and <m>C</m> are as follows:
+          <ul>
+            <li>
+              The matrix <m>B</m> is <term>block diagonal</term>, where the blocks are <m>1\times 1</m> blocks containing the real eigenvalues (with their multiplicities), or <m>2\times 2</m> blocks containing the matrices
+              <me>\mat{\Re(\lambda) \Im(\lambda); -\Im(\lambda) \Re(\Lambda)}</me>
+              for each non-real eigenvalue <m>\lambda</m> (with multiplicity).
+            </li>
+            <li>
+              The columns of <m>C</m> form bases for the eigenspaces for the real eigenvectors, or come in pairs <m>\bigl(\,\Re(v)\;\Im(v)\,\bigr)</m> for the non-real eigenvectors.
+            </li>
+          </ul>
+        </p>
+      </statement>
+    </theorem>
+
+    <p>
+      The <xref ref="block-diag-thm"/> is proved in the same way as the <xref ref="diagonalization-thm"/> and the <xref ref="cplx-diagonalization-thm"/>.  It is best understood in the case of <m>3\times 3</m> matrices.
+    </p>
+
+    <specialcase hide-type="true">
+      <title>Block Diagonalization of a <m>3\times 3</m> Matrix with a Complex Eigenvalue</title>
+      <p>
+        Let <m>A</m> be a <m>3\times 3</m> matrix with a complex eigenvalue <m>\lambda_1</m>.  Then <m>\bar\lambda_1</m> is another eigenvalue, and there is one real eigenvalue <m>\lambda_2</m>.  Since there are three distinct eigenvalues, they have algebraic and geometric multiplicity one, so the <xref ref="block-diag-thm"/> applies to <m>A</m>.
+      </p>
+      <p>
+        Let <m>v_1</m> be a (complex) eigenvector with eigenvalue <m>\lambda_1</m>, and let <m>v_2</m> be a (real) eigenvector with eigenvalue <m>\lambda_2</m>.  Then the <xref ref="block-diag-thm"/> says that <m>A = CBC\inv</m> for
+        <me>
+          <![CDATA[
+\def\b{\color{seq-blue}}\def\g{\color{seq-green}}
+C = \mat{\b| \b| \g|; \b\Re(v_1) \b\Im(v_1) \g v_2; \b| \b| \g|}
+\qquad
+B =
+  \begin{tikzpicture}[baseline=(A-2-1.base)]
+    \matrix[math matrix, column sep=0, row sep=0,
+            nodes={inner ysep=2pt, inner xsep=4pt}] (A)
+      {
+        |[seq-blue]| \phantom{-}\Re(\lambda_1) \& |[seq-blue]| \Im(\lambda_1) \& |[black!40]| 0 \\
+        |[seq-blue]| -\Im(\lambda_1) \& |[seq-blue]| \Re(\lambda_1) \& |[black!40]| 0 \\
+        |[black!40]| 0 \& |[black!40]| 0 \& |[seq-green]| \lambda_2 \\
+      };
+    \draw[thick, seq-blue] (A-1-1.north west) rectangle (A-2-2.south east);
+    \draw[thick, seq-green] (A-2-2.south east) rectangle (A-3-3.south east);
+  \end{tikzpicture}.
+          ]]>
+        </me>
+      </p>
+    </specialcase>
+
+    <example>
+      <title>Geometry of a <m>3\times 3</m> matrix with a complex eigenvalue</title>
+      <statement>
+        <p>
+          What does the matrix
+          <me>
+            A = \frac 1{29}\mat{33 -23 9; 22 33 -23; 19 14 50}
+          </me>
+          do geometrically?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          First we find the (real and complex) eigenvalues of <m>A</m>.  We compute the characteristic polynomial using whatever method we like:
+          <me>
+            f(\lambda) = \det(A-\lambda I_3) = -\lambda^3 + 4\lambda^2 - 6\lambda + 4.
+          </me>
+          We search for a real root using the rational root theorem.  The possible rational roots are <m>\pm 1,\pm 2,\pm 4</m>; we find <m>f(2) = 0</m>, so that <m>\lambda-2</m> divides <m>f(\lambda)</m>.  Performing polynomial long division gives
+          <me>
+            f(\lambda) = -(\lambda-2)\bigl(\lambda^2-2\lambda+2\bigr).
+          </me>
+          The quadratic term has roots
+          <me>
+            \lambda = \frac{2\pm\sqrt{4-8}}2 = 1\pm i,
+          </me>
+          so that the complete list of eigenvalues is <m>\lambda_1 = 1-i</m>, <m>\bar\lambda_1 = 1+i</m>, and <m>\lambda_2 = 2</m>.
+        </p>
+        <p>
+          Now we compute some eigenvectors, starting with <m>\lambda_1=1-i</m>.  We row reduce (probably with the aid of a computer):
+          <me>
+            A-(1-i)I_3 = \frac 1{29}\mat{4+29i -23 9;
+            22 4+29i -23;
+            19 14 21+29i}
+            \;\xrightarrow{\text{RREF}}\;
+            \mat{1 0 7/5+i/5; 0 1 -2/5+9i/5; 0 0 0}.
+          </me>
+          The free variable is <m>z</m>, and the parametric form is
+          <me>
+            \syseq{
+            x = -\left(\dfrac 75+\dfrac 15i\right)z;
+            y = \left(\dfrac 25-\dfrac 95i\right)z
+            }
+            \quad\xrightarrow[\text{eigenvector}]{z=5}\quad
+            v_1 = \vec{-7-i 2-9i 5}.
+          </me>
+          For <m>\lambda_2=2</m>, we have
+          <me>
+            A - 2I_3 = \frac 1{29}\mat{-25 -23 9; 22 -25 -23; 19 14 -8}
+            \;\xrightarrow{\text{RREF}}\;
+            \mat{1 0 -2/3; 0 1 1/3; 0 0 0}.
+          </me>
+          The free variable is <m>z</m>, and the parametric form is
+          <me>
+            \syseq{
+            x = \dfrac 23z;
+            y = -\dfrac 13z
+            }
+            \quad\xrightarrow[\text{eigenvector}]{z=3}\quad
+            v_2 = \vec{2 -1 3}.
+          </me>
+          According to the <xref ref="block-diag-thm"/>, we have <m>A=CBC\inv</m> for
+          <me>
+            \begin{split}
+            C \amp= \mat{| | |; \Re(v_1) \Im(v_1) v_2; | | |}
+            = \mat{-7 -1 2; 2 -9 -1; 5 0 3} \\
+            B \amp= \mat{\Re(\lambda_1) \Im(\lambda_1) 0;
+            0 -\Im(\lambda_1) \Re(\lambda_1) 0; 0 0 2}
+            = \mat{1 -1 0; 1 1 0; 0 0 2}.
+            \end{split}
+          </me>
+        </p>
+        <p>
+          The matrix <m>B</m> is a combination of the rotation-scaling matrix <m>\smallmat1{-1}11</m> from this <xref ref="cplx-evals-rot-scale-1"/>, and a diagonal matrix.  More specifically, <m>B</m> acts on the <m>xy</m>-coordinates by rotating counterclockwise by <m>45^\circ</m> and scaling by <m>\sqrt2</m>, and it scales the <m>z</m>-coordinate by <m>2</m>.  This means that points above the <m>xy</m>-plane spiral out away from the <m>z</m>-axis and move up, and points below the <m>xy</m>-plane spiral out away from the <m>z</m>-axis and move down.
+        </p>
+        <p>
+          The matrix <m>A</m> does the same thing as <m>B</m>, but with respect to the <m>\Re(v_1),\Im(v_1),v_2</m>-coordinate system.  That is, <m>A</m> acts on the <m>\Re(v_1),\Im(v_1)</m>-plane by spiraling out, and <m>A</m> acts on the <m>v_2</m>-coordinate by scaling by a factor of <m>2</m>.  See the demo below.
+        </p>
+        <figure>
+          <caption>The geometric action of <m>A</m> and <m>B</m> on <m>\R^3</m>.  Click <q>iterate</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
+          <mathbox source="demos/similarity.html?C=-1/4,-3/4,1/2:1,-1/4,-1/4:1/4,1/2,3/4&amp;B=1,-1,0:1,1,0:0,0,2&amp;dynamics=on&amp;reference=spiral&amp;range2=10&amp;range1=10" height="600px"/>
+        </figure>
+      </solution>
+    </example>
+
+  </subsection>
 
 </section>
