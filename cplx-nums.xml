@@ -186,7 +186,7 @@ the license is included in gfdl.xml.
         For example, <m>f(x) = x^3-x = x(x-1)(x+1)</m> has three real roots; its graph looks like this:
         <latex-code>
           <![CDATA[
-\begin{tikzpicture}[domain=-1.5:1.5,smooth,xscale=.5,yscale=.5]
+\begin{tikzpicture}[domain=-1.5:1.5,smooth]
   \draw (-2,0) -- (2,0);
   \draw[color=seq-red, <->] plot (\x,\x^3-\x);
 \end{tikzpicture}
@@ -195,7 +195,7 @@ the license is included in gfdl.xml.
         On the other hand, the polynomial <me>g(x) = x^3-5x^2+x-5 = (x-5)(x^2+1) = (x-5)(x+i)(x-i)</me> has one real root at <m>5</m> and a conjugate pair of complex roots <m>\pm i</m>.  Its graph looks like this:
         <latex-code>
           <![CDATA[
-\begin{tikzpicture}[domain=-.5:.5,smooth,xscale=-2,yscale=1.5]
+\begin{tikzpicture}[domain=-.5:.5,smooth,xscale=-4,yscale=3]
   \draw (-.5,-4.7) -- (.5,-4.7);
   \draw[color=seq-red, <->] plot (\x,\x^3-5*\x^2+\x-5);
 \end{tikzpicture}

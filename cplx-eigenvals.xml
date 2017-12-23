@@ -29,14 +29,14 @@ the license is included in gfdl.xml.
       In <xref ref="diagonalization"/>, we saw that a matrix whose characteristic polynomial has distinct real roots is <em>diagonalizable</em>: it is similar to a diagonal matrix, which is much simpler to analyze.  In this Section, we study matrices whose characteristic polynomial has <em>complex</em> roots.  It turns out that such a matrix is similar (in the <m>2\times 2</m> case) to a <em>rotation-scaling matrix</em>, which is also relatively easy to understand.
     </p>
     <p>
-      In a certain sense, this whole Section is analogous to <xref ref="diagonalization"/>, with rotation-scaling matrices playing the role of diagonal matrices.
+      In a certain sense, this entire Section is analogous to <xref ref="diagonalization"/>, with rotation-scaling matrices playing the role of diagonal matrices.
     </p>
   </introduction>
 
   <subsection>
     <title>Matrices with Complex Eigenvalues</title>
     <p>
-      As a consequence of the <xref ref="fund-thm-alg"/> as applied to the characteristic polynomial we see that:
+      As a consequence of the <xref ref="fund-thm-alg"/> as applied to the characteristic polynomial, we see that:
     </p>
 
     <warning>
@@ -301,7 +301,7 @@ A-\frac{4+3i}5I_3 =
         <p>
           A <term>rotation-scaling matrix</term> is a <m>2\times 2</m> matrix of the form
           <me>\mat{a -b; b a},</me>
-          where <m>a</m> and <m>b</m> are real numbers.
+          where <m>a</m> and <m>b</m> are real numbers, not both equal to zero.
         </p>
       </statement>
     </definition>
@@ -575,8 +575,8 @@ A-\frac{4+3i}5I_3 =
 
     <p>
       The matrix in the second Example has second column <m>{-\sqrt 3\choose 1}</m>, which is rotated counterclockwise from the positive <m>x</m>-axis by an angle of <m>5\pi/6</m>.  This rotation angle is <em>not</em> equal to
-      <m>\tan\inv(1/(-\sqrt3)) = -\frac\pi 6.</m>
-      The problem is that arctan always outputs values in <m>(-\pi/2,\pi/2)</m>: it does not account for points in the second or third quadrants.  This is why we drew a triangle and used its (positive) edge lengths to compute the angle <m>\varphi</m>:
+      <m>\tan\inv\bigl(1/(-\sqrt3)\bigr) = -\frac\pi 6.</m>
+      The problem is that arctan always outputs values between <m>-\pi/2</m> and <m>\pi/2</m>: it does not account for points in the second or third quadrants.  This is why we drew a triangle and used its (positive) edge lengths to compute the angle <m>\varphi</m>:
       <latex-code mode="bare">
         \usetikzlibrary{angles}
       </latex-code>
@@ -618,7 +618,7 @@ A-\frac{4+3i}5I_3 =
     <title>Geometry of <m>2\times 2</m> Matrices with a Complex Eigenvalue</title>
 
     <p>
-      Let <m>A</m> be a <m>2\times 2</m> matrix with a complex, non-real eigenvalue <m>\lambda</m>.  Then <m>A</m> also has the eigenvalue <m>\bar\lambda\neq\lambda</m>.  In particular, <m>A</m> has distinct eigenvalues, so it is diagonalizable over the complex numbers.  However, the following construction is generally more useful, as it only deals with matrices with <em>real</em> entries.
+      Let <m>A</m> be a <m>2\times 2</m> matrix with a complex, non-real eigenvalue <m>\lambda</m>.  Then <m>A</m> also has the eigenvalue <m>\bar\lambda\neq\lambda</m>.  In particular, <m>A</m> has distinct eigenvalues, so it is diagonalizable over the complex numbers.  However, the following construction is generally more useful, as all matrices involved have <em>real</em> entries.
     </p>
 
     <theorem type-name="Rotation-Scaling Theorem" xml:id="cplx-diagonalization-thm">
@@ -630,7 +630,7 @@ A-\frac{4+3i}5I_3 =
             \sptxt{and}
             B = \mat{\Re(\lambda) \Im(\lambda); -\Im(\lambda) \Re(\lambda)}.
           </me>
-          In particular, <m>A</m> is similar to a rotation-scaling matrix that scales by a factor of <m>|\lambda| = \sqrt{\det(B)}.</m>.
+          In particular, <m>A</m> is similar to a rotation-scaling matrix that scales by a factor of <m>|\lambda| = \sqrt{\det(B)}.</m>
         </p>
       </statement>
       <proof>
@@ -643,7 +643,7 @@ A-\frac{4+3i}5I_3 =
             \amp= y\Re(v) - x\Im(v).
             \end{split}
           </me>
-          Now, <m>(y+ix)v</m> is also an eigenvector of <m>A</m> with eigenvalue <m>\lambda</m>.  But we just showed that <m>(y+ix)v</m> is a vector with real entries, and any <em>real</em> eigenvector of a real matrix has a real eigenvalue.  Therefore, <m>\Re(v)</m> and <m>\Im(v)</m> must be linearly independent after all.
+          Now, <m>(y+ix)v</m> is also an eigenvector of <m>A</m> with eigenvalue <m>\lambda</m>, as it is a scalar multiple of <m>v</m>.  But we just showed that <m>(y+ix)v</m> is a vector with real entries, and any <em>real</em> eigenvector of a real matrix has a real eigenvalue.  Therefore, <m>\Re(v)</m> and <m>\Im(v)</m> must be linearly independent after all.
         </p>
         <p>
           Let <m>\lambda = a+bi</m> and <m>v = {x+yi\choose z+wi}</m>.  We observe that
@@ -1175,6 +1175,8 @@ A-\frac{4+3i}5I_3 =
           A = \frac 1{\sqrt 2}\mat{\sqrt3+1 -2; 1 \sqrt3-1}
           \qquad
           B = \frac 1{\sqrt 2}\mat{\sqrt3 -1; 1 \sqrt3}
+          \qquad
+          C = \mat{2 0; 1 1}
         </me>
         <me>
           \lambda = \frac{\sqrt3-i}{\sqrt 2} \qquad |\lambda| = \sqrt 2 > 1
@@ -1193,6 +1195,8 @@ A-\frac{4+3i}5I_3 =
           A = \frac 12\mat{\sqrt3+1 -2; 1 \sqrt3-1}
           \qquad
           B = \frac 12\mat{\sqrt3 -1; 1 \sqrt3}
+          \qquad
+          C = \mat{2 0; 1 1}
         </me>
         <me>
           \lambda = \frac{\sqrt3-i}2 \qquad |\lambda| = 1
@@ -1211,6 +1215,8 @@ A-\frac{4+3i}5I_3 =
           A = \frac 1{2\sqrt 2}\mat{\sqrt3+1 -2; 1 \sqrt3-1}
           \qquad
           B = \frac 1{2\sqrt 2}\mat{\sqrt3 -1; 1 \sqrt3}
+          \qquad
+          C = \mat{2 0; 1 1}
         </me>
         <me>
           \lambda = \frac{\sqrt3-i}{2\sqrt 2} \qquad |\lambda| = \frac 1{\sqrt 2} \lt 1
@@ -1386,7 +1392,7 @@ B =
           The matrix <m>B</m> is a combination of the rotation-scaling matrix <m>\smallmat1{-1}11</m> from this <xref ref="cplx-evals-rot-scale-1"/>, and a diagonal matrix.  More specifically, <m>B</m> acts on the <m>xy</m>-coordinates by rotating counterclockwise by <m>45^\circ</m> and scaling by <m>\sqrt2</m>, and it scales the <m>z</m>-coordinate by <m>2</m>.  This means that points above the <m>xy</m>-plane spiral out away from the <m>z</m>-axis and move up, and points below the <m>xy</m>-plane spiral out away from the <m>z</m>-axis and move down.
         </p>
         <p>
-          The matrix <m>A</m> does the same thing as <m>B</m>, but with respect to the <m>\Re(v_1),\Im(v_1),v_2</m>-coordinate system.  That is, <m>A</m> acts on the <m>\Re(v_1),\Im(v_1)</m>-plane by spiraling out, and <m>A</m> acts on the <m>v_2</m>-coordinate by scaling by a factor of <m>2</m>.  See the demo below.
+          The matrix <m>A</m> does the same thing as <m>B</m>, but with respect to the <m>\{\Re(v_1),\Im(v_1),v_2\}</m>-coordinate system.  That is, <m>A</m> acts on the <m>\Re(v_1),\Im(v_1)</m>-plane by spiraling out, and <m>A</m> acts on the <m>v_2</m>-coordinate by scaling by a factor of <m>2</m>.  See the demo below.
         </p>
         <figure>
           <caption>The geometric action of <m>A</m> and <m>B</m> on <m>\R^3</m>.  Click <q>iterate</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
