@@ -15,9 +15,11 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Understand the equivalence between a system of linear equations, an augmented matrix, a vector equation, and a matrix equation.</li>
-      <li>Characterize the vectors <m>b</m> such that <m>Ax=b</m> is consistent. in terms of the span of the columns of <m>A</m>.</li>
+      <li>Characterize the vectors <m>b</m> such that <m>Ax=b</m> is consistent, in terms of the span of the columns of <m>A</m>.</li>
       <li>Characterize matrices <m>A</m> such that <m>Ax=b</m> is consistent for all vectors <m>b</m>.</li>
-      <li>Vocabulary word: <term>matrix equation</term>.</li>
+      <li><em>Recipe:</em> multiply a vector by a matrix (two ways).</li>
+      <li><em>Picture:</em> the set of all vectors <m>b</m> such that <m>Ax=b</m> is consistent.</li>
+      <li><em>Vocabulary word:</em> <term>matrix equation</term>.</li>
     </ol>
   </objectives>
 

@@ -18,7 +18,8 @@ the license is included in gfdl.xml.
       <li>Learn examples of matrix transformations: reflection, dilation, rotation, shear, projection.</li>
       <li>Understand the vocabulary surrounding transformations: domain, codomain, range.</li>
       <li>Understand the domain, codomain, and range of a matrix transformation.</li>
-      <li>Vocabulary words: <term>transformation</term> / <term>function</term>, <term>domain</term>, <term>codomain</term>, <term>range</term>, <term>identity transformation</term>, <term>matrix transformation</term>.</li>
+      <li><em>Pictures:</em> common matrix transformations.</li>
+      <li><em>Vocabulary words:</em> <term>transformation</term> / <term>function</term>, <term>domain</term>, <term>codomain</term>, <term>range</term>, <term>identity transformation</term>, <term>matrix transformation</term>.</li>
     </ol>
   </objectives>
 
@@ -338,7 +339,7 @@ the license is included in gfdl.xml.
     </solution>
   </example>
 
-  <example>
+  <example xml:id="matrix-trans-shear">
     <title>Shear</title>
     <statement>
       <p>Let <me>A = \mat{1 1; 0 1}.</me>  Describe the function <m>b=Ax</m> geometrically.</p>
@@ -702,7 +703,7 @@ the license is included in gfdl.xml.
     Now we specialize the general notions and vocabulary from the previous <xref ref="matrix-trans-transformations"/> to the functions defined by matrices that we considered in the first <xref ref="matrix-trans-matrices-functions"/>.
   </p>
 
-  <definition>
+  <definition xml:id="matrix-trans-defn-of">
     <statement>
       <p>
         Let <m>A</m> be an <m>m\times n</m> matrix.  The <term>matrix transformation</term> associated to <m>A</m> is the transformation

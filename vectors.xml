@@ -16,7 +16,8 @@ the license is included in gfdl.xml.
     <ol>
       <li>Learn how to add and scalar-multiply vectors in <m>\R^n</m>, both algebraically and geometrically.</li>
       <li>Understand linear combinations geometrically.</li>
-      <li>Vocabulary words: <term>vector</term>, <term>linear combination</term>.</li>
+      <li><em>Pictures:</em> vector addition, vector subtraction, linear combinations.</li>
+      <li><em>Vocabulary words:</em> <term>vector</term>, <term>linear combination</term>.</li>
     </ol>
   </objectives>
 

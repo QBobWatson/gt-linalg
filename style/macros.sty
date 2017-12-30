@@ -6,6 +6,7 @@
 \usepackage{calc}
 
 \def\R{\mathbf R}
+\def\C{\mathbf C}
 \let\mathbb=\mathbf
 \spaligndelims()
 \let\oldvec=\vec
@@ -14,6 +15,7 @@
 \let\amat=\spalignaugmat
 \let\hmat=\spalignaugmathalf
 \let\syseq=\spalignsys
+\let\epsilon=\varepsilon
 
 \def\Span{\operatorname{Span}}
 \def\Nul{\operatorname{Nul}}
@@ -21,13 +23,17 @@
 \def\rank{\operatorname{rank}}
 \def\nullity{\operatorname{nullity}}
 \def\Id{\operatorname{Id}}
+\def\Tr{\operatorname{Tr}}
 \def\adj{\operatorname{adj}}
+\def\Re{\operatorname{Re}}
+\def\Im{\operatorname{Im}}
 \def\inv{^{-1}}
 \let\To=\longrightarrow
 \def\rref{\;\overset{\text{rref}}\To\;}
 \def\matrow#1{\text{---}\,#1\,\text{---}}
 \def\vol{\operatorname{vol}}
 \def\sptxt#1{\quad\text{ #1 }\quad}
+\let\bar=\overline
 
 \def\cB{{\mathcal B}}
 
@@ -51,6 +57,11 @@
 \definecolor{seq6}{rgb}{0.7000,0.7000,0.0000}
 \definecolor{seq7}{rgb}{0.6510,0.3373,0.1569}
 \definecolor{seq8}{rgb}{0.9686,0.5059,0.7490}
+
+\newenvironment{smm}{\left(\begin{smallmatrix}}
+                    {\end{smallmatrix}\right)}
+\newcommand*\smallmat[4]%
+  {\ensuremath{\begin{smm}#1&#2\\#3&#4\end{smm}}}
 
 \usepackage{tikz}
 \usetikzlibrary{backgrounds}
@@ -86,7 +97,7 @@
         vector/.style={very thick, -{Stealth[length=3mm]}},
         thick vector/.style={very thick, -Stealth},
         point/.style={circle, fill=black, inner sep=0pt,
-                      minimum size=2mm, anchor=center},
+                      minimum size=1.5mm, anchor=center},
     }
 
     % JDR: fix delimiter size (?)

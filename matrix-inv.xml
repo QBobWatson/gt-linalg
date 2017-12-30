@@ -15,11 +15,12 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Understand what it means for a square matrix to be invertible.</li>
-      <li><em>Learn 19 equivalent conditions for a matrix to be invertible.</em></li>
-      <li>Learn how to compute the inverse of a matrix.</li>
       <li>Learn to solve a linear system of equations with matrix inverses.</li>
       <li>Learn about invertible transformations, and understand the relationship between invertible matrices and invertible transformations.</li>
-      <li>Vocabulary words: <term>inverse matrix</term>, <term>inverse transformation</term>.</li>
+      <li><em>Recipes:</em> compute the inverse matrix, solve a linear system by taking inverses.</li>
+      <li><em>Picture:</em> the inverse of a transformation.</li>
+      <li><em>Theorem:</em> the Invertible Matrix Theorem.</li>
+      <li><em>Vocabulary words:</em> <term>inverse matrix</term>, <term>inverse transformation</term>.</li>
     </ol>
   </objectives>
 
@@ -81,7 +82,7 @@ the license is included in gfdl.xml.
      </p>
    </remark>
 
-   <proposition type-name="fact" hide-type="true">
+   <proposition type-name="Fact" hide-type="true" xml:id="matrix-inv-facts">
      <title>Facts about invertible matrices</title>
      <statement>
        <p>
@@ -833,7 +834,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
  <subsection>
    <title>Characterizing Invertible Matrices</title>
 
-   <p>This Subsection consists of a single important theorem, with many equivalent conditions for a matrix to be invertible.  This is one of the most important theorems in the course.  We will append more criteria later on, as we develop them.</p>
+   <p>This Subsection consists of a single important theorem, with many equivalent conditions for a matrix to be invertible.  This is one of the most important theorems in the course.  We will append two more criteria in <xref ref="eigenvectors"/>.</p>
 
    <theorem type-name="Invertible Matrix Theorem" hide-type="true" xml:id="imt-1">
      <title>The Invertible Matrix Theorem</title>

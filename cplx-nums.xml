@@ -12,186 +12,196 @@ the license is included in gfdl.xml.
 <section xml:id="complex-numbers">
   <title>Complex Numbers</title>
 
-  <!-- <p>Overview of complex numbers.</p> -->
+  <objectives>
+    <ol>
+      <li>Become comfortable doing arithmetic with complex numbers.</li>
+      <li><em>Vocabulary words:</em> <term>imaginary number</term>, <term>complex number</term>, <term>complex conjugate</term>.</li>
+    </ol>
+  </objectives>
 
-  <introduction>
+  <p>
+    In this section we give a brief review of the arithmetic and basic properties of the complex numbers.
+  </p>
 
-            <p>JDR: this is copied from the sample book to test typesetting.</p>
+    <p>
+      As motivation, notice that the rotation matrix
+      <me>A = \mat{0 -1; 1 0}</me>
+      has characteristic polynomial <m>f(\lambda) = \lambda^2 + 1</m>.  A zero of this function is a square root of <m>-1</m>.  If we want this polynomial to have a root, then we have to use a larger number system: we need to declare by <em>fiat</em> that there exists a square root of <m>-1</m>.
+    </p>
 
-            <theorem xml:id="theorem-integers-division_algorithm">
-                <title>Division Algorithm</title>
-                <idx><h>Division algorithm</h><h>for integers</h></idx>
-                <statement>
-                    <p>Let <m>a</m> and <m>b</m> be integers, with <m>b \gt 0</m>.  Then there exist unique integers <m>q</m> and <m>r</m> such that
-                        <me>a = bq + r</me>
-                    where <m>0 \leq r \lt b</m>.</p>
-                </statement>
-                <proof>
-                    <p>This is a perfect example of the existence-and-uniqueness type of proof.  We must first prove that the numbers <m>q</m> and <m>r</m> actually  exist. Then we must show that if  <m>q'</m> and <m>r'</m> are two other such numbers, then <m>q = q'</m> and <m>r = r'</m>.</p>
+    <definition>
+      <statement>
+        <p>
+          <ol>
+            <li>
+              The <term>imaginary number</term> <m>i</m> is defined to satisfy the equation <m>i^2 = -1</m>.
+            </li>
+            <li>
+              A <term>complex number</term> is a number of the form <m>a+bi</m>, where <m>a,b</m> are real numbers.
+            </li>
+          </ol>
+          The set of all complex numbers is denoted <m>\C</m>.
+        </p>
+      </statement>
+    </definition>
 
-                    <p><em>Existence of <m>q</m> and <m>r</m>.</em> Let
-                        <me>S = \{ a - bk : k \in {\mathbf Z} \text{ and } a - bk \geq 0 \}.</me>
-                    If <m>0 \in S</m>, then <m>b</m> divides <m>a</m>, and  we can let <m>q = a/b</m> and <m>r = 0</m>.  If <m>0 \notin S</m>, we can use the Well-Ordering Principle.  We must first show that <m>S</m> is nonempty.  If <m>a \gt 0</m>, then <m>a - b \cdot 0 \in S</m>. If <m>a \lt 0</m>, then <m>a - b(2a) = a(1 - 2b) \in S</m>.  In either case <m>S \neq \emptyset</m>.  By the Well-Ordering Principle, <m>S</m> must have a smallest member, say <m>r = a - bq</m>. Therefore, <m>a = bq + r</m>, <m>r \geq 0</m>. We now show that <m>r \lt b</m>. Suppose that <m>r \gt b</m>. Then
-                        <me>a - b(q + 1)= a - bq - b = r - b \gt 0.</me>
-                    In this case we would have <m>a - b(q + 1)</m> in the set <m>S</m>. But then <m>a - b(q + 1) \lt a - bq</m>, which would contradict the fact that <m>r = a - bq</m> is the smallest member  of <m>S</m>. So <m>r \leq b</m>.  Since <m>0 \notin S</m>, <m>r \neq b</m> and so <m>r \lt b</m>.</p>
+    <p>
+      The real numbers are just the complex numbers of the form <m>a + 0i</m>, so that <m>\R</m> is contained in <m>\C</m>.
+    </p>
 
-                    <p><em>Uniqueness of <m>q</m> and <m>r</m>.</em> Suppose there exist integers <m>r</m>, <m>r'</m>, <m>q</m>, and <m>q'</m> such that
-                        <me>a = bq + r, 0 \leq r \lt b \quad \text{and}\quad a = bq' + r', 0 \leq r' \lt b.</me>
-                    Then <m> bq + r =  bq' + r'</m>.  Assume that <m>r' \geq r</m>.  From the last equation we have <m>b(q - q') = r' - r</m>; therefore, <m>b</m> must divide <m>r' - r</m> and <m>0 \leq r'- r \leq r' \lt b</m>.  This is possible only if <m>r' - r = 0</m>.  Hence, <m>r = r'</m> and  <m>q = q'</m>.</p>
-                </proof>
-            </theorem>
+    <p>
+      We can identify <m>\C</m> with <m>\R^2</m> by <m>a+bi \longleftrightarrow {a\choose b}</m>. So when we draw a picture of <m>\C</m>, we draw the plane:
+      <latex-code>
+        <![CDATA[
+\begin{tikzpicture}[whitebg nodes, thin border nodes]
+  \draw[grid lines] (-2,-2) grid (2,2);
+  \draw[thick, ->] (-2,0) -- (2,0);
+  \draw[<-, overlay] (-2.05,0) -- (-2.5,0) node[left] {real axis};
+  \draw[thick, ->] (0,-2) -- (0,2);
+  \draw[<-, overlay] (-.05,-1.5) -- ++(-2.5,0) node[left] {imaginary axis};
+  \point["$1$" above] at (1,0);
+  \point["$i$" left] at (0,1);
+  \point at (0,0);
+  \point["$1-i$" below] at (1,-1);
+\end{tikzpicture}
+        ]]>
+      </latex-code>
+    </p>
 
-            <p>Let <m>a</m> and <m>b</m> be integers.  If <m>b = ak</m> for some integer <m>k</m>, we write <m>a \mid b</m>.  An integer <m>d</m> is called a <term>common divisor</term> of <m>a</m> and <m>b</m> if <m>d \mid a</m> and <m>d \mid b</m>.  The <term>greatest common divisor</term><idx><h>Greatest common divisor</h><h>of two integers</h></idx> of integers <m>a</m> and <m>b</m> is a positive integer <m>d</m> such that <m>d</m> is a common divisor  of <m>a</m> and <m>b</m> and if <m>d'</m> is any other common divisor of <m>a</m> and <m>b</m>, then <m>d' \mid d</m>. <notation><usage>a \mid b</usage><description><m>a</m> divides <m>b</m></description></notation><notation><usage>\gcd(a, b)</usage><description>greatest common divisor of <m>a</m> and <m>b</m></description></notation>  We write <m>d = \gcd(a, b)</m>; for example, <m>\gcd( 24, 36) = 12</m> and <m>\gcd(120, 102) = 6</m>.  We say that two integers <m>a</m> and <m>b</m> are <term>relatively prime</term> if <m>\gcd( a, b ) = 1</m>.</p>
+    <note hide-type="true">
+      <title>Arithmetic of Complex Numbers</title>
+      <p>
+        We can perform all of the usual arithmetic operations on complex numbers: add, subtract, multiply, divide, absolute value.  There is also an important new operation called complex conjugation.
+        <ul>
+          <li>
+            <em>Addition</em> is performed componentwise:
+            <me>
+              (a + bi) + (c + di) = (a + c) + (b + d)i.
+            </me>
+          </li>
+          <li>
+            <em>Multiplication</em> is performed using distributivity and <m>i^2=-1</m>:
+            <me>
+              (a+bi)(c+di) = ac + adi + bci + bdi^2 = (ac-bd) + (ad+bc)i.
+            </me>
+          </li>
+          <li>
+            <em>Complex conjugation</em> replaces <m>i</m> with <m>-i</m>, and is denoted with a bar:
+            <me>
+              \bar{a+bi} = a - bi.
+            </me>
+            The number <m>\bar{a+bi}</m> is called the <term>complex conjugate</term> of <m>a+bi</m>.  One checks that for any two complex numbers <m>z,w</m>, we have
+            <me>
+              \bar{z+w} = \bar z + \bar w \sptxt{and} \bar{zw} = \bar z\bar w.
+            </me>
+            Also, <m>(a+bi)(a-bi) = a^2 + b^2</m>, so <m>z\bar z</m> is a nonnegative <em>real</em> number for any complex number <m>z</m>.
+          </li>
+          <li>
+            The <em>absolute value</em> of a complex number <m>z</m> is the real number <m>|z| = \sqrt{z\bar z}</m>:
+            <me>
+              |a+bi| = \sqrt{a^2 + b^2}.
+            </me>
+            One chacks that <m>|zw| = |z|\cdot|w|.</m>
+          </li>
+          <li>
+            <em>Division</em> by a nonzero real number proceeds componentwise:
+            <me>\frac{a+bi}c = \frac ac + \frac bci.</me>
+          </li>
+          <li>
+            <em>Division</em> by a nonzero complex number requires multiplying the numerator and denominator by the complex conjugate of the denominator:
+            <me>\frac zw = \frac{z\bar w}{w\bar w} = \frac{z\bar w}{|w|^2}.</me>
+            For example,
+            <me>\frac{1+i}{1-i} = \frac{(1+i)^2}{1^2+(-1)^2} = \frac{1+2i+i^2}2 = i.</me>
+          </li>
+          <li>
+            The <em>real</em> and <em>imaginary</em> parts of a complex number are
+            <me>\Re(a+bi) = a \qquad \Im(a+bi) =  b.</me>
+          </li>
+        </ul>
+      </p>
+    </note>
 
-            <theorem xml:id="theorem-integers-gcd">
-                <statement>
-                    <p>Let <m>a</m> and <m>b</m> be nonzero integers. Then there exist integers <m>r</m> and <m>s</m> such that
-                        <me>\gcd( a, b) = ar + bs.</me>
-                    Furthermore, the greatest common divisor of <m>a</m> and <m>b</m> is unique.</p>
-                </statement>
-                <proof>
-                    <p>Let
-                        <me>S = \{ am + bn : m, n \in {\mathbf Z} \text{ and } am + bn \gt 0 \}.</me>
-                    Clearly, the set <m>S</m> is nonempty; hence, by the Well-Ordering Principle <m>S</m> must have a smallest member, say <m>d = ar + bs</m>.  We claim that <m>d = \gcd( a, b)</m>.  Write <m>a = dq + r'</m> where <m>0 \leq r' \lt d</m>. If <m>r' \gt 0</m>, then<md>
-                        <!-- r changed to r' - TWJ 1/31/2011 -->
-                        <mrow>r'&amp; = a - dq</mrow>
-                        <mrow>&amp; = a - (ar + bs)q</mrow>
-                        <mrow>&amp; = a - arq - bsq</mrow>
-                        <mrow>&amp; = a( 1 - rq ) + b( -sq ),</mrow>
-                    </md></p>
+    <p>
+      The point of introducing complex numbers is to find roots of polynomials.  It turns out that introducing <m>i</m> is sufficent to find the roots of any polynomial.
+    </p>
 
-                    <p>which is in <m>S</m>.  But this would contradict the fact that <m>d</m> is the smallest member of <m>S</m>.  Hence, <m>r' = 0</m> and <m>d</m> divides <m>a</m>.  A similar argument shows that <m>d</m> divides <m>b</m>.  Therefore, <m>d</m> is a common divisor of <m>a</m> and <m>b</m>.</p>
+    <theorem type-name="Fundamental Theorem of Algebra" xml:id="fund-thm-alg">
+      <statement>
+        <p>
+          Every polynomial of degree <m>n</m> has exactly <m>n</m> (real and) complex roots, counted with multiplicity.
+        </p>
+        <p>
+          Equivalently, if <m>f(x) = x^n + a_{n-1}x^{n-1} + \cdots + a_1x + a_0</m> is a polynomial of degree <m>n</m>, then <m>f</m> factors as
+          <me>
+            f(x) = (x-\lambda_1)(x-\lambda_2)\cdots(x-\lambda_n)
+          </me>
+          for (not necessarily distinct) complex numbers <m>\lambda_1,\lambda_2,\ldots,\lambda_n</m>.
+        </p>
+      </statement>
+    </theorem>
 
-                    <p>Suppose that <m>d'</m> is another common divisor of <m>a</m> and <m>b</m>, and we want to show that <m>d' \mid d</m>. If we let <m>a = d'h</m> and <m>b = d'k</m>, then
-                        <me>d = ar + bs = d'hr + d'ks = d'(hr + ks).</me>
-                    So <m>d'</m> must divide <m>d</m>. Hence, <m>d</m> must be the unique greatest common divisor of <m>a</m> and <m>b</m>.</p>
-                </proof>
-                <!-- Notation error in proof fixed (pointed out by Rocco Rossi) - TWJ 9/13/2010 -->
-            </theorem>
+    <specialcase hide-type="true">
+      <title>Degree-2 Polynomials</title>
+      <p>
+        The quadratic formula gives the roots of a degree-2 polynomial, real or complex:
+        <me>
+          f(x) = x^2 + bx + c \implies x = \frac{-b \pm \sqrt{b^2 - 4c}}2.
+        </me>
+      </p>
+      <p>
+        For example, if <m>f(x) = x^2 - \sqrt 2x + 1</m>, then
+        <me>
+          x = \frac{\sqrt 2\pm\sqrt{-2}}2 = \frac{\sqrt 2}2(1\pm i)
+          = \frac{1\pm i}{\sqrt 2}.
+        </me>
+        Note that if <m>b,c</m> are real numbers, then the two roots are complex conjugates.
+      </p>
+    </specialcase>
 
-            <corollary xml:id="corollary-integers-coprime">
-                <statement>
-                    <p>Let <m>a</m> and <m>b</m> be two integers that are relatively prime. Then there exist  integers <m>r</m> and <m>s</m> such that <m>ar + bs = 1</m>.</p>
-                </statement>
-            </corollary>
+    <p>
+      A complex number <m>z</m> is real if and only if <m>z = \bar z</m>.  This leads to the following observation.
+    </p>
 
-        </introduction>
+    <warning type-name="Note" xml:id="cplx-nums-root-pairs">
+      <p>
+        If <m>f</m> is a polynomial with real coefficients, and if <m>\lambda</m> is a complex root of <m>f</m>, then so is <m>\bar\lambda</m>:
+        <me>
+          \begin{split}
+          0 = \bar{f(\lambda)}
+    \amp= \bar{\lambda^n + a_{n-1}\lambda^{n-1}+\cdots+a_1\lambda+a_0} \\
+    \amp= \bar\lambda{}^n + a_{n-1}\bar\lambda{}^{n-1}+\cdots+a_1\bar\lambda+a_0
+    = f\bigl(\bar\lambda\bigr).
+    \end{split}
+        </me>
+        Therefore, complex roots of real polynomials come in <em>conjugate pairs</em>.
+      </p>
+    </warning>
 
-        <subsection>
-            <title>The Euclidean Algorithm</title>
-
-            <p>Among other things, <xref ref="theorem-integers-gcd" /> allows us to compute the greatest common divisor of two integers.</p>
-
-            <example xml:id="example-integers-gcd">
-                <p>Let us compute the greatest common divisor of <m>945</m> and <m>2415</m>.  First observe that<md>
-                    <mrow>2415 &amp; = 945 \cdot 2 + 525</mrow>
-                    <mrow>945 &amp; = 525 \cdot 1 + 420</mrow>
-                    <mrow>525 &amp; = 420 \cdot 1 + 105</mrow>
-                    <mrow>420 &amp; = 105 \cdot 4 + 0.</mrow>
-                </md></p>
-
-                <p>Reversing our steps, 105 divides 420, 105 divides 525, 105 divides 945, and 105 divides 2415.  Hence, 105 divides both 945 and 2415.  If <m>d</m> were another common divisor of 945 and 2415, then <m>d</m> would also have to divide 105.  Therefore, <m>\gcd( 945, 2415 ) = 105</m>.</p>
-
-                <p>If we work backward through the above sequence of equations, we can also obtain numbers <m>r</m> and <m>s</m> such that <m>945 r + 2415 s = 105</m>.  Observe that<md>
-                    <mrow>105 &amp; = 525 + (-1) \cdot 420</mrow>
-                    <mrow>&amp; = 525 + (-1) \cdot [945 + (-1) \cdot 525]</mrow>
-                    <mrow>&amp; = 2 \cdot 525 + (-1) \cdot 945</mrow>
-                    <mrow>&amp; = 2 \cdot [2415 + (-2) \cdot 945] + (-1) \cdot 945</mrow>
-                    <mrow>&amp; = 2 \cdot 2415 + (-5) \cdot 945.</mrow>
-                </md></p>
-
-                <p>So <m>r = -5</m> and <m>s= 2</m>.  Notice that <m>r</m> and <m>s</m> are not unique, since <m>r = 41</m> and <m>s = -16</m> would also work.</p>
-            </example>
-
-            <p>To compute <m>\gcd(a,b) = d</m>, we are using repeated divisions to obtain a decreasing sequence of positive integers <m>r_1 \gt r_2 \gt \cdots \gt r_n = d</m>; that is,<md>
-                <mrow>b &amp; = a q_1 + r_1</mrow>
-                <mrow>a &amp; = r_1 q_2 + r_2</mrow>
-                <mrow>r_1 &amp; = r_2 q_3 + r_3</mrow>
-                <mrow>&amp; \vdots </mrow>
-                <mrow>r_{n - 2} &amp; = r_{n - 1} q_{n} + r_{n}</mrow>
-                <mrow>r_{n - 1} &amp; = r_n q_{n + 1}.</mrow>
-            </md></p>
-
-            <p>To find <m>r</m> and <m>s</m> such that <m>ar + bs = d</m>, we begin with this last equation and substitute results obtained from the previous equations:<md>
-                <mrow>d &amp; = r_n</mrow>
-                <mrow>&amp; = r_{n - 2} - r_{n - 1} q_n</mrow>
-                <mrow>&amp; = r_{n - 2} - q_n( r_{n - 3} - q_{n - 1} r_{n - 2} )</mrow>
-                <mrow>&amp; = -q_n r_{n - 3} + ( 1+ q_n q_{n-1} ) r_{n - 2} </mrow>
-                <mrow>&amp; \vdots </mrow>
-                <mrow>&amp; = ra + sb.</mrow>
-            </md></p>
-
-            <p>The algorithm that we have just used to find the greatest common divisor <m>d</m> of two integers <m>a</m> and <m>b</m> and to write <m>d</m> as the linear combination of <m>a</m> and <m>b</m> is known as the <term>Euclidean algorithm</term><idx><h>Euclidean algorithm</h></idx><idx><h>Algorithm</h><h>Euclidean</h></idx>.</p>
-
-        </subsection>
-
-        <subsection>
-            <title>Prime Numbers</title>
-
-            <p>Let <m>p</m> be an integer such that <m>p \gt 1</m>.  We say that <m>p</m> is a <term>prime number</term><idx><h>Prime integer</h></idx>, or simply <m>p</m> is <term>prime</term>, if the only positive numbers that divide <m>p</m> are 1 and <m>p</m> itself.  An integer <m>n \gt 1</m> that is not prime is said to be <term>composite</term><idx><h>Composite integer</h></idx>.</p>
-
-            <lemma xml:id="theorem-integers-prime-divisor">
-                <title>Euclid</title>
-
-                <statement>
-                    <p>Let <m>a</m> and <m>b</m> be integers and <m>p</m> be a prime number.  If <m>p \mid ab</m>, then either <m>p \mid a</m> or <m>p \mid b</m>.</p>
-                </statement>
-                <proof>
-                    <p>Suppose that <m>p</m> does not divide <m>a</m>.  We must show that <m>p \mid b</m>. Since <m>\gcd( a, p ) = 1</m>, there exist integers <m>r</m> and <m>s</m> such that <m>ar + ps = 1</m>.  So
-                        <me>b = b(ar + ps) = (ab)r + p(bs).</me>
-                    Since <m>p</m> divides both <m>ab</m> and itself, <m>p</m> must divide <m>b = (ab)r + p(bs)</m>.</p>
-                </proof>
-            </lemma>
-
-            <theorem xml:id="theorem-integers-infinite-primes">
-                <title>Euclid</title>
-                <statement>
-                    <p>There exist an infinite number of primes.</p>
-                </statement>
-                <proof>
-                    <p>We will prove this theorem by contradiction.  Suppose that there are only a finite number of primes, say <m>p_1, p_2, \ldots, p_n</m>.  Let <m>P = p_1  p_2  \cdots  p_n + 1</m>.    Then <m>P</m> must be divisible by some <m>p_i</m> for <m>1 \leq i \leq n</m>. In this  case, <m>p_i</m> must divide <m>P - p_1 p_2 \cdots p_n = 1</m>, which is a contradiction.  Hence, either <m>P</m> is prime or there exists an additional prime number <m>p \neq p_i</m> that divides <m>P</m>.</p>
-                </proof>
-            </theorem>
-
-            <!-- Error in proof fixed.  Suggested by R. Rossi.  TWJ 12/19/2011 -->
-
-            <theorem xml:id="theorem-fund-theorem-arithmetic">
-                <title>Fundamental Theorem of Arithmetic</title>
-                <idx><h>Fundamental Theorem</h><h>of Arithmetic</h></idx>
-                <statement>
-                    <p>Let <m>n</m> be an integer such that <m>n \gt 1</m>. Then
-                        <me>n = p_1 p_2 \cdots p_k,</me>
-                    where <m>p_1, \ldots, p_k</m> are  primes (not necessarily distinct).  Furthermore, this factorization is unique; that is, if
-                        <me>n = q_1 q_2 \cdots q_l,</me>
-                    then <m>k = l</m> and the <m>q_i</m>'s are just the <m>p_i</m>'s rearranged.</p>
-                </statement>
-                <proof>
-                    <p><em>Uniqueness.</em>  To show uniqueness we will use induction on <m>n</m>. The theorem is certainly true for <m>n = 2</m> since in this case <m>n</m> is prime.  Now assume that the result holds for all integers <m>m</m> such that <m>1 \leq m \lt n</m>, and
-                        <me>n = p_1 p_2 \cdots p_k = q_1 q_2 \cdots q_l,</me>
-                    where <m>p_1 \leq p_2 \leq \cdots \leq p_k</m> and <m>q_1 \leq q_2 \leq \cdots \leq q_l</m>. By <xref ref="theorem-integers-prime-divisor" />, <m>p_1  \mid  q_i</m> for some <m>i = 1, \ldots, l</m> and <m>q_1  \mid  p_j</m> for some <m>j = 1, \ldots, k</m>.  Since all of the <m>p_i</m>'s and <m>q_i</m>'s are prime, <m>p_1 = q_i</m> and  <m>q_1 = p_j</m>. Hence, <m>p_1 = q_1</m> since <m>p_1 \leq p_j = q_1 \leq q_i = p_1</m>.  By the induction hypothesis,
-                        <me>n' = p_2 \cdots p_k = q_2 \cdots q_l</me>
-                    has a unique factorization.  Hence, <m>k = l</m> and <m>q_i = p_i</m> for <m>i = 1, \ldots, k</m>.</p>
-
-                    <p><em>Existence.</em> To show existence, suppose that there is some integer that cannot be written as the product of primes.  Let <m>S</m> be the set of all such numbers.  By the Principle of Well-Ordering, <m>S</m> has a smallest number, say <m>a</m>.  If the only positive factors of <m>a</m> are <m>a</m> and 1, then <m>a</m> is prime, which is a contradiction.  Hence, <m>a = a_1 a_2</m> where <m>1 \lt a_1 \lt a</m> and <m>1 \lt a_2 \lt a</m>.  Neither <m>a_1\in S</m> nor <m>a_2 \in S</m>, since <m>a</m> is the smallest element in <m>S</m>.  So<md>
-                        <mrow>a_1 &amp; = p_1 \cdots p_r</mrow>
-                        <mrow>a_2 &amp; = q_1 \cdots q_s.</mrow>
-                    </md></p>
-
-                    <p>Therefore, <me>a = a_1 a_2 = p_1 \cdots p_r q_1 \cdots q_s.</me>  So <m>a \notin S</m>, which is a contradiction.</p>
-                </proof>
-            </theorem>
-
-        </subsection>
-
-        <subsection>
-            <title>Historical Note</title>
-
-            <p>Prime numbers were first studied by the ancient Greeks.  Two important results from antiquity are Euclid's proof that an infinite number of primes exist and the Sieve of Eratosthenes, a method of computing all of the prime numbers less than a fixed positive integer <m>n</m>.  One problem in number theory is to find a function <m>f</m> such that <m>f(n)</m> is prime for each integer <m>n</m>. Pierre Fermat (1601?<ndash />1665) conjectured that <m>2^{2^n} + 1</m> was prime for all <m>n</m>, but later it was shown by Leonhard Euler (1707<ndash />1783) that
-                <me>2^{2^5} + 1 = \text{4,294,967,297}</me>
-            is a composite number. One of the many unproven conjectures about prime numbers is Goldbach's Conjecture.  In a letter to Euler in 1742, Christian Goldbach stated the conjecture that every even integer with the exception of 2 seemed to be the sum of two primes:  <m>4 = 2 + 2</m>, <m>6 = 3 + 3</m>, <m>8 =3 + 5</m>, <m>\ldots</m>.  Although the conjecture has been verified for the numbers up through <m>4 \times 10^{18}</m>, it has yet to be proven in general.  Since prime numbers play an important role in public key cryptography, there is currently a great deal of interest in determining whether or not a large number is prime.</p>
-
-        </subsection>
-
-        <!--Updated the numbers for which Goldbach's conjcture has been verified.  TWJ 4/7/2014-->
+    <specialcase hide-type="true">
+      <title>Degree-3 Polynomials</title>
+      <p>
+        A real cubic polynomial has either three real roots, or one real root and a conjugate pair of complex roots.
+      </p>
+      <p>
+        For example, <m>f(x) = x^3-x = x(x-1)(x+1)</m> has three real roots; its graph looks like this:
+        <latex-code>
+          <![CDATA[
+\begin{tikzpicture}[domain=-1.5:1.5,smooth]
+  \draw (-2,0) -- (2,0);
+  \draw[color=seq-red, <->] plot (\x,\x^3-\x);
+\end{tikzpicture}
+          ]]>
+        </latex-code>
+        On the other hand, the polynomial <me>g(x) = x^3-5x^2+x-5 = (x-5)(x^2+1) = (x-5)(x+i)(x-i)</me> has one real root at <m>5</m> and a conjugate pair of complex roots <m>\pm i</m>.  Its graph looks like this:
+        <latex-code>
+          <![CDATA[
+\begin{tikzpicture}[domain=-.5:.5,smooth,xscale=-4,yscale=3]
+  \draw (-.5,-4.7) -- (.5,-4.7);
+  \draw[color=seq-red, <->] plot (\x,\x^3-5*\x^2+\x-5);
+\end{tikzpicture}
+          ]]>
+        </latex-code>
+      </p>
+    </specialcase>
 
 </section>

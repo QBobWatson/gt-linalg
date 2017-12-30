@@ -6,11 +6,16 @@ die() {
 }
 
 PRETEX_ALL=
+CHUNKSIZE="250"
 
 while [[ $# -gt 0 ]]; do
     case $1 in
         --reprocess-latex)
             PRETEX_ALL="true"
+            ;;
+        --chunk)
+            shift
+            CHUNKSIZE=$1
             ;;
         *)
             die "Unknown argument: $1"
@@ -25,7 +30,7 @@ base_dir="$(cd "$base_dir"; pwd)"
 build_dir="$base_dir/build"
 static_dir="$build_dir/static"
 figure_img_dir="$build_dir"/figure-images
-pretex="$base_dir/gt-text-common/pretex/processtex.py"
+pretex="$base_dir/gt-text-common/pretex/pretex.py"
 
 echo "Checking xml..."
 cd "$compile_dir"
@@ -63,7 +68,7 @@ xsltproc -o "$build_dir/" --xinclude \
 
 echo "Preprocessing LaTeX (be patient)..."
 [ -n "$PRETEX_ALL" ] && rm -r pretex-cache
-python3 "$pretex" --preamble "$build_dir/preamble.tex" \
+python3 "$pretex" --chunk-size $CHUNKSIZE --preamble "$build_dir/preamble.tex" \
         --cache-dir pretex-cache --style-path "$compile_dir"/style \
         "$build_dir"/*.html "$build_dir"/knowl/*.html \
     || die "Can't process html!"

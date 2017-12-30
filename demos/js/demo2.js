@@ -2256,6 +2256,7 @@
       this.opts = opts1;
       this.stopAll = bind(this.stopAll, this);
       this.animate = bind(this.animate, this);
+      this.clearAnims = bind(this.clearAnims, this);
       this.texCombo = bind(this.texCombo, this);
       this.texSet = bind(this.texSet, this);
       this.urlParams = urlParams;
@@ -2529,18 +2530,17 @@
       return new Subspace(opts);
     };
 
-    Demo.prototype.animate = function(element, opts) {
-      var anim, clearAnims;
-      clearAnims = (function(_this) {
-        return function() {
-          return _this.animations = _this.animations.filter(function(a) {
-            return a.running;
-          });
-        };
-      })(this);
-      anim = new MathboxAnimation(element, opts);
-      anim.on('stopped', clearAnims);
-      anim.on('done', clearAnims);
+    Demo.prototype.clearAnims = function() {
+      return this.animations = this.animations.filter(function(a) {
+        return a.running;
+      });
+    };
+
+    Demo.prototype.animate = function(opts) {
+      var anim, ref;
+      anim = (ref = opts.animation) != null ? ref : new MathboxAnimation(opts.element, opts);
+      anim.on('stopped', this.clearAnims);
+      anim.on('done', this.clearAnims);
       anim.start();
       return this.animations.push(anim);
     };
@@ -2551,6 +2551,8 @@
       for (l = 0, len = ref.length; l < len; l++) {
         anim = ref[l];
         anim.stop();
+        anim.off('stopped', this.clearAnims);
+        anim.off('done', this.clearAnims);
       }
       return this.animations = [];
     };
@@ -2646,6 +2648,8 @@
   window.rowReduce = rowReduce;
 
   window.eigenvalues = eigenvalues;
+
+  window.Animation = Animation;
 
   window.Demo = Demo;
 

@@ -15,11 +15,12 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Learn the definition of the determinant.</li>
-      <li>Learn to compute the determinant using row and column operations.</li>
       <li>Learn some ways to eyeball a matrix with zero determinant, and how to compute determinants of upper- and lower-triangular matrices.</li>
       <li>Learn the basic properties of the determinant, and how to apply them.</li>
-      <li>Vocabulary words: <term>diagonal</term>, <term>upper-triangular</term>, <term>lower-triangular</term>, <term>transpose</term>.</li>
-      <li>Essential vocabulary word: <term>determinant</term>.</li>
+      <li><em>Recipe:</em> compute the determinant using row and column operations.</li>
+      <li><em>Theorems:</em> invertibility property, multiplicativity property, transpose property, multilinearity property.</li>
+      <li><em>Vocabulary words:</em> <term>diagonal</term>, <term>upper-triangular</term>, <term>lower-triangular</term>, <term>transpose</term>.</li>
+      <li><em>Essential vocabulary word:</em> <term>determinant</term>.</li>
     </ol>
   </objectives>
 
@@ -65,6 +66,10 @@ the license is included in gfdl.xml.
       In each of the first three cases, doing a row operation on a matrix scales the determinant by a <em>nonzero</em> number.  (Multiplying a row by zero is not a row operation.)  Therefore, doing row operations on a square matrix <m>A</m> does not change whether or not the determinant is zero.
     </p>
 
+    <p>
+      The reason behind using these particular defining properties is geometric.
+      See <xref ref="determinants-volumes"/>.
+    </p>
 
     <example>
       <statement>
@@ -505,7 +510,7 @@ the license is included in gfdl.xml.
       By the invertibility property, a matrix that does not satisfy any of the properties of the <xref ref="imt-1"/> has zero determinant.
     </p>
 
-    <corollary>
+    <corollary xml:id="det-defn-dep-det0">
       <statement>
         <p>
           Let <m>A</m> be a square matrix.  If the rows or columns of <m>A</m> are linearly dependent, then <m>\det(A)=0</m>.
@@ -670,7 +675,7 @@ the license is included in gfdl.xml.
       For completeness, we set <m>A^0 = I_n</m>.
     </p>
 
-    <corollary>
+    <corollary xml:id="det-defn-power-prop">
       <statement>
         <p>
           If <m>A</m> is a square matrix, then

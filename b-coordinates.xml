@@ -15,9 +15,9 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Learn to view a basis as a coordinate system on a subspace.</li>
-      <li>Compute the coordinates of a vector with respect to a basis.</li>
-      <li>Understand <m>\cB</m>-coordinates geometrically.</li>
-      <li>Vocabulary word: <term><m>\cB</m>-coordinates</term>.</li>
+      <li><em>Recipes:</em> compute the <m>\cB</m>-coordinates of a vector, compute the usual coordinates of a vector from its <m>\cB</m>-coordinates.</li>
+      <li><em>Picture:</em> the <m>\cB</m>-coordinates of a vector using its location on a nonstandard coordinate grid.</li>
+      <li><em>Vocabulary word:</em> <term><m>\cB</m>-coordinates</term>.</li>
     </ol>
   </objectives>
 

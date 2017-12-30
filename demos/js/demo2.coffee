@@ -2191,18 +2191,21 @@ class Demo
     labeledPoints: (view, opts) -> new LabeledPoints view, opts
     subspace: (opts) -> new Subspace opts
 
-    animate: (element, opts) =>
-        clearAnims = () =>
-            @animations = @animations.filter (a) -> a.running
-        anim = new MathboxAnimation element, opts
-        anim.on 'stopped', clearAnims
-        anim.on 'done', clearAnims
+    clearAnims: () =>
+        @animations = @animations.filter (a) -> a.running
+
+    animate: (opts) =>
+        anim = opts.animation ? new MathboxAnimation opts.element, opts
+        anim.on 'stopped', @clearAnims
+        anim.on 'done', @clearAnims
         anim.start()
         @animations.push anim
 
     stopAll: () =>
         for anim in @animations
             anim.stop()
+            anim.off 'stopped', @clearAnims
+            anim.off 'done', @clearAnims
         @animations = []
 
 
@@ -2253,6 +2256,7 @@ class Demo2D extends Demo
 window.rowReduce     = rowReduce
 window.eigenvalues   = eigenvalues
 
+window.Animation     = Animation
 window.Demo          = Demo
 window.Demo2D        = Demo2D
 window.urlParams     = urlParams

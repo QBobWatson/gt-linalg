@@ -8,6 +8,7 @@
   <uri resource="determinant-cofactors.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="backmatter.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="b-coordinates.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="rank-thm.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="bookinfo.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="charpoly.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="cplx-eigenvals.xml" uri="../mathbook/schema/pretext.rnc"/>
@@ -20,6 +21,7 @@
   <uri resource="diagonalization.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="dimension.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="eigenvectors.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="similarity.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="frontmatter.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="gfdl.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="gramschmidt.xml" uri="../mathbook/schema/pretext.rnc"/>

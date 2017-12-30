@@ -14,12 +14,13 @@ the license is included in gfdl.xml.
 
   <objectives>
     <ol>
-      <li>Express the solution set of a matrix equation in parametric vector form.</li>
-      <li>Write the solution set of a homogeneous system as a span.</li>
+      <li>Learn to express the solution set of a matrix equation in parametric vector form.</li>
+      <li>Learn to write the solution set of a homogeneous system as a span.</li>
       <li>Understand the relationship between the solution set of <m>Ax=0</m> and the solution set of <m>Ax=b</m>.</li>
-      <li>Understand the geometric picture of solution sets.</li>
       <li>Understand the difference between the solution set and the column span.</li>
-      <li>Vocabulary words: <term>homogeneous</term>/<term>inhomogeneous</term>, <term>trivial solution</term>, <term>parametric vector form</term>.</li>
+      <li><em>Recipe:</em> parametric vector form.</li>
+      <li><em>Pictures:</em> solution set of a homogeneous system, solution set of an inhomogeneous system.</li>
+      <li><em>Vocabulary words:</em> <term>homogeneous</term>/<term>inhomogeneous</term>, <term>trivial solution</term>.</li>
     </ol>
   </objectives>
 
@@ -477,7 +478,7 @@ the license is included in gfdl.xml.
         <ul>
           <li>This is a span if <m>b=0</m>, and it is a translate of a span (or it is empty) if <m>b\neq 0</m>.</li>
           <li>It is a subset of <m>\R^n</m>.</li>
-          <li>It is computed by finding the parametric vector form of the solution.</li>
+          <li>It is computed by solving a system of equations: usually by row reducing and finding the parametric vector form.</li>
         </ul>
         </p>
       </li>
@@ -487,6 +488,7 @@ the license is included in gfdl.xml.
           <ul>
             <li>This is the span of the columns of <m>A</m>.</li>
             <li>It is a subset of <m>\R^m</m>.</li>
+            <li>It is not computed by solving a system of equations: row reduction plays no role.</li>
           </ul>
         </p>
       </li>

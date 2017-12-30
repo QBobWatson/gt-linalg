@@ -16,9 +16,10 @@ the license is included in gfdl.xml.
     <ol>
       <li>Learn how to verify that a transformation is linear, or prove that a transformation is not linear.</li>
       <li>Understand the relationship between linear transformations and matrix transformations.</li>
-      <li><em>Learn to compute the matrix of a linear transformation.</em></li>
-      <li>Notation: the <term>unit coordinate vectors</term> <m>e_1,e_2,\ldots</m>.</li>
-      <li>Vocabulary words: <term>linear transformation</term>, <term>standard matrix</term>, <term>identity matrix</term>.</li>
+      <li><em>Recipe:</em> compute the matrix of a linear transformation.</li>
+      <li><em>Theorem:</em> linear transformations and matrix transformations.</li>
+      <li><em>Notation:</em> the <term>unit coordinate vectors</term> <m>e_1,e_2,\ldots</m>.</li>
+      <li><em>Vocabulary words:</em> <term>linear transformation</term>, <term>standard matrix</term>, <term>identity matrix</term>.</li>
     </ol>
   </objectives>
 
@@ -493,7 +494,7 @@ the license is included in gfdl.xml.
     </theorem>
 
     <p>
-      The matrix <m>A</m> in the above Theorem is called the <term>standard matrix</term> for <m>T</m>.  The columns of <m>A</m> are the vectors obtained by evaluating <m>T</m> on the <m>n</m> unit coordinate vectors in <m>\R^n</m>.  To summarize the Theorem:
+      The matrix <m>A</m> in the above Theorem is called the <term>standard matrix</term> for <m>T</m>.  The columns of <m>A</m> are the vectors obtained by evaluating <m>T</m> on the <m>n</m> unit coordinate vectors in <m>\R^n</m>.  To summarize part of the Theorem:
     </p>
 
     <warning>
@@ -730,7 +731,7 @@ $\xrightarrow{\text{project $yz$}}$
           </me>
         </p>
         <figure>
-          <caption>Illustration of a transformation defined in steps.  Click and drag the vecctor on the left.</caption>
+          <caption>Illustration of a transformation defined in steps.  Click and drag the vector on the left.</caption>
           <mathbox source="demos/steps.html" height="500px"/>
         </figure>
       </solution>

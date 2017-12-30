@@ -12,57 +12,433 @@ the license is included in gfdl.xml.
 <section xml:id="characteristic-polynomial">
   <title>The Characteristic Polynomial</title>
 
-  <p>Computing eigenvectors.</p>
+  <objectives>
+    <ol>
+      <li>Learn to compute eigenvalues using the characteristic polynomial.</li>
+      <li>Learn that the eigenvalues of a triangular matrix are the diagonal entries.</li>
+      <li>Learn some strategies for finding the zeros of a polynomial.</li>
+      <li><em>Recipe:</em> compute eigenvalues using the characteristic polynomial.</li>
+      <li><em>Vocabulary words:</em> <term>characteristic polynomial</term>, <term>trace</term>.</li>
+    </ol>
+  </objectives>
 
-  <theorem xml:id="test-theorem">
-    <title>Test theorem</title>
+  <p>
+    In <xref ref="eigenvectors"/> we discussed how to decide whether a given number <m>\lambda</m> is an eigenvalue of a matrix, and if so, how to find all of the associated eigenvectors.  In this Section, we will give a method for computing all of the <em>eigenvalues</em> of a matrix.  This does not reduce to solving a system of linear equations: indeed, it requires solving a <em>nonlinear</em> equation in one variable, namely, finding the roots of the characteristic polynomial.
+  </p>
+
+  <definition>
     <statement>
-      <p>This is a test theorem.</p>
+      <p>
+        Let <m>A</m> be an <m>n\times n</m> matrix.  The <term>characteristic polynomial</term> of <m>A</m> is the function
+        <me>f(\lambda) = \det(A-\lambda I_n).</me>
+      </p>
     </statement>
-    <proof>
-      <p>This would be the proof.</p>
+  </definition>
+
+  <p>
+    We will see <xref ref="charpoly-is-poly">below</xref> that the characteristic polynomial is in fact a polynomial.  Finding the characterestic polynomial means computing the determinant of the matrix <m>A-\lambda I_n</m>, whose entries contain the unknown <m>\lambda</m>.
+  </p>
+
+  <example xml:id="charpoly-eg-22">
+    <statement>
+      <p>
+        Find the characteristic polynomial of the matrix
+        <me>A = \mat{5 2; 2 1}.</me>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        We have
+        <me>
+          \begin{split}
+          f(\lambda) = \det(A - \lambda I_2)
+          \amp= \det\left(\mat{5 2; 2 1} - \mat{\lambda, 0; 0 \lambda}\right) \\
+          \amp= \det\mat{5-\lambda, 2; 2 1-\lambda} \\
+          \amp= (5-\lambda)(1-\lambda) - 2\cdot 2
+          = \lambda^2 - 6\lambda + 1.
+          \end{split}
+        </me>
+      </p>
+    </solution>
+  </example>
+
+  <example xml:id="charpoly-eg-33">
+    <statement>
+      <p>
+        Find the characteristic polynomial of the matrix
+        <me>A = \mat{0 6 8; \frac 12 0 0; 0 \frac 12 0}.</me>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        We compute the determinant by expanding cofactors along the third column:
+        <me>
+          \begin{split}
+          f(\lambda) = \det(A - \lambda I_3)
+          \amp= \det\mat{-\lambda, 6 8; \frac 12 -\lambda, 0; 0 \frac 12 -\lambda} \\
+          \amp= 8\left(\frac 14 - 0\cdot-\lambda\right)
+          - \lambda\left(\lambda^2 - 6\cdot\frac 12\right) \\
+          \amp= -\lambda^3 + 3\lambda + 2.
+          \end{split}
+        </me>
+      </p>
+    </solution>
+  </example>
+
+  <p>
+    The point of the characteristic polynomial is that we can use it to compute eigenvalues.
+  </p>
+
+  <theorem>
+    <title>Eigenvalues are roots of the characteristic polynomial</title>
+    <statement>
+      <p>
+        Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>f(\lambda) = \det(A-\lambda I_n)</m> be its characteristic polynomial.  Then <m>\lambda</m> is an eigenvalue of <m>A</m> if and only if <m>f(\lambda) = 0</m>.
+      </p>
+    </statement>
+    <proof visible="true">
+      <p>
+        By the <xref ref="imt-2"/>, the matrix equation <m>(A-\lambda I_n)x=0</m> has a nontrivial solution if and only if <m>\det(A-\lambda I_n) = 0</m>.  Therefore,
+        <me>
+          \begin{split}
+          \lambda \text{ is an eigenvalue of } A
+          \amp\iff Ax = \lambda x \text{ has a nontrivial solution} \\
+          \amp\iff (A-\lambda I_n)x = 0 \text{ has a nontrivial solution} \\
+          \amp\iff A - \lambda I_n \text{ is not invertible} \\
+          \amp\iff \det(A - \lambda I_n) = 0 \\
+          \amp\iff f(\lambda) = 0.
+          \end{split}
+        </me>
+      </p>
     </proof>
   </theorem>
 
-  <p><m>
-    \spaligndelims()
-    x = \spalignarray{lcr}{1 -2 3 ; 4 55 2^3; \frac {1 1}2 {1 3} {1{0}1}}
-    \spaligndelims[]
-  </m></p>
+  <example>
+    <title>Finding eigenvalues</title>
+    <statement>
+      <p>
+        Find the eigenvalues and eigenvectors of the matrix
+        <me>A = \mat{5 2; 2 1}.</me>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        In the above <xref ref="charpoly-eg-22"/> we computed the characteristic polynomial of <m>A</m> to be <m>f(\lambda) = \lambda^2-6\lambda + 1</m>.  We can solve the equation <m>\lambda^2-6\lambda+1=0</m> using the quadratic formula:
+        <me>
+          \lambda = \frac{6\pm\sqrt{36-4}}2 = 3\pm 2\sqrt 2.
+        </me>
+        Therefore, the eigenvalues are <m>3+2\sqrt 2</m> and <m>3-2\sqrt 2</m>.
+      </p>
+      <p>
+        To compute the eigenvectors, we solve the homogeneous system of equationts <m>(A-\lambda I_2)x=0</m> for each eigenvalue <m>\lambda</m>.  When <m>\lambda=3+2\sqrt 2</m>, we have
+        <me>
+          \begin{split}
+          A-(3+\sqrt 2)I_2 = \amp\mat{2-2\sqrt2 2; 2 -2-2\sqrt2} \\
+          \xrightarrow{R_1 = R_1\times(2+2\sqrt2)}\;
+          \amp\mat{-4 4+4\sqrt2; 2 -2-2\sqrt2} \\
+          \xrightarrow{R_2 = R_2+R_1/2}\;
+          \amp\mat{-4 4+4\sqrt2; 0 0} \\
+          \xrightarrow{R_1 = R_1 \div -4}\;
+          \amp\mat{1 -1-\sqrt2; 0 0}.
+          \end{split}
+        </me>
+        The parametric form of the general solution is <m>x=(1+\sqrt 2)y</m>, so the <m>(3+2\sqrt 2)</m>-eigenspace is the line spanned by <m>{1+\sqrt 2\choose 1}</m>.  We compute in the same way that the <m>(3-2\sqrt 2)</m>-eigenspace is the line spanned by <m>{1-\sqrt 2\choose 1}</m>.
+      </p>
+      <figure>
+        <caption>The red line is the <m>(3-2\sqrt 2)</m>-eigenspace, and the green line is the <m>(3+2\sqrt 2)</m>-eigenspace.</caption>
+        <mathbox source="demos/eigenspace.html?mat=5,2:2,1&amp;nomult" height="500px"/>
+      </figure>
+    </solution>
+  </example>
 
-  <p><m>
-    y = \spalignarray{lr}{\cos\theta{} \sin\theta; -\sin\theta , \cos\theta}
-  </m></p>
+  <example>
+    <title>Finding eigenvalues</title>
+    <statement>
+      <p>
+        Find the eigenvalues and eigenvectors of the matrix
+        <me>
+          A = \mat{0 6 8; \frac 12 0 0; 0 \frac 12 0}.
+        </me>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        In the above <xref ref="charpoly-eg-22"/> we computed the characteristic polynomial of <m>A</m> to be <m>f(\lambda) = -\lambda^3+3\lambda+2</m>.  We eyeball that <m>f(2) = -8 + 3\cdot 2 + 2 = 0</m>.  Thus <m>\lambda-2</m> divides <m>f(\lambda)</m>; to find the other roots, we perform <url href="https://en.wikipedia.org/wiki/Polynomial_long_division">polynomial long division</url>:
+        <me>
+          \frac{-\lambda^3+3\lambda+2}{\lambda-2}
+          = -\lambda^2-2\lambda-1 = -(\lambda+1)^2.
+        </me>
+        Therefore,
+        <me>
+          f(\lambda) = -(\lambda-2)(\lambda+1)^2,
+        </me>
+        so the only eigenvalues are <m>\lambda = 2,-1</m>.
+      </p>
+      <p>
+        We compute the <m>2</m>-eigenspace by solving the homogeneous system <m>(A-2I_3)x=0</m>.  We have
+        <me>
+          A-2I_3 = \mat{-2 6 8; \frac 12 -2 0; 0 \frac 12 -2}
+          \quad\xrightarrow{\text{RREF}}\quad
+          \mat{1 0 -16; 0 1 -4; 0 0 0}.
+        </me>
+        The parametric form and parametric vector form of the solutions are:
+        <me>
+          \syseq{x = 16z; y = 4z; z = z}
+          \quad\To\quad
+          \vec{x y z} = z\vec{16 4 1}.
+        </me>
+        Therefore, the <m>2</m>-eigenspace is the line
+        <me>
+          \Span\left\{\vec{16 4 1}\right\}.
+        </me>
+      </p>
+      <p>
+        We compute the <m>-1</m>-eigenspace by solving the homogeneous system <m>(A+I_3)x=0</m>.  We have
+        <me>
+          A+I_3 = \mat{1 6 8; \frac 12 1 0; 0 \frac 12 1}
+          \quad\xrightarrow{\text{RREF}}\quad
+          \mat{1 0 -4; 0 1 2; 0 0 0}.
+        </me>
+        The parametric form and parametric vector form of the solutions are:
+        <me>
+          \syseq{x = 4z; y = -2z; z = z}
+          \quad\To\quad
+          \vec{x y z} = z\vec{4 -2 1}.
+        </me>
+        Therefore, the <m>-1</m>-eigenspace is the line
+        <me>
+          \Span\left\{\vec{4 -2 1}\right\}.
+        </me>
+      </p>
+      <figure>
+        <caption>The red line is the <m>-1</m>-eigenspace, and the green line is the <m>2</m>-eigenspace.</caption>
+        <mathbox source="demos/eigenspace.html?mat=0,6,8:1/2,0,0:0,1/2,0&amp;nomult" height="500px"/>
+      </figure>
+    </solution>
+  </example>
 
-  <p><m>
-    y = \mat{\cos\theta{} \sin\theta; -\sin\theta , \cos\theta}
-  </m></p>
-
-  <p><m>
-    y = \vec{12 13 \frac 23 4}
-  </m></p>
-
-  <p><m>
-    x = \amat[r]{1 -2 3 ; 4 55 2^3; \frac {1 1}2 {1 3} {1{0}1}}
-  </m></p>
-
-  <p><m>
-    x = \spalignaugmatn[c]{2}{1 -2 3 ; 4 55 2^3; \frac {1 1}2 {1 3} {1{0}1}}
-  </m></p>
-
-  <p><m>
-    x = \hmat*{1 2 3 4; 10 20 30 40}
-  </m></p>
-
-  <p><m>
-    \spalignsysdelims\{\}
-    \spalignsystabspace2pt
-    \syseq{2x \+ \. - 3z = 1;
-           \. \+ 4y + z = -4}
-  </m></p>
+  <paragraphs>
+    <title>Form of the characteristic polynomial</title>
 
   <p>
-    Click on Theorem <xref ref="test-theorem" />!
+    It is time that we justified the use of the term <q>polynomial.</q> First we need a vocabulary word.
   </p>
+
+  <definition>
+    <statement>
+      <p>
+        The <term>trace</term> of a square matrix <m>A</m> is the number <m>\Tr(A)</m> obtained by summing the diagonal entries of <m>A</m>:
+        <me>
+          \def\r{\color{red}}
+          \Tr\mat{\r a_{11} a_{12} \cdots, a_{1,n-1} a_{1n} ;
+          a_{21} \r a_{22} \cdots, a_{2,n-1} a_{2n} ;
+          \vdots, \vdots, \ddots, \vdots, \vdots ;
+          a_{n-1,1} a_{n-1,2} \cdots, \r a_{n-1,n-1} a_{n-1,n} ;
+          a_{n1} a_{n2} \cdots, a_{n,n-1} \r a_{nn}}
+          =
+          \r a_{11} + a_{22} + \cdots + a_{nn}\color{black}.
+        </me>
+      </p>
+    </statement>
+  </definition>
+
+  <theorem xml:id="charpoly-is-poly">
+    <statement>
+      <p>
+        Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>f(\lambda)=\det(A-\lambda I_n)</m> be its characteristic polynomial.  Then <m>f(\lambda)</m> is a polynomial of degree <m>n</m>, of the form
+        <me>
+          f(\lambda) = (-1)^n\lambda^n + (-1)^{n-1}\Tr(A)\lambda^{n-1} + \cdots + \det(A).
+        </me>
+        In other words, the coefficient of <m>\lambda^{n-1}</m> is <m>\pm\Tr(A)</m>, and the constant term is <m>\det(A)</m> (the other coefficients are just numbers without names).
+      </p>
+    </statement>
+    <proof visible="true">
+      <p>
+        First we notice that
+        <me>
+          f(0) = \det(A - 0I_n) = \det(A),
+        </me>
+        so that the constant term is always <m>\det(A)</m>.
+      </p>
+      <p>
+        We will prove the rest of the theorem only for <m>2\times 2</m> matrices; the reader is encouraged to complete the proof in general using cofactor expansions.  We can write a <m>2\times 2</m> matrix as <m>A = \smallmat  abcd</m>; then
+        <me>
+          \begin{split}
+          f(\lambda) \amp= \det(A-\lambda I_2)
+          = \det\mat{a-\lambda, b; c d-\lambda}
+          = (a-\lambda)(d-\lambda)-bc \\
+          \amp=\lambda^2 - (a+d)\lambda + (ad-bc)
+          = \lambda^2 - \Tr(A)\lambda + \det(A).
+          \end{split}
+        </me>
+      </p>
+    </proof>
+  </theorem>
+
+  <warning>
+    <p>
+      When <m>n=2</m>, the Theorem tells us all of the coefficients of the characteristic polynomial:
+      <me>
+        f(\lambda) = \lambda^2 - \Tr(A)\lambda + \det(A).
+      </me>
+      This is generally the fastest way to compute the characteristic polynomial of a <m>2\times 2</m> matrix.
+    </p>
+  </warning>
+
+  <example>
+    <statement>
+      <p>
+        Find the characteristic polynomial of the matrix
+        <me>
+          A = \mat{5 2; 2 1}.
+        </me>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        We have
+        <me>
+          f(\lambda) = \lambda^2 - \Tr(A)\lambda + \det(A)
+          = \lambda^2 - (5+1)\lambda + (5\cdot 1-2\cdot 2)
+          = \lambda^2 - 6\lambda + 1,
+        </me>
+        as in the above <xref ref="charpoly-eg-22"/>.
+      </p>
+    </solution>
+  </example>
+
+  </paragraphs>
+
+  <paragraphs>
+    <title>Factoring the characteristic polynomial</title>
+
+    <p>
+      If <m>A</m> is a <m>n\times n</m> matrix, then the above <xref ref="charpoly-is-poly"/> says that the characteristic polynomial <m>f(\lambda)</m> has degree <m>n</m>.  When <m>n=2</m>, one can use the quadratic formula to find the roots of <m>f(\lambda)</m>.  There exist algebraic formulas for the roots of <url href="https://en.wikipedia.org/wiki/Cubic_function#General_solution_to_the_cubic_equation_with_real_coefficients">cubic</url> and <url href="https://en.wikipedia.org/wiki/Quartic_function#Solving_a_quartic_equation">quartic</url> polynomials, but these are generally too cumbersome to apply by hand.  Even worse, it is known that there is <url href="https://en.wikipedia.org/wiki/Abel%E2%80%93Ruffini_theorem">no algebraic formula</url> for the roots of a general polynomial of degree at least <m>5</m>.
+    </p>
+
+    <p>
+      In practice, the roots of the characteristic polynomial are found numerically by computer, for instance using <url href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton<rsq/>s method</url>.  That said, there do exist methods for finding roots by hand.  For instance, we have the following consequence of the <url href="https://en.wikipedia.org/wiki/Rational_root_theorem">rational root theorem</url> (which we also call the rational root theorem):
+    </p>
+
+    <fact hide-type="true" xml:id="rational-root-thm">
+      <title>Rational Root Theorem</title>
+      <p>
+        Suppose that <m>A</m> is an <m>n\times n</m> matrix whose characteristic polynomial <m>f(\lambda)</m> has integer (whole-number) entries.  Then all rational roots of its characteristic polynomial are integer divisors of <m>\det(A)</m>.
+      </p>
+    </fact>
+
+    <p>
+      For example, if <m>A</m> has integer entries, then its characteristic polynomial has integer coefficients.  This gives us one way to find a root by hand, if <m>A</m> has an eigenvalue that is a rational number.  Once we have found one root, then we can reduce the degree by <url href="https://en.wikipedia.org/wiki/Polynomial_long_division">polynomial long division</url>.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Find the eigenvalues of the matrix
+          <me>A = \mat{7 0 3; -3 2 -3; -3 0 -1}.</me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We compute the characteristic polynomial by expanding cofactors along the first row:
+          <me>
+            \begin{split}
+            f(\lambda) = \det(A - \lambda I_3)
+            \amp= \det\mat{7-\lambda, 0 3; -3 2-\lambda, -3; -3 0 -1-\lambda} \\
+            \amp= (7-\lambda)(2-\lambda)(-1-\lambda) + 3\cdot 3(2-\lambda) \\
+            \amp= -\lambda^3 + 8\lambda^2 - 14\lambda + 4.
+            \end{split}
+          </me>
+          The determinant of <m>A</m> is the constant term <m>f(0) = 4</m>; its integer divisors are <m>\pm 1,\pm 2,\pm 4</m>.  We check which are roots:
+          <me>
+            f(1) = -3 \quad f(-1) = 27 \quad f(2) = 0 \quad f(-2) = 72 \quad f(4) = 12 \quad f(-4) = 252.
+          </me>
+          The only rational root of <m>f(\lambda)</m> is <m>\lambda=2</m>.  We divide by <m>\lambda-2</m> using polynomial long division:
+          <me>
+            \frac{-\lambda^3 + 8\lambda^2 - 14\lambda + 4}{\lambda-2} = -\lambda^2 + 6\lambda - 2.
+          </me>
+          We can use the quadratic formula to find the roots of the quotient:
+          <me>
+            \lambda = \frac{-6 \pm\sqrt{36 - 4\cdot 2}}{-2}
+            = 3\pm\sqrt 7.
+          </me>
+          We have factored <m>f</m> completely:
+          <me>
+            f(\lambda) = -(\lambda-2)\bigl(\lambda-(3+\sqrt7)\bigr)\bigl(\lambda-(3-\sqrt7)\bigr).
+          </me>
+          Therefore, the eigenvalues of <m>A</m> are <m>2,\,3+\sqrt7,\,3-\sqrt7.</m>
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      In the above Example, we could have expanded cofactors along the second column to obtain
+      <me>
+        f(\lambda) = (2-\lambda)\det\mat{7-\lambda, 3; -3 -1-\lambda}.
+      </me>
+      Since <m>2-\lambda</m> was the only nonzero entry in its column, this expression already has the <m>2-\lambda</m> term factored out: the rational root theorem was not needed.  The determinant in the above expression is the characteristic polynomial of the matrix <m>\smallmat 73{-3}{-1}</m>, so we can compute it using the trace and determinant:
+      <me>
+        f(\lambda) = (2-\lambda)\bigl(\lambda^2-(7-1)\lambda+(-7+9)\bigr)
+        = (2-\lambda)(\lambda^2-6\lambda+2).
+      </me>
+    </p>
+
+  </paragraphs>
+
+  <paragraphs>
+    <title>Eigenvalues of a triangular matrix</title>
+
+    <p>
+      It is easy to compute the determinant of an upper- or lower-triangular matrix; this makes it easy to find its eigenvalues as well.
+    </p>
+
+    <corollary>
+      <statement>
+        <p>
+          If <m>A</m> is an upper- or lower-triangular matrix, then the eigenvalues of <m>A</m> are its diagonal entries.
+        </p>
+      </statement>
+      <proof visible="true">
+        <p>
+          Suppose for simplicity that <m>A</m> is a <m>3\times 3</m> upper-triangular matrix:
+          <me>
+            A = \mat{a_{11} a_{12} a_{13}; 0 a_{22} a_{23}; 0 0 a_{33}}.
+          </me>
+          Its characteristic polynomial is
+          <me>
+            f(\lambda) = \det(A-\lambda I_3)
+            = \det\mat{a_{11}-\lambda, a_{12} a_{13};
+            0 a_{22}-\lambda, a_{23};
+            0 0 a_{33}-\lambda}.
+          </me>
+          This is also an upper-triangular matrix, so the determinant is the product of the diagonal entries:
+          <me>
+            f(\lambda) = (a_{11}-\lambda)(a_{22}-\lambda)(a_{33}-\lambda).
+          </me>
+          The zeros of this polynomial are exactly <m>a_{11},\,a_{22},\,a_{33}.</m>
+        </p>
+      </proof>
+    </corollary>
+
+    <example>
+      <statement>
+        <p>
+          Find the eigenvalues of the matrix
+          <me>
+            A = \mat{1 7 2 4; 0 1 3 11; 0 0 \pi, 101; 0 0 0 0}.
+          </me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The eigenvalues are the diagonal entries <m>1,\pi,0</m>.  (The eigenvalue <m>1</m> occurs twice, but it counts as one eigenvalue; in <xref ref="diagonalization"/> we will define the notion of <em>multiplicity</em> of an eigenvalue.)
+        </p>
+      </solution>
+    </example>
+
+  </paragraphs>
+
+  <!-- TODO: algebraic multiplicity?  Or with geometric multiplicity? -->
+  <!-- TODO: expanded IMT?  Or wait until end? -->
 
 </section>

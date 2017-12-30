@@ -15,9 +15,9 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Understand the definitions of one-to-one and onto transformations.</li>
-      <li>Learn to verify if a matrix transformation is one-to-one and/or onto.</li>
-      <li>Understand the notions of one-to-one and onto transformations geometrically.</li>
-      <li>Vocabulary words: <term>one-to-one</term>, <term>onto</term>.</li>
+      <li><em>Recipe:</em> verify whether a matrix transformation is one-to-one and/or onto.</li>
+      <li><em>Pictures:</em> examples of matrix transformations that are/are not one-to-one and/or onto.</li>
+      <li><em>Vocabulary words:</em> <term>one-to-one</term>, <term>onto</term>.</li>
     </ol>
   </objectives>
 

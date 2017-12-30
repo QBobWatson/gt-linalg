@@ -12,6 +12,1062 @@ the license is included in gfdl.xml.
 <section xml:id="diagonalization">
   <title>Diagonalization</title>
 
-  <p>Diagonalization of matrices using eigenvalues.</p>
+  <objectives>
+    <ol>
+      <li>Learn two main criteria for a matrix to be diagonalizable.</li>
+      <li>Learn to quickly compute powers of matrices by diagonalization.</li>
+      <li>Develop a library of examples of matrices which are and are not diagonalizable.</li>
+      <li>Understand what diagonalizability and multiplicity have to say about similarity.</li>
+      <li><em>Recipe:</em> diagonalize a matrix.</li>
+      <li><em>Pictures:</em> the geometry of diagonal matrices, why a shear is not diagonalizable.</li>
+      <li><em>Theorem:</em> the Diagonalization Theorem (two variants).</li>
+      <li><em>Vocabulary words:</em> <term>diagonalizable</term>, <term>algebraic multiplicity</term>, <term>geometric multiplicity</term>.</li>
+    </ol>
+  </objectives>
+
+  <introduction>
+    <p>
+      Diagonal matrices are the easiest kind of matrices to understand: they just scale the coordinate directions by their diagonal entries.  In <xref ref="similarity"/>, we saw that similar matrices behave in the same way, with respect to different coordinate systems.  Therefore, if a matrix is similar to a diagonal matrix, it is also relatively easy to understand.  This Section is devoted to the question: <q>When is a matrix similar to a diagonal matrix?</q>
+    </p>
+  </introduction>
+
+  <subsection>
+    <title>Diagonalizability</title>
+
+    <p>
+      Before answering the above question, first we give it a name.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+          An <m>n\times n</m> matrix <m>A</m> is <term>diagonalizable</term> if it is similar to a diagonal matrix: that is, if there exists an invertible <m>n\times n</m> matrix <m>C</m> and a diagonal matrix <m>D</m> such that
+          <me>A = CDC\inv.</me>
+        </p>
+      </statement>
+    </definition>
+
+    <specialcase>
+      <p>
+        Any diagonal matrix is <m>D</m> is diagonalizable because it is <xref ref="similarity-eq-reln" text="title">similar to itself</xref>.  For instance,
+        <me>
+          \mat{1 0 0; 0 2 0; 0 0 3} = I_3\mat{1 0 0; 0 2 0; 0 0 3}I_3\inv.
+        </me>
+      </p>
+    </specialcase>
+
+    <example>
+      <p>
+        Most of the examples in <xref ref="similarity"/> involve diagonalizable matrices:
+        <me>
+        \def\idb{\quad\parbox{\widthof{because it equals}}{is diagonalizable\\because it equals}\quad}
+        \begin{split}
+          \mat{-12 15; -10 13} \amp\idb
+          \mat{-2 3; 1 -1} \mat{3 0; 0 -2} \mat{-2 3; 1 -1}\inv\\
+          \mat{1/2 3/2; 3/2 1/2} \amp\idb
+          \mat{1 1; 1 -1} \mat{2 0; 0 -1} \mat{1 1; 1 -1}\inv\\
+          \frac 15\mat{-8 -9; 6 13} \amp\idb
+          \frac 12\mat{-1 -3; 2 1} \mat{2 0; 0 -1} \left(\frac 12\mat{-1 -3; 2 1}\right)\inv\\
+          \mat{-1 0 0; -1 0 2; -1 1 1} \amp\idb
+          \mat{-1 1 0; 1 1 1; -1 0 1} \mat{-1 0 0; 0 -1 0; 0 0 2} \mat{-1 1 0; 1 1 1; -1 0 1}\inv.
+        \end{split}
+        </me>
+      </p>
+    </example>
+
+    <paragraphs>
+      <title>Powers of diagonalizable matrices</title>
+    <p>
+      Multiplying diagonal matrices together just multiplies their diagonal entries:
+      <me>
+        \mat{x_1 0 0; 0 x_2 0; 0 0 x_3}\mat{y_1 0 0; 0 y_2 0; 0 0 y_3}
+        = \mat{x_1y_1 0 0; 0 x_2y_2 0; 0 0 x_3y_3}.
+      </me>
+      Therefore, it is easy to take powers of a diagonal matrix:
+      <me>
+        \mat{x 0 0; 0 y 0; 0 0 z}^n = \mat{x^n 0 0; 0 y^n 0; 0 0 z^n}.
+      </me>
+      By this <xref ref="similarity-powers"/>, if <m>A = CDC\inv</m> then <m>A^n = CD^nC\inv</m>, so it is also easy to take powers of <em>diagonalizable</em> matrices.  This will be very important in applications to difference equations in <xref ref="stochastic-matrices"/>.
+    </p>
+
+    <warning xml:id="diag-powers">
+      <p>
+        If <m>A = CDC\inv</m>, where <m>D</m> is a diagonal matrix, then <m>A^n = CD^nC\inv</m>:
+        <me>
+          A = C\mat{x 0 0; 0 y 0; 0 0 z}C\inv \quad\implies\quad
+          A^n = C\mat{x^n 0 0; 0 y^n 0; 0 0 z^n}C\inv.
+        </me>
+      </p>
+    </warning>
+
+    <example>
+      <statement>
+        <p>
+          Let
+          <me>
+            A = \mat{1/2 3/2; 3/2 1/2} =
+            \mat{1 1; 1 -1} \mat{2 0; 0 -1} \mat{1 1; 1 -1}\inv.
+          </me>
+          Find a closed formula for <m>A^n</m>, where <m>n</m> is any positive whole number.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We have
+          <me>
+            \begin{split}
+            A^n \amp= \mat{1 1; 1 -1} \mat{2 0; 0 -1}^n \mat{1 1; 1 -1}\inv \\
+            \amp= \mat{1 1; 1 -1} \mat{2^n 0; 0 (-1)^n} \frac 1{-2}\mat{-1 -1; -1 1} \\
+            \amp= \mat{2^n (-1)^n; 2^n (-1)^{n+1}}\frac 12\mat{1 1; 1 -1} \\
+            \amp= \frac 12\mat{2^n+(-1)^n 2^n+(-1)^{n+1}; 2^n+(-1)^{n+1} 2^n+(-1)^{n}},
+            \end{split}
+          </me>
+          where we used <m>(-1)^{n+2}=(-1)^2(-1)^n = (-1)^n</m>.
+        </p>
+      </solution>
+    </example>
+    </paragraphs>
+
+    <p>
+      Now we come to the primary criterion for diagonalizability.  It shows that diagonalizability is an eigenvalue problem.
+    </p>
+
+    <theorem type-name="Diagonalization Theorem" xml:id="diagonalization-thm">
+      <statement>
+        <p>
+          An <m>n\times n</m> matrix <m>A</m> is diagonalizable if and only if <m>A</m> has <m>n</m> linearly independent eigenvectors.
+        </p>
+        <p>
+          In this case, <m>A = CDC\inv</m> for
+          <me>
+            C = \mat{| |,, |; v_1 v_2 \cdots, v_n; | |,, |}
+            \qquad
+            D = \mat{\lambda_1 0 \cdots, 0; 0 \lambda_2 \cdots, 0;
+              \vdots, \vdots, \ddots, \vdots; 0 0 \cdots, \lambda_n},
+          </me>
+          where <m>v_1,v_2,\ldots,v_n</m> are linearly independent eigenvectors, and <m>\lambda_1,\lambda_2,\ldots,\lambda_n</m> are the corresponding eigenvalues, in the same order.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          First suppose that <m>A</m> has <m>n</m> linearly independent eigenvectors <m>v_1,v_2,\ldots,v_n</m>, with eigenvalues <m>\lambda_1,\lambda_2,\ldots,\lambda_n</m>.  Define <m>C</m> as above, so <m>C</m> is invertible by the <xref ref="imt-2"/>.  Let <m>D = C\inv A C</m>, so <m>A = CDC\inv</m>.  <xref ref="linear-trans-pick-columns" text="title">Multiplying by unit coordinate vectors</xref> picks out the columns of <m>C</m>: we have <m>Ce_i = v_i</m>, so <m>e_i = C\inv v_i</m>.  We multiply by the unit coordinate vectors to find the columns of <m>D</m>:
+          <me>
+            De_i = C\inv A Ce_i = C\inv Av_i = C\inv\lambda_i v_i = \lambda_iC\inv v_i = \lambda_ie_i.
+          </me>
+          Therefore, the columns of <m>D</m> are multiples of the unit coordinate vectors:
+          <me>
+            D = \mat{\lambda_1 0 \cdots, 0 0; 0 \lambda_2 \cdots, 0 0;
+            \vdots, \vdots, \ddots, \vdots, \vdots;
+            0 0 \cdots, \lambda_{n-1} 0; 0 0 \cdots, 0 \lambda_n}.
+          </me>
+        </p>
+        <p>
+          Now suppose that <m>A = CDC\inv</m>, where <m>C</m> has columns <m>v_1,v_2,\ldots,v_n</m>, and <m>D</m> is diagonal with diagonal entries <m>\lambda_1,\lambda_2,\ldots,\lambda_n</m>.  Since <m>C</m> is invertible, its columns are linearly independent.  We have to show that <m>v_i</m> is an eigenvector of <m>A</m> with eigenvalue <m>\lambda_i</m>.  We know that the unit coordinate vector <m>e_i</m> is an eigenvector of <m>D</m> with eigenvalue <m>\lambda_i</m>, so:
+          <me>
+            Av_i = CDC\inv v_i = CDe_i = C\lambda_ie_i = \lambda_iCe_i = \lambda_i v_i.
+          </me>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      By this <xref ref="evecs-linindep"/>, if an <m>n\times n</m> matrix <m>A</m> has <m>n</m> <em>distinct</em> eigenvalues <m>\lambda_1,\lambda_2,\ldots,\lambda_n</m>, then a choice of corresponding eigenvectors <m>v_1,v_2,\ldots,v_n</m> is automatically linearly independent.
+    </p>
+
+    <warning>
+      <p>
+        An <m>n\times n</m> matrix with <m>n</m> distinct eigenvalues is diagonalizable.
+      </p>
+    </warning>
+
+    <example hide-type="true" xml:id="diag-easy-eg">
+      <title>Easy Example</title>
+      <statement>
+        <p>
+          Apply the <xref ref="diagonalization-thm"/> to the matrix
+          <me>A = \mat{1 0 0; 0 2 0; 0 0 3}.</me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          This diagonal matrix is in particular upper-triangular, so its eigenvalues are the diagonal entries <m>1,2,3</m>.  The unit coordinate vectors are eigenvalues of a diagonal matrix:
+          <me>
+            \mat{1 0 0; 0 2 0; 0 0 3}\vec{1 0 0} = 1\cdot\vec{1 0 0} \qquad
+            \mat{1 0 0; 0 2 0; 0 0 3}\vec{0 1 0} = 2\cdot\vec{0 1 0}
+          </me>
+          <me>
+            \mat{1 0 0; 0 2 0; 0 0 3}\vec{0 0 1} = 3\cdot\vec{0 0 1}.
+          </me>
+          Therefore, the diagonalization theorem says that <m>A=CDC\inv</m>, where the columns of <m>C</m> are the unit coordinate vectors, and the <m>D</m> is the diagonal matrix with entries <m>1,2,3</m>:
+          <me>
+            \mat{1 0 0; 0 2 0; 0 0 3} =
+            \mat{1 0 0; 0 1 0; 0 0 1} \mat{1 0 0; 0 2 0; 0 0 3}
+            \mat{1 0 0; 0 1 0; 0 0 1}\inv.
+          </me>
+          This just tells us that <m>A</m> is similar to itself.
+        </p>
+        <p>
+          Actually, the diagonalization theorem is not completely trivial even for diagonal matrices.  If we put our eigenvalues in the order <m>3,2,1</m>, then the corresponding eigenvectors are <m>e_3,e_2,e_1</m>, so we also have that <m>A = C'D'(C')\inv</m>, where <m>C'</m> is the matrix with columns <m>e_3,e_2,e_1</m>, and <m>D'</m> is the diagonal matrix with entries <m>3,2,1</m>:
+          <me>
+            \mat{1 0 0; 0 2 0; 0 0 3} =
+            \mat{0 0 1; 0 1 0; 1 0 0} \mat{3 0 0; 0 2 0; 0 0 1}
+            \mat{0 0 1; 0 1 0; 1 0 0}\inv.
+          </me>
+          In particular, the matrices
+          <me>
+            \mat{1 0 0; 0 2 0; 0 0 3}
+            \sptxt{and}
+            \mat{3 0 0; 0 2 0; 0 0 1}
+          </me>
+          are similar to each other.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+    </p>
+
+    <note>
+      <p>
+        We saw in the above example that changing the order of the eigenvalues and eigenvectors produces a different diagonalization of the same matrix. There are generally many different ways to diagonalize a matrix, corresponding to different orderings of the eigenvalues of that matrix.  The important thing is that the eigenvalues and eigenvectors have to be listed in the same order.
+        <me>
+          \begin{split}
+          A \amp= \mat{| | |; v_1 v_2 v_3; | | |}
+          \mat{\lambda_1 0 0; 0 \lambda_2 0; 0 0 \lambda_3}
+          \mat{| | |; v_1 v_2 v_3; | | |}\inv \\
+          \amp= \mat{| | |; v_3 v_2 v_1; | | |}
+          \mat{\lambda_3 0 0; 0 \lambda_2 0; 0 0 \lambda_1}
+          \mat{| | |; v_3 v_2 v_1; | | |}\inv.
+          \end{split}
+        </me>
+      </p>
+    </note>
+
+    <example xml:id="diagonal-eg-22">
+      <title>A diagonalizable <m>2\times 2</m> matrix</title>
+      <statement>
+        <p>
+          Diagonalize the matrix
+          <me>
+            A = \mat{1/2 3/2; 3/2 1/2}.
+          </me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We need to find the eigenvalues and eigenvectors of <m>A</m>.  First we compute the characteristic polynomial:
+          <me>
+            f(\lambda) = \lambda^2-\Tr(A)\lambda + \det(A) = \lambda^2-\lambda-2
+            = (\lambda+1)(\lambda-2).
+          </me>
+          Therefore, the eigenvalues are <m>-1</m> and <m>2</m>.  We need to compute eigenvectors for each eigenvalue.  We start with <m>\lambda_1 = -1</m>:
+          <me>
+(A + 1I_2)v = 0 \iff
+  \mat{3/2 3/2; 3/2 3/2}v = 0
+  \;\xrightarrow{\text{RREF}}\;
+  \mat{1 1; 0 0}v = 0.
+          </me>
+          The parametric form is <m>x = -y</m>, so <m>v_1 = {-1\choose 1}</m> is an eigenvector with eigenvalue <m>\lambda_1</m>.  Now we find an eigenvector with eigenvalue <m>\lambda_2 = 2</m>:
+          <me>
+            (A-2I_2)v = 0 \iff
+  \mat{-3/2 3/2; 3/2 -3/2}v = 0
+  \;\xrightarrow{\text{RREF}}\;
+  \mat{1 -1; 0 0}v = 0.
+          </me>
+          The parametric form is <m>x = y</m>, so <m>v_2 = {1\choose 1}</m> is an eigenvector with eigenvalue <m>2</m>.
+        </p>
+        <p>
+          The eigenvectors <m>v_1,v_2</m> are linearly independent, so the <xref ref="diagonalization-thm"/> says that
+          <me>
+            A = CDC\inv \sptxt{for} C = \mat{-1 1; 1 1} \qquad D = \mat{-1 0; 0 2}.
+          </me>
+          Alternatively, if we choose <m>2</m> as our first eigenvalue, then
+          <me>
+            A = C'D'(C')\inv \sptxt{for} C' = \mat{1 -1; 1 1} \qquad D' = \mat{2 0; 0 -1}.
+          </me>
+        </p>
+        <figure>
+          <caption>The red line is the <m>-1</m>-eigenspace of <m>A</m>, and the green line is the <m>2</m>-eigenspace. There are two linearly independent (noncollinear) eigenvectors visible in the picture: choose any nonzero vector on the red line, and any nonzero vector on the green line.</caption>
+          <mathbox source="demos/eigenspace.html?mat=1/2,3/2:3/2,1/2&amp;nomult" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <example xml:id="diagonal-eg-33">
+      <title>A diagonalizable <m>3\times 3</m> matrix</title>
+      <statement>
+        <p>
+          Diagonalize the matrix
+          <me>
+            A = \mat{4 -3 0; 2 -1 0; 1 -1 1}.
+          </me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We need to find the eigenvalues and eigenvectors of <m>A</m>.  First we compute the characteristic polynomial by expanding cofactors along the third column:
+          <me>
+            \begin{split}
+            f(\lambda) \amp= \det(A-\lambda I_3)
+            = (1-\lambda)\det\left(\mat{4 -3; 2 -1} - \lambda I_2\right) \\
+            \amp= (1-\lambda)(\lambda^2 - 3\lambda + 2)
+            = -(\lambda-1)^2(\lambda-2).
+            \end{split}
+          </me>
+          Therefore, the eigenvalues are <m>1</m> and <m>2</m>.  We need to compute eigenvectors for each eigenvalue.  We start with <m>\lambda_1 = 1</m>:
+          <me>
+(A-I_3)v = 0 \iff
+\mat{3 -3 0; 2 -2 0; 1 -1 0}v = 0
+  \;\xrightarrow{\text{RREF}}\;
+\mat{1 -1 0; 0 0 0; 0 0 0}v = 0.
+          </me>
+          The parametric vector form is
+          <me>
+            \syseq{x = y; y = y; z = \. \+ z}
+            \implies \vec{x y z} = y\vec{1 1 0} + z\vec{0 0 1}.
+          </me>
+          Hence a basis for the <m>1</m>-eigenspace is
+          <me>
+            \cB_1 = \bigl\{ v_1,v_2 \bigr\} \sptxt{where}
+v_1 = \vec{1 1 0}, \quad v_2 = \vec{0 0 1}.
+          </me>
+          Now we compute the eigenspace for <m>\lambda_2 = 2</m>:
+          <me>
+(A-2I_3)v = 0 \iff
+\mat{2 -3 0; 2 -3 0; 1 -1 -1}v = 0
+  \;\xrightarrow{\text{RREF}}\;
+  \mat{1 0 -3; 0 1 -2; 0 0 0}v = 0
+          </me>
+          The parametric form is <m>x = 3z, y = 2z</m>, so an eigenvector with eigenvalue <m>2</m> is
+          <me>v_3 = \vec{3 2 1}.</me>
+        </p>
+        <p>
+The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> form a basis for the <m>1</m>-eigenspace, and <m>v_3</m> is not contained in the <m>1</m>-eigenspace because its eigenvalue is <m>2</m>.
+          Therefore, the <xref ref="diagonalization-thm"/> says that
+          <me>
+            A = CDC\inv \sptxt{for} C = \mat{1 0 3; 1 0 2; 0 1 1}
+            \qquad D = \mat{1 0 0; 0 1 0; 0 0 2}.
+          </me>
+        </p>
+        <figure>
+          <caption>The red plane is the <m>1</m>-eigenspace of <m>A</m>, and the green line is the <m>2</m>-eigenspace. There are three linearly independent eigenvectors visible in the picture: choose any two noncollinear vectors on the red plane, and any nonzero vector on the green line.</caption>
+          <mathbox source="demos/eigenspace.html?mat=4,-3,0:2,-1,0:1,-1,1&amp;nomult" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <p>
+      Here is the procedure we used in the above Examples.
+    </p>
+
+    <warning>
+      <title>Diagonalization: Procedure</title>
+      <p>
+        Let <m>A</m> be an <m>n\times n</m> matrix.  To diagonalize <m>A</m>:
+        <ol>
+          <li>
+            Find the eigenvalues of <m>A</m> using the characteristic polynomial.
+          </li>
+          <li>
+            For each eigenvalue <m>\lambda</m> of <m>A</m>, compute a basis <m>\cB_\lambda</m> for the <m>\lambda</m>-eigenspace.
+          </li>
+          <li>
+            If there are fewer than <m>n</m> total vectors in all of the eigenspace bases <m>B_\lambda</m>, then the matrix is not diagonalizable.
+          </li>
+          <li>
+            Otherwise, the <m>n</m> vectors <m>v_1,v_2,\ldots,v_n</m> in the eigenspace bases are linearly independent, and <m>A = CDC\inv</m> for
+            <me>
+    C = \mat{| |,, |; v_1 v_2 \cdots, v_n; | | ,, |} \sptxt{and}
+  D = \mat{\lambda_1 0 \cdots, 0;
+    0 \lambda_2 \cdots, 0;
+    \vdots, \vdots, \ddots, \vdots;
+    0 0 \cdots, \lambda_n},
+            </me>
+  where <m>\lambda_i</m> is the eigenvalue for <m>v_i</m>.
+          </li>
+        </ol>
+      </p>
+    </warning>
+
+    <p>
+      We will justify the linear independence assertion in part 4 in the proof of this <xref ref="diag-thm-variant"/> below.
+    </p>
+
+    <example xml:id="diag-eg-shear">
+      <title>A shear is not diagonalizable</title>
+      <p>
+        Let
+        <me>A = \mat{1 1; 0 1},</me>
+        so <m>T(x) = Ax</m> is a <xref ref="matrix-trans-shear" text="title">shear</xref>.  The characteristic polynomial of <m>A</m> is <m>f(\lambda) = (\lambda-1)^2</m>, so the only eigenvalue of <m>A</m> is <m>1</m>.  We compute the <m>1</m>-eigenspace:
+        <me>
+(A - I_2)v = 0 \iff
+  \mat{0 1; 0 0}\vec{x y} = 0 \iff y = 0.
+        </me>
+        In other words, the <m>1</m>-eigenspace is exactly the <m>x</m>-axis, so <em>all</em> of the eigenvectors of <m>A</m> lie on the <m>x</m>-axis.  It follows that <m>A</m> does <em>not</em> admit two linearly independent eigenvectors, so by the <xref ref="diagonalization-thm"/>, it is not diagonalizable.
+      </p>
+      <p>
+        In this <xref ref="evecs-eg-shear"/>, we studied the eigenvalues of a shear geometrically; we reproduce the interactive demo here.
+      </p>
+        <figure>
+          <caption>All eigenvectors of a shear lie on the <m>x</m>-axis.</caption>
+          <mathbox source="demos/eigenspace.html?mat=1,1:0,1&amp;nomult" height="500px"/>
+        </figure>
+    </example>
+
+    <example xml:id="diag-eg-33-nondiag">
+      <title>A non-diagonalizable <m>3\times 3</m> matrix</title>
+      <p>
+        Let
+        <me>A = \mat{1 1 0; 0 1 0; 0 0 2}.</me>
+        The characteristic polynomial of <m>A</m> is <m>f(\lambda) = -(\lambda-1)^2(\lambda-2)</m>, so the eigenvalues of <m>A</m> are <m>1</m> and <m>2</m>.  We compute the <m>1</m>-eigenspace:
+        <me>
+(A - I_3)v = 0 \iff
+  \mat{0 1 0; 0 0 0; 0 0 2}\vec{x y z} = 0 \iff y = z = 0.
+        </me>
+        In other words, the <m>1</m>-eigenspace is the <m>x</m>-axis.  Similarly,
+        <me>
+(A - 2I_3)v = 0 \iff
+  \mat{-1 1 0; 0 -1 0; 0 0 0}\vec{x y z} = 0 \iff x = y = 0,
+        </me>
+        so the <m>2</m>-eigenspace is the <m>z</m>-axis.  In particular, all eigenvectors of <m>A</m> lie on the <m>xz</m>-plane, so there do not exist three linearly independent eigenvectors of <m>A</m>.  By the <xref ref="diagonalization-thm"/>, the matrix <m>A</m> is not diagonalizable.
+      </p>
+      <p>
+        Notice that <m>A</m> contains a <m>2\times 2</m> block on its diagonal that looks like a shear:
+        <me>
+          \def\r{\color{red}}
+          A = \mat{\r 1 \r 1 0; \r 0 \r 1 0; 0 0 2}.
+        </me>
+        This makes one suspect that such a matrix is not diagonalizable.
+      </p>
+      <figure>
+        <caption>All eigenvectors of <m>A</m> lie on the <m>x</m>- and <m>z</m>-axes.</caption>
+        <mathbox source="demos/eigenspace.html?mat=1,1,0:0,1,0:0,0,2&amp;nomult" height="500px"/>
+      </figure>
+    </example>
+
+    <example xml:id="diag-eg-rotation">
+      <title>A rotation matrix</title>
+      <p>
+        Let
+        <me>
+          A = \mat{0 -1; 1 0},
+        </me>
+        so <m>T(x) = Ax</m> is the linear transformation that rotates counterclockwise by <m>90^\circ</m>.  We saw in this <xref ref="evecs-eg-rotation"/> that <m>A</m> does not have any eigenvectors at all.  It follows that <m>A</m> is not diagonalizable.
+      </p>
+        <figure>
+          <caption>This rotation matrix has no eigenvectors.</caption>
+          <mathbox source="demos/eigenspace.html?mat=0,-1:1,0&amp;nospace" height="500px"/>
+        </figure>
+      <p>
+        The characteristic polynomial of <m>A</m> is <m>f(\lambda) = \lambda^2+1</m>, which of course does not have any real roots.  If we allow <em>complex</em> numbers, however, then <m>f</m> has <em>two</em> roots, namely, <m>\pm i</m>, where <m>i = \sqrt{-1}</m>.  Hence the matrix is diagonalizable if we allow ourselves to use complex numbers.  We will treat this topic in detail in <xref ref="complex-eigenvalues"/>.
+      </p>
+    </example>
+
+    <p>
+      The following point is often a source of confusion.
+    </p>
+
+    <warning>
+      <title>Diagonalizability has nothing to do with invertibility</title>
+      <p>
+        Of the following matrices, the first is diagonalizable and invertible, the second is diagonalizable but not invertible, the third is invertible but not diagonalizable, and the fourth is neither invertible nor diagonalizable, as the reader can verify:
+        <me>\mat{1 0; 0 1} \qquad \mat{1 0; 0 0} \qquad \mat{1 1; 0 1} \qquad \mat{0 1; 0 0}.</me>
+      </p>
+    </warning>
+
+    <remark xml:id="diag-rem-all-nondiag">
+      <title>Non-diagonalizable <m>2\times 2</m> matrices with an eigenvalue</title>
+      <p>
+        As in the above <xref ref="diag-eg-shear"/>, one can check that the matrix
+        <me>A_\lambda = \mat{\lambda, 1; 0 \lambda}</me>
+        is not diagonalizable for any number <m>\lambda</m>.  We claim that any non-diagonalizable <m>2\times 2</m> matrix <m>B</m> with a real eigenvalue <m>\lambda</m> is similar to <m>A_\lambda</m>.  Therefore, up to similarity, these are the only such examples.
+      </p>
+      <p>
+        To prove this, let <m>B</m> be such a matrix.  Let <m>v_1</m> be an eigenvector with eigenvalue <m>\lambda</m>, and let <m>v_2</m> be any vector in <m>\R^2</m> that is not collinear with <m>v_1</m>, so that <m>\{v_1,v_2\}</m> forms a basis for <m>\R^2</m>.  Let <m>C</m> be the matrix with columns <m>v_1,v_2</m>, and consider <m>A = C\inv BC</m>.  We have <m>Ce_1=v_1</m> and <m>Ce_2=v_2</m>, so <m>C\inv v_1=e_1</m> and <m>C\inv v_2=e_2</m>.  We can compute the first column of <m>A</m> as follows:
+        <me>
+          Ae_1 = C\inv BC e_1 = C\inv Bv_1 = C\inv\lambda v_1 = \lambda C\inv v_1 = \lambda e_1.
+        </me>
+        Therefore, <m>A</m> has the form
+        <me>A = \mat{\lambda, b; 0 d}.</me>
+        Since <m>A</m> is similar to <m>B</m>, it also has only one eigenvalue <m>\lambda</m>; since <m>A</m> is upper-triangular, this implies <m>d=\lambda</m>, so
+        <me>A = \mat{\lambda, b; 0 \lambda}.</me>
+        As <m>B</m> is not diagonalizable, we know <m>A</m> is not diagonal (<m>B</m> is similar to <m>A</m>), so <m>b\neq 0</m>.  Now we observe that
+        <me>
+          \mat{1/b 0; 0 1}\mat{\lambda, b; 0 \lambda}\mat{1/b 0; 0 1}\inv
+          = \mat{\lambda/b 1; 0 \lambda}\mat{b 0; 0 1}
+          = \mat{\lambda, 1; 0 \lambda} = A_\lambda.
+        </me>
+        We have shown that <m>B</m> is similar to <m>A</m>, which is similar to <m>A_\lambda</m>, so <m>B</m> is similar to <m>A_\lambda</m> by the <xref ref="similarity-eq-reln" text="title">transitivity property</xref> of similar matrices
+      </p>
+    </remark>
+
+  </subsection>
+
+  <subsection>
+    <title>Algebraic and Geometric Multiplicity</title>
+
+    <p>
+      In this Subsection, we give a variant of the <xref ref="diagonalization-thm"/> that provides another criterion for diagonalizability.  It is stated in the language of <em>multiplicities</em> of eigenvalues.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+          Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>\lambda</m> be an eigenvalue of <m>A</m>.
+          <ol>
+            <li>
+              The <term>algebraic multiplicity</term> of <m>\lambda</m> is its multiplicity as a root of the characteristic polynomial of <m>A</m>.
+            </li>
+            <li>
+              The <term>geometric multiplicity</term> of <m>\lambda</m> is the dimension of the <m>\lambda</m>-eigenspace.
+            </li>
+          </ol>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      Since the <m>\lambda</m>-eigenspace of <m>A</m> is <m>\Nul(A-\lambda I_n)</m>, its dimension is the number of free variables in the system of equations <m>(A - \lambda I_n)x=0</m>, i.e., the number of columns without pivots in the matrix <m>A-\lambda I_n</m>.
+    </p>
+
+    <example>
+      <p>
+        The shear matrix
+        <me>
+          A = \mat{1 1; 0 1}
+        </me>
+        has only one eigenvalue <m>\lambda=1</m>.  The characteristic polynomial of <m>A</m> is <m>f(\lambda) = (\lambda-1)^2</m>, so <m>1</m> has algebraic multiplicity <m>2</m>, as it is a double root of <m>f</m>.  On the other hand, we showed in this <xref ref="diag-eg-shear"/> that the <m>1</m>-eigenspace of <m>A</m> is the <m>x</m>-axis, so the geometric multiplicity of <m>1</m> is equal to <m>1</m>.  This matrix is not diagonalizable.
+      </p>
+        <figure>
+          <caption>Eigenspace of the shear matrix, with multiplicities.</caption>
+          <mathbox source="demos/eigenspace.html?mat=1,1:0,1" height="500px"/>
+        </figure>
+      <p>
+        The identity matrix
+        <me>
+          I_2 = \mat{1 0; 0 1}
+        </me>
+        also has characteristic polynomial <m>(\lambda-1)^2</m>, so the eigenvalue <m>1</m> has algebraic multiplicity <m>2</m>.  Since every nonzero vector in <m>\R^2</m> is an eigenvector of <m>I_2</m> with eigenvalue <m>1</m>, the <m>1</m>-eigenspace is all of <m>\R^2</m>, so the geometric multiplicity is <m>2</m> as well.  This matrix is diagonal.
+      </p>
+        <figure>
+          <caption>Eigenspace of the identity matrix, with multiplicities.</caption>
+          <mathbox source="demos/eigenspace.html?mat=1,0:0,1" height="500px"/>
+        </figure>
+    </example>
+
+    <example>
+      <p>
+        Continuing with this <xref ref="diagonal-eg-33"/>, let
+        <me>
+          A = \mat{4 -3 0; 2 -1 0; 1 -1 1}.
+        </me>
+        The characteristic polynomial is <m>f(\lambda) = -(\lambda-1)^2(\lambda-2)</m>, so that <m>1</m> and <m>2</m> are the eigenvalues, with algebraic multiplicities <m>2</m> and <m>1</m>, respectively.  We computed that the <m>1</m>-eigenspace is a plane and the <m>2</m>-eigenspace is a line, so that <m>1</m> and <m>2</m> also have geometric multiplicities <m>2</m> and <m>1</m>, respectively.  This matrix is diagonalizable.
+      </p>
+      <figure>
+        <caption>The red plane is the <m>1</m>-eigenspace of <m>A</m>, and the green line is the <m>2</m>-eigenspace.  Hence the geometric multiplicity of the <m>1</m>-eigenspace is <m>2</m>, and the geometric multiplicity of the <m>2</m>-eigenspace is <m>1</m>.</caption>
+        <mathbox source="demos/eigenspace.html?mat=4,-3,0:2,-1,0:1,-1,1" height="500px"/>
+      </figure>
+      <p>
+        In this <xref ref="diag-eg-33-nondiag"/>, we saw that the matrix
+        <me>A = \mat{1 1 0; 0 1 0; 0 0 2}</me>
+        also has characteristic polynomial <m>f(\lambda) = -(\lambda-1)^2(\lambda-2)</m>, so that <m>1</m> and <m>2</m> are the eigenvalues, with algebraic multiplicities <m>2</m> and <m>1</m>, respectively.  In this case, however, both eigenspaces are <em>lines,</em> so that both eigenvalues have geometric multiplicity <m>1</m>.  This matrix is not diagonalizable.
+      </p>
+      <figure>
+        <caption>Both eigenspaces of <m>A</m> are lines, so they both have geometric multiplicity <m>1</m>.</caption>
+        <mathbox source="demos/eigenspace.html?mat=1,1,0:0,1,0:0,0,2" height="500px"/>
+      </figure>
+    </example>
+
+    <p>
+      We saw in the above Examples that the algebraic and geometric multiplicities need not coincide.  However, they do satisfy the following fundamental inequality, the proof of which is beyond the scope of this text.
+    </p>
+
+    <theorem xml:id="diag-amgm">
+      <title>Algebraic and Geometric Multiplicity</title>
+      <statement>
+        <p>
+          Let <m>A</m> be a square matrix and let <m>\lambda</m> be an eigenvalue of <m>A</m>.  Then
+          <me>
+            1 \leq \text{(the geometric multiplicity of $\lambda$)}
+  \leq \text{(the algebraic multiplicity of $\lambda$)}.
+          </me>
+        </p>
+      </statement>
+    </theorem>
+
+    <p>
+      In particular, if the algebraic multiplicity of <m>\lambda</m> is equal to <m>1</m>, then so is the geometric multiplicity.
+    </p>
+
+    <warning>
+      <p>
+        If <m>A</m> has an eigenvalue <m>\lambda</m> with algebraic multiplicity <m>1</m>, then the <m>\lambda</m>-eigenspace is a <em>line.</em>
+      </p>
+    </warning>
+
+    <p>
+      We can use the <xref ref="diag-amgm"/> to give another criterion for diagonalizability.
+    </p>
+
+    <theorem xml:id="diag-thm-variant" hide-type="true">
+      <title>Diagonalization Theorem, Variant</title>
+      <statement>
+        <p>
+          Let <m>A</m> be an <m>n\times n</m> matrix.  The following are equivalent:
+          <ol>
+            <li>
+              <m>A</m> is diagonalizable.
+            </li>
+            <li>
+              The sum of the geometric multiplicities of the eigenvalues of <m>A</m> is equal to <m>n</m>.
+            </li>
+            <li>
+              The sum of the algebraic multiplicities of the eigenvalues of <m>A</m> is equal to <m>n</m>, and the geometric multiplicity equals the algebraic multiplicity of each eigenvalue.
+            </li>
+          </ol>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          We will show <m>1\implies 2\implies 3\implies 1</m>.  First suppose that <m>A</m> is diagonalizable.  Then <m>A</m> has <m>n</m> linearly independent eigenvectors <m>v_1,v_2,\ldots,v_n</m>.  This implies that the sum of the geometric multiplicities is <em>at least</em> <m>n</m>: for instance, if <m>v_1,v_2,v_3</m> have the same eigenvalue <m>\lambda</m>, then the geometric multiplicity of <m>\lambda</m> is at least <m>3</m> (as the <m>\lambda</m>-eigenspace contains three linearly independent vectors), and so on.  But the sum of the algebraic multiplicities is greater than or equal to the sum of the geometric multiplicities by the <xref ref="diag-amgm"/>, and the sum of the algebraic multiplicities is at most <m>n</m> because the characteristic polynomial has degree <m>n</m>.  Therefore, the sum of the geometric multiplicities equals <m>n</m>.
+        </p>
+        <p>
+          Now suppose that the sum of the geometric multiplicities equals <m>n</m>.  As above, this forces the sum of the algebraic multiplicities to equal <m>n</m> as well.  As the algebraic multiplicities are all greater than or equal to the geometric multiplicities in any case, this implies that they are in fact equal.
+        </p>
+        <p>
+          Finally, suppose that the third condition is satisfied.  Then the sum of the geometric multiplicities equals <m>n</m>.  Suppose that the distinct eigenvectors are <m>\lambda_1,\lambda_2,\ldots,\lambda_k</m>, and that <m>\cB_i</m> is a basis for the <m>\lambda_i</m>-eigenspace, which we call <m>V_i</m>.  We claim that the collection <m>\cB = \{v_1,v_2,\ldots,v_n\}</m> of all vectors in all of the eigenspace bases <m>\cB_i</m> is linearly independent.  Consider the vector equation
+          <me>
+            0 = c_1v_1 + c_2v_2 + \cdots + c_nv_n.
+          </me>
+          Grouping the eigenvectors with the same eigenvalues, this sum has the form
+          <me>
+            0 = \text{(something in $V_1$)} + \text{(something in $V_2$)} + \cdots + \text{(something in $V_k$)}.
+          </me>
+          Since <xref ref="evecs-linindep" text="title">eigenvectors with distinct eigenvalues are linearly independent</xref>, each <q>something in <m>V_i</m></q> is equal to zero.  But this implies that all coefficients <m>c_1,c_2,\ldots,c_n</m> are equal to zero, since the vectors in each <m>\cB_i</m> are linearly independent.  Therefore, <m>A</m> has <m>n</m> linearly independent eigenvectors, so it is diagonalizable.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The first part of the third statement simply says that the characteristic polynomial of <m>A</m> factors completely into linear polynomials over the real numbers: in other words, there are no complex (non-real) roots.  The second part of the third statement says in particular that <em>for any diagonalizable matrix, the algebraic and geometric multiplicities coincide.</em>
+    </p>
+
+    <p>
+      The examples at the beginning of this Subsection illustrate the Theorem.  Here we give some general consequences for diagonalizability of <m>2\times 2</m> and <m>3\times 3</m> matrices.
+    </p>
+
+    <specialcase hide-type="true" xml:id="diag-cases-22">
+      <title>Diagonalizability of <m>2\times 2</m> Matrices</title>
+      <p>
+        Let <m>A</m> be a <m>2\times 2</m> matrix.  There are four cases:
+        <ol>
+          <li>
+            <m>A</m> has two different eigenvalues.  In this case, each eigenvalue has algebraic and geometric multiplicity equal to one.  This implies <m>A</m> is diagonalizable.  For example:
+            <me>A = \mat{1 7; 0 2}.</me>
+          </li>
+          <li>
+            <m>A</m> has one eigenvalue <m>\lambda</m> of algebraic and geometric multiplicity <m>2</m>.  To say that the geometric multiplicity is <m>2</m> means that <m>\Nul(A-\lambda I_2) = \R^2</m>, i.e., that every vector in <m>\R^2</m> is in the null space of <m>A-\lambda I_2</m>.  This implies that <m>A-\lambda I_2</m> is the zero matrix, so that <m>A</m> is the diagonal matrix <m>\lambda I_2</m>.  In particular, <m>A</m> is diagonalizable.  For example:
+            <me>A = \mat{1 0; 0 1}.</me>
+          </li>
+          <li>
+            <m>A</m> has one eigenvalue <m>\lambda</m> of algebraic multiplicity <m>2</m> and geometric multiplicity <m>1</m>.  In this case, <m>A</m> is not diagonalizable, by part 3 of the <xref ref="diag-thm-variant"/>.  For example, a <xref ref="diag-eg-shear" text="title">shear</xref>:
+            <me>A = \mat{1 1; 0 1}.</me>
+          </li>
+          <li>
+            <m>A</m> has no eigenvalues.  This happens when the characteristic polynomial has no real roots.  In particular, <m>A</m> is not diagonalizable.  For example, a <xref ref="diag-eg-rotation" text="title">rotation</xref>:
+            <me>A = \mat{1 -1; 1 1}.</me>
+          </li>
+        </ol>
+      </p>
+    </specialcase>
+
+    <example hide-type="true" xml:id="diag-cases-33">
+      <title>Diagonalizability of <m>3\times 3</m> Matrices</title>
+      <p>
+        Let <m>A</m> be a <m>3\times 3</m> matrix.  We can analyze the diagonalizability of <m>A</m> on a case-by-case basis, as in the previous <xref ref="diag-cases-22"/>.
+        <ol>
+          <li>
+            <m>A</m> has three different eigenvalues.  In this case, each eigenvalue has algebraic and geometric multiplicity equal to one.  This implies <m>A</m> is diagonalizable.  For example:
+            <me>A = \mat{1 7 4; 0 2 3; 0 0 -1}.</me>
+          </li>
+          <li>
+            <m>A</m> has two distinct eigenvalues <m>\lambda_1,\lambda_2</m>.  In this case, one has algebraic multiplicity one and the other has algebraic multiplicity two; after reordering, we can assume <m>\lambda_1</m> has multiplicity <m>1</m> and <m>\lambda_2</m> has multiplicity <m>2</m>.  This implies that <m>\lambda_1</m> has geometric multiplicity <m>1</m>, so <em><m>A</m> is diagonalizable if and only if the <m>\lambda_2</m>-eigenspace is a plane.</em>  For example:
+            <me>A = \mat{1 7 4; 0 2 0; 0 0 2}.</me>
+            On the other hand, if the geometric multiplicity of <m>\lambda_2</m> is <m>1</m>, then <m>A</m> is not diagonalizable.  For example:
+            <me>A = \mat{1 7 4; 0 2 1; 0 0 2}.</me>
+          </li>
+          <li>
+            <m>A</m> has only one eigenvalue <m>\lambda</m>.  If the algebraic multiplicity of <m>\lambda</m> is <m>1</m>, then <m>A</m> is not diagonalizable.  This happens when the characteristic polynomial has two complex (non-real) roots.  For example:
+            <me>A = \mat{1 -1 0; 1 1 0; 0 0 2}.</me>
+            Otherwise, the algebraic multiplicity of <m>\lambda</m> is equal to <m>3</m>.  In this case, if the geometric multiplicity is <m>1</m>:
+            <me>A = \mat{1 1 1; 0 1 1; 0 0 1}</me>
+            or <m>2</m>:
+            <me>A = \mat{1 0 1; 0 1 1; 0 0 1}</me>
+            then <m>A</m> is not diagonalizable.  If the geometric multiplicity is <m>3</m>, then <m>\Nul(A-\lambda I_3) = \R^3</m>, so that <m>A-\lambda I_3</m> is the zero matrix, and hence <m>A = \lambda I_3</m>.  Therefore, in this case <m>A</m> is necessarily diagonal, as in:
+            <me>A = \mat{1 0 0 ; 0 1 0; 0 0 1}.</me>
+          </li>
+        </ol>
+      </p>
+    </example>
+
+    <paragraphs>
+      <title>Similarity and multiplicity</title>
+    <p>
+      Recall from this <xref ref="similarity-charpoly"/> that similar matrices have the same eigenvalues.  It turns out that <em>both</em> notions of multiplicity of an eigenvalue are preserved under similarity.
+    </p>
+
+    <theorem xml:id="diag-similar-amgm">
+      <statement>
+        <p>
+          Let <m>A</m> and <m>B</m> be similar <m>n\times n</m> matrices, and let <m>\lambda</m> be an eigenvalue of <m>A</m> and <m>B</m>.  Then:
+          <ol>
+            <li>
+              The algebraic multiplicity of <m>\lambda</m> is the same for <m>A</m> and <m>B</m>.
+            </li>
+            <li>
+              The geometric multiplicity of <m>\lambda</m> is the same for <m>A</m> and <m>B</m>.
+            </li>
+          </ol>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Since <m>A</m> and <m>B</m> have the same characteristic polynomial, the multiplicity of <m>\lambda</m> as a root of the characteristic polynomial is the same for both matrices, which proves the first statement.  For the second, suppose that <m>A = CBC\inv</m> for an invertible matrix <m>C</m>.  By this <xref ref="similarity-evecs"/>, the matrix <m>C</m> takes eigenvectors of <m>B</m> to eigenvectors of <m>A</m>, both with eigenvalue <m>\lambda</m>.
+        </p>
+        <p>
+          Let <m>\{v_1,v_2,\ldots,v_k\}</m> be a basis of the <m>\lambda</m>-eigenspace of <m>B</m>.  We claim that <m>\{Cv_1,Cv_2,\ldots,Cv_k\}</m> is linearly independent.  Suppose that
+          <me>c_1Cv_1 + c_2Cv_2 + \cdots + c_kCv_k = 0.</me>
+          Regrouping, this means
+          <me>C\bigl(c_1v_1 + c_2v_2 + \cdots + c_kv_k\bigr) = 0.</me>
+          By the <xref ref="imt-2"/>, the null space of <m>C</m> is trivial, so this implies
+          <me>c_1v_1 + c_2v_2 + \cdots + c_kv_k = 0.</me>
+          Since <m>v_1,v_2,\ldots,v_k</m> are linearly independent, we get <m>c_1=c_2=\cdots=c_k=0</m>, as desired.
+        </p>
+        <p>
+          By the previous paragraph, the dimension of the <m>\lambda</m>-eigenspace of <m>A</m> is greater than or equal to the dimension of the <m>\lambda</m>-eigenspace of <m>B</m>.  By symmetry (<m>B</m> is similar to <m>A</m> as well), the dimensions are equal, so the geometric multiplicities coincide.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      For instance, the four matrices in this <xref ref="diag-cases-22"/> are not similar to each other, because the algebraic and/or geometric multiplicities of the eigenvalues do not match up.  Or, combined with the above <xref ref="diag-thm-variant"/>, we see that a diagonalizable matrix cannot be similar to a non-diagonalizable one, because the algebraic and geometric multiplicities of such matrices cannot both coincide.
+    </p>
+
+    <example>
+      <p>
+        Continuing with this <xref ref="diagonal-eg-33"/>, let
+        <me>
+          A = \mat{4 -3 0; 2 -1 0; 1 -1 1}.
+        </me>
+        This is a diagonalizable matrix that is similar to
+        <me>
+          D = \mat{1 0 0; 0 1 0; 0 0 2}
+        \sptxt{using the matrix}
+          C = \mat{1 0 3; 1 0 2; 0 1 1}.
+        </me>
+        The <m>1</m>-eigenspace of <m>D</m> is the <m>xy</m>-plane, and the <m>2</m>-eigenspace is the <m>z</m>-axis.  The matrix <m>C</m> takes the <m>xy</m>-plane to the <m>1</m>-eigenspace of <m>A</m>, which is again a plane, and the <m>z</m>-axis to the <m>2</m>-eigenspace of <m>A</m>, which is again a line.  This shows that the geometric multiplicities of <m>A</m> and <m>D</m> coincide.
+      </p>
+      <figure>
+        <caption>The matrix <m>C</m> takes the <m>xy</m>-plane to the <m>1</m>-eigenspace of <m>A</m> (the grid) and the <m>z</m>-axis to the <m>2</m>-eigenspace (the blue line).</caption>
+        <mathbox source="demos/similarity.html?C=1,0,3:1,0,2:0,1,1&amp;B=1,0,0:0,1,0:0,0,2" height="500px"/>
+      </figure>
+    </example>
+
+    <p>
+      The converse of the <xref ref="diag-similar-amgm"/> is false: there exist matrices  whose eigenvectors have the same algebraic and geometric multiplicities, but which are not similar.  See the <xref ref="diag-eg-nonsimilar"/> below.
+      However, for <m>2\times 2</m> and <m>3\times 3</m> matrices whose characteristic polynomial has no complex (non-real) roots, the converse of the <xref ref="diag-similar-amgm"/> is true.  (We will handle the case of complex roots in <xref ref="complex-eigenvalues"/>.)
+    </p>
+
+    <example xml:id="diag-eg-nonsimilar">
+      <title>Matrices that look similar but are not</title>
+      <statement>
+        <p>
+          Show that the matrices
+          <me>
+            A = \mat{0 0 0 0; 0 0 1 0; 0 0 0 1; 0 0 0 0} \sptxt{and}
+            B = \mat{0 1 0 0; 0 0 0 0; 0 0 0 1; 0 0 0 0}
+          </me>
+          have the same eigenvalues with the same algebraic and geometric multiplicities, but are not similar.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          These matrices are upper-triangular.  They both have characteristic polynomial <m>f(\lambda) = \lambda^4</m>, so they both have one eigenvalue <m>0</m> with algebraic multiplicity <m>4</m>.  The <m>0</m>-eigenspace <xref ref="evecs-eval0" text="title">is the null space</xref>, which has dimension <m>2</m> in each case because <m>A</m> and <m>B</m> have two columns without pivots.  Hence <m>0</m> has geometric multiplicity <m>2</m> in each case.
+        </p>
+        <p>
+          To show that <m>A</m> and <m>B</m> are not similar, we note that
+          <me>A^2 = \mat{0 0 0 0; 0 0 0 1; 0 0 0 0; 0 0 0 0}
+          \sptxt{and} B^2 = \mat{0 0 0 0; 0 0 0 0; 0 0 0 0; 0 0 0 0},</me>
+          as the reader can verify.  If <m>A = CBC\inv</m> then by this <xref ref="diag-powers"/>, we have
+          <me>A^2 = CB^2C\inv = C0C\inv = 0,</me>
+          which is not the case.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      On the other hand, suppose that <m>A</m> and <m>B</m> are <em>diagonalizable</em> matrices with the same characteristic polynomial.  Since the geometric multiplicities of the eigenvalues coincide with the algebraic multiplicities, which are the same for <m>A</m> and <m>B</m>, we conclude that there exist <m>n</m> linearly independent eigenvectors of each matrix, all of which have the same eigenvalues.  This shows that <m>A</m> and <m>B</m> are both similar to the same diagonal matrix.  Using  the <xref ref="similarity-eq-reln" text="title">transitivity property</xref> of similar matrices, this shows:
+    </p>
+
+    <warning>
+      <p>
+        <em>Diagonalizable</em> matrices are similar if and only if they have the same characteristic polynomial, or equivalently, the same eigenvalues with the same algebraic multiplicities.
+      </p>
+    </warning>
+
+    <example xml:id="diag-similarity">
+      <statement>
+        <p>
+          Show that the matrices
+          <me>
+            A = \mat{1 7 2; 0 -1 3; 0 0 4} \sptxt{and}
+            B = \mat{1 0 0; -2 4 0; -5 -4 -1}
+          </me>
+          are similar.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Both matrices have the three distinct eigenvalues <m>1,-1,4</m>.  Hence they are both diagonalizable, and are similar to the diagonal matrix
+          <me>\mat{1 0 0; 0 -1 0; 0 0 4}.</me>
+          By the <xref ref="similarity-eq-reln" text="title">transitivity property</xref> of similar matrices, this implies that <m>A</m> and <m>B</m> are similar to each other.
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <title>Diagonal matrices with the same entries are similar</title>
+      <p>
+        Any two diagonal matrices with the same diagonal entries (possibly in a different order) are similar to each other.  Indeed, such matrices have the same characteristic polynomial.  We saw this phenomenon in this <xref ref="diag-easy-eg"/>, where we noted that
+          <me>
+            \mat{1 0 0; 0 2 0; 0 0 3} =
+            \mat{0 0 1; 0 1 0; 1 0 0} \mat{3 0 0; 0 2 0; 0 0 1}
+            \mat{0 0 1; 0 1 0; 1 0 0}\inv.
+          </me>
+      </p>
+    </example>
+
+  </paragraphs>
+
+  </subsection>
+
+  <subsection xml:id="diag-ss-geometry">
+    <title>The Geometry of Diagonalizable Matrices</title>
+
+    <p>
+      A diagonal matrix is easy to understand geometrically, as it just scales the coordinate axes:
+      <me>
+        \mat{1 0 0; 0 2 0; 0 0 3}\vec{1 0 0} = 1\cdot\vec{1 0 0} \qquad
+        \mat{1 0 0; 0 2 0; 0 0 3}\vec{0 1 0} = 2\cdot\vec{0 1 0}
+      </me>
+      <me>
+        \mat{1 0 0; 0 2 0; 0 0 3}\vec{0 0 1} = 3\cdot\vec{0 0 1}.
+      </me>
+      Therefore, we know from <xref ref="similarity"/> that a diagonalizable matrix simply scales the <q>axes</q> with respect to a different coordinate system.  Indeed, if <m>v_1,v_2,\ldots,v_n</m> are linearly independent eigenvectors of an <m>n\times n</m> matrix <m>A</m>, then <m>A</m> scales the <m>v_i</m>-direction by the eigenvalue <m>\lambda_i</m>.
+    </p>
+
+    <p>
+      In the following examples, we visualize the action of a diagonalizable matrix <m>A</m> in terms of its <em>dynamics</em>.  In other words, we start with a collection of vectors (drawn as points), and we see where they move when we multiply them by <m>A</m> repeatedly.
+    </p>
+
+    <example>
+      <title>Eigenvalues <m>|\lambda_1| > 1,\,|\lambda_2|\lt1</m></title>
+      <statement>
+        <p>
+          Describe how the matrix
+          <me>
+            A = \frac 1{10}\mat{11 6; 9 14}
+          </me>
+          acts on the plane.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          First we diagonalize <m>A</m>.  The characteristic polynomial is
+          <me>
+            f(\lambda) = \lambda^2 - \Tr(A)\lambda + \det(A)
+            = \lambda^2 - \frac 52\lambda + 1
+            = (\lambda - 2)\left(\lambda - \frac 12\right).
+          </me>
+          We compute the <m>2</m>-eigenspace:
+          <me>
+(A-2I_3)v = 0 \iff
+\frac 1{10}\mat{-9 6; 9 -6}v = 0
+  \;\xrightarrow{\text{RREF}}\;
+\mat{1 -2/3; 0 0}v = 0.
+          </me>
+          The parametric form of this equation is <m>x = 2/3y</m>, so one eigenvector is <m>v_1 = {2/3\choose 1}</m>.  For the <m>1/2</m>-eigenspace, we have:
+          <me>
+\left(A-\frac 12I_3\right)v = 0 \iff
+\frac 1{10}\mat{6 6; 9 9}v = 0
+  \;\xrightarrow{\text{RREF}}\;
+\mat{1 1; 0 0}v = 0.
+          </me>
+          The parametric form of this equation is <m>x = -y</m>, so an eigenvector is <m>v_2 = {-1\choose 1}</m>.  It follows that <m>A = CDC\inv</m>, where
+          <me>
+            C = \mat{2/3 -1; 1 1} \qquad D = \mat{2 0; 0 1/2}.
+          </me>
+        </p>
+        <p>
+          The diagonal matrix <m>D</m> scales the <m>x</m>-coordinate by <m>2</m> and the <m>y</m>-coordinate by <m>1/2</m>.  Therefore, it moves vectors closer to the <m>x</m>-axis and farther from the <m>y</m>-axis.  In fact, since <m>(2x)(y/2) = xy</m>, multiplication by <m>D</m> does not move a point off of a hyperbola <m>xy = C</m>.
+        </p>
+        <p>
+          The matrix <m>A</m> does the same thing, in the <m>v_1,v_2</m>-coordinate system: multiplying a vector by <m>A</m> scales the <m>v_1</m>-coordinate by <m>2</m> and the <m>v_2</m>-coordinate by <m>1/2</m>.  Therefore, <m>A</m> moves vectors closer to the <m>2</m>-eigenspace and farther from the <m>1/2</m>-eigenspace.
+        </p>
+        <figure>
+          <caption>Dynamics of the matrices <m>A</m> and <m>D</m>.  Click <q>iterate</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.</caption>
+          <mathbox source="demos/similarity.html?C=2/3,-1:1,1&amp;B=2,0:0,1/2&amp;BName=D&amp;dynamics=on" height="600px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <example xml:id="diag-l1big-l2big">
+      <title>Eigenvalues <m>|\lambda_1| > 1,\,|\lambda_2| > 1</m></title>
+      <statement>
+        <p>
+          Describe how the matrix
+          <me>
+            A = \frac 1{5}\mat{13 -2; -3 12}
+          </me>
+          acts on the plane.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          First we diagonalize <m>A</m>.  The characteristic polynomial is
+          <me>
+            f(\lambda) = \lambda^2 - \Tr(A)\lambda + \det(A)
+            = \lambda^2 - 5\lambda + 6
+            = (\lambda - 2)(\lambda - 3).
+          </me>
+          Next we compute the <m>2</m>-eigenspace:
+          <me>
+(A-2I_3)v = 0 \iff
+\frac 15\mat{3 -2; -3 2}v = 0
+  \;\xrightarrow{\text{RREF}}\;
+\mat{1 -2/3; 0 0}v = 0.
+          </me>
+          The parametric form of this equation is <m>x = 2/3y</m>, so one eigenvector is <m>v_1 = {2/3\choose 1}</m>.  For the <m>3</m>-eigenspace, we have:
+          <me>
+(A-3I_3)v = 0 \iff
+\frac 15\mat{-2 -2; -3 -3}v = 0
+  \;\xrightarrow{\text{RREF}}\;
+\mat{1 1; 0 0}v = 0.
+          </me>
+          The parametric form of this equation is <m>x = -y</m>, so an eigenvector is <m>v_2 = {-1\choose 1}</m>.  It follows that <m>A = CDC\inv</m>, where
+          <me>
+            C = \mat{2/3 -1; 1 1} \qquad D = \mat{2 0; 0 3}.
+          </me>
+        </p>
+        <p>
+          The diagonal matrix <m>D</m> scales the <m>x</m>-coordinate by <m>2</m> and the <m>y</m>-coordinate by <m>3</m>.  Therefore, it moves vectors farther from both the <m>x</m>-axis and the <m>y</m>-axis, but faster in the <m>y</m>-direction than the <m>x</m>-direction.
+        </p>
+        <p>
+          The matrix <m>A</m> does the same thing, in the <m>v_1,v_2</m>-coordinate system: multiplying a vector by <m>A</m> scales the <m>v_1</m>-coordinate by <m>2</m> and the <m>v_2</m>-coordinate by <m>3</m>.  Therefore, <m>A</m> moves vectors farther from the <m>2</m>-eigenspace and the <m>3</m>-eigenspace, but faster in the <m>v_2</m>-direction than the <m>v_1</m>-direction.
+        </p>
+        <figure>
+          <caption>Dynamics of the matrices <m>A</m> and <m>D</m>.  Click <q>iterate</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.</caption>
+          <mathbox source="demos/similarity.html?C=2/3,-1:1,1&amp;B=2,0:0,3&amp;BName=D&amp;dynamics=on" height="600px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <example>
+      <title>Eigenvalues <m>|\lambda_1| \lt 1,\,|\lambda_2| \lt 1</m></title>
+      <statement>
+        <p>
+          Describe how the matrix
+          <me>
+            A' = \frac 1{30}\mat{12 2; 3 13}
+          </me>
+          acts on the plane.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          This is the inverse of the matrix <m>A</m> from the previous <xref ref="diag-l1big-l2big"/>.  In that Example, we found <m>A = CDC\inv</m> for
+          <me>
+            C = \mat{2/3 -1; 1 1} \qquad D = \mat{2 0; 0 3}.
+          </me>
+          Therefore, remembering that taking inverses <xref ref="matrix-inv-facts" text="title">reverses the order of multiplication</xref>, we have
+          <me>
+            A' = A\inv = (CDC\inv)\inv = (C\inv)\inv D\inv C\inv = C\mat{1/2 0 ; 0 1/3}C\inv.
+          </me>
+          The diagonal matrix <m>D\inv</m> does the opposite of what <m>D</m> does: it scales the <m>x</m>-coordinate by <m>1/2</m> and the <m>y</m>-coordinate by <m>1/3</m>.  Therefore, it moves vectors closer to both coordinate axes, but faster in the <m>y</m>-direction.  The matrix <m>A'</m> does the same thing, but with respect to the <m>v_1,v_2</m>-coordinate system.
+        </p>
+        <figure>
+          <caption>Dynamics of the matrices <m>A'</m> and <m>D\inv</m>.  Click <q>iterate</q> to multiply the colored points by <m>D\inv</m> on the left and <m>A'</m> on the right.</caption>
+          <mathbox source="demos/similarity.html?C=2/3,-1:1,1&amp;B=1/2,0:0,1/3&amp;BName=D&amp;dynamics=on" height="600px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <example>
+      <title>Eigenvalues <m>|\lambda_1| = 1,\,|\lambda_2|\lt1</m></title>
+      <statement>
+        <p>
+          Describe how the matrix
+          <me>
+            A = \frac 16\mat{5 -1; -2 4}
+          </me>
+          acts on the plane.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          First we diagonalize <m>A</m>.  The characteristic polynomial is
+          <me>
+            f(\lambda) = \lambda^2 - \Tr(A)\lambda + \det(A)
+            = \lambda^2 - \frac 32\lambda + \frac 12
+            = (\lambda - 1)\left(\lambda - \frac 12\right).
+          </me>
+          Next we compute the <m>1</m>-eigenspace:
+          <me>
+(A-I_3)v = 0 \iff
+\frac 16\mat{-1 -1; -2 -2}v = 0
+  \;\xrightarrow{\text{RREF}}\;
+\mat{1 1; 0 0}v = 0.
+          </me>
+          The parametric form of this equation is <m>x = -y</m>, so one eigenvector is <m>v_1 = {-1\choose 1}</m>.  For the <m>1/2</m>-eigenspace, we have:
+          <me>
+\left(A-\frac 12I_3\right)v = 0 \iff
+\frac 16\mat{2 -1; -2 1}v = 0
+  \;\xrightarrow{\text{RREF}}\;
+\mat{1 -1/2; 0 0}v = 0.
+          </me>
+          The parametric form of this equation is <m>x = 1/2y</m>, so an eigenvector is <m>v_2 = {1/2\choose 1}</m>.  It follows that <m>A = CDC\inv</m>, where
+          <me>
+            C = \mat{-1 1/2; 1 1} \qquad D = \mat{1 0; 0 1/2}.
+          </me>
+        </p>
+        <p>
+          The diagonal matrix <m>D</m> scales the <m>y</m>-coordinate by <m>1/2</m> and does not move the <m>x</m>-coordinate.  Therefore, it simply moves vectors closer to the <m>x</m>-axis along vertical lines.  The matrix <m>A</m> does the same thing, in the <m>v_1,v_2</m>-coordinate system: multiplying a vector by <m>A</m> scales the <m>v_2</m>-coordinate by <m>1/2</m> and does not change the <m>v_1</m>-coordinate.  Therefore, <m>A</m> <q>sucks vectors into the <m>1</m>-eigenspace</q> along lines parallel to <m>v_2</m>.
+        </p>
+        <figure>
+          <caption>Dynamics of the matrices <m>A</m> and <m>D</m>.  Click <q>iterate</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.</caption>
+          <mathbox source="demos/similarity.html?C=-1,1/2:1,1&amp;B=1,0:0,1/2&amp;BName=D&amp;dynamics=on" height="600px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <example hide-type="true">
+      <title>Interactive: a diagonalizable <m>3\times 3</m> matrix</title>
+      <p>
+        The diagonal matrix
+        <me>
+          D = \mat{1/2 0 0; 0 2 0; 0 0 3/2}
+        </me>
+        scales the <m>x</m>-coordinate by <m>1/2</m>, the <m>y</m>-coordinate by <m>2</m>, and the <m>z</m>-coordinate by <m>3/2</m>.  Looking straight down at the <m>xy</m>-plane, the points follow parabolic paths taking them away from the <m>x</m>-axis and toward the <m>y</m>-axis.  The <m>z</m>-coordinate is scaled by <m>3/2</m>, so points fly away from the <m>xy</m>-plane in that direction.
+      </p>
+      <p>
+        If <m>A = CDC\inv</m> for some invertible matrix <m>C</m>, then <m>A</m> does the same thing as <m>D</m>, but with respect to the coordinate system defined by the columns of <m>C</m>.
+      </p>
+        <figure>
+          <caption>Dynamics of the matrices <m>A</m> and <m>D</m>.  Click <q>iterate</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.</caption>
+          <mathbox source="demos/similarity.html?C=-.25062,-.71864,.64864:.93934,-.34258,-.01661:.23415,.60514,.76091&amp;B=1/2,0,0:0,2,0:0,0,3/2&amp;BName=D&amp;dynamics=on" height="600px"/>
+        </figure>
+    </example>
+
+  </subsection>
 
 </section>
