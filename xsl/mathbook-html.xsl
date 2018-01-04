@@ -145,6 +145,18 @@
     <xsl:text>true</xsl:text>
 </xsl:template>
 
+<!-- JDR: paragraphs are optionally hidden -->
+<xsl:template match="paragraphs" mode="is-hidden">
+    <xsl:choose>
+        <xsl:when test="@visible='false'">
+            <xsl:text>true</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:text>false</xsl:text>
+        </xsl:otherwise>
+    </xsl:choose>
+</xsl:template>
+
 <xsl:template match="warning" mode="body-css-class">
     <xsl:text>warning-like</xsl:text>
 </xsl:template>
@@ -444,5 +456,6 @@
       </xsl:otherwise>
     </xsl:choose>
 </xsl:template>
+
 
 </xsl:stylesheet>

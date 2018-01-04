@@ -18,7 +18,7 @@ the license is included in gfdl.xml.
       <li>Learn some ways to eyeball a matrix with zero determinant, and how to compute determinants of upper- and lower-triangular matrices.</li>
       <li>Learn the basic properties of the determinant, and how to apply them.</li>
       <li><em>Recipe:</em> compute the determinant using row and column operations.</li>
-      <li><em>Theorems:</em> invertibility property, multiplicativity property, transpose property, multilinearity property.</li>
+      <li><em>Theorems:</em> invertibility property, multiplicativity property, transpose property.</li>
       <li><em>Vocabulary words:</em> <term>diagonal</term>, <term>upper-triangular</term>, <term>lower-triangular</term>, <term>transpose</term>.</li>
       <li><em>Essential vocabulary word:</em> <term>determinant</term>.</li>
     </ol>
@@ -35,7 +35,7 @@ the license is included in gfdl.xml.
     <title>The Definition of the Determinant</title>
 
     <p>
-      The determinant of a square matrix <m>A</m> is a real number <m>\det(A)</m>.  More precisely, <m>\det</m> is a function from the set of square matrices to the real numbers.  It is in some sense a very complicated function<mdash/>one can give a closed formula for the determinant, but in the case of a <m>10\times10</m> matrix, this formula has <m>3,628,800</m> terms<mdash/>so instead of defining the determinant using a formula, we will define it via its behavior with respect to row operations.
+      The determinant of a square matrix <m>A</m> is a real number <m>\det(A)</m>.  It is defined via its behavior with respect to row operations; this means we can use row reduction to compute it.  We will give a recursive formula for the determinant in <xref ref="determinants-cofactors"/>.  We will also show in <xref ref="det-defn-magic-props"/> that the determinant is related to invertibility, and in <xref ref="determinants-volumes"/> that it is related to volumes.
     </p>
 
     <essential xml:id="det-defn-the-defn">
@@ -94,12 +94,14 @@ the license is included in gfdl.xml.
           First we row reduce, then we compute the determinant in the opposite order:
           <md>
             <mrow>
-  \mat{1 0 0;0 0 1;5 1 0}
-  \amp\;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_2\longleftrightarrow R_3$\hss}}\;
-    \mat{1 0 0;5 1 0; 0 0 1} \amp \strut\det \amp= -1
+  \amp\mat{1 0 0;0 0 1;5 1 0} \amp\strut\det\amp=-1
             </mrow>
             <mrow>
-  \amp\;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_2 = R_2 - 5R_1$\hss}}\;
+  \;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_2\longleftrightarrow R_3$\hss}}\;\amp
+    \mat{1 0 0;5 1 0; 0 0 1} \amp \strut\det \amp= 1
+            </mrow>
+            <mrow>
+  \;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_2 = R_2 - 5R_1$\hss}}\;\amp
     \mat{1 0 0; 0 1 0; 0 0 1} \amp \strut\det \amp= 1
             </mrow>
           </md>
@@ -118,20 +120,22 @@ the license is included in gfdl.xml.
           First we row reduce, then we compute the determinant in the opposite order:
           <md>
             <mrow>
-  \mat{2 1; 1 4}
-  \amp\;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_1\longleftrightarrow R_2$\hss}}\;
-    \mat{1 4; 2 1} \amp \strut\det \amp= 7
+              \amp\mat{2 1; 1 4} \amp\strut\det\amp=7
             </mrow>
             <mrow>
-  \amp\;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_2 = R_2 - 2R_1$\hss}}\;
+  \;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_1\longleftrightarrow R_2$\hss}}\;\amp
+    \mat{1 4; 2 1} \amp \strut\det \amp= -7
+            </mrow>
+            <mrow>
+  \;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_2 = R_2 - 2R_1$\hss}}\;\amp
     \mat{1 4; 0 -7} \amp \strut\det \amp= -7
             </mrow>
             <mrow>
-  \amp\;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_2 = R_2 \div -7$\hss}}\;
+  \;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_2 = R_2 \div -7$\hss}}\;\amp
     \mat{1 4; 0 1} \amp \strut\det \amp= 1
             </mrow>
             <mrow>
-  \amp\;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_1 = R_1 - 4R_2$\hss}}\;
+  \;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_1 = R_1 - 4R_2$\hss}}\;\amp
     \mat{1 0; 0 1} \amp \strut\det \amp= 1
             </mrow>
           </md>
@@ -456,13 +460,13 @@ the license is included in gfdl.xml.
             </me>
           </li>
         </ul>
-        In either case, we recover the formula from this <xref ref="matrix-inv-def-det"/>:
+        In either case, we recover the <xref ref="matrix-inv-def-det">formula</xref>:
         <me>\det\mat{a b; c d} = ad-bc.</me>
       </p>
     </specialcase>
 
     <p>
-      The determinant is uniquely characterized by its <xref ref="det-defn-the-defn">defining properties</xref>, since we can compute the determinant of any matrix using row reduction, as in the above <xref ref="det-defn-ref-compute"/>.  However, we have not yet proved the existence of a function satisfying the defining properties!  Row reducing will compute the determinant <em>if it exists</em>, but we cannot use row reduction to prove existence, because we do not yet know that you compute the same number by row reducing in two different ways.
+      The determinant is characterized by its <xref ref="det-defn-the-defn">defining properties</xref>, since we can compute the determinant of any matrix using row reduction, as in the above <xref ref="det-defn-ref-compute"/>.  However, we have not yet proved the existence of a function satisfying the defining properties!  Row reducing will compute the determinant <em>if it exists</em>, but we cannot use row reduction to prove existence, because we do not yet know that you compute the same number by row reducing in two different ways.
     </p>
 
     <theorem xml:id="det-defn-unique">
@@ -487,11 +491,11 @@ the license is included in gfdl.xml.
 
   </subsection>
 
-  <subsection>
+  <subsection xml:id="det-defn-magic-props">
     <title>Magical Properties of the Determinant</title>
 
     <p>
-      In this Subsection, we will discuss a number of the amazing properties enjoyed by the determinant.
+      In this Subsection, we will discuss a number of the amazing properties enjoyed by the determinant: the <xref ref="det-defn-invert-prop">invertibility property</xref>, the <xref ref="det-defn-mult-prop">multiplicativity property</xref>, and the <xref ref="det-defn-trans-prop">transpose property</xref>.
     </p>
 
     <proposition hide-type="true" xml:id="det-defn-invert-prop">
@@ -551,7 +555,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      The proofs of the <xref ref="det-defn-mult-prop">multiplicativity property</xref> and the <xref ref="det-defn-trans-prop">transpose property</xref>, as well as the <xref ref="det-cofact-expansion">cofactor expansion theorem</xref>, follow the same strategy: define another function <m>d\colon\{\text{$n\times n$ matrices}\} \to \R</m>, and prove that <m>d</m> satisfies the same four defining properties as the determinant.  By the <xref ref="det-defn-unique">existence theorem</xref>, <em>the function <m>d</m> is equal to the determinant</em>.  This is an advantage of defining a function via its properties: in order to prove it is equal to another function, one only has to check the defining properties.
+      The proofs of the <xref ref="det-defn-mult-prop">multiplicativity property</xref> and the <xref ref="det-defn-trans-prop">transpose property</xref> below, as well as the <xref ref="det-cofact-expansion">cofactor expansion theorem</xref> and the <xref ref="det-is-volume">determinants and volumes theorem</xref>, use the following strategy: define another function <m>d\colon\{\text{$n\times n$ matrices}\} \to \R</m>, and prove that <m>d</m> satisfies the same four defining properties as the determinant.  By the <xref ref="det-defn-unique">existence theorem</xref>, <em>the function <m>d</m> is equal to the determinant</em>.  This is an advantage of defining a function via its properties: in order to prove it is equal to another function, one only has to check the defining properties.
     </p>
 
     <proposition hide-type="true" xml:id="det-defn-mult-prop">
@@ -980,6 +984,13 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
+    <paragraphs visible="false">
+      <title>Multilinearity</title>
+
+      <p>
+        The following observation is useful for theoretical purposes.
+      </p>
+
     <p>
       We can think of <m>\det</m> as a function of the rows of a matrix:
       <me>\det(v_1,v_2,\ldots,v_n)
@@ -1141,6 +1152,8 @@ the license is included in gfdl.xml.
         This is the basic idea behind cofactor expansions in <xref ref="determinants-cofactors"/>.
       </p>
     </example>
+
+  </paragraphs>
 
     <warning>
       <title>Summary: Magical Properties of the Determinant</title>
