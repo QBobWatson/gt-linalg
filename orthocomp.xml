@@ -40,7 +40,7 @@ the license is included in gfdl.xml.
   </definition>
 
   <p>
-    This is the set of all vectors <m>v</m> in <m>\R^n</m> that are orthogonal to all of the vectors in <m>W</m>.  We will show TODO:xref that <m>W^\perp</m> is indeed a subspace.
+    This is the set of all vectors <m>v</m> in <m>\R^n</m> that are orthogonal to all of the vectors in <m>W</m>.  We will show <xref ref="orthocomp-facts-basic">below</xref> that <m>W^\perp</m> is indeed a subspace.
   </p>
 
   <note>
