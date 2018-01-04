@@ -67,7 +67,7 @@ the license is included in gfdl.xml.
       Above we expressed <m>C</m> in set builder notation, which we introduced in this <xref ref="set-builder-notation"/>.
     </p>
 
-    <definition>
+    <definition xml:id="subspaces-defn-of">
       <statement>
         <p>
           A <term>subspace</term> of <m>\R^n</m> is a subset <m>V</m> of <m>\R^n</m> satisfying:

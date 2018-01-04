@@ -107,13 +107,14 @@ Free Documentation License"
     </chapter>
 
     <chapter xml:id="chap-orthogonality">
-      <title>Inner Products and Orthogonality</title>
+      <title>Orthogonality</title>
 
       <introduction>
         <p>Lay's chapter 6</p>
       </introduction>
 
       <xi:include href="./innerprod.xml" />
+      <xi:include href="./orthocomp.xml" />
       <xi:include href="./orthosets.xml" />
       <xi:include href="./gramschmidt.xml" />
       <xi:include href="./leastsquares.xml" />

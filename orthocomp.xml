@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<section xml:id="orthogonal-complements">
+  <title>Orthogonal Complements</title>
+
+  <objectives>
+    <ol>
+      <li>Understand the basic properties of orthogonal complements.</li>
+      <li>Learn shortcuts to compute orthogonal complements of common subspaces.</li>
+      <li><em>Recipe:</em> compute the orthogonal complement of a span.</li>
+      <li><em>Picture:</em> orthogonal complements in <m>\R^2</m> and <m>\R^3</m>.</li>
+      <li><em>Vocabulary words:</em> <term>orthogonal complement</term>, <term>row space</term>.</li>
+    </ol>
+  </objectives>
+
+  <p>
+    It will be important to compute the set of <em>all</em> vectors that are orthogonal to a given set of vectors.  It turns out that a vector is orthogonal to a set of vectors if and only if it is orthogonal to the span of those vectors, which is a subspace, so we restrict ourselves to the case of subspaces.
+  </p>
+
+  <definition>
+    <statement>
+      <p>
+        Let <m>W</m> be a subspace of <m>\R^n</m>.  Its <term>orthogonal complement</term> is the subspace
+        <me>
+          W^\perp = \bigl\{ \text{$v$ in $\R^n$}\mid
+          v\cdot w=0 \text{ for all $w$ in $W$} \bigr\}.
+        </me>
+        The symbol <m>W^\perp</m> is read <q><m>W</m> perp</q>.
+      </p>
+    </statement>
+  </definition>
+
+  <p>
+    This is the set of all vectors <m>v</m> in <m>\R^n</m> that are orthogonal to all of the vectors in <m>W</m>.  We will show TODO:xref that <m>W^\perp</m> is indeed a subspace.
+  </p>
+
+  <note>
+    <p>
+      We now have two similar-looking pieces of notation:
+      <me>
+        \begin{split}
+        A^{\color{red}T} \amp\text{ is the transpose of a matrix $A$}. \\
+        W^{\color{red}\perp} \amp\text{ is the orthogonal complement of a subspace $W$}.
+        \end{split}
+      </me>
+      Try not to confuse the two.
+    </p>
+  </note>
+
+  <paragraphs>
+    <title>Pictures of orthogonal complements</title>
+
+    <p>
+      The orthogonal complement of a line <m>\color{seq-blue}W</m> in <m>\R^2</m> is the perpendicular line <m>\color{seq-green}W^\perp</m>.
+      <latex-code>
+    \begin{tikzpicture}[thin border nodes]
+      \draw (-2,-2) rectangle (2,2);
+      \clip (-2,-2) rectangle (2,2);
+      \draw[seq-blue] (-2,-3) -- node[right=2pt,pos=.7] {$W$} (2,3);
+      \draw[seq-green] (3,-2) -- node[above right,pos=.7] {$W^\perp$} (-3,2);
+      \draw[very thin]
+        let \p1=($(0,0)!4mm!(-2,-3)$), \p2=($(0,0)!4mm!(3,-2)$) in
+          (\p1) -- ($(\p1) + (\p2)$) -- (\p2);
+    \end{tikzpicture}
+      </latex-code>
+    </p>
+
+    <example hide-type="true">
+      <title>Interactive: orthogonal complements in <m>\R^2</m></title>
+      <figure>
+        <caption>The orthogonal complement of the line spanned by <m>v</m> is the perpendicular line.  Click and drag the head of <m>v</m> to move it.</caption>
+        <mathbox source="demos/spans.html?v1=2,3&amp;captions=orthog&amp;labels=v" height="500px"/>
+      </figure>
+    </example>
+
+    <p>
+      The orthogonal complement of a line <m>\color{seq-blue}W</m> in <m>\R^3</m> is the perpendicular plane <m>\color{seq-green}W^\perp</m>.
+      <latex-code>
+    \begin{tikzpicture}[myxyz, thin border nodes]
+      \clip[resetxy] (-4,-2) rectangle (4,2);
+      \coordinate (x) at ($1/sqrt(1.09)*(.3,0,1)$);
+      \coordinate (y) at (0.957826, 0., -0.287348);
+      \coordinate (z) at (0,1,0);
+      \draw[seq-blue] (0,0) -- ($-3*(x)$);
+      \begin{scope}[x=(y), y=(z), transformxy]
+        \filldraw[seq-green,fill opacity=.5] (-1.5,-1.5) rectangle (1.5,1.5);
+        \node[seq-green] at (-1.8,-.8) {$W^\perp$};
+      \end{scope}
+      \draw[seq-blue] (0,0) -- node[right,pos=.5] {$W$} ($3*(x)$);
+      \point (o) at (0,0,0);
+      \pic[draw] {right angle=(z)--(o)--(x)};
+      \pic[draw] {right angle=(y)--(o)--(x)};
+    \end{tikzpicture}
+      </latex-code>
+    </p>
+
+    <example hide-type="true">
+      <title>Interactive: orthogonal complements in <m>\R^3</m></title>
+      <figure>
+        <caption>The orthogonal complement of the line spanned by <m>v</m> is the perpendicular plane.  Click and drag the head of <m>v</m> to move it.</caption>
+        <mathbox source="demos/spans.html?v1=.3,0,1&amp;captions=orthog&amp;range=3&amp;labels=v" height="500px"/>
+      </figure>
+    </example>
+
+    <p>
+      The orthogonal complement of a plane <m>\color{seq-blue}W</m> in <m>\R^3</m> is the perpendicular line <m>\color{seq-green}W^\perp</m>.
+      <latex-code>
+    \begin{tikzpicture}[myxyz, thin border nodes]
+      \clip[resetxy] (-4,-2) rectangle (4,2);
+      \coordinate (x) at ($1/sqrt(1.09)*(.3,0,1)$);
+      \coordinate (y) at (0.957826, 0., -0.287348);
+      \coordinate (z) at (0,1,0);
+      \draw[seq-green] (0,0) -- ($-3*(x)$);
+      \begin{scope}[x=(y), y=(z), transformxy]
+        \filldraw[seq-blue,fill opacity=.5] (-1.5,-1.5) rectangle (1.5,1.5);
+        \node[seq-blue] at (-1.8,-.8) {$W$};
+      \end{scope}
+      \draw[seq-green] (0,0) -- node[right,pos=.5] {$W^\perp$} ($3*(x)$);
+      \point (o) at (0,0,0);
+      \pic[draw] {right angle=(z)--(o)--(x)};
+      \pic[draw] {right angle=(y)--(o)--(x)};
+    \end{tikzpicture}
+      </latex-code>
+    </p>
+
+    <example hide-type="true">
+      <title>Interactive: orthogonal complements in <m>\R^3</m></title>
+      <figure>
+        <caption>The orthogonal complement of the plane spanned by <m>v,w</m> is the perpendicular line.  Click and drag the heads of <m>v,w</m> to change the plane.</caption>
+        <mathbox source="demos/spans.html?v1=.957,0,-.287&amp;v2=0,1,0&amp;captions=orthog&amp;range=3&amp;labels=v,w" height="500px"/>
+      </figure>
+    </example>
+  </paragraphs>
+
+
+  <p>
+    Since any subspace is a span, the following Proposition gives a recipe for computing the orthogonal complement of any subspace.  However, below we will give several shortcuts for computing the orthogonal complements of other common kinds of subspaces.
+  </p>
+
+  <proposition xml:id="orthocomp-comp-of-span">
+    <title>The orthogonal complement of a span</title>
+    <statement>
+      <p>
+        Let <m>v_1,v_2,\ldots,v_m</m> be vectors in <m>\R^n</m>, and let <m>W = \Span\{v_1,v_2,\ldots,v_m\}</m>.  Then
+        <me>
+          W^\perp =
+          \bigl\{\text{all vectors orthogonal to each $v_1,v_2,\ldots,v_m$}\bigr\}
+          = \Nul\mat{
+          \matrow{v_1^T};
+          \matrow{v_2^T};
+          \vdots;
+          \matrow{v_m^T}}.
+        </me>
+      </p>
+    </statement>
+    <proof>
+      <p>
+        To justify the first equality, we need to show that a vector <m>x</m> is perpendicular to the all of the vectors in <m>W</m> if and only if it is perpendicular only to <m>v_1,v_2,\ldots,v_m</m>.  Since the <m>v_i</m> are contained in <m>W</m>, we really only have to show that if <m>x\cdot v_1 = x\cdot v_2 = \cdots = x\cdot v_m = 0</m>, then <m>x</m> is perpendicular to every vector <m>v</m> in <m>W</m>.  Indeed, any vector in <m>W</m> has the form <m>v = c_1v_1 + c_2v_2 + \cdots + c_mv_m</m> for suitable scalars <m>c_1,c_2,\ldots,c_m</m>, so
+        <me>
+          \begin{split}
+          x\cdot v \amp= x\cdot(c_1v_1 + c_2v_2 + \cdots + c_mv_m) \\
+          \amp= c_1(x\cdot v_1) + c_2(x\cdot v_2) + \cdots + c_m(x\cdot v_m) \\
+          \amp= c_1(0) + c_2(0) + \cdots + c_m(0) = 0.
+          \end{split}
+        </me>
+        Therefore, <m>x</m> is in <m>W^\perp.</m>
+      </p>
+      <p>
+        To prove the second equality, we let
+        <me>
+          A = \mat{
+            \matrow{v_1^T};
+            \matrow{v_2^T};
+            \vdots;
+            \matrow{v_m^T}}.
+        </me>
+        By the <xref ref="matrixeq-row-column-prod">row-column rule for matrix multiplication</xref>, for any vector <m>x</m> in <m>\R^n</m> we have
+        <me>
+          Ax = \vec{v_1^Tx v_2^Tx \vdots, v_m^Tx}
+          = \vec{v_1\cdot x v_2\cdot x \vdots, v_m\cdot x}.
+        </me>
+        Therefore, <m>x</m> is in <m>\Nul(A)</m> if and only if <m>x</m> is perpendicular to each vector <m>v_1,v_2,\ldots,v_m</m>.
+      </p>
+    </proof>
+  </proposition>
+
+  <p>
+    By the Proposition, computing the null space of a span means <em>solving a system of linear equations</em>.  For example, if
+    <me>
+      v_1 = \vec{1 7 2} \qquad v_2 = \vec{-2 3 1}
+    </me>
+    then <m>\Span\{v_1,v_2\}^\perp</m> is the solution set of the homogeneous linear system associated to the matrix
+    <me>
+      \mat{\matrow{v_1^T}; \matrow{v_2^T}} = \mat{1 7 2; -2 3 1}.
+    </me>
+    This is the solution set of the system of equations
+    <me>
+      \syseq{x_1 + 7x_2 + 2x_3 = 0; -2x_1 + 3x_2 + x_3 = 0\rlap.}
+    </me>
+  </p>
+
+  <example>
+    <statement>
+      <p>
+        Compute <m>W^\perp</m>, where
+        <me>
+          W = \Span\left\{\vec{1 7 2},\;\vec{-2 3 1}\right\}.
+        </me>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        According to the <xref ref="orthocomp-comp-of-span"/>, we need to compute the null space of the matrix
+        <me>
+          \mat{1 7 2; -2 3 1} \;\xrightarrow{\text{RREF}}\;
+          \mat{1 0 -1/17; 0 1 5/17}.
+        </me>
+        The free variable is <m>x_3</m>, so the parametric form of the solution set is <m>x_1=x_3/17,\,x_2=-5x_3/17</m>, and the parametric vector form is
+        <me>
+          \vec{x_1 x_2 x_3} = x_3\vec{1/17 -5/17 1}.
+        </me>
+        Scaling by a factor of <m>17</m>, we see that
+        <me>
+          W^\perp = \Span\left\{\vec{1 -5 17}\right\}.
+        </me>
+        We can check our work:
+        <me>
+          \vec{1 7 2}\cdot\vec{1 -5 17} = 0 \qquad
+          \vec{-2 3 1}\cdot\vec{1 -5 17} = 0.
+        </me>
+      </p>
+    </solution>
+  </example>
+
+  <example>
+    <statement>
+      <p>Find all vectors orthogonal to <m>v = \vec{1 1 -1}.</m></p>
+    </statement>
+    <solution>
+      <p>
+        According to the <xref ref="orthocomp-comp-of-span"/>, we need to compute the null space of the matrix
+        <me>A = \mat{\matrow{v}} = \mat{1 1 -1}.</me>
+        This matrix is in reduced-row echelon form.  The parametric form for the solution set is <m>x_1 = -x_2 + x_3</m>, so the parametric vector form of the general solution is
+        <me>x = \vec{x_1 x_2 x_3} = x_2\vec{-1 1 0} + x_3\vec{1 0 1}.</me>
+        Therefore, the answer is the <em>plane</em>
+        <me>\Span\left\{\vec{-1 1 0},\;\vec{1 0 1}\right\}.</me>
+      </p>
+      <figure>
+        <caption>The set of all vectors perpendicular to <m>v</m>.</caption>
+        <mathbox source="demos/spans.html?v1=1,1,-1&amp;captions=orthog&amp;range=3&amp;labels=v" height="500px"/>
+      </figure>
+    </solution>
+  </example>
+
+  <example>
+    <statement>
+      <p>
+        Compute
+        <me>
+          \Span\left\{\vec{1 1 -1},\;\vec{1 1 1}\right\}^\perp.
+        </me>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        According to the <xref ref="orthocomp-comp-of-span"/>, we need to compute the null space of the matrix
+        <me>A = \mat{1 1 -1; 1 1 1}\;\xrightarrow{\text{RREF}}\;\mat{1 1 0; 0 0 1}.</me>
+        The parametric vector form of the solution is
+        <me>\vec{x_1 x_2 x_3} = x_2\vec{-1 1 0}.</me>
+        Therefore, the answer is the <em>line</em>
+        <me>\Span\left\{\vec{-1 1 0}\right\}.</me>
+      </p>
+      <figure>
+        <caption>The orthogonal complement of the plane spanned by <m>v = (1,1,-1)</m> and <m>w = (1, 1, 1)</m>.</caption>
+        <mathbox source="demos/spans.html?v1=1,1,-1&amp;v2=1,1,1&amp;captions=orthog&amp;range=3&amp;labels=v,w" height="500px"/>
+      </figure>
+    </solution>
+  </example>
+
+  <p>
+    In order to find shortcuts for computing orthogonal complements, we need the following basic facts.
+  </p>
+
+  <theorem hide-type="true" xml:id="orthocomp-facts-basic">
+    <title>Facts about Orthogonal Complements</title>
+    <statement>
+      <p>
+        Let <m>W</m> be a subspace of <m>\R^n</m>.  Then:
+        <ol>
+          <li><m>W^\perp</m> is also a subspace of <m>\R^n.</m></li>
+          <li><m>(W^\perp)^\perp = W.</m></li>
+          <li><m>\dim(W) + \dim(W^\perp) = n.</m></li>
+        </ol>
+      </p>
+    </statement>
+    <proof>
+      <p>
+        For the first assertion, we verify the three <xref ref="subspaces-defn-of">defining properties of subspaces</xref>.
+        <ol>
+          <li>
+            The zero vector is in <m>W^\perp</m> because the zero vector is orthogonal to every vector in <m>\R^n</m>.
+          </li>
+          <li>
+            Let <m>u,v</m> be in <m>W^\perp</m>, so <m>u\cdot x = 0</m> and <m>v\cdot x = 0</m> for every vector <m>x</m> in <m>W</m>.  We must verify that <m>(u+v)\cdot x = 0</m> for every <m>x</m> in <m>W</m>.  Indeed, we have
+            <me>(u+v)\cdot x = u\cdot x + v\cdot x = 0 + 0 = 0.</me>
+          </li>
+          <li>
+            Let <m>u</m> be in <m>W^\perp</m>, so <m>u\cdot x = 0</m> for every <m>x</m> in <m>W</m>, and let <m>c</m> be a scalar.  We must verify that <m>(cu)\cdot x = 0</m> for every <m>x</m> in <m>W</m>.  Indeed, we have
+            <me>(cu)\cdot x = c(u\cdot x) = c0 = 0.</me>
+          </li>
+        </ol>
+      </p>
+      <p>
+        Next we prove the third assertion.  Let <m>v_1,v_2,\ldots,v_m</m> be a basis for <m>W</m>, so <m>m = \dim(W)</m>, and let <m>v_{m+1},v_{m+2},\ldots,v_k</m> be a basis for <m>W^\perp</m>, so <m>k-m = \dim(W^\perp)</m>.  We need to show <m>k=n</m>.  First we claim that <m>\{v_1,v_2,\ldots,v_m,v_{m+1},v_{m+2},\ldots,v_k\}</m> is linearly independent.  Suppose that <m>c_1v_1 + c_2v_2 + \cdots + c_kv_k = 0</m>.  Let <m>w = c_1v_1 + c_2v_2 + \cdots + c_mv_m</m> and <m>w' = c_{m+1}v_{m+1} + c_{m+2}v_{m+2} + \cdots + c_kv_k</m>, so <m>w</m> is in <m>W</m>, <m>w'</m> is in <m>W'</m>, and <m>w + w' = 0</m>.  Then <m>w = -w'</m> is in both <m>W</m> and <m>W^\perp</m>, which implies <m>w</m> is perpendicular to <em>itself</em>.  In particular, <m>w\cdot w = 0</m>, so <m>w = 0</m>, and hence <m>w' = 0</m>.  Therefore, all coefficients <m>c_i</m> are equal to zero, because <m>\{v_1,v_2,\ldots,v_m\}</m> and <m>\{v_{m+1},v_{m+2},\ldots,v_k\}</m> are linearly independent.
+      </p>
+      <p>
+        It follows from the previous paragraph that <m>k \leq n</m>.  Suppose that <m>k \lt n</m>.  Then the matrix
+        <me>
+          A = \mat{
+            \matrow{v_1^T};
+            \matrow{v_2^T};
+            \vdots;
+            \matrow{v_k^T}}
+        </me>
+        has more columns than rows (it is <q>wide</q>), so its null space is nonzero by this <xref ref="one-to-one-wide-matrices"/>.  Let <m>x</m> be a nonzero vector in <m>\Nul(A)</m>.  Then
+        <me>
+          0 = Ax = \vec{v_1^Tx v_2^Tx \vdots, v_k^Tx}
+          = \vec{v_1\cdot x v_2\cdot x \vdots, v_k\cdot x}
+        </me>
+        by the <xref ref="matrixeq-row-column-prod">row-column rule for matrix multiplication</xref>.  Since <m>v_1\cdot x = v_2\cdot x = \cdots = v_m\cdot x = 0</m>, it follows from this <xref ref="orthocomp-comp-of-span"/> that <m>x</m> is in <m>W^\perp</m>, and similarly, <m>x</m> is in <m>(W^\perp)^\perp</m>.  As above, this implies <m>x</m> is orthogonal to itself, which contradicts our assumption that <m>x</m> is nonzero.  Therefore, <m>k = n</m>, as desired.
+      </p>
+      <p>
+        Finally, we prove the second assertion.  Clearly <m>W</m> is contained in <m>(W^\perp)^\perp</m>: this says that everything in <m>W</m> is perpendicular to the set of all vectors perpendicular to everything in <m>W</m>.  Let <m>m=\dim(W).</m> By 3, we have <m>\dim(W^\perp) = n-m</m>, so <m>\dim((W^\perp)^\perp) = n - (n-m) = m</m>.  The only <m>m</m>-dimensional subspace of <m>(W^\perp)^\perp</m> is all of <m>(W^\perp)^\perp</m>, so <m>(W^\perp)^\perp = W.</m>
+      </p>
+    </proof>
+  </theorem>
+
+  <p>
+    For example, if <m>W</m> is a (<m>2</m>-dimensional) plane in <m>\R^4</m>, then the third property says that <m>W^\perp</m> is another (<m>2</m>-dimensional) plane.
+  </p>
+
+  <definition>
+    <statement>
+      <p>
+        The <term>row space</term> of a matrix <m>A</m> is the span of the rows of <m>A</m>, and is denoted <m>\Row(A)</m>.
+      </p>
+    </statement>
+  </definition>
+
+  <p>
+    If <m>A</m> is an <m>m\times n</m> matrix, then the rows of <m>A</m> are vectors with <m>n</m> entries, so <m>\Row(A)</m> is a subspace of <m>\R^n</m>.  Equivalently, since the rows of <m>A</m> are the columns of <m>A^T</m>, the row space of <m>A</m> is the column space of <m>A^T</m>:
+    <me>\Row(A) = \Col(A^T).</me>
+  </p>
+
+  <p>
+    We showed in the above <xref ref="orthocomp-comp-of-span"/> that if <m>A</m> has rows <m>v_1^T,v_2^T,\ldots,v_m^T</m>, then
+    <me>\Row(A)^\perp = \Span\{v_1,v_2,\ldots,v_m\}^\perp = \Nul(A).</me>
+    Taking orthogonal complements of both sides and using the <xref ref="orthocomp-facts-basic">second fact</xref> gives
+    <me>\Row(A) = \Nul(A)^\perp.</me>
+    Replacing <m>A</m> by <m>A^T</m> and remembering that <m>\Row(A)=\Col(A^T)</m> gives
+    <me>\Col(A)^\perp = \Nul(A^T) \sptxt{and} \Col(A) = \Nul(A^T)^\perp.</me>
+    To summarize:
+  </p>
+
+  <warning>
+    <title>Shortcuts for computing orthogonal complements</title>
+    <p>
+      For any vectors <m>v_1,v_2,\ldots,v_m</m>, we have
+      <me>
+        \Span\{v_1,v_2,\ldots,v_m\}^\perp = \Nul\mat{
+          \matrow{v_1^T};
+          \matrow{v_2^T};
+          \vdots;
+          \matrow{v_m^T}}.
+      </me>
+      For any matrix <m>A</m>, we have
+      <me>
+        \begin{aligned}
+          \Row(A)^\perp &amp;= \Nul(A)    &amp;  \Nul(A)^\perp &amp;= \Row(A) \\
+          \Col(A)^\perp &amp;= \Nul(A^T)\quad  &amp;  \Nul(A^T)^\perp &amp;= \Col(A).
+        \end{aligned}
+      </me>
+    </p>
+  </warning>
+
+  <example>
+    <statement>
+      <p>
+        Compute the orthogonal complement of the subspace
+        <me>
+          W = \bigl\{(x,y,z) \text{ in } \R^3\mid 3x + 2y = z\bigr\}.
+        </me>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        Rewriting, we see that <m>W</m> is the solution set of the system of equations <m>3x + 2y - z = 0</m>, i.e., the null space of the matrix <m>A = \mat{3 2 -1}.</m>  Therefore,
+        <me>
+          W^\perp = \Row(A) = \Span\left\{\vec{3 2 -1}\right\}.
+        </me>
+        No row reduction was needed!
+      </p>
+    </solution>
+  </example>
+
+  <example>
+    <title>Orthogonal complement of an eigenspace</title>
+    <statement>
+      <p>
+        Find the orthogonal complement of the <m>5</m>-eigenspace of the matrix
+        <me>
+          A = \mat{2 4 -1; 3 2 0; -2 4 3}.
+        </me>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        The <m>5</m>-eigenspace is
+        <me>W = \Nul(A - 5I_3) = \Nul\mat{-3 4 -1; 3 -3 0; -2 4 -2},</me>
+        so
+        <me>
+          W^\perp = \Row\mat{-3 4 -1; 3 -3 0; -2 4 -2}
+          = \Span\left\{\vec{-3 4 -1},\;\vec{3 -3 0},\;\vec{-2 4 -2}\right\}.
+        </me>
+        These vectors are necessarily linearly dependent (why)?
+      </p>
+    </solution>
+  </example>
+
+  <!-- Ortho complement of eigenspace -->
+  <!-- row and column rank -->
+
+</section>

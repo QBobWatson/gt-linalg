@@ -9,9 +9,359 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="inner-products">
-  <title>Inner Products</title>
-	
-  <p>Inner product algebra, orthogonality.</p>
+<section xml:id="dot-product">
+  <title>Dot Products and Orthogonality</title>
+
+  <objectives>
+    <ol>
+      <li>Understand the relationship between the dot product, length, and distance.</li>
+      <li>Understand the relationship between the dot product and orthogonality.</li>
+      <li><em>Vocabulary words:</em> <term>dot product</term>, <term>length</term>, <term>distance</term>, <term>unit vector</term>, <term>unit vector in the direction of <m>x</m></term>.</li>
+      <li><em>Essential vocabulary word:</em> <term>orthogonal</term>.</li>
+    </ol>
+  </objectives>
+
+  <subsection>
+    <title>The Dot Product</title>
+
+    <p>
+      The basic construction in this Section is the <em>dot product</em>, which measures angles between vectors and computes the length of a vector.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+          The <term>dot product</term> of two vectors <m>x,y</m> in <m>\R^n</m> is
+          <me>
+            x\cdot y = \vec{x_1 x_2 \vdots, x_n} \cdot \vec{y_1 y_2 \vdots, y_n}
+            \;\overset{\rm def}=\; x_1y_1 + x_2y_2 + \cdots + x_ny_n.
+          </me>
+          Thinking of <m>x,y</m> as column vectors, this is the same as <m>x^Ty</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The <q>def</q> above the equals sign means that the equality is a definition.  For example,
+      <me>
+        \vec{1 2 3}\cdot\vec{4 5 6} = \mat{1 2 3}\vec{4 5 6}
+        = 1\cdot 4 + 2\cdot 5 + 3\cdot 6 = 32.
+      </me>
+      Notice that the dot product of two <em>vectors</em> is a <em>scalar</em>.
+    </p>
+
+    <p>
+      You can do arithmetic with dot products mostly as usual, as long as you remember you can only dot two vectors together, and that the result is a scalar.
+    </p>
+
+    <note hide-type="true">
+      <title>Properties of the Dot Product</title>
+      <p>
+        Let <m>x,y,z</m> be vectors in <m>\R^n</m> and let <m>c</m> be a scalar.
+        <ol>
+          <li>
+            <em>Commutativity:</em> <m>x\cdot y = y \cdot x</m>.
+          </li>
+          <li>
+            <em>Distributivity with addition:</em> <m>(x + y)\cdot z = x\cdot z+y\cdot z</m>.
+          </li>
+          <li>
+            <em>Distributivity with scalar multiplication:</em> <m>(cx)\cdot y = c(x\cdot y)</m>.
+          </li>
+        </ol>
+      </p>
+    </note>
+
+    <warning>
+      <p>
+        If <m>x\cdot y = 0</m>, it does <em>not</em> follow that <m>x=0</m> or <m>y=0</m>.  For instance, <m>{1\choose 0}\cdot{0\choose 1} = 0.</m>
+      </p>
+    </warning>
+
+    <p>
+      The dot product of a vector with itself is an important special case:
+      <me>
+        \vec{x_1 x_2 \vdots, x_n}\cdot\vec{x_1 x_2 \vdots, x_n}
+        = x_1^2 + x_2^2 + \cdots + x_n^2.
+      </me>
+      Therefore, for any vector <m>x</m>, we have:
+      <ul>
+        <li><m>x\cdot x \geq 0</m></li>
+        <li><m>x\cdot x = 0 \iff x = 0.</m></li>
+      </ul>
+      This leads to a good definition of <em>length</em>.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+          The <term>length</term> of a vector <m>x</m> in <m>\R^n</m> is the number
+          <me>
+            \|x\| = \sqrt{x\cdot x} = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}.
+          </me>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      It is easy to see why this is a reasonable definition for vectors in <m>\R^2</m>, by the Pythagorean Theorem.
+      <latex-code>
+\begin{tikzpicture}[scale=1,decoration={brace,raise=3pt}]
+  \draw[grid lines] (0,0) grid (5,5);
+  \point at (0,0);
+  \point["$\vec{3 4}$" right] (x) at (3,4);
+  \draw[vector] (0,0)
+    -- node[sloped,above,inner sep=1pt] {$\sqrt{3^2 + 4^2} = 5$}
+    (x);
+  \draw[decorate,decoration={mirror}] (0,0) -- node[below=4pt] {3} (3,0);
+  \draw[decorate] (0,0) -- node[left=3pt] {4} (0,4);
+
+  \node at (8,2.5) {$\left\|\vec{3 4}\right\| = \sqrt{3^2+4^2} = 5$};
+
+\end{tikzpicture}
+      </latex-code>
+      For vectors in <m>\R^3</m>, one can check that the above definition of length agrees with the usual notion, although now this requires <em>two</em> applications of the Pythagorean theorem.
+    </p>
+
+    <fact>
+      <p>
+        If <m>x</m> is a vector and <m>c</m> is a scalar, then <m>\|cx\|=|c|\cdot\|x\|.</m>
+      </p>
+    </fact>
+
+    <p>
+      For example,
+      <me>
+        \left\|\vec{6 8}\right\| = \left\|2\vec{3 4}\right\|
+        = 2\left\|\vec{3 4}\right\| = 10.
+      </me>
+    </p>
+
+    <p>
+      Now that we have a good notion of length, we can define the <em>distance</em> between points in <m>\R^n</m>.  Recall that the difference between two points <m>x,y</m> is naturally a vector, namely, the vector <m>y-x</m> pointing from <m>x</m> to <m>y</m>.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+          The <term>distance</term> between two points <m>x,y</m> in <m>\R^n</m> is the length of the vector from <m>x</m> to <m>y</m>:
+          <me>\dist(x,y) = \|y-x\|.</me>
+        </p>
+      </statement>
+    </definition>
+
+    <example>
+      <statement>
+        <p>
+          Find the distance from <m>(1,2)</m> to <m>(4,4)</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Let <m>x=(1,2)</m> and <m>y=(4,4)</m>.  Then
+          <me>
+            \dist(x,y) = \|y-x\| = \left\|\vec{3,2}\right\| = \sqrt{3^2+2^2} = \sqrt{13}.
+          </me>
+          <latex-code>
+  \begin{tikzpicture}[thin border nodes]
+    \draw[grid lines] (0,0) grid (5,5);
+    \point["$0$" left] at (0,0);
+    \point["$x$" left] (x) at (1,2);
+    \point["$y$" right] (y) at (4,4);
+    \draw[vector] (x) --
+      node[sloped,above] {$y-x$} (y);
+  \end{tikzpicture}
+          </latex-code>
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      Vectors with length one are very common in applications, so we give them a name.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+          A <term>unit vector</term> is a vector <m>x</m> with length <m>\|x\|=1</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The unit coordinate vectors are unit vectors (have length one):
+      <me>\|e_1\| = \left\|\vec{1 0 0}\right\| = \sqrt{1^2 + 0^2 + 0^2} = 1.</me>
+      For any nonzero vector <m>x</m>, there is a unique unit vector pointing in the same direction.  It is obtained by dividing by the length of <m>x</m>.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+          Let <m>x</m> be a nonzero vector in <m>\R^n</m>.  The <term>unit vector in the direction of <m>x</m></term> is the vector <m>x/\|x\|</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      This is in fact a unit vector (noting that <m>1/\|x\|</m> is a positive number):
+      <me>
+        \left\|\frac{x}{\|x\|}\right\| = \frac 1{\|x\|}\|x\| = 1.
+      </me>
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          What is the unit vector <m>u</m> in the direction of <m>x = \vec{3 4}</m>?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We divide by the length of <m>x</m>:
+          <me>
+            u = \frac{x}{\|x\|} = \frac 1{\sqrt{3^2+4^2}}\vec{3 4} = \frac{1}{5}\vec{3 4}
+            = \vec{3/5 4/5}.
+          </me>
+          <latex-code>
+  \begin{tikzpicture}[thin border nodes]
+    \draw[grid lines] (-1,-1) grid (5,5);
+    \coordinate["$x$" above] (x) at (3,4);
+    \draw[vector] (0,0) -- (x);
+    \draw[vector,seq-red] (0,0) to["$u$"] ($1/5*(x)$);
+    \point["$0$" left] at (0,0);
+  \end{tikzpicture}
+          </latex-code>
+        </p>
+      </solution>
+    </example>
+
+  </subsection>
+
+  <subsection>
+    <title>Orthogonal Vectors</title>
+
+    <p>
+      In this section, we show how the dot product can be used to provide a robust notion of <em>orthogonality</em>, i.e., when two vectors are perpendicular to each other.
+    </p>
+
+    <essential>
+      <statement>
+        <p>
+          Two vectors <m>x,y</m> in <m>\R^n</m> are <term>orthogonal</term> or <term>perpendicular</term> if <m>x\cdot y</m>.
+        </p>
+        <p>
+          <em>Notation:</em> <m>x\perp y</m> means <m>x\cdot y = 0</m>.
+        </p>
+      </statement>
+    </essential>
+
+    <warning>
+      <p>
+        Since <m>0 \cdot x = 0</m> for any vector <m>x</m>, the zero vector is orthogonal to every vector in <m>\R^n</m>.
+      </p>
+    </warning>
+
+    <p>
+      In <m>\R^2</m>, this definition agrees with our usual notion of perpendicular vectors.  To see this, one uses the <em>law of cosines</em>.  In our language, the law of cosines asserts that if <m>x,y</m> are two nonzero vectors in <m>\R^2</m>, and if <m>\alpha</m> is the angle between them, then
+      <me>\|y-x\|^2 = \|x\|^2 + \|y\|^2 - 2\|x\|\,\|y\|\cos\alpha.</me>
+      <latex-code mode="bare">
+        \usetikzlibrary{angles}
+      </latex-code>
+      <latex-code>
+\begin{tikzpicture}[baseline=1cm]
+  \point ["$x$" right] (x) at (3,1);
+  \point ["$y$" above] (y) at (-2,3);
+  \coordinate (o) at (0,0);
+  \draw[vector] (0,0) -- node[below] {$\|x\|$} (x);
+  \draw[vector] (0,0) -- node[left] {$\|y\|$} (y);
+  \draw[vector] (x) -- node[sloped,above] {$\|y-x\|$} (y);
+  \pic[draw, "$\alpha$"] {angle=x--o--y};
+\end{tikzpicture}
+      </latex-code>
+      In particular, <m>\alpha=90^\circ</m> if and only if <m>\cos(\alpha)=0</m>, which happens if and only if <m>\|y-x\|^2 = \|x\|^2+\|y\|^2</m>.  Therefore,
+      <me>
+\begin{split}
+    \text{$x$ and $y$ are perpendicular}
+    \amp\iff \|x\|^2 + \|y\|^2 = \|y-x\|^2 \\
+    \amp\iff x\cdot x + y\cdot y = (y-x)\cdot(y-x) \\
+    \amp\iff x\cdot x + y\cdot y = y\cdot y + x\cdot x -2x\cdot y \\
+    \amp\iff x\cdot y = 0.
+\end{split}
+      </me>
+      To reiterate:
+    </p>
+
+    <warning>
+      <p>
+        <me>
+          x\perp y \quad\iff\quad x\cdot y = 0 \quad\iff\quad \|y-x\|^2 = \|x\|^2 + \|y\|^2.
+        </me>
+      </p>
+    </warning>
+
+    <example>
+      <statement>
+        <p>Find all vectors orthogonal to <m>v = \vec{1 1 -1}.</m></p>
+      </statement>
+      <solution>
+        <p>
+          We have to find all vectors <m>x</m> such that <m>x\cdot v = 0</m>.  This means solving the equation
+          <me>0 = x\cdot v = \vec{x_1 x_2 x_3}\cdot\vec{1 1 -1} = x_1 + x_2 - x_3.</me>
+          The parametric form for the solution set is <m>x_1 = -x_2 + x_3</m>, so the parametric vector form of the general solution is
+          <me>x = \vec{x_1 x_2 x_3} = x_2\vec{-1 1 0} + x_3\vec{1 0 1}.</me>
+          Therefore, the answer is the <em>plane</em>
+          <me>\Span\left\{\vec{-1 1 0},\;\vec{1 0 1}\right\}.</me>
+          For instance,
+          <me>\vec{-1 1 0}\perp\vec{1 1 -1} \sptxt{because} \vec{-1 1 0}\cdot\vec{1 1 -1} = 0</me>.
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <statement>
+        <p>Find all vectors orthogonal to both <m>v = \vec{1 1 -1}</m> and <m>w = \vec{1 1 1}</m>.</p>
+      </statement>
+      <solution>
+        <p>
+          We have to solve the system of two homogeneous equations
+          <me>\spalignsysdelims..
+          \syseq{
+            0 = x\cdot v = \vec{x_1 x_2 x_3}\cdot\vec{1 1 -1} = x_1 + x_2 - x_3;
+              0 = x\cdot w = \vec{x_1 x_2 x_3}\cdot\vec{1 1 1}  = x_1 + x_2 + x_3\rlap.}
+          </me>
+          In matrix form:
+          <me>\mat{1 1 -1; 1 1 1} \;\xrightarrow{\text{RREF}}\;\mat{1 1 0; 0 0 1}.</me>
+          The parametric vector form of the solution set is
+          <me>\vec{x_1 x_2 x_3} = x_2\vec{-1 1 0}.</me>
+          Therefore, the answer is the <em>line</em>
+          <me>\Span\left\{\vec{-1 1 0}\right\}.</me>
+          For instance,
+          <me>
+            \vec{-1 1 0}\cdot\vec{1 1 -1} = 0 \sptxt{and}
+            \vec{-1 1 0}\cdot\vec{1 1 1} = 0.
+            </me>
+        </p>
+      </solution>
+    </example>
+
+    <remark>
+      <title>Angle between two vectors</title>
+      <p>
+        More generally, the law of cosines gives a formula for the angle <m>\alpha</m> between two nonzero vector <m>x,y</m> in <m>\R^2</m>:
+        <me>
+          \begin{split}
+          2\|x\|\|y\|\cos(\alpha)
+          \amp= \|x\|^2 + \|y\|^2 - \|y-x\|^2 \\
+          \amp= x\cdot x + y\cdot y - (y-x)\cdot (y-x) \\
+          \amp= x\cdot x + y\cdot y - y\cdot y - x\cdot x + 2x\cdot y \\
+          \amp= 2x\cdot y \\
+          \amp\quad\implies \alpha = \cos\inv\left(\frac{x\cdot y}{\|x\|\|y\|}\right).
+          \end{split}
+        </me>
+        Since the above formula makes sense in any dimension, we use it to <em>define</em> the angle between two vectors in <m>\R^n</m>.
+      </p>
+    </remark>
+
+  </subsection>
 
 </section>
