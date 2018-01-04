@@ -55,8 +55,7 @@ the license is included in gfdl.xml.
       Clearly (the number of columns with pivots) plus (the number of columns without pivots) equals (the number of columns of <m>A</m>), so we have proved the following Theorem.
     </p>
 
-    <theorem type-name="Rank Theorem" hide-type="true" xml:id="rank-theorem">
-      <title>The Rank Theorem</title>
+    <theorem type-name="Rank Theorem" xml:id="rank-theorem">
       <statement>
         <p>
           If <m>A</m> is an <m>m\times n</m> matrix, then

@@ -436,7 +436,21 @@ the license is included in gfdl.xml.
     </solution>
   </example>
 
-  <!-- Ortho complement of eigenspace -->
-  <!-- row and column rank -->
+  <remark>
+    <title>Row rank and column rank</title>
+    <p>
+      Let <m>A</m> be an <m>m\times n</m> matrix. By the <xref ref="rank-theorem"/>, we have
+      <me>
+        \dim\Col(A) + \dim\Nul(A) = n.
+      </me>
+      On the other hand the <xref ref="orthocomp-facts-basic">third fact</xref> says that
+      <me>
+        \dim\Nul(A)^\perp + \dim\Nul(A) = n,
+      </me>
+      which implies <m>\dim\Col(A) = \dim\Nul(A)^\perp</m>.  Since <m>\Nul(A)^\perp = \Row(A),</m> we have
+      <me>\dim\Col(A) = \dim\Row(A)</me>.
+      In other words, <em>the span of the rows of <m>A</m> has the same dimension as the span of the columns of <m>A</m>,</em> even though the first lives in <m>\R^n</m> and the second lives in <m>\R^m</m>.  This fact is often stated as <q>the row rank equals the column rank.</q>
+    </p>
+  </remark>
 
 </section>
