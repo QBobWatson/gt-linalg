@@ -185,10 +185,10 @@ the license is included in gfdl.xml.
               \amp= d(B) + d(C),
               \end{split}
             </me>
-            as desired.  This shows that <m>d(A)</m> satisfies (LC1) in the rows of <m>A</m>.
+            as desired.  This shows that <m>d(A)</m> satisfies the first <xref ref="linear-trans-defn">defining property</xref> in the rows of <m>A</m>.
             </p>
             <p>
-            We still have to show that <m>d(A)</m> satisfies (LC2) in the rows of <m>A</m>.  Let <m>B</m> be the matrix obtained by scaling the <m>i</m>th row of <m>A</m> by a factor of <m>c</m>:
+            We still have to show that <m>d(A)</m> satisfies the second <xref ref="linear-trans-defn">defining property</xref> in the rows of <m>A</m>.  Let <m>B</m> be the matrix obtained by scaling the <m>i</m>th row of <m>A</m> by a factor of <m>c</m>:
             <me>
               A = \mat{a_{11} a_{12} a_{13}; a_{21} a_{22} a_{23}; a_{31} a_{32} a_{33}}
               \qquad

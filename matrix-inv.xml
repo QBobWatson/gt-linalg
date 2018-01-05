@@ -744,7 +744,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
      </statement>
      <proof>
        <p>
-         Suppose that <m>T</m> is invertible.  Let <m>U\colon\R^n\to\R^n</m> be the inverse of <m>T</m>.  We claim that <m>U</m> is linear.  We need to check the defining properties (LC1) and (LC2).  Let <m>u,v</m> be vectors in <m>\R^n</m>.  Then
+         Suppose that <m>T</m> is invertible.  Let <m>U\colon\R^n\to\R^n</m> be the inverse of <m>T</m>.  We claim that <m>U</m> is linear.  We need to check the <xref ref="linear-trans-defn">defining properties</xref>.  Let <m>u,v</m> be vectors in <m>\R^n</m>.  Then
          <me>u + v = T(U(u)) + T(U(v)) = T(U(u) + U(v))</me>
          by linearity of <m>T</m>.  Applying <m>U</m> to both sides gives
          <me>U(u + v) = U\bigl(T(U(u) + U(v))\bigr) = U(u) + U(v).</me>
@@ -752,7 +752,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
          <me>cu = cT(U(u)) = T(cU(u))</me>
          by linearity of <m>T</m>.  Applying <m>U</m> to both sides gives
          <me>U(cu) = U\bigl(T(cU(u))\bigr) = cU(u).</me>
-         Since <m>U</m> satisfies (LC1) and (LC2), it is a linear transformation.
+         Since <m>U</m> satisfies the <xref ref="linear-trans-defn">defining properties</xref>, it is a linear transformation.
        </p>
        <p>
          Now that we know that <m>U</m> is linear, we know that it has a standard matrix <m>B</m>.  By the <xref ref="matrix-mult-comp-is-prod">compatibility of matrix multiplication and composition</xref>, the matrix for <m>T\circ U</m> is <m>AB</m>.  But <m>T\circ U</m> is the identity transformation <m>\Id_{\R^n},</m> and the standard matrix for <m>\Id_{\R^n}</m> is <m>I_n</m>, so <m>AB = I_n</m>.  One shows similarly that <m>BA = I_n</m>.  Hence <m>A</m> is invertible and <m>B = A\inv</m>.

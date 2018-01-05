@@ -57,8 +57,8 @@ the license is included in gfdl.xml.
         <p>
           A <term>linear transformation</term> is a transformation <m>T\colon\R^n\to\R^m</m> satisfying
           <md>
-            <mrow>T(u + v) &amp;= T(u) + T(v) &amp; \text{(LT1)}</mrow>
-            <mrow>T(cu) &amp;= cT(u) &amp; \text{(LT2)}</mrow>
+            <mrow>T(u + v) &amp;= T(u) + T(v)</mrow>
+            <mrow>T(cu) &amp;= cT(u)</mrow>
           </md>
           for all vectors <m>u,v</m> in <m>\R^n</m> and all scalars <m>c</m>.
         </p>
@@ -71,7 +71,7 @@ the license is included in gfdl.xml.
         <mrow>T(u + v) = A(u + v) &amp;= Au + Av = T(u) + T(v)</mrow>
         <mrow>T(cu) = A(cu) &amp;= cAu = cT(u)</mrow>
       </md>
-      for all vectors <m>u,v</m> in <m>\R^n</m> and all scalars <m>c</m>.  Since a matrix transformation satisfies properties (LC1) and (LC2), it is a linear transformation
+      for all vectors <m>u,v</m> in <m>\R^n</m> and all scalars <m>c</m>.  Since a matrix transformation satisfies the two defining properties, it is a linear transformation
     </p>
 
     <p>
@@ -101,16 +101,16 @@ the license is included in gfdl.xml.
             <li>
               Since <m>0 = -0</m>, we have
               <me>T(0) = T(-0) = -T(0)</me>
-              by (LT2).  The only vector <m>w</m> such that <m>w=-w</m> is the zero vector.
+              by the second <xref ref="linear-trans-defn">defining property</xref>.  The only vector <m>w</m> such that <m>w=-w</m> is the zero vector.
             </li>
             <li>
               Let us suppose for simplicity that <m>k=2</m>.  Then
               <md>
                 <mrow>
-                  T(c_1v_1 + c_2v_2) &amp;= T(c_1v_1) + T(c_2v_2) &amp; \text{(LT1)}
+                  T(c_1v_1 + c_2v_2) &amp;= T(c_1v_1) + T(c_2v_2) &amp; \text{first property}
                 </mrow>
                 <mrow>
-                  &amp;= c_1T(v_1) + c_2T(v_2). &amp; \text{(LT2)}
+                  &amp;= c_1T(v_1) + c_2T(v_2) &amp; \text{second property.}
                 </mrow>
               </md>
             </li>
@@ -140,7 +140,7 @@ the license is included in gfdl.xml.
           We have <m>T(0) = 0 + 1 = 1</m>.  Since any linear transformation necessarily takes zero to zero by the above <xref ref="linear-trans-T0-0"/>, we conclude that <m>T</m> is <em>not</em> linear.
         </p>
         <p>
-          <em>Note:</em> in this case, it was not necessary to check explicitly that <m>T</m> does not satisfy both defining properties (LT1) and (LT2): since <m>T(0)=0</m> is a consequence of these properties, at least one of them must not be satisfied.  (In fact, this <m>T</m> satisfies neither.)
+          <em>Note:</em> in this case, it was not necessary to check explicitly that <m>T</m> does not satisfy both <xref ref="linear-trans-defn">defining properties</xref>: since <m>T(0)=0</m> is a consequence of these properties, at least one of them must not be satisfied.  (In fact, this <m>T</m> satisfies neither.)
         </p>
       </solution>
     </example>
@@ -152,7 +152,7 @@ the license is included in gfdl.xml.
       </statement>
       <solution>
         <p>
-          We have to check the properties (LT1) and (LT2) for <em>all</em> vectors <m>u,v</m> and <em>all</em> scalars <m>c</m>.  In other words, we have to treat <m>u,v,</m> and <m>c</m> as <em>unknowns</em>.  The only thing we are allowed to use is the definition of <m>T</m>.
+          We have to check the <xref ref="linear-trans-defn">defining properties</xref> for <em>all</em> vectors <m>u,v</m> and <em>all</em> scalars <m>c</m>.  In other words, we have to treat <m>u,v,</m> and <m>c</m> as <em>unknowns</em>.  The only thing we are allowed to use is the definition of <m>T</m>.
           <md>
             <mrow>
               T(u + v) &amp;= 1.5(u + v) = 1.5u + 1.5v = T(u) + T(v)
@@ -269,7 +269,7 @@ the license is included in gfdl.xml.
       </statement>
       <solution>
         <p>
-          We have to check the properties (LT1) and (LT2) for <em>all</em> vectors <m>u,v</m> and <em>all</em> scalars <m>c</m>.  In other words, we have to treat <m>u,v,</m> and <m>c</m> as <em>unknowns</em>; the only thing we are allowed to use is the definition of <m>T</m>.  Since <m>T</m> is defined in terms of the coordinates of <m>u,v</m>, we need to give those names as well; say <m>u={x_1\choose y_1}</m> and <m>v={x_2\choose y_2}</m>.  For the first property, we have
+          We have to check the <xref ref="linear-trans-defn">defining properties</xref> for <em>all</em> vectors <m>u,v</m> and <em>all</em> scalars <m>c</m>.  In other words, we have to treat <m>u,v,</m> and <m>c</m> as <em>unknowns</em>; the only thing we are allowed to use is the definition of <m>T</m>.  Since <m>T</m> is defined in terms of the coordinates of <m>u,v</m>, we need to give those names as well; say <m>u={x_1\choose y_1}</m> and <m>v={x_2\choose y_2}</m>.  For the first property, we have
           <me>
             \begin{split}
               T\left(\vec{x_1 y_1} + \vec{x_2 y_2}\right)
@@ -291,7 +291,7 @@ the license is included in gfdl.xml.
             = cT\vec{x_1 y_1}.
             \end{split}
           </me>
-          Since <m>T</m> satisfies the defining properties (LT1) and (LT2), <m>T</m> is a linear transformation.
+          Since <m>T</m> satisfies the <xref ref="linear-trans-defn">defining properties</xref>, <m>T</m> is a linear transformation.
         </p>
         <p>
           <em>Note:</em> we will see in this <xref ref="linear-trans-matrix-formula"/> below  that
@@ -330,21 +330,21 @@ the license is included in gfdl.xml.
       </statement>
       <solution>
         <p>
-          In order to verify that a transformation <m>T</m> is <em>not</em> linear, we have to show that <m>T</m> does not satisfy <em>at least one</em> of the two properties (LC1), (LC2).  For (LC1), the negation of the statement <q><m>T(u+v)=T(u)+T(v)</m> for all vectors <m>u,v</m></q> is <q>there exists at least one pair of vectors <m>u,v</m> such that <m>T(u+v)\neq T(u)+T(v)</m>.</q>  In other words, it suffices to find <em>one example</em> of a pair of vectors <m>u,v</m> such that <m>T(u+v)\neq T(u)+T(v)</m>.  Likewise, for (LC2), the negation of the statement <q><m>T(cu) = cT(u)</m> for all vectors <m>u</m> and all scalars <m>c</m></q> is <q>there exists some vector <m>u</m> and some scalar <m>c</m> such that <m>T(cu)\neq cT(u)</m>.</q>  In other words, it suffices to find <em>one</em> vector <m>u</m> and <em>one</em> scalar <m>c</m> such that <m>T(cu)\neq cT(u)</m>.
+          In order to verify that a transformation <m>T</m> is <em>not</em> linear, we have to show that <m>T</m> does not satisfy <em>at least one</em> of the two <xref ref="linear-trans-defn">defining properties</xref>.  For the first, the negation of the statement <q><m>T(u+v)=T(u)+T(v)</m> for all vectors <m>u,v</m></q> is <q>there exists at least one pair of vectors <m>u,v</m> such that <m>T(u+v)\neq T(u)+T(v)</m>.</q>  In other words, it suffices to find <em>one example</em> of a pair of vectors <m>u,v</m> such that <m>T(u+v)\neq T(u)+T(v)</m>.  Likewise, for the second, the negation of the statement <q><m>T(cu) = cT(u)</m> for all vectors <m>u</m> and all scalars <m>c</m></q> is <q>there exists some vector <m>u</m> and some scalar <m>c</m> such that <m>T(cu)\neq cT(u)</m>.</q>  In other words, it suffices to find <em>one</em> vector <m>u</m> and <em>one</em> scalar <m>c</m> such that <m>T(cu)\neq cT(u)</m>.
         </p>
         <p>
           For the first transformation, we note that
           <me>T_1\left(-\vec{1 0}\right) = T_1\vec{-1 0} = \vec{|-1| 0} = \vec{1 0}</me>
           but that
           <me>-T_1\vec{1 0} = -\vec{|1| 0} = -\vec{1 0} = \vec{-1 0}.</me>
-          Therefore, this transformation does not satisfy (LC2).
+          Therefore, this transformation does not satisfy the second property.
         </p>
         <p>
           For the second transformation, we note that
           <me>T_2\left(2\vec{1 1}\right) = T_2\vec{2 2} = \vec{2\cdot 2 2} = \vec{4 2}</me>
           but that
           <me>2T_2\vec{1 1} = 2\vec{1\cdot 1 1} = 2\vec{1 1} = \vec{2 2}.</me>
-          Therefore, this transformation does not satisfy (LC2).
+          Therefore, this transformation does not satisfy the second property.
         </p>
         <p>
           For the third transformation, we observe that
@@ -360,7 +360,7 @@ the license is included in gfdl.xml.
 
     <remark type-name="Challenge">
       <p>
-        Find an example of a transformation that satisfies (LC1) but not (LC2).
+        Find an example of a transformation that satisfies the first <xref ref="linear-trans-defn">property of linearity</xref> but not the second.
       </p>
     </remark>
 
@@ -749,7 +749,7 @@ $\xrightarrow{\text{project $yz$}}$
       </statement>
       <solution>
         <p>
-          We verify the two defining properties (LC1) and (LC2) of linear transformations.  Let <m>u,v</m> be vectors in <m>\R^n</m>.  Then
+          We verify the two <xref ref="linear-trans-defn">defining properties</xref> of linear transformations.  Let <m>u,v</m> be vectors in <m>\R^n</m>.  Then
           <me>\Id_{\R^n}(u+v) = u+v = \Id_{\R^n}(u) + \Id_{\R^n}(v).</me>
           If <m>c</m> is a scalar, then
           <me>\Id_{\R^n}(cu) = cu = c\Id_{\R^n}(u).</me>

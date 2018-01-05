@@ -1,0 +1,803 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<section xml:id="projections">
+  <title>Orthogonal Projection</title>
+
+  <objectives>
+    <ol>
+      <li>Understand the orthogonal decomposition of a vector with respect to a subspace.</li>
+      <li>Understand the relationship between orthogonal decomposition and orthogonal projection.</li>
+      <li>Understand the relationship between orthogonal decomposition and distance to a subspace.</li>
+      <li>Learn the basic properties of orthogonal projections as linear transformations and as matrix transformations.</li>
+      <li><em>Recipes:</em> orthogonal projection onto a line, orthogonal decomposition by solving a system of equations, orthogonal projection via a complicated matrix product.</li>
+      <li><em>Pictures:</em> orthogonal decomposition, orthogonal projection.</li>
+      <li><em>Vocabulary words:</em> <term>orthogonal decomposition</term>, <term>orthogonal projection</term>.</li>
+    </ol>
+  </objectives>
+
+  <introduction>
+    <p>
+      Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  In this Section, we will learn to compute the <em>closest vector</em> <m>x_W</m> to <m>x</m> in <m>W</m>.  The vector <m>x_W</m> is called the <em>orthogonal projection</em> of <m>x</m> onto <m>W</m>.
+    </p>
+  </introduction>
+
+  <subsection>
+    <title>Orthogonal Decomposition</title>
+
+    <p>
+      To say that <m>x_W</m> is the closest vector to <m>x</m> on <m>W</m> means that the difference <m>x-x_W</m> is <em>orthogonal</em> to the vectors in <m>W</m>:
+      <latex-code>
+\begin{tikzpicture}[myxyz, thin border nodes]
+  \coordinate (u) at (1,0,0);
+  \coordinate (v) at (0,1.1,-.2);
+  \coordinate (uxv) at (0,.2,1.1);
+  \coordinate (x) at ($-1.1*(u)+(v)+1.5*(uxv)$);
+  \begin{scope}[x=(u),y=(v),transformxy]
+    \fill[seq-violet!30] (-2,-2) rectangle (2,2);
+    \draw[seq-violet, help lines] (-2,-2) grid (2,2);
+    \node[seq-violet] at (2.6,1) {$W$};
+  \end{scope}
+  \point[seq-blue, "$x_W$" {below,text=seq-blue}] (y) at ($-1.1*(u)+1*(v)$);
+  \coordinate (yu) at ($(y)+(u)$);
+  \coordinate (yv) at ($(y)+(v)$);
+  \pic[draw, right angle len=3mm] {right angle=(x)--(y)--(yu)};
+  \pic[draw, right angle len=3mm] {right angle=(x)--(y)--(yv)};
+  \point[seq-red, "$x$" {above,text=seq-red}] (xx) at (x);
+  \draw[vector, thin] (y) -- node[auto] {$x-x_W$} (xx);
+  \point at (0,0,0);
+\end{tikzpicture}
+      </latex-code>
+      In other words, if <m>x_{W^\perp} = x - x_W</m>, then we have <m>x = x_W + x_{W^\perp}</m>, where <m>x_W</m> is in <m>W</m> and <m>x_{W^\perp}</m> is in <m>W^\perp</m>.  The first order of business is to prove that such vectors always exist.
+    </p>
+
+    <theorem xml:id="projections-decomp-exists">
+      <title>Orthogonal decomposition</title>
+      <statement>
+        <p>
+          Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  Then we can write <m>x</m> as
+          <me>x = x_W + x_{W^\perp}</me>
+          for unique vectors <m>x_W</m> in <m>W</m> and <m>x_{W^\perp}</m> in <m>W^\perp</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Let <m>m = \dim(W)</m>, so <m>n-m = \dim(W^\perp)</m> by this <xref ref="orthocomp-facts-basic"/>.  Let <m>v_1,v_2,\ldots,v_m</m> be a basis for <m>W</m> and let <m>v_{m+1},v_{m+2},\ldots,v_n</m> be a basis for <m>W^\perp</m>.  We showed in the proof of this <xref ref="orthocomp-facts-basic"/> that <m>\{v_1,v_2,\ldots,v_m,v_{m+1},v_{m+2},\ldots,v_n\}</m> is linearly independent, so it forms a basis for <m>\R^n</m>.  Therefore, we can write
+          <me>
+            x = (c_1v_1 + \cdots + c_mv_m) + (c_{m+1}v_{m+1} + \cdots + c_nv_n)
+            = x_W + x_{W^\perp},
+          </me>
+          where <m>x_W = c_1v_1 + \cdots + c_mv_m</m> and <m>x_{W^\perp} = c_{m+1}v_{m+1} + \cdots + c_nv_n</m>.  This proves that such a decomposition exists.
+        </p>
+        <p>
+          As for uniqueness, suppose that
+          <me>x = x_W + x_{W^\perp} = y_W + y_{W^\perp}</me>
+          for <m>x_W,y_W</m> in <m>W</m> and <m>x_{W^\perp},y_{W^\perp}</m> in <m>W^\perp</m>.  Rearranging gives
+          <me>x_W - y_W = y_{W^\perp} - x_{W^\perp}.</me>
+          Since <m>W</m> and <m>W^\perp</m> are subspaces, the left side of the equation is in <m>W</m> and the right side is in <m>W^\perp</m>.  Therefore, <m>x_W-y_W</m> is in <m>W</m> and in <m>W^\perp</m>, so it is orthogonal to itself, which implies <m>x_W-y_W=0</m>.  Hence <m>x_W = y_W</m> and <m>x_{W^\perp} = y_{W^\perp}</m>, which proves uniqueness.
+        </p>
+      </proof>
+    </theorem>
+
+    <definition>
+      <statement>
+        <p>
+          Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  The expression
+          <me>x = x_W + x_{W^\perp}</me>
+          for <m>x_W</m> in <m>W</m> and <m>x_{W^\perp}</m> in <m>W^\perp</m>, is called the <term>orthogonal decomposition</term> of <m>x</m> with respect to <m>W</m>, and the vector <m>x_W</m> is the <term>orthogonal projection</term> of <m>x</m> onto <m>W</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      Since <m>x_W</m> is the closest vector on <m>W</m> to <m>x</m>, the distance from <m>x</m> to the subspace <m>W</m> is the length of the vector from <m>x_W</m> to <m>x</m>, i.e., the length of <m>x_{W^\perp}</m>.
+    </p>
+
+    <warning>
+      <p>
+        <ul>
+          <li>
+            The vector <m>x_W</m> is the <em>closest</em> vector to <m>x</m> in <m>W</m>.
+          </li>
+          <li>
+            The <em>distance from <m>x</m> to <m>W</m></em> is <m>\|x_{W^\perp}\|</m>.
+          </li>
+        </ul>
+      </p>
+    </warning>
+
+    <example xml:id="projections-eg-xy-plane">
+      <title>Orthogonal decomposition with respect to the <m>xy</m>-plane</title>
+      <p>
+        Let <m>W</m> be the <m>xy</m>-plane in <m>\R^3</m>, so <m>W^\perp</m> is the <m>z</m>-axis.  It is easy to compute the orthogonal decomposition of a vector with respect to this <m>W</m>:
+        <me>
+          \begin{split}
+          x \amp= \vec{1 2 3} \implies x_W = \vec{1 2 0} \quad x_{W^\perp} = \vec{0 0 3}\\
+          x \amp= \vec{a b c} \implies x_W = \vec{a b 0} \quad x_{W^\perp} = \vec{0 0 c}.
+          \end{split}
+        </me>
+        We see that the orthogonal decomposition in this case expresses a vector in terms of a <q>horizontal</q> component (in the <m>xy</m>-plane) and a <q>vertical</q> component (on the <m>z</m>-axis).
+        <latex-code>
+\begin{tikzpicture}[myxyz, thin border nodes]
+  \draw (0,0,-2)--(0,0,0);
+  \fill[transformxy, help lines, seq-violet!20, opacity=.7]
+    (-2.5,-2.5) rectangle (2.5,2.5);
+  \draw[transformxy, help lines, seq-violet!50] (-2.5,-2.5) grid (2.5,2.5);
+  \draw[->] (-2.5,0,0)--(2.5,0,0);
+  \draw[->] (0,-2.5,0)--(0,2.5,0);
+  \draw[->] (0,0,0)--(0,0,2);
+  \point[seq-red, "$x$" {above, text=seq-red}] (x) at (1,2,3);
+  \coordinate (xW) at (1,2,0);
+  \draw[vector, seq-blue] (0,0,0) -- node [right=1pt, text=seq-blue] {$x_W$} (xW);
+  \point (o) at (0,0,0);
+  \draw[vector, seq-green] (xW) --
+    node[auto, seq-green!80!black] {$x_{W^\perp}$} (x);
+  \coordinate (xWu) at ($(xW)+(1,0,0)$);
+  \coordinate (xWv) at ($(xW)+(0,1,0)$);
+  \pic[draw] {right angle=(x)--(xW)--(xWu)};
+  \pic[draw] {right angle=(x)--(xW)--(xWv)};
+  \node[seq-violet] at (3,1,0) {$W$};
+\end{tikzpicture}
+        </latex-code>
+      </p>
+      <figure>
+        <caption>Orthogonal decomposition of a vector with respect to the <m>xy</m>-plane in <m>\R^3</m>.  Note that <m>\color[rgb]{1,.3,.3}x_W</m> is in the <m>xy</m>-plane and <m>\color[rgb]{0,.8,.8}x_{W^\perp}</m> is in the <m>z</m>-axis.  Click and drag the head of the vector <m>x</m> to see how the orthogonal decomposition changes.</caption>
+        <mathbox source="demos/projection.html?u1=1,0,0&amp;u2=0,1,0&amp;vec=-1.1,2,1.5&amp;range=3&amp;mode=decomp&amp;closed" height="500px"/>
+      </figure>
+    </example>
+
+    <example xml:id="projections-eg-inW">
+      <title>Orthogonal decomposition of a vector in <m>W</m></title>
+      <p>
+        If <m>x</m> is in a subspace <m>W</m>, then the closest vector to <m>x</m> in <m>W</m> is itself, so <m>x = x_W</m> and <m>x_{W^\perp} = 0</m>.  Conversely, if <m>x = x_W</m> then <m>x</m> is contained in <m>W</m> because <m>x_W</m> is contained in <m>W</m>.
+      </p>
+    </example>
+
+    <example xml:id="projections-eg-inWperp">
+      <title>Orthogonal decomposition of a vector in <m>W^\perp</m></title>
+      <p>
+        If <m>W</m> is a subspace and  <m>x</m> is in <m>W^\perp</m>, then the orthogonal decomposition of <m>x</m> is <m>x = 0 + x</m>, where <m>0</m> is in <m>W</m> and <m>x</m> is in <m>W^\perp</m>.  It follows that <m>x_W = 0</m>.  Conversely, if <m>x_W = 0</m> then the orthogonal decomposition of <m>x</m> is <m>x = x_W + x_{W^\perp} = 0 + x_{W^\perp}</m>, so <m>x = x_{W^\perp}</m> is in <m>W^\perp</m>.
+      </p>
+    </example>
+
+    <example hide-type="true">
+      <title>Interactive: orthogonal decomposition in <m>\R^2</m></title>
+      <figure>
+        <caption>Orthogonal decomposition of a vector with respect to a line <m>W</m> in <m>\R^2</m>.  Note that <m>\color[rgb]{1,.3,.3}x_W</m> is in <m>W</m> and <m>\color[rgb]{0,.8,.8}x_{W^\perp}</m> is in the line perpendicular to <m>W</m>.  Click and drag the head of the vector <m>x</m> to see how the orthogonal decomposition changes.</caption>
+        <mathbox source="demos/projection.html?u1=1,.5&amp;vec=1,-1&amp;range=3&amp;mode=decomp&amp;closed&amp;subname=W" height="500px"/>
+      </figure>
+    </example>
+
+    <example hide-type="true">
+      <title>Interactive: orthogonal decomposition in <m>\R^3</m></title>
+      <figure>
+        <caption>Orthogonal decomposition of a vector with respect to a plane <m>W</m> in <m>\R^3</m>.  Note that <m>\color[rgb]{1,.3,.3}x_W</m> is in <m>W</m> and <m>\color[rgb]{0,.8,.8}x_{W^\perp}</m> is in the line perpendicular to <m>W</m>.  Click and drag the head of the vector <m>x</m> to see how the orthogonal decomposition changes.</caption>
+        <mathbox source="demos/projection.html?u1=1,0,0&amp;u2=0,1.1,-.2&amp;vec=-1.1,2,1.5&amp;range=3&amp;mode=decomp&amp;closed" height="500px"/>
+      </figure>
+    </example>
+
+    <example hide-type="true">
+      <title>Interactive: orthogonal decomposition in <m>\R^3</m></title>
+      <figure>
+        <caption>Orthogonal decomposition of a vector with respect to a line <m>W</m> in <m>\R^3</m>.  Note that <m>\color[rgb]{1,.3,.3}x_W</m> is in <m>W</m> and <m>\color[rgb]{0,.8,.8}x_{W^\perp}</m> is in the plane perpendicular to <m>W</m>.  Click and drag the head of the vector <m>x</m> to see how the orthogonal decomposition changes.</caption>
+        <mathbox source="demos/projection.html?u1=0,1.1,.2&amp;vec=-1.1,2,1.5&amp;range=3&amp;mode=decomp&amp;closed&amp;subname=W" height="500px"/>
+      </figure>
+    </example>
+
+    <p>
+      Now we turn to the problem of computing <m>x_W</m> and <m>x_{W^\perp}</m>.  Of course, since <m>x_{W^\perp} = x - x_W</m>, really all we need is to compute <m>x_W</m>.  The following Theorem gives a method for computing the orthogonal projection in terms of a spanning set.
+    </p>
+
+    <theorem xml:id="projections-ATA-formula">
+      <statement>
+        <p>
+          Let <m>W</m> be a subspace of <m>\R^n</m>, let <m>v_1,v_2,\ldots,v_m</m> be a spanning set for <m>W</m> (e.g., a basis), and let <m>A</m> be the <m>n\times m</m> matrix with columns <m>v_1,v_2,\ldots,v_m</m>:
+          <me>
+            A = \mat{| | ,, |; v_1 v_2 \cdots, v_m; | | ,, |}.
+          </me>
+          Let <m>x</m> be a vector in <m>\R^n</m>.  Then the matrix equation <m>A^TAc=A^Tx</m> in the unknown vector <m>c</m> is consistent, and <m>x_W = Ac</m> for any solution <m>c</m>.
+        </p>
+      </statement>
+      <proof visible="true">
+        <p>
+          Let <m>x = x_W + x_{W^\perp}</m> be the orthogonal decomposition with respect to <m>W</m>.  We have <m>A^Tx_{W^\perp}=0</m> by this <xref ref="orthocomp-comp-of-span"/>, so
+          <me>A^Tx = A^T(x_W + x_{W^\perp}) = A^Tx_W + A^Tx_{W^\perp} = A^Tx_W.</me>
+          Since <m>x_W</m> is in <m>W</m>, we can write <m>x_W = c_1v_1 + c_2v_2 + \cdots + c_mv_m</m> for some scalars <m>c_1,c_2,\ldots,c_m</m>.  Let <m>c</m> be the vector with entries <m>c_1,c_2,\ldots,c_m</m>.  Then <m>Ac = x_W</m>, so
+          <me>A^Tx = A^Tx_W = A^TAc.</me>
+          This proves that the matrix equation <m>A^TAc = A^Tx</m> is consistent, and that <m>x_W = Ac</m> for a solution <m>c</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <specialcase>
+      <title>Orthogonal projection onto a line</title>
+      <p>
+        Let <m>L = \Span\{u\}</m> be a line in <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  By the <xref ref="projections-ATA-formula"/>, to find <m>x_L</m> we must solve the matrix equation <m>u^Tuc = u^Tx</m>, where we regard <m>u</m> as an <m>n\times 1</m> matrix.  But <m>u^Tu = u\cdot u</m> and <m>u^Tx = u\cdot x</m>, so <m>c = (u\cdot x)/(u\cdot u)</m> is a solution of <m>u^Tuc = u^Tx</m>, and hence
+        <m>x_L = uc = (u\cdot x)(u\cdot u)\,u.</m>
+        <latex-code>
+\begin{tikzpicture}[thin border nodes]
+  \draw[seq-violet] (-3,-2) -- node[below right, very near start] {$L$} (3,2);
+  \draw[vector] (0,0) --  node[below right] {$u$} (1.5,1);
+  \point[seq-red] (x) at (-3,2);
+  \point (o) at (0,0);
+  \draw[vector,seq-red] (o) -- node[auto,swap] {$x$} (x);
+  \point[seq-blue, "$x_L = \dfrac{u\cdot x}{u\cdot u}\,u$" {below right,seq-blue}]
+    (p) at (${-2.5/(1.5*1.5+1)}*(1.5,1)$);
+  \draw[vector, seq-green] (p) -- node[below left] {$x_{L^\perp}$} (x);
+  \pic[draw] {right angle=(x)--(p)--(o)};
+\end{tikzpicture}
+        </latex-code>
+      </p>
+    </specialcase>
+
+    <p>To reiterate:</p>
+
+    <warning>
+      <title>Recipe: orthogonal projection onto a line</title>
+      <p>
+        If <m>L = \Span\{u\}</m> is a line, then
+        <me>
+          x_L = \frac{u\cdot x}{u\cdot u}\,u
+          \sptxt{and}
+          x_{L^\perp} = x - x_L
+        </me>
+        for any vector <m>x</m>.
+      </p>
+    </warning>
+
+    <example>
+      <title>Projection onto a line in <m>\R^2</m></title>
+      <statement>
+        <p>
+          Compute the orthogonal projection of <m>x = {-6\choose 4}</m> onto the line <m>L</m> spanned by <m>u = {3\choose 2}</m>, and find the distance from <m>x</m> to <m>L</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          First we find
+          <me>
+            x_L = \frac{x\cdot u}{u\cdot u}\,u = \frac{-18+8}{9+4}\vec{3 2} = -\frac{10}{13}\vec{3 2}
+            \qquad
+            x_{L^\perp} = x - x_L = \frac 1{13}\vec{-48 72}.
+          </me>
+          The distance from <m>x</m> to <m>L</m> is
+          <me>
+            \|x_{L^\perp}\| = \frac 1{13}\sqrt{48^2 + 72^2} \approx 6.656.
+          </me>
+          <latex-code>
+\begin{tikzpicture}[thin border nodes]
+  \draw[seq-violet] (-3,-2) -- node[below right, very near start] {$L$} (3,2);
+  \draw[vector] (0,0) --  node[below right, at end] {$\vec{3 2}$} (1.5,1);
+  \point[seq-red] (x) at (-3,2);
+  \point (o) at (0,0);
+  \draw[vector,seq-red] (o) -- node[at end, left=1mm] {$\vec{-6 4}$} (x);
+  \point[seq-blue, "$\displaystyle-\frac{10}{13}\vec{3 2}$" {below right,xshift=-2mm,yshift=2mm,seq-blue}]
+    (p) at (${-2.5/(1.5*1.5+1)}*(1.5,1)$);
+  \draw (p) -- (x);
+  \pic[draw] {right angle=(x)--(p)--(o)};
+\end{tikzpicture}
+          </latex-code>
+        </p>
+      <figure>
+        <caption>Distance from the line <m>L</m>.</caption>
+        <mathbox source="demos/projection.html?u1=3,2&amp;vec=-6,4&amp;labels=u&amp;closed&amp;mode=distance" height="500px"/>
+      </figure>
+      </solution>
+    </example>
+
+    <example>
+      <title>Projection onto a line in <m>\R^3</m></title>
+      <statement>
+        <p>
+          Let
+          <me>
+            x = \vec{-2 3 -1} \qquad u = \vec{-1 1 1},
+          </me>
+          and let <m>L</m> be the line spanned by <m>u</m>.  Compute <m>x_L</m> and <m>x_L^\perp</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          <me>
+            x_L = \frac{x\cdot u}{u\cdot u}\,u = \frac{2+3-1}{1+1+1}\vec{-1 1 1} = \frac{4}{3}\vec{-1 1 1}
+            \qquad
+            x_{L^\perp} = x - x_L = \frac 13\vec{-2 5 -7}.
+          </me>
+        </p>
+      <figure>
+        <caption>Orthogonal projection onto the line <m>L</m>.</caption>
+        <mathbox source="demos/projection.html?u1=-1,1,1&amp;vec=-2,3,-1&amp;labels=u&amp;range=3.5&amp;closed" height="500px"/>
+      </figure>
+      </solution>
+    </example>
+
+    <p>
+      When <m>W = \Span\{v_1,v_2,\ldots,v_m\}</m> has dimension greater than one, computing the orthogonal projection of <m>x</m> onto <m>W</m> means solving the matrix equation <m>A^TAc = A^Tx</m>, where <m>A</m> has columns <m>v_1,v_2,\ldots,v_m</m>.  In other words, it means <em>solving a system of linear equations</em>.
+    </p>
+
+    <warning>
+      <title>Recipe: compute an orthogonal decomposition</title>
+      <p>
+        Let <m>W = \Span\{v_1,v_2,\ldots,v_m\}</m> and let <m>A</m> be the matrix with columns <m>v_1,v_2,\ldots,v_m</m>.  Here is a method to compute the orthogonal decomposition of a vector <m>x</m> with respect to <m>W</m>:
+        <ol>
+          <li>
+            Compute the matrix <m>A^TA</m> and the vector <m>A^Tx</m>.
+          </li>
+          <li>
+            Form the augmented matrix for the matrix equation <m>A^TAc = A^Tx</m> in the unknown vector <m>c</m>, and row reduce.
+          </li>
+          <li>
+            This equation is always consistent; choose one solution <m>c</m>.  Then
+            <me>
+              x_W = Ac \qquad x_{W^\perp} = x - x_W.
+            </me>
+          </li>
+        </ol>
+      </p>
+    </warning>
+
+    <example>
+      <title>Projection onto the <m>xy</m>-plane</title>
+      <statement>
+        <p>
+          Use the <xref ref="projections-ATA-formula"/> to compute the orthogonal decomposition of a vector with respect to the <m>xy</m>-plane in <m>\R^3</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          A basis for the <m>xy</m>-plane is given by the two unit coordinate vectors
+          <me>
+            e_1 = \vec{1 0 0} \qquad e_2 = \vec{0 1 0}.
+          </me>
+          Let <m>A</m> be the matrix with columns <m>e_1,e_2</m>:
+          <me>
+            A = \mat{1 0; 0 1; 0 0}.
+          </me>
+          Then
+          <me>
+            A^TA = \mat{1 0; 0 1} = I_2 \qquad
+            A^T\vec{x_1 x_2 x_3} = \mat{1 0 0; 0 1 0}\vec{x_1 x_2 x_3} = \vec{x_1 x_2}.
+          </me>
+          It follows that the unique solution <m>c</m> of <m>A^TAc = I_2c = A^Tx</m> is given by the first two coordinates of <m>x</m>, so
+          <me>
+            x_W = A\vec{x_1 x_2} = \mat{1 0; 0 1; 0 0}\vec{x_1 x_2} = \vec{x_1 x_2 0}
+            \qquad
+            x_{W^\perp} = x - x_W = \vec{0 0 x_3}.
+          </me>
+          We have recovered this <xref ref="projections-eg-xy-plane"/>.
+        </p>
+      </solution>
+    </example>
+
+    <example xml:id="projections-onto-plane">
+      <title>Projection onto a plane in <m>\R^3</m></title>
+      <statement>
+        <p>
+          Let
+          <me>
+            W = \Span\left\{\vec{1 0 -1},\;\vec{1 1 0}\right\}
+            \qquad
+            x = \vec{1 2 3}.
+          </me>
+          Compute <m>x_W</m> and the distance from <m>x</m> to <m>W</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We have to solve the matrix equation <m>A^TAc = A^Tx</m>, where
+          <me>A = \mat{1 1; 0 1; -1 0}.</me>
+          We have
+          <me>
+            A^TA = \mat{2 1; 1 2} \qquad A^Tx = \vec{-2 3}.
+          </me>
+          We form an augmented matrix and row reduce:
+          <me>
+            \amat{2 1 -2; 1 2 3} \rref
+            \amat{1 0 -7/3; 0 1 8/3}
+            \implies
+            c = \frac 13\vec{-7 8}.
+          </me>
+          It follows that
+          <me>
+            x_W = Ac = \frac 13\vec{1 8 7}
+            \qquad
+            x_{W^\perp} = x - x_W = \frac 13\vec{2 -2 2}.
+          </me>
+          The distance from <m>x</m> to <m>W</m> is
+          <me>
+            \|x_{W^\perp}\| = \frac 1{3}\sqrt{4+4+4} \approx 1.155.
+          </me>
+        </p>
+      <figure>
+        <caption>Orthogonal projection onto the plane <m>W</m>.</caption>
+        <mathbox source="demos/projection.html?u1=1,0,-1&amp;u2=-1,-2,-1&amp;vec=1,2,3&amp;labels=v1,v2&amp;range=3.5&amp;closed&amp;mode=decomp" height="500px"/>
+      </figure>
+      </solution>
+    </example>
+
+    <example>
+      <title>Projection onto a <m>3</m>-space in <m>\R^4</m></title>
+      <statement>
+        <p>
+          Let
+          <me>
+            W = \Span\left\{\vec{1 0 -1 0},\;\vec{0 1 0 -1},\;\vec{1 1 1 -1}\right\}
+            \qquad
+            x = \vec{0 1 3 4}.
+          </me>
+          Compute the orthogonal decomposition of <m>x</m> with respect to <m>W</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We have to solve the matrix equation <m>A^TAc = A^Tx</m>, where
+          <me>
+            A = \mat[r]{1 0 1; 0 1 1; -1 0 1; 0 -1 -1}.
+          </me>
+          We compute
+          <me>
+            A^TA = \mat{2 0 0; 0 2 2; 0 2 4} \qquad
+            A^Tx = \vec{-3 -3 0}.
+          </me>
+          We form an augmented matrix and row reduce:
+          <me>
+            \amat{2 0 0 -3; 0 2 2 -3; 0 2 4 0}
+            \rref
+            \amat{1 0 0 -3/2; 0 1 0 -3; 0 0 1 3/2}
+            \implies
+            c = \frac 12\vec{-3 -6 3}.
+          </me>
+          It follows that
+          <me>
+            x_W = Ac = \frac 12\vec{0 -3 6 3} \qquad
+            x_{W^\perp} = \frac 12\vec{0 5 0 5}.
+          </me>
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      In the context of the above <xref ref="projections-ATA-formula"/>, if we start with a <em>basis</em> of <m>W</m>, then it turns out that the square matrix <m>A^TA</m> is automatically invertible!  (It is always the case that <m>A^TA</m> is square and the equation <m>A^TAc = A^Tx</m> is consistent, but <m>A^TA</m> need not be invertible in general.)
+    </p>
+
+    <corollary xml:id="projections-ATA-formula2">
+      <statement>
+        <p>
+          Let <m>W</m> be a subspace of <m>\R^n</m>, let <m>v_1,v_2,\ldots,v_m</m> be a basis for <m>W</m>, and let <m>A</m> be the <m>n\times m</m> matrix with columns <m>v_1,v_2,\ldots,v_m</m>:
+          <me>
+            A = \mat{| | ,, |; v_1 v_2 \cdots, v_m; | | ,, |}.
+          </me>
+          Then the <m>m\times m</m> matrix <m>A^TA</m> is invertible, and for all vectors <m>x</m> in <m>\R^n</m>, we have
+          <me>
+            x_W = A(A^TA)\inv A^Tx.
+          </me>
+        </p>
+      </statement>
+      <proof visible="true">
+        <p>
+          We will show that <m>\Nul(A^TA)=\{0\}</m>, which implies invertibility by the <xref ref="imt-2"/>.  Suppose that <m>A^TAc = 0</m>.  Then <m>A^TAc = A^T0</m>, so <m>0_W = Ac</m> by the <xref ref="projections-ATA-formula"/>.  But <m>0_W = 0</m> (the orthogonal decomposition of the zero vector is just <m>0 = 0 + 0)</m>, so <m>Ac = 0</m>, and therefore <m>c</m> is in <m>\Nul(A)</m>.  Since the columns of <m>A</m> are linearly independent, we have <m>c=0</m>, so <m>\Nul(A^TA)=0</m>, as desired.
+        </p>
+        <p>
+          Let <m>x</m> be a vector in <m>\R^n</m> and let <m>c</m> be a solution of <m>A^TAc = A^Tx</m>.  Then <m>c = (A^TA)\inv A^Tx</m>, so <m>x_W =Ac = A(A^TA)\inv A^Tx</m>.
+        </p>
+      </proof>
+    </corollary>
+
+    <example xml:id="projections-onto-plane2">
+      <title>Matrix for a projection</title>
+      <statement>
+        <p>
+          Continuing with the above <xref ref="projections-onto-plane"/>, let
+          <me>
+            W = \Span\left\{\vec{1 0 -1},\;\vec{1 1 0}\right\}
+            \qquad
+            x = \vec{x_1 x_2 x_3}.
+          </me>
+          Compute <m>x_W</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Clearly the spanning vectors are noncollinear, so according to the <xref ref="projections-ATA-formula2"/>, we have <m>x_W = A(A^TA)\inv A^Tx</m>, where
+          <me>A = \mat{1 1; 0 1; -1 0}.</me>
+          We compute
+          <me>
+            A^TA = \mat{2 1; 1 2} \implies (A^TA)\inv = \frac 13\mat{2 -1; -1 2},
+          </me>
+          so
+          <me>
+            \spalignsysdelims()\spalignsystabspace=0pt
+            \begin{split}
+            x_W \amp= A(A^TA)\inv A^Tx
+            = \mat{1 1; 0 1; -1 0}\frac 13\mat{2 -1; -1 2}\mat{1 0 -1; 1 1 0}\vec{x_1 x_2 x_3} \\
+            \amp= \frac 13\mat{2 1 -1; 1 2 1; -1 1 2}\vec{x_1 x_2 x_3}
+            = \frac 13\syseq{2x_1 + x_2 - x_3; x_1 + 2x_2 + x_3; -x_1 + x_2 + 2x_3}.
+            \end{split}
+          </me>
+        </p>
+      </solution>
+    </example>
+
+  </subsection>
+
+  <subsection>
+    <title>Orthogonal Projection</title>
+
+    <p>
+      In this Subsection, we change perspective and think of the orthogonal projection <m>x_W</m> as a <em>function</em> of <m>x</m>.  This function turns out to be a linear transformation with many nice properties, and is a good example of a linear transformation which is not originally defined as a matrix transformation.
+    </p>
+
+    <proposition hide-type="true" xml:id="projections-properties-of">
+      <title>Properties of Orthogonal Projections</title>
+      <statement>
+        <p>
+          Let <m>W</m> be a subspace of <m>\R^n</m>, and define <m>T\colon\R^n\to\R^n</m> by <m>T(x) = x_W</m>.  Then:
+          <ol>
+            <li><m>T</m> is a linear transformation.</li>
+            <li><m>T(x)=x</m> if and only if <m>x</m> is in <m>W</m>.</li>
+            <li><m>T(x)=0</m> if and only if <m>x</m> is in <m>W^\perp</m>.</li>
+            <li><m>T\circ T = T</m>.</li>
+            <li>The range of <m>T</m> is <m>W</m>.</li>
+          </ol>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          <ol>
+            <li>
+              We have to verify the <xref ref="linear-trans-defn">defining properties of linearity</xref>.  Let <m>x,y</m> be vectors in <m>\R^n</m>, and let <m>x = x_W + x_{W^\perp}</m> and <m>y = y_W + y_{W^\perp}</m> be their orthogonal decompositions.  Since <m>W</m> and <m>W^\perp</m> are subspaces, the sums <m>x_W+y_W</m> and <m>x_{W^\perp}+y_{W^\perp}</m> are in <m>W</m> and <m>W^\perp</m>, respectively.  Therefore, the orthogonal decomposition of <m>x+y</m> is <m>(x_W+y_W)+(x_{W^\perp}+y_{W^\perp})</m>, so
+              <me>
+                T(x+y) = (x+y)_W = x_W+y_W = T(x) + T(y).
+              </me>
+              Now let <m>c</m> be a scalar.  Then <m>cx_W</m> is in <m>W</m> and <m>cx_{W^\perp}</m> is in <m>W^\perp</m>, so the orthogonal decomposition of <m>cx</m> is <m>cx_W + cx_{W^\perp}</m>, and therefore,
+              <me>
+                T(cx) = (cx)_W = cx_W = cT(x).
+              </me>
+              Since <m>T</m> satisfies the two <xref ref="linear-trans-defn">defining properties</xref>, it is a linear transformation.
+            </li>
+            <li>
+              See this <xref ref="projections-eg-inW"/>.
+            </li>
+            <li>
+              See this <xref ref="projections-eg-inWperp"/>.
+            </li>
+            <li>
+              For any <m>x</m> in <m>\R^n</m> the vector <m>T(x)</m> is in <m>W</m>, so <m>T\circ T(x) = T(T(x)) = T(x)</m> by 2.
+            </li>
+            <li>
+              Any vector <m>x</m> in <m>W</m> is in the range of <m>T</m>, because <m>T(x) = x</m> for such vectors.  On the other hand, for any vector <m>x</m> in <m>\R^n</m> the output <m>T(x) = x_W</m> is in <m>W</m>, so <m>W</m> is the range of <m>T</m>.
+            </li>
+          </ol>
+        </p>
+      </proof>
+    </proposition>
+
+    <p>
+      We compute the standard matrix of the orthogonal projection in the same way as for <xref ref="matrix-of-transformation" text="title">any other transformation</xref>: by evaluating on the unit coordinate vectors.  In this case, this means projecting the unit coordinate vectors onto the subspace.
+    </p>
+
+    <example>
+      <title>Matrix of a projection</title>
+      <statement>
+        <p>
+          Let <m>L</m> be the line in <m>\R^2</m> spanned by the vector <m>u = {3\choose 2}</m>, and define <m>T\colon\R^2\to\R^2</m> by <m>T(x)=x_L</m>.  Compute the standard matrix <m>B</m> for <m>T</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The columns of <m>B</m> are <m>T(e_1) = (e_1)_L</m> and <m>T(e_2) = (e_2)_L</m>.  We have
+          <me>
+            \left.
+            \begin{split}
+            (e_1)_L \amp= \frac{u\cdot e_1}{u\cdot u}\,u
+            = \frac{3}{13}\vec{3 2} \\
+            (e_2)_L \amp= \frac{u\cdot e_2}{u\cdot u}\,u
+            = \frac{2}{13}\vec{3 2}
+            \end{split}
+            \right\} \quad\implies\quad
+            B = \frac 1{13}\mat{9 6; 6 4}.
+          </me>
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <title>Matrix of a projection</title>
+      <statement>
+        <p>
+          Let <m>L</m> be the line in <m>\R^2</m> spanned by the vector
+          <me>
+            u = \vec{-1 1 1},
+          </me>
+          and define <m>T\colon\R^3\to\R^3</m> by <m>T(x)=x_L</m>.  Compute the standard matrix <m>B</m> for <m>T</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The columns of <m>B</m> are <m>T(e_1) = (e_1)_L</m>, <m>T(e_2) = (e_2)_L</m>, and <m>T(e_3) = (e_3)_L</m>.  We have
+          <me>
+            \left.
+            \begin{split}
+            (e_1)_L \amp= \frac{u\cdot e_1}{u\cdot u}\,u
+            = \frac{-1}{3}\vec{-1 1 1} \\
+            (e_2)_L \amp= \frac{u\cdot e_2}{u\cdot u}\,u
+            = \frac{1}{3}\vec{-1 1 1} \\
+            (e_3)_L \amp= \frac{u\cdot e_3}{u\cdot u}\,u
+            = \frac{1}{3}\vec{-1 1 1}
+            \end{split}
+            \right\} \quad\implies\quad
+            B = \frac 1{3}\mat{1 -1 -1; -1 1 1; -1 1 1}.
+          </me>
+        </p>
+      </solution>
+    </example>
+
+    <example xml:id="projections-onto-plane3">
+      <title>Matrix of a projection</title>
+      <statement>
+        <p>
+          Continuing with this <xref ref="projections-onto-plane"/>, let
+          <me>
+            W = \Span\left\{\vec{1 0 -1},\;\vec{1 1 0}\right\},
+          </me>
+          and define <m>T\colon\R^3\to\R^3</m> by <m>T(x)=x_W</m>.  Compute the standard matrix <m>B</m> for <m>T</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The columns of <m>B</m> are <m>T(e_1) = (e_1)_W</m>, <m>T(e_2) = (e_2)_W</m>, and <m>T(e_3) = (e_3)_W</m>.  Let
+          <me>
+            A = \mat{1 1; 0 1; -1 0}.
+          </me>
+          To compute each <m>(e_i)_W</m>, we solve the matrix equation <m>A^TAc = A^Te_i</m> for <m>c</m>, then use the equality <m>(e_i)_W = Ac</m>.  First we note that
+          <me>
+            A^TA = \mat{2 1; 1 2};
+            \qquad
+            A^Te_i = \text{the $i$th column of } A^T = \mat{1 0 -1; 1 1 0}.
+          </me>
+          For <m>e_1</m>, we form an augmented matrix and row reduce:
+          <me>
+            \amat{2 1 1; 1 2 1} \rref
+            \amat{1 0 1/3; 0 1 1/3}
+            \implies
+            (e_1)_W = A\vec{1/3 1/3} = \frac 13\vec{2 1 -1}.
+          </me>
+          We do the same for <m>e_2</m>:
+          <me>
+            \amat{2 1 0; 1 2 1} \rref
+            \amat{1 0 -1/3; 0 1 2/3}
+            \implies
+            (e_1)_W = A\vec{-1/3 2/3} = \frac 13\vec{1 2 1}
+          </me>
+          and for <m>e_3</m>:
+          <me>
+            \amat{2 1 -1; 1 2 0} \rref
+            \amat{1 0 -2/3; 0 1 1/3}
+            \implies
+            (e_1)_W = A\vec{-2/3 1/3} = \frac 13\vec{-1 1 2}.
+          </me>
+          It follows that
+          <me>
+            B = \frac 13\mat{2 1 -1; 1 2 1; -1 1 2}.
+          </me>
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      In the previous <xref ref="projections-onto-plane3"/>, we could have used the fact that
+      <me>
+        \left\{\vec{1 0 -1},\;\vec{1 1 0}\right\}
+      </me>
+      forms a <em>basis</em> for <m>W</m>, so that
+      <me>
+        T(x) = x_W = \bigl[A(A^TA)\inv A^T\bigr]x
+        \sptxt{for}
+        A = \mat{1 1; 0 1; -1 0}
+      </me>
+      by the <xref ref="projections-ATA-formula2"/>.  In this case, we have already expressed <m>T</m> as a matrix transformation with matrix <m>A(A^TA)\inv A^T</m>.  See this <xref ref="projections-onto-plane2"/>.
+    </p>
+
+    <warning>
+      <p>
+        Let <m>W</m> be a subspace of <m>\R^n</m> with basis <m>v_1,v_2,\ldots,v_m</m>, and let <m>A</m> be the matrix with columns <m>v_1,v_2,\ldots,v_m</m>.  Then the standard matrix for <m>T(x) = x_W</m> is
+        <me>
+          A(A^TA)\inv A^T.
+        </me>
+      </p>
+    </warning>
+
+    <p>
+      We can translate the above <xref ref="projections-properties-of">properties of orthogonal projections</xref> into properties of the associated standard matrix.
+    </p>
+
+    <proposition hide-type="true">
+      <title>Properties of Projection Matrices</title>
+      <statement>
+        <p>
+          Let <m>W</m> be a subspace of <m>\R^n</m>, define <m>T\colon\R^n\to\R^n</m> by <m>T(x) = x_W</m>, and let <m>B</m> be the standard matrix for <m>T</m>.  Then:
+          <ol>
+            <li><m>\Col(B) = W.</m></li>
+            <li><m>\Nul(B) = W^\perp.</m></li>
+            <li><m>B^2 = B.</m></li>
+            <li><m>B</m> is similar to the diagonal matrix with <m>m</m> ones and <m>n-m</m> zeros on the diagonal, where <m>m = \dim(W).</m></li>
+          </ol>
+          In particular, <m>B</m> has eigenvalues <m>0</m> (unless <m>W=\R^n</m>) and <m>1</m> (unless <m>W=\{0\}</m>).
+        </p>
+      </statement>
+      <proof>
+        <p>
+          The first three assertions are translations of <xref ref="projections-properties-of">properties 5, 3, and 4</xref>, respectively, using this <xref ref="matrix-trans-dictionary"/> and this <xref ref="matrix-mult-comp-is-prod"/>.
+        </p>
+        <p>
+          For the final assertion, we showed in the proof of this <xref ref="projections-decomp-exists"/> that there is a basis of <m>\R^n</m> of the form <m>\{v_1,\ldots,v_m,v_{m+1},\ldots,v_n\}</m>, where <m>\{v_1,\ldots,v_m\}</m> is a basis for <m>W</m> and <m>\{v_{m+1},\ldots,v_n\}</m> is a basis for <m>W^\perp</m>.  Each <m>v_i</m> is an eigenvector of <m>B</m>: indeed, for <m>i\leq m</m> we have
+          <me>
+            Bv_i = T(v_i) = v_i = 1\cdot v_i
+          </me>
+          because <m>v_i</m> is in <m>W</m>, and for <m>i > m</m> we have
+          <me>
+            Bv_i = T(v_i) = 0 = 0\cdot v_i
+          </me>
+          because <m>v_i</m> is in <m>W^\perp</m>.  Therefore, we have found a basis of eigenvectors, with associated eigenvalues <m>1,\ldots,1,0,\ldots,0</m> (<m>m</m> ones and <m>n-m</m> zeros).  Now we use the <xref ref="diagonalization-thm"/>.
+        </p>
+      </proof>
+    </proposition>
+
+    <example xml:id="projections-onto-plane4">
+      <p>
+        Continuing with the above <xref ref="projections-onto-plane3"/>, we showed that
+        <me>
+          B = \frac 13\mat{2 1 -1; 1 2 1; -1 1 2}
+        </me>
+        is the standard matrix of the orthogonal projection onto
+        <me>
+          W = \Span\left\{\vec{1 0 -1},\;\vec{1 1 0}\right\}.
+        </me>
+        One can verify by hand that <m>B^2=B</m> (try it!).  We compute <m>W^\perp</m> as the null space of
+        <me>
+          \mat{1 0 -1; 1 1 0} \rref \mat{1 0 -1; 0 1 1}.
+        </me>
+        The free variable is <m>x_3</m>, and the parametric form is <m>x_1 = x_3,\,x_2 = -x_3</m>, so that
+        <me>
+          W^\perp = \Span\left\{\vec{1 -1 1}\right\}.
+        </me>
+        It follows that <m>B</m> has eigenvectors
+        <me>
+          \vec{1 0 -1},\qquad \vec{1 1 0},\qquad \vec{1 -1 1}
+        </me>
+        with eigenvalues <m>1,1,0</m>, respectively, so that
+        <me>
+          B = \mat{1 1 1; 0 1 -1; -1 0 1}\mat{1 0 0; 0 1 0; 0 0 0}\mat{1 1 1; 0 1 -1; -1 0 1}\inv.
+        </me>
+      </p>
+    </example>
+
+    <remark>
+      <p>
+        As we saw in this <xref ref="projections-onto-plane4"/>, if you are willing to compute bases for <m>W</m> and <m>W^\perp</m>, then this provides a third way of finding the standard matrix <m>B</m> for projection onto <m>W</m>: indeed, if <m>\{v_1,v_2,\ldots,v_m\}</m> is a basis for <m>W</m> and <m>\{v_{m+1},v_{m+2},\ldots,v_n\}</m> is a basis for <m>W^\perp</m>, then
+        <me>
+          B = \mat{| | ,, |; v_1 v_1 \cdots, v_n; | | ,, |}
+          \mat{
+          1 \cdots, 0 0 \cdots, 0;
+          \vdots, \ddots, \vdots, \vdots, \ddots, \vdots;
+          0 \cdots, 1 0 \cdots, 0;
+          0 \cdots, 0 0 \cdots, 0;
+          \vdots, \ddots, \vdots, \vdots, \ddots, \vdots;
+          0 \cdots, 0 0 \cdots, 0}
+          \mat{| | ,, |; v_1 v_1 \cdots, v_n; | | ,, |}\inv,
+        </me>
+        where the middle matrix in the product is the diagonal matrix with <m>m</m> ones and <m>n-m</m> zeros on the diagonal.  However, since you already have a basis for <m>W</m>, it is faster to multiply out the expression <m>A(A^TA)\inv A^T</m> as in the <xref ref="projections-ATA-formula2"/>.
+      </p>
+    </remark>
+
+  </subsection>
+
+</section>

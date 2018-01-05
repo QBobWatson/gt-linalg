@@ -290,7 +290,7 @@ the license is included in gfdl.xml.
     In order to find shortcuts for computing orthogonal complements, we need the following basic facts.
   </p>
 
-  <theorem hide-type="true" xml:id="orthocomp-facts-basic">
+  <theorem hide-type="true" type-name="Fact" xml:id="orthocomp-facts-basic">
     <title>Facts about Orthogonal Complements</title>
     <statement>
       <p>

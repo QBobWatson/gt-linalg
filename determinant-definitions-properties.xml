@@ -1010,10 +1010,10 @@ the license is included in gfdl.xml.
         <p>
           First assume that <m>i=1</m>, so
           <me>T(x) = \det(x,v_2,\ldots,v_n).</me>
-          We have to show that <m>T</m> satisfies the properties (LC1) and (LC2) of this <xref ref="linear-trans-defn"/>.
+          We have to show that <m>T</m> satisfies the <xref ref="linear-trans-defn">defining properties</xref>.
           <ul>
             <li>
-              By the first <xref ref="det-defn-the-defn">defining property</xref>, scaling any row of a matrix by a number <m>c</m> scales the determinant by a factor of <m>c</m>.  This implies that <m>T</m> satisfies (LC2), i.e., that
+              By the first <xref ref="det-defn-the-defn">defining property</xref>, scaling any row of a matrix by a number <m>c</m> scales the determinant by a factor of <m>c</m>.  This implies that <m>T</m> satisfies the second property, i.e., that
               <me>T(cx) = \det(cx,v_2,\ldots,v_n) = c\det(x,v_2,\ldots,v_n) = cT(x).</me>
             </li>
             <li>
@@ -1050,7 +1050,7 @@ the license is included in gfdl.xml.
                   \amp= \det(w,v_2,\ldots,v_n) = T(w),
                   \end{split}
                 </me>
-                which finishes the proof of (LC1) in this case.
+                which finishes the proof of the first property in this case.
               </p>
               <p>
                 Now suppose that <m>w</m> is not in <m>\Span\{v,v_2,\ldots,v_n\}</m>.  This implies that <m>\{v,v_2,\ldots,v_n\}</m> is linearly <em>dependent</em> (otherwise it would form a basis for <m>\R^n</m>), so <m>T(v)</m> = 0.  If <m>v</m> is not in <m>\Span\{v_2,\ldots,v_n\}</m>, then <m>\{v_2,\ldots,v_n\}</m> is linearly dependent by the <xref ref="linindep-increasing-span"/>, so <m>T(x) = 0</m> for all <m>x</m>, as the matrix with rows <m>x,v_2,\ldots,v_n</m> is not invertible.  Hence we may assume <m>v</m> is in <m>\Span\{v_2,\ldots,v_n\}</m>.   By the above argument with the roles of <m>v</m> and <m>w</m> reversed, we have <m>T(v+w) = T(v)+T(w).</m>
@@ -1106,7 +1106,7 @@ the license is included in gfdl.xml.
         We have already shown that our four <xref ref="det-defn-the-defn">defining properties</xref> imply these three.  Conversely, we will prove that these three alternative properties imply our four, so that both sets of properties are equivalent.
       </p>
       <p>
-        Defining property <m>2</m> is just (LC2).  Suppose that the rows of <m>A</m> are <m>v_1,v_2,\ldots,v_n</m>.  If we perform the row replacement <m>R_i = R_i + cR_j</m> on <m>A</m>, then the rows of our new matrix are <m>v_1,v_2,\ldots,v_{i-1},v_i+cv_j,v_{i+1},\ldots,v_n</m>, so by linearity in the <m>i</m>th row,
+        Defining property <m>2</m> is just the second <xref ref="linear-trans-defn">defining property</xref>.  Suppose that the rows of <m>A</m> are <m>v_1,v_2,\ldots,v_n</m>.  If we perform the row replacement <m>R_i = R_i + cR_j</m> on <m>A</m>, then the rows of our new matrix are <m>v_1,v_2,\ldots,v_{i-1},v_i+cv_j,v_{i+1},\ldots,v_n</m>, so by linearity in the <m>i</m>th row,
         <me>
           \begin{split}
           \det(\amp v_1,v_2,\ldots,v_{i-1},v_i+cv_j,v_{i+1},\ldots,v_n) \\

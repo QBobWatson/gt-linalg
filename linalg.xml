@@ -115,7 +115,7 @@ Free Documentation License"
 
       <xi:include href="./innerprod.xml" />
       <xi:include href="./orthocomp.xml" />
-      <xi:include href="./orthosets.xml" />
+      <xi:include href="./projections.xml" />
       <xi:include href="./gramschmidt.xml" />
       <xi:include href="./leastsquares.xml" />
 

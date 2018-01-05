@@ -652,7 +652,7 @@ the license is included in gfdl.xml.
           </me>
           If <m>c</m> is a scalar, then
           <me>T\circ U(cv) = T(U(cv)) = T(cU(v)) = cT(U(v)) = cT\circ U(v).</me>
-          Since <m>T\circ U</m> satisfies the two properties (LC1) and (LC2), it is a linear transformation.
+          Since <m>T\circ U</m> satisfies the two <xref ref="linear-trans-defn">defining properties</xref>, it is a linear transformation.
         </p>
         <p>
           Now that we know that <m>T\circ U</m> is linear, it makes sense to compute its standard matrix.  Let <m>C</m> be the standard matrix of <m>T\circ U</m>, so <m>T(x) = Ax,</m> <m>U(x) = Bx</m>, and <m>T\circ U(x) = Cx</m>.  By this <xref ref="matrix-of-transformation"/>, the first column of <m>C</m> is <m>Ce_1</m>, and the first column of <m>B</m> is <m>Be_1</m>.  We have
