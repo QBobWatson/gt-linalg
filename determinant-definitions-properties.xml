@@ -1178,9 +1178,6 @@ the license is included in gfdl.xml.
             <me>\det(A^T) = \det(A).</me>
           </li>
           <li>
-            The determinant is linear in the rows and the columns of a matrix.
-          </li>
-          <li>
             The determinant can be computed by performing row and/or column operations.
           </li>
         </ol>
