@@ -194,7 +194,7 @@ the license is included in gfdl.xml.
       For any nonzero vector <m>x</m>, there is a unique unit vector pointing in the same direction.  It is obtained by dividing by the length of <m>x</m>.
     </p>
 
-    <definition>
+    <definition xml:id="innerprod-unit-vec-dir">
       <statement>
         <p>
           Let <m>x</m> be a nonzero vector in <m>\R^n</m>.  The <term>unit vector in the direction of <m>x</m></term> is the vector <m>x/\|x\|</m>.

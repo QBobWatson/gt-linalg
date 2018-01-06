@@ -21,7 +21,7 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      In this Section, we give a formula for orthogonal projection that is considerably simpler than the one in <xref ref="projections"/>, in that it does not require row reduction or matrix inversion.  However, this formula, called the Projection Formula, only works in the presence of an <em>orthogonal</em> basis.  We will present the Gram<ndash/>Schmidt process for turning an arbitrary basis into an orthogonal one.
+      In this Section, we give a formula for orthogonal projection that is considerably simpler than the one in <xref ref="projections"/>, in that it does not require row reduction or matrix inversion.  However, this formula, called the Projection Formula, only works in the presence of an <em>orthogonal</em> basis.  We will also present the Gram<ndash/>Schmidt process for turning an arbitrary basis into an orthogonal one.
     </p>
   </introduction>
 
@@ -78,7 +78,7 @@ the license is included in gfdl.xml.
     <example>
       <statement>
         <p>
-          Is this set orthogonal?
+          Is this set orthogonal?  Is it orthonormal?
           <me>\cB = \left\{\vec{1 1 1},\;\vec{1 -2 1},\;\vec{1 0 -1}\right\}</me>
         </p>
       </statement>
@@ -90,10 +90,7 @@ the license is included in gfdl.xml.
             \qquad \vec{1 1 1}\cdot\vec{1 0 -1} = 0
             \qquad \vec{1 -2 1}\cdot\vec{1 0 -1} = 0.
           </me>
-          Therefore, <m>\cB</m> is orthogonal.  It is not orthonormal because, for instance,
-          <me>
-            \vec{1 1 1} \cdot \vec{1 1 1} = 3 \neq 1.
-          </me>
+          Therefore, <m>\cB</m> is orthogonal.
           <latex-code>
 \begin{tikzpicture}[scale=1.5, myxyz, thin border nodes]
   \draw[grid lines, transformxy] (-2,-2) grid (2,2);
@@ -113,9 +110,33 @@ the license is included in gfdl.xml.
   \point at (0,0,0);
 \end{tikzpicture}
           </latex-code>
+          The set <m>\cB</m> is not orthonormal because, for instance,
+          <me>
+            \vec{1 1 1} \cdot \vec{1 1 1} = 3 \neq 1.
+          </me>
+          However, we can make it orthonormal by replacing each vector by the <xref ref="innerprod-unit-vec-dir" text="title">unit vector in the direction of</xref> each vector:
+          <me>
+            \left\{\frac 1{\sqrt3}\vec{1 1 1},\;\frac 1{\sqrt6}\vec{1 -2 1},\;
+            \frac 1{\sqrt2}\vec{1 0 -1}\right\}
+          </me>
+          is orthonormal.
         </p>
       </solution>
     </example>
+
+    <p>
+      We saw in the previous example that it is easy to produce an orthonormal set of vectors from an orthogonal one by replacing each vector with the unit vector in the same direction.
+    </p>
+
+    <warning>
+      <p>
+        If <m>\{v_1,v_2,\ldots,v_m\}</m> is an orthogonal set of vectors, then
+        <me>
+          \left\{\frac{v_1}{\|v_1\|},\;\frac{v_2}{\|v_2\|},\ldots,\;\frac{v_m}{\|v_m\|}\right\}
+        </me>
+        is an orthonormal set.
+      </p>
+    </warning>
 
     <example>
       <statement>
