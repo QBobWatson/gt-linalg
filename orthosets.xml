@@ -172,9 +172,14 @@ the license is included in gfdl.xml.
           <me>
             \vec{1 1 1}\cdot\vec{1 -1 -1} = 1-1-1 = -1 \neq 0.
           </me>
+          We will see how to produce an orthogonal set from <m>\cB</m> in this <xref ref="orthosets-gram-schmidt"/>.
         </p>
       </solution>
     </example>
+
+    <p>
+      A nice property enjoyed by orthogonal sets is that they are automatically linearly independent.
+    </p>
 
     <lemma type-name="Fact">
       <statement>
@@ -256,14 +261,14 @@ the license is included in gfdl.xml.
     <p>
       Suppose that <m>\{u_1,u_2,\ldots,u_m\}</m> is an orthogonal basis for a subspace <m>W</m>, and let <m>L_i = \Span\{u_i\}</m> for each <m>i=1,2,\ldots,m</m>.  Then we see that for any vector <m>x</m>, we have
       <me>
-        \begin{split}
-        x_W \amp= \frac{x\cdot u_1}{u_1\cdot u_1}\,u_1
-            + \frac{x\cdot u_2}{u_2\cdot u_2}\,u_2 + \cdots
-            + \frac{x\cdot u_m}{u_m\cdot u_m}\,u_m \\
-        \amp= x_{L_1} + x_{L_2} + \cdots + x_{L_m}.
-        \end{split}
+        \spalignsysdelims..
+        \syseq{x_W =
+           \dfrac{x\cdot u_1}{u_1\cdot u_1}\,u_1
+            + \dfrac{x\cdot u_2}{u_2\cdot u_2}\,u_2 + \cdots,
+            + \dfrac{x\cdot u_m}{u_m\cdot u_m}\,u_m ;
+        \. = \phantom{\frac{u_1}{u_1}}x_{L_1} + x_{L_2} + \cdots, + x_{L_m}\rlap.}
       </me>
-      In other words, for an <em>orthogonal</em> basis, the projection of <m>x</m> onto <m>W</m> is the sum of the projections onto the lines spanned by the basis vectors.  In this sense, projection onto the line is the most important example of an orthogonal projection.
+      In other words, for an <em>orthogonal</em> basis, the projection of <m>x</m> onto <m>W</m> is the sum of the projections onto the lines spanned by the basis vectors.  In this sense, projection onto a line is the most important example of an orthogonal projection.
     </p>
 
     <example>
@@ -377,7 +382,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      Now let <m>W</m> be a subspace of <m>\R^n</m> with orthogonal basis <m>\cB=\{v_1,v_2,\ldots,v_m\}</m> and let <m>x</m> be a vector in <m>W</m>.  Then <m>x = x_W</m>, so by the <xref ref="projection-formula"/>, we have
+      Now let <m>W</m> be a subspace of <m>\R^n</m> with orthogonal basis <m>\cB=\{v_1,v_2,\ldots,v_m\}</m>, and let <m>x</m> be a vector in <m>W</m>.  Then <m>x = x_W</m>, so by the <xref ref="projection-formula"/>, we have
       <me>
         x = x_W = \frac{x\cdot u_1}{u_1\cdot u_1}\,u_1
         + \frac{x\cdot u_2}{u_2\cdot u_2}\,u_2 + \cdots
@@ -513,7 +518,7 @@ the license is included in gfdl.xml.
 
   </subsection>
 
-  <subsection>
+  <subsection xml:id="orthosets-gram-schmidt">
     <title>The Gram<ndash/>Schmidt Process</title>
 
     <p>
@@ -634,7 +639,7 @@ the license is included in gfdl.xml.
             = \vec{0 0 1} \\
             3.\quad u_3 \amp= v_3
             - \frac{v_3\cdot u_1}{u_1\cdot u_1}\,u_1
-            - \frac{v_3\cdot u_2}{u_2\cdot u_2}\,u_2 \\
+            - \frac{v_3\cdot u_2}{u_2\cdot u_2}\,u_2 \phantom{\vec{1 2 3}} \\
             \amp\qquad=
             \vec{3 1 1}
             - \frac{4}{2}\vec{1 1 0}
