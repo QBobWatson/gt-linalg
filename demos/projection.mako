@@ -330,8 +330,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
             @caption '<p><span id="sum-here"></span></p>'
             sumElt = document.getElementById 'sum-here'
             updateCaptions = () =>
-                str = "\\text{proj}_{#{subName}}(#{vecLabel}) =" \
-                    + "\\color{#{hexColorProj}}{#{vecLabel}_{#{subName}}} = "
+                str = "\\color{#{hexColorProj}}{#{vecLabel}_{#{subName}}} = "
                 str += @texVector decompProj, color: hexColorProj
                 str += '='
                 str += @texCombo vectors, coeffs,

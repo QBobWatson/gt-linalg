@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<section xml:id="orthogonal-sets">
+  <title>Orthogonal Sets</title>
+
+  <objectives>
+    <ol>
+      <li><em>Recipes:</em> Projection Formula, <m>\cB</m>-coordinates when <m>\cB</m> is an orthogonal set, Gram<ndash/>Schmidt process.</li>
+      <li><em>Vocabulary words:</em> <term>orthogonal set</term>, <term>orthonormal set</term>.</li>
+    </ol>
+  </objectives>
+
+  <introduction>
+    <p>
+      In this Section, we give a formula for orthogonal projection that is considerably simpler than the one in <xref ref="projections"/>, in that it does not require row reduction or matrix inversion.  However, this formula, called the Projection Formula, only works in the presence of an <em>orthogonal</em> basis.  We will present the Gram<ndash/>Schmidt process for turning an arbitrary basis into an orthogonal one.
+    </p>
+  </introduction>
+
+  <subsection>
+    <title>Orthogonal Sets and the Projection Formula</title>
+
+    <p>
+      Computations involving orthogonality tend to be much easier in the presence of an <em>orthogonal</em> set of vectors.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+          A set of <em>nonzero</em> vectors <m>\{u_1,u_2,\ldots,u_m\}</m> is called <term>orthogonal</term> if <m>u_i\cdot u_j = 0</m> whenever <m>i\neq j</m>.  It is <term>orthonormal</term> if it is orthogonal, and in addition <m>u_i\cdot u_i = 1</m> for all <m>i=1,2,\ldots,m</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      In other words, a set of vectors is orthogonal if different vectors in the set are perpendicular to each other.  An orthonormal set is an orthogonal set of <xref ref="innerprod-unit-vec" text="title">unit vectors</xref>.
+    </p>
+
+    <specialcase>
+      <p>
+        The unit coordinate vectors in <m>\R^n</m> always form an orthonormal set.  For instance, in <m>\R^3</m> we check that
+        <me>
+          \vec{1 0 0}\cdot\vec{0 1 0} = 0 \qquad
+          \vec{1 0 0}\cdot\vec{0 0 1} = 0 \qquad
+          \vec{0 1 0}\cdot\vec{0 0 1} = 0.
+        </me>
+        Since <m>e_i\cdot e_i = 1</m> for all <m>i=1,2,3</m>, this shows that <m>\{e_1,e_2,e_3\}</m> is orthonormal.
+        <latex-code>
+\begin{tikzpicture}[scale=1.5, myxyz, thin border nodes]
+  \draw[grid lines, transformxy] (-1.5,-1.5) grid (1.5,1.5);
+  \draw[->] (-1.5,0,0) -- (1.5,0,0);
+  \draw[->] (0,-1.5,0) -- (0,1.5,0);
+  \draw[->] (0,0,-1.5) -- (0,0,1.5);
+  \coordinate (e1) at (1,0,0);
+  \coordinate (e2) at (0,1,0);
+  \coordinate (e3) at (0,0,1);
+  \coordinate (o) at (0,0,0);
+  \pic[draw, right angle len=3mm] {right angle=(e1)--(o)--(e2)};
+  \pic[draw, right angle len=3mm] {right angle=(e1)--(o)--(e3)};
+  \pic[draw, right angle len=3mm] {right angle=(e2)--(o)--(e3)};
+  \draw[vector, seq1] (0,0,0) to["$e_1$" below=1pt] (1,0,0);
+  \draw[vector, seq2] (0,0,0) to["$e_2$" pos=.8] (0,1,0);
+  \draw[vector, seq3] (0,0,0) to["$e_3$"] (0,0,1);
+  \point at (0,0,0);
+\end{tikzpicture}
+        </latex-code>
+      </p>
+    </specialcase>
+
+    <example>
+      <statement>
+        <p>
+          Is this set orthogonal?
+          <me>\cB = \left\{\vec{1 1 1},\;\vec{1 -2 1},\;\vec{1 0 -1}\right\}</me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We check that
+          <me>
+            \vec{1 1 1}\cdot\vec{1 -2 1} = 0
+            \qquad \vec{1 1 1}\cdot\vec{1 0 -1} = 0
+            \qquad \vec{1 -2 1}\cdot\vec{1 0 -1} = 0.
+          </me>
+          Therefore, <m>\cB</m> is orthogonal.  It is not orthonormal because, for instance,
+          <me>
+            \vec{1 1 1} \cdot \vec{1 1 1} = 3 \neq 1.
+          </me>
+          <latex-code>
+\begin{tikzpicture}[scale=1.5, myxyz, thin border nodes]
+  \draw[grid lines, transformxy] (-2,-2) grid (2,2);
+  \draw[->] (-2.5,0,0) -- (2.5,0,0);
+  \draw[->] (0,-2.5,0) -- (0,2.5,0);
+  \draw[->] (0,0,-1.5) -- (0,0,1.5);
+  \coordinate (v1) at (1,1,1);
+  \coordinate (v2) at (-1,2,-1);
+  \coordinate (v3) at (1,0,-1);
+  \coordinate (o) at (0,0,0);
+  \pic[draw, right angle len=3mm] {right angle=(v1)--(o)--(v2)};
+  \pic[draw, right angle len=3mm] {right angle=(v1)--(o)--(v3)};
+  \pic[draw, right angle len=3mm] {right angle=(v2)--(o)--(v3)};
+  \draw[vector, seq1] (0,0,0) to (v1);
+  \draw[vector, seq2] (0,0,0) to (v2);
+  \draw[vector, seq3] (0,0,0) to (v3);
+  \point at (0,0,0);
+\end{tikzpicture}
+          </latex-code>
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <statement>
+        <p>
+          Let <m>a,b</m> be scalars, and let
+          <me>
+            u_1 = \vec{a b} \qquad u_2 = \vec{-b a}.
+          </me>
+          Is <m>\cB = \{u_1,u_2\}</m> orthogonal?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We only have to check that
+          <me>
+            \vec{a b}\cdot\vec{-b a} = -ab + ab = 0.
+          </me>
+          Therefore, <m>\{u_1,u_2\}</m> is orthogonal, <em>unless</em> <m>a=b=0</m>.
+        </p>
+      </solution>
+    </example>
+
+    <example type-name="Non-Example">
+      <statement>
+        <p>
+          Is this set orthogonal?
+          <me>\cB = \left\{\vec{1 1 1},\;\vec{1 -2 1},\;\vec{1 -1 -1}\right\}</me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          This set is not orthogonal because
+          <me>
+            \vec{1 1 1}\cdot\vec{1 -1 -1} = 1-1-1 = -1 \neq 0.
+          </me>
+        </p>
+      </solution>
+    </example>
+
+    <lemma type-name="Fact">
+      <statement>
+        <p>
+          An orthogonal set is linearly independent.  Therefore, it is a basis for its span.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Suppose that <m>\{u_1,u_2,\ldots,u_m\}</m> is orthogonal.  We need to show that the equation
+          <me>
+            c_1u_1 + c_2u_2 + \cdots + c_mu_m = 0
+          </me>
+          has only the trivial solution <m>c_1=c_2=\cdots=c_m=0</m>.  Taking the dot product of both sides of this equation with <m>u_1</m> gives
+          <me>
+            \begin{split}
+            0 = u_1\cdot 0
+            \amp= u_1\cdot\bigl(c_1u_1 + c_2u_2 + \cdots + c_mu_m\bigr) \\
+            \amp= c_1(u_1\cdot u_1) + c_2(u_1\cdot u_2) + \cdots + c_m(u_1\cdot u_m) \\
+            \amp= c_1(u_1\cdot u_1)
+            \end{split}
+          </me>
+          because <m>u_1\cdot u_i = 0</m> for <m>i > 1</m>.  Since <m>u_1\neq 0</m> we have <m>u_1\cdot u_1\neq 0</m>, so <m>c_1 = 0</m>.  Similarly, taking the dot product with <m>u_i</m> shows that each <m>c_i = 0</m>, as desired.
+        </p>
+      </proof>
+    </lemma>
+
+    <p>
+      One advantage of working with orthogonal sets is that it gives a simple formula for the <xref ref="projections-defn-of" text="title">orthogonal projection</xref> of a vector.
+    </p>
+
+    <theorem type-name="Projection Formula" xml:id="projection-formula">
+      <statement>
+        <p>
+          Let <m>W</m> be a subspace of <m>\R^n</m>, and let <m>\{u_1,u_2,\ldots,u_m\}</m> be an <em>orthogonal</em> basis for <m>W</m>.  Then for any vector <m>x</m> in <m>\R^n</m>, the orthogonal projection of <m>x</m> onto <m>W</m> is given by the formula
+          <me>
+            x_W = \frac{x\cdot u_1}{u_1\cdot u_1}\,u_1
+            + \frac{x\cdot u_2}{u_2\cdot u_2}\,u_2 + \cdots
+            + \frac{x\cdot u_m}{u_m\cdot u_m}\,u_m.
+          </me>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Let
+          <me>
+            y = \frac{x\cdot u_1}{u_1\cdot u_1}\,u_1
+            + \frac{x\cdot u_2}{u_2\cdot u_2}\,u_2 + \cdots
+            + \frac{x\cdot u_m}{u_m\cdot u_m}\,u_m.
+          </me>
+          This vector is contained in <m>W</m> because it is a linear combination of <m>u_1,u_2,\ldots,u_m</m>.  Hence we just need to show that <m>x - y</m> is in <m>W^\perp</m>, i.e., that <m>u_i\cdot (x-y) = 0</m> for each <m>i=1,2,\ldots,m</m>.  For <m>u_1</m>, we have
+          <me>
+            \begin{split}
+            u_1\cdot(x-y)
+            \amp= u_1\cdot\left( x -
+            \frac{x\cdot u_1}{u_1\cdot u_1}\,u_1
+            - \frac{x\cdot u_2}{u_2\cdot u_2}\,u_2 - \cdots
+            - \frac{x\cdot u_m}{u_m\cdot u_m}\,u_m
+            \right) \\
+            \amp= u_1\cdot x - \frac{x\cdot u_1}{u_1\cdot u_1}(u_1\cdot u_1) - 0 - \cdots - 0 \\
+            \amp= 0.
+            \end{split}
+          </me>
+          A similar calculation shows that <m>u_i\cdot(x-y) = 0</m> for each <m>i</m>, so <m>x-y</m> is in <m>W^\perp</m>, as desired.
+        </p>
+      </proof>
+    </theorem>
+
+    <specialcase>
+      <p>
+        Suppose that <m>L = \Span\{u\}</m> is a line.  The set <m>\{u\}</m> is an orthogonal basis for <m>L</m>, so the Projection Formula says that for any vector <m>x</m>, we have
+        <me>
+          x_L = \frac{x\cdot u}{u\cdot u}\,u,
+        </me>
+        as in this <xref ref="projections-onto-line"/>.  See also this <xref ref="projections-onto-line2"/> and this <xref ref="projections-onto-line3"/>.
+      </p>
+    </specialcase>
+
+    <p>
+      Suppose that <m>\{u_1,u_2,\ldots,u_m\}</m> is an orthogonal basis for a subspace <m>W</m>, and let <m>L_i = \Span\{u_i\}</m> for each <m>i=1,2,\ldots,m</m>.  Then we see that for any vector <m>x</m>, we have
+      <me>
+        \begin{split}
+        x_W \amp= \frac{x\cdot u_1}{u_1\cdot u_1}\,u_1
+            + \frac{x\cdot u_2}{u_2\cdot u_2}\,u_2 + \cdots
+            + \frac{x\cdot u_m}{u_m\cdot u_m}\,u_m \\
+        \amp= x_{L_1} + x_{L_2} + \cdots + x_{L_m}.
+        \end{split}
+      </me>
+      In other words, for an <em>orthogonal</em> basis, the projection of <m>x</m> onto <m>W</m> is the sum of the projections onto the lines spanned by the basis vectors.  In this sense, projection onto the line is the most important example of an orthogonal projection.
+    </p>
+
+    <example>
+      <title>Projection onto the <m>xy</m>-plane</title>
+      <statement>
+        <p>
+          Continuing with this <xref ref="projections-eg-xy-plane"/> and this <xref ref="projections-onto-xy-plane"/>, use the <xref ref="projection-formula"/> to compute the orthogonal projection of a vector onto the <m>xy</m>-plane in <m>\R^3</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          A basis for the <m>xy</m>-plane is given by the two unit coordinate vectors
+          <me>
+            e_1 = \vec{1 0 0} \qquad e_2 = \vec{0 1 0}.
+          </me>
+          The set <m>\{e_1,e_2\}</m> is orthogonal, so for any vector <m>x = (x_1,x_2,x_3)</m>, we have
+          <me>
+            x_W = \frac{x\cdot e_1}{e_1\cdot e_1}\,e_1
+            + \frac{x\cdot e_2}{e_2\cdot e_2}\,e_2
+            = x_1e_1 + x_2e_2
+            = \vec{x_1 x_2 0}.
+          </me>
+        </p>
+      <figure>
+        <caption>Orthogonal projection of a vector onto the <m>xy</m>-plane in <m>\R^3</m>.  Note that <m>x_W</m> is the sum of the projections of <m>x</m> onto the <m>e_1</m>- and <m>e_2</m>-coordinate axes (shown in green and blue, respectively).</caption>
+        <mathbox source="demos/projection.html?u1=1,0,0&amp;u2=0,1,0&amp;labels=e1,e2&amp;vec=-1.1,2,1.5&amp;range=3&amp;closed" height="500px"/>
+      </figure>
+      </solution>
+    </example>
+
+    <example>
+      <title>Projection onto a plane in <m>\R^3</m></title>
+      <statement>
+        <p>
+          Let
+          <me>
+            W = \Span\left\{\vec{1 0 -1},\;\vec{1 1 1}\right\}
+            \qquad
+            x = \vec{2 3 -2}.
+          </me>
+          Find <m>x_W</m> and <m>x_{W^\perp}</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The vectors
+          <me>
+            u_1 = \vec{1 0 -1} \qquad u_2 = \vec{1 1 1}
+          </me>
+          are orthogonal, so we can use the Projection Formula:
+          <me>
+            x_W = \frac{x\cdot u_1}{u_1\cdot u_1}\,u_1
+            + \frac{x\cdot u_2}{u_2\cdot u_2}\,u_2
+            = \frac{4}{2}\vec{1 0 -1} + \frac{3}{3}\vec{1 1 1}
+            = \vec{3 1 -1}.
+          </me>
+          Then we have
+          <me>
+            x_{W^\perp} = x - x_W = \vec{-1 2 -1}.
+          </me>
+        </p>
+      <figure>
+        <caption>Orthogonal projection of a vector onto the plane <m>W</m>.  Note that <m>x_W</m> is the sum of the projections of <m>x</m> onto the lines spanned by <m>u_1</m> and <m>u_2</m> (shown in green and blue, respectively).</caption>
+        <mathbox source="demos/projection.html?u1=1,0,-1&amp;u2=1,1,1&amp;vec=2,3,-2&amp;range=3.5&amp;closed" height="500px"/>
+      </figure>
+      </solution>
+    </example>
+
+    <example>
+      <title>Projection onto a <m>3</m>-space in <m>\R^4</m></title>
+      <statement>
+        <p>
+          Let
+          <me>
+            W = \Span\left\{\vec{1 0 -1 0},\;\vec{0 1 0 -1},\;\vec{1 1 1 1}\right\}
+            \qquad
+            x = \vec{0 1 3 4}.
+          </me>
+          Compute <m>x_W</m>, and find the distance from <m>x</m> to <m>W</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The vectors
+          <me>
+            u_1 = \vec{1 0 -1 0} \qquad
+            u_2 = \vec{0 1 0 -1} \qquad
+            u_3 = \vec{1 1 1 1}
+          </me>
+          are orthogonal, so we can use the Projection Formula:
+          <me>
+            \begin{split}
+            x_W \amp=
+            \frac{x\cdot u_1}{u_1\cdot u_1}\,u_1 +
+            \frac{x\cdot u_2}{u_2\cdot u_2}\,u_2 +
+            \frac{x\cdot u_3}{u_3\cdot u_3}\,u_3 \\
+            \amp=
+            \frac{-3}{2}\vec{1 0 -1 0} +
+            \frac{-3}{2}\vec{0 1 0 -1} +
+            \frac{8}{4}\vec{1 1 1 1}
+            = \frac 12\vec{1 1 7 7} \\
+            x_{W^\perp} \amp= x - x_W = \frac 12\vec{-1 1 -1 1}.
+            \end{split}
+          </me>
+          The distance from <m>x</m> to <m>W</m> is
+          <me>
+            \|x_{W^\perp}\| = \frac 12\sqrt{1+1+1+1} = 1.
+          </me>
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      Now let <m>W</m> be a subspace of <m>\R^n</m> with orthogonal basis <m>\cB=\{v_1,v_2,\ldots,v_m\}</m> and let <m>x</m> be a vector in <m>W</m>.  Then <m>x = x_W</m>, so by the <xref ref="projection-formula"/>, we have
+      <me>
+        x = x_W = \frac{x\cdot u_1}{u_1\cdot u_1}\,u_1
+        + \frac{x\cdot u_2}{u_2\cdot u_2}\,u_2 + \cdots
+        + \frac{x\cdot u_m}{u_m\cdot u_m}\,u_m.
+      </me>
+      This gives us a way of expressing <m>x</m> as a linear combination of the basis vectors in <m>\cB</m>: we have computed the <m>\cB</m>-<xref ref="dimension-defn-Bcoords" text="title">coordinates</xref> of <m>x</m> without row reducing!
+    </p>
+
+    <warning>
+      <p>
+        Let <m>W</m> be a subspace of <m>\R^n</m> with orthogonal basis <m>\cB=\{v_1,v_2,\ldots,v_m\}</m> and let <m>x</m> be a vector in <m>W</m>.  Then
+        <me>
+          [x]_\cB = \left( \frac{x\cdot u_1}{u_1\cdot u_1},\;
+          \frac{x\cdot u_2}{u_2\cdot u_2},\;
+          \ldots,\;
+          \frac{x\cdot u_m}{u_m\cdot u_m}
+          \right).
+        </me>
+      </p>
+    </warning>
+
+    <example>
+      <title>Computing coordinates with respect to an orthogonal basis</title>
+      <statement>
+        <p>
+          Find the <m>\cB</m>-coordinates of <m>x</m>, where
+          <me>
+            \cB = \left\{ \vec{1 2},\;\vec{-4 2} \right\} \qquad
+            x = \vec{0 3}.
+          </me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Since
+          <me>
+            u_1 = \vec{1 2} \qquad u_2 = \vec{-4 2}
+          </me>
+          form an <em>orthogonal</em> basis of <m>\R^2</m>, we have
+          <me>
+            [x]_\cB = \left(\frac{x\cdot u_1}{u_1\cdot u_1},\;
+              \frac{x\cdot u_2}{u_2\cdot u_2} \right)
+            = \left(\frac{3\cdot 2}{1^2+2^2},\;
+              \frac{3\cdot 2}{(-4)^2+2^2} \right)
+            = \left(\frac 65,\;\frac 3{10} \right).
+          </me>
+          <latex-code>
+\begin{tikzpicture}[thin border nodes]
+  \draw[grid lines] (-5,-1) grid (2,4);
+  \draw[->] (-5,0) -- (2,0);
+  \draw[->] (0,-1) -- (0,4);
+  \clip (-5,-1) rectangle (3,4);
+  \coordinate (u1) at (1,2);
+  \coordinate (u2) at (-4,2);
+  \draw[seq-blue] ($-3*(u1)$) -- ($3*(u1)$);
+  \draw[seq-green] ($-3*(u2)$) -- ($3*(u2)$);
+  \draw[vector] (0,0) -- node[auto,swap] {$u_1$} (u1);
+  \draw[vector] (0,0) -- node[auto,near end] {$u_2$} (u2);
+  \point[seq-red, "$x$" {above right, text=seq-red}] (y) at (0,3);
+  \point (o) at (0,0);
+  \coordinate (p1) at ($6/5*(u1)$);
+  \coordinate (p2) at ($6/20*(u2)$);
+  \point[scale=.75] at (p1);
+  \node[right=2.5pt, yshift=-2pt, fill=white] at (p1) {$\frac 65 u_1$};
+  \point[scale=.75] at (p2);
+  \node[below left=1pt, fill=white] at (p2) {$\frac 3{10} u_2$};
+  \draw[densely dashed] (y) -- (p1) (y) -- (p2);
+  \pic[draw] {right angle=(o)--(p1)--(y)};
+  \pic[draw] {right angle=(o)--(p2)--(y)};
+\end{tikzpicture}
+          </latex-code>
+        </p>
+      <figure>
+        <caption>Computing <m>\cB</m>-coordinates using the Projection Formula.</caption>
+        <mathbox source="demos/projection.html?u1=1,2&amp;u2=-4,2&amp;vec=0,3&amp;mode=basis&amp;closed&amp;range=4.5" height="500px"/>
+      </figure>
+      </solution>
+    </example>
+
+    <p>
+      The following example shows that the Projection Formula does in fact require an orthogonal basis.
+    </p>
+
+    <example type-name="Non-Example">
+      <title>A non-orthogonal basis</title>
+      <p>
+        Consider the basis <m>\cB = \{v_1,v_2\}</m> of <m>\R^2</m>, where
+        <me>v_1 = \vec{2 -1/2} \qquad v_2 = \vec{1 2}.</me>
+        This is not orthogonal because <m>v_1\cdot v_2 = 2-1 = 1\neq 0</m>.  Let <m>x = {1\choose 1}</m>.  Let us try to compute <m>x = x_{\R^2}</m> using the Projection Formula with respect to the basis <m>\cB</m>:
+        <me>
+          x_{\R^2} = \textcolor{seq-green}{\frac{x\cdot v_1}{v_1\cdot v_1}v_1}
+          + \textcolor{seq-violet}{\frac{x\cdot v_2}{v_2\cdot v_2}v_2}
+          = \textcolor{seq-green}{\frac{3/2}{17/4}\vec{2 -1/2}}
+          + \textcolor{seq-violet}{\frac{3}{5}\vec{1 2}}
+          = \vec{111/85, 87/85} \neq x.
+        </me>
+        Since <m>x = x_{\R^2}</m>, we see that the Projection Formula does not compute the orthogonal projection in this case.  Geometrically, the projections of <m>x</m> onto the lines spanned by <m>v_1</m> and <m>v_2</m> do not sum to <m>x</m>, as we can see from the picture.
+        <latex-code>
+\begin{tikzpicture}[scale=2.5, baseline=.5cm, thin border nodes]
+  \draw[help lines] (-1, -1) grid (2, 2);
+  \draw[vector, seq1] (0, 0) -- node[below=2pt, pos=.6] {$v_1$} (2, -1/2);
+  \draw[vector, seq2] (0, 0) -- node[left=2pt, pos=.75] {$v_2$} (1, 2);
+  \coordinate (O) at (0, 0);
+  \coordinate (X) at (1, 1);
+  \draw[vector] (0, 0) -- node[below right] {$x$} (X);
+  \coordinate (proj1) at (12/17, -3/17);
+  \draw[vector, seq-green] (0, 0) -- node[below=2pt] {$x_{\Span\{v_1\}}$} (proj1);
+  \draw (proj1) -- (X);
+  \pic[draw] {right angle=(O)--(proj1)--(X)};
+  \coordinate (proj2) at (3/5, 6/5);
+  \draw[vector, seq-violet] (0, 0) -- node[left=2pt] {$x_{\Span\{v_2\}}$} (proj2);
+  \draw (proj2) -- (X);
+  \pic[draw] {right angle=(O)--(proj2)--(X)};
+  \coordinate (bad) at (111/85, 87/85);
+  \draw[seq-green] (proj2) -- (bad);
+  \draw[seq-violet] (proj1) -- (bad);
+  \point["\rlap{${111/85\choose 87/85}$}" above right] at (bad);
+  \point at (0,0);
+\end{tikzpicture}
+        </latex-code>
+      </p>
+      <figure>
+        <caption>When <m>v_1</m> and <m>v_2</m> are not orthogonal, then <m>x_{\R^2} = x</m> is not necessarily equal to the sum (orange) of the projections (green and blue) of <m>x</m> onto the lines spanned by <m>v_1</m> and <m>v_2</m>.</caption>
+        <mathbox source="demos/projection.html?u1=2,-.5&amp;u2=1,2&amp;vec=1,1&amp;range=3&amp;mode=badbasis&amp;labels=v1,v2&amp;closed" height="500px"/>
+      </figure>
+    </example>
+
+    <warning>
+      <p>
+        You need an orthogonal basis to use the Projection Formula.
+      </p>
+    </warning>
+
+  </subsection>
+
+  <subsection>
+    <title>The Gram<ndash/>Schmidt Process</title>
+
+    <p>
+      We saw in the previous Subsection that orthogonal projections and <m>\cB</m>-coordinates are much easier to compute in the presence of an <em>orthogonal</em> basis for a subspace.  In this Subsection, we give a method, called the <em>Gram<ndash/>Schmidt Process</em>, for computing an orthogonal basis of a subspace.
+    </p>
+
+    <theorem hide-type="true">
+      <title>The Gram<ndash/>Schmidt Process</title>
+      <statement>
+        <p>
+          Let <m>v_1,v_2,\ldots,v_m</m> be a basis for a subspace <m>W</m> of <m>\R^n</m>.  Define:
+          <me>
+            \begin{split}
+            1.\quad u_1 \amp= v_1 \phantom{\dfrac{u_1}{u_1}} \\
+            2.\quad u_2 \amp=
+            \hbox to 3.4cm{$(v_2)_{\Span\{u_1\}^\perp}$}
+            = v_2 - \frac{v_2\cdot u_1}{u_1\cdot u_1}\,u_1 \\
+            3.\quad u_3 \amp=
+            \hbox to 3.4cm{$(v_3)_{\Span\{u_1,u_2\}^\perp}$}
+            = v_3 - \frac{v_3\cdot u_1}{u_1\cdot u_1}\,u_1
+            - \frac{v_3\cdot u_2}{u_2\cdot u_2}\,u_2 \\
+            \vdots\quad\amp \\
+            m.\quad u_m \amp=
+            \hbox to 3.4cm{$(v_m)_{\Span\{u_1,u_2,\ldots,u_{m-1}\}^\perp}$}
+            = v_m - \sum_{i=1}^{m-1}\frac{v_m\cdot u_i}{u_i\cdot u_i}\,u_i.
+            \end{split}
+          </me>
+          Then <m>\{u_1,u_2,\ldots,u_m\}</m> is an orthogonal basis for the same subspace <m>W</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          First we claim that each <m>u_i</m> is in <m>W</m>, and in fact that <m>u_i</m> is in <m>\Span\{v_1,v_2,\ldots,v_i\}</m>.  Clearly <m>u_1 = v_1</m> is in <m>\Span\{v_1\}</m>.  Then <m>u_2</m> is a linear combination of <m>u_1</m> and <m>v_2</m>, which are both in <m>\Span\{v_1,v_2\}</m>, so <m>u_2</m> is in <m>\Span\{v_1,v_2\}</m> as well.  Similarly, <m>u_3</m> is a linear combination of <m>u_1,\,u_2,</m> and <m>v_3</m>, which are all in <m>\Span\{v_1,v_2,v_3\}</m>, so <m>u_3</m> is in <m>\Span\{v_1,v_2,v_3\}</m>.  Continuing in this way, we see that each <m>u_i</m> is in <m>\Span\{v_1,v_2,\ldots,v_i\}</m>.
+        </p>
+        <p>
+          Now we claim that <m>\{u_1,u_2,\ldots,u_m\}</m> is an orthogonal set.  Let <m>1\leq i \lt j \leq m</m>.  Then <m>u_j = (v_j)_{\Span\{u_1,u_2,\ldots,u_{j-1}\}^\perp}</m>, so by definition <m>u_j</m> is orthogonal to every vector in <m>\Span\{u_1,u_2,\ldots,u_{j-1}\}</m>.  In particular, <m>u_j</m> is orthogonal to <m>u_i</m>.
+        </p>
+        <p>
+          We still have to prove that each <m>u_i</m> is nonzero.  Clearly <m>u_1=v_1\neq 0</m>.  Suppose that <m>u_i=0</m>.  Then <m>(v_i)_{\Span\{u_1,u_2,\ldots,u_{i-1}\}^\perp}=0</m>, which means that <m>v_i</m> is in <m>\Span\{u_1,u_2,\ldots,u_{i-1}\}.</m>  But each <m>u_1,u_2,\ldots,u_{i-1}</m> is in <m>\Span\{v_1,v_2,\ldots,v_{i-1}\}</m> by the first paragraph, so <m>v_i</m> is in <m>\Span\{v_1,v_2,\ldots,v_{i-1}\}.</m>  This contradicts the <xref ref="linindep-increasing-span"/>; therefore, <m>u_i</m> must be nonzero.
+        </p>
+        <p>
+          The previous two paragraphs justify the use of the <xref ref="projection-formula"/> in the equalities
+          <me>
+            (v_i)_{\Span\{u_1,u_2,\ldots,u_{i-1}\}^\perp}
+            = v_i - (v_i)_{\Span\{u_1,u_2,\ldots,u_{i-1}\}}
+            = v_i - \sum_{j=1}^{i-1}\frac{v_i\cdot u_j}{u_j\cdot u_j}\,u_j
+          </me>
+          in the statement of the Theorem.
+        </p>
+        <p>
+          Since <m>\{u_1,u_2,\ldots,u_m\}</m> is an orthogonal set, it is linearly independent.  Thus it is a set of <m>m</m> linearly independent vectors in <m>W</m>, so it is a basis for <m>W</m> by the <xref ref="basis-theorem"/>.  Similarly, for every <m>i</m>, we saw that the set <m>\{u_1,u_2,\ldots,u_i\}</m> is contained in the <m>i</m>-dimensional subspace <m>\Span\{v_1,v_2,\ldots,v_i\}</m>, so <m>\{u_1,u_2,\ldots,u_i\}</m> is an orthogonal basis for <m>\Span\{v_1,v_2,\ldots,v_i\}</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <example>
+      <title>Two vectors</title>
+      <statement>
+        <p>
+          Find an orthogonal basis <m>\{u_1,u_2\}</m> for <m>W = \Span\{v_1,v_2\}</m>, where
+          <me>
+            v_1 = \vec{1 1 0} \qquad v_2 = \vec{1 1 1}.
+          </me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We run Gram<ndash/>Schmidt: first take <m>u_1 = v_1</m>, then
+          <me>
+            u_2 = v_2 - \frac{v_2\cdot u_1}{u_1\cdot u_1}\,u_1
+            = \vec{1 1 1} - \frac{2}{2}\vec{1 1 0}
+            = \vec{0 0 1}.
+          </me>
+          Then <m>\{u_1,u_2\}</m> is an orthogonal basis for <m>W</m>: indeed, it is clear that <m>u_1\cdot u_2 = 0.</m>
+        </p>
+        <p>
+          Geometrically, we are simply replacing <m>v_2</m> with the part of <m>v_2</m> that is perpendicular to the line <m>L_1 = \Span\{v_1\}</m>:
+          <latex-code>
+\begin{tikzpicture}[x={(1cm,.3cm)}, y={(.8cm,-.5cm)}, z={(0cm,1cm)},
+    scale=2, thin border nodes]
+  \coordinate (v1) at (1,1,0);
+  \coordinate (v2) at (1,1,1);
+  \coordinate (u2) at (0,0,1);
+
+  \begin{scope}[x=(v1), y=(u2), transformxy]
+    \fill[seq-violet!50, opacity=.7] (-1,-1) rectangle (2.3,2);
+    \draw[seq-blue] (-1,0) -- node[auto, very near end, swap] {$L_1$} (2.3,0);
+    \node[seq-violet] at (-.5,1.5) {$W$};
+  \end{scope}
+
+  \point (o) at (0,0,0);
+  \draw[vector] (o) -- node[midway,sloped,below] {$v_1=u_1\mathstrut$} (v1);
+  \draw[vector] (o) -- node[auto] {$v_2$} (v2);
+  \draw[vector] (v1) -- node[auto,swap] {$\,u_2 = (v_2)_{L_1^\perp}$} ($(v2)$) ;
+  \pic[draw, right angle len=3mm] {right angle=(v2)--(v1)--(o)};
+\end{tikzpicture}
+          </latex-code>
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <title>Three vectors</title>
+      <statement>
+        <p>
+          Find an orthogonal basis <m>\{u_1,u_2,u_3\}</m> for <m>W = \Span\{v_1,v_2,v_3\} = \R^3</m>, where
+          <me>v_1 = \vec{1 1 0} \qquad v_2 = \vec{1 1 1} \qquad v_3 = \vec{3 1 1}.</me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We run Gram<ndash/>Schmidt:
+          <me>
+            \begin{split}
+            1.\quad u_1 \amp= v_1 = \vec{1 1 0} \\
+            2.\quad u_2 \amp= v_2 - \frac{v_2\cdot u_1}{u_1\cdot u_1}\,u_1
+            = \vec{1 1 1} - \frac{2}{2}\vec{1 1 0}
+            = \vec{0 0 1} \\
+            3.\quad u_3 \amp= v_3
+            - \frac{v_3\cdot u_1}{u_1\cdot u_1}\,u_1
+            - \frac{v_3\cdot u_2}{u_2\cdot u_2}\,u_2 \\
+            \amp\qquad=
+            \vec{3 1 1}
+            - \frac{4}{2}\vec{1 1 0}
+            - \frac{1}{1}\vec{0 0 1} = \vec{1 -1 0}.
+            \end{split}
+          </me>
+          Then <m>\{u_1,u_2,u_3\}</m> is an orthogonal basis for <m>W</m>: indeed, we have
+          <me>
+            u_1\cdot u_2 = 0 \qquad u_1\cdot u_3 = 0 \qquad u_2\cdot u_3 = 0.
+          </me>
+        </p>
+        <p>
+          Geometrically, once we have <m>u_1</m> and <m>u_2</m>, we replace <m>v_3</m> by the part that is orthogonal to <m>W_2 = \Span\{u_1,u_2\} = \Span\{v_1,v_2\}</m>:
+          <latex-code>
+\begin{tikzpicture}[x={(.4cm,-.8cm)}, y={(-1cm,0cm)}, z={(0cm,1cm)},
+    scale=2, thin border nodes]
+  \coordinate (v1) at (1,1,0);
+  \coordinate (v2) at (1,1,1);
+  \coordinate (v3) at (3,1,1);
+  \coordinate (u1) at (v1);
+  \coordinate (u2) at (0,0,1);
+  \coordinate (u3) at (1,-1,0);
+  \coordinate (p3) at (2,2,1);
+
+  \begin{scope}[x=(v1), y=(u2), transformxy]
+    \fill[seq-violet!50, opacity=.7] (-1,-1) rectangle (2.3,2);
+    \node[seq-violet] at (-.5,1.5) {$W_2$};
+    \draw[seq-blue] (-1,0) -- node[auto, very near end] {$L_1$} (2.3,0);
+    \coordinate (p31) at (2,0);
+    \coordinate (p32) at (0,1);
+  \end{scope}
+
+  \point (o) at (0,0,0);
+  \draw[vector, black!50] (o) -- node[auto] {$u_1$} (u1);
+  \draw[vector, black!50] (o) -- node[auto,swap] {$u_2$} (u2);
+  \pic[draw] {right angle=(u1)--(o)--(u2)};
+
+  \draw[vector] (o) -- node[auto] {$v_3$} (v3);
+  \draw[vector] (p3) -- node[midway,swap,sloped,below=2pt] {$u_3=(v_3)_{W_2^\perp}$} (v3);
+  \draw[vector] (o) -- node[sloped,midway,above=1pt]
+    {$(v_3)_{W_2}$} (p3);
+  \pic[draw] {right angle=(o)--(p3)--(v3)};
+  \draw[very thin, black!50] (p3) -- (p31);
+  \draw[very thin, black!50] (p3) -- (p32);
+
+\end{tikzpicture}
+          </latex-code>
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <title>Three vectors in <m>\R^4</m></title>
+      <statement>
+        <p>
+          Find an orthogonal basis <m>\{u_1,u_2,u_3\}</m> for <m>W = \Span\{v_1,v_2,v_3\}</m>, where
+          <me>
+            v_1 = \vec[r]{1 1 1 1} \qquad v_2 = \vec[r]{-1 4 4 -1} \qquad
+            v_3 = \vec[r]{4 -2 -2 0}.
+          </me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We run Gram<ndash/>Schmidt:
+          <me>
+            \begin{split}
+            1.\quad u_1 \amp= v_1 = \vec{1 1 1 1} \\
+            2.\quad u_2 \amp= v_2 - \frac{v_2\cdot u_1}{u_1\cdot u_1}\,u_1
+              = \vec[r]{-1 4 4 -1} - \frac{6}{4}\vec[r]{1 1 1 1}
+              = \vec[r]{-5/2 5/2 5/2 -5/2} \\
+            3.\quad u_3 \amp= v_3
+            - \frac{v_3\cdot u_1}{u_1\cdot u_1}\,u_1
+            - \frac{v_3\cdot u_2}{u_2\cdot u_2}\,u_2 \\
+            \amp\qquad=
+            \vec[r]{4 -2 -2 0}
+            - \frac{0}{24}\vec[r]{1 1 1 1}
+            - \frac{-20}{25}\vec[r]{-5/2 5/2 5/2 -5/2}
+            = \vec[r]{2 0 0 -2}.
+            \end{split}
+          </me>
+          Then <m>\{u_1,u_2,u_3\}</m> is an orthogonal basis for <m>W</m>.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      We saw in the proof of the Gram<ndash/>Schmidt Process that for every <m>i</m> between <m>1</m> and <m>m</m>, the set <m>\{u_1,u_2,\ldots,u_i\}</m> is a an orthogonal basis for <m>\Span\{v_1,v_2,\ldots,v_i\}</m>.
+    </p>
+    <p>
+      If we had started with a spanning set <m>\{v_1,v_2,\ldots,v_m\}</m> which is linearly dependent, then for some <m>i</m>, the vector <m>v_i</m> is in <m>\Span\{v_1,v_2,\ldots,v_{i-1}\}</m> by the <xref ref="linindep-increasing-span"/>.  Hence
+      <me>
+        0 = (v_i)_{\Span\{v_1,v_2,\ldots,v_{i-1}\}^\perp}
+        = (v_i)_{\Span\{u_1,u_2,\ldots,u_{i-1}\}^\perp}
+        = u_i.
+      </me>
+    </p>
+
+    <warning>
+      <p>
+        You can use the Gram<ndash/>Schmidt Process to produce an orthogonal basis from any spanning set: if some <m>u_i = 0</m>, just throw away <m>u_i</m> and <m>v_i</m>, and continue.
+      </p>
+    </warning>
+
+  </subsection>
+
+</section>

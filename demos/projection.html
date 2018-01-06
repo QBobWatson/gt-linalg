@@ -415,7 +415,7 @@ window.demo = new (size === 2 ? Demo2D : Demo)({}, function() {
       updateCaptions = (function(_this) {
         return function() {
           var str;
-          str = ("\\text{proj}_{" + subName + "}(" + vecLabel + ") =") + ("\\color{" + hexColorProj + "}{" + vecLabel + "_{" + subName + "}} = ");
+          str = "\\color{" + hexColorProj + "}{" + vecLabel + "_{" + subName + "}} = ";
           str += _this.texVector(decompProj, {
             color: hexColorProj
           });

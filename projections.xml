@@ -87,7 +87,7 @@ the license is included in gfdl.xml.
       </proof>
     </theorem>
 
-    <definition>
+    <definition xml:id="projections-defn-of">
       <statement>
         <p>
           Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  The expression
@@ -217,7 +217,7 @@ the license is included in gfdl.xml.
       </proof>
     </theorem>
 
-    <specialcase>
+    <specialcase xml:id="projections-onto-line">
       <title>Orthogonal projection onto a line</title>
       <p>
         Let <m>L = \Span\{u\}</m> be a line in <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  By the <xref ref="projections-ATA-formula"/>, to find <m>x_L</m> we must solve the matrix equation <m>u^Tuc = u^Tx</m>, where we regard <m>u</m> as an <m>n\times 1</m> matrix.  But <m>u^Tu = u\cdot u</m> and <m>u^Tx = u\cdot x</m>, so <m>c = (u\cdot x)/(u\cdot u)</m> is a solution of <m>u^Tuc = u^Tx</m>, and hence
@@ -253,7 +253,7 @@ the license is included in gfdl.xml.
       </p>
     </warning>
 
-    <example>
+    <example xml:id="projections-onto-line2">
       <title>Projection onto a line in <m>\R^2</m></title>
       <statement>
         <p>
@@ -293,7 +293,7 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
-    <example>
+    <example xml:id="projections-onto-line3">
       <title>Projection onto a line in <m>\R^3</m></title>
       <statement>
         <p>
@@ -344,7 +344,7 @@ the license is included in gfdl.xml.
       </p>
     </warning>
 
-    <example>
+    <example xml:id="projections-onto-xy-plane">
       <title>Projection onto the <m>xy</m>-plane</title>
       <statement>
         <p>
@@ -795,6 +795,43 @@ the license is included in gfdl.xml.
           \mat{| | ,, |; v_1 v_1 \cdots, v_n; | | ,, |}\inv,
         </me>
         where the middle matrix in the product is the diagonal matrix with <m>m</m> ones and <m>n-m</m> zeros on the diagonal.  However, since you already have a basis for <m>W</m>, it is faster to multiply out the expression <m>A(A^TA)\inv A^T</m> as in the <xref ref="projections-ATA-formula2"/>.
+      </p>
+    </remark>
+
+    <remark>
+      <title>Reflections</title>
+      <p>
+        Let <m>W</m> be a subspace of <m>\R^n</m>, and let <m>x</m> be a vector in <m>\R^n</m>.  The <em>reflection</em> of <m>x</m> over <m>W</m> is defined to be the vector
+        <me>
+          \refl_W(x) = x - 2x_{W^\perp}.
+        </me>
+        In other words, to find <m>\refl_W(x)</m> one starts at <m>x</m>, then moves to <m>x-x_{W^\perp} = x_W</m>, then continues in the same direction one more time, to end on the opposite side of <m>W</m>.
+        <latex-code>
+\begin{tikzpicture}[thin border nodes]
+  \draw[seq-violet] (-3,-2) -- node[below right, very near start] {$W$} (3,2);
+  \coordinate (x) at (-3,2);
+  \coordinate (o) at (0,0);
+  \draw[vector,seq-red] (o) -- node[auto,swap] {$x$} (x);
+  \point[seq-blue, "$x_W$" {seq-blue, below, yshift=-2mm}] (p) at (${-2.5/(1.5*1.5+1)}*(1.5,1)$);
+  \coordinate (p2) at ($-1*(x)+2*(p)$);
+  \draw[vector, seq-green] (x) -- node[below left] {$-x_{W^\perp}$} (p);
+  \draw[vector, seq-green] (p) -- node[below left] {$-x_{W^\perp}$} ($-1*(x)+2*(p)$);
+  \draw[vector, seq-green] (p) -- node[below left] {$-x_{W^\perp}$} (p2);
+  \pic[draw] {right angle=(o)--(p)--(p2)};
+  \draw[vector, seq-orange] (o) -- node[right=2pt] {$\refl_W(x)$} (p2);
+  \point at (o);
+\end{tikzpicture}
+        </latex-code>
+        Since <m>x_{W^\perp} = x - x_W</m>, we also have
+        <me>
+          \refl_W(x) = x - 2(x - x_W) = 2x_W - x.
+        </me>
+        We leave it to the reader to check using the definition that:
+        <ol>
+          <li><m>\refl_W\circ\refl_W = \Id_{\R^n}.</m></li>
+          <li>The <m>1</m>-eigenspace of <m>\refl_W</m> is <m>W</m>, and the <m>-1</m>-eigenspace of <m>\refl_W</m> is <m>W^\perp</m>.</li>
+          <li><m>\refl_W</m> is similar to the diagonal matrix with <m>m = \dim(W)</m> ones on the diagonal and <m>n-m</m> negative ones.</li>
+        </ol>
       </p>
     </remark>
 

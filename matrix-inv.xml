@@ -669,7 +669,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
      </solution>
    </example>
 
-   <example type-name="Non-example">
+   <example type-name="Non-Example">
      <title>Projection</title>
      <statement>
        <p>Let <m>T\colon\R^3\to\R^3</m> be the projection onto the <m>xy</m>-plane, introduced in this <xref ref="matrix-trans-eg-projection"/>.  Is <m>T</m> invertible?</p>

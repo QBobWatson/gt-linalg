@@ -180,10 +180,10 @@ the license is included in gfdl.xml.
       Vectors with length one are very common in applications, so we give them a name.
     </p>
 
-    <definition>
+    <definition xml:id="innerprod-unit-vec">
       <statement>
         <p>
-          A <term>unit vector</term> is a vector <m>x</m> with length <m>\|x\|=1</m>.
+          A <term>unit vector</term> is a vector <m>x</m> with length <m>\|x\| = \sqrt{x\cdot x} =1</m>.
         </p>
       </statement>
     </definition>
