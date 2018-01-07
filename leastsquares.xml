@@ -12,6 +12,1163 @@ the license is included in gfdl.xml.
 <section xml:id="least-squares">
   <title>The Method of Least Squares</title>
 
-  <p>Lots of pictures and examples.</p>
+  <objectives>
+    <ol>
+      <li>Learn examples of best-fit problems.</li>
+      <li>Learn to turn a best-fit problem into a least-squares problem.</li>
+      <li><em>Recipe:</em> find a least-squares solution (two ways).</li>
+      <li><em>Picture:</em> geometry of a least-squares solution.</li>
+      <li><em>Vocabulary words:</em> <term>least-squares solution</term>.</li>
+    </ol>
+  </objectives>
+
+  <introduction>
+    <p>
+      In this section, we answer the following important question:
+    </p>
+    <blockquote>
+      <p>
+        Suppose that <m>Ax=b</m> does not have a solution.  What is the best approximate solution?
+      </p>
+    </blockquote>
+    <p>
+      For our purposes, the best approximate solution is called the <em>least-squares solution</em>.  We will present two methods for finding least-squares solutions, and we will give several applications to best-fit problems.
+    </p>
+  </introduction>
+
+  <subsection>
+    <title>Least-Squares Solutions</title>
+
+    <p>
+      We begin by clarifying exactly what we will mean by a <q>best approximate solution</q> to a (usually inconsistent) matrix equation <m>Ax=b</m>.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+          Let <m>A</m> be an <m>m\times n</m> matrix and let <m>b</m> be a vector in <m>\R^m</m>.  A <term>least-squares solution</term> of the matrix equation <m>Ax=b</m> is a vector <m>\hat x</m> in <m>\R^n</m> such that
+          <me>\dist(b,A\hat x) \leq \dist(b,Ax)</me>
+          for all other vectors <m>x</m> in <m>\R^n</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      Recall that <m>\dist(v,w) = \|v-w\|</m> is the <xref ref="innerprod-distance-defn" text="title">distance</xref> between the vectors <m>v</m> and <m>w</m>.  The term <q>least squares</q> comes from the fact that <m>\dist(b,Ax) = \|b-A\hat x\|</m> is the square root of the sum of the squares of the entries of the vector <m>b-A\hat x</m>.  So a least-squares solution minimizes the sum of the squares of the differences between the entries of <m>A\hat x</m> and <m>b</m>.
+    </p>
+
+    <paragraphs>
+      <title>Least Squares: Picture</title>
+    <p>
+      Recall from this <xref ref="matrixeq-spans-consistency"/> that the column space of <m>A</m> is the set of all vectors <m>c</m> such that <m>Ax=c</m> is consistent.  Hence, the <xref ref="projections-closest-vector" text="title">closest vector</xref> of the form <m>Ax</m> to <m>b</m> is the orthogonal projection of <m>b</m> onto <m>\Col(A)</m>.
+      <latex-code><![CDATA[
+\begin{tikzpicture}[scale=1.5, myxyz, thin border nodes]
+  \coordinate (u) at (1,0,0);
+  \coordinate (v) at (0,1.1,-.2);
+  \coordinate (uxv) at (0,.2,1.1);
+  \coordinate (x) at ($-1.1*(u)+(v)+1.5*(uxv)$);
+  \begin{scope}[x=(u),y=(v),transformxy]
+    \fill[seq-violet!30] (-2,-2) rectangle (2,2);
+    \draw[seq-violet, help lines] (-2,-2) grid (2,2);
+    \node[seq-violet] at (2.8,1) {$\Col A$};
+    \point[black!50, "$Ax$" text=black!50] at (1,-1);
+    \point[black!50, "$Ax$" text=black!50] at (-1,0);
+    \point[black!50, "$Ax$" text=black!50] at (1,1);
+  \end{scope}
+  \point[seq-blue, "{$A\hat x = b_{\Col(A)}$}" {below, text=seq-blue}] (y) at ($-1.1*(u)+1*(v)$);
+  \coordinate (yu) at ($(y)+(u)$);
+  \coordinate (yv) at ($(y)+(v)$);
+  \pic[draw, right angle len=3mm] {right angle=(x)--(y)--(yu)};
+  \pic[draw, right angle len=3mm] {right angle=(x)--(y)--(yv)};
+  \point[seq-red, "$b$" {above,text=seq-red}] (xx) at (x);
+  \draw[vector] (y) -- node[auto,pos=.6] {$b-A\hat x = b_{\Col(A)^\perp}$} (xx);
+  \point at (0,0,0);
+\end{tikzpicture}
+]]></latex-code>
+    </p>
+
+    <warning>
+      <p>
+        A least-squares solution of <m>Ax=b</m> is a solution <m>\hat x</m> of the consistent equation <m>Ax=b_{\Col(A)}</m>.
+      </p>
+    </warning>
+
+    <p>
+      Where is <m>\hat x</m> in this picture?  If <m>v_1,v_2,\ldots,v_n</m> are the columns of <m>A</m>, then
+      <me>
+        A\hat x = A\vec{\hat x_1 \hat x_2 \vdots, \hat x_n}
+        = \hat x_1v_1 + \hat x_2v_2 + \cdots + \hat x_nv_n.
+      </me>
+      Hence the entries of <m>\hat x</m> are the <q>coordinates</q> of <m>b_{\Col(A)}</m> with respect to the spanning set <m>\{v_1,v_2,\ldots,v_m\}</m> of <m>\Col(A)</m>.  (They are honest <m>\cB</m>-coordinates if the columns of <m>A</m> are linearly independent.)
+      <latex-code>
+\begin{tikzpicture}[scale=2, myxyz, thin border nodes]
+  \coordinate (u) at (1,0,0);
+  \coordinate (v) at (0,1.1,-.2);
+  \coordinate (uxv) at (0,.2,1.1);
+  \coordinate (x) at ($-1.1*(u)+(v)+1.5*(uxv)$);
+  \coordinate (y) at ($-1.1*(u)+1*(v)$);
+  \begin{scope}[x=(u),y=(v),transformxy]
+    \fill[seq-violet!30] (-2,-1) rectangle (2,2);
+    \draw[seq-violet, help lines] (-2,-1) grid (2,2);
+    \node[seq-violet] at (2.8,1) {$\Col A$};
+    \draw[vector, seq-orange] (0, 0) to["$v_1$"] (u);
+    \draw[vector, seq-orange] (0, 0) to["$v_2$"] (v);
+    \draw[thick, dashed] (0,0) -|
+        node[pos=.25,above] {$\hat x_1v_1$}
+        node[pos=.7,above left] {$\hat x_2v_2$}
+        (y);
+  \end{scope}
+  \point[seq-blue, "{$A\hat x = b_{\Col(A)}$}" {below, text=seq-blue}] at (y);
+  \coordinate (yu) at ($(y)+(u)$);
+  \coordinate (yv) at ($(y)+(v)$);
+  \pic[draw, right angle len=3mm] {right angle=(x)--(y)--(yu)};
+  \pic[draw, right angle len=3mm] {right angle=(x)--(y)--(yv)};
+  \point[seq-red, "$b$" {above,text=seq-red}] (xx) at (x);
+  \draw[vector] (y) -- node[auto,pos=.6] {$b-A\hat x = b_{\Col(A)^\perp}$} (xx);
+  \point at (0,0,0);
+\end{tikzpicture}
+      </latex-code>
+    </p>
+    <figure>
+      <caption>The red plane is <m>\Col(A)</m>.  The closest that <m>Ax</m> can get to <m>b</m> is the closest vector on <m>\Col(A)</m> to <m>b</m>, which is the orthogonal projection <m>b_{\Col(A)}</m> (in light blue).  The vectors <m>v_1,v_2</m> are the columns of <m>A</m>, and the coefficients of <m>\hat x</m> are the lengths of the purple and green lines.  Click and drag <m>b</m> to move it.</caption>
+      <mathbox source="demos/leastsquares.html?v1=1,0,0&amp;v2=0,1.1,-.2&amp;range=2&amp;vec=1,1,1" height="500px"/>
+    </figure>
+
+    </paragraphs>
+
+    <p>
+      We learned to solve this kind of orthogonal projection problem in <xref ref="projections"/>.
+    </p>
+
+    <theorem xml:id="leastsquares-ATA-method">
+      <statement>
+        <p>
+          Let <m>A</m> be an <m>m\times n</m> matrix and let <m>b</m> be a vector in <m>\R^m</m>.  The least-squares solutions of <m>Ax=b</m> are the solutions of the matrix equation
+          <me>A^TAx = A^Tb</me>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          By this <xref ref="projections-ATA-formula"/>, if <m>\hat x</m> is a solution of the matrix equation <m>A^TAx = A^Tb</m>, then <m>A\hat x</m> is equal to <m>b_{\Col(A)}</m>.  We argued above that a least-squares solution of <m>Ax=b</m> is a solution of <m>Ax = b_{\Col(A)}.</m>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      In particular, finding a least-squares solution means solving a consistent system of linear equations.  We can translate the above Theorem into a recipe:
+    </p>
+
+    <warning>
+      <title>Recipe 1: Compute a least-squares solution</title>
+      <p>
+        Let <m>A</m> be an <m>m\times n</m> matrix and let <m>b</m> be a vector in <m>\R^n</m>.  Here is a method for computing a least-squares solution of <m>Ax=b</m>:
+        <ol>
+          <li>
+            Compute the matrix <m>A^TA</m> and the vector <m>A^Tb</m>.
+          </li>
+          <li>
+            Form the augmented matrix for the matrix equation <m>A^TAx = A^Tb</m>, and row reduce.
+          </li>
+          <li>
+            This equation is always consistent, and any solution <m>\hat x</m> is a least-squares solution.
+          </li>
+        </ol>
+      </p>
+    </warning>
+
+    <p>
+      To reiterate: once you have found a least-squares solution <m>\hat x</m> of <m>Ax=b</m>, then <m>b_{\Col(A)}</m> is equal to <m>A\hat x</m>.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Find the least-squares solutions of <m>Ax=b</m> where:
+          <me>A = \mat{1 0; 1 1; 1 2} \qquad b = \vec{6 0 0}.</me>
+          What quantity is being minimized?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We have
+          <me>A^TA = \mat{1 1 1; 0 1 2}\mat{1 0; 1 1; 1 2} = \mat{3 3; 3 5}</me>
+          and
+          <me>A^T b = \mat{1 1 1; 0 1 2}\vec{6 0 0} = \vec{6 0}.</me>
+          We form an augmented matrix and row reduce:
+          <me>\amat{3 3 6; 3 5 0} \rref \amat{1 0 5; 0 1 -3}.</me>
+          Therefore, the only least-squares solution is <m>\hat x = {5\choose -3}.</m>
+        </p>
+        <p>
+          This solution minimizes the distance from <m>A\hat x</m> to <m>b</m>, i.e., the sum of the squares of the entries of <m>b-A\hat x</m>.  In this case, we have
+          <me>
+            \|b-A\hat x\| = \left\|\vec{6 0 0} - \vec{5 2 -1}\right\|
+            = \left\|\vec{1 -2 1}\right\| = \sqrt{1^2+(-2)^2+1^2} = \sqrt 6.
+          </me>
+          Therefore, <m>b_{\Col(A)} = A\hat x</m> is <m>\sqrt 6</m> units from <m>b.</m>
+        </p>
+        <p>
+          In the following picture, <m>v_1,v_2</m> are the columns of <m>A</m>:
+          <latex-code><![CDATA[
+\begin{tikzpicture}[x={(1.2cm,.4cm)}, y={(1cm,-.8cm)}, z={(0cm,1cm)},
+    scale=.6, thin border nodes, baseline]
+  \coordinate (v1) at (1,1,1);
+  \coordinate (v2) at (0,1,2);
+  \coordinate (b)  at (6,0,0);
+  \coordinate (bh) at ($5*(v1)-3*(v2)$);
+
+  \begin{scope}[x=(v1), y=(v2), transformxy]
+    \draw[help lines, seq-violet!50] (-1,-4) grid (6,2);
+    \fill[seq-violet!50, opacity=.7] (-1,-4) rectangle (6,2);
+    \node[seq-violet] at (3,-5) {$\Col A$};
+    \draw[vector] (0,0) to["$v_1$"'] (1,0);
+    \draw[vector] (0,0) -- (0,1)
+      node[anchor=south] {$v_2$};
+
+    \draw[dashed] (0,0) -|
+      node[pos=.25, above=1pt] {$5v_1$}
+      node[pos=.75, right] {$-3v_2$}
+        (5,-3);
+  \end{scope}
+
+  \point (o) at (0,0,0);
+  \draw (b) -- node[pos=.5,left=1pt] {$\sqrt 6$} (bh);
+  \coordinate (b1) at ($(bh)-(v1)$);
+  \coordinate (b2) at ($(bh)+(v2)$);
+  \point[seq-blue, pin={[
+      text=seq-blue,
+      pin edge={<-,very thin, seq-blue, shorten <=1pt},
+      pin distance=.6cm]
+      below right:$b_{\Col(A)}=A\vec{5 -3}$}] at (bh);
+  \point[seq-red, "$b$" text=seq-red] at (b);
+  \pic[draw] {right angle=(b)--(bh)--(b1)};
+  \pic[draw] {right angle=(b)--(bh)--(b2)};
+
+\end{tikzpicture}
+          ]]></latex-code>
+        </p>
+        <figure>
+          <caption>The red plane is <m>\Col(A)</m>.  The closest that <m>Ax</m> can get to <m>b</m> is the closest vector on <m>\Col(A)</m> to <m>b</m>, which is the orthogonal projection <m>b_{\Col(A)}</m> (in light blue).  The vectors <m>v_1,v_2</m> are the columns of <m>A</m>, and the coefficients of <m>\hat x</m> are the <m>\cB</m>-coordinates of <m>b_{\Col(A)}</m>, where <m>\cB = \{v_1,v_2\}</m>.</caption>
+          <mathbox source="demos/leastsquares.html?v1=1,1,1&amp;v2=0,1,2&amp;range=6.5&amp;vec=6,0,0" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <example>
+      <statement>
+        <p>
+          Find the least-squares solutions of <m>Ax=b</m> where:
+          <me>A = \mat[r]{2 0; -1 1; 0 2} \qquad b = \vec[r]{1 0 -1}.</me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We have
+          <me>
+            A^T A = \mat[r]{2 -1 0; 0 1 2}\mat[r]{2 0; -1 1; 0 2} =
+            \mat[r]{5 -1; -1 5}
+          </me>
+          and
+          <me>
+            A^T b = \mat[r]{2 -1 0; 0 1 2}\vec[r]{1 0 -1}
+            = \vec[r]{2 -2}.
+          </me>
+          We form an augmented matrix and row reduce:
+          <me>\amat{5 -1 2; -1 5 -2} \rref \amat{1 0 1/3; 0 1 -1/3}.</me>
+          Therefore, the only least-squares solution is <m>\hat x = \frac 13{1\choose -1}.</m>
+        </p>
+        <figure>
+          <caption>The red plane is <m>\Col(A)</m>.  The closest that <m>Ax</m> can get to <m>b</m> is the closest vector on <m>\Col(A)</m> to <m>b</m>, which is the orthogonal projection <m>b_{\Col(A)}</m> (in light blue).  The vectors <m>v_1,v_2</m> are the columns of <m>A</m>, and the coefficients of <m>\hat x</m> are the <m>\cB</m>-coordinates of <m>b_{\Col(A)}</m>, where <m>\cB = \{v_1,v_2\}</m>.</caption>
+          <mathbox source="demos/leastsquares.html?v1=2,-1,0&amp;v2=0,1,2&amp;vec=1,0,-1&amp;range=3" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <p>
+      The reader may have noticed that we have been careful to say <q>the least-squares solutions</q> in the plural.  This is because a least-squares solution need not be unique: indeed, if the columns of <m>A</m> are linearly dependent, then <m>Ax=b_{\Col(A)}</m> has infinitely many solutions.  The following Theorem, which gives equivalent criteria for uniqueness, is an analogue of this <xref ref="projections-ATA-formula2"/>.
+    </p>
+
+    <theorem>
+      <statement>
+        <p>
+          Let <m>A</m> be an <m>m\times n</m> matrix and let <m>b</m> be a vector in <m>\R^m</m>.  The following are equivalent:
+          <ol>
+            <li><m>Ax=b</m> has a unique least-squares solution.</li>
+            <li>The columns of <m>A</m> are linearly independent.</li>
+            <li><m>A^TA</m> is invertible.</li>
+          </ol>
+          In this case, the least-squares solution is
+          <me>\hat x = (A^TA)\inv A^Tb.</me>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          The set of least-squares solutions of <m>Ax=b</m> is the solution set of the consistent equation <m>A^TAx=A^Tb</m>, which is a translate of the solution set of the homogeneous equation <m>A^TAx=0</m>.  Since <m>A^TA</m> is a square matrix, the equivalence of 1 and 3 follows from the <xref ref="imt-2"/>.  The set of least squares-solutions is also the solution set of the consistent equation <m>Ax = b_{\Col(A)}</m>, which has a unique solution if and only if the columns of <m>A</m> are linearly independent by this <xref ref="linindep-matrix-cols"/>.
+        </p>
+      </proof>
+    </theorem>
+
+    <example>
+      <title>Infinitely many least-squares solutions</title>
+      <statement>
+        <p>
+          Find the least-squares solutions of <m>Ax=b</m> where:
+          <me>
+            A = \mat{1 0 1; 1 1 -1; 1 2 -3} \qquad b = \vec{6 0 0}.
+          </me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We have
+          <me>
+            A^TA = \mat{1 1 1; 0 1 2; 1 -1 -3}\mat{1 0 1; 1 1 -1; 1 2 -3}
+            = \mat{3 3 -3; 3 5 -7; -3 -7 11}
+          </me>
+          and
+          <me>
+            A^Tb = \vec{6 0 6}.
+          </me>
+          We form an augmented matrix and row reduce:
+          <me>
+            \amat{3 3 -3 6; 3 5 -7 0; -3 -7 11 6}
+            \rref
+            \amat{1 0 1 5; 0 1 -2 -3; 0 0 0 0}.
+          </me>
+          The free variable is <m>x_3</m>, so the solution set is
+          <me>
+            \syseq{x_1 = -x_3 - 5; x_2 = 2x_3 + 3; x_3 = x_3}
+            \quad\xrightarrow[\text{vector form}]{\text{parametric}}\quad
+            \hat x = \vec{x_1 x_2 x_3} = x_3\vec{-1 2 1} + \vec{-5 3 0}.
+          </me>
+          For example, taking <m>x_3 = 0</m> and <m>x_3=1</m> gives the least-squares solutions
+          <me>
+            \hat x = \vec{-5 3 0} \sptxt{and} \hat x = \vec{-6 5 1}.
+          </me>
+        </p>
+        <p>
+          Geometrically, we see that the columns <m>v_1,v_2,v_3</m> of <m>A</m> are coplanar:
+          <latex-code><![CDATA[
+\begin{tikzpicture}[x={(1.2cm,.4cm)}, y={(1cm,-.8cm)}, z={(0cm,1cm)},
+    scale=.6, thin border nodes, baseline]
+  \coordinate (v1) at (1,1,1);
+  \coordinate (v2) at (0,1,2);
+  \coordinate (b)  at (6,0,0);
+  \coordinate (bh) at ($5*(v1)-3*(v2)$);
+
+  \begin{scope}[x=(v1), y=(v2), transformxy]
+    \draw[help lines, seq-violet!50] (-1,-4) grid (6,2);
+    \fill[seq-violet!50, opacity=.7] (-1,-4) rectangle (6,2);
+    \node[seq-violet] at (3,-5) {$\Col A$};
+    \draw[vector] (0,0) to["$v_1$"'] (1,0);
+    \draw[vector] (0,0) -- (0,1)
+      node[anchor=south] {$v_2$};
+    \draw[vector] (0,0) -- (1,-2)
+      node[anchor=east] {$v_3$};
+  \end{scope}
+
+  \point (o) at (0,0,0);
+  \draw (b) -- (bh);
+  \coordinate (b1) at ($(bh)-(v1)$);
+  \coordinate (b2) at ($(bh)+(v2)$);
+  \point[seq-blue, pin={[
+      text=seq-blue,
+      pin edge={<-,very thin, seq-blue, shorten <=1pt},
+      pin distance=.6cm]
+      below right:$b_{\Col(A)}=A\hat x$}] at (bh);
+  \point[seq-red, "$b$" text=seq-red] at (b);
+  \pic[draw] {right angle=(b)--(bh)--(b1)};
+  \pic[draw] {right angle=(b)--(bh)--(b2)};
+\end{tikzpicture}
+]]></latex-code>
+          Therefore, there are many ways of writing <m>b_{\Col(A)}</m> as a linear combination of <m>v_1,v_2,v_3</m>.
+        </p>
+        <figure>
+          <caption>The three columns of <m>A</m> are coplanar, so there are many least-squares solutions.  (The demo picks one solution when you move <m>b</m>.)</caption>
+          <mathbox source="demos/leastsquares.html?v1=1,1,1&amp;v2=0,1,2&amp;v3=1,-1,-3&amp;vec=6,0,0&amp;range=6.5" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <p>
+      As usual, orthogonality calculations become easier in the presence of an orthogonal set.  Indeed, if <m>A</m> is an <m>m\times n</m> matrix with <em>orthogonal</em> columns <m>u_1,u_2,\ldots,u_m</m>, then we can use the <xref ref="projection-formula"/> to write
+      <me>
+        b_{\Col(A)} = \frac{b\cdot u_1}{u_1\cdot u_1}\,u_1
+            + \frac{b\cdot u_2}{u_2\cdot u_2}\,u_2 + \cdots
+            + \frac{b\cdot u_m}{u_m\cdot u_m}\,u_m
+        = A\vec{(b\cdot u_1)/(u_1\cdot u_1) (b\cdot u_2)/(u_2\cdot u_2) \vdots,
+            (b\cdot u_m)/(u_m\cdot u_m)}.
+      </me>
+      Note that the least-squares solution is unique in this case, since <xref ref="orthosets-is-li" text="title">an orthogonal set is linearly independent</xref>.
+    </p>
+
+    <warning xml:id="leastsquares-recipe2">
+      <title>Recipe 2: Compute a least-squares solution</title>
+      <p>
+        Let <m>A</m> be an <m>m\times n</m> matrix with <em>orthogonal</em> columns <m>u_1,u_2,\ldots,u_m</m>, and let <m>b</m> be a vector in <m>\R^n</m>.  Then the least-squares solution of <m>Ax=b</m> is the vector
+        <me>
+          \hat x = \left(\frac{b\cdot u_1}{u_1\cdot u_1},\;
+          \frac{b\cdot u_2}{u_2\cdot u_2},\;
+          \ldots,\;
+          \frac{b\cdot u_m}{u_m\cdot u_m}
+          \right).
+        </me>
+      </p>
+    </warning>
+
+    <p>
+      This formula is particularly useful in the sciences, as matrices with orthogonal columns often arise in nature.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Find the least-squares solution of <m>Ax=b</m> where:
+          <me>
+            A = \mat{1 0 1; 0 1 1; -1 0 1; 0 -1 1} \qquad b = \vec{0 1 3 4}.
+          </me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Let <m>u_1,u_2,u_3</m> be the columns of <m>A</m>.  These form an orthogonal set, so
+          <me>
+            \hat x = \left(\frac{b\cdot u_1}{u_1\cdot u_1},\;
+              \frac{b\cdot u_2}{u_2\cdot u_2},\;
+              \frac{b\cdot u_3}{u_3\cdot u_3}
+              \right)
+            = \left(\frac{-3}{2},\;\frac{-3}{2},\;\frac{8}{4}\right)
+            = \left(-\frac32,\;-\frac32,\;2\right).
+          </me>
+          Compare this <xref ref="orthosets-3space-in-R4"/>.
+        </p>
+      </solution>
+    </example>
+
+  </subsection>
+
+  <subsection>
+    <title>Best-Fit Problems</title>
+
+    <p>
+      In this Subsection we give an application of the method of least squares to data modeling.  We begin with a basic example.
+    </p>
+
+    <specialcase>
+      <title>Best-fit line</title>
+      <p>
+        Suppose that we have measured three data points
+        <me>
+          (0,6),\quad (1,0),\quad (2,0),
+        </me>
+        and that our model for these data asserts that the points should lie on a line.  Of course, these three points do not actually lie on a single line, but this could be due to errors in our measurement.  How do we predict which line they are supposed to lie on?
+        <latex-code>
+\begin{tikzpicture}[thin border nodes]
+  \draw[grid lines] (-2,-2) grid (4,7);
+  \draw[->] (-2,0) -- (4,0);
+  \draw[->] (0,-2) -- (0,7);
+  \point["{$(0,6)$}" above right] at (0,6);
+  \point["{$(1,0)$}" below] at (1,0);
+  \point["{$(2,0)$}" anchor=-130] at (2,0);
+\end{tikzpicture}
+        </latex-code>
+      </p>
+      <p>
+        The general equation for a (non-vertical) line is
+        <me>y = Mx + B.</me>
+        If our three data points were to lie on this line, then the following equations would be satisfied:
+        <men xml:id="leastsquares-line-eq">
+          \begin{split}
+          6 \amp= M\cdot 0 + B \\
+          0 \amp= M\cdot 1 + B \\
+          0 \amp= M\cdot 2 + B.
+          \end{split}
+        </men>
+        In order to find the best-fit line, we try to solve the above equations in the unknowns <m>M</m> and <m>B</m>.  As the three points do not actually lie on a line, there is no actual solution, so instead we compute a least-squares solution.
+      </p>
+      <p>
+        Putting our linear equations into matrix form, we are trying to solve <m>Ax=b</m> for
+        <me>
+          A = \mat{0 1; 1 1; 2 1}  \qquad x = \vec{M B}\qquad b = \vec{6 0 0}.
+        </me>
+        We have
+        <me>
+          A^TA = \mat{5 3; 3 3} \qquad A^Tb = \vec{0 6}.
+        </me>
+        We form an augmented matrix and row reduce:
+        <me>
+          \amat{5 3 0; 3 3 6} \rref \amat{1 0 -3; 0 1 5}.
+        </me>
+        Hence the least-squares solution to <m>Ax=b</m> is <m>\hat x = {M\choose B} = {-3\choose 5}</m>, so the best-fit line is
+        <me>y = -3x + 5.</me>
+        <latex-code>
+\begin{tikzpicture}[thin border nodes]
+  \draw[grid lines] (-2,-2) grid (4,7);
+  \draw[->] (-2,0) -- (4,0);
+  \draw[->] (0,-2) -- (0,7);
+  \point["{$(0,6)$}" above right] at (0,6);
+  \point["{$(1,0)$}" below] at (1,0);
+  \point["{$(2,0)$}" anchor=-130] at (2,0);
+  \draw[thick, seq-red] (-2/3,7) --
+    node[sloped,above=1pt] {$y=-3x+5$} (7/3,-2);
+\end{tikzpicture}
+        </latex-code>
+      </p>
+      <p>
+        What exactly is the line <m>y= f(x) = -3x+5</m> minimizing?  The least-squares solution <m>\hat x</m> minimizes the sum of the squares of the entries of the vector <m>b-A\hat x</m>. The vector <m>b</m> is the left-hand side of <xref ref="leastsquares-line-eq"/>, and
+        <me>
+          A\vec{-3 5} = \vec{-3(0)+5 -3(1)+5 -3(2)+5} = \vec{f(0) f(1) f(2)}.
+        </me>
+        In other words, <m>A\hat x</m> is the vector whose entries are the <m>y</m>-coordinates of the graph of the line at the values of <m>x</m> we specified in our data points, and <m>b</m> is the vector whose entries are the <m>y</m>-coordinates of those data points.  The difference <m>b-A\hat x</m> is the vertical distance of the graph from the data points:
+        <latex-code>
+\begin{tikzpicture}[decoration={brace,raise=1mm}, thin border nodes]
+  \draw[grid lines] (-2,-2) grid (4,7);
+  \draw[->] (-2,0) -- (4,0);
+  \draw[->] (0,-2) -- (0,7);
+  \point["{$(0,6)$}" above right] at (0,6);
+  \point["{$(1,0)$}" below] at (1,0);
+  \point["{$(2,0)$}" anchor=-130] at (2,0);
+  \draw[decorate, seq-blue, thick, decoration={mirror}]
+    (0,5) -- node[right=2mm] {$-1$} (0,6);
+  \draw[decorate, seq-blue, thick]
+    (1,0) -- node[left=2mm,yshift=1.5pt] {$2$} (1,2);
+  \draw[decorate, seq-blue, thick]
+    (2,0) -- node[right=2mm] {$-1$} (2,-1);
+  \draw[thick, seq-red] (-2/3,7) --
+    node[sloped,above=1pt] {$y=-3x+5$} (7/3,-2);
+  \node[text=seq-blue] at (1,-3.2)
+    {$b - A\hat x = \vec{6 0 0} - A\vec{-3 5} = \vec{-1 2 -1}$};
+\end{tikzpicture}
+        </latex-code>
+        The best-fit line minimizes the sum of the squares of these vertical distances.
+      </p>
+    </specialcase>
+
+    <example hide-type="true">
+      <title>Interactive: Best-fit line</title>
+      <figure>
+        <caption>The best-fit line minimizes the sum of the squares of the vertical distances (purple).  Click and drag the points to see how the best-fit line changes.</caption>
+        <mathbox source="demos/bestfit.html?v1=0,6&amp;v2=1,0&amp;v3=2,0&amp;range=7" height="500px"/>
+      </figure>
+    </example>
+
+    <example>
+      <title>Best-fit parabola</title>
+      <statement>
+        <p>
+          Find the parabola that best approximates the data points
+          <me>
+            (-1,\,1/2),\quad(1,\,-1),\quad(2,\,-1/2),\quad(3,\,2).
+          </me>
+          <latex-code>
+\begin{tikzpicture}[scale=1, thin border nodes, whitebg nodes]
+  \draw[grid lines] (-4,-2) grid (5,5);
+  \draw[->] (-4,0) -- (5,0);
+  \draw[->] (0,-2) -- (0,5);
+
+  \point["{$(-1,1/2)$}" {above}] at (-1,0.5);
+  \point["{$(1,-1)$}" {below}] at (1,-1);
+  \point["{$(2,-1/2)$}" right] at (2,-0.5);
+  \point["{$(3,2)$}" {above}] at (3,2);
+\end{tikzpicture}
+          </latex-code>
+          What quantity is being minimized?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The general equation for a parabola is
+          <me>y = Bx^2 + Cx + D.</me>
+          If the four points were to lie on this parabola, then the following equations would be satisfied:
+          <men xml:id="leastsquares-parabola-eq">
+            \spalignsysdelims..
+            \syseq{\dfrac12 = B(-1)^2 + C(-1) + D;
+            -1 = B(1)^2 + C(1) + D;
+            -\dfrac12 = B(2)^2 + C(2) + D;
+            2 = B(3)^2 + C(3) + D\rlap.}
+          </men>
+          We treat this as a system of equations in the unknowns <m>B,C,D</m>.  In matrix form, we can write this as <m>Ax=b</m> for
+          <me>
+            A = \mat[r]{
+              1 -1 1;
+              1  1 1;
+              4  2 1;
+              9  3 1}
+            \qquad
+            x = \vec{B C D}
+            \qquad b = \vec[r]{1/2 -1 -1/2 2}.
+          </me>
+          We find a least-squares solution by multiplying both sides by the transpose:
+          <me>
+            A^TA = \mat{99 35 15; 35 15 5; 15 5 4} \qquad
+            A^Tb = \vec{31/2 7/2 1},
+          </me>
+          then forming an augmented matrix and row reducing:
+          <me>
+            \amat{99 35 15 31/2; 35 15 5 7/2; 15 5 4 1}
+            \rref
+            \amat{1 0 0 53/88; 0 1 0 -379/440; 0 0 1 -41/44}
+            \implies
+            \hat x = \vec[r]{53/88 -379/440 -41/44}.
+          </me>
+          The best-fit parabola is
+          <me>
+            y = \frac{53}{88}x^2 - \frac{379}{440}x - \frac{41}{44}.
+          </me>
+          Multiplying through by <m>88</m>, we can write this as
+          <me>
+            88y = 53x^2 - \frac{379}{5}x - 82.
+          </me>
+          <latex-code>
+\begin{tikzpicture}[scale=1, thin border nodes, whitebg nodes]
+  \draw[grid lines] (-4,-2) grid (5,5);
+  \draw[->] (-4,0) -- (5,0);
+  \draw[->] (0,-2) -- (0,5);
+
+  \point["{$(-1,0.5)$}" {right,yshift=2mm}] at (-1,0.5);
+  \point["{$(1,-1)$}" {above,xshift=-2mm}] at (1,-1);
+  \point["{$(2,-0.5)$}" right] at (2,-0.5);
+  \point["{$(3,2)$}" {above,xshift=-4mm}] at (3,2);
+
+  \clip (-4,-2) rectangle (5,5);
+
+  \draw[thick, seq-red, domain=-6:6, samples=50, smooth]
+    plot (\x, 53/88*\x*\x - 379/440*\x - 41/44);
+  \node[text=seq-red, font=\normalsize] at (.8, 3.3)
+    {$\displaystyle 88y = 53x^2 - \frac{379}5x - 82$};
+\end{tikzpicture}
+          </latex-code>
+        </p>
+        <p>
+          Now we consider what exactly the parabola <m>y = f(x)</m> is minimizing.  The least-squares solution <m>\hat x</m> minimizes the sum of the squares of the entries of the vector <m>b-A\hat x</m>.  The vector <m>b</m> is the left-hand side of <xref ref="leastsquares-parabola-eq"/>, and
+          <me>
+            A\hat x
+            = \vec{\frac{53}{88}(-1)^2-\frac{379}{440}(-1)-\frac{41}{44}
+            \frac{53}{88}(1)^2-\frac{379}{440}(1)-\frac{41}{44}
+            \frac{53}{88}(2)^2-\frac{379}{440}(2)-\frac{41}{44}
+            \frac{53}{88}(3)^2-\frac{379}{440}(3)-\frac{41}{44}}
+            = \vec{f(-1) f(1) f(2) f(3)}.
+          </me>
+          In other words, <m>A\hat x</m> is the vector whose entries are the <m>y</m>-coordinates of the graph of the parabola at the values of <m>x</m> we specified in our data points, and <m>b</m> is the vector whose entries are the <m>y</m>-coordinates of those data points.  The difference <m>b-A\hat x</m> is the vertical distance of the graph from the data points:
+          <latex-code>
+\begin{tikzpicture}[scale=1, thin border nodes]
+  \draw[grid lines] (-4,-2) grid (5,5);
+  \draw[->] (-4,0) -- (5,0);
+  \draw[->] (0,-2) -- (0,5);
+
+  \point at (-1,0.5);
+  \point at (1,-1);
+  \point at (2,-0.5);
+  \point at (3,2);
+
+  \node[text=seq-blue] at (.5,-3.2)
+    {$b - A\hat x = \vec[r]{1/2 -1 -1/2 2} - A\vec[r]{53/88 -379/440 -41/44}
+      = \vec[r]{-7/220 21/110 -14/55 21/220}$};
+
+  \clip (-4,-2) rectangle (5,5);
+
+  \draw[thick, seq-red, domain=-6:6, samples=50, smooth]
+    plot (\x, 53/88*\x*\x - 379/440*\x - 41/44);
+  \node[whitebg, text=seq-red, font=\normalsize] at (.8, 3.3)
+    {$\displaystyle 88y = 53x^2 - \frac{379}5x - 82$};
+
+  \draw[seq-blue, thick]
+    (-1,1/2) -- node[left] {$-\frac 7{220}$} (-1,117/220);
+  \draw[seq-blue, thick]
+    (1,-1) -- node[below=2mm] {$\frac{21}{110}$} (1,-131/110);
+  \draw[seq-blue, thick]
+    (2,-1/2) -- node[right] {$-\frac{14}{55}$} (2,-27/110);
+  \draw[seq-blue, thick]
+    (3,2) -- node[right] {$\frac{21}{220}$} (3,419/220);
+\end{tikzpicture}
+          </latex-code>
+          The best-fit parabola minimizes the sum of the squares of these vertical distances.
+        </p>
+      <figure>
+        <caption>The best-fit parabola minimizes the sum of the squares of the vertical distances (purple).  Click and drag the points to see how the best-fit parabola changes.</caption>
+        <mathbox source="demos/bestfit.html?func=A*x^2+B*x+C&amp;v1=-1,.5&amp;v2=1,-1&amp;v3=2,-.5&amp;v4=3,2&amp;range=5" height="500px"/>
+      </figure>
+      </solution>
+    </example>
+
+    <example xml:id="leastsquares-linear-eg">
+      <title>Best-fit linear function</title>
+      <statement>
+        <p>
+          Find the linear function <m>f(x,y)</m> that best approximates the following data:
+          <me>
+\begin{array}{r|r|c}
+  x &amp; y &amp; f(x,y) \\\hline
+  1 &amp; 0 &amp; 0 \\
+  0 &amp; 1 &amp; 1 \\
+  -1 &amp; 0 &amp; 3 \\
+  0 &amp; -1 &amp; 4
+\end{array}
+          </me>
+          What quantity is being minimized?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The general equation for a linear function in two variables is
+          <me>
+            f(x,y) = Bx + Cy + D.
+          </me>
+          We want to solve the following system of equations in the unknowns <m>B,C,D</m>:
+          <men xml:id="leastsquares-linear-eq">
+            \spalignsysdelims..\syseq{
+            B(1) + C(0) + D = 0;
+            B(0) + C(1) + D = 1;
+            B(-1) + C(0) + D = 3;
+            B(0) + C(-1) + D = 4\rlap.}
+          </men>
+          In matrix form, we can write this as <m>Ax=b</m> for
+          <me>
+            A = \mat[r]{
+            1 0 1;
+            0 1 1;
+            -1 0 1;
+            0 -1 1
+            }
+            \qquad x = \vec{B C D}
+            \qquad b = \vec{0 1 3 4}.
+          </me>
+          We observe that the columns <m>u_1,u_2,u_3</m> of <m>A</m> are <em>orthogonal</em>, so we can use <xref ref="leastsquares-recipe2">Recipe 2</xref>:
+          <me>
+            \hat x = \left(\frac{b\cdot u_1}{u_1\cdot u_1},\;
+              \frac{b\cdot u_2}{u_2\cdot u_2},\;
+              \frac{b\cdot u_3}{u_3\cdot u_3}
+              \right)
+            = \left(\frac{-3}{2},\;\frac{-3}{2},\;\frac{8}{4}\right)
+            = \left(-\frac32,\;-\frac32,\;2\right).
+          </me>
+          Therefore, the best-fit linear equation is
+          <me>
+            f(x,y) = -\frac 32x - \frac32y + 2.
+          </me>
+          Here is a picture of the graph of <m>f(x,y)</m>:
+          <latex-code mode="bare">
+            \usetikzlibrary{math}
+          </latex-code>
+          <latex-code>
+\begin{tikzpicture}[scale=1, myxyz, thin border nodes,
+    vert lines/.style={very thin, black!40}]
+
+  \begin{scope}[transformxy]
+    \draw[help lines, black!90] (-2,-2) grid (2,2);
+  \end{scope}
+
+  \tikzmath {
+    int \x, \y;
+    function f(\x,\y) {
+      return -3/2*\x-3/2*\y+2;
+    };
+    for \x in {-2,...,1}{
+      for \y in {-2,...,1}{
+        { \filldraw[help lines, seq-red!70, fill=seq-red!40, fill opacity=.5]
+             (\x,\y,{f(\x,\y)})
+             -- (\x+1,\y,{f(\x+1,\y)})
+             -- (\x+1,\y+1,{f(\x+1,\y+1)})
+             -- (\x,\y+1,{f(\x,\y+1)})
+             -- cycle;
+        };
+      };
+    };
+  }
+
+  \draw[vert lines] (-2,-2,{f(-2,-2)}) -- (-2,-2,0);
+  \draw[vert lines] (-2, 2,{f(-2, 2)}) -- (-2, 2,0);
+  \draw[vert lines] ( 2,-2,{f( 2,-2)}) -- ( 2,-2,0);
+  \draw[vert lines] ( 2, 2,{f( 2, 2)}) -- ( 2, 2,0);
+
+  \begin{scope}[every node/.style={font=\footnotesize, inner sep=1pt}]
+    \draw[thick,seq-blue] (1,0,0)
+      -- (1,0,{f(1,0)})
+      node[point,seq-red,"${f(1,0)}$" text=seq-red] {};
+    \point["${(1,0,0)}$" below] at (1,0,0);
+    \draw[densely dotted] (0,1,1) -- (0,1,0);
+    \draw[thick,seq-blue] (0,1,1)
+      -- (0,1,{f(0,1)})
+      node[point,seq-red,"${f(0,1)}$" {text=seq-red, below}] {};
+    \point["${(0,1,1)}$"] at (0,1,1);
+    \draw[densely dotted] (-1,0,3) -- (-1,0,0);
+    \draw[thick,seq-blue] (-1,0,3)
+      -- (-1,0,{f(-1,0)})
+      node[point,seq-red,"${f(-1,0)}$" text=seq-red] {};
+    \point["${(-1,0,3)}$" below] at (-1,0,3);
+    \draw[densely dotted] (0,-1,4) -- (0,-1,0);
+    \draw[thick,seq-blue] (0,-1,4)
+      -- (0,-1,{f(0,-1)})
+      node[point,seq-red,"${f(0,-1)}$" {text=seq-red, below}] {};
+    \point["${(0,-1,4)}$"] at (0,-1,4);
+  \end{scope}
+
+  \point[scale=.75, black!50] at (0,0,0);
+
+\end{tikzpicture}
+          </latex-code>
+        </p>
+        <p>
+          Now we consider what quantity is being minimized by the function <m>f(x,y)</m>.  The least-squares solution <m>\hat x</m> minimizes the sum of the squares of the entries of the vector <m>b-A\hat x</m>.  The vector <m>b</m> is the right-hand side of <xref ref="leastsquares-linear-eq"/>, and
+          <me>
+            A\hat x =
+            \spalignsysdelims()\syseq{
+            -\frac32(1) - \frac32(0) + 2;
+            -\frac32(0) - \frac32(1) + 2;
+            -\frac32(-1) - \frac32(0) + 2;
+            -\frac32(0) - \frac32(-1) + 2
+            }
+            = \vec{{f(1,0)} {f(0,1)} {f(-1,0)} {f(0,-1)}}.
+          </me>
+          In other words, <m>A\hat x</m> is the vector whose entries are the values of <m>f</m> evaluated on the points <m>(x,y)</m> we specified in our data table, and <m>b</m> is the vector whose entries are the desired values of <m>f</m> evaluated at those points.  The difference <m>b-A\hat x</m> is the vertical distance of the graph from the data points, as indicated in the above picture.  The best-fit linear function minimizes the sum of these vertical distances.
+        </p>
+        <figure>
+          <caption>The best-fit linear function minimizes the sum of the squares of the vertical distances (purple).  Click and drag the points to see how the best-fit linear function changes.</caption>
+          <mathbox source="demos/bestfit.html?func=A*x+B*y+C&amp;v1=1,0,0&amp;v2=0,1,1&amp;v3=-1,0,3&amp;v4=0,-1,4&amp;range=5" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <p>
+      All of the above examples have the following form: some number of data points <m>(x,y)</m> are given, and we want to find a function
+      <me>
+        y = B_1g_1(x) + B_2g_2(x) + \cdots + B_mg_m(x)
+      </me>
+      that best approximates these points, where <m>g_1,g_2,\ldots,g_m</m> are fixed functions of <m>x</m>.  Indeed, in the best-fit line example we had <m>g_1(x)=x</m> and <m>g_2(x)=1</m>; in the best-fit parabola example we had <m>g_1(x)=x^2</m>, <m>g_2(x)=x</m>, and <m>g_3(x)=1</m>; and in the best-fit linear function example we had <m>g_1(x_1,x_2)=x_1</m>, <m>g_2(x_1,x_2)=x_2</m>, and <m>g_3(x_1,x_2)=1</m> (in this example we take <m>x</m> to be a vector with two entries).  We evaluate the above equation on the given data points to obtain a system of linear equations in the unknowns <m>B_1,B_2,\ldots,B_m</m><mdash/>once we evaluate the <m>g_i</m>, they just become numbers, so it does not matter what they are<mdash/>and we find the least-squares solution.  The resulting best-fit function minimizes the sum of the squares of the vertical distances from the graph of <m>y = f(x)</m> to our original data points.
+    </p>
+
+    <p>
+      To emphasize that the nature of the functions <m>g_i</m> really is irrelevant, consider the following example.
+    </p>
+
+    <example>
+      <title>Best-fit trigonometric function</title>
+      <statement>
+        <p>
+          What is the best-fit function of the form
+          <me> y=B+C\cos(x)+D\sin(x)+E\cos(2x)+F\sin(2x)+G\cos(3x)+H\sin(3x) </me>
+          passing through the points
+          <me>
+            \vec{-4 -1},\;
+            \vec{-3 0},\;
+            \vec{-2 -1.5},\;
+            \vec{-1 .5},\;
+            \vec{0 1},\;
+            \vec{1 -1},\;
+            \vec{2 -.5},\;
+            \vec{3 2},\;
+            \vec{4 -1}?
+          </me>
+          <latex-code>
+\def\labeledpt(#1)#2{\point["{$(#1)$}" #2] at (#1)}
+\begin{tikzpicture}[scale=1.35, thin border nodes, whitebg nodes]
+  \draw[grid lines] (-5,-2) grid (5,2);
+  \draw[->] (-5,0) -- (5,0);
+  \draw[->] (0,-2) -- (0,2);
+
+  \labeledpt(-4,-1){{below}};
+  \labeledpt(-3,0){{below}};
+  \labeledpt(-2,-1.5){below};
+  \labeledpt(-1,.5){above};
+  \labeledpt(0,1){{above}};
+  \labeledpt(1,-1){below};
+  \labeledpt(2,-.5){below};
+  \labeledpt(3,2){below};
+  \labeledpt(4,-1){above};
+
+\end{tikzpicture}
+          </latex-code>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We want to solve the system of equations
+          <latex-code>
+            \small\[
+            \spalignsysdelims..
+            \syseq{
+            -1 = B + C\cos(-4) + D\sin(-4) + E\cos(-8) + F\sin(-8) + G\cos(-12) + H\sin(-12);
+            0 = B + C\cos(-3) + D\sin(-3) + E\cos(-6) + F\sin(-6) + G\cos(-9) + H\sin(-9);
+            -1.5 = B + C\cos(-2) + D\sin(-2) + E\cos(-4) + F\sin(-4) + G\cos(-6) + H\sin(-6);
+            0.5 = B + C\cos(-1) + D\sin(-1) + E\cos(-2) + F\sin(-2) + G\cos(-3) + H\sin(-3);
+            1 = B + C\cos(0) + D\sin(0) + E\cos(0) + F\sin(0) + G\cos(0) + H\sin(0);
+            -1 = B + C\cos(1) + D\sin(1) + E\cos(2) + F\sin(2) + G\cos(3) + H\sin(3);
+            -0.5 = B + C\cos(2) + D\sin(2) + E\cos(4) + F\sin(4) + G\cos(6) + H\sin(6);
+            2 = B + C\cos(3) + D\sin(3) + E\cos(6) + F\sin(6) + G\cos(9) + H\sin(9);
+            -1 = B + C\cos(4) + D\sin(4) + E\cos(8) + F\sin(8) + G\cos(12) + H\sin(12)\rlap.
+            }\]
+          </latex-code>
+          All of the terms in these equations are <em>numbers</em>, except for the unknowns <m>B,C,D,E,F,G,H</m>:
+          <latex-code>
+            \small\[
+            \spalignsysdelims..
+            \syseq{
+            -1 = B - 0.6536C + 0.7568D - 0.1455E - 0.9894F + 0.8439G + 0.5366H;
+            0 = B - 0.9900C - 0.1411D + 0.9602E + 0.2794F - 0.9111G - 0.4121H;
+            -1.5 = B - 0.4161C - 0.9093D - 0.6536E + 0.7568F + 0.9602G + 0.2794H;
+            0.5 = B + 0.5403C - 0.8415D - 0.4161E - 0.9093F - 0.9900G - 0.1411H;
+            1 = B + C \+ \. + E \+ \. + G;
+            -1 = B + 0.5403C + 0.8415D - 0.4161E + 0.9093F - 0.9900G + 0.1411H;
+            -0.5 = B - 0.4161C + 0.9093D - 0.6536E - 0.7568F + 0.9602G - 0.2794H;
+            2 = B - 0.9900C + 0.1411D + 0.9602E - 0.2794F - 0.9111G + 0.4121H;
+            -1 = B - 0.6536C - 0.7568D - 0.1455E + 0.9894F + 0.8439G - 0.5366H\rlap.
+            }\]
+          </latex-code>
+          Hence we want to solve the least-squares problem
+          <latex-code>
+            \small\[
+            \mat[r]{
+            1 -0.6536  0.7568 -0.1455 -0.9894  0.8439  0.5366;
+            1 -0.9900 -0.1411  0.9602  0.2794 -0.9111 -0.4121;
+            1 -0.4161 -0.9093 -0.6536  0.7568  0.9602  0.2794;
+            1  0.5403 -0.8415 -0.4161 -0.9093 -0.9900 -0.1411;
+            1  1       0            1       0       1       0;
+            1  0.5403  0.8415 -0.4161  0.9093 -0.9900  0.1411;
+            1 -0.4161  0.9093 -0.6536 -0.7568  0.9602 -0.2794;
+            1 -0.9900  0.1411  0.9602 -0.2794 -0.9111  0.4121;
+            1 -0.6536 -0.7568 -0.1455  0.9894  0.8439 -0.5366
+            }
+            \vec{B C D E F G H}
+            = \vec[r]{-1 0 -1.5 0.5 1 -1 -0.5 2 -1}.
+            \]
+          </latex-code>
+          We find the least-squares solution with the aid of a computer:
+          <latex-code>
+            \small\[
+            \hat x \approx \vec[r]{-0.1435 0.2611 -0.2337 1.116 -0.5997 -0.2767 0.1076}.
+            \]
+          </latex-code>
+          Therefore, the best-fit function is
+          <me>
+            \begin{split}
+            y \amp\approx
+            -0.1435 + 0.2611\cos(x) -0.2337\sin(x)  + 1.116\cos(2x) -0.5997\sin(2x) \\
+            \amp\qquad\qquad -0.2767\cos(3x) +  0.1076\sin(3x).
+            \end{split}
+          </me>
+          <latex-code>
+\def\labeledpt(#1)#2{\point["{$(#1)$}" #2] at (#1)}
+\begin{tikzpicture}[scale=1.35, thin border nodes, whitebg nodes]
+  \draw[grid lines] (-5,-2) grid (5,2);
+  \draw[->] (-5,0) -- (5,0);
+  \draw[->] (0,-2) -- (0,2);
+
+  \labeledpt(-4,-1){{below,xshift=3mm}};
+  \labeledpt(-3,0){{below,xshift=-2mm}};
+  \labeledpt(-2,-1.5){below};
+  \labeledpt(-1,.5){above left};
+  \labeledpt(0,1){{above,xshift=3mm}};
+  \labeledpt(1,-1){below left};
+  \labeledpt(2,-.5){left};
+  \labeledpt(3,2){below};
+  \labeledpt(4,-1){above right};
+
+  \draw[thick, seq-red, domain=-5:5, samples=100, smooth]
+    plot (\x, {-0.14349970812998397 + 0.2610707891632625*cos(\x r)
+                - 0.23369384976594704*sin(\x r) + 1.1164954570890104*cos(2*\x r)
+                - 0.5996551982189049*sin(2*\x r) - 0.2767472417583463*cos(3*\x r)
+                + 0.10760782737030863*sin(3*\x r)});
+  \node[text=seq-red, font=\tiny, below] at (0, -2.3)
+    {$y\approx -0.14 + 0.26\cos(x) - 0.23\sin(x) + 1.11\cos(2x)
+      - 0.60\sin(2x) - 0.28\cos(3x) + 0.11\sin(3x)$};
+\end{tikzpicture}
+          </latex-code>
+          As in the previous examples, the best-fit function minimizes the sum of the squares of the vertical distances from the graph of <m>y = f(x)</m> to the data points.
+        </p>
+        <figure>
+          <caption>The best-fit function minimizes the sum of the squares of the vertical distances (purple).  Click and drag the points to see how the best-fit function changes.</caption>
+          <mathbox source="demos/bestfit.html?func=A+B*cos(x)+C*sin(x)+D*cos(2*x)+EE*sin(2*x)+F*cos(3*x)+G*sin(3*x)&amp;v1=-4,-1&amp;v2=-3,0&amp;v3=-2,-1.5&amp;v4=-1,.5&amp;v5=0,1&amp;v6=1,-1&amp;v7=2,-.5&amp;v8=3,2&amp;v9=4,-1&amp;range=5" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <p>
+      The next example has a somewhat different flavor from the previous ones.
+    </p>
+
+    <example>
+      <title>Best-fit ellipse</title>
+      <statement>
+        <p>
+          Find the best-fit ellipse through the points
+          <me>
+            (0,2),\, (2,1),\, (1,-1),\, (-1,-2),\, (-3,1),\, (-1,-1).
+          </me>
+          <latex-code>
+\begin{tikzpicture}[scale=1,decoration={brace,raise=1mm},
+    thin border nodes, whitebg nodes]
+  \draw[grid lines] (-6,-4) grid (6,4);
+  \draw[->] (-6,0) -- (6,0);
+  \draw[->] (0,-4) -- (0,4);
+
+  \point["{$(0,2)$}" above] at (0,2);
+  \point["{$(2,1)$}" right] at (2,1);
+  \point["{$(1,-1)$}" {right}] at (1,-1);
+  \point["{$(-1,-2)$}" {below,xshift=-1mm}] at (-1,-2);
+  \point["{$(-3,1)$}" {above}] at (-3,1);
+  \point["{$(-1,1)$}" below] at (-1,1);
+
+\end{tikzpicture}
+          </latex-code>
+          What quantity is being minimized?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The general equation for an ellipse (actually, for a nondegenerate conic section) is
+          <me>
+            x^2 + By^2 + Cxy + Dx + Ey + F = 0.
+          </me>
+          This is an <em>implicit equation</em>: the ellipse is the set of all solutions of the equation, just like the unit circle is the set of solutions of <m>x^2+y^2=1.</m>  To say that our data points lie on the ellipse means that the above equation is satisfied for the given values of <m>x</m> and <m>y</m>:
+          <men xml:id="leastsquares-ellipse-eq">
+\def\eqline#1#2{(#1)^2 + B(#2)^2 + C(#1)(#2) + D(#1) + E(#2) + F = 0}
+\edef\eqs{\eqline02;
+  \eqline21;
+  \eqline1{-1};
+  \eqline{-1}{-2};
+  \eqline{-3}1;
+  \eqline{-1}{-1}
+}
+\spalignsysdelims..
+\expandafter\syseq\expandafter{\eqs\rlap.}
+          </men>
+          To put this in matrix form, we move the constant terms to the right-hand side of the equals sign; then we can write this as <m>Ax=b</m> for
+          <me>
+            A = \mat[r]{
+            4 0 0 2 \phantom-1;
+            1 2 2 1 1;
+            1 -1 1 -1 1;
+            4 2 -1 -2 1;
+            1 -3 -3 1 1;
+            1 1 -1 -1 1
+            } \qquad
+            x = \vec{B C D E F} \qquad
+            b = \vec[r]{0 -4 -1 -1 -9 -1}.
+          </me>
+          We compute
+          <me>
+            A^TA = \mat[r]{
+            36  7 -5  0 12;
+            7 19  9 -5  1;
+            -5  9 16  1 -2;
+            0 -5  1 12  0;
+            12  1 -2  0  6
+            } \qquad
+            A^T b = \vec[r]{-19, 17, 20, -9, -16}.
+          </me>
+          We form an augmented matrix and row reduce:
+          <me>
+            \amat{
+            36  7 -5  0 12 -19;
+            7 19  9 -5  1 17;
+            -5  9 16  1 -2 20;
+            0 -5  1 12  0 -9;
+            12  1 -2  0  6 -16
+            } \rref
+            \amat{
+            1 0 0 0 0 405/266;
+            0 1 0 0 0 -89/133;
+            0 0 1 0 0 201/133;
+            0 0 0 1 0 -123/266;
+            0 0 0 0 1 -687/133
+            }.
+          </me>
+          The least-squares solution is
+          <me>
+            \hat x = \vec{405/266 -89/133 201/133 -123/266 -687/133},
+          </me>
+          so the best-fit ellipse is
+          <me>
+            x^2 + \frac{405}{266} y^2 -\frac{89}{133} xy + \frac{201}{133}x
+            - \frac{123}{266}y - \frac{687}{133} = 0.
+          </me>
+          Multiplying through by <m>266</m>, we can write this as
+          <me>
+            266 x^2 + 405 y^2 - 178 xy + 402 x - 123 y - 1374 = 0.
+          </me>
+          <latex-code>
+\begin{tikzpicture}[thin border nodes, whitebg nodes]
+  \draw[grid lines] (-6,-4) grid (6,4);
+  \draw[->] (-6,0) -- (6,0);
+  \draw[->] (0,-4) -- (0,4);
+
+  \point["{$(0,2)$}" above] at (0,2);
+  \point["{$(2,1)$}" right] at (2,1);
+  \point["{$(1,-1)$}" {right,yshift=-1mm}] at (1,-1);
+  \point["{$(-1,-2)$}" {below,xshift=1.5mm}] at (-1,-2);
+  \point["{$(-3,1)$}" {above,xshift=-1.5mm}] at (-3,1);
+  \point["{$(-1,1)$}" below] at (-1,1);
+
+  \draw[thick, seq-red] (-0.760768, -0.0153293)
+      ellipse[x radius=2.61837, y radius=1.84472, rotate=26.0068];
+  \node[text=seq-red, font=\normalsize] at (0, -3.3)
+    {$266 x^2 + 405 y^2 - 178 xy + 402 x - 123 y - 1374 = 0$};
+\end{tikzpicture}
+          </latex-code>
+        </p>
+        <p>
+          Now we consider the question of which quantity is minimized by this ellipse.  The least-squares solution <m>\hat x</m> minimizes the sum of the squares of the entries of the vector <m>b-A\hat x</m>, or equivalently, of <m>A\hat x-b</m>.  The vector <m>-b</m> contains the constant terms of the left-hand sides of <xref ref="leastsquares-ellipse-eq"/>, and
+          <me>
+\def\eqline#1#2{\frac{405}{266}(#2)^2 - \frac{89}{133}(#1)(#2) + \frac{201}{133}(#1) - \frac{123}{266}(#2) - \frac{687}{133}}
+\edef\eqs{\eqline02;
+  \eqline21;
+  \eqline1{-1};
+  \eqline{-1}{-2};
+  \eqline{-3}1;
+  \eqline{-1}{-1}
+}
+\spalignsysdelims()
+A\hat x =
+\expandafter\syseq\expandafter{\eqs}
+          </me>
+          contains the rest of the terms on the left-hand side of <xref ref="leastsquares-ellipse-eq"/>.  Therefore, the entries of <m>A\hat x-b</m> are the quantities obtained by evaluating the function
+          <me>
+            f(x,y) = x^2 + \frac{405}{266} y^2 -\frac{89}{133} xy + \frac{201}{133}x
+            - \frac{123}{266}y - \frac{687}{133}
+          </me>
+          on the given data points.
+        </p>
+        <p>
+          If our data points actually lay on the ellipse defined by <m>f(x,y)=0</m>, then evaluating <m>f(x,y)</m> on our data points would always yield zero, so <m>A\hat x-b</m> would be the zero vector.  This is not the case; instead, <m>A\hat x-b</m> contains the <em>actual</em> values of <m>f(x,y)</m> when evaluated on our data points.  The quantity being minimized is the sum of the squares of these values:
+          <me>
+            \begin{split}
+            \amp\text{minimized} = \\
+            \amp\quad
+            f(0,2)^2 + f(2,1)^2 + f(1,-1)^2 + f(-1,-2)^2 + f(-3,1)^2 + f(-1,-1)^2.
+            \end{split}
+          </me>
+          One way to visualize this is as follows.  We can put this best-fit problem into the framework of this <xref ref="leastsquares-linear-eg"/> by asking to find an equation of the form
+          <me>
+            f(x,y) = x^2 + By^2 + Cxy + Dx + Ey + F
+          </me>
+          which best approximates the data table
+          <me>
+\begin{array}{r|r|c}
+  x &amp; y &amp; f(x,y) \\\hline
+  0 &amp; 2 &amp; 0 \\
+  2 &amp; 1 &amp; 0 \\
+  1 &amp; -1 &amp; 0 \\
+  -1 &amp; -2 &amp; 0 \\
+  -3 &amp; 1 &amp; 0 \\
+  -1 &amp; -1 &amp; 0\rlap.
+\end{array}
+          </me>
+          The resulting function minimizes the sum of the squares of the vertical distances from these data points <m>(0,2,0),\,(2,1,0),\,\ldots</m>, which lie on the <m>xy</m>-plane, to the graph of <m>f(x,y)</m>.
+        </p>
+        <figure>
+          <caption>The best-fit ellipse minimizes the sum of the squares of the vertical distances (purple) from the points <m>(x,y,0)</m> to the graph of <m>f(x,y)</m> on the left.  The ellipse itself is the zero set of <m>f(x,y)</m>, on the right.  Click and drag the points on the right to see how the best-fit ellipse changes.  Can you arrange the points so that the best-fit conic section is actually a hyperbola?</caption>
+          <mathbox source="demos/bestfit-implicit.html?func=x^2+A*y^2+B*x*y+C*x+D*y+EE&amp;v1=0,2&amp;v2=2,1&amp;v3=1,-1&amp;v4=-1,-2&amp;v5=-3,1&amp;v6=-1,1&amp;range=5&amp;rangez=25&amp;camera1=-2.14,.814,1.69" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <remark>
+      <p>
+        Gauss actually invented the method of least squares to find a best-fit ellipse:
+he predicted the (elliptical) orbit of the asteroid Ceres as it passed behind
+the sun in 1801.
+      </p>
+    </remark>
+
+  </subsection>
 
 </section>

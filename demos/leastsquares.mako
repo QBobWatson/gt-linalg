@@ -90,7 +90,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
         name:      'bandbhat'
         points:    [vector, projection]
         colors:    [[1, 0.3, .3, 1], [0, .8, .8, 1]]
-        labels:    [vecLabel, "#{vecLabel}hat"]
+        labels:    [vecLabel, "#{vecLabel}_Col(A)"]
         live:      true
         pointOpts: zIndex: 4
         labelOpts: zIndex: 5
@@ -175,7 +175,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
                 sign = '+'
             a = solution[2].toFixed 2
             str += "#{sign}\\color{#ffff00}{#{a}}\\, \\color{#dd0000}{#{texLabels[2]}}"
-        str += "= \\color{#{hexColorProj}}{\\hat b}"
+        str += "= \\color{#{hexColorProj}}{#{vecLabel}_{\\text{Col}(A)}}"
         katex.render str, vectorElt
 
         str  = "A \\color{#ffff00}{\\hat x} ="
@@ -183,7 +183,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
         str += @texVector solution, color: '#ffff00'
         str += '='
         str += @texVector projection, color: hexColorProj
-        str += "= \\color{#{hexColorProj}}{\\hat b}"
+        str += "= \\color{#{hexColorProj}}{#{vecLabel}_{\\text{Col}(A)}}"
         katex.render str, matrixElt
 
     computeOut()

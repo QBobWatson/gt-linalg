@@ -141,7 +141,7 @@ the license is included in gfdl.xml.
       Now that we have a good notion of length, we can define the <em>distance</em> between points in <m>\R^n</m>.  Recall that the difference between two points <m>x,y</m> is naturally a vector, namely, the vector <m>y-x</m> pointing from <m>x</m> to <m>y</m>.
     </p>
 
-    <definition>
+    <definition xml:id="innerprod-distance-defn">
       <statement>
         <p>
           The <term>distance</term> between two points <m>x,y</m> in <m>\R^n</m> is the length of the vector from <m>x</m> to <m>y</m>:

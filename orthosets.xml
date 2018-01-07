@@ -181,7 +181,7 @@ the license is included in gfdl.xml.
       A nice property enjoyed by orthogonal sets is that they are automatically linearly independent.
     </p>
 
-    <lemma type-name="Fact">
+    <lemma type-name="Fact" xml:id="orthosets-is-li">
       <statement>
         <p>
           An orthogonal set is linearly independent.  Therefore, it is a basis for its span.
@@ -337,7 +337,7 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
-    <example>
+    <example xml:id="orthosets-3space-in-R4">
       <title>Projection onto a <m>3</m>-space in <m>\R^4</m></title>
       <statement>
         <p>

@@ -101,7 +101,7 @@ the license is included in gfdl.xml.
       Since <m>x_W</m> is the closest vector on <m>W</m> to <m>x</m>, the distance from <m>x</m> to the subspace <m>W</m> is the length of the vector from <m>x_W</m> to <m>x</m>, i.e., the length of <m>x_{W^\perp}</m>.
     </p>
 
-    <warning>
+    <warning xml:id="projections-closest-vector">
       <p>
         <ul>
           <li>
