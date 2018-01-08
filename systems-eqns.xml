@@ -15,8 +15,8 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Understand the definition of <m>\R^n</m>, and how to use <m>\R^n</m> to label points.</li>
-      <li>Learn to replace a system of linear equations by an augmented matrix.</li>
-      <li>Learn to solve an equation using the elimination method by performing row operations on an augmented matrix.</li>
+      <li>Learn how the elimination method corresponds to performing row operations on an augmented matrix.</li>
+      <li><em>Recipe:</em> replace a system of linear equations by an augmented matrix.</li>
       <li><em>Vocabulary words:</em> <term>consistent</term>, <term>inconsistent</term>, <term>solution set</term>, <term>row operation</term>, <term>row equivalence</term>, <term>augmented matrix</term>.</li>
     </ol>
   </objectives>

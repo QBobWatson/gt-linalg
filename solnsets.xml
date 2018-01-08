@@ -14,12 +14,10 @@ the license is included in gfdl.xml.
 
   <objectives>
     <ol>
-      <li>Learn to express the solution set of a matrix equation in parametric vector form.</li>
-      <li>Learn to write the solution set of a homogeneous system as a span.</li>
       <li>Understand the relationship between the solution set of <m>Ax=0</m> and the solution set of <m>Ax=b</m>.</li>
       <li>Understand the difference between the solution set and the column span.</li>
-      <li><em>Recipe:</em> parametric vector form.</li>
-      <li><em>Pictures:</em> solution set of a homogeneous system, solution set of an inhomogeneous system.</li>
+      <li><em>Recipes:</em> parametric vector form, write the solution set of a homogeneous system as a span.</li>
+      <li><em>Pictures:</em> solution set of a homogeneous system, solution set of an inhomogeneous system, the relationship between the two.</li>
       <li><em>Vocabulary words:</em> <term>homogeneous</term>/<term>inhomogeneous</term>, <term>trivial solution</term>.</li>
     </ol>
   </objectives>

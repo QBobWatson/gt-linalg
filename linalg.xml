@@ -20,7 +20,6 @@ Free Documentation License"
 
   <book xml:id="index">
     <title>Introduction to Linear Algebra</title>
-    <!-- <subtitle>Textbook for Math 1553 at the Georgia Institute of Technology</subtitle> -->
 
     <!-- Title Page, Preface, etc. -->
     <xi:include href="./frontmatter.xml" />
@@ -30,9 +29,13 @@ Free Documentation License"
 
     <chapter xml:id="chap-algebra">
       <title>Systems of Linear Equations: Algebra</title>
-      <introduction><p>
-        In this chapter you will learn a procedure, called <term>row reduction</term>, for finding all solutions to a system of linear equations.  You will see how to express the solutions in <term>parametric form</term>.
-      </p></introduction>
+
+      <introduction>
+        <p>
+          In this Chapter, we will introduce <em>systems of linear equations</em>, the class of equations whose study forms the subject of linear algebra.  We will present a procedure, called <em>row reduction</em>, for finding all solutions of a system of linear equations.  You will see how to express all solutions of a system of linear equations in a unique way using the <em>parametric form</em> of the general solution.
+        </p>
+      </introduction>
+
       <xi:include href="./systems-eqns.xml" />
       <xi:include href="./row-reduction.xml" />
       <xi:include href="./parametric-form.xml" />
@@ -40,6 +43,18 @@ Free Documentation License"
 
     <chapter xml:id="chap-geometry">
       <title>Systems of Linear Equations: Geometry</title>
+
+      <introduction>
+        <p>
+          This Chapter is devoted to the geometric study of two objects:
+          <ol>
+            <li>the solution set of a system of linear equations, and</li>
+            <li>the set of all constants that makes a particular system consistent.</li>
+          </ol>
+          These objects are related in a beautiful way by the Rank Theorem in <xref ref="rank-thm"/>.  We will develop a large list of vocabulary words that we will use to describe these objects: vectors, spans, linear independence, subspaces, dimension, coordinate systems, etc.  We will use these concepts to give a precise geometric description of the solution set of any system of equations.  We will also learn how to express systems of equations more simply using matrix equations and non-standard coordinate systems.
+        </p>
+      </introduction>
+
       <xi:include href="./vectors.xml" />
       <xi:include href="./spans.xml" />
       <xi:include href="./matrixeq.xml" />
@@ -53,6 +68,13 @@ Free Documentation License"
 
     <chapter xml:id="chap-matrices">
       <title>Linear Transformations and Matrix Algebra</title>
+
+      <introduction>
+        <p>
+          In this Chapter, we are concerned with understanding the geometry of matrices as functions.  Namely, we consider the equation <m>b = Ax</m> as a function with independent variable <m>x</m> and dependent variable <m>b</m>, and we draw pictures accordingly.  We spend some time studying transformations in the abstract, and asking questions about a transformation, like whether it is one-to-one and/or onto.  We then present matrix multiplication and matrix inversion as special cases of composition and inversion of transformations, respectively.  This leads to the study of <em>matrix algebra</em>: that is, to what extent one can do arithmetic with matrices in the place of numbers.
+        </p>
+      </introduction>
+
       <xi:include href="./matrix-trans.xml" />
       <xi:include href="./one-one-onto.xml" />
       <xi:include href="./linear-trans.xml" />
@@ -66,11 +88,11 @@ Free Documentation License"
         <p>
           We begin by recalling the three primary goals of this course:
           <ol>
-            <li> Solving systems of linear equations, i.e., solving the matrix equation <m>Ax=b</m>.</li>
-            <li>Solving the matrix equation <m>Ax=\lambda x</m>, where <m>\lambda</m> is a number.</li>
-            <li> <q>Almost solving</q> the matrix equation <m>Ax=b</m>.</li>
+            <li>Solve the matrix equation <m>Ax=b</m>.</li>
+            <li>Solve the matrix equation <m>Ax=\lambda x</m>, where <m>\lambda</m> is a number.</li>
+            <li>Approximately solve the matrix equation <m>Ax=b</m>.</li>
           </ol>
-          At this point we have said all we will say about the first goal.  This chapter  belongs primarily to the second main topic of the course.
+          At this point we have said all that we will say about the first goal.  This Chapter belongs primarily to the second main topic of the course.
         </p>
         <p>
           The <em>determinant</em> of a square matrix <m>A</m> is a number <m>\det(A)</m>.  In <xref ref="determinants-definitions-properties"/>, we will define the determinant in terms of its behavior with respect to row operations.  The determinant satisfies many wonderful properties: for instance, <m>\det(A) \neq 0</m> if and only if <m>A</m> is invertible.  We will discuss some of these properties in <xref ref="determinants-definitions-properties"/> as well.
@@ -93,7 +115,9 @@ Free Documentation License"
       <title>Eigenvalues and Eigenvectors</title>
 
       <introduction>
-        <p>Lay's chapter 5</p>
+        <p>
+          This Chapter constitutes the core of any first course on linear algebra: eigenvalues and eigenvectors play a crucial role in most real-world applications of the subject.  After defining eigenvalues and eigenvectors and showing how to compute them, we will study the geometry of matrices using diagonalization and complex eigenvalues.  We also spend <xref ref="stochastic-matrices"/> presenting a common kind of application of eigenvalues and eigenvectors to real-world problems, including searching the Internet using Google<rsq/>s PageRank algorithm.
+        </p>
       </introduction>
 
       <xi:include href="./eigenvectors.xml" />
@@ -110,7 +134,18 @@ Free Documentation License"
       <title>Orthogonality</title>
 
       <introduction>
-        <p>Lay's chapter 6</p>
+        <p>
+          Let us recall one last time the structure of this course:
+          <ol>
+            <li>Solve the matrix equation <m>Ax=b</m>.</li>
+            <li>Solve the matrix equation <m>Ax=\lambda x</m>, where <m>\lambda</m> is a number.</li>
+            <li>Approximately solve the matrix equation <m>Ax=b</m>.</li>
+          </ol>
+          We have now come to the third goal.
+        </p>
+        <p>
+          Finding approximate solutions of equations generally requires computing the closest vector on a subspace from a given vector.  This becomes an <em>orthogonality</em> problem: one needs to know which vectors are perpendicular to the subspace.  First we will define orthogonality and learn to find orthogonal complements of subspaces in <xref ref="dot-product"/> and <xref ref="orthogonal-complements"/>.  The core of this chapter is <xref ref="projections"/>, in which we discuss <em>the orthogonal projection</em> of a vector onto a subspace; this is a method of calculating the closest vector on a subspace to a given vector.  These calculations become easier in the presence of an orthogonal set, as we will see in <xref ref="orthogonal-sets"/>.  Finally in <xref ref="least-squares"/> we will present the least-squares method of approximately solving systems of equations, and we will give applications to data modeling.
+        </p>
       </introduction>
 
       <xi:include href="./innerprod.xml" />

@@ -15,9 +15,8 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Understand when a matrix is in (reduced) row echelon form.</li>
-      <li>Learn to solve systems of linear equations using the row reduction algorithm.</li>
       <li>Learn which row reduced matrices come from inconsistent linear systems.</li>
-      <li><em>Recipe:</em> row reduction.</li>
+      <li><em>Recipe:</em> the row reduction algorithm.</li>
       <li><em>Vocabulary words:</em> <term>pivot</term>, <term>(reduced) row echelon form</term>.</li>
     </ol>
   </objectives>

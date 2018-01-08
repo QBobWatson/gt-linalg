@@ -15,10 +15,9 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Learn two main criteria for a matrix to be diagonalizable.</li>
-      <li>Learn to quickly compute powers of matrices by diagonalization.</li>
-      <li>Develop a library of examples of matrices which are and are not diagonalizable.</li>
+      <li>Develop a library of examples of matrices that are and are not diagonalizable.</li>
       <li>Understand what diagonalizability and multiplicity have to say about similarity.</li>
-      <li><em>Recipe:</em> diagonalize a matrix.</li>
+      <li><em>Recipe:</em> diagonalize a matrix, quickly compute powers of a matrix by diagonalization.</li>
       <li><em>Pictures:</em> the geometry of diagonal matrices, why a shear is not diagonalizable.</li>
       <li><em>Theorem:</em> the Diagonalization Theorem (two variants).</li>
       <li><em>Vocabulary words:</em> <term>diagonalizable</term>, <term>algebraic multiplicity</term>, <term>geometric multiplicity</term>.</li>

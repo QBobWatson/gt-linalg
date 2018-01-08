@@ -14,7 +14,6 @@ the license is included in gfdl.xml.
 
   <objectives>
     <ol>
-      <li>Learn to compute eigenvalues using the characteristic polynomial.</li>
       <li>Learn that the eigenvalues of a triangular matrix are the diagonal entries.</li>
       <li>Learn some strategies for finding the zeros of a polynomial.</li>
       <li><em>Recipe:</em> compute eigenvalues using the characteristic polynomial.</li>

@@ -106,7 +106,7 @@ the license is included in gfdl.xml.
       </li>
       <li>
         <p>
-        Approximately solve the equation <m>Ax=b</m>.
+        Approximately solve the matrix equation <m>Ax=b</m>.
         <ul>
           <li>
             Find best-fit solutions to systems of linear equations that have no actual solution using least-squares approximations.
