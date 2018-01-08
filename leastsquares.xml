@@ -40,21 +40,21 @@ the license is included in gfdl.xml.
     <title>Least-Squares Solutions</title>
 
     <p>
-      We begin by clarifying exactly what we will mean by a <q>best approximate solution</q> to a (usually inconsistent) matrix equation <m>Ax=b</m>.
+      We begin by clarifying exactly what we will mean by a <q>best approximate solution</q> to a (generally inconsistent) matrix equation <m>Ax=b</m>.
     </p>
 
     <definition>
       <statement>
         <p>
           Let <m>A</m> be an <m>m\times n</m> matrix and let <m>b</m> be a vector in <m>\R^m</m>.  A <term>least-squares solution</term> of the matrix equation <m>Ax=b</m> is a vector <m>\hat x</m> in <m>\R^n</m> such that
-          <me>\dist(b,A\hat x) \leq \dist(b,Ax)</me>
+          <me>\dist(b,\,A\hat x) \leq \dist(b,\,Ax)</me>
           for all other vectors <m>x</m> in <m>\R^n</m>.
         </p>
       </statement>
     </definition>
 
     <p>
-      Recall that <m>\dist(v,w) = \|v-w\|</m> is the <xref ref="innerprod-distance-defn" text="title">distance</xref> between the vectors <m>v</m> and <m>w</m>.  The term <q>least squares</q> comes from the fact that <m>\dist(b,Ax) = \|b-A\hat x\|</m> is the square root of the sum of the squares of the entries of the vector <m>b-A\hat x</m>.  So a least-squares solution minimizes the sum of the squares of the differences between the entries of <m>A\hat x</m> and <m>b</m>.
+      Recall that <m>\dist(v,w) = \|v-w\|</m> is the <xref ref="innerprod-distance-defn" text="title">distance</xref> between the vectors <m>v</m> and <m>w</m>.  The term <q>least squares</q> comes from the fact that <m>\dist(b,Ax) = \|b-A\hat x\|</m> is the square root of the sum of the squares of the entries of the vector <m>b-A\hat x</m>.  So a least-squares solution minimizes the sum of the squares of the differences between the entries of <m>A\hat x</m> and <m>b</m>.  In other words, a least-squares solution solves the equation <m>Ax=b</m> as closely as possible, in the sense that the sum of the squares of the difference <m>b-Ax</m> is minimized.
     </p>
 
     <paragraphs>
@@ -199,7 +199,7 @@ the license is included in gfdl.xml.
           Therefore, the only least-squares solution is <m>\hat x = {5\choose -3}.</m>
         </p>
         <p>
-          This solution minimizes the distance from <m>A\hat x</m> to <m>b</m>, i.e., the sum of the squares of the entries of <m>b-A\hat x</m>.  In this case, we have
+          This solution minimizes the distance from <m>A\hat x</m> to <m>b</m>, i.e., the sum of the squares of the entries of <m>b-A\hat x = b-b_{\Col(A)} = b_{\Col(A)^\perp}</m>.  In this case, we have
           <me>
             \|b-A\hat x\| = \left\|\vec{6 0 0} - \vec{5 2 -1}\right\|
             = \left\|\vec{1 -2 1}\right\| = \sqrt{1^2+(-2)^2+1^2} = \sqrt 6.
@@ -284,7 +284,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      The reader may have noticed that we have been careful to say <q>the least-squares solutions</q> in the plural.  This is because a least-squares solution need not be unique: indeed, if the columns of <m>A</m> are linearly dependent, then <m>Ax=b_{\Col(A)}</m> has infinitely many solutions.  The following Theorem, which gives equivalent criteria for uniqueness, is an analogue of this <xref ref="projections-ATA-formula2"/>.
+      The reader may have noticed that we have been careful to say <q>the least-squares solutions</q> in the plural, and <q>a least-squares solution</q> using the indefinite article.  This is because a least-squares solution need not be unique: indeed, if the columns of <m>A</m> are linearly dependent, then <m>Ax=b_{\Col(A)}</m> has infinitely many solutions.  The following Theorem, which gives equivalent criteria for uniqueness, is an analogue of this <xref ref="projections-ATA-formula2"/>.
     </p>
 
     <theorem>
@@ -321,12 +321,8 @@ the license is included in gfdl.xml.
         <p>
           We have
           <me>
-            A^TA = \mat{1 1 1; 0 1 2; 1 -1 -3}\mat{1 0 1; 1 1 -1; 1 2 -3}
-            = \mat{3 3 -3; 3 5 -7; -3 -7 11}
-          </me>
-          and
-          <me>
-            A^Tb = \vec{6 0 6}.
+            A^TA =  \mat{3 3 -3; 3 5 -7; -3 -7 11}
+            \qquad A^Tb = \vec{6 0 6}.
           </me>
           We form an augmented matrix and row reduce:
           <me>
@@ -829,7 +825,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      All of the above examples have the following form: some number of data points <m>(x,y)</m> are given, and we want to find a function
+      All of the above examples have the following form: some number of data points <m>(x,y)</m> are specified, and we want to find a function
       <me>
         y = B_1g_1(x) + B_2g_2(x) + \cdots + B_mg_m(x)
       </me>
@@ -1106,7 +1102,7 @@ the license is included in gfdl.xml.
           </latex-code>
         </p>
         <p>
-          Now we consider the question of which quantity is minimized by this ellipse.  The least-squares solution <m>\hat x</m> minimizes the sum of the squares of the entries of the vector <m>b-A\hat x</m>, or equivalently, of <m>A\hat x-b</m>.  The vector <m>-b</m> contains the constant terms of the left-hand sides of <xref ref="leastsquares-ellipse-eq"/>, and
+          Now we consider the question of what quantity is minimized by this ellipse.  The least-squares solution <m>\hat x</m> minimizes the sum of the squares of the entries of the vector <m>b-A\hat x</m>, or equivalently, of <m>A\hat x-b</m>.  The vector <m>-b</m> contains the constant terms of the left-hand sides of <xref ref="leastsquares-ellipse-eq"/>, and
           <me>
 \def\eqline#1#2{\frac{405}{266}(#2)^2 - \frac{89}{133}(#1)(#2) + \frac{201}{133}(#1) - \frac{123}{266}(#2) - \frac{687}{133}}
 \edef\eqs{\eqline02;
@@ -1163,8 +1159,8 @@ A\hat x =
 
     <remark>
       <p>
-        Gauss actually invented the method of least squares to find a best-fit ellipse:
-he predicted the (elliptical) orbit of the asteroid Ceres as it passed behind
+        Gauss invented the method of least squares to find a best-fit ellipse:
+he correctly predicted the (elliptical) orbit of the asteroid Ceres as it passed behind
 the sun in 1801.
       </p>
     </remark>
