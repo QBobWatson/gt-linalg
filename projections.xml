@@ -241,7 +241,7 @@ the license is included in gfdl.xml.
     <p>To reiterate:</p>
 
     <warning>
-      <title>Recipe: orthogonal projection onto a line</title>
+      <title>Recipe: Orthogonal projection onto a line</title>
       <p>
         If <m>L = \Span\{u\}</m> is a line, then
         <me>
@@ -324,7 +324,7 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
-      <title>Recipe: compute an orthogonal decomposition</title>
+      <title>Recipe: Compute an orthogonal decomposition</title>
       <p>
         Let <m>W = \Span\{v_1,v_2,\ldots,v_m\}</m> and let <m>A</m> be the matrix with columns <m>v_1,v_2,\ldots,v_m</m>.  Here is a method to compute the orthogonal decomposition of a vector <m>x</m> with respect to <m>W</m>:
         <ol>

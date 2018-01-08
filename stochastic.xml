@@ -12,6 +12,782 @@ the license is included in gfdl.xml.
 <section xml:id="stochastic-matrices">
   <title>Stochastic Matrices</title>
 
-  <p>Stochastic matrices and PageRank.</p>
+  <objectives>
+    <ol>
+      <li>Learn examples of stochastic matrices and applications to difference equations.</li>
+      <li><em>Recipe:</em> find the steady state of a positive stochastic matrix.</li>
+      <li><em>Picture:</em> dynamics of a positive stochastic matrix.</li>
+      <li><em>Theorem:</em> the Perron<ndash/>Frobenius Theorem.</li>
+      <li><em>Vocabulary words:</em> <term>difference equation</term>, <term>(positive) stochastic matrix</term>, <term>steady state</term>.</li>
+    </ol>
+  </objectives>
+
+  <introduction>
+    <p>
+      This section is devoted to one common kind of application of eigenvalues: to the study of difference equations, in particular to Markov chains.  We will introduce stochastic matrices, which encode this type of difference equation, and will cover in detail the most famous example of a stochastic matrix: the Google Matrix.
+    </p>
+  </introduction>
+
+  <subsection>
+    <title>Difference Equations</title>
+
+    <p>
+      Suppose that we are studying a system whose state can be described by a list of numbers: for instance, the numbers of rabbits aged <m>0,1,</m> and <m>2</m> years, respectively, or the number of copies of Prognosis Negative in each of the Red Box kiosks in Atlanta.  In each case, we can represent the state at time <m>t</m> by a vector <m>v_t</m>.  Suppose in addition that the state at time <m>t+1</m> is related to the state at time <m>t</m> in a linear way: <m>v_{t+1}=Av_t</m> for some matrix <m>A</m>.  This is the situation we will consider in this Subsection.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+          A <term>difference equation</term> is an equation of the form
+          <me>v_{t+1} = Av_t</me>
+          for an <m>n\times n</m> matrix <m>A</m> and vectors <m>v_0,v_1,v_2,\ldots</m> in <m>\R^n</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      In other words:
+      <ul>
+        <li><m>v_t</m> is the <q>state at time <m>t</m>,</q></li>
+        <li><m>v_{t+1}</m> is the <q>state at time <m>t+1</m>,</q> and</li>
+        <li><m>v_{t+1}=Av_t</m> means that <m>A</m> is the <q>change of state matrix.</q></li>
+      </ul>
+      Note that
+      <me>v_t = Av_{t-1} = A^2v_{t-2} = \cdots = A^tv_0,</me>
+      which should hint to you that the long-term behavior of a difference equation is an eigenvalue problem.
+    </p>
+
+    <p>
+      We will use the following example in this Subsection and the next.  Understanding this Section amounts to understanding this example.
+    </p>
+
+    <specialcase xml:id="stochastic-redbox-eg1">
+      <p>
+        Red Box has kiosks all over Atlanta where you can rent movies.  You can return them to any other kiosk.  For simplicity, pretend that there are three kiosks in Atlanta, and that every customer returns their movie the next day.  Let <m>v_t</m> be the vector whose entries <m>x_t,y_t,z_t</m> are the number of copies of Prognosis Negative at kiosks <m>1,2,</m> and <m>3</m>, respectively.  Let <m>A</m> be the matrix whose <m>i,j</m>-entry is the probability that a customer renting Prognosis Negative from kiosk <m>j</m> returns it to kiosk <m>i</m>.  For example, the matrix
+        <me>
+          A = \mat{.3 .4 .5; .3 .4 \color{seq-red}.3; \color{seq-green}.4 .2 .2}
+        </me>
+        encodes a <m>\color{seq-red}30\%</m> probability that a customer renting from kiosk 3 returns the movie to kiosk 2, and a <m>\color{seq-green}40\%</m> probability that a movie rented from kiosk <m>1</m> gets returned to kiosk <m>3</m>.  The second row (for instance) of the matrix <m>A</m> says:
+      </p>
+      <blockquote>
+        <p>
+          The number of movies returned to kiosk <m>2</m> will be (on average):
+          <me>
+            \begin{split}
+            30\% \amp\text{ of the movies from kiosk } 1 \\
+            40\% \amp\text{ of the movies from kiosk } 2 \\
+            30\% \amp\text{ of the movies from kiosk } 3 \\
+            \end{split}
+          </me>
+        </p>
+      </blockquote>
+      <p>
+        Applying this to all three rows, this means
+        <me>
+          A\vec{x_t y_t z_t} = \vec{.3x_t+.4y_t+.5z_t .3x_t+.4y_t+.3z_t .4x_t+.2y_t+.2z_t}.
+        </me>
+        Therefore, <m>Av_t</m> represents the number of movies in each kiosk the next day:
+        <me>Av_t = v_{t+1}.</me>
+        This system is modeled by a difference equation.
+      </p>
+    </specialcase>
+
+    <p>
+      An important question to ask about a difference equation is: what is its long-term behavior?  Where will the movies be after 100 days?  In the next Subsection, we will answer this question for a particular type of difference equation.
+    </p>
+
+    <example>
+      <title>Rabbit population</title>
+      <p>
+        In a population of rabbits,
+        <ol>
+          <li>half of the newborn rabbits survive their first year;</li>
+          <li>of those, half survive their second year;</li>
+          <li>the maximum life span is three years;</li>
+          <li>rabbits produce 0, 6, 8 rabbits in their first, second, and third years, respectively.</li>
+        </ol>
+        Let <m>v_t</m> be the vector whose entries <m>x_t,y_t,z_t</m> are the number of rabbits aged <m>0, 1</m>, and <m>2</m>, respectively.  The rules above can be written as a system of equations:
+        <me>
+          \spalignsysdelims..\syseq{
+          x_{t+1} = \. \+ 6y_t + 8z_t;
+          y_{t+1} = \frac 12x_t;
+          z_{t+1} = \. \+ \frac 12y_t\rlap.
+          }
+        </me>
+        In matrix form, this says:
+        <me>\mat{0 6 8; \frac12 0 0; 0 \frac12 0} v_t = v_{t+1}.</me>
+        This system is modeled by a difference equation.
+      </p>
+    </example>
+
+  </subsection>
+
+  <subsection>
+    <title>Stochastic Matrices and the Steady State</title>
+
+    <p>
+      In this Subsection, we discuss difference equations representing <em>probabilities</em>, like the <xref ref="stochastic-redbox-eg1">Red Box example</xref>.  Such systems are called <em>Markov chains</em>.  The most important result in this section is the Perron<ndash/>Frobenius Theorem, which describes the long-term behavior of a Markov chain.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+          A square matrix <m>A</m> is <term>stochastic</term> if all of its entries are nonnegative, and the entries of each column sum to one.
+        </p>
+        <p>
+          A matrix is <em>positive</em> if all of its entries are positive numbers.
+        </p>
+      </statement>
+    </definition>
+
+    <specialcase xml:id="stochastic-redbox-eg2">
+      <p>
+        Continuing with the <xref ref="stochastic-redbox-eg1">Red Box example</xref>, the matrix
+        <me>
+          A = \mat{.3 .4 .5; .3 .4 .3; .4 .2 .2}
+        </me>
+        is a positive stochastic matrix.  The fact that the columns sum to one says that all of the movies rented from a particular kiosk must be returned to <em>some</em> other kiosk (remember that every customer returns their movie the next day).  For instance, the first column says:
+      </p>
+      <blockquote>
+        <p>
+          Of the movies rented from kiosk <m>1</m>,
+          <me>
+            \begin{split}
+            30\% \amp\text{ will be returned to kiosk } 1 \\
+            30\% \amp\text{ will be returned to kiosk } 2 \\
+            40\% \amp\text{ will be returned to kiosk } 3. \\
+            \end{split}
+          </me>
+          The sum is <m>100\%</m>, as all of the movies are returned to one of the three kiosks.
+        </p>
+      </blockquote>
+      <p>
+        The matrix <m>A</m> represents the change of state from one day to the next:
+        <me>
+          \vec{x_{t+1} y_{t+1} z_{t+1}} = A\vec{x_t y_t z_t} = \vec{.3x_t+.4y_t+.5z_t .3x_t+.4y_t+.3z_t .4x_t+.2y_t+.2z_t}.
+        </me>
+        If we sum the entries of <m>v_{t+1}</m>, we obtain
+        <me>
+          \begin{split}
+          \amp(.3x_t+.4y_t+.5z_t)+ (.3x_t+.4y_t+.3z_t)+ (.4x_t+.2y_t+.2z_t) \\
+          \amp\qquad=(.3+.3+.4)x_t + (.4+.4+.2)y_t + (.5+.3+.2)z_t \\
+          \amp\qquad= x_t + y_t + z_t.
+          \end{split}
+        </me>
+        This says that the <em>total</em> number of copies of Prognosis Negative in the three kiosks does not change from day to day, as we expect.
+      </p>
+    </specialcase>
+
+    <p>
+      The fact that the entries of the vectors <m>v_t</m> and <m>v_{t+1}</m> sum to the same number is a consequence of the fact that the columns of a stochastic matrix sum to one.
+    </p>
+
+    <warning>
+      <p>
+        Let <m>A</m> be a stochastic matrix, let <m>v_t</m> be a vector, and let <m>v_{t+1} = Av_t</m>.  Then the sum of the entries of <m>v_t</m> equals the sum of the entries of <m>v_{t+1}</m>.
+      </p>
+    </warning>
+
+    <p>
+      Computing the long-term behavior of a difference equation turns out to be an eigenvalue problem.  The eigenvalues of stochastic matrices have very special properties.
+    </p>
+
+    <theorem type-name="Fact">
+      <statement>
+        <p>
+          Let <m>A</m> be a stochastic matrix.  Then:
+          <ol>
+            <li><m>1</m> is an eigenvalue of <m>A.</m></li>
+            <li>If <m>\lambda</m> is a (real or complex) eigenvalue of <m>A</m>, then <m>|\lambda|\leq 1.</m></li>
+          </ol>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          If <m>A</m> is stochastic, then the <em>rows</em> of <m>A^T</m> sum to one.  But multiplying a matrix by the vector <m>(1,1,\ldots,1)</m> sums the rows:
+          <me>
+            \mat{.3 .3 .4; .4 .4 .2; .5 .3 .2}\vec{1 1 1}
+            = \vec{.3+.3+.4 .4+.4+.2 .5+.3+.2}
+            = \vec{1 1 1}.
+          </me>
+          Therefore, <m>1</m> is an eigenvalue of <m>A^T</m>.  But <m>A</m> and <m>A^T</m> have the same characteristic polynomial:
+          <me>
+            \det(A-\lambda I_n) = \det\bigl((A-\lambda I_n)^T\bigr)
+            = \det(A^T - \lambda I_n).
+          </me>
+          Therefore, <m>1</m> is an eigenvalue of <m>A</m>.
+        </p>
+        <p>
+          Now let <m>\lambda</m> be any eigenvalue of <m>A</m>, so it is also an eigenvalue of <m>A^T</m>.  Let <m>x = (x_1,x_2,\ldots,x_n)</m> be an eigenvector of <m>A^T</m> with eigenvalue <m>\lambda</m>, so <m>\lambda x = A^Tx</m>.  The <m>j</m>th entry of this vector equation is
+          <me>
+            \lambda x_j = \sum_{i=1}^n a_{ij} x_i.
+          </me>
+          Choose <m>x_j</m> with the largest absolute value, so <m>|x_i|\leq|x_j|</m> for all <m>i</m>.  Then
+          <me>
+            |\lambda|\cdot|x_j| = \left\vert \sum_{i=1}^n a_{ij} x_i \right\vert
+            \leq \sum_{i=1}^n a_{ij}\cdot |x_i|
+            \leq \sum_{i=1}^n a_{ij}\cdot |x_j|
+            = 1\cdot|x_j|,
+          </me>
+          where the last equality holds because <m>\sum_{i=1}^n a_{ij}=1</m>.  This implies <m>|\lambda|\leq 1.</m>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      In fact, for a <em>positive</em> stochastic matrix <m>A</m>, one can show that if <m>\lambda\neq 1</m> is a (real or complex) eigenvalue of <m>A</m>, then <m>|\lambda|\lt 1.</m>  The <m>1</m>-eigenspace of a stochastic matrix is very important.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+          A <em>steady state</em> of a stochastic matrix <m>A</m> is an eigenvector <m>w</m> with eigenvalue <m>1</m>, such that the entries are <em>positive</em> and sum to <m>1</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The Perron<ndash/>Frobenius theorem describes the long-term behavior of a difference equation represented by a stochastic matrix.  Its proof is beyond the scope of this text.
+    </p>
+
+    <theorem hide-type="true">
+      <title>Perron<ndash/>Frobenius Theorem</title>
+      <statement>
+        <p>
+          Let <m>A</m> be a positive stochastic matrix.  Then <m>A</m> admits a unique steady state vector <m>w</m>, which spans the <m>1</m>-eigenspace.
+        </p>
+        <p>
+          Moreover, for any vector <m>v_0</m> with entries summing to some number <m>c</m>, the iterates
+          <me>v_1 = Av_0,\; v_2 = Av_1,\; \ldots,\; v_t = Av_{t-1},\; \ldots</me>
+          approach <m>cw</m> as <m>t</m> gets large.
+        </p>
+      </statement>
+    </theorem>
+
+    <p>
+      <em>Translation:</em> The Perron<ndash/>Frobenius theorem makes the following assertions:
+      <ul>
+        <li>
+          The <m>1</m>-eigenspace of a positive stochastic matrix is a line.
+        </li>
+        <li>
+          The <m>1</m>-eigenspace contains a vector with positive entries.
+        </li>
+        <li>
+          All vectors approach the <m>1</m>-eigenspace upon repeated multiplication by <m>A</m>.
+        </li>
+      </ul>
+      One should think of a steady state vector <m>w</m> as a vector of <em>percentages.</em>  For example, if the movies are distributed according to these percentages today, then they will be have the same distribution tomorrow, since <m>Aw=w</m>.  And nomatter the starting distribution of movies, the long-term distribution will always be the steady state vector.
+    </p>
+    <p>
+      The sum <m>c</m> of the entries of <m>v_0</m> is the <em>total number</em> of things in the system being modeled.  The total number does not change, so the long-term state of the system must approach <m>cw</m>: it is a multiple of <m>w</m> because it is contained in the <m>1</m>-eigenspace, and the entries of <m>cw</m> sum to <m>c</m>.
+    </p>
+
+    <warning>
+      <title>Recipe 1: Compute the steady state vector</title>
+      <p>
+        Let <m>A</m> be a positive stochastic matrix.  Here is how to compute the steady-state vector of <m>A.</m>
+        <ol>
+          <li>
+            Find any eigenvector <m>v</m> of <m>A</m> with eigenvalue <m>1</m> by solving <m>(A-I_n)v = 0</m>.
+          </li>
+          <li>
+            Divide <m>v</m> by the sum of the entries of <m>v</m> to obtain a vector <m>w</m> whose entries sum to <m>1.</m>
+          </li>
+          <li>
+            This vector automatically has positive entries.  It is the unique steady-state vector.
+          </li>
+        </ol>
+      </p>
+    </warning>
+
+    <p>
+      The above Recipe is suitable for calculations by hand, but it does not take advantage of the fact that <m>A</m> is a stochastic matrix.    In practice, it is generally faster to compute a steady state vector by computer as follows:
+    </p>
+
+    <warning>
+      <title>Recipe 2: Compute the steady state vector by computer</title>
+      <p>
+        Let <m>A</m> be a positive stochastic matrix.  Here is how to compute the steady-state vector of <m>A</m> with a computer.
+        <ol>
+          <li>
+            Choose any vector <m>v_0</m> whose entries sum to <m>1</m> (e.g., a unit coordinate vector).
+          </li>
+          <li>
+            Compute <m>v_1 = Av_0,\,v_2 = Av_1,\,v_3=Av_2,\,</m> etc.
+          </li>
+          <li>
+            These converge to the steady state vector <m>w</m>.
+          </li>
+        </ol>
+      </p>
+    </warning>
+
+    <example>
+      <title>A <m>2\times 2</m> stochastic matrix</title>
+      <p>
+        Consider the positive stochastic matrix
+        <me>A = \mat{3/4 1/4; 1/4 3/4}.</me>
+        This matrix has characteristic polynomial
+        <me>
+          f(\lambda) = \lambda^2 - \Tr(A)\lambda + \det(\lambda)
+          = \lambda^2 - \frac32\lambda + \frac12 \\
+          = (\lambda - 1)(\lambda-1/2).
+        </me>
+        Notice that <m>1</m> is strictly greater than the other eigenvalue, and that it has algebraic (hence, geometric) multiplicity <m>1</m>.  One computes eigenvectors for the eigenvalues <m>1,1/2</m> to be, respectively,
+        <me>u_1 = \vec{1 1} \qquad u_2 = \vec{1 -1}.</me>
+        The eigenvector <m>u_1</m> necessarily has positive entries; the steady-state vector is
+        <me>
+          w = \frac 1{1+1}\vec{1 1} = \frac 12\vec{1 1} = \vec{50\% 50\%}.
+        </me>
+        The Perron<ndash/>Frobenius theorem asserts that, for any vector <m>v_0</m>, the vectors <m>v_1 = Av_0,\,v_2=Av_1,\,\ldots</m> approach a vector whose entries are the same: <m>50\%</m> of the sum will be in the first entry, and <m>50\%</m> will be in the second.
+      </p>
+      <p>
+        We can see this explicitly, as follows.  The eigenvectors <m>u_1,u_2</m> form a basis <m>\cB</m> for <m>\R^2</m>; for any vector <m>x = a_1u_1 + a_2u_2</m> in <m>\R^2</m>, we have
+        <me>
+          Ax = A(a_1u_1+a_2u_2) = a_1Au_1 + a_2Au_2 = a_1u_1 + \frac{a_2}2u_2.
+        </me>
+        Iterating multiplication by <m>A</m> in this way, we have
+        <me>
+          A^tx = a_1u_1 + \frac{a_2}{2^t}u_2 \;\To\; a_1u_1
+        </me>
+        as <m>t\to\infty</m>.  This shows that <m>A^tx</m> approaches
+        <me>
+          a_1u_1 = \vec{a_1 a_1}.
+        </me>
+        Note that the sum of the entries of <m>a_1u_1</m> is equal to the sum of the entries of <m>a_1u_1+a_2u_2</m>, since the entries of <m>u_2</m> sum to zero.
+      </p>
+      <p>
+        To illustrate the theorem with numbers, let us choose a particular value for <m>u_0</m>, say <m>u_0={1\choose 0}</m>.  We compute the values for <m>u_t = {x_t\choose y_t}</m> in this table:
+        <me>
+\begin{array}{c|c|c|c}
+  t &amp; x_t &amp; y_t \\\hline
+  0 &amp; 1.000 &amp; 0.000 \\
+  1 &amp; 0.750 &amp; 0.250 \\
+  2 &amp; 0.625 &amp; 0.375 \\
+  3 &amp; 0.563 &amp; 0.438 \\
+  4 &amp; 0.531 &amp; 0.469 \\
+  5 &amp; 0.516 &amp; 0.484 \\
+  6 &amp; 0.508 &amp; 0.492 \\
+  7 &amp; 0.504 &amp; 0.496 \\
+  8 &amp; 0.502 &amp; 0.498 \\
+  9 &amp; 0.501 &amp; 0.499 \\
+  10&amp; 0.500 &amp; 0.500 \\
+\end{array}
+        </me>
+        We see that <m>u_t</m> does indeed approach <m>{0.5\choose0.5}</m>.
+      </p>
+      <p>
+        Now we turn to visualizing the dynamics of (i.e., repeated multiplication by) the matrix <m>A</m>.  This matrix is diagonalizable; we have <m>A=CDC\inv</m> for
+        <me>
+          C = \mat{1 1; 1 -1} \qquad D = \mat{1 0 ; 0 1/2}.
+        </me>
+        The matrix <m>D</m> leaves the <m>x</m>-coordinate unchanged and scales the <m>y</m>-coordinate by <m>1/2</m>.  Repeated multiplication by <m>D</m> makes the <m>y</m>-coordinate very small, so it <q>sucks all vectors into the <m>x</m>-axis.</q>
+      </p>
+      <p>
+        The matrix <m>A</m> does the same thing as <m>D</m>, but with respect to the <m>\cB</m>-coordinates, where <m>\cB = \{u_1,u_2\}</m> is the basis of columns of <m>C</m>.  This means that <m>A</m> <q>sucks all vectors into the <m>1</m>-eigenspace</q>, without changing the sum of the entries of the vectors.
+      </p>
+      <figure>
+        <caption>Dynamics of the stochastic matrix <m>A</m>.  Click <q>iterate</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.  Note that on both sides, all vectors are <q>sucked into the <m>1</m>-eigenspace</q> (the red line).</caption>
+        <mathbox source="demos/similarity.html?C=1,1:1,-1&amp;B=1,0:0,1/2&amp;BName=D&amp;dynamics=on&amp;snap=off" height="600px"/>
+      </figure>
+    </example>
+
+    <specialcase xml:id="stochastic-redbox-eg3">
+      <p>
+        Continuing with the <xref ref="stochastic-redbox-eg2">Red Box example</xref>, we can illustrate the Perron<ndash/>Frobenius Theorem explicitly.  The matrix
+        <me>
+          A = \mat{.3 .4 .5; .3 .4 .3; .4 .2 .2}
+        </me>
+        has characteristic polynomial
+        <me>
+           f(\lambda) = -\lambda^3 + 0.12\lambda - 0.02 =
+           -(\lambda-1)(\lambda+0.2)(\lambda-0.1).
+        </me>
+        Notice that <m>1</m> is strictly greater in absolute value than the other eigenvalues, and that it has algebraic (hence, geometric) multiplicity <m>1</m>.  One computes eigenvectors for the eigenvalues <m>1,-0.2,0.1</m> to be, respectively,
+        <me>
+          u_1 = \vec{7 6 5} \qquad u_2 = \vec{-1 0 1} \qquad u_3 = \vec{1 -3 2}.
+        </me>
+        The eigenvector <m>u_1</m> necessarily has positive entries; the steady-state vector is
+        <me>
+          w = \frac 1{7+6+5}u_1 = \frac 1{18}\vec{7 6 5}.
+        </me>
+        The eigenvectors <m>u_1,u_2,u_3</m> form a basis <m>\cB</m> for <m>\R^3</m>; for any vector <m>x = a_1u_1+a_2u_2+a_3u_3</m> in <m>\R^3</m>, we have
+        <me>
+          \begin{split}
+          Ax \amp= A(a_1u_1+a_2u_2+a_3u_3) \\
+          \amp= a_1Au_1 + a_2Au_2 + a_3Au_3 \\
+          \amp= a_1u_1 - 0.2a_2u_2 + 0.1a_3u_3.
+          \end{split}
+        </me>
+        Iterating multiplication by <m>A</m> in this way, we have
+        <me>
+          A^tx = a_1u_1 - (0.2)^ta_2u_2 + (0.1)^ta_3u_3 \;\To\; a_1u_1
+        </me>
+        as <m>t\to\infty</m>.  This shows that <m>A^tx</m> approaches <m>a_1u_1</m>, which is an <em>eigenvector with eigenvalue <m>1</m></em>, as guaranteed by the Perron<ndash/>Frobenius Theorem.
+      </p>
+      <p>
+        What do the above calculations say about the number of copies of Prognosis Negative in the Atlanta Red Box kiosks?  Suppose that the kiosks start with 100 copies of the movie, with <m>30</m> copies at kiosk 1, <m>50</m> copies at kiosk <m>2</m>, and <m>20</m> copies at kiosk <m>3</m>.  Let <m>v_0 = (30,50,20)</m> be the vector describing this state.  Then there will be <m>v_1 = Av_0</m> movies in the kiosks the next day, <m>v_2 = Av_1</m> the day after that, and so on.  We let <m>v_t = (x_t,y_t,z_t).</m>
+        <me>
+\begin{array}{c|c|c|c}
+  t &amp; x_t &amp; y_t &amp; z_t \\\hline
+  0 &amp; 30.000000 &amp; 50.000000 &amp; 20.000000 \\
+  1 &amp; 39.000000 &amp; 35.000000 &amp; 26.000000 \\
+  2 &amp; 38.700000 &amp; 33.500000 &amp; 27.800000 \\
+  3 &amp; 38.910000 &amp; 33.350000 &amp; 27.740000 \\
+  4 &amp; 38.883000 &amp; 33.335000 &amp; 27.782000 \\
+  5 &amp; 38.889900 &amp; 33.333500 &amp; 27.776600 \\
+  6 &amp; 38.888670 &amp; 33.333350 &amp; 27.777980 \\
+  7 &amp; 38.888931 &amp; 33.333335 &amp; 27.777734 \\
+  8 &amp; 38.888880 &amp; 33.333333 &amp; 27.777786 \\
+  9 &amp; 38.888891 &amp; 33.333333 &amp; 27.777776 \\
+  10&amp; 38.888889 &amp; 33.333333 &amp; 27.777778 \\
+\end{array}
+        </me>
+        (Of course it does not make sense to have a fractional number of movies; the decimals are included here to illustrate the convergence.)  The steady-state vector says that eventually, the movies will be distributed in the kiosks according to the percentages
+        <me>
+          w = \frac 1{18}\vec{7 6 5} = \vec{38.888888\% 33.333333\% 27.777778\%},
+        </me>
+        which agrees with the above table.  Moreover, this distribution is <em>independent</em> of the beginning distribution of movies in the kiosks.
+      </p>
+      <p>
+        Now we turn to visualizing the dynamics of (i.e., repeated multiplication by) the matrix <m>A</m>.  This matrix is diagonalizable; we have <m>A=CDC\inv</m> for
+        <me>
+          C = \mat{7 -1 1; 6 0 -3; 5 1 2} \qquad D = \mat{1 0 0 ; 0 -.2 0; 0 0 .1}.
+        </me>
+        The matrix <m>D</m> leaves the <m>x</m>-coordinate unchanged, scales the <m>y</m>-coordinate by <m>-1/5</m>, and scales the <m>z</m>-coordinate by <m>1/10</m>.  Repeated multiplication by <m>D</m> makes the <m>y</m>- and <m>z</m>-coordinates very small, so it <q>sucks all vectors into the <m>x</m>-axis.</q>
+      </p>
+      <p>
+        The matrix <m>A</m> does the same thing as <m>D</m>, but with respect to the <m>\cB</m>-coordinates, where <m>\cB = \{u_1,u_2,u_3\}</m> is the basis of columns of <m>C</m>.  This means that <m>A</m> <q>sucks all vectors into the <m>1</m>-eigenspace</q>, without changing the sum of the entries of the vectors.
+      </p>
+      <figure>
+        <caption>Dynamics of the stochastic matrix <m>A</m>.  Click <q>iterate</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.  Note that on both sides, all vectors are <q>sucked into the <m>1</m>-eigenspace</q> (the red line).</caption>
+        <mathbox source="demos/similarity.html?C=7,-1,1:6,0,-3:5,1,2&amp;B=1,0,0:0,-.2,0:0,0,.1&amp;BName=D&amp;dynamics=on&amp;reference=none&amp;snap=off" height="600px"/>
+      </figure>
+    </specialcase>
+
+    <p>
+      The picture of a positive stochastic matrix is always the same, whether or not it is diagonalizable: <em>all vectors are <q>sucked into the <m>1</m>-eigenspace,</q></em> which is a line, without changing the sum of the entries of the vectors.  This is the geometric content of the Perron<ndash/>Frobenius Theorem.
+    </p>
+
+  </subsection>
+
+  <subsection hidden="true">
+    <title>Google<rsq/>s PageRank Algorithm</title>
+
+    <p>
+      Internet searching in the 1990s was very inefficient.  Yahoo or AltaVista would scan pages for your search text, and simply list the results with the most occurrences of those words.  Not surprisingly, the more unsavory websites soon learned that by putting the words <q>Alanis Morissette</q> a million times in their pages, they could show up first every time an angsty teenager tried to find <em>Jagged Little Pill</em> on Napster.
+    </p>
+
+    <p>
+      Larry Page and Sergey Brin invented a way to rank pages by <em>importance</em>. They founded Google based on their algorithm. Here is how it works. (Roughly.)
+    </p>
+
+    <p>
+      Each web page has an associated importance, or <term>rank</term>.  This is a positive number.  This rank is determined by the following rule.
+    </p>
+
+    <definition hide-type="true">
+      <title>The Importance Rule</title>
+      <statement>
+        <p>
+          If a page <m>P</m> links to <m>n</m> other pages <m>Q_1,Q_2,\ldots,Q_n</m>, then each page <m>Q_i</m> inherits <m>\frac 1n</m> of <m>P</m><rsq/>s importance.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      In practice, this means:
+      <ul>
+        <li>
+          If a very important page links to your page (and not to a zillion other ones as well), then your page is considered important.
+        </li>
+        <li>
+          If a zillion unimportant pages link to your page, then your page is still important.
+        </li>
+        <li>
+          If only one unknown page links to yours, your page is not important.
+        </li>
+      </ul>
+      Alternatively, there is the <em>random surfer interpretation.</em>  A <q>random surfer</q> just sits at his computer all day, randomly clicking on links.  The pages he spends the most time on should be the most important.  So, the important (high-ranked) pages are those where a random surfer will end up most often.  This measure turns out to be equivalent to the rank.
+    </p>
+
+    <definition hide-type="true">
+      <title>The Importance Matrix</title>
+      <statement>
+        <p>
+          Consider an Internet with <m>n</m> pages.  The <term>importance matrix</term> is the <m>n\times n</m> matrix <m>A</m> whose <m>i,j</m>-entry is the importance that page <m>j</m> passes to page <m>i.</m>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      Observe that the importance matrix is a stochastic matrix, assuming every page contains a link: if page <m>i</m> has <m>m</m> links, then the <m>i</m>th column contains the number <m>1/m</m>, <m>m</m> times, and the number zero in the other entries.
+    </p>
+
+    <specialcase>
+      <p>
+        Consider the following Internet with only four pages.  Links are indicated by arrows.
+        <latex-code><![CDATA[
+\begin{tikzpicture}
+  \matrix[matrix of nodes,
+      nodes={draw, circle, thick, anchor=center, font=\large},
+      row sep={3cm,between origins}, column sep={5cm,between origins}]
+    (pages)
+  {
+    |[seq1] (A)| A \& |[seq2] (B)| B \\
+    |[seq3] (C)| C \& |[seq4] (D)| D \\
+  };
+  \begin{scope}[->, shorten=2pt,
+      every node/.style={midway, auto, thin border},
+      every to/.style={bend left=10}]
+    \draw[seq1] (A) to node {${\frac 13}$} (B);
+    \draw[seq1] (A) to node {${\frac 13}$} (C);
+    \draw[seq1] (A) to node[near start] {${\frac 13}$} (D);
+    \draw[seq2] (B) to node[near end] {${\frac 12}$} (C);
+    \draw[seq2] (B) to node {${\frac 12}$} (D);
+    \draw[seq3] (C) to node {${1}$} (A);
+    \draw[seq4] (D) to node[near end] {${\frac 12}$} (A);
+    \draw[seq4] (D) to node {${\frac 12}$} (C);
+  \end{scope}
+\end{tikzpicture}
+        ]]></latex-code>
+        The Importance Rule says:
+        <ul>
+          <li>
+            Page <m>\color{seq1}A</m> has <m>3</m> links, so it passes <m>\frac 13</m> of its importance to pages
+<m>B,C,D</m>.
+          </li>
+          <li>
+            Page <m>\color{seq2}B</m> has <m>2</m> links, so it passes <m>\frac 12</m> of its importance to pages <m>C,D</m>.
+          </li>
+          <li>
+Page <m>\color{seq3}C</m> has one link, so it passes all of its importance to page <m>A</m>.
+          </li>
+          <li>
+Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of its importance to pages <m>A,C</m>.
+          </li>
+        </ul>
+        In terms of matrices, if <m>v = (a,b,c,d)</m> is the vector containing the ranks <m>a,b,c,d</m> of the pages <m>A,B,C,D</m>, then
+        <me>
+\def\r{\color{seq1}}\def\b{\color{seq2}}\def\g{\color{seq3}}\def\p{\color{seq4}}
+ \mat{
+  \r0 \b0 \g1 \p\frac 12;
+  \r\frac 13 \b0 \g0 \p0;
+  \r\frac 13 \b\frac 12 \g0 \p\frac 12;
+  \r\frac 13 \b\frac 12 \g0 \p0}
+\vec{a b c d}
+= \spalignsysdelims()\syseq{
+\. \+ \. \+ c + \frac 12d;
+\frac 13a;
+\frac 13a + \frac 12b \+ \. + \frac 12d;
+\frac 13a + \frac 12b}
+= \vec{a b c d}.
+        </me>
+        The matrix on the left is the Importance Matrix, and the final equality expresses the Importance Rule.
+      </p>
+    </specialcase>
+
+    <p>
+      The above Example illustrates the key observation.
+    </p>
+
+    <warning>
+      <title>Key Observation</title>
+      <p>
+        The rank vector is an eigenvector of the importance matrix with eigenvalue one.
+      </p>
+    </warning>
+
+    <p>
+      In light of the Key Observation, we would like to use the Perron<ndash/>Frobenius theorem to find the rank vector.  Unfortunately, the Importance Matrix is not always a <em>positive</em> stochastic matrix.
+    </p>
+
+    <example>
+      <title>A page with no links</title>
+      <p>
+        Consider the following Internet with three pages:
+        <latex-code><![CDATA[
+\begin{tikzpicture}
+  \matrix[matrix of nodes,
+      nodes={draw, circle, thick, anchor=center, font=\large},
+      row sep={1.5cm,between origins}, column sep={5cm,between origins}]
+  {
+    |[seq1] (A)| A \\ \& |[seq3] (C)| C \\
+    |[seq2] (B)| B \\
+  };
+  \begin{scope}[->, shorten=2pt,
+      every node/.style={midway, auto, thin border}]
+    \draw[seq1] (A) to node {$1$} (C);
+    \draw[seq2] (B) to[swap] node {$1$} (C);
+  \end{scope}
+\end{tikzpicture}
+        ]]></latex-code>
+        The importance matrix is
+        <me>
+          \def\r{\color{seq1}}\def\b{\color{seq2}}\def\g{\color{seq3}}
+          \mat{\r0 \b0 \g0; \r0 \b0 \g0; \r1 \b1 \g0}.
+        </me>
+        This has characteristic polynomial
+        <me>f(\lambda) = \det\mat{-\lambda, 0 0; 0 -\lambda, 0; 1 1 -\lambda}
+        = -\lambda^3.</me>
+        So <m>1</m> is not an eigenvalue at all: there is no rank vector!  The Importance Matrix is not stochastic because the page <m>C</m> has no links.
+      </p>
+    </example>
+
+    <example>
+      <title>Disconnected Internet</title>
+      <p>
+        Consider the following Internet:
+        <latex-code><![CDATA[
+\begin{tikzpicture}
+  \matrix[matrix of nodes,
+      nodes={draw, circle, thick, anchor=center, font=\large},
+      row sep={1.5cm,between origins}, column sep={3cm,between origins}]
+  {
+    \& \& \& |[seq4] (D)| D \\
+    |[seq1] (A)| A \& |[seq2] (B)| B \& |[seq3] (C)| C \\
+    \& \& \& |[seq5] (E)| E \\
+  };
+  \begin{scope}[->, shorten=2pt,
+      every node/.style={midway, auto, thin border},
+      every to/.style={bend left=10}]
+    \draw[seq1] (A) to node {$1$} (B);
+    \draw[seq2] (B) to node {$1$} (A);
+    \draw[seq3] (C) to node {$\frac 12$} (D);
+    \draw[seq4] (D) to node[pos=.3] {$\frac 12$} (C);
+    \draw[seq3] (C) to node[pos=.5] {$\frac 12$} (E);
+    \draw[seq5] (E) to node {$\frac 12$} (C);
+    \draw[seq4] (D) to node {$\frac 12$} (E);
+    \draw[seq5] (E) to node {$\frac 12$} (D);
+  \end{scope}
+\end{tikzpicture}
+]]></latex-code>
+        The Importance Matrix is
+        <me>
+\def\r{\color{seq1}}\def\b{\color{seq2}}\def\g{\color{seq3}}
+\def\p{\color{seq4}}\def\o{\color{seq5}}
+\mat{\r0 \b1 0 0 0; \r1 \b0 0 0 0;
+  0 0 \g0 \p\frac 12 \o\frac 12;
+  0 0 \g\frac 12 \p0 \o\frac 12;
+  0 0 \g\frac 12 \p\frac 12 \o0}.
+        </me>
+        This has linearly independent eigenvectors
+        <me>
+          \vec{1 1 0 0 0} \sptxt{and}
+          \vec{0 0 1 1 1},
+        </me>
+        both with eigenvalue <m>1</m>.  So there is more than one rank vector in this case.  Here the Importance Matrix is stochastic, but not positive.
+      </p>
+    </example>
+
+    <p>
+      Here is Page and Brin<rsq/>s solution.  Choose a number <m>p</m> in <m>(0,1)</m>, called the <term>damping factor</term>.  (A typical value is <m>p=0.15</m>.)
+    </p>
+
+    <definition hide-type="true">
+      <title>The Google Matrix</title>
+      <statement>
+        <p>
+          Let <m>A</m> be the Importance Matrix for an Internet with <m>n</m> pages.  The <term>Google Matrix</term> is the matrix
+          <me>
+            M = (1-p)\cdot A + p\cdot B
+            \sptxt{where}
+            B = \frac 1n\mat{1 1 \cdots, 1; 1 1 \cdots, 1;
+            \vdots, \vdots, \ddots, \vdots; 1 1 \cdots, 1}.
+          </me>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      In the random surfer interpretation, this matrix <m>M</m> says: with probability <m>p</m>, our surfer will surf to a completely random page; otherwise, he'll click a random link on the current page.
+    </p>
+
+    <p>
+      The reader can verify the following important Fact.
+    </p>
+
+    <fact>
+      <p>
+        The Google Matrix is a positive stochastic matrix.
+      </p>
+    </fact>
+
+    <p>
+      If we declare that the ranks of all of the pages must sum to one, then we find:
+    </p>
+
+    <warning>
+      <title>The 25 Billion Dollar Eigenvector</title>
+      <p>
+        The PageRank vector is the steady state of the Google Matrix.
+      </p>
+    </warning>
+
+    <p>
+      This exists and has positive entries by the Perron<ndash/>Frobenius theorem.  The hard part is calculating it: in real life, the Google Matrix has zillions of rows.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          What is the PageRank vector for the following Internet?
+        <latex-code><![CDATA[
+\begin{tikzpicture}
+  \matrix[matrix of nodes,
+      nodes={draw, circle, thick, anchor=center, font=\large},
+      row sep={3cm,between origins}, column sep={5cm,between origins}]
+    (pages)
+  {
+    |[seq1] (A)| A \& |[seq2] (B)| B \\
+    |[seq3] (C)| C \& |[seq4] (D)| D \\
+  };
+  \begin{scope}[->, shorten=2pt,
+      every node/.style={midway, auto, thin border},
+      every to/.style={bend left=10}]
+    \draw[seq1] (A) to node {${\frac 13}$} (B);
+    \draw[seq1] (A) to node {${\frac 13}$} (C);
+    \draw[seq1] (A) to node[near start] {${\frac 13}$} (D);
+    \draw[seq2] (B) to node[near end] {${\frac 12}$} (C);
+    \draw[seq2] (B) to node {${\frac 12}$} (D);
+    \draw[seq3] (C) to node {${1}$} (A);
+    \draw[seq4] (D) to node[near end] {${\frac 12}$} (A);
+    \draw[seq4] (D) to node {${\frac 12}$} (C);
+  \end{scope}
+\end{tikzpicture}
+]]></latex-code>
+        Which page is the most important?  Which is the least important?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Choosing the damping factor <m>p=0.15</m>, the Importance Matrix is
+          <me>
+\def\r{\color{seq1}}\def\b{\color{seq2}}\def\g{\color{seq3}}\def\p{\color{seq4}}
+            \begin{split}
+ \amp0.85\cdot\mat{
+  \r0 \b0 \g1 \p\frac 12;
+  \r\frac 13 \b0 \g0 \p0;
+  \r\frac 13 \b\frac 12 \g0 \p\frac 12;
+  \r\frac 13 \b\frac 12 \g0 \p0}
+  + 0.15\cdot\mat{1/4 1/4 1/4 1/4; 1/4 1/4 1/4 1/4; 1/4 1/4 1/4 1/4; 1/4 1/4 1/4 1/4} \\
+  \amp\qquad\approx \mat{
+  0.0375    0.0375    0.8875    0.4625;
+  0.3208    0.0375    0.0375    0.0375;
+  0.3208    0.4625    0.0375    0.4625;
+  0.3208    0.4625    0.0375    0.0375}.
+  \end{split}
+          </me>
+          The PageRank vector is the steady state:
+          <me>
+            w \approx \vec{0.3682    0.1418    0.2880    0.2021}.
+          </me>
+          Page <m>A</m> is the most important, with a rank of <m>0.3682</m>, and page <m>B</m> is the least important, with a rank of <m>0.1418.</m>
+        </p>
+      </solution>
+    </example>
+
+  </subsection>
 
 </section>
