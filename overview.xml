@@ -12,50 +12,354 @@ the license is included in gfdl.xml.
 <chapter xml:id="overview">
   <title>Overview</title>
 
-  <section xml:id="section-what-is-lin-alg">
-    <title>What is linear algebra?</title>
+  <paragraphs>
+    <title>The Subject of This Textbook</title>
+  <p>
+    Before starting with the content of the text, we first ask the basic question: what <em>is</em> linear algebra?
+    <ul>
+      <li>
+        <em>Linear:</em> having to do with lines, planes, etc.
+      </li>
+      <li>
+        <em>Algebra:</em> solving equations involving unknowns.
+      </li>
+    </ul>
+    The name of the textbook highlights an important theme: the synthesis between algebra and geometry.  It will be very important to us to understand systems of linear equations both <em>algebraically</em> (writing equations for their solutions) and <em>geometrically</em> (drawing pictures and visualizing).
+  </p>
 
+  <remark>
     <p>
-      Before jumping into the main material of the course, we first ask the basic question: what <em> is </em> linear algebra?
+      The term <q>algebra</q> was coined by the <m>9</m>th century mathematician Abu Ja<rsq/>far Muhammad ibn Muso al-Khwarizmi.  It comes from the Arabic word <em>al-jebr</em>, meaning reunion of broken parts.
     </p>
+  </remark>
 
-    <p>
-      There are two main answers to this question. In particular, we can describe what the study of linear algebra is all about by
-      saying what the "objects" it studies are, and by what the applications of the main results are. Both of these are encapsulated in the following famous mathematical joke, which may not be very precise, but captures the core philosophy of the situation.
-    </p>
+  <p>
+    At the simplest level, solving a system of linear equations is not very hard.  You probably learned in high school how to solve a system like
+    <me>
+      \syseq{
+      x + 3y - z = 4;
+      2x - y + 3z = 17;
+      \. \+ y - 4z = -3\rlap.
+      }
+    </me>
+    However, in real life one usually has to be more clever.
+    <ul>
+      <li>
+        Engineers need to solve many, many equations in many, many variables.  Here is a tiny example:
+        <me>
+          \syseq{
+    3x_1 + 4x_2 + 10x_3 + 19x_4 - 2x_5 - 3x_6 = 141;
+    7x_1 + 2x_2 - 13x_3 - 7x_4 + 21x_5 + 8x_6 = 2567;
+    -x_1 + 9x_2 + \frac 32x_3 + x_4 + 14x_5 + 27x_6 = 26;
+    \frac 12x_1 + 4x_2 + 10x_3 + 11x_4 + 2x_5 + x_6 = -15\rlap.
+  }
+        </me>
+      </li>
+      <li>
+        Often it is enough to know some information about the set of solutions, without having to solve the equations in the first place.  For instance, does there exist a solution?  What does the solution set look like geometrically?
+      </li>
+      <li>
+        Sometimes the coefficients also contain parameters, like the <em>eigenvalue equation</em>
+        <me>
+        \syseq{
+        (7-\lambda)x + y + 3z = 0 ;
+        -3x + (2-\lambda)y - 3z = 0 ;
+        -3x - 2y + (-1-\lambda)z = 0\rlap.
+        }
+        </me>
+      </li>
+      <li>
+        In data modeling, a system of equations generally does not actually have a solution.  In that case, what is the best approximate solution?
+      </li>
+    </ul>
 
+  </p>
 
-
-    <theorem xml:id="LinAlgMainThm">
-      <statement>
-        <p>All of mathematics is calculus and linear algebra. </p>
-      </statement>
-
-      <proof>
+  <p>
+    Accordingly, this text is organized into three main sections.
+    <ol>
+      <li>
         <p>
-          Linear algebra is the study of "flat" things; for example, lines (as implied by the name) and planes. If everything in the world were flat, and if objects always moved in a straight line at a constant speed, then geometry and physics would only require us to know linear algebra. Of course, real life is curvy, and sometimes moving objects do change directions or speed. However, like the Earth looks flat to us, everything curved locally looks flat. Using calculus, we can approximate curvy things by flat things (using linear approximation), which are then in the domain of linear algebra.
+        Solve the matrix equation <m>Ax=b</m> (Chapters 2<ndash/>4).
+        <ul>
+          <li>
+            Solve systems of linear equations using matrices, row reduction, and inverses.
+          </li>
+          <li>
+            Analyze systems of linear equations geometrically using the geometry of solution sets and linear transformations.
+          </li>
+        </ul>
         </p>
-      </proof>
+      </li>
+      <li>
+        <p>
+        Solve the matrix equation <m>Ax=\lambda x</m> (Chapters 5<ndash/>6).
+        <ul>
+          <li>
+            Solve eigenvalue problems using the characteristic polynomial.
+          </li>
+          <li>
+            Understand the geometry of matrices using similarity, eigenvalues, diagonalization, and complex numbers.
+          </li>
+        </ul>
+        </p>
+      </li>
+      <li>
+        <p>
+        Approximately solve the equation <m>Ax=b</m>.
+        <ul>
+          <li>
+            Find best-fit solutions to systems of linear equations that have no actual solution using least-squares approximations.
+          </li>
+          <li>
+            Study the geometry of closest vectors and orthogonal projections.
+          </li>
+        </ul>
+        </p>
+      </li>
+    </ol>
+  </p>
 
-    </theorem>
+  <p>
+    This text is roughly half computational and half conceptual in nature.  The main goal is to present a library of linear algebra tools, and more importantly, to teach a conceptual framework for understanding which tools should be applied in a given context.
+  </p>
 
-
-    <remark>
-      <p>
-        The remainder of this chapter will introduce you to the main objects of lienar algebra, lines, planes, Euclidean space, and vectors, in a more formal way with many more examples.
-      </p>
-    </remark>
-
-
+  <warning>
     <p>
-      <term> Sample application:</term>
-      You may not all remember it, but a long time ago there were several dozen competing search engines, all of which were terrible. One day, linear algebra was used to invent the page-rank algorithm, which made Google possible. The idea only uses basic linear algebra facts we will learn this semester.
+      If Matlab can find the answer faster than you can, then your question is just an algorithm: this is not real problem solving.
     </p>
+  </warning>
 
+  <p>
+    The subtle part of the subject lies in understanging <em>what computation to ask the computer to do for you</em><mdash/>it is far less important to know how to perform computations that a computer can do better than you anyway.
+  </p>
+
+</paragraphs>
+
+<paragraphs>
+  <title>Uses of Linear Algebra in Engineering</title>
+
+  <p>
+    The vast majority of undergraduates at Georgia Tech have to take a course in linear algebra.  There is a reason for this:
+  </p>
+
+  <warning>
     <p>
-      As we move through the course, we will see several other "real world" applications, including techniques developed by people at Georgia Tech.
+      Large classes of engineering problems, no matter how complicated, can be reduced to linear algebra:
+      <me>
+        Ax=b \sptxt{or} Ax=\lambda x.
+      </me>
     </p>
+  </warning>
 
-  </section>
+  <p>
+    Here we present some sample problems in science and engineering that require linear algebra to solve.
+  </p>
+
+  <specialcase>
+    <title>Civil Engineering</title>
+    <p>
+      The following diagram represents traffic flow around the town square.  The streets are all one way, and the numbers and arrows indicate the number of cars per hour flowing along each street, as measured by sensors underneath the roads.
+      <latex-code>
+\tikzset{
+  mid arrow/.style={
+    postaction={
+      decoration={
+        markings,
+        mark=at position #1 with {\arrow{Stealth[scale=1]}},
+      },
+      decorate
+    },
+  },
+  rmid arrow/.style={
+    postaction={
+      decoration={
+        markings,
+        mark=at position #1 with {\arrowreversed{Stealth[scale=1]}},
+      },
+      decorate
+    }
+  },
+  mid arrow/.default={0.5},
+  rmid arrow/.default={0.5},
+}
+  \begin{tikzpicture}[scale=2, thick,
+      every node/.style={inner sep=3pt, label distance=1mm}]
+    \node at (0,2.4) {Traffic flow (cars/hr)};
+    \point[scale=1.5] (A) at (-1,1);
+    \point[scale=1.5] (B) at (1,1);
+    \point[scale=1.5] (C) at (1,-1);
+    \point[scale=1.5] (D) at (-1,-1);
+    \draw[mid arrow] (A.center) to["$x$"] (B.center);
+    \draw[mid arrow] (B.center) to["$y$"] (C.center);
+    \draw[mid arrow] (C.center) to["$z$"] (D.center);
+    \draw[mid arrow] (D.center) to["$w$"] (A.center);
+    \draw[rmid arrow=.3] (A.center) to["$120$"] +(-1,0);
+    \draw[mid arrow=.7] (A.center) to["$250$"] +(0,1);
+    \draw[mid arrow=.7] (B.center) to["$70$" swap] +(1,0);
+    \draw[rmid arrow=.3] (B.center) to["$120$" swap] +(0,1);
+    \draw[rmid arrow=.3] (C.center) to["$530$"] +(1,0);
+    \draw[mid arrow=.7] (C.center) to["$390$"] +(0,-1);
+    \draw[mid arrow=.7] (D.center) to["$175$" swap] +(-1,0);
+    \draw[rmid arrow=.3] (D.center) to["$115$" swap] +(0,-1);
+  \end{tikzpicture}
+      </latex-code>
+      There are no sensors underneath some of the streets, so we do not know how much traffic is flowing around the square itself.  What are the values of <m>x,y,z,w</m>?  Since the number of cars entering each intersection has to equal the number of cars leaving that intersection, we obtain a system of linear equations:
+      <me>\syseq{
+      w + 120 = x + 250;
+      x + 120 = y + 70;
+      y + 530 = z + 390;
+      z + 115 = w + 175\rlap.
+      }</me>
+    </p>
+  </specialcase>
+
+  <specialcase>
+    <title>Chemical Engineering</title>
+    <p>
+      A certain chemical reaction (burning) takes ethane and oxygen, and produces carbon dioxide and water:
+      <latex-code>
+  \underline{\hbox to 5mm{\hss{$x$}\hss}} C$_2$H$_6$ +
+  \underline{\hbox to 5mm{\hss{$y$}\hss}} O$_2$ $\rightarrow$
+  \underline{\hbox to 5mm{\hss{$z$}\hss}} CO$_2$ +
+  \underline{\hbox to 5mm{\hss{$w$}\hss}} H$_2$O
+      </latex-code>
+      What ratio of the molecules is needed to sustain the reaction?  The number of atoms on the left side has to equal the number of atoms on the right, so we are lead to solve the system of linear equations
+      <me>
+        \begin{split}
+    2x \amp= z \\
+    6x \amp= 2w \\
+    2y \amp= 2z + w\rlap.
+        \end{split}
+      </me>
+    </p>
+  </specialcase>
+
+  <specialcase>
+    <title>Biology</title>
+    <p>
+      In a population of rabbits,
+      <ol>
+        <li>half of the newborn rabbits survive their first year;</li>
+        <li>of those, half survive their second year;</li>
+        <li>the maximum life span is three years;</li>
+        <li>rabbits produce 0, 6, 8 baby rabbits in their first, second, and third years, respectively.</li>
+      </ol>
+      If you know the rabbit population in 2016  (in terms of the number of first, second, and third year rabbits), then what is the population in 2017?  The rules for reproduction lead to the following system of equations, where <m>x,y,z</m> represent the number of newborn, first-year, and second-year rabbits, respectively:
+      <me>
+\syseq{
+    \. \+ 6y_{2016} + 8z_{2016} = x_{2017};
+    \frac 12x_{2016} \+ \. \+ \. = y_{2017};
+    \. \+ \frac 12y_{2016} \+ \. = z_{2017}\rlap.
+  }
+      </me>
+      A common question is: what is the <em>asymptotic</em> behavior of this system?  What will the rabbit population look like in 100 years?  This turns out to be an eigenvalue problem.
+    </p>
+  </specialcase>
+
+  <specialcase>
+    <title>Astronomy</title>
+    <p>
+      An asteroid has been observed at the following locations:
+      <me>
+        (0,2),\, (2,1),\, (1,-1),\, (-1,-2),\, (-3,1),\, (-1,-1).
+      </me>
+      Its orbit around the sun is elliptical; it is described by an equation of the form
+      <me>
+        x^2 + By^2 + Cxy + Dx + Ey + F = 0.
+      </me>
+      What is the most likely orbit of the asteroid, given that there was some significant error in measuring its position?  Substituting the data points into the above equation yields the system
+      <me>
+\def\eqline#1#2{(#1)^2 + B(#2)^2 + C(#1)(#2) + D(#1) + E(#2) + F = 0}
+\edef\eqs{\eqline02;
+  \eqline21;
+  \eqline1{-1};
+  \eqline{-1}{-2};
+  \eqline{-3}1;
+  \eqline{-1}{-1}
+}
+\spalignsysdelims..
+\expandafter\syseq\expandafter{\eqs\rlap.}
+      </me>
+      There is no actual solution to this system due to measurement error, but here is the best-fitting ellipse:
+      <latex-code>
+\begin{tikzpicture}[thin border nodes, whitebg nodes]
+  \draw[grid lines] (-6,-4) grid (6,4);
+  \draw[->] (-6,0) -- (6,0);
+  \draw[->] (0,-4) -- (0,4);
+
+  \point["{$(0,2)$}" above] at (0,2);
+  \point["{$(2,1)$}" right] at (2,1);
+  \point["{$(1,-1)$}" {right,yshift=-1mm}] at (1,-1);
+  \point["{$(-1,-2)$}" {below,xshift=1.5mm}] at (-1,-2);
+  \point["{$(-3,1)$}" {above,xshift=-1.5mm}] at (-3,1);
+  \point["{$(-1,1)$}" below] at (-1,1);
+
+  \draw[thick, seq-red] (-0.760768, -0.0153293)
+      ellipse[x radius=2.61837, y radius=1.84472, rotate=26.0068];
+  \node[text=seq-red, font=\normalsize] at (0, -3.3)
+    {$266 x^2 + 405 y^2 - 178 xy + 402 x - 123 y - 1374 = 0$};
+\end{tikzpicture}
+      </latex-code>
+    </p>
+  </specialcase>
+
+  <specialcase>
+    <title>Computer Science</title>
+    <p>
+      Each web page has some measure of importance, which it shares via outgoing links to other pages.  This leads to zillions of equations in zillions of variables.  Larry Page and Sergei Brin realized that this is a linear algebra problem at its core, and used the insight to found Google.  We will discuss this example in detail in <xref ref="stochastic-matrices"/>.
+    </p>
+  </specialcase>
+
+</paragraphs>
+
+<paragraphs>
+  <title>How to Use This Textbook</title>
+
+  <p>
+    There are a number of different categories of ideas that are contained in most sections.  They are listed at the top of the section, under <em>Objectives</em>, for easy review.  We classify them as follows.
+    <ul>
+      <li>
+        <em>Recipes:</em> these are algorithms that are generally straightforward (if sometimes tedious), and are usually done by computer in real life.  They are nonetheless important to learn and to practice.
+      </li>
+      <li>
+        <em>Vocabulary words:</em> forming a conceptual understanding of the subject of linear algebra means being able to communicate much more precisely than in ordinary speech.  The vocabulary words have precise definitions, which must be learned and used correctly.
+      </li>
+      <li>
+        <em>Essential vocabulary words:</em> these vocabulary words are essential in that they form the essence of the subject of linear algebra.  For instance, if you do not know the definition of an eigenvector, then by definition you cannot claim to understand linear algebra.
+      </li>
+      <li>
+        <em>Theorems:</em> these describe in a precise way how the objects of interest relate to each other.  Knowing which recipe to use in a given situation generally means recognizing which vocabulary words to use to describe the situation, and understanding which theorems apply to that problem.
+      </li>
+      <li>
+        <em>Pictures:</em> visualizing the geometry underlying the algebra means interpreting and drawing pictures of the objects involved.  The pictures are meant to be a core part of the material in the text: they are not just a pretty add-on.
+      </li>
+    </ul>
+  </p>
+
+  <p>
+    This textbook is exclusively targeted at Math 1553 at Georgia Tech.  As such, it contains exactly the material that is taught in that class; no more, and no less: <em>students in Math 1553 are responsible for understanding all visible content.</em>  Some extra material (most examples and proofs, for instance) is <q>hidden,</q> in that one needs to click on a link to reveal it, like this:
+  </p>
+
+  <remark hide-type="true">
+    <title>Hidden Content</title>
+    <p>
+      Hidden content is meant to enrich your understanding of the topic, but is not an official part of Math 1553.  That said, the text will be very hard to follow without understanding the examples, and studying the proofs is an excellent way to learn the conceptual part of the material.
+    </p>
+  </remark>
+
+  <p>
+    Finally, we remark that there are over 140 interactive demos contained in the text, which were created to illustrate the geometry of the topic.  Click the <q>view in a new window</q> link, and play around with them!  You will need a modern browser.  Internet Explorer is not a modern browser; try Safari, <url href="https://www.google.com/chrome/browser/desktop/">Chrome</url>, or <url href="https://www.mozilla.org/en-US/firefox/">Firefox</url>.  Here is a demo from <xref ref="least-squares"/>:
+  </p>
+
+  <figure>
+    <caption>Click and drag the points on grid on the right.</caption>
+    <mathbox source="demos/bestfit-implicit.html?func=x^2+A*y^2+B*x*y+C*x+D*y+EE&amp;v1=0,2&amp;v2=2,1&amp;v3=1,-1&amp;v4=-1,-2&amp;v5=-3,1&amp;v6=-1,1&amp;range=5&amp;rangez=25&amp;camera1=-2.14,.814,1.69" height="500px"/>
+  </figure>
+
+  <!-- TODO: exercises, when ready -->
+
+</paragraphs>
+
 
 </chapter>
