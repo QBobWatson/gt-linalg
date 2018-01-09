@@ -16,6 +16,7 @@ the license is included in gfdl.xml.
     <ol>
       <li>Learn to interpret similar matrices geoemetrically.</li>
       <li>Understand the relationship between the eigenvalues, eigenvectors, and characteristic polynomials of similar matrices.</li>
+      <li><em>Recipe:</em> compute <m>Ax</m> in terms of <m>B,C</m> for <m>A=CBC\inv</m>.</li>
       <li><em>Picture:</em> the geometry of similar matrices.</li>
       <li><em>Vocabulary word:</em> <term>similarity</term>.</li>
     </ol>
@@ -108,13 +109,13 @@ the license is included in gfdl.xml.
           Let <m>A,B</m>, and <m>C</m> be <m>n\times n</m> matrices.
           <ol>
             <li>
-              <em>Reflexivity:</em> <m>A</m> is similar to itself.
+              <alert>Reflexivity:</alert> <m>A</m> is similar to itself.
             </li>
             <li>
-              <em>Symmetry:</em> if <m>A</m> is similar to <m>B</m>, then <m>B</m> is similar to <m>A</m>.
+              <alert>Symmetry:</alert> if <m>A</m> is similar to <m>B</m>, then <m>B</m> is similar to <m>A</m>.
             </li>
             <li>
-              <em>Transitivity:</em> if <m>A</m> is similar to <m>B</m> and <m>B</m> is similar to <m>C</m>, then <m>A</m> is similar to <m>C</m>.
+              <alert>Transitivity:</alert> if <m>A</m> is similar to <m>B</m> and <m>B</m> is similar to <m>C</m>, then <m>A</m> is similar to <m>C</m>.
             </li>
           </ol>
         </p>
@@ -243,8 +244,8 @@ the license is included in gfdl.xml.
       so that multiplying <m>CBC\inv</m> by <m>x</m> means <em>first</em> multiplying by <m>C\inv</m>, <em>then</em> by <m>B</m>, <em>then</em> by <m>C</m>.  See this <xref ref="matrix-mult-order-ops"/>.
     </p>
 
-    <note hide-type="true">
-      <title>Computing <m>Ax</m> in terms of <m>B</m></title>
+    <warning>
+      <title>Recipe: Computing <m>Ax</m> in terms of <m>B</m></title>
       <p>
         Suppose that <m>A = CBC\inv,</m> where <m>C</m> is an invertible matrix with columns <m>v_1,v_2,\ldots,v_n.</m>  Let <m>\cB = \{v_1,v_2,\ldots,v_n\}</m>, a basis for <m>\R^n</m>.  Let <m>x</m> be a vector in <m>\R^n</m>.  To compute <m>Ax</m>, one does the following:
         <ol>
@@ -288,11 +289,8 @@ the license is included in gfdl.xml.
 \end{tikzpicture}
         </latex-code>
       </p>
-    </note>
-
-    <warning>
       <p>
-        If <m>A = CBC\inv</m>, then <m>A</m> and <m>B</m> do the same thing, only in different coordinate systems.
+        To summarize: if <m>A = CBC\inv</m>, then <m>A</m> and <m>B</m> do the same thing, only in different coordinate systems.
       </p>
     </warning>
 
@@ -536,7 +534,7 @@ the license is included in gfdl.xml.
     </specialcase>
 
     <example hide-type="true" xml:id="similarity-another-matrix">
-      <title>Interactive: another matrix similar to <m>B</m></title>
+      <title>Interactive: Another matrix similar to <m>B</m></title>
       <p>
         Consider the matrices
         <me>
@@ -875,7 +873,7 @@ the license is included in gfdl.xml.
     </example>
 
     <example hide-type="true" xml:id="similarity-33-eg">
-      <title>Interactive: similar <m>3\times 3</m> matrices</title>
+      <title>Interactive: Similar <m>3\times 3</m> matrices</title>
       <p>
         Consider the matrices
         <me>
@@ -1047,7 +1045,7 @@ the license is included in gfdl.xml.
     </specialcase>
 
     <example hide-type="true">
-      <title>Interactive: another matrix similar to <m>B</m></title>
+      <title>Interactive: Another matrix similar to <m>B</m></title>
       <p>
         Continuing with this <xref ref="similarity-another-matrix"/>, let
         <me>
@@ -1106,7 +1104,7 @@ the license is included in gfdl.xml.
     </example>
 
     <example hide-type="true">
-      <title>Interactive: similar <m>3\times 3</m> matrices</title>
+      <title>Interactive: Similar <m>3\times 3</m> matrices</title>
       <p>
         Continuing with this <xref ref="similarity-33-eg"/>, let
         <me>

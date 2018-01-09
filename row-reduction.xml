@@ -55,7 +55,7 @@ the license is included in gfdl.xml.
 
     <definition>
       <statement>
-        <p>A <term>pivot</term> is the first nonzero entry of a row of a matrix.</p>
+        <p>A <term>pivot</term> is the first nonzero entry of a row of a matrix in reduced echelon form.</p>
       </statement>
     </definition>
 
@@ -130,19 +130,19 @@ the license is included in gfdl.xml.
           <ul label="">
             <li><alert>Step 1a:</alert>
             Swap the 1st row with a lower one so a leftmost nonzero entry is
-  in 1st row (if necessary).</li>
+  in the 1st row (if necessary).</li>
             <li><alert>Step 1b:</alert>
-            Scale 1st row so that its leading entry is equal to 1.</li>
+            Scale the 1st row so that its leading entry is equal to 1.</li>
             <li><alert>Step 1c:</alert>
             Use row replacement so all entries below this 1 are 0.</li>
             <li><alert>Step 2a:</alert>
-            Swap the 2nd row with a lower one so that the leftmost nonzero entry is in 2nd row.</li>
+            Swap the 2nd row with a lower one so that the leftmost nonzero entry is in the 2nd row.</li>
             <li><alert>Step 2b:</alert>
-            Scale 2nd row so that its leading entry is equal to 1.</li>
+            Scale the 2nd row so that its leading entry is equal to 1.</li>
             <li><alert>Step 2c:</alert>
             Use row replacement so all entries below this 1 are 0.</li>
             <li><alert>Step 3a:</alert>
-            Swap the 3rd row with a lower one so that the leftmost nonzero entry is in 3rd row.</li>
+            Swap the 3rd row with a lower one so that the leftmost nonzero entry is in the 3rd row.</li>
             <li>etc.</li>
             <li><alert>Last Step:</alert>
             Use row replacement to clear all entries above the pivots, starting with the last pivot.</li>
@@ -335,7 +335,7 @@ the license is included in gfdl.xml.
       The reduced row echelon form of the matrix tells us that the only solution is <m>(x,y,z) = (1,-2,3).</m>
       </p>
       <figure>
-        <caption>Animated slideshow of the row reduction in this <xref ref="row-reduction-eg1"/>.</caption>
+        <caption>Animated slideshow of the row reduction in this Example.</caption>
         <mathbox source="demos/rowred2.html" height="500px"/>
       </figure>
     </solution>

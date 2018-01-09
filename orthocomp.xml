@@ -15,8 +15,7 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Understand the basic properties of orthogonal complements.</li>
-      <li>Learn shortcuts to compute orthogonal complements of common subspaces.</li>
-      <li><em>Recipe:</em> compute the orthogonal complement of a span.</li>
+      <li><em>Recipes:</em> shortcuts for computing the orthogonal complements of common subspaces.</li>
       <li><em>Picture:</em> orthogonal complements in <m>\R^2</m> and <m>\R^3</m>.</li>
       <li><em>Vocabulary words:</em> <term>orthogonal complement</term>, <term>row space</term>.</li>
     </ol>
@@ -75,7 +74,7 @@ the license is included in gfdl.xml.
     </p>
 
     <example hide-type="true">
-      <title>Interactive: orthogonal complements in <m>\R^2</m></title>
+      <title>Interactive: Orthogonal complements in <m>\R^2</m></title>
       <figure>
         <caption>The orthogonal complement of the line spanned by <m>v</m> is the perpendicular line.  Click and drag the head of <m>v</m> to move it.</caption>
         <mathbox source="demos/spans.html?v1=2,3&amp;captions=orthog&amp;labels=v" height="500px"/>
@@ -104,7 +103,7 @@ the license is included in gfdl.xml.
     </p>
 
     <example hide-type="true">
-      <title>Interactive: orthogonal complements in <m>\R^3</m></title>
+      <title>Interactive: Orthogonal complements in <m>\R^3</m></title>
       <figure>
         <caption>The orthogonal complement of the line spanned by <m>v</m> is the perpendicular plane.  Click and drag the head of <m>v</m> to move it.</caption>
         <mathbox source="demos/spans.html?v1=.3,0,1&amp;captions=orthog&amp;range=3&amp;labels=v" height="500px"/>
@@ -133,7 +132,7 @@ the license is included in gfdl.xml.
     </p>
 
     <example hide-type="true">
-      <title>Interactive: orthogonal complements in <m>\R^3</m></title>
+      <title>Interactive: Orthogonal complements in <m>\R^3</m></title>
       <figure>
         <caption>The orthogonal complement of the plane spanned by <m>v,w</m> is the perpendicular line.  Click and drag the heads of <m>v,w</m> to change the plane.</caption>
         <mathbox source="demos/spans.html?v1=.957,0,-.287&amp;v2=0,1,0&amp;captions=orthog&amp;range=3&amp;labels=v,w" height="500px"/>
@@ -372,7 +371,7 @@ the license is included in gfdl.xml.
   </p>
 
   <warning>
-    <title>Shortcuts for computing orthogonal complements</title>
+    <title>Recipes: Shortcuts for computing orthogonal complements</title>
     <p>
       For any vectors <m>v_1,v_2,\ldots,v_m</m>, we have
       <me>

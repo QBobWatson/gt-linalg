@@ -60,7 +60,7 @@ the license is included in gfdl.xml.
     <p>The difference is purely psychological: <em>points and vectors are both just lists of numbers</em>.</p>
 
     <example hide-type="true">
-      <title>Interactive: a vector in <m>\R^3</m>, by coordinates</title>
+      <title>Interactive: A vector in <m>\R^3</m>, by coordinates</title>
       <figure>
         <caption>A vector in <m>\R^3</m>, and its coordinates.  Drag the arrow head and tail.</caption>
         <mathbox source="demos/vector.html" height="400px"/>
@@ -97,7 +97,7 @@ the license is included in gfdl.xml.
     </remark>
 
     <p>Another way to think about a vector is as a <em>difference</em> between two
-    points, or the arrow from one point to another.  For instance, <m>\vec{1 2}</m> is the arrow from <m>(1,1)</m> to <m>(2,3)</m>.
+    points, or the arrow from one point to another.  For instance, <m>{1\choose 2}</m> is the arrow from <m>(1,1)</m> to <m>(2,3)</m>.
     <latex-code>
           <![CDATA[
   \begin{tikzpicture}[whitebg nodes, thin border nodes]
@@ -183,7 +183,7 @@ the license is included in gfdl.xml.
       </latex-code></p>
 
       <example hide-type="true">
-        <title>Interactive: the parallelogram law for vector addition</title>
+        <title>Interactive: The parallelogram law for vector addition</title>
         <figure>
           <caption>The parallelogram law for vector addition.  Click and drag the heads of <m></m> and <m>w</m>.</caption>
           <mathbox source="demos/vector-add.html" height="400px"/>
@@ -214,7 +214,7 @@ the license is included in gfdl.xml.
       </latex-code></p>
 
       <example hide-type="true">
-        <title>Interactive: vector subtraction</title>
+        <title>Interactive: Vector subtraction</title>
         <figure>
           <caption>Vector subtraction.  Click and drag the heads of <m>v</m> and <m>w</m>.</caption>
           <mathbox source="demos/vector-sub.html" height="400px"/>
@@ -246,7 +246,7 @@ the license is included in gfdl.xml.
       </latex-code></p>
 
       <example hide-type="true">
-        <title>Interactive: scalar multiplication</title>
+        <title>Interactive: Scalar multiplication</title>
         <figure>
           <caption>Scalar multiplication.  Drag the slider to change the scalar.</caption>
           <mathbox source="demos/vector-mul.html" height="400px"/>
@@ -260,7 +260,7 @@ the license is included in gfdl.xml.
   <subsection>
     <title>Linear Combinations</title>
 
-    <p>We can add and scalar multiply vectors in the same equation.</p>
+    <p>We can add and scalar-multiply vectors in the same equation.</p>
 
     <definition>
       <statement>
@@ -276,7 +276,7 @@ the license is included in gfdl.xml.
     </p>
 
     <example xml:id="vectors-eg-lincombo-plane">
-      <p>Let <m>v_1 = \vec{1 2}</m> and <m>v_2 = \vec{1 0}</m>.  Here are some linear combinations of <m>v_1</m> and <m>v_2</m>, drawn as points.
+      <p>Let <m>v_1 = {1\choose 2}</m> and <m>v_2 = {1\choose 0}</m>.  Here are some linear combinations of <m>v_1</m> and <m>v_2</m>, drawn as points.
       <latex-code>
             <![CDATA[
   \begin{tikzpicture}[thin border nodes]
@@ -321,7 +321,7 @@ the license is included in gfdl.xml.
     </figure>
 
     <example hide-type="true">
-      <title>Interactive: linear combinations of three vectors</title>
+      <title>Interactive: Linear combinations of three vectors</title>
       <figure>
         <caption>Linear combinations of three vectors: move the sliders to change the coefficients of <m>v_1,v_2,v_3</m>.  Note how the parallelogram law for addition of three vectors is more of a <q>parallepiped law</q>.</caption>
         <mathbox source="demos/spans.html?v1=2,-1,1&amp;v2=1,1,-1&amp;v3=-1,1,4&amp;range=5&amp;captions=combo" height="500px"/>
@@ -330,7 +330,7 @@ the license is included in gfdl.xml.
 
     <specialcase>
       <title>Linear Combinations of a Single Vector</title>
-      <p>A linear combination of a single vector <m>v = \vec{1 2}</m> is just a scalar multiple of <m>v</m>.  So some examples include
+      <p>A linear combination of a single vector <m>v = {1\choose 2}</m> is just a scalar multiple of <m>v</m>.  So some examples include
       <me>v=\vec{1 2},\quad \frac 32v=\vec{3/2 3},\quad -\frac12v = \vec{-1/2 -1},\quad\ldots
       </me>
       The set of all linear combinations is the <em>line through <m>v</m></em>.  (Unless <m>v=0</m>, in which case any scalar multiple of <m>v</m> is again <m>0</m>.)
@@ -370,7 +370,7 @@ the license is included in gfdl.xml.
     </specialcase>
 
     <example hide-type="true">
-      <title>Interactive: linear combinations of two collinear vectors</title>
+      <title>Interactive: Linear combinations of two collinear vectors</title>
       <figure>
         <caption>Linear combinations of two collinear vectors in <m>\R^2</m>.  Move the sliders to change the coefficients of <m>v_1,v_2</m>.  Note that there is no way to <q>escape</q> the line.</caption>
         <mathbox source="demos/spans.html?v1=2,2&amp;v2=-1,-1&amp;range=5&amp;captions=combo&amp;grid=disabled" height="400px"/>

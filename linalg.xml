@@ -86,13 +86,13 @@ Free Documentation License"
       <title>Determinants</title>
       <introduction>
         <p>
-          We begin by recalling the three primary goals of this course:
+          We begin by recalling the three primary goals of this book:
           <ol>
             <li>Solve the matrix equation <m>Ax=b</m>.</li>
             <li>Solve the matrix equation <m>Ax=\lambda x</m>, where <m>\lambda</m> is a number.</li>
             <li>Approximately solve the matrix equation <m>Ax=b</m>.</li>
           </ol>
-          At this point we have said all that we will say about the first goal.  This Chapter belongs primarily to the second main topic of the course.
+          At this point we have said all that we will say about the first goal.  This Chapter belongs primarily to the second main topic.
         </p>
         <p>
           The <em>determinant</em> of a square matrix <m>A</m> is a number <m>\det(A)</m>.  In <xref ref="determinants-definitions-properties"/>, we will define the determinant in terms of its behavior with respect to row operations.  The determinant satisfies many wonderful properties: for instance, <m>\det(A) \neq 0</m> if and only if <m>A</m> is invertible.  We will discuss some of these properties in <xref ref="determinants-definitions-properties"/> as well.
@@ -135,7 +135,7 @@ Free Documentation License"
 
       <introduction>
         <p>
-          Let us recall one last time the structure of this course:
+          Let us recall one last time the structure of this book:
           <ol>
             <li>Solve the matrix equation <m>Ax=b</m>.</li>
             <li>Solve the matrix equation <m>Ax=\lambda x</m>, where <m>\lambda</m> is a number.</li>

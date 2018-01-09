@@ -169,7 +169,7 @@ the license is included in gfdl.xml.
     </example>
 
     <example hide-type="true">
-      <title>Interactive: orthogonal decomposition in <m>\R^2</m></title>
+      <title>Interactive: Orthogonal decomposition in <m>\R^2</m></title>
       <figure>
         <caption>Orthogonal decomposition of a vector with respect to a line <m>W</m> in <m>\R^2</m>.  Note that <m>\color[rgb]{1,.3,.3}x_W</m> is in <m>W</m> and <m>\color[rgb]{0,.8,.8}x_{W^\perp}</m> is in the line perpendicular to <m>W</m>.  Click and drag the head of the vector <m>x</m> to see how the orthogonal decomposition changes.</caption>
         <mathbox source="demos/projection.html?u1=1,.5&amp;vec=1,-1&amp;range=3&amp;mode=decomp&amp;closed&amp;subname=W" height="500px"/>
@@ -177,7 +177,7 @@ the license is included in gfdl.xml.
     </example>
 
     <example hide-type="true">
-      <title>Interactive: orthogonal decomposition in <m>\R^3</m></title>
+      <title>Interactive: Orthogonal decomposition in <m>\R^3</m></title>
       <figure>
         <caption>Orthogonal decomposition of a vector with respect to a plane <m>W</m> in <m>\R^3</m>.  Note that <m>\color[rgb]{1,.3,.3}x_W</m> is in <m>W</m> and <m>\color[rgb]{0,.8,.8}x_{W^\perp}</m> is in the line perpendicular to <m>W</m>.  Click and drag the head of the vector <m>x</m> to see how the orthogonal decomposition changes.</caption>
         <mathbox source="demos/projection.html?u1=1,0,0&amp;u2=0,1.1,-.2&amp;vec=-1.1,2,1.5&amp;range=3&amp;mode=decomp&amp;closed" height="500px"/>
@@ -185,7 +185,7 @@ the license is included in gfdl.xml.
     </example>
 
     <example hide-type="true">
-      <title>Interactive: orthogonal decomposition in <m>\R^3</m></title>
+      <title>Interactive: Orthogonal decomposition in <m>\R^3</m></title>
       <figure>
         <caption>Orthogonal decomposition of a vector with respect to a line <m>W</m> in <m>\R^3</m>.  Note that <m>\color[rgb]{1,.3,.3}x_W</m> is in <m>W</m> and <m>\color[rgb]{0,.8,.8}x_{W^\perp}</m> is in the plane perpendicular to <m>W</m>.  Click and drag the head of the vector <m>x</m> to see how the orthogonal decomposition changes.</caption>
         <mathbox source="demos/projection.html?u1=0,1.1,.2&amp;vec=-1.1,2,1.5&amp;range=3&amp;mode=decomp&amp;closed&amp;subname=W" height="500px"/>

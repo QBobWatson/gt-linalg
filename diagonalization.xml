@@ -17,7 +17,7 @@ the license is included in gfdl.xml.
       <li>Learn two main criteria for a matrix to be diagonalizable.</li>
       <li>Develop a library of examples of matrices that are and are not diagonalizable.</li>
       <li>Understand what diagonalizability and multiplicity have to say about similarity.</li>
-      <li><em>Recipe:</em> diagonalize a matrix, quickly compute powers of a matrix by diagonalization.</li>
+      <li><em>Recipes:</em> diagonalize a matrix, quickly compute powers of a matrix by diagonalization.</li>
       <li><em>Pictures:</em> the geometry of diagonal matrices, why a shear is not diagonalizable.</li>
       <li><em>Theorem:</em> the Diagonalization Theorem (two variants).</li>
       <li><em>Vocabulary words:</em> <term>diagonalizable</term>, <term>algebraic multiplicity</term>, <term>geometric multiplicity</term>.</li>
@@ -90,6 +90,7 @@ the license is included in gfdl.xml.
     </p>
 
     <warning xml:id="diag-powers">
+      <title>Recipe: Compute powers of a diagonalizable matrix</title>
       <p>
         If <m>A = CDC\inv</m>, where <m>D</m> is a diagonal matrix, then <m>A^n = CD^nC\inv</m>:
         <me>
@@ -360,7 +361,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
     </p>
 
     <warning>
-      <title>Diagonalization: Procedure</title>
+      <title>Recipe: Diagonalization</title>
       <p>
         Let <m>A</m> be an <m>n\times n</m> matrix.  To diagonalize <m>A</m>:
         <ol>
@@ -1050,7 +1051,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
     </example>
 
     <example hide-type="true">
-      <title>Interactive: a diagonalizable <m>3\times 3</m> matrix</title>
+      <title>Interactive: A diagonalizable <m>3\times 3</m> matrix</title>
       <p>
         The diagonal matrix
         <me>

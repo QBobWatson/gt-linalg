@@ -755,7 +755,7 @@ the license is included in gfdl.xml.
     </example>
 
     <warning>
-      <title>Summary: Eigenspaces</title>
+      <title>Recipes: Eigenspaces</title>
       <p>
         Let <m>A</m> be an <m>n\times n</m> matrix and let <m>\lambda</m> be a number.
         <ol>

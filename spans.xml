@@ -44,9 +44,11 @@ the license is included in gfdl.xml.
     </definition>
 
     <example xml:id="vectors-example-consistent">
-      <p>Is <m>\vec{ 8 16 3}</m> a linear combination of <m>\vec{1 2 6}</m> and <m>\vec{-1 -2 -1}</m>?
-      </p>
-
+      <statement>
+        <p>Is <m>\vec{ 8 16 3}</m> a linear combination of <m>\vec{1 2 6}</m> and <m>\vec{-1 -2 -1}</m>?
+        </p>
+      </statement>
+      <solution>
       <p><alert>This means:</alert> can we solve the equation
       <me>x\vec{1 2 6} + y \vec{-1 -2 -1} = \vec{8 16 3}</me>
       in the unknowns <m>x,y</m>?  This vector equation translates into the system of linear equations
@@ -60,6 +62,7 @@ the license is included in gfdl.xml.
       <me>-\vec{1 2 6} -9\vec{-1 -2 -1} = \vec{8 16 3}.
       </me>
       </p>
+      </solution>
     </example>
 
     <figure xml:id="vectors-figure-consistent">
@@ -86,6 +89,7 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
+      <title>Recipe: Solving a vector equation</title>
       <p>In general, the vector equation
       <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = b</me>
       where <m>v_1,v_2,\ldots,v_p,\,b</m> are vectors in <m>\R^n</m> and <m>x_1,x_2,\ldots,x_p</m> are unknown scalars, has the same solution set as the linear system with augmented matrix
@@ -122,7 +126,7 @@ the license is included in gfdl.xml.
       </statement>
     </essential>
 
-    <p>The above <xref ref="vectors-defn-span"/> is the first of several <em>essential definitions</em> that we will see in this course.  They are essential in that they form the essence of the subject of linear algebra: learning linear algebra means (in part) learning these definitions.  All of the definitions are important, but it is essential that you learn and understand the definitions marked as such.
+    <p>The above <xref ref="vectors-defn-span"/> is the first of several <em>essential definitions</em> that we will see in this textbook.  They are essential in that they form the essence of the subject of linear algebra: learning linear algebra means (in part) learning these definitions.  All of the definitions are important, but it is essential that you learn and understand the definitions marked as such.
     </p>
 
     <note hide-type="true" xml:id="set-builder-notation">
@@ -205,9 +209,9 @@ the license is included in gfdl.xml.
       </figure>
 
       <example hide-type="true">
-        <title>Interactive: span of two vectors in <m>\R^2</m></title>
+        <title>Interactive: Span of two vectors in <m>\R^2</m></title>
         <figure>
-          <caption>Interactive picture of a span of two vectors in <m>\R^2</m>.  Check <q>Show x.v1 + y.v2</q> and move the sliders to see how every point in the red region is in fact a linear combination of the two vectors.</caption>
+          <caption>Interactive picture of a span of two vectors in <m>\R^2</m>.  Check <q>Show x.v + y.w</q> and move the sliders to see how every point in the red region is in fact a linear combination of the two vectors.</caption>
           <mathbox source="demos/spans.html?v1=1,2&amp;v2=1,0&amp;showPlane=true&amp;range=5&amp;labels=v,w" height="500px"/>
         </figure>
       </example>
@@ -348,17 +352,17 @@ the license is included in gfdl.xml.
       </figure>
 
       <example hide-type="true">
-        <title>Interactive: span of two vectors in <m>\R^3</m></title>
+        <title>Interactive: Span of two vectors in <m>\R^3</m></title>
         <figure>
-          <caption>Interactive picture of a span of two vectors in <m>\R^3</m>.  Check <q>Show x.v1 + y.v2</q> and move the sliders to see how every point in the red region is in fact a linear combination of the three vectors.</caption>
+          <caption>Interactive picture of a span of two vectors in <m>\R^3</m>.  Check <q>Show x.v + y.w</q> and move the sliders to see how every point in the red region is in fact a linear combination of the two vectors.</caption>
           <mathbox source="demos/spans.html?v1=3,2,4&amp;v2=-4,2,1&amp;labels=v,w" height="500px"/>
         </figure>
       </example>
 
       <example hide-type="true">
-        <title>Interactive: span of three vectors in <m>\R^3</m></title>
+        <title>Interactive: Span of three vectors in <m>\R^3</m></title>
         <figure>
-          <caption>Interactive picture of a span of three vectors in <m>\R^3</m>.  Check <q>Show x.v1 + y.v2 + z.v3</q> and move the sliders to see how every point in the red region is in fact a linear combination of the three vectors.</caption>
+          <caption>Interactive picture of a span of three vectors in <m>\R^3</m>.  Check <q>Show x.v + y.w + z.u</q> and move the sliders to see how every point in the red region is in fact a linear combination of the three vectors.</caption>
           <mathbox source="demos/spans.html?labels=v,w,u" height="500px"/>
         </figure>
       </example>

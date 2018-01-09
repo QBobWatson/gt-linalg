@@ -17,6 +17,7 @@ the license is included in gfdl.xml.
       <li>Learn the definition of a subspace.</li>
       <li>Learn to determine whether or not a subset is a subspace.</li>
       <li>Learn the most important examples of subspaces.</li>
+      <li><em>Recipe:</em> compute a spanning set for a null space.</li>
       <li><em>Picture:</em> whether a subset of <m>\R^2</m> or <m>\R^3</m> is a subspace or not.</li>
       <li><em>Vocabulary words:</em> <term>subspace</term>, <term>column space</term>, <term>null space</term>.</li>
     </ol>
@@ -64,7 +65,7 @@ the license is included in gfdl.xml.
     </p>
 
     <p>
-      Above we expressed <m>C</m> in set builder notation, which we introduced in this <xref ref="set-builder-notation"/>.
+      Above we expressed <m>C</m> in <xref ref="set-builder-notation" text="title">set builder notation</xref>.
     </p>
 
     <definition xml:id="subspaces-defn-of">
@@ -72,9 +73,9 @@ the license is included in gfdl.xml.
         <p>
           A <term>subspace</term> of <m>\R^n</m> is a subset <m>V</m> of <m>\R^n</m> satisfying:
           <ol>
-            <li><em>Nonemptiness:</em> The zero vector is in <m>V</m>.</li>
-            <li><em>Closure under addition:</em> If <m>u</m> and <m>v</m> are in <m>V</m>, then <m>u+v</m> is also in <m>V</m>.</li>
-            <li><em>Closure under scalar multiplication:</em> If <m>v</m> is in <m>V</m> and <m>c</m> is in <m>\R</m>, then <m>cv</m> is also in <m>V</m>.</li>
+            <li><alert>Nonemptiness:</alert> The zero vector is in <m>V</m>.</li>
+            <li><alert>Closure under addition:</alert> If <m>u</m> and <m>v</m> are in <m>V</m>, then <m>u+v</m> is also in <m>V</m>.</li>
+            <li><alert>Closure under scalar multiplication:</alert> If <m>v</m> is in <m>V</m> and <m>c</m> is in <m>\R</m>, then <m>cv</m> is also in <m>V</m>.</li>
           </ol>
         </p>
       </statement>
@@ -484,6 +485,7 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
+      <title>Recipe: Compute a spanning set for a null space</title>
       <p>
         To find a spanning set for <m>\Nul(A)</m>, compute the parametric vector form of the solutions to the homogeneous equation <m>Ax=0</m>.  The vectors attached to the free variables form a spanning set for <m>\Nul(A)</m>.
       </p>
@@ -503,7 +505,7 @@ the license is included in gfdl.xml.
           The free variables are <m>x_3</m> and <m>x_4</m>; the parametric form of the solution set is
           <me>
             \syseq{x_1 = x_3 - 2x_4; x_2 = 2x_3 + 3x_4; x_3 = x_3; x_4 = \. \+ x_4}
-            \quad\xrightarrow{\text{parametric vector form}}\quad
+            \quad\xrightarrow[\text{vector form}]{\text{parametric}}\quad
             \vec{x_1 x_2 x_3 x_4} = x_3\vec{1 2 1 0} + x_4\vec{-2 3 0 1}.
           </me>
           Therefore,

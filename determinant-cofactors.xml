@@ -603,8 +603,8 @@ the license is included in gfdl.xml.
     The formula for the determinant of a <m>3\times 3</m> matrix looks too complicated to memorize outright.  Fortunately, there is a useful mnemonic device:
   </p>
 
-  <fact hide-type="true">
-    <title>Computing the Determinant of a <m>3\times 3</m> Matrix</title>
+  <warning>
+    <title>Recipe: Computing the Determinant of a <m>3\times 3</m> Matrix</title>
     <p>
       To compute the determinant of a <m>3\times 3</m> matrix, first draw a larger matrix with the first two columns repeated on the right.  Then add the products of the downward diagonals together, and subtract the products of the upward diagonals:
       <latex-code><![CDATA[
@@ -649,7 +649,7 @@ the license is included in gfdl.xml.
   \end{tikzpicture}
       ]]></latex-code>
     </p>
-  </fact>
+  </warning>
 
   <p>
     Alternatively, it is not necessary to repeat the first two columns if you allow your diagonals to <q>wrap around</q> the sides of a matrix.

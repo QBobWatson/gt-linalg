@@ -237,7 +237,7 @@ the license is included in gfdl.xml.
     </example>
 
     <example hide-type="true">
-      <title>Interactive: a composition of matrix transformations</title>
+      <title>Interactive: A composition of matrix transformations</title>
       <p>
         Define <m>T\colon\R^3\to\R^2</m> and <m>U\colon\R^2\to\R^3</m> by
         <me>T(x) = \mat{1 1 0; 0 1 1}x \sptxt{and}
@@ -251,7 +251,7 @@ the license is included in gfdl.xml.
     </example>
 
     <example hide-type="true">
-      <title>Interactive: a transformation defined in steps</title>
+      <title>Interactive: A transformation defined in steps</title>
       <p>
         Let <m>S\colon\R^3\to\R^3</m> be the linear transformation that first reflects over the <m>xy</m>-plane and then projects onto the <m>yz</m>-plane, as in this <xref ref="linear-trans-in-steps"/>.  The transformation <m>S</m> is the composition <m>T\circ U</m>, where <m>U\colon\R^3\to\R^3</m> is the transformation that reflects over the <m>xy</m>-plane, and <m>T\colon\R^3\to\R^3</m> is the transformation that projects onto the <m>yz</m>-plane.
       </p>
@@ -262,7 +262,7 @@ the license is included in gfdl.xml.
     </example>
 
     <example hide-type="true">
-      <title>Interactive: a transformation defined in steps</title>
+      <title>Interactive: A transformation defined in steps</title>
       <p>
         Let <m>S\colon\R^3\to\R^3</m> be the linear transformation that first projects onto the <m>xy</m>-plane, and then projects onto the <m>xz</m>-plane.  The transformation <m>S</m> is the composition <m>T\circ U</m>, where <m>U\colon\R^3\to\R^3</m> is the transformation that projects onto the <m>xy</m>-plane, and <m>T\colon\R^3\to\R^3</m> is the transformation that projects onto the <m>xz</m>-plane.
       </p>
@@ -519,7 +519,7 @@ the license is included in gfdl.xml.
       </p>
 
       <warning xml:id="matrix-mult-row-column">
-        <title>The row-column rule for matrix multiplication</title>
+        <title>Recipe: The row-column rule for matrix multiplication</title>
         <p>
           Let <m>A</m> be an <m>m\times n</m> matrix, let <m>B</m> be an <m>n\times p</m> matrix, and let <m>C = AB</m>.  Then the <m>ij</m> entry of <m>C</m> is the <m>i</m>th row of <m>A</m> times the <m>j</m>th column of <m>B</m>:
           <me>c_{ij} = a_{i1}b_{1j} + a_{i2}b_{2j} + \cdots + a_{in}b_{nj}.</me>
@@ -725,7 +725,7 @@ the license is included in gfdl.xml.
     </remark>
 
     <example hide-type="true">
-      <title>Interactive: a composition of matrix transformations</title>
+      <title>Interactive: A composition of matrix transformations</title>
       <p>
         Define <m>T\colon\R^3\to\R^2</m> and <m>U\colon\R^2\to\R^3</m> by
         <me>T(x) = \mat{1 1 0; 0 1 1}x \sptxt{and}
@@ -741,7 +741,7 @@ the license is included in gfdl.xml.
     </example>
 
     <example hide-type="true">
-      <title>Interactive: a transformation defined in steps</title>
+      <title>Interactive: A transformation defined in steps</title>
       <p>
         Let <m>S\colon\R^3\to\R^3</m> be the linear transformation that first reflects over the <m>xy</m>-plane and then projects onto the <m>yz</m>-plane, as in this <xref ref="linear-trans-in-steps"/>.  The transformation <m>S</m> is the composition <m>T\circ U</m>, where <m>U\colon\R^3\to\R^3</m> is the transformation that reflects over the <m>xy</m>-plane, and <m>T\colon\R^3\to\R^3</m> is the transformation that projects onto the <m>yz</m>-plane.
       </p>

@@ -27,7 +27,7 @@ the license is included in gfdl.xml.
   <introduction>
     <p>
       Sometimes the span of a set of vectors is <q>smaller</q> than you expect from the
-number of vectors, as in the Figure below.  This means that (at least) one of the vectors is <em>redundant</em>: it can be removed without affecting the span.  In the present section, we formalize this idea in the notion of <em>linear (in)dependence</em>.
+number of vectors, as in the picture below.  This means that (at least) one of the vectors is <em>redundant</em>: it can be removed without affecting the span.  In the present section, we formalize this idea in the notion of <em>linear (in)dependence</em>.
     </p>
     <figure xml:id="linindep-intro-pic">
       <caption>Pictures of sets of vectors that are linearly dependent.  Note that in each case, one vector is in the span of the others<mdash/>so it doesn<rsq/>t make the span bigger.</caption>
@@ -175,17 +175,24 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
     </example>
 
     <p>
-      As we saw in the above Examples, a set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly independent if and only if the vector equation
+      The above Examples lead to the following Recipe.
+    </p>
+
+    <warning>
+      <title>Recipe: Checking linear (in)dependence</title>
+    <p>
+      A set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly independent if and only if the vector equation
       <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = 0</me>
       has only the trivial solution, if and only if the matrix equation
       <m>Ax=0</m>
       has only the trivial solution, where <m>A</m> is the matrix with columns <m>v_1,v_2,\ldots,v_p</m>:
       <me>A = \mat{| |, , |; v_1 v_2 \cdots, v_p; | |, , |}.</me>
-      This is true if and only if <m>A</m> has a pivot in every column. See this <xref ref="solnsets-nontrivial"/>.
+      This is true if and only if <m>A</m> has a pivot in every column.
     </p>
+    </warning>
 
     <p>
-      In summary:
+      See this <xref ref="solnsets-nontrivial"/>.  To rephrase:
     </p>
 
     <theorem hide-type="true" xml:id="linindep-matrix-cols">
@@ -193,7 +200,7 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
       <p>
         <ul>
           <li>The vectors <m>\{v_1,v_2,\ldots,v_p\}</m> are linearly independent if and only if the matrix <m>A</m> with columns <m>v_1,v_2,\ldots,v_p</m> has a pivot in every column, if and only if <m>Ax=0</m> has only the trivial solution.</li>
-          <li>Solving the matrix equatiion <m>Ax=0</m> will either verify that the columns <m>v_1,v_2,\ldots,v_p</m> are linearly independent, or will produce a linear dependece relation by substituting any nonzero values for the free variables.</li>
+          <li>Solving the matrix equatiion <m>Ax=0</m> will either verify that the columns <m>v_1,v_2,\ldots,v_p</m> are linearly independent, or will produce a linear dependence relation by substituting any nonzero values for the free variables.</li>
         </ul>
       </p>
     </theorem>
@@ -249,7 +256,7 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
     <title>Criteria for Linear Independence</title>
 
     <p>
-      In this subsection we give several criteria for a set of vectors to be linearly (in)dependent.  Keep in mind, however, that the actual <xref ref="linindep-defn-linindep"/> is above.
+      In this Subsection we give several criteria for a set of vectors to be linearly (in)dependent.  Keep in mind, however, that the actual <xref ref="linindep-defn-linindep"/> is above.
     </p>
 
     <theorem xml:id="linindep-criterion-inspan">
@@ -460,7 +467,7 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
   </p>
 
     <example hide-type="true">
-      <title>Interactive: linear independence of two vectors in <m>\R^2</m></title>
+      <title>Interactive: Linear independence of two vectors in <m>\R^2</m></title>
       <figure>
         <caption>Move the vector heads and the demo will tell you if they are linearly independent and show you their span.</caption>
         <mathbox source="demos/spans.html?captions=indep&amp;v1=2,1&amp;v2=-1,-.5&amp;labels=v,w&amp;range=5&amp;showPlane=true&amp;closed" height="500px"/>
@@ -468,7 +475,7 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
     </example>
 
     <example hide-type="true">
-      <title>Interactive: linear dependence of three vectors in <m>\R^2</m></title>
+      <title>Interactive: Linear dependence of three vectors in <m>\R^2</m></title>
       <figure>
         <caption>Move the vector heads and the demo will tell you that they are linearly dependent and show you their span.</caption>
         <mathbox source="demos/spans.html?captions=indep&amp;v1=2,1&amp;v2=-1,-.5&amp;v3=0,-1.5&amp;labels=v,w,u&amp;range=5&amp;showPlane=true&amp;closed" height="500px"/>
@@ -714,7 +721,7 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
     </figure>
 
     <example hide-type="true">
-      <title>Interactive: linear independence of two vectors in <m>\R^3</m></title>
+      <title>Interactive: Linear independence of two vectors in <m>\R^3</m></title>
       <figure>
         <caption>Move the vector heads and the demo will tell you if they are linearly independent and show you their span.</caption>
         <mathbox source="demos/spans.html?captions=indep&amp;v1=2,-1,1&amp;v2=1,0,-1&amp;labels=v,w&amp;range=5&amp;closed" height="500px"/>
@@ -722,7 +729,7 @@ number of vectors, as in the Figure below.  This means that (at least) one of th
     </example>
 
     <example hide-type="true">
-      <title>Interactive: linear independence of three vectors in <m>\R^3</m></title>
+      <title>Interactive: Linear independence of three vectors in <m>\R^3</m></title>
       <figure>
         <caption>Move the vector heads and the demo will tell you if they are linearly independent and show you their span.</caption>
         <mathbox source="demos/spans.html?captions=indep&amp;v1=2,-1,1&amp;v2=1,0,-1&amp;v3=.5,-.5,1&amp;labels=v,w,u&amp;range=5&amp;closed" height="500px"/>

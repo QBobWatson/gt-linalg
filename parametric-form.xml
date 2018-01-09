@@ -105,18 +105,19 @@ the license is included in gfdl.xml.
     the free variables are <m>\color{seq-red}x_2</m> and <m>\color{seq-blue}x_4</m>.  (The augmented column is not free because it does not correspond to a variable.)
     </p>
 
-    <definition>
-      <statement>
-        <p>The <term>parametric form</term> for the solution set of a consistent system of linear equations is obtained as follows.
+    <warning>
+      <title>Recipe: Parametric form</title>
+
+      <p>
+        The <term>parametric form</term> of the solution set of a consistent system of linear equations is obtained as follows.
         <ol>
           <li>Write the system as an augmented matrix.</li>
           <li>Row reduce to reduced row echelon form.</li>
           <li>Write the corresponding (solved) system of linear equations.</li>
           <li><em>Move all free variables to the right hand side of the equations.</em></li>
         </ol>
-        </p>
-      </statement>
-    </definition>
+      </p>
+    </warning>
 
     <p>Moving the free variables to the right hand side of the equations amounts to solving for the non-free variables (the ones that come from columns with pivots) in terms of the free variables.  One can think of the free variables as being <em>independent</em> variables, and the non-free variables being <em>dependent</em>.
     </p>
@@ -141,10 +142,10 @@ the license is included in gfdl.xml.
 
     <warning>
       <p>
-        <ul>
-          <li>You can chose <em>any value</em> for the free variables in a (consistent) linear system.</li>
-          <li>Free variables come from the <em>columns without pivots</em> in a matrix in row echelon form.</li>
-        </ul>
+        You can chose <em>any value</em> for the free variables in a (consistent) linear system.
+      </p>
+      <p>
+        Free variables come from the <em>columns without pivots</em> in a matrix in row echelon form.
       </p>
     </warning>
 

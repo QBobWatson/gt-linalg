@@ -363,9 +363,8 @@ the license is included in gfdl.xml.
       A matrix can always be transformed into row echelon form by a series of  row operations, and a matrix in row echelon form is upper-triangular.  Therefore, we have a systematic way of computing the determinant:
     </p>
 
-    <theorem xml:id="det-defn-ref-compute" hide-type="true">
-      <title>Computing determinants by row reducing</title>
-      <statement>
+    <warning xml:id="det-defn-ref-compute" type-name="Recipe">
+      <title>Recipe: Computing determinants by row reducing</title>
 	<p>
           Let <m>A</m> be a square matrix.  Suppose that you do some number of row operations on <m>A</m> to obtain a matrix <m>B</m> in row echelon form.  Then
 	  <me>
@@ -375,8 +374,7 @@ the license is included in gfdl.xml.
 	  </me>
           where <m>r</m> is the number of row swaps performed.
 	</p>
-      </statement>
-    </theorem>
+    </warning>
 
     <p>
       In other words, the determinant of <m>A</m> is the product of diagonal entries of the row echelon form <m>B</m>, times a factor of <m>\pm1</m> coming from the number of row swaps you made, divided by the product of the scaling factors used in the row reduction.
@@ -676,7 +674,7 @@ the license is included in gfdl.xml.
       <me>A^2 = AA  \qquad A^3 = AAA \qquad \text{etc.}</me>
       If <m>A</m> is invertible, then we define
       <me>A^{-2} = A\inv A\inv \qquad A^{-3} = A\inv A\inv A\inv \qquad \text{etc.}</me>
-      For completeness, we set <m>A^0 = I_n</m>.
+      For completeness, we set <m>A^0 = I_n</m> if <m>A\neq 0</m>.
     </p>
 
     <corollary xml:id="det-defn-power-prop">

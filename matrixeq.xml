@@ -167,15 +167,17 @@ the license is included in gfdl.xml.
       </definition>
 
       <warning xml:id="matrixeq-row-column">
-        <title>The row-column rule for matrix-vector multiplication</title>
-        <p>If <m>A</m> is an <m>m\times n</m> matrix with rows <m>r_1,r_2,\ldots,r_m</m>, and <m>x</m> is a vector in <m>\R^n</m>, then
-        <me>Ax = \mat[c]{ \matrow{r_1};
-        \matrow{r_2};
-        \vdots ;
-        \matrow{r_m}}
-        x
-        = \vec{r_1x r_2x \vdots, r_mx}.
-        </me>
+        <title>Recipe: The row-column rule for matrix-vector multiplication</title>
+
+        <p>
+          If <m>A</m> is an <m>m\times n</m> matrix with rows <m>r_1,r_2,\ldots,r_m</m>, and <m>x</m> is a vector in <m>\R^n</m>, then
+          <me>Ax = \mat[c]{ \matrow{r_1};
+          \matrow{r_2};
+          \vdots ;
+          \matrow{r_m}}
+          x
+          = \vec{r_1x r_2x \vdots, r_mx}.
+          </me>
         </p>
       </warning>
 
@@ -298,7 +300,7 @@ the license is included in gfdl.xml.
           <mathbox source="demos/spans.html?v1=2,-1,1&amp;v2=1,0,-1&amp;target=0,2,2&amp;range=5" height="500px"/>
         </figure>
 
-        <p>Let<rsq/>s check our geometric answer by solving the matrix equation using row reduction.  We put the system into an augmented matrix and row reduce:
+        <p>Let us check our geometric answer by solving the matrix equation using row reduction.  We put the system into an augmented matrix and row reduce:
         <me>\amat{2 1 0; -1 0 2; 1 -1 2}
         \quad\xrightarrow{\text{RREF}}\quad
         \amat{1 0 0; 0 1 0; 0 0 1}.
@@ -379,7 +381,7 @@ the license is included in gfdl.xml.
           <mathbox source="demos/spans.html?v1=2,-1,1&amp;v2=1,0,-1&amp;target=1,-1,2&amp;range=5" height="500px"/>
         </figure>
 
-        <p>Let<rsq/>s check our geometric answer by solving the matrix equation using row reduction.  We put the system into an augmented matrix and row reduce:
+        <p>Let us check our geometric answer by solving the matrix equation using row reduction.  We put the system into an augmented matrix and row reduce:
         <me>\amat{2 1 1; -1 0 -1; 1 -1 2}
         \quad\xrightarrow{\text{RREF}}\quad
         \amat{1 0 1; 0 1 -1; 0 0 0}.
@@ -451,7 +453,7 @@ the license is included in gfdl.xml.
       </warning>
 
       <example hide-type="true">
-        <title>Interactive: the criteria of the Theorem are satisfied</title>
+        <title>Interactive: The criteria of the Theorem are satisfied</title>
         <figure>
           <caption>An example where the criteria of the above <xref ref="matrixeq-thm-full-span"/> are satisfied.  The red region is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.  If you drag <m>b</m>, the demo will solve <m>Ax=b</m> for you and move <m>x</m>.</caption>
           <mathbox source="demos/Axequalsb.html?mat=2,1,-1:1,0,2&amp;range2=5&amp;show=false&amp;closed=true" height="600px"/>
@@ -459,7 +461,7 @@ the license is included in gfdl.xml.
       </example>
 
       <example hide-type="true">
-        <title>Interactive: the critera of the Theorem are not satisfied</title>
+        <title>Interactive: The critera of the Theorem are not satisfied</title>
         <figure>
           <caption>An example where the criteria of the above <xref ref="matrixeq-thm-full-span"/> are <em>not</em> satisfied.  The red region is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.  Try dragging <m>b</m> in and out of the column span.</caption>
           <mathbox source="demos/Axequalsb.html?show=false&amp;closed=true" height="600px"/>

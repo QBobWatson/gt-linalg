@@ -97,7 +97,7 @@ the license is included in gfdl.xml.
   </p>
 
   <example hide-type="true">
-    <title>Interactive: a <m>2\times 3</m> matrix</title>
+    <title>Interactive: A <m>2\times 3</m> matrix</title>
     <figure>
       <caption>A picture of a <m>2\times 3</m> matrix, regarded as a function.  The input vector is <m>x</m>, which is a vector in <m>\R^3</m>, and the output vector is <m>b=Ax</m>, which is a vector in <m>\R^2</m>.  The red line on the right is the column space; as you vary <m>x</m>, the output <m>b</m> is constrained to lie on this line.</caption>
       <mathbox source="demos/Axequalsb.html?show=false" height="500px"/>
@@ -105,7 +105,7 @@ the license is included in gfdl.xml.
   </example>
 
   <example hide-type="true">
-    <title>Interactive: a <m>3\times 2</m> matrix</title>
+    <title>Interactive: A <m>3\times 2</m> matrix</title>
     <figure>
       <caption>A picture of a <m>3\times 2</m> matrix, regarded as a function.  The input vector is <m>x</m>, which is a vector in <m>\R^2</m>, and the output vector is <m>b=Ax</m>, which is a vector in <m>\R^3</m>.  The red plane on the right is the column space; as you vary <m>x</m>, the output <m>b</m> is constrained to lie on this plane.</caption>
       <mathbox source="demos/Axequalsb.html?mat=1,0:0,1:1,0&amp;range2=5&amp;closed=true&amp;show=false" height="500px"/>
@@ -519,7 +519,7 @@ the license is included in gfdl.xml.
   <example>
     <title>A Function of one variable</title>
     <p>
-      Most of the functions you may have seen in previous courses have domain and codomain equal to <m>\R = \R^1</m>.  For example,
+      Most of the functions you may have seen previously have domain and codomain equal to <m>\R = \R^1</m>.  For example,
       <me>\sin\colon\R\To\R \qquad \sin(x) =
   \left(\,\parbox{5cm}{
     the length of the opposite edge over the hypotenuse of a right
@@ -759,7 +759,7 @@ the license is included in gfdl.xml.
   </warning>
 
   <example hide-type="true">
-    <title>Interactive: a <m>2\times 3</m> matrix: reprise</title>
+    <title>Interactive: A <m>2\times 3</m> matrix: reprise</title>
     <p>
       Let
       <me>
@@ -774,7 +774,7 @@ the license is included in gfdl.xml.
   </example>
 
   <example hide-type="true">
-    <title>Interactive: a <m>3\times 2</m> matrix: reprise</title>
+    <title>Interactive: A <m>3\times 2</m> matrix: reprise</title>
     <p>
       Let
       <me>

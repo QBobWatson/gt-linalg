@@ -15,8 +15,8 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Understand the definition of <m>\R^n</m>, and how to use <m>\R^n</m> to label points.</li>
+      <li>Learn to replace a system of linear equations by an augmented matrix.</li>
       <li>Learn how the elimination method corresponds to performing row operations on an augmented matrix.</li>
-      <li><em>Recipe:</em> replace a system of linear equations by an augmented matrix.</li>
       <li><em>Vocabulary words:</em> <term>consistent</term>, <term>inconsistent</term>, <term>solution set</term>, <term>row operation</term>, <term>row equivalence</term>, <term>augmented matrix</term>.</li>
     </ol>
   </objectives>
@@ -269,7 +269,7 @@ the license is included in gfdl.xml.
   <subsection>
     <title>Solving Systems of Equations</title>
 
-    <p>During the first half of the course, we will be primarily concerned with understanding the solutions to linear equations.</p>
+    <p>During the first half of this textbook, we will be primarily concerned with understanding the solutions to linear equations.</p>
 
     <definition>
       <statement>
@@ -309,7 +309,7 @@ the license is included in gfdl.xml.
       <statement>
         <p>
           <ul>
-            <li>A <term>solution</term> to a system of equations is a list of numbers <m>x, y, z, \ldots</m> that make all of the equations true simultaneously.</li>
+            <li>A <term>solution</term> of a system of equations is a list of numbers <m>x, y, z, \ldots</m> that make all of the equations true simultaneously.</li>
             <li>The <term>solution set</term> of a system of equations is the collection of all solutions.</li>
             <li><term>Solving</term> the system means describing the solution set parametrically.</li>
           </ul>
@@ -317,7 +317,7 @@ the license is included in gfdl.xml.
       </statement>
     </definition>
 
-    <p>A solution to a system of equations in <m>n</m> variables is a list of <m>n</m> numbers: it is an element of <m>\R^n</m>.  For example, <m>(x,y,z) = (1,-2,3)</m> is a solution to <xref ref="systems-eqns-example"/>; this is an element of <m>\R^3</m>.</p>
+    <p>A solution of a system of equations in <m>n</m> variables is a list of <m>n</m> numbers: it is an element of <m>\R^n</m>.  For example, <m>(x,y,z) = (1,-2,3)</m> is a solution of <xref ref="systems-eqns-example"/>; this is an element of <m>\R^3</m>.</p>
 
     <paragraphs><title>The elimination method</title>
     <p>We will solve systems of linear equations using the <term>elimination</term> method.  In other words, we will combine the equations in various ways to try to eliminate as many variables as possible from each equation.  There are three valid operations we can perform on our system of equations:
@@ -434,7 +434,7 @@ the license is included in gfdl.xml.
       3  1  -1  -2
       }.
     </me>
-    This is called an <term>augmented matrix</term>.  In this notation, our three valid ways of manipulating our equations become <term>row operations</term>:
+    This is called an <term>augmented matrix</term>.  The word <q>augmented</q> refers to the vertical line, which we draw to remind ourselves where the equals sign belongs.  In this notation, our three valid ways of manipulating our equations become <term>row operations</term>:
     <ul>
       <li><alert>Scaling:</alert> multiply all entries in a row by a nonzero number.
       <me>

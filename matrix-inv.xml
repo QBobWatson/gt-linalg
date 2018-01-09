@@ -833,7 +833,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
  <subsection>
    <title>Characterizing Invertible Matrices</title>
 
-   <p>This Subsection consists of a single important theorem, with many equivalent conditions for a matrix to be invertible.  This is one of the most important theorems in the course.  We will append two more criteria in <xref ref="eigenvectors"/>.</p>
+   <p>This Subsection consists of a single important theorem, with many equivalent conditions for a matrix to be invertible.  This is one of the most important theorems in this textbook.  We will append two more criteria in <xref ref="eigenvectors"/>.</p>
 
    <theorem type-name="Invertible Matrix Theorem" hide-type="true" xml:id="imt-1">
      <title>The Invertible Matrix Theorem</title>
