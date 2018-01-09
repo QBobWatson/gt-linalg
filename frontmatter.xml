@@ -42,6 +42,7 @@ Copyright 2017 Georgia Institute of Technology
 
   <!-- Each paragraph gets centered and has some vertical separatation -->
   <!-- A line element may be used here with a single paragraph   -->
+  <!--
   <dedication>
     <p>Place a dedication here.</p>
   </dedication>
@@ -55,7 +56,8 @@ Copyright 2017 Georgia Institute of Technology
     <attribution>
       <line>Attribution here.</line>
     </attribution>
-  </preface>
+    </preface>
+    -->
 
   <preface>
     <title>Contributors to this textbook</title>
