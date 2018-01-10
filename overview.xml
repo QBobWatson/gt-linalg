@@ -361,5 +361,12 @@ the license is included in gfdl.xml.
 
 </paragraphs>
 
+<paragraphs>
+  <title>Feedback</title>
+  <p>
+    Every page has a link on the bottom for providing feedback.  This will take you to the GitHub Issues page for this book.  It requires a Georgia Tech login to access.
+  </p>
+</paragraphs>
+
 
 </chapter>

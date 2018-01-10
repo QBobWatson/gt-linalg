@@ -474,8 +474,9 @@
       <xsl:attribute name="target">
         <xsl:text>_blank</xsl:text>
       </xsl:attribute>
-      <xsl:text>Corrections or Suggestions?</xsl:text>
+      <xsl:text>Comments, corrections or suggestions?</xsl:text>
     </xsl:element>
+    <span class="feedback-link">(GT login required)</span>
   </div>
 </xsl:template>
 
