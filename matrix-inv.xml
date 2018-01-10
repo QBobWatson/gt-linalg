@@ -591,7 +591,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
 
    <example>
      <title>Rotation</title>
-     <idx><h>Rotation</h><h>counterclockwise by <m>90^\circ</m></h><h>inverse of</h></idx>
+     <idx><h>Rotation</h><h>counterclockwise by <m>45^\circ</m></h></idx>
      <statement>
        <p>Let <m>T\colon\R^2\to\R^2</m> be counterclockwise rotation by <m>45^\circ</m>.  Is <m>T</m> invertible?  If so, what is <m>T\inv</m>?</p>
      </statement>
@@ -817,7 +817,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
 
    <example>
      <title>Rotation</title>
-     <idx><h>Rotation</h><h>counterclockwise by <m>90^\circ</m></h><h>inverse of</h></idx>
+     <idx><h>Rotation</h><h>counterclockwise by <m>45^\circ</m></h></idx>
      <statement>
        <p>Let <m>T\colon\R^2\to\R^2</m> be counterclockwise rotation by <m>45^\circ</m>.  Is <m>T</m> invertible?  If so, what is <m>T\inv</m>?</p>
      </statement>
