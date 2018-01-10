@@ -147,7 +147,7 @@ the license is included in gfdl.xml.
   </specialcase>
 
   <p>
-    When does a parallelepiped have zero volume?  This can happen only if the parallelepiped is <q>flat</q>, i.e., it is <q>squashed</q> into a lower dimension.
+    When does a parallelepiped have zero volume?  This can happen only if the parallelepiped is flat, i.e., it is squashed into a lower dimension.
     <latex-code>
 \begin{tikzpicture}[thin border nodes, baseline=0]
   \draw[line width=1mm, seq-orange] (-1,-.5) to["$P$"' black] (2,1);
@@ -251,7 +251,7 @@ the license is included in gfdl.xml.
 \begin{tikzpicture}[thin border nodes, scale=1.3]
   \filldraw[fill=seq-orange, fill opacity=.2, very thin]
     (0,0) -- (1,2) -- (3,3) -- (2,1) -- cycle;
-  \draw[line width=1mm, seq-blue] (0,0) to["base"' pos=.3] (2,1);
+  \draw[line width=1mm, seq-blue] (0,0) to["base"' {pos=.3,sloped}] (2,1);
   \draw[vector] (0,0) -- node[auto]{$v_2$} (1,2);
   \draw[vector, opacity=.75] (0,0) -- node[auto,swap,opacity=1,pos=.7]{$v_1$} (2,1);
   \draw[dashed, very thick, seq-red] (1,2) to["height"] (8/5,4/5);
@@ -282,17 +282,45 @@ the license is included in gfdl.xml.
               \usetikzlibrary{math}
             </latex-code>
             <latex-code>
-\begin{tikzpicture}[thin border nodes, scale=1.3]
+\begin{tikzpicture}[thin border nodes, scale=1.3, baseline=1.3cm]
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (1,2) -- (3,3) -- (2,1) -- cycle;
+  \draw[line width=1mm, seq-blue] (0,0) to["base"' {pos=.3,sloped}] (2,1);
+  \draw[vector] (0,0) -- node[auto]{$v_2$} (1,2);
+  \draw[vector, opacity=.75] (0,0) -- node[auto,swap,opacity=1,pos=.7]{$v_1$} (2,1);
+  \draw[dashed, very thick, seq-red] (1,2) to["height"] (8/5,4/5);
+\end{tikzpicture}
+$\quad\xrightarrow{\phantom{MMMM}}\quad$
+\begin{tikzpicture}[thin border nodes, scale=1.3, baseline=1.3cm]
   \filldraw[fill=seq-orange, fill opacity=.2, very thin]
     (0,0) -- (0,3/2) -- (2,5/2) -- (2,1) -- cycle;
-  \draw[line width=1mm, seq-blue] (0,0) to["base"' pos=.3] (2,1);
+  \draw[line width=1mm, seq-blue] (0,0) to["base"' {pos=.3,sloped}] (2,1);
   \draw[vector, opacity=.5] (0,0) -- node[auto,swap,pos=.8]{$v_2$} (1,2);
   \draw[vector] (0,0) -- node[auto]{$v_2-.5v_1$} (0,3/2);
   \draw[vector, opacity=.75] (0,0) -- node[auto,swap,opacity=1,pos=.7]{$v_1$} (2,1);
   \draw[dashed, very thick, seq-red] (0,3/2) to["height"] (3/5,3/10);
+\end{tikzpicture}\\[3mm]
+\begin{tikzpicture}[thin border nodes, myxyz, scale=2, baseline=1.3cm]
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-blue, opacity=.5, very thin]
+    (0,0,0) -- (0,-1,0) -- (1,-.8,0) -- (1,.2,0) -- cycle;
+  \node[seq-blue] at (.5,-.4,0) {base};
+  \filldraw[fill=seq-orange, opacity=.2, shift={(0,-1,0)}, very thin]
+    (0,0,0) -- (1,.2,0) -- (1.3,.2,1) -- (.3,0,1) -- cycle;
+  \draw[dashed, very thick, seq-red] (.3,0,1) to["height" pos=.55] (.2,-.2,0);
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0,0) -- (1,.2,0) -- (1.3,.2,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={(1,.2,0)}, very thin]
+    (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={(.3,0,1)}, very thin]
+    (0,0,0) -- (0,-1,0) -- (1,-.8,0) -- (1,.2,0) -- cycle;
+  \draw[vector] (0,0,0) -- node[auto,swap] {$v_1$} (1,.2,0);
+  \draw[vector, opacity=.4] (0,0,0) -- node[auto,pos=.4] {$v_2$} (0,-1,0);
+  \draw[vector] (0,0,0) -- node[auto] {$v_3$} (.3,0,1);
 \end{tikzpicture}
-\qquad\qquad
-\begin{tikzpicture}[thin border nodes, myxyz, scale=2]
+$\quad\xrightarrow{\phantom{MMMM}}\quad$
+\begin{tikzpicture}[thin border nodes, myxyz, scale=2, baseline=1.3cm]
   \def\va{(1,.2,0)}
   \def\vb{(0,-1,0)}
   \def\vc{(.8,.1,1)}
@@ -331,17 +359,45 @@ the license is included in gfdl.xml.
               \usetikzlibrary{math}
             </latex-code>
             <latex-code>
-\begin{tikzpicture}[thin border nodes, scale=1.3]
+\begin{tikzpicture}[thin border nodes, scale=1.3, baseline=1.3cm]
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (1,2) -- (3,3) -- (2,1) -- cycle;
+  \draw[line width=1mm, seq-blue] (0,0) to["base"' {pos=.3, sloped}] (2,1);
+  \draw[vector] (0,0) -- node[auto]{$v_2$} (1,2);
+  \draw[vector, opacity=.75] (0,0) -- node[auto,swap,opacity=1,pos=.7]{$v_1$} (2,1);
+  \draw[dashed, very thick, seq-red] (1,2) to["height"] (8/5,4/5);
+\end{tikzpicture}
+$\quad\xrightarrow{\phantom{MMMM}}\quad$
+\begin{tikzpicture}[thin border nodes, scale=1.3, baseline=1.3cm]
   \filldraw[fill=seq-orange, fill opacity=.2, very thin]
     (0,0) -- (.75,1.5) -- (2.75,2.5) -- (2,1) -- cycle;
-  \draw[line width=1mm, seq-blue] (0,0) to["base"' pos=.3] (2,1);
+  \draw[line width=1mm, seq-blue] (0,0) to["base"' {pos=.3, sloped}] (2,1);
   \draw[vector, opacity=.5] (0,0) -- (1,2);
   \draw[vector] (0,0) -- node[auto]{$\frac34v_2$} (.75,1.5);
   \draw[vector, opacity=.75] (0,0) -- node[auto,swap,opacity=1,pos=.7]{$v_1$} (2,1);
   \draw[dashed, very thick, seq-red] (.75,1.5) to["$\frac34$\small height"] ($.75*(8/5,4/5)$);
+\end{tikzpicture}\\[3mm]
+\begin{tikzpicture}[thin border nodes, myxyz, scale=2, baseline=1.3cm]
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-blue, opacity=.5, very thin]
+    (0,0,0) -- (0,-1,0) -- (1,-.8,0) -- (1,.2,0) -- cycle;
+  \node[seq-blue] at (.5,-.4,0) {base};
+  \filldraw[fill=seq-orange, opacity=.2, shift={(0,-1,0)}, very thin]
+    (0,0,0) -- (1,.2,0) -- (1.3,.2,1) -- (.3,0,1) -- cycle;
+  \draw[dashed, very thick, seq-red] (.3,0,1) to["height" pos=.55] (.2,-.2,0);
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0,0) -- (1,.2,0) -- (1.3,.2,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={(1,.2,0)}, very thin]
+    (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={(.3,0,1)}, very thin]
+    (0,0,0) -- (0,-1,0) -- (1,-.8,0) -- (1,.2,0) -- cycle;
+  \draw[vector] (0,0,0) -- node[auto,swap] {$v_1$} (1,.2,0);
+  \draw[vector, opacity=.4] (0,0,0) -- node[auto,pos=.4] {$v_2$} (0,-1,0);
+  \draw[vector] (0,0,0) -- node[auto] {$v_3$} (.3,0,1);
 \end{tikzpicture}
-\qquad
-\begin{tikzpicture}[thin border nodes, myxyz, scale=2, baseline=-.2]
+$\quad\xrightarrow{\phantom{MMMM}}\quad$
+\begin{tikzpicture}[thin border nodes, myxyz, scale=2, baseline=1.3cm]
   \def\va{(1,.2,0)}
   \def\vb{(0,-1,0)}
   \def\vc{(.4,0,4/3)}
@@ -377,14 +433,20 @@ the license is included in gfdl.xml.
           <li>
             Swapping two rows of <m>A</m> just reorders the vectors <m>v_1,v_2,\ldots,v_n</m>, hence has no effect on the parallelepiped determined by those vectors.  Thus, <m>\vol(A)</m> is unchanged by row swaps.
             <latex-code>
-\begin{tikzpicture}[thin border nodes, scale=1.3]
+\begin{tikzpicture}[thin border nodes, scale=1.3, baseline=1.3cm]
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0) -- (1,2) -- (3,3) -- (2,1) -- cycle;
+  \draw[vector] (0,0) -- node[auto]{$v_2$} (1,2);
+  \draw[vector] (0,0) -- node[auto,swap]{$v_1$} (2,1);
+\end{tikzpicture}
+$\quad\xrightarrow{\phantom{MMMM}}\quad$
+\begin{tikzpicture}[thin border nodes, scale=1.3, baseline=1.3cm]
   \filldraw[fill=seq-orange, fill opacity=.2, very thin]
     (0,0) -- (1,2) -- (3,3) -- (2,1) -- cycle;
   \draw[vector] (0,0) -- node[auto]{$v_1$} (1,2);
   \draw[vector] (0,0) -- node[auto,swap]{$v_2$} (2,1);
-\end{tikzpicture}
-\qquad
-\begin{tikzpicture}[thin border nodes, myxyz, scale=2]
+\end{tikzpicture}\\[3mm]
+\begin{tikzpicture}[thin border nodes, myxyz, scale=2, baseline=1.3cm]
   \filldraw[fill=seq-orange, opacity=.2, very thin]
     (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
   \filldraw[fill=seq-orange, opacity=.2, very thin]
@@ -401,6 +463,24 @@ the license is included in gfdl.xml.
   \draw[vector, opacity=.4] (0,0,0) -- node[auto] {$v_3$} (0,-1,0);
   \draw[vector] (0,0,0) -- node[auto] {$v_2$} (.3,0,1);
 \end{tikzpicture}
+$\quad\xrightarrow{\phantom{MMMM}}\quad$
+\begin{tikzpicture}[thin border nodes, myxyz, scale=2, baseline=1.3cm]
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, opacity=.2, very thin]
+    (0,0,0) -- (0,-1,0) -- (1,-.8,0) -- (1,.2,0) -- cycle;
+  \filldraw[fill=seq-orange, opacity=.2, shift={(0,-1,0)}, very thin]
+    (0,0,0) -- (1,.2,0) -- (1.3,.2,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, very thin]
+    (0,0,0) -- (1,.2,0) -- (1.3,.2,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={(1,.2,0)}, very thin]
+    (0,0,0) -- (0,-1,0) -- (.3,-1,1) -- (.3,0,1) -- cycle;
+  \filldraw[fill=seq-orange, fill opacity=.2, shift={(.3,0,1)}, very thin]
+    (0,0,0) -- (0,-1,0) -- (1,-.8,0) -- (1,.2,0) -- cycle;
+  \draw[vector] (0,0,0) -- node[auto,swap] {$v_1$} (1,.2,0);
+  \draw[vector, opacity=.4] (0,0,0) -- node[auto] {$v_2$} (0,-1,0);
+  \draw[vector] (0,0,0) -- node[auto] {$v_3$} (.3,0,1);
+\end{tikzpicture}
             </latex-code>
           </li>
           <li>
@@ -409,6 +489,7 @@ the license is included in gfdl.xml.
         </ol>
         Since <m>|\det|</m> is the only function satisfying these properties, we have
         <me>\vol(P) = \vol(A) = |\det(A)|.</me>
+        This completes the proof.
       </p>
     </proof>
   </theorem>
@@ -446,7 +527,7 @@ the license is included in gfdl.xml.
   \node at (6, 1.5) {area${}=\left|\det\mat{a b; c d}\right| = |ad-bc|$};
 \end{tikzpicture}
       </latex-code>
-      It is fun geometry problem to prove this formula by hand.  [Hint: first think about the case when the first row of <m>A</m> lies on the <m>x</m>-axis.]
+      It is perhaps surprising that it is possible to compute the area of a parallelogram without trigonometry.  It is a fun geometry problem to prove this formula by hand.  [Hint: first think about the case when the first row of <m>A</m> lies on the <m>x</m>-axis.]
     </p>
   </specialcase>
 
@@ -547,6 +628,10 @@ the license is included in gfdl.xml.
       </p>
     </solution>
   </example>
+
+  <p>
+    You might be wondering: if the absolute value of the determinant is a volume, what is the geometric meaning of the determinant without the absolute value?  The next Remark explains that we can think of the determinant as a <em>signed</em> volume.  If you have taken an integral calculus course, you probably computed negative areas under curves; the idea here is similar.
+  </p>
 
   <remark>
     <title>Signed volumes</title>
@@ -650,12 +735,13 @@ the license is included in gfdl.xml.
     <title>Volumes of Regions</title>
 
     <p>
-      Let <m>A</m> be an <m>n\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_n</m>, and let <m>T\colon\R^n\to\R^n</m> be the associated <xref ref="matrix-trans-defn-of" text="title">matrix transformation</xref> <m>T(x)=Ax</m>.  Then <m>T(e_1)=v_1</m> and <m>T(e_2)=v_2</m>, so <m>T</m> takes the unit cube to the parallelepiped determined by <m>v_1,v_2,\ldots,v_n</m>:
+      Let <m>A</m> be an <m>n\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_n</m>, and let <m>T\colon\R^n\to\R^n</m> be the associated <xref ref="matrix-trans-defn-of" text="title">matrix transformation</xref> <m>T(x)=Ax</m>.  Then <m>T(e_1)=v_1</m> and <m>T(e_2)=v_2</m>, so <m>T</m> takes the unit cube <m>C</m> to the parallelepiped <m>P</m> determined by <m>v_1,v_2,\ldots,v_n</m>:
       <latex-code>
 \begin{tikzpicture}[thin border nodes, scale=1.3]
   \begin{scope}[scale=1.7, yshift=.3cm]
   \filldraw[fill=seq-orange, fill opacity=.2, very thin]
     (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+  \node at (.5, .5) {$C$};
   \draw[vector] (0,0) -- node[auto]{$e_2$} (0,1);
   \draw[vector, opacity=.75] (0,0) -- node[auto,swap]{$e_1$} (1,0);
   \coordinate (a) at (1.2, .5);
@@ -671,14 +757,27 @@ the license is included in gfdl.xml.
     (0,0) -- (1,2) -- (3,3) -- (2,1) -- cycle;
   \draw[vector] (0,0) -- node[auto]{$v_2$} (1,2);
   \draw[vector] (0,0) -- node[auto,swap]{$v_1$} (2,1);
+  \node at (1.5, 1.5) {$P$};
   \end{scope}
 \end{tikzpicture}
       </latex-code>
-      Since the unit cube has volume <m>1</m> and its image has volume <m>|\det(A)|</m>, the transformation <m>T</m> scaled the volume of the cube by a factor of <m>|\det(A)|</m>.
+      Since the unit cube has volume <m>1</m> and its image has volume <m>|\det(A)|</m>, the transformation <m>T</m> scaled the volume of the cube by a factor of <m>|\det(A)|</m>.  To rephrase:
+    </p>
+
+    <warning>
+      <p>
+        If <m>A</m> is an <m>n\times n</m> matrix with corresponding matrix transformation <m>T\colon\R^n\to\R^n</m>, and if <m>C</m> is the unit cube in <m>\R^n</m>, then the volume of <m>T(C)</m> is <m>|\det(A)|.</m>
+      </p>
+    </warning>
+
+    <p>
+      <notation><usage>T(S)</usage><description>The image of a region under a transformation</description></notation>
+      The notation <m>T(S)</m> means the image of the region <m>S</m> under the transformation <m>T</m>.  In <xref ref="set-builder-notation" text="title">set builder notation</xref>, this is the subset
+      <me>T(S) = \bigl\{T(x)\mid x \text{ in } S\bigr\}. </me>
     </p>
 
     <p>
-      In fact, <m>T</m> scales the volume of <em>any</em> region in <m>\R^n</m> by the same factor, even for <q>curvy</q> regions.
+      In fact, <m>T</m> scales the volume of <em>any</em> region in <m>\R^n</m> by the same factor, even for curvy regions.
     </p>
 
     <theorem xml:id="det-vol-regions">
