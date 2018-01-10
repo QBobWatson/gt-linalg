@@ -25,7 +25,7 @@ the license is included in gfdl.xml.
       In this Section, we give a recursive formula for the determinant of a matrix, called a <em>cofactor expansion</em>.  The formula is recursive in that we will compute the determinant of an <m>n\times n</m> matrix <em>assuming</em> we already know how to compute the determinant of an <m>(n-1)\times(n-1)</m> matrix.
     </p>
     <p>
-      At the end is a supplementary Subsection on Cramer<rsq/>s rule and a cofactor formula for the inverse matrix.
+      At the end is a supplementary Subsection on Cramer<rsq/>s rule and a cofactor formula for the inverse of a matrix.
     </p>
   </introduction>
 
@@ -345,7 +345,15 @@ the license is included in gfdl.xml.
   </theorem>
 
   <p>
-    Note that the Theorem actually gives <m>2n</m> different formulas for the determinant: one for each row and one for each column.  Remember, the determinant of a matrix is just a number, defined by the four <xref ref="det-defn-the-defn">defining properties</xref>, so to be clear:
+    Note that the Theorem actually gives <m>2n</m> different formulas for the determinant: one for each row and one for each column.  For instance, the formula for cofactor expansion along the first column is
+    <me>
+      \begin{split}
+      \det(A) = \sum_{i=1}^n a_{i1}C_{i1}
+      \amp= a_{11}C_{11} + a_{21}C_{21} + \cdots + a_{n1}C_{n1} \\
+      \amp= a_{11}\det(A_{11}) - a_{21}\det(A_{21}) + a_{31}\det(A_{31}) - \cdots \pm a_{n1}\det(A_{n1}).
+      \end{split}
+    </me>
+    Remember, the determinant of a matrix is just a number, defined by the four <xref ref="det-defn-the-defn">defining properties</xref>, so to be clear:
   </p>
 
   <warning>
@@ -610,7 +618,7 @@ the license is included in gfdl.xml.
   </specialcase>
 
   <p>
-    The formula for the determinant of a <m>3\times 3</m> matrix looks too complicated to memorize outright.  Fortunately, there is a useful mnemonic device:
+    The formula for the determinant of a <m>3\times 3</m> matrix looks too complicated to memorize outright.  Fortunately, there is the following mnemonic device.
   </p>
 
   <warning>
@@ -663,7 +671,7 @@ the license is included in gfdl.xml.
   </warning>
 
   <p>
-    Alternatively, it is not necessary to repeat the first two columns if you allow your diagonals to <q>wrap around</q> the sides of a matrix.
+    Alternatively, it is not necessary to repeat the first two columns if you allow your diagonals to <q>wrap around</q> the sides of a matrix, like in <url href="https://en.wikipedia.org/wiki/Pac-Man">Pac-Man</url> or <url href="https://en.wikipedia.org/wiki/Asteroids_(video_game)">Asteroids</url>.
   </p>
 
   <example>
@@ -718,7 +726,7 @@ the license is included in gfdl.xml.
 
 
   <p>
-    Cofactor expansions are most useful when computing the determinant of a matrix that has a row or column with several zero entries.  Indeed, if the <m>(i,j)</m> entry of <m>A</m> is zero, then there is no reason to compute the <m>(i,j)</m> cofactor.
+    Cofactor expansions are most useful when computing the determinant of a matrix that has a row or column with several zero entries.  Indeed, if the <m>(i,j)</m> entry of <m>A</m> is zero, then there is no reason to compute the <m>(i,j)</m> cofactor.  In the following Example we compute the determinant of a matrix with two zeros in the fourth column by expanding cofactors along the fourth column.
   </p>
 
   <example>
@@ -734,7 +742,7 @@ the license is included in gfdl.xml.
           \begin{split}
           \det(A) \amp= 2\det\mat{-2 -3 2;1 3 -2;-1 6 4}
           -5 \det \mat{2 5 -3;1 3 -2;-1 6 4} \\
-          \amp\qquad+ 0\det\mat\cdots + 0\det\mat\cdots.
+          \amp\qquad - 0\det(\text{don't care}) + 0\det(\text{don't care}).
           \end{split}
         </me>
         We only have to compute two cofactors.  We can find these determinants using any method we wish; for the sake of illustration, we will expand cofactors on one and use the formula for the <m>3\times 3</m> determinant on the other.
@@ -855,7 +863,7 @@ the license is included in gfdl.xml.
   </subsection>
 
   <subsection hidden="true" xml:id="det-cofact-cramer-ss">
-    <title>Cramer<rsq/>s Rule</title>
+    <title>Cramer<rsq/>s Rule and Matrix Inverses</title>
 
     <p>
       Recall from this <xref ref="matrix-inv-22"/> that one can compute the determinant of a <m>2\times 2</m> matrix using the rule
@@ -895,7 +903,7 @@ the license is included in gfdl.xml.
                  C_{1,n-1} C_{2,n-1} \cdots, C_{n-1,n-1} C_{n,n-1};
                  C_{1n} C_{2n} \cdots, C_{n-1,n} C_{nn}}.
       </me>
-      Note that the <m>(i,j)</m> cofactor <m>C_{ij}</m> goes in the <m>(j,i)</m> entry the adjugate matrix, not the <m>(i,j)</m> entry.
+      Note that the <m>(i,j)</m> cofactor <m>C_{ij}</m> goes in the <m>(j,i)</m> entry the adjugate matrix, not the <m>(i,j)</m> entry: the adjugate matrix is the <em>transpose</em> of the cofactor matrix.
     </p>
 
     <remark>
