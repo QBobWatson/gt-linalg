@@ -60,6 +60,7 @@ cp -r "$base_dir/gt-text-common/fonts/"* "$static_dir/fonts"
 cp "$compile_dir/images/"* "$static_dir/images"
 cp -r "$compile_dir/demos" "$build_dir/demos"
 ln -s "static/images" "$build_dir/images"
+cp "$compile_dir/extra/google9ccfcae89045309c.html" "$build_dir"
 
 echo "Converting xml to html..."
 cat >xsl/git-hash.xsl <<EOF
@@ -84,6 +85,12 @@ python3 "$pretex" --chunk-size $CHUNKSIZE --preamble "$build_dir/preamble.tex" \
     || die "Can't process html!"
 mkdir "$figure_img_dir"
 cp pretex-cache/*.png "$figure_img_dir"
+
+echo "Cleaning up..."
+rm "$build_dir"/preamble.tex
+rm "$build_dir"/demos/*.mako
+rm "$build_dir"/demos/js/*.coffee
+rm "$build_dir"/demos/generate.py
 
 echo "Build successful!  Open or reload"
 echo "     $build_dir/index.html"

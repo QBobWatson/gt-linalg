@@ -50,6 +50,10 @@ Copyright 2017 Georgia Institute of Technology
       textwidth=300mm, textheight=300mm, ignoreall}
   </latex-image-preamble>
 
-  <!-- TODO: Google custom search -->
+  <search>
+    <google>
+      <cx>003308934872512483719:xkt6y7nrxhk</cx>
+    </google>
+  </search>
 
 </docinfo>
