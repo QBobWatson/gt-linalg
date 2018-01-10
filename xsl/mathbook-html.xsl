@@ -11,6 +11,7 @@
 >
 
 <xsl:import href="../../mathbook/xsl/mathbook-html.xsl" />
+<xsl:import href="git-hash.xsl" />
 
 <!-- JDR: for caching -->
 <xsl:param name="debug.datedfiles">no</xsl:param>
@@ -457,5 +458,25 @@
     </xsl:choose>
 </xsl:template>
 
+<!-- JDR: feedback link -->
+<xsl:template name="feedback-link">
+  <div class="feedback-link">
+    <xsl:element name="a">
+      <xsl:attribute name="href">
+        <xsl:text>https://github.gatech.edu/math-online-textbooks/gt-linalg/issues/new?title=Feedback%20on%20</xsl:text>
+        <xsl:apply-templates select="." mode="internal-id" />
+        <xsl:text>&amp;body=In%20reference%20to%20version%20</xsl:text>
+        <xsl:call-template name="git-hash" />
+      </xsl:attribute>
+      <xsl:attribute name="class">
+        <xsl:text>feedback-link</xsl:text>
+      </xsl:attribute>
+      <xsl:attribute name="target">
+        <xsl:text>_blank</xsl:text>
+      </xsl:attribute>
+      <xsl:text>Corrections or Suggestions?</xsl:text>
+    </xsl:element>
+  </div>
+</xsl:template>
 
 </xsl:stylesheet>

@@ -62,6 +62,16 @@ cp -r "$compile_dir/demos" "$build_dir/demos"
 ln -s "static/images" "$build_dir/images"
 
 echo "Converting xml to html..."
+cat >xsl/git-hash.xsl <<EOF
+<?xml version='1.0'?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
+    xmlns:exsl="http://exslt.org/common"
+    extension-element-prefixes="exsl">
+  <xsl:template name="git-hash">
+    <xsl:text>$(git rev-parse HEAD)</xsl:text>
+  </xsl:template>
+</xsl:stylesheet>
+EOF
 xsltproc -o "$build_dir/" --xinclude \
          "$compile_dir/xsl/mathbook-html.xsl" linalg.xml \
     || die "xsltproc failed!"
