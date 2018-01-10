@@ -53,6 +53,8 @@ the license is included in gfdl.xml.
     </p>
 
     <definition xml:id="linear-trans-defn">
+      <idx><h>Linear transformation</h><h>definition of</h></idx>
+      <idx><h>Transformation</h><h>linear</h><see>Linear transformation</see></idx>
       <statement>
         <p>
           A <term>linear transformation</term> is a transformation <m>T\colon\R^n\to\R^m</m> satisfying
@@ -66,6 +68,7 @@ the license is included in gfdl.xml.
     </definition>
 
     <p>
+      <idx><h>Matrix transformation</h><h>linearity of</h></idx>
       Let <m>T\colon\R^n\to\R^m</m> be a matrix transformation: <m>T(x)=Ax</m> for an <m>m\times n</m> matrix <m>A</m>.  By this <xref ref="matrix-linearity"/>, we have
       <md>
         <mrow>T(u + v) = A(u + v) &amp;= Au + Av = T(u) + T(v)</mrow>
@@ -80,6 +83,7 @@ the license is included in gfdl.xml.
 
     <fact hide-type="true">
       <title>Facts about linear transformations</title>
+      <idx><h>Linear transformation</h><h>basic facts</h></idx>
       <statement>
         <p>
           Let <m>T\colon\R^n\to\R^m</m> be a linear transformation.  Then:
@@ -120,6 +124,7 @@ the license is included in gfdl.xml.
     </fact>
 
     <p>
+      <idx><h>Superposition principle</h></idx>
       In engineering, the second Fact is called the <em>superposition principle</em>.
       For example, <m>T(cu + dv) = cT(u) + dT(v)</m> for any vectors <m>u,v</m> and any scalars <m>c,d</m>.  To restate the first Fact:
     </p>
@@ -302,6 +307,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
+      <idx><h>Linear transformation</h><h>when defined by a formula</h></idx>
       One can show that, if a transformation is defined by formulas in the coordinates as in the above Example, then the transformation is linear if and only if each coordinate is a linear expression in the variables with no constant term.
     </p>
 
@@ -318,6 +324,7 @@ the license is included in gfdl.xml.
 
     <example>
       <title>More non-linear transformations</title>
+      <idx><h>Linear transformation</h><h>verifying nonlinearity</h></idx>
       <statement>
         <p>
           Verify that the following transformations from <m>\R^2</m> to <m>\R^2</m> are not linear:
@@ -375,7 +382,9 @@ the license is included in gfdl.xml.
 
     <warning xml:id="defn-unit-coord-vectors" type-name="Notation">
       <title>Unit coordinate vectors</title>
+      <idx><h>Unit coordinate vectors</h><h>definition of</h></idx>
       <p>
+        <notation><usage>e_1,e_2,\ldots</usage><description>Unit coordinate vectors</description></notation>
         The <term>unit coordinate vectors in <m>\R^n</m></term> are the <m>n</m> vectors
         <me>
           e_1=\vec{1 0 \vdots, 0 0},\quad
@@ -397,6 +406,7 @@ the license is included in gfdl.xml.
     </p>
 
     <p>
+      <idx><h>Unit coordinate vectors</h><h>picture of</h></idx>
       The unit coordinate vectors in <m>\R^2</m> and <m>\R^3</m> are pictured below.
       <latex-code>
 \begin{tikzpicture}[thin border nodes]
@@ -426,6 +436,8 @@ the license is included in gfdl.xml.
 
     <fact hide-type="true" xml:id="linear-trans-pick-columns">
       <title>Multiplying a matrix by the unit coordinate vectors</title>
+      <idx><h>Unit coordinate vectors</h><h>and matrix columns</h></idx>
+      <idx><h>Matrix-vector product</h><h>with unit coordinate vectors</h></idx>
       <p>
         If <m>A</m> is an <m>m\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_m</m>, then <m>\color{red}Ae_i = v_i</m> for each <m>i=1,2,\ldots,n</m>:
         <me>
@@ -445,6 +457,10 @@ the license is included in gfdl.xml.
     </p>
 
     <definition xml:id="linear-trans-identity-mat">
+      <idx><h>Identity matrix</h><h>definition of</h></idx>
+      <idx><h>Identity matrix</h><h>and unit coordinate vectors</h></idx>
+      <idx><h>Unit coordinate vectors</h><h>columns of the identity matrix</h></idx>
+      <notation><usage>I_n</usage><description><m>n\times n</m> identity matrix</description></notation>
       <statement>
         <p>
           The <term><m>n\times n</m> identity matrix</term> is the matrix <m>I_n</m> whose columns are the <m>n</m> unit coordinate vectors in <m>\R^n</m>:
@@ -470,6 +486,8 @@ the license is included in gfdl.xml.
 
     <theorem xml:id="matrix-of-transformation">
       <title>The matrix of a linear transformation</title>
+      <idx><h>Linear transformation</h><h>standard matrix of</h></idx>
+      <idx><h>Standard matrix</h><see>Linear transformation</see></idx>
       <statement>
         <p>
           Let <m>T\colon\R^n\to\R^m</m> be a linear transformation.  Let <m>A</m> be the <m>m\times n</m> matrix
@@ -498,11 +516,14 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
+      <idx><h>Linear transformation</h><h>are matrix transformations</h></idx>
       <p>Matrix transformations are the same as linear transformations.</p>
     </warning>
 
     <note hide-type="true">
       <title>Dictionary</title>
+      <idx><h>Linear transformation</h><h>dictionary</h></idx>
+      <idx><h>Matrix transformation</h><h>dictionary</h></idx>
       <p>
         Linear transformations are the same as matrix transformations, which come from matrices.  The correspondence can be summarized in the following dictionary.
         <latex-code>
@@ -523,6 +544,7 @@ the license is included in gfdl.xml.
 
     <example>
       <title>The matrix of a dilation</title>
+      <idx><h>Dilation</h></idx>
       <statement>
         <p>Define <m>T\colon\R^2\to\R^2</m> by <m>T(x)=1.5x</m>.  Find the standard matrix <m>A</m> for <m>T</m>.</p>
       </statement>
@@ -543,6 +565,7 @@ the license is included in gfdl.xml.
 
     <example xml:id="linear-trans-rotation-matrix">
       <title>The matrix of a rotation</title>
+      <idx><h>Rotation</h><h>counterclockwise by <m>\theta</m></h></idx>
       <statement>
         <p>
           Define <m>T\colon\R^2\to\R^2</m> by
@@ -743,6 +766,8 @@ $\xrightarrow{\text{project $yz$}}$
 
     <example xml:id="linear-trans-matrix-of-id">
       <title>The standard matrix of the identity transformation</title>
+      <idx><h>Identity matrix</h><h>and identity transformation</h></idx>
+      <idx><h>Identity transformation</h><h>and identity matrix</h></idx>
       <statement>
         <p>Verify that the identity transformation <m>\Id_{\R^n}\colon\R^n\to\R^n</m> is linear, and compute its standard matrix.
         </p>

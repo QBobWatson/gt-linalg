@@ -29,13 +29,13 @@ the license is included in gfdl.xml.
     </p>
 
     <essential xml:id="dimension-defn-basis">
+      <idx><h>Basis</h><h>definition of</h></idx>
       <statement>
         <p>Let <m>V</m> be a subspace of <m>\R^n</m>.  A <term>basis</term> of <m>V</m> is a set of vectors <m>\{v_1,v_2,\ldots,v_m\}</m> in <m>V</m> such that:
         <ol>
           <li><m>V = \Span\{v_1,v_2,\ldots,v_m\}</m>, and</li>
           <li>the set <m>\{v_1,v_2,\ldots,v_m\}</m> is linearly independent.</li>
         </ol>
-        The number of vectors in a basis is the <term>dimension</term> of <m>V</m>, and is written <m>\dim V</m>.
         </p>
       </statement>
     </essential>
@@ -45,12 +45,15 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
+      <idx><h>Basis</h><h>infinitely many</h></idx>
       <p>A subspace generally has <em>infinitely many</em> different bases, but they all contain the same number of vectors.</p>
     </warning>
 
     <p>We leave it as an exercise to prove that any two bases have the same number of vectors; one might want to wait until after learning the invertible matrix theorem in <xref ref="matrix-inverses"/>.</p>
 
     <essential xml:id="dimension-defn-dimension">
+      <idx><h>Dimension</h><h>definition of</h></idx>
+      <notation><usage>\dim V</usage><description>Dimension of a subspace</description></notation>
       <statement>
         <p>
           Let <m>V</m> be a subspace of <m>\R^n</m>.  The number of vectors in any basis of <m>V</m> is called the <term>dimension</term> of <m>V</m>, and is written <m>\dim V</m>.
@@ -120,6 +123,7 @@ the license is included in gfdl.xml.
 
     <example xml:id="dimension-eg-Rn">
       <title>The standard basis of <m>\R^n</m></title>
+      <idx><h>Basis</h><h>of <m>\R^n</m></h></idx>
       <p>
         One shows exactly as in the above <xref ref="dimension-eg-R2"/> that the unit coordinate vectors
         <me>e_1=\vec{1 0 \vdots, 0 0},\quad e_2=\vec{0 1 \vdots, 0 0}, \quad\ldots,\quad
@@ -132,6 +136,7 @@ the license is included in gfdl.xml.
     </example>
 
     <specialcase xml:id="dimension-eg-Rn-any">
+      <idx><h>Basis</h><h>of <m>\R^n</m></h></idx>
       <p>
         The previous <xref ref="dimension-eg-Rn"/> implies that any basis for <m>\R^n</m> has <m>n</m> vectors in it.  Let <m>v_1,v_2,\ldots,v_n</m> be vectors in <m>\R^n</m>, and let <m>A</m> be the <m>n\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_n</m>.
           <ol>
@@ -206,6 +211,8 @@ the license is included in gfdl.xml.
       <p>First we show how to compute a basis for the column space of a matrix.</p>
 
     <theorem xml:id="dimension-basis-colspace">
+      <idx><h>Basis</h><h>of a column space</h></idx>
+      <idx><h>Column space</h><h>basis of</h><see>Basis</see></idx>
       <statement>
         <p>The pivot columns of a matrix <m>A</m> form a basis for <m>\Col(A)</m>.</p>
       </statement>
@@ -269,12 +276,14 @@ the license is included in gfdl.xml.
       <title>A basis of a span</title>
 
     <p>
+      <idx><h>Basis</h><h>of a span</h></idx>
+      <idx><h>Span</h><h>basis of</h><see>Basis</see></idx>
       Computing a basis for a span is the same as computing a basis for a column space.  Indeed, the span of finitely many vectors <m>v_1,v_2,\ldots,v_m</m> <em>is</em> the column space of a matrix, namely, the matrix <m>A</m> whose columns are <m>v_1,v_2,\ldots,v_m</m>:
       <me>A = \mat{| | ,, |; v_1 v_2 \cdots, v_m; | | ,, |}.</me>
     </p>
 
     <example xml:id="dimension-eg-basis-span">
-      <title>A basis for a span</title>
+      <title>A basis of a span</title>
       <statement>
         <p>
           Find a basis of the subspace
@@ -298,7 +307,7 @@ the license is included in gfdl.xml.
     </example>
 
     <example xml:id="dimension-eg-basis-span2">
-      <title>Another basis for the same span</title>
+      <title>Another basis of the same span</title>
       <statement>
         <p>
           Find a basis of the subspace
@@ -334,18 +343,20 @@ the license is included in gfdl.xml.
     <p>In order to compute a basis for the null space of a matrix, one has to find the parametric vector form of the solutions of the homogeneous equation <m>Ax=0</m>.</p>
 
     <theorem xml:id="dimension-basis-nulspace">
+      <idx><h>Basis</h><h>of a null space</h></idx>
+      <idx><h>Null space</h><h>basis of</h><see>Basis</see></idx>
       <statement>
-        <p>The vectors attached to the free variables in the parametric vector form of the solution set of <m>Ax=0</m> form a basis for <m>\Nul(A)</m>.</p>
+        <p>The vectors attached to the free variables in the parametric vector form of the solution set of <m>Ax=0</m> form a basis of <m>\Nul(A)</m>.</p>
       </statement>
     </theorem>
 
     <p>In lieu of a proof, we illustrate the Theorem with an example, and we leave it to the reader to generalize the argument.</p>
 
     <example xml:id="dimension-eg-basis-nul">
-      <title>A basis for a null space</title>
+      <title>A basis of a null space</title>
       <statement>
         <p>
-          Find a basis for the null space of the matrix
+          Find a basis of the null space of the matrix
           <me>A = \mat[r]{0 -1 1 2; 4 5 -2 -3; 0 -2 2 4}.</me>
         </p>
       </statement>

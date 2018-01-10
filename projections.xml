@@ -61,6 +61,8 @@ the license is included in gfdl.xml.
 
     <theorem xml:id="projections-decomp-exists">
       <title>Orthogonal decomposition</title>
+      <idx><h>Orthogonal decomposition</h><see>Orthogonal projection</see></idx>
+      <idx><h>Orthogonal projection</h><h>existence of</h></idx>
       <statement>
         <p>
           Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  Then we can write <m>x</m> as
@@ -88,6 +90,9 @@ the license is included in gfdl.xml.
     </theorem>
 
     <definition xml:id="projections-defn-of">
+      <idx><h>Orthogonal projection</h><h>definition of</h></idx>
+      <notation><usage>x_W</usage><description>Orthogonal projection of <m>x</m> onto <m>W</m></description></notation>
+      <notation><usage>x_{W^\perp}</usage><description>Orthogonal part of <m>x</m> with respect to <m>W</m></description></notation>
       <statement>
         <p>
           Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  The expression
@@ -102,6 +107,8 @@ the license is included in gfdl.xml.
     </p>
 
     <warning xml:id="projections-closest-vector">
+      <idx><h>Orthogonal projection</h><h>is the closest vector</h></idx>
+      <idx><h>Orthogonal projection</h><h>distance from</h></idx>
       <p>
         <ul>
           <li>
@@ -156,6 +163,7 @@ the license is included in gfdl.xml.
 
     <example xml:id="projections-eg-inW">
       <title>Orthogonal decomposition of a vector in <m>W</m></title>
+      <idx><h>Orthogonal projection</h><h>of a vector in <m>W</m></h></idx>
       <p>
         If <m>x</m> is in a subspace <m>W</m>, then the closest vector to <m>x</m> in <m>W</m> is itself, so <m>x = x_W</m> and <m>x_{W^\perp} = 0</m>.  Conversely, if <m>x = x_W</m> then <m>x</m> is contained in <m>W</m> because <m>x_W</m> is contained in <m>W</m>.
       </p>
@@ -163,6 +171,7 @@ the license is included in gfdl.xml.
 
     <example xml:id="projections-eg-inWperp">
       <title>Orthogonal decomposition of a vector in <m>W^\perp</m></title>
+      <idx><h>Orthogonal projection</h><h>of a vector in <m>W^\perp</m></h></idx>
       <p>
         If <m>W</m> is a subspace and  <m>x</m> is in <m>W^\perp</m>, then the orthogonal decomposition of <m>x</m> is <m>x = 0 + x</m>, where <m>0</m> is in <m>W</m> and <m>x</m> is in <m>W^\perp</m>.  It follows that <m>x_W = 0</m>.  Conversely, if <m>x_W = 0</m> then the orthogonal decomposition of <m>x</m> is <m>x = x_W + x_{W^\perp} = 0 + x_{W^\perp}</m>, so <m>x = x_{W^\perp}</m> is in <m>W^\perp</m>.
       </p>
@@ -197,6 +206,7 @@ the license is included in gfdl.xml.
     </p>
 
     <theorem xml:id="projections-ATA-formula">
+      <idx><h>Orthogonal projection</h><h>computation of</h><h>row reduction</h></idx>
       <statement>
         <p>
           Let <m>W</m> be a subspace of <m>\R^n</m>, let <m>v_1,v_2,\ldots,v_m</m> be a spanning set for <m>W</m> (e.g., a basis), and let <m>A</m> be the <m>n\times m</m> matrix with columns <m>v_1,v_2,\ldots,v_m</m>:
@@ -242,6 +252,8 @@ the license is included in gfdl.xml.
 
     <warning>
       <title>Recipe: Orthogonal projection onto a line</title>
+      <idx><h>Orthogonal projection</h><h>onto a line</h></idx>
+      <idx><h>Line</h><h>orthogonal projection onto</h></idx>
       <p>
         If <m>L = \Span\{u\}</m> is a line, then
         <me>
@@ -325,6 +337,7 @@ the license is included in gfdl.xml.
 
     <warning>
       <title>Recipe: Compute an orthogonal decomposition</title>
+      <idx><h>Orthogonal projection</h><h>computation of</h><h>row reduction</h></idx>
       <p>
         Let <m>W = \Span\{v_1,v_2,\ldots,v_m\}</m> and let <m>A</m> be the matrix with columns <m>v_1,v_2,\ldots,v_m</m>.  Here is a method to compute the orthogonal decomposition of a vector <m>x</m> with respect to <m>W</m>:
         <ol>
@@ -469,6 +482,8 @@ the license is included in gfdl.xml.
     </p>
 
     <corollary xml:id="projections-ATA-formula2">
+      <idx><h>Orthogonal projection</h><h>computation of</h><h>complicated matrix formula</h></idx>
+      <idx><h>Basis</h><h>and orthogonal projection</h></idx>
       <statement>
         <p>
           Let <m>W</m> be a subspace of <m>\R^n</m>, let <m>v_1,v_2,\ldots,v_m</m> be a basis for <m>W</m>, and let <m>A</m> be the <m>n\times m</m> matrix with columns <m>v_1,v_2,\ldots,v_m</m>:
@@ -530,6 +545,7 @@ the license is included in gfdl.xml.
 
   <subsection>
     <title>Orthogonal Projection</title>
+    <idx><h>Orthogonal projection</h><h>as a transformation</h></idx>
 
     <p>
       In this Subsection, we change perspective and think of the orthogonal projection <m>x_W</m> as a <em>function</em> of <m>x</m>.  This function turns out to be a linear transformation with many nice properties, and is a good example of a linear transformation which is not originally defined as a matrix transformation.
@@ -537,6 +553,10 @@ the license is included in gfdl.xml.
 
     <proposition hide-type="true" xml:id="projections-properties-of">
       <title>Properties of Orthogonal Projections</title>
+      <idx><h>Orthogonal projection</h><h>properties of</h></idx>
+      <idx><h>Orthogonal projection</h><h>linearity of</h></idx>
+      <idx><h>Orthogonal projection</h><h>composed with itself</h></idx>
+      <idx><h>Orthogonal projection</h><h>range of</h></idx>
       <statement>
         <p>
           Let <m>W</m> be a subspace of <m>\R^n</m>, and define <m>T\colon\R^n\to\R^n</m> by <m>T(x) = x_W</m>.  Then:
@@ -581,6 +601,8 @@ the license is included in gfdl.xml.
     </proposition>
 
     <p>
+      <idx><h>Orthogonal projection</h><h>standard matrix of</h></idx>
+      <idx><h>Linear transformation</h><h>standard matrix of</h><h>orthogonal projection</h></idx>
       We compute the standard matrix of the orthogonal projection in the same way as for <xref ref="matrix-of-transformation" text="title">any other transformation</xref>: by evaluating on the unit coordinate vectors.  In this case, this means projecting the unit coordinate vectors onto the subspace.
     </p>
 
@@ -707,6 +729,7 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
+      <idx><h>Orthogonal projection</h><h>standard matrix of</h><h>complicated matrix formula</h></idx>
       <p>
         Let <m>W</m> be a subspace of <m>\R^n</m> with basis <m>v_1,v_2,\ldots,v_m</m>, and let <m>A</m> be the matrix with columns <m>v_1,v_2,\ldots,v_m</m>.  Then the standard matrix for <m>T(x) = x_W</m> is
         <me>
@@ -721,6 +744,22 @@ the license is included in gfdl.xml.
 
     <proposition hide-type="true">
       <title>Properties of Projection Matrices</title>
+      <idx><h>Projection matrix</h><see>Orthogonal projection, standard matrix of</see></idx>
+      <idx><h>Matrix</h><h>projection</h><see>Orthogonal projection, standard matrix of</see></idx>
+      <idx><h>Orthogonal projection</h><h>standard matrix of</h><h>properties of</h></idx>
+      <idx><h>Orthogonal projection</h><h>standard matrix of</h><h>column space of</h></idx>
+      <idx><h>Column space</h><h>of an orthogonal projection</h></idx>
+      <idx><h>Orthogonal projection</h><h>standard matrix of</h><h>null space of</h></idx>
+      <idx><h>Null space</h><h>of an orthogonal projection</h></idx>
+      <idx><h>Orthogonal projection</h><h>standard matrix of</h><h>square of</h></idx>
+      <idx><h>Orthogonal projection</h><h>standard matrix of</h><h>diagonalizability of</h></idx>
+      <idx><h>Orthogonal projection</h><h>standard matrix of</h><h>eigenvalues of</h></idx>
+      <idx><h>Orthogonal projection</h><h>standard matrix of</h><h>eigenvectors of</h></idx>
+      <idx><h>Orthogonal projection</h><h>standard matrix of</h><h>noninvertibility of</h></idx>
+      <idx><h>Eigenvalue</h><h>of a projection matrix</h></idx>
+      <idx><h>Eigenvector</h><h>of a projection matrix</h></idx>
+      <idx><h>Eigenspace</h><h>of a projection matrix</h></idx>
+      <idx><h>Diagonalizability</h><h>of a projection matrix</h></idx>
       <statement>
         <p>
           Let <m>W</m> be a subspace of <m>\R^n</m>, define <m>T\colon\R^n\to\R^n</m> by <m>T(x) = x_W</m>, and let <m>B</m> be the standard matrix for <m>T</m>.  Then:
@@ -800,6 +839,7 @@ the license is included in gfdl.xml.
 
     <remark>
       <title>Reflections</title>
+      <idx><h>Reflection</h><h>in general</h></idx>
       <p>
         Let <m>W</m> be a subspace of <m>\R^n</m>, and let <m>x</m> be a vector in <m>\R^n</m>.  The <em>reflection</em> of <m>x</m> over <m>W</m> is defined to be the vector
         <me>

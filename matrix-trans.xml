@@ -37,6 +37,8 @@ the license is included in gfdl.xml.
     </p>
 
   <p>
+    <idx><h>Matrix</h><h>as a function</h></idx>
+    <idx><h>Matrix</h><h>as a function</h><see>Matrix transformation</see></idx>
     Let <m>A</m> be a matrix with <m>m</m> rows and <m>n</m> columns.  Consider the matrix equation <m>b=Ax</m> (we write it this way instead of <m>Ax=b</m> to remind the reader of the notation <m>y=f(x)</m>).  If we vary <m>x</m>, then <m>b</m> will also vary; in this way, we think of <m>A</m> as a function with independent variable <m>x</m> and dependent variable <m>b</m>.
     <ul>
       <li>
@@ -114,6 +116,8 @@ the license is included in gfdl.xml.
 
   <example xml:id="matrix-trans-eg-projection">
     <title>Projection onto the <m>xy</m>-plane</title>
+    <idx><h>Projection</h><see>Orthogonal projection</see></idx>
+    <idx><h>Orthogonal projection</h><h>onto the <m>xy</m>-plane</h></idx>
     <statement>
       <p>Let <me>A = \mat{1 0 0; 0 1 0; 0 0 0}.</me>  Describe the function <m>b=Ax</m> geometrically.</p>
     </statement>
@@ -160,6 +164,7 @@ the license is included in gfdl.xml.
 
   <example xml:id="matrix-trans-eg-reflection">
     <title>Reflection</title>
+    <idx><h>Reflection</h><h>over the <m>y</m>-axis</h></idx>
     <statement>
       <p>Let <me>A = \mat{-1 0; 0 1}.</me>  Describe the function <m>b=Ax</m> geometrically.</p>
     </statement>
@@ -196,6 +201,9 @@ the license is included in gfdl.xml.
 
   <example xml:id="matrix-trans-eg-dilation">
     <title>Dilation</title>
+    <idx><h>Dilation</h></idx>
+    <idx><h>Scale</h><see>Dilation</see></idx>
+    <idx><h>Scale</h><see>Row operations, scaling</see></idx>
     <statement>
       <p>Let <me>A = \mat{1.5 0; 0 1.5}.</me>  Describe the function <m>b=Ax</m> geometrically.</p>
     </statement>
@@ -233,6 +241,7 @@ the license is included in gfdl.xml.
 
   <example xml:id="matrix-trans-eg-identity">
     <title>Identity</title>
+    <idx><h>Identity matrix</h><h>as a function</h></idx>
     <statement>
       <p>Let <me>A = \mat{1 0; 0 1}.</me>  Describe the function <m>b=Ax</m> geometrically.</p>
     </statement>
@@ -269,6 +278,7 @@ the license is included in gfdl.xml.
 
   <example xml:id="matrix-trans-eg-rotation">
     <title>Rotation</title>
+    <idx><h>Rotation</h><h>counterclockwise by <m>90^\circ</m></h></idx>
     <statement>
       <p>Let <me>A = \mat{0 -1; 1 0}.</me>  Describe the function <m>b=Ax</m> geometrically.</p>
     </statement>
@@ -341,6 +351,7 @@ the license is included in gfdl.xml.
 
   <example xml:id="matrix-trans-shear">
     <title>Shear</title>
+    <idx><h>Shear</h><h>in the <m>x</m>-direction</h></idx>
     <statement>
       <p>Let <me>A = \mat{1 1; 0 1}.</me>  Describe the function <m>b=Ax</m> geometrically.</p>
     </statement>
@@ -384,6 +395,16 @@ the license is included in gfdl.xml.
   </p>
 
   <definition>
+    <idx><h>Transformation</h><h>definition of</h></idx>
+    <idx><h>Transformation</h><h>domain of</h></idx>
+    <idx><h>Transformation</h><h>codomain of</h></idx>
+    <idx><h>Transformation</h><h>range of</h></idx>
+    <idx><h>Function</h><see>Transformation</see></idx>
+    <idx><h>Domain</h><see>Transformation</see></idx>
+    <idx><h>Codomain</h><see>Transformation</see></idx>
+    <idx><h>Range</h><see>Transformation</see></idx>
+    <notation><usage>x\mapsto y</usage><description>image of a point under a transformation</description></notation>
+    <notation><usage>T\colon\R^n\to\R^m</usage><description>transformation with domain <m>\R^n</m> and codomain <m>\R^m</m></description></notation>
     <statement>
       <p>
         A <term>transformation</term> (or <term>function</term> or <term>map</term>) from <m>\R^n</m> to <m>\R^m</m> is a rule <m>T</m> that assigns to each vector <m>x</m> in <m>\R^n</m> a vector <m>T(x)</m> in <m>\R^m</m>.
@@ -408,6 +429,7 @@ the license is included in gfdl.xml.
   </definition>
 
   <p>
+    <idx><h>Transformation</h><h>as a machine</h></idx>
     It may help to think of <m>T</m> as a <q>machine</q> that takes <m>x</m> as an input, and gives you <m>T(x)</m> as the output.
     <latex-code>
             <![CDATA[
@@ -518,6 +540,7 @@ the license is included in gfdl.xml.
 
   <example>
     <title>A Function of one variable</title>
+    <idx><h>Transformation</h><h>of one variable</h></idx>
     <p>
       Most of the functions you may have seen previously have domain and codomain equal to <m>\R = \R^1</m>.  For example,
       <me>\sin\colon\R\To\R \qquad \sin(x) =
@@ -557,6 +580,7 @@ the license is included in gfdl.xml.
 
   <example>
     <title>Functions of several variables</title>
+    <idx><h>Transformation</h><h>of several variables</h></idx>
     <p>
       Here is an example of a function from <m>\R^2</m> to <m>\R^3</m>:
       <me>f\vec{x y} = \vec{x+y \cos(y) y-x^2}.</me>
@@ -571,6 +595,9 @@ the license is included in gfdl.xml.
   </example>
 
   <definition xml:id="matrix-trans-identity">
+    <idx><h>Identity transformation</h><h>definition of</h></idx>
+    <idx><h>Transformation</h><h>identity</h><see>Identity transformation</see></idx>
+    <notation><usage>\Id_{\R^n}</usage><description>Identity transformation</description></notation>
     <statement>
       <p>
         The <term>identity transformation</term> <m>\Id_{\R^n}\colon\R^n\to\R^n</m> is the transformation defined by the rule
@@ -704,6 +731,8 @@ the license is included in gfdl.xml.
   </p>
 
   <definition xml:id="matrix-trans-defn-of">
+    <idx><h>Matrix transformation</h><h>definition of</h></idx>
+    <idx><h>Transformation</h><h>associated to a matrix</h><see>Matrix transformation</see></idx>
     <statement>
       <p>
         Let <m>A</m> be an <m>m\times n</m> matrix.  The <term>matrix transformation</term> associated to <m>A</m> is the transformation
@@ -742,6 +771,10 @@ the license is included in gfdl.xml.
   </p>
 
   <warning xml:id="matrix-trans-dictionary">
+    <idx><h>Matrix transformation</h><h>domain of</h></idx>
+    <idx><h>Matrix transformation</h><h>codomain of</h></idx>
+    <idx><h>Matrix transformation</h><h>range of</h></idx>
+    <idx><h>Column space</h><h>range of a transformation</h></idx>
     <p>
       Let <m>A</m> be an <m>m\times n</m> matrix, and let <m>T(x)=Ax</m> be the associated matrix transformation.
       <ul>
@@ -790,6 +823,7 @@ the license is included in gfdl.xml.
 
   <example>
     <title>Projection onto the <m>xy</m>-plane: reprise</title>
+    <idx><h>Orthogonal projection</h><h>onto the <m>xy</m>-plane</h></idx>
     <statement>
       <p>
         Let <me>A = \mat{1 0 0; 0 1 0; 0 0 0},</me> and let <m>T(x) = Ax</m>.  What are the domain, the codomain, and the range of <m>T</m>?
@@ -835,6 +869,12 @@ the license is included in gfdl.xml.
 
   <example>
     <title>Matrix transformations of <m>\R^2</m></title>
+    <idx><h>Matrix transformation</h><h>of <m>\R^2</m></h></idx>
+    <idx><h>Reflection</h><h>over the <m>y</m>-axis</h></idx>
+    <idx><h>Dilation</h></idx>
+    <idx><h>Identity matrix</h><h>as a matrix transformation</h></idx>
+    <idx><h>Rotation</h><h>counterclockwise by <m>90^\circ</m></h></idx>
+    <idx><h>Shear</h><h>in the <m>x</m>-direction</h></idx>
     <p>
       In the first <xref ref="matrix-trans-matrices-functions"/> we discussed the transformations defined by several <m>2\times 2</m> matrices, namely:
       <md>

@@ -37,6 +37,12 @@ the license is included in gfdl.xml.
     </p>
 
     <definition>
+      <idx><h>Transformation</h><h>addition of</h></idx>
+      <idx><h>Linear transformation</h><h>addition of</h><see>Transformation</see></idx>
+      <idx><h>Matrix transformation</h><h>addition of</h><see>Transformation</see></idx>
+      <idx><h>Transformation</h><h>scalar multiplication of</h></idx>
+      <idx><h>Linear transformation</h><h>scalar multiplication of</h><see>Transformation</see></idx>
+      <idx><h>Matrix transformation</h><h>scalar multiplication of</h><see>Transformation</see></idx>
       <statement>
         <p>
           <ul>
@@ -94,10 +100,15 @@ the license is included in gfdl.xml.
     </note>
 
     <p>
+      <notation><usage>0</usage><description>The zero transformation</description></notation>
       In one of the above properties, we used <m>0</m> to denote the transformation <m>\R^n\to\R^m</m> that is zero on every input vector: <m>0(x) = 0</m> for all <m>x</m>.  This is called the <term>zero transformation</term>.
     </p>
 
     <definition>
+      <idx><h>Transformation</h><h>composition of</h></idx>
+      <idx><h>Linear transformation</h><h>composition of</h><see>Transformation</see></idx>
+      <idx><h>Matrix transformation</h><h>composition of</h><see>Transformation</see></idx>
+      <idx><h>Matrix transformation</h><h>composition of</h><see>Linear transformation</see></idx>
       <statement>
         <p>
           Let <m>T\colon\R^n\to\R^m</m> and <m>U\colon\R^p\to\R^n</m> be transformations.  Their <term>composition</term> is the transformation <m>T\circ U\colon\R^p\to\R^m</m> defined by
@@ -278,6 +289,7 @@ the license is included in gfdl.xml.
 
     <note hide-type="true" xml:id="matrix-mult-compose-trans">
       <title>Properties of composition</title>
+      <idx><h>Identity transformation</h><h>and composition</h></idx>
       <p>
         Let <m>S,T,U</m> be transformations and let <m>c</m> be a scalar.  Suppose that <m>T\colon\R^n\to\R^m</m>, and that in each of the following identities, the domains and the codomains are compatible when necessary for the composition to be defined.  The following properties are easily verified:
         <md>
@@ -307,6 +319,7 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
+      <idx><h>Transformation</h><h>composition of</h><h>noncommutativity of</h></idx>
       <p>
         Composition of transformations is <em>not</em> commutative in general.  That is, in general, <m>T\circ U\neq U\circ T</m>, even when both compositions are defined.
       </p>
@@ -354,9 +367,10 @@ the license is included in gfdl.xml.
     <p>In this Subsection, we translate the algebra of linear transformations from the previous Subsection into the language of matrices.  First we need some terminology.</p>
 
     <definition type-name="Notation">
+      <notation><usage>a_{ij}</usage><description>The <m>i,j</m>th entry of a matrix</description></notation>
       <statement>
         <p>
-          Let <m>A</m> be an <m>m\times n</m> matrix.  We will generally write <m>a_{ij}</m> for the entry in the <m>i</m>th row and the <m>j</m>th column.  It is called the <term><m>ij</m>th entry</term> of the matrix.
+          Let <m>A</m> be an <m>m\times n</m> matrix.  We will generally write <m>a_{ij}</m> for the entry in the <m>i</m>th row and the <m>j</m>th column.  It is called the <term><m>i,j</m>th entry</term> of the matrix.
           <latex-code>
             <![CDATA[
 \def\spvdots{\vphantom{\vbox{\hbox{(}\kern0pt}}\smash{\vdots}}
@@ -384,6 +398,8 @@ the license is included in gfdl.xml.
     </definition>
 
     <definition>
+      <idx><h>Matrix</h><h>addition of</h></idx>
+      <idx><h>Matrix</h><h>scalar multiplication of</h></idx>
       <statement>
         <p>
           <ul>
@@ -447,11 +463,14 @@ the license is included in gfdl.xml.
     </note>
 
     <p>
+      <notation><usage>0</usage><description>The zero matrix</description></notation>
       In one of the above properties, we used <m>0</m> to denote the <m>m\times n</m> matrix whose entries are all zero.  This is the standard matrix of the zero transformation, and is called the <term>zero matrix</term>.
     </p>
 
     <definition xml:id="matrix-mult-defn-of">
       <title>Matrix multiplication</title>
+      <idx><h>Matrix multiplication</h><h>definition of</h></idx>
+      <idx><h>Matrix</h><h>multiplication</h><see>Matrix multiplication</see></idx>
       <statement>
         <p>
           Let <m>A</m> be an <m>m\times n</m> matrix and let <m>B</m> be an <m>n\times p</m> matrix.  Denote the columns of <m>B</m> by <m>v_1,v_2,\ldots,v_p</m>:
@@ -486,6 +505,7 @@ the license is included in gfdl.xml.
 
     <warning>
       <title>Dimensions of the matrix product</title>
+      <idx><h>Matrix multiplication</h><h>dimensions of</h></idx>
       <p>
         <ul>
           <li>
@@ -501,10 +521,14 @@ the license is included in gfdl.xml.
     </warning>
 
     <p>
+      <idx><h>Matrix multiplication</h><h>and the matrix-vector product</h></idx>
+      <idx><h>Matrix-vector product</h><h>and matrix multiplication</h></idx>
       If <m>B</m> has only one column, then <m>AB</m> also has one column.  A matrix with one column is the same as a vector, so the definition of the matrix product generalizes the definition of the matrix-vector product.
     </p>
 
     <p>
+      <idx><h>Matrix multiplication</h><h>powers</h></idx>
+      <idx><h>Power of a matrix</h><see>Matrix multiplication</see></idx>
       If <m>A</m> is a square matrix, then we can multiply it by itself; we define its <term>powers</term> to be
       <me>A^2 = AA \qquad A^3 = AAA \qquad \text{etc.}</me>
     </p>
@@ -520,6 +544,7 @@ the license is included in gfdl.xml.
 
       <warning xml:id="matrix-mult-row-column">
         <title>Recipe: The row-column rule for matrix multiplication</title>
+        <idx><h>Matrix multiplication</h><h>row-column rule</h></idx>
         <p>
           Let <m>A</m> be an <m>m\times n</m> matrix, let <m>B</m> be an <m>n\times p</m> matrix, and let <m>C = AB</m>.  Then the <m>ij</m> entry of <m>C</m> is the <m>i</m>th row of <m>A</m> times the <m>j</m>th column of <m>B</m>:
           <me>c_{ij} = a_{i1}b_{1j} + a_{i2}b_{2j} + \cdots + a_{in}b_{nj}.</me>
@@ -639,6 +664,9 @@ the license is included in gfdl.xml.
     </p>
 
     <theorem xml:id="matrix-mult-comp-is-prod">
+      <idx><h>Matrix multiplication</h><h>and composition of transformations</h></idx>
+      <idx><h>Linear transformation</h><h>composition of</h><h>linearity of</h></idx>
+      <idx><h>Linear transformation</h><h>composition of</h><h>and matrix multiplication</h></idx>
       <statement>
         <p>Let <m>T\colon\R^n\to\R^m</m> and <m>U\colon\R^p\to\R^n</m> be linear transformations, and let <m>A</m> and <m>B</m> be their standard matrices, respectively, so <m>A</m> is an <m>m\times n</m> matrix and <m>B</m> is an <m>n\times p</m> matrix.  Then <m>T\circ U\colon\R^p\to\R^n</m> is a linear transformation, and its standard matrix is the product <m>AB</m>.</p>
       </statement>
@@ -678,6 +706,7 @@ the license is included in gfdl.xml.
 
     <example>
       <title>Composition of rotations</title>
+      <idx><h>Rotation</h><h>composition of</h></idx>
       <p>
         In this <xref ref="linear-trans-rotation-matrix"/>, we showed that the standard matrix for the counterclockwise rotation of the plane by an angle of <m>\theta</m> is
         <me>A = \mat{\cos(\theta) -\sin(\theta); \sin(\theta) \cos(\theta)}.</me>
@@ -819,6 +848,7 @@ $\xrightarrow{\text{reflect $xy$}}$
 
     <example xml:id="matrix-mult-compose-noncom2">
       <title>Non-commutative multiplication of matrices</title>
+      <idx><h>Matrix multiplication</h><h>noncommutativity of</h></idx>
       <p>
         Define matrix transformations <m>T,U\colon\R^2\to\R^2</m> by
         <me>T(x) = \mat{1 1; 0 1}x \sptxt{and}
@@ -844,6 +874,9 @@ $\xrightarrow{\text{reflect $xy$}}$
 
     <note hide-type="true">
       <title>Properties of matrix multiplication</title>
+      <idx><h>Identity matrix</h><h>and matrix multiplication</h></idx>
+      <idx><h>Matrix multiplication</h><h>properties of</h></idx>
+      <idx><h>Matrix multiplication</h><h>associativity of</h></idx>
       <p>
         Let <m>A,B,C</m> be matrices and let <m>c</m> be a scalar.  Suppose that <m>A</m> has dimensions <m>m\times n</m>, and that in each of the following identities, the dimensions of <m>B</m> and <m>C</m> are compatible when necessary for the product to be defined.  Then:
         <md>
@@ -876,6 +909,7 @@ $\xrightarrow{\text{reflect $xy$}}$
 
     <warning>
       <title>Matrix multiplication caveats</title>
+      <idx><h>Matrix multiplication</h><h>caveats</h></idx>
       <p>
         <ul>
           <li>
@@ -896,6 +930,8 @@ $\xrightarrow{\text{reflect $xy$}}$
 
     <example hide-type="true" xml:id="matrix-mult-order-ops">
       <title>Order of Operations</title>
+      <idx><h>Matrix multiplication</h><h>order of operations</h></idx>
+      <idx><h>Transformation</h><h>composition of</h><h>order of operations</h></idx>
       <p>
         Let <m>T\colon\R^n\to\R^m</m> and <m>U\colon\R^p\to\R^n</m> be linear transformations, and let <m>A</m> and <m>B</m> be their standard matrices, respectively.  Recall that <m>T\circ U(x)</m> is the vector obtained by first applying <m>U</m> to <m>x</m>, and then <m>T</m>.
       </p>

@@ -33,6 +33,10 @@ the license is included in gfdl.xml.
     </p>
 
     <definition>
+      <idx><h>Orthogonal set</h><h>definition of</h></idx>
+      <idx><h>Orthogonal set</h><h>orthonormality of</h></idx>
+      <idx><h>Orthonormal set</h><see>Orthogonal set</see></idx>
+      <idx><h>Unit vector</h><h>and orthonormality</h></idx>
       <statement>
         <p>
           A set of <em>nonzero</em> vectors <m>\{u_1,u_2,\ldots,u_m\}</m> is called <term>orthogonal</term> if <m>u_i\cdot u_j = 0</m> whenever <m>i\neq j</m>.  It is <term>orthonormal</term> if it is orthogonal, and in addition <m>u_i\cdot u_i = 1</m> for all <m>i=1,2,\ldots,m</m>.
@@ -45,6 +49,8 @@ the license is included in gfdl.xml.
     </p>
 
     <specialcase>
+      <idx><h>Orthogonal set</h><h>orthonormality of</h><h>unit coordinate vectors</h></idx>
+      <idx><h>Unit coordinate vectors</h><h>orthonormality of</h></idx>
       <p>
         The unit coordinate vectors in <m>\R^n</m> always form an orthonormal set.  For instance, in <m>\R^3</m> we check that
         <me>
@@ -130,6 +136,7 @@ the license is included in gfdl.xml.
 
     <warning>
       <title>Recipe: An orthonormal set from an orthogonal set</title>
+      <idx><h>Orthogonal set</h><h>making orthonormal</h></idx>
       <p>
         If <m>\{v_1,v_2,\ldots,v_m\}</m> is an orthogonal set of vectors, then
         <me>
@@ -183,6 +190,9 @@ the license is included in gfdl.xml.
     </p>
 
     <lemma type-name="Fact" xml:id="orthosets-is-li">
+      <idx><h>Orthogonal set</h><h>linear independence of</h></idx>
+      <idx><h>Linear independence</h><h>of an orthogonal set</h></idx>
+      <idx><h>Basis</h><h>span of an orthogonal set</h></idx>
       <statement>
         <p>
           An orthogonal set is linearly independent.  Therefore, it is a basis for its span.
@@ -213,6 +223,8 @@ the license is included in gfdl.xml.
     </p>
 
     <theorem type-name="Projection Formula" xml:id="projection-formula">
+      <idx><h>Orthogonal projection</h><h>computation of</h><h>Projection Formula</h></idx>
+      <idx><h>Projection Formula</h></idx>
       <statement>
         <p>
           Let <m>W</m> be a subspace of <m>\R^n</m>, and let <m>\{u_1,u_2,\ldots,u_m\}</m> be an <em>orthogonal</em> basis for <m>W</m>.  Then for any vector <m>x</m> in <m>\R^n</m>, the orthogonal projection of <m>x</m> onto <m>W</m> is given by the formula
@@ -250,6 +262,8 @@ the license is included in gfdl.xml.
     </theorem>
 
     <specialcase>
+      <idx><h>Orthogonal projection</h><h>onto a line</h></idx>
+      <idx><h>Line</h><h>orthogonal projection onto</h></idx>
       <p>
         Suppose that <m>L = \Span\{u\}</m> is a line.  The set <m>\{u\}</m> is an orthogonal basis for <m>L</m>, so the Projection Formula says that for any vector <m>x</m>, we have
         <me>
@@ -274,6 +288,7 @@ the license is included in gfdl.xml.
 
     <example>
       <title>Projection onto the <m>xy</m>-plane</title>
+      <idx><h>Orthogonal projection</h><h>onto the <m>xy</m>-plane</h></idx>
       <statement>
         <p>
           Continuing with this <xref ref="projections-eg-xy-plane"/> and this <xref ref="projections-onto-xy-plane"/>, use the <xref ref="projection-formula"/> to compute the orthogonal projection of a vector onto the <m>xy</m>-plane in <m>\R^3</m>.
@@ -394,6 +409,9 @@ the license is included in gfdl.xml.
 
     <warning>
       <title>Recipe: <m>\cB</m>-coordinates when <m>\cB</m> is an orthogonal set</title>
+      <idx><h>Orthogonal set</h><h>and <m>\cB</m>-coordinates</h></idx>
+      <idx><h>Orthogonal projection</h><h>and <m>\cB</m>-coordinates</h></idx>
+      <idx><h><m>\cB</m>-coordinates</h><h>computing</h><h>with respect to an orthogonal basis</h></idx>
       <p>
         Let <m>W</m> be a subspace of <m>\R^n</m> with orthogonal basis <m>\cB=\{v_1,v_2,\ldots,v_m\}</m> and let <m>x</m> be a vector in <m>W</m>.  Then
         <me>
@@ -513,6 +531,7 @@ the license is included in gfdl.xml.
     </example>
 
     <warning>
+      <idx><h>Orthogonal set</h><h>necessity of</h></idx>
       <p>
         You need an orthogonal basis to use the Projection Formula.
       </p>
@@ -529,6 +548,9 @@ the license is included in gfdl.xml.
 
     <theorem hide-type="true">
       <title>The Gram<ndash/>Schmidt Process</title>
+      <idx><h>Orthogonal set</h><h>producing from a basis</h></idx>
+      <idx><h>Basis</h><h>making orthogonal</h></idx>
+      <idx><h>Gram<ndash/>Schmidt Process</h></idx>
       <statement>
         <p>
           Let <m>v_1,v_2,\ldots,v_m</m> be a basis for a subspace <m>W</m> of <m>\R^n</m>.  Define:
@@ -741,6 +763,8 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
+      <idx><h>Gram<ndash/>Schmidt Process</h><h>detecting linear dependence</h></idx>
+      <idx><h>Linear independence</h><h>verifying</h><h>with Gram<ndash/>Schmidt</h></idx>
       <p>
         You can use the Gram<ndash/>Schmidt Process to produce an orthogonal basis from any spanning set: if some <m>u_i = 0</m>, just throw away <m>u_i</m> and <m>v_i</m>, and continue.
       </p>

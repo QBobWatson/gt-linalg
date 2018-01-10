@@ -39,6 +39,13 @@ the license is included in gfdl.xml.
     </p>
 
     <essential xml:id="det-defn-the-defn">
+      <idx><h>Determinant</h><h>defining properties of</h></idx>
+      <idx><h>Matrix</h><h>determinant of</h><see>Determinant</see></idx>
+      <idx><h>Determinant</h><h>identity matrix</h></idx>
+      <idx><h>Identity matrix</h><h>determinant of</h></idx>
+      <idx><h>Row operations</h><h>and determinants</h></idx>
+      <idx><h>Determinant</h><h>and row operations</h></idx>
+      <notation><usage>\det(A)</usage><description>The determinant of a matrix</description></notation>
       <statement>
 	<p>
 	  The <term>determinant</term> is a function
@@ -149,6 +156,12 @@ the license is included in gfdl.xml.
     </p>
 
     <definition>
+      <idx><h>Matrix</h><h>diagonal entries of</h></idx>
+      <idx><h>Matrix</h><h>upper-triangular</h></idx>
+      <idx><h>Matrix</h><h>lower-triangular</h></idx>
+      <idx><h>Diagonal</h><h>see Matrix</h></idx>
+      <idx><h>Upper-triangular</h><h>see Matrix</h></idx>
+      <idx><h>Lower-triangular</h><h>see Matrix</h></idx>
       <statement>
         <p>
           <ul>
@@ -257,6 +270,8 @@ the license is included in gfdl.xml.
     </definition>
 
     <proposition xml:id="defn-det-special-case">
+      <idx><h>Matrix</h><h>upper-triangular</h><h>determinant of</h></idx>
+      <idx><h>Matrix</h><h>lower-triangular</h><h>determinant of</h></idx>
       <statement>
         <p>
           Let <m>A</m> be an <m>n\times n</m> matrix.
@@ -365,6 +380,8 @@ the license is included in gfdl.xml.
 
     <warning xml:id="det-defn-ref-compute" type-name="Recipe">
       <title>Recipe: Computing determinants by row reducing</title>
+      <idx><h>Determinant</h><h>computation of</h><h>row reduction</h></idx>
+      <idx><h>Row reduction</h><h>computing determinants</h></idx>
 	<p>
           Let <m>A</m> be a square matrix.  Suppose that you do some number of row operations on <m>A</m> to obtain a matrix <m>B</m> in row echelon form.  Then
 	  <me>
@@ -438,6 +455,7 @@ the license is included in gfdl.xml.
 
     <specialcase xml:id="det-defn-22-again">
       <title>The determinant of a <m>2\times 2</m> matrix</title>
+      <idx><h>Determinant</h><h>of a <m>2\times 2</m> matrix</h></idx>
       <p>
         Let us use the <xref ref="det-defn-ref-compute"/> to compute the determinant of a general <m>2\times 2</m> matrix <m>A = \mat{a b; c d}</m>.
         <ul>
@@ -469,6 +487,7 @@ the license is included in gfdl.xml.
 
     <theorem xml:id="det-defn-unique">
       <title>Existence of the determinant</title>
+      <idx><h>Determinant</h><h>existence and uniqueness of</h></idx>
       <statement>
 	<p>
 	  There exists one and only function from the set of square matrices to the real numbers, that satisfies the four <xref ref="det-defn-the-defn">defining properties</xref>.
@@ -498,6 +517,8 @@ the license is included in gfdl.xml.
 
     <proposition hide-type="true" xml:id="det-defn-invert-prop">
       <title>Invertibility Property</title>
+      <idx><h>Determinant</h><h>invertibility property</h></idx>
+      <idx><h>Invertible matrix</h><h>determinant of</h></idx>
       <statement>
         <p>A square matrix is invertible if and only if <m>\det(A)\neq 0</m>.</p>
       </statement>
@@ -513,6 +534,7 @@ the license is included in gfdl.xml.
     </p>
 
     <corollary xml:id="det-defn-dep-det0">
+      <idx><h>Linear independence</h><h>and determinants</h></idx>
       <statement>
         <p>
           Let <m>A</m> be a square matrix.  If the rows or columns of <m>A</m> are linearly dependent, then <m>\det(A)=0</m>.
@@ -558,6 +580,8 @@ the license is included in gfdl.xml.
 
     <proposition hide-type="true" xml:id="det-defn-mult-prop">
       <title>Multiplicativity Property</title>
+      <idx><h>Determinant</h><h>multiplicativity property</h></idx>
+      <idx><h>Matrix multiplication</h><h>determinant of</h></idx>
       <statement>
         <p>
           If <m>A</m> and <m>B</m> are <m>n\times n</m> matrices, then
@@ -678,6 +702,7 @@ the license is included in gfdl.xml.
     </p>
 
     <corollary xml:id="det-defn-power-prop">
+      <idx><h>Determinant</h><h>and powers of matrices</h></idx>
       <statement>
         <p>
           If <m>A</m> is a square matrix, then
@@ -763,6 +788,9 @@ the license is included in gfdl.xml.
     </p>
 
     <definition>
+      <idx><h>Matrix</h><h>transpose of</h></idx>
+      <idx><h>Transpose</h><see>Matrix</see></idx>
+      <notation><usage>A^T</usage><description>Transpose of a matrix</description></notation>
       <statement>
         <p>
           The <term>transpose</term> of an <m>m\times n</m> matrix <m>A</m> is the <m>n\times m</m> matrix <m>A^T</m> whose rows are the columns of <m>A</m>.  In other words, the <m>ij</m> entry of <m>A^T</m> is <m>a_{ji}</m>.
@@ -808,6 +836,7 @@ the license is included in gfdl.xml.
     </p>
 
     <lemma xml:id="det-defn-prod-trans" type-name="Fact">
+      <idx><h>Matrix</h><h>transpose of</h><h>and products</h></idx>
       <statement>
         <p>
           Let <m>A</m> be an <m>m\times n</m> matrix, and let <m>B</m> be an <m>n\times p</m> matrix.  Then
@@ -860,6 +889,8 @@ the license is included in gfdl.xml.
 
     <proposition hide-type="true" xml:id="det-defn-trans-prop">
       <title>Transpose Property</title>
+      <idx><h>Determinant</h><h>transpose property</h></idx>
+      <idx><h>Matrix</h><h>transpose of</h><h>determinant of</h></idx>
       <statement>
         <p>
           For any square matrix <m>A</m>, we have
@@ -937,6 +968,7 @@ the license is included in gfdl.xml.
     </p>
 
     <corollary xml:id="defn-det-col-ops">
+      <idx><h>Determinant</h><h>and column operations</h></idx>
       <statement>
         <p>
           The determinant satisfies the following properties with respect to column operations:
@@ -997,6 +1029,7 @@ the license is included in gfdl.xml.
 
     <proposition hide-type="true" xml:id="det-defn-linear-prop">
       <title>Multilinearity Property</title>
+      <idx><h>Determinant</h><h>multilinearity property</h></idx>
       <statement>
         <p>
           Let <m>i</m> be a whole number between <m>1</m> and <m>n</m>, and fix <m>n-1</m> vectors <m>v_1,v_2,\ldots,v_{i-1},v_{i+1},\ldots,v_n</m> in <m>\R^n</m>.  Then the transformation <m>T\colon\R^n\to\R</m> defined by
@@ -1088,6 +1121,7 @@ the license is included in gfdl.xml.
 
     <remark xml:id="det-defn-use-multi">
       <title>Alternative defining properties</title>
+      <idx><h>Determinant</h><h>alternative defining properties of</h></idx>
       <p>
         In more theoretical treatments of the topic, where row reduction plays a secondary role, the defining properties of the determinant are often taken to be:
         <ol>
@@ -1155,6 +1189,7 @@ the license is included in gfdl.xml.
 
     <warning>
       <title>Summary: Magical Properties of the Determinant</title>
+      <idx><h>Determinant</h><h>properties of</h></idx>
       <p>
         <ol>
           <li>

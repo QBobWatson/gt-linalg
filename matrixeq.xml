@@ -31,6 +31,8 @@ the license is included in gfdl.xml.
 
     <warning>
       <p>When we say <q><m>A</m> is an <m>m\times n</m> matrix,</q> we mean that <m>A</m> has <m>m</m> rows and <m>n</m> columns.
+      <idx><h>Matrix</h><h>dimensions of</h></idx>
+      <notation><usage>m\times n\text{ matrix}</usage><description>Dimensions of a matrix</description></notation>
       </p>
     </warning>
 
@@ -39,6 +41,9 @@ the license is included in gfdl.xml.
     </remark>
 
     <definition xml:id="matrixeq-defn-Ax1">
+      <idx><h>Matrix-vector product</h><h>definition of</h></idx>
+      <idx><h>Matrix</h><h>product with vector</h><see>Matrix-vector product</see></idx>
+      <idx><h>Vector</h><h>product with matrix</h><see>Matrix-vector product</see></idx>
       <statement>
         <p>Let <m>A</m> be an <m>m\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_n</m>:
         <me>A = \mat{| | ,{}, |; v_1 v_1 \cdots, v_n;| | ,{}, | }</me>
@@ -84,6 +89,7 @@ the license is included in gfdl.xml.
     </proposition>
 
     <definition>
+      <idx><h>Matrix equation</h><h>definition of</h></idx>
       <statement>
         <p>A <term>matrix equation</term> is an equation of the form <m>Ax=b</m>, where <m>A</m> is an <m>m\times n</m> matrix, <m>b</m> is a vector in <m>\R^m</m>, and <m>x</m> is a vector whose coefficients <m>x_1,x_2,\ldots,x_n</m> are unknown.</p>
       </statement>
@@ -91,6 +97,8 @@ the license is included in gfdl.xml.
 
     <note hide-type="true">
       <title>Matrix Equations and Vector Equations</title>
+      <idx><h>Matrix equation</h><h>equivalence with vector equation</h></idx>
+      <idx><h>Vector equation</h><h>equivalence with matrix equation</h></idx>
       <p>Let <m>v_1,v_2,\ldots,v_n</m> and <m>b</m> be vectors in <m>\R^m</m>.  Consider the vector equation
       <me>x_1v_1 + x_2v_2 + \cdots + x_nv_n = b.</me>
       This is equivalent to the matrix equation <m>Ax=b</m>, where
@@ -126,6 +134,7 @@ the license is included in gfdl.xml.
     <note hide-type="true">
       <title>Four Ways of Writing a Linear System</title>
       <p>We now have <em>four</em> equivalent ways of writing (and thinking about) a system of linear equations:
+      <idx><h>System of linear equations</h><h>four ways of writing</h></idx>
       <ol>
         <li>As a system of equations:
         <me>\syseq{2x_1 + 3x_2 - 2x_3 = 7; x_1 - x_2 - 3x_3 = 5}
@@ -157,6 +166,9 @@ the license is included in gfdl.xml.
       </p>
 
       <definition xml:id="matrixeq-row-column-prod">
+        <idx><h>Row vector</h><see>Vector</see></idx>
+        <idx><h>Vector</h><h>row vector</h></idx>
+        <idx><h>Vector</h><h>row vector</h><h>product with column vector</h></idx>
         <statement>
           <p>A <term>row vector</term> is a matrix with one row.  The <term>product</term> of a row vector of length <m>n</m> and a (column) vector of length <m>n</m> is
           <me>\mat{a_1 a_2 \cdots, a_n} \vec{x_1 x_2 \vdots, x_n}
@@ -168,6 +180,7 @@ the license is included in gfdl.xml.
 
       <warning xml:id="matrixeq-row-column">
         <title>Recipe: The row-column rule for matrix-vector multiplication</title>
+        <idx><h>Matrix-vector product</h><h>row-column rule</h></idx>
 
         <p>
           If <m>A</m> is an <m>m\times n</m> matrix with rows <m>r_1,r_2,\ldots,r_m</m>, and <m>x</m> is a vector in <m>\R^n</m>, then
@@ -228,6 +241,9 @@ the license is included in gfdl.xml.
 
     <warning xml:id="matrixeq-spans-consistency">
       <title>Spans and Consistency</title>
+      <idx><h>Matrix equation</h><h>spans and consistency</h></idx>
+      <idx><h>System of linear equations</h><h>consistent</h><h>span criterion</h></idx>
+      <idx><h>Column span</h><see>Column space</see></idx>
       <p>The matrix equation <m>Ax=b</m> has a solution if and only if <m>b</m> is in the span of the columns of <m>A</m>.</p>
     </warning>
 
@@ -401,6 +417,7 @@ the license is included in gfdl.xml.
       <p>Building on this <xref ref="matrixeq-spans-consistency">Note</xref>, we have the following criterion for when <m>Ax=b</m> is consistent for <em>every</em> choice of <m>b</m>.</p>
 
       <theorem xml:id="matrixeq-thm-full-span">
+        <idx><h>Matrix equation</h><h>always consistent</h></idx>
         <statement>
           <p>Let <m>A</m> be an <m>m\times n</m> (non-augmented) matrix.  The following are equivalent:
           <ol>

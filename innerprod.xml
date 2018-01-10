@@ -29,6 +29,8 @@ the license is included in gfdl.xml.
     </p>
 
     <definition>
+      <idx><h>Dot product</h><h>definition of</h></idx>
+      <notation><usage>x\cdot y</usage><description>Dot product of two vectors</description></notation>
       <statement>
         <p>
           The <term>dot product</term> of two vectors <m>x,y</m> in <m>\R^n</m> is
@@ -56,6 +58,7 @@ the license is included in gfdl.xml.
 
     <note hide-type="true">
       <title>Properties of the Dot Product</title>
+      <idx><h>Dot product</h><h>properties of</h></idx>
       <p>
         Let <m>x,y,z</m> be vectors in <m>\R^n</m> and let <m>c</m> be a scalar.
         <ol>
@@ -93,6 +96,8 @@ the license is included in gfdl.xml.
     </p>
 
     <definition>
+      <idx><h>Dot product</h><h>and length</h></idx>
+      <idx><h>Vector</h><h>length of</h></idx>
       <statement>
         <p>
           The <term>length</term> of a vector <m>x</m> in <m>\R^n</m> is the number
@@ -142,6 +147,9 @@ the license is included in gfdl.xml.
     </p>
 
     <definition xml:id="innerprod-distance-defn">
+      <idx><h>Dot product</h><h>and distance</h></idx>
+      <idx><h>Vector</h><h>distance between</h></idx>
+      <idx><h>Point</h><h>distance between</h></idx>
       <statement>
         <p>
           The <term>distance</term> between two points <m>x,y</m> in <m>\R^n</m> is the length of the vector from <m>x</m> to <m>y</m>:
@@ -181,6 +189,8 @@ the license is included in gfdl.xml.
     </p>
 
     <definition xml:id="innerprod-unit-vec">
+      <idx><h>Unit vector</h><h>definition of</h></idx>
+      <idx><h>Vector</h><h>unit vector</h><see>Unit vector</see></idx>
       <statement>
         <p>
           A <term>unit vector</term> is a vector <m>x</m> with length <m>\|x\| = \sqrt{x\cdot x} =1</m>.
@@ -189,12 +199,16 @@ the license is included in gfdl.xml.
     </definition>
 
     <p>
+      <idx><h>Unit coordinate vectors</h><h>are unit vectors</h></idx>
+      <idx><h>Unit vector</h><h>unit coordinate vectors</h></idx>
       The unit coordinate vectors are unit vectors (have length one):
       <me>\|e_1\| = \left\|\vec{1 0 0}\right\| = \sqrt{1^2 + 0^2 + 0^2} = 1.</me>
       For any nonzero vector <m>x</m>, there is a unique unit vector pointing in the same direction.  It is obtained by dividing by the length of <m>x</m>.
     </p>
 
     <definition xml:id="innerprod-unit-vec-dir">
+      <idx><h>Unit vector</h><h>in the direction of a vector</h></idx>
+      <idx><h>Vector</h><h>unit vector in the direction of</h></idx>
       <statement>
         <p>
           Let <m>x</m> be a nonzero vector in <m>\R^n</m>.  The <term>unit vector in the direction of <m>x</m></term> is the vector <m>x/\|x\|</m>.
@@ -245,6 +259,9 @@ the license is included in gfdl.xml.
     </p>
 
     <essential>
+      <idx><h>Orthogonality</h><h>definition of</h></idx>
+      <idx><h>Vector</h><h>orthogonal</h><see>Orthogonality</see></idx>
+      <notation><usage>x\perp y</usage><description><m>x</m> is orthogonal to <m>y</m></description></notation>
       <statement>
         <p>
           Two vectors <m>x,y</m> in <m>\R^n</m> are <term>orthogonal</term> or <term>perpendicular</term> if <m>x\cdot y</m>.
@@ -256,6 +273,7 @@ the license is included in gfdl.xml.
     </essential>
 
     <warning>
+      <idx><h>Orthogonality</h><h>zero vector</h></idx>
       <p>
         Since <m>0 \cdot x = 0</m> for any vector <m>x</m>, the zero vector is orthogonal to every vector in <m>\R^n</m>.
       </p>
@@ -292,6 +310,7 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
+      <idx><h>Orthogonality</h><h>and the Pythagorean Theorem</h></idx>
       <p>
         <me>
           x\perp y \quad\iff\quad x\cdot y = 0 \quad\iff\quad \|y-x\|^2 = \|x\|^2 + \|y\|^2.
@@ -346,6 +365,8 @@ the license is included in gfdl.xml.
 
     <remark>
       <title>Angle between two vectors</title>
+      <idx><h>Vector</h><h>angle between</h></idx>
+      <idx><h>Dot product</h><h>and angles</h></idx>
       <p>
         More generally, the law of cosines gives a formula for the angle <m>\alpha</m> between two nonzero vector <m>x,y</m> in <m>\R^2</m>:
         <me>

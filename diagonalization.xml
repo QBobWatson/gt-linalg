@@ -38,6 +38,8 @@ the license is included in gfdl.xml.
     </p>
 
     <definition>
+      <idx><h>Diagonalizability</h><h>definition of</h></idx>
+      <idx><h>Similarity</h><h>to a diagonal matrix</h><see>Diagonalizability</see></idx>
       <statement>
         <p>
           An <m>n\times n</m> matrix <m>A</m> is <term>diagonalizable</term> if it is similar to a diagonal matrix: that is, if there exists an invertible <m>n\times n</m> matrix <m>C</m> and a diagonal matrix <m>D</m> such that
@@ -47,6 +49,7 @@ the license is included in gfdl.xml.
     </definition>
 
     <specialcase>
+      <idx><h>Diagonalizability</h><h>diagonal matrices</h></idx>
       <p>
         Any diagonal matrix is <m>D</m> is diagonalizable because it is <xref ref="similarity-eq-reln" text="title">similar to itself</xref>.  For instance,
         <me>
@@ -91,6 +94,8 @@ the license is included in gfdl.xml.
 
     <warning xml:id="diag-powers">
       <title>Recipe: Compute powers of a diagonalizable matrix</title>
+      <idx><h>Diagonalizability</h><h>powers of</h></idx>
+      <idx><h>Matrix multiplication</h><h>powers</h><h>and diagonalizability</h></idx>
       <p>
         If <m>A = CDC\inv</m>, where <m>D</m> is a diagonal matrix, then <m>A^n = CD^nC\inv</m>:
         <me>
@@ -133,6 +138,8 @@ the license is included in gfdl.xml.
     </p>
 
     <theorem type-name="Diagonalization Theorem" xml:id="diagonalization-thm">
+      <idx><h>Diagonalizability</h><h>criterion</h></idx>
+      <idx><h>Eigenvector</h><h>and diagonalizability</h></idx>
       <statement>
         <p>
           An <m>n\times n</m> matrix <m>A</m> is diagonalizable if and only if <m>A</m> has <m>n</m> linearly independent eigenvectors.
@@ -175,6 +182,8 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
+      <idx><h>Eigenvalue</h><h>and diagonalizability</h></idx>
+      <idx><h>Diagonalizability</h><h>distinct eigenvalues</h></idx>
       <p>
         An <m>n\times n</m> matrix with <m>n</m> distinct eigenvalues is diagonalizable.
       </p>
@@ -182,6 +191,7 @@ the license is included in gfdl.xml.
 
     <example hide-type="true" xml:id="diag-easy-eg">
       <title>Easy Example</title>
+      <idx><h>Diagonalizability</h><h>diagonal matrices</h></idx>
       <statement>
         <p>
           Apply the <xref ref="diagonalization-thm"/> to the matrix
@@ -228,6 +238,7 @@ the license is included in gfdl.xml.
     </p>
 
     <note>
+      <idx><h>Diagonalizability</h><h>order of eigenvalues</h></idx>
       <p>
         We saw in the above example that changing the order of the eigenvalues and eigenvectors produces a different diagonalization of the same matrix. There are generally many different ways to diagonalize a matrix, corresponding to different orderings of the eigenvalues of that matrix.  The important thing is that the eigenvalues and eigenvectors have to be listed in the same order.
         <me>
@@ -362,6 +373,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 
     <warning>
       <title>Recipe: Diagonalization</title>
+      <idx><h>Diagonalizability</h><h>recipe</h></idx>
       <p>
         Let <m>A</m> be an <m>n\times n</m> matrix.  To diagonalize <m>A</m>:
         <ol>
@@ -395,6 +407,8 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 
     <example xml:id="diag-eg-shear">
       <title>A shear is not diagonalizable</title>
+      <idx><h>Diagonalizability</h><h>shear</h></idx>
+      <idx><h>Shear</h><h>non-diagonalizability of</h></idx>
       <p>
         Let
         <me>A = \mat{1 1; 0 1},</me>
@@ -447,6 +461,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 
     <example xml:id="diag-eg-rotation">
       <title>A rotation matrix</title>
+      <idx><h>Rotation</h><h>non-diagonalizability of</h></idx>
       <p>
         Let
         <me>
@@ -469,6 +484,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 
     <warning>
       <title>Diagonalizability has nothing to do with invertibility</title>
+      <idx><h>Diagonalizability</h><h>is unrelated to invertibility</h></idx>
       <p>
         Of the following matrices, the first is diagonalizable and invertible, the second is diagonalizable but not invertible, the third is invertible but not diagonalizable, and the fourth is neither invertible nor diagonalizable, as the reader can verify:
         <me>\mat{1 0; 0 1} \qquad \mat{1 0; 0 0} \qquad \mat{1 1; 0 1} \qquad \mat{0 1; 0 0}.</me>
@@ -511,6 +527,12 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
     </p>
 
     <definition>
+      <idx><h>Algebraic multiplicity</h><h>definition of</h></idx>
+      <idx><h>Geometric multiplicity</h><h>definition of</h></idx>
+      <idx><h>Multiplicity</h><h>algebraic</h><see>Algebraic multiplicity</see></idx>
+      <idx><h>Multiplicity</h><h>geometric</h><see>Geometric multiplicity</see></idx>
+      <idx><h>Eigenvalue</h><h>algebraic multiplicity of</h><see>Algebraic multiplicity</see></idx>
+      <idx><h>Eigenvalue</h><h>geometric multiplicity of</h><see>Geometric multiplicity</see></idx>
       <statement>
         <p>
           Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>\lambda</m> be an eigenvalue of <m>A</m>.
@@ -531,6 +553,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
     </p>
 
     <example>
+      <idx><h>Shear</h><h>multiplicities</h></idx>
       <p>
         The shear matrix
         <me>
@@ -584,6 +607,8 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 
     <theorem xml:id="diag-amgm">
       <title>Algebraic and Geometric Multiplicity</title>
+      <idx><h>Algebraic multiplicity</h><h>and geometric multiplicity</h></idx>
+      <idx><h>Geometric multiplicity</h><h>and algebraic multiplicity</h></idx>
       <statement>
         <p>
           Let <m>A</m> be a square matrix and let <m>\lambda</m> be an eigenvalue of <m>A</m>.  Then
@@ -600,6 +625,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
     </p>
 
     <warning>
+      <idx><h>Algebraic multiplicity</h><h>equals one</h></idx>
       <p>
         If <m>A</m> has an eigenvalue <m>\lambda</m> with algebraic multiplicity <m>1</m>, then the <m>\lambda</m>-eigenspace is a <em>line.</em>
       </p>
@@ -611,6 +637,9 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 
     <theorem xml:id="diag-thm-variant" hide-type="true">
       <title>Diagonalization Theorem, Variant</title>
+      <idx><h>Algebraic multiplicity</h><h>and diagonalizability</h></idx>
+      <idx><h>Geometric multiplicity</h><h>and diagonalizability</h></idx>
+      <idx><h>Diagonalizability</h><h>algebraic-geometric multiplicity criterion</h></idx>
       <statement>
         <p>
           Let <m>A</m> be an <m>n\times n</m> matrix.  The following are equivalent:
@@ -658,6 +687,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 
     <specialcase hide-type="true" xml:id="diag-cases-22">
       <title>Diagonalizability of <m>2\times 2</m> Matrices</title>
+      <idx><h>Diagonalizability</h><h>of <m>2\times 2</m> matrices</h></idx>
       <p>
         Let <m>A</m> be a <m>2\times 2</m> matrix.  There are four cases:
         <ol>
@@ -683,6 +713,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 
     <example hide-type="true" xml:id="diag-cases-33">
       <title>Diagonalizability of <m>3\times 3</m> Matrices</title>
+      <idx><h>Diagonalizability</h><h>of <m>3\times 3</m> matrices</h></idx>
       <p>
         Let <m>A</m> be a <m>3\times 3</m> matrix.  We can analyze the diagonalizability of <m>A</m> on a case-by-case basis, as in the previous <xref ref="diag-cases-22"/>.
         <ol>
@@ -717,6 +748,9 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
     </p>
 
     <theorem xml:id="diag-similar-amgm">
+      <idx><h>Similarity</h><h>and multiplicities</h></idx>
+      <idx><h>Algebraic multiplicity</h><h>of similar matrices</h></idx>
+      <idx><h>Geometric multiplicity</h><h>of similar matrices</h></idx>
       <statement>
         <p>
           Let <m>A</m> and <m>B</m> be similar <m>n\times n</m> matrices, and let <m>\lambda</m> be an eigenvalue of <m>A</m> and <m>B</m>.  Then:
@@ -810,6 +844,8 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
     </p>
 
     <warning>
+      <idx><h>Similarity</h><h>of diagonalizable matrices</h></idx>
+      <idx><h>Diagonalizability</h><h>criterion for similarity</h></idx>
       <p>
         <em>Diagonalizable</em> matrices are similar if and only if they have the same characteristic polynomial, or equivalently, the same eigenvalues with the same algebraic multiplicities.
       </p>
@@ -837,6 +873,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 
     <example>
       <title>Diagonal matrices with the same entries are similar</title>
+      <idx><h>Similarity</h><h>of diagonal matrices</h></idx>
       <p>
         Any two diagonal matrices with the same diagonal entries (possibly in a different order) are similar to each other.  Indeed, such matrices have the same characteristic polynomial.  We saw this phenomenon in this <xref ref="diag-easy-eg"/>, where we noted that
           <me>
@@ -853,6 +890,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 
   <subsection xml:id="diag-ss-geometry">
     <title>The Geometry of Diagonalizable Matrices</title>
+    <idx><h>Diagonalizability</h><h>geometry of</h></idx>
 
     <p>
       A diagonal matrix is easy to understand geometrically, as it just scales the coordinate axes:
@@ -872,6 +910,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 
     <example>
       <title>Eigenvalues <m>|\lambda_1| > 1,\,|\lambda_2|\lt1</m></title>
+      <idx><h>Diagonalizability</h><h>dynamics of</h></idx>
       <statement>
         <p>
           Describe how the matrix
@@ -923,6 +962,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 
     <example xml:id="diag-l1big-l2big">
       <title>Eigenvalues <m>|\lambda_1| > 1,\,|\lambda_2| > 1</m></title>
+      <idx><h>Diagonalizability</h><h>dynamics of</h></idx>
       <statement>
         <p>
           Describe how the matrix
@@ -974,6 +1014,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 
     <example>
       <title>Eigenvalues <m>|\lambda_1| \lt 1,\,|\lambda_2| \lt 1</m></title>
+      <idx><h>Diagonalizability</h><h>dynamics of</h></idx>
       <statement>
         <p>
           Describe how the matrix
@@ -1004,6 +1045,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 
     <example>
       <title>Eigenvalues <m>|\lambda_1| = 1,\,|\lambda_2|\lt1</m></title>
+      <idx><h>Diagonalizability</h><h>dynamics of</h></idx>
       <statement>
         <p>
           Describe how the matrix

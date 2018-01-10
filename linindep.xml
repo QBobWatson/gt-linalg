@@ -100,6 +100,8 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     <title>The Definition of Linear Independence</title>
 
     <essential xml:id="linindep-defn-linindep">
+      <idx><h>Linear independence</h><h>definition of</h></idx>
+      <idx><h>Linear dependence</h><see>Linear independence</see></idx>
       <statement>
         <p>
           A set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is <term>linearly independent</term> if the vector equation
@@ -110,6 +112,10 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     </essential>
 
     <p>
+      <idx><h>Linear Independence</h><h>linear dependence relation</h></idx>
+      <idx><h>Linear Independence</h><h>equation of linear dependence</h></idx>
+      <idx><h>Equation of linear dependence</h><see>Linear independence</see></idx>
+      <idx><h>Linear dependence relation</h><see>Linear independence</see></idx>
       In other words, <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent if there exist numbers <m>x_1,x_2,\ldots,x_p</m>, not all equal to zero, such that
       <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = 0.</me>
       This is called a <term>linear dependence relation</term> or <term>equation of linear dependence</term>.
@@ -180,6 +186,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
 
     <warning>
       <title>Recipe: Checking linear (in)dependence</title>
+      <idx><h>Linear Independence</h><h>verifying</h></idx>
     <p>
       A set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly independent if and only if the vector equation
       <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = 0</me>
@@ -197,6 +204,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
 
     <theorem hide-type="true" xml:id="linindep-matrix-cols">
       <title>Linear independence and matrix columns</title>
+      <idx><h>Linear Independence</h><h>and matrix columns</h></idx>
       <p>
         <ul>
           <li>The vectors <m>\{v_1,v_2,\ldots,v_p\}</m> are linearly independent if and only if the matrix <m>A</m> with columns <m>v_1,v_2,\ldots,v_p</m> has a pivot in every column, if and only if <m>Ax=0</m> has only the trivial solution.</li>
@@ -210,6 +218,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     </p>
 
     <warning xml:id="linindep-wide-matrix">
+      <idx><h>Linear Independence</h><h>wide matrices</h></idx>
       <p>A wide matrix has linearly dependent columns.</p>
     </warning>
 
@@ -217,6 +226,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
 
     <fact hide-type="true" xml:id="linindep-facts">
       <title>Facts about linear independence</title>
+      <idx><h>Linear Independence</h><h>basic facts</h></idx>
       <statement>
         <p>
           <ol>
@@ -289,6 +299,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     </p></warning>
 
     <theorem xml:id="linindep-criterion-redundant">
+      <idx><h>Linear Independence</h><h>redundancy criterion</h></idx>
       <statement>
         <p>A set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent if and only if we can remove one of the vectors without shrinking the span.</p>
       </statement>
@@ -324,6 +335,8 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     </p>
 
     <theorem xml:id="linindep-increasing-span" type-name="Increasing Span Criterion">
+      <idx><h>Linear Independence</h><h>increasing span criterion</h></idx>
+      <idx><h>Increasing span criterion</h><see>Linear independence</see></idx>
       <statement>
         <p>A set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly independent if and only if, for every <m>j</m>, the vector <m>v_j</m> is not in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m>.</p>
       </statement>
@@ -351,6 +364,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
 
   <subsection>
     <title>Pictures of Linear Independence</title>
+      <idx><h>Linear Independence</h><h>pictures of</h></idx>
 
     <p>A set containg one vector <m>\{v\}</m> is linearly independent when <m>v\neq 0</m>, since <m>xv = 0</m> implies <m>x=0</m>.
     <latex-code>

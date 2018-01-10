@@ -32,19 +32,29 @@ the license is included in gfdl.xml.
     <p>The equation <m>Ax=b</m> is easier to solve when <m>b=0</m>, so we start with this case.</p>
 
     <definition>
+      <idx><h>System of linear equations</h><h>homogeneous</h></idx>
+      <idx><h>System of linear equations</h><h>inhomogeneous</h></idx>
+      <idx><h>Homogeneous</h><see>System of linear equations</see></idx>
+      <idx><h>Inhomogeneous</h><see>System of linear equations</see></idx>
       <statement>
         <p>A system of linear equations of the form <m>Ax=0</m> is called <term>homogeneous</term>.</p>
-        <p>A system of linear equations of the form <m>Ax=b</m> for <m>b\neq 0</m> is called <term>nonhomogeneous</term> or <term>inhomogeneous</term>.</p>
+        <p>A system of linear equations of the form <m>Ax=b</m> for <m>b\neq 0</m> is called <term>inhomogeneous</term>.</p>
       </statement>
     </definition>
 
     <p>A homogeneous system is just a system of linear equations where all constants on the right side of the equals sign are zero.</p>
 
     <warning>
+      <idx><h>System of linear equations</h><h>trivial solution</h></idx>
+      <idx><h>System of linear equations</h><h>nontrivial solution</h></idx>
+      <idx><h>System of linear equations</h><h>homogeneous</h><h>trivial solution</h></idx>
+      <idx><h>Trivial solution</h><see>System of linear equations</see></idx>
+      <idx><h>Nontrivial solution</h><see>System of linear equations</see></idx>
       <p>A homogeneous system always has the solution <m>x=0</m>.  This is called the <term>trivial solution</term>.  Any nonzero solution is called <term>nontrivial</term>.</p>
     </warning>
 
     <observation xml:id="solnsets-nontrivial">
+      <idx><h>System of linear equations</h><h>nontrivial solution</h><h>and free variables</h></idx>
       <p>The equation <m>Ax=0</m> has a nontrivial solution <m>\iff</m> there is a free variable, <m>\iff</m> <m>A</m> has a column without a pivot.</p>
     </observation>
 
@@ -116,6 +126,7 @@ the license is included in gfdl.xml.
     <p>Since there were <em>two</em> variables in the above <xref ref="solnsets-eg-line"/>, the solution set is a subset of <m>\R^2</m>.  Since <em>one</em> of the variables was free, the solution set is a <em>line</em>.</p>
 
     <warning>
+      <idx><h>System of linear equations</h><h>nontrivial solution</h><h>finding</h></idx>
       <p>In order to actually <em>find</em> a nontrivial solution to <m>Ax=0</m> in the above <xref ref="solnsets-eg-line"/>, it suffices to substitute any nonzero value for the free variable <m>x_2</m>.  For instance, taking <m>x_2=1</m> gives the nontrivial solution <m>x = 1\cdot{3\choose 1} = {3\choose 1}.</m></p>
     </warning>
 
@@ -230,6 +241,8 @@ the license is included in gfdl.xml.
 
     <warning>
       <title>Recipe: Parametric vector form (homogeneous case)</title>
+      <idx><h>Parametric vector form</h><h>of a homogeneous equation</h></idx>
+      <idx><h>System of linear equations</h><h>parametric vector form of</h><see>Parametric vector form</see></idx>
         <p>Let <m>A</m> be an <m>m\times n</m> matrix.  Suppose that the free variables in the homogeneous equation <m>Ax=0</m> are <m>x_i,x_j,x_k,\ldots</m>.  Then the solutions to <m>Ax=0</m> can be written in the form
         <me> x = x_iv_i + x_jv_j + x_kv_k + \cdots</me>
         for some vectors <m>v_i,v_j,v_k,\ldots</m> in <m>\R^n</m>, and any scalars <m>x_i,x_j,x_k,\ldots</m>.  This is called the <term>parametric vector form</term> of the solution.  It is obtained by finding the parametric form of the solution, including the redundant equations <m>x_i=x_i</m>, <m>x_j=x_j</m>, <m>x_k=x_k,\ldots</m>, putting these equations in order, and making a vector equation.
@@ -240,16 +253,19 @@ the license is included in gfdl.xml.
         </p>
     </warning>
 
-    <p>Note that the solution set of a homogeneous equation <m>Ax=0</m> is a <em>span</em>!</p>
+    <p>
+      Note that the solution set of a homogeneous equation <m>Ax=0</m> is a <em>span</em>!
+      <idx><h>Solution set</h><h>of a homogeneous system is a span</h></idx>
+    </p>
 
   </subsection>
 
 
   <subsection>
-    <title>Nonhomogeneous Systems</title>
+    <title>Inhomogeneous Systems</title>
 
     <p>
-      Recall that a matrix equation <m>Ax=b</m> is called <term>nonhomogeneous</term> when <m>b\neq0</m>.
+      Recall that a matrix equation <m>Ax=b</m> is called <term>inhomogeneous</term> when <m>b\neq0</m>.
     </p>
 
     <example xml:id="solnsets-eg-line2">
@@ -389,14 +405,21 @@ the license is included in gfdl.xml.
 
     <warning xml:id="solnsets-translate-span">
       <title>Key Observation</title>
+      <idx><h>Parametric vector form</h><h>particular solution</h></idx>
+      <idx><h>Particular solution</h><see>Parametric vector form</see></idx>
+      <idx><h>System of linear equations</h><h>particular solution of</h><see>Parametric vector form</see></idx>
+      <idx><h>Solution set</h><h>translate of a span</h></idx>
       <p>
-        The set of solutions to <m>Ax=b</m>, if it is nonempty, is obtained by taking one <term>specific</term> or <term>particular solution</term> <m>p</m> of <m>Ax=b</m>, and adding all solutions of <m>Ax=0</m>.
+        The set of solutions to <m>Ax=b</m>, if it is nonempty, is obtained by taking one <term>particular solution</term> <m>p</m> of <m>Ax=b</m>, and adding all solutions of <m>Ax=0</m>.
       </p>
 
       <p>In particular, the solution set of <m>Ax=b</m> is either empty, or it is a <em>translate of a span</em>.</p>
     </warning>
 
-    <p>The <term>parametric vector form</term> of the solutions of <m>Ax=b</m> is just the parametric vector form of the solutions of <m>Ax=0</m>, plus a particular solution <m>p</m>.</p>
+    <p>
+      <idx><h>Parametric vector form</h><h>of an inhomogeneous equation</h></idx>
+      The <term>parametric vector form</term> of the solutions of <m>Ax=b</m> is just the parametric vector form of the solutions of <m>Ax=0</m>, plus a particular solution <m>p</m>.
+    </p>
 
     <p>It is not hard to see why the above <xref ref="solnsets-translate-span">Observation</xref> is true.  If <m>p</m> is a particular solution, then <m>Ap=b</m>, and if <m>x</m> is a solution to the homogeneous equation <m>Ax=0</m>, then
     <me>A(x+p) = Ax + Ap = 0 + b = b,</me>
@@ -454,6 +477,10 @@ the license is included in gfdl.xml.
     <p>See the interactive figures in the next <xref ref="solnsets-ss-and-cs"/> for visualizations of the above <xref ref="solnsets-translate-span">Observation</xref>.</p>
 
     <warning><title>Dimension of the solution set</title>
+    <idx><h>Line</h><h>dimension-1 solution set</h></idx>
+    <idx><h>Plane</h><h>dimension-2 solution set</h></idx>
+    <idx><h>Space</h><h>dimension-3 solution set</h></idx>
+    <idx><h>Dimension</h><h>of a solution set</h></idx>
     <p>As in the first <xref ref="solnsets-homog"/>, when there is one free variable in a consistent matrix equation, the solution set is a line<mdash/>this line does not pass through the origin when the system is inhomogeneous<mdash/>when there are two free variables, the solution set is a plane, etc.
     </p>
     <p>We will develop a rigorous definition of dimension in <xref ref="dimension"/>, but for now it is important to note that the <q>dimension</q> of the solution set of a consistent system is equal to the number of free variables.
@@ -464,6 +491,8 @@ the license is included in gfdl.xml.
 
   <subsection xml:id="solnsets-ss-and-cs">
     <title>Solution Sets and Column Spans</title>
+    <idx><h>Column space</h><h>versus the solution set</h></idx>
+    <idx><h>Solution set</h><h>versus the column space</h></idx>
 
     <p>To every <m>m\times n</m> matrix <m>A</m>, we have now associated two completely different geometric objects, both described using spans.
     <ul>

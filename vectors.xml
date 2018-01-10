@@ -28,6 +28,8 @@ the license is included in gfdl.xml.
 
     <definition hide-type="true">
       <title>Points and Vectors</title>
+      <idx><h>Point</h></idx>
+      <idx><h>Vector</h><h>definition of</h></idx>
       <statement>
         <p>A <term>point</term> is an element of <m>\R^n</m>, drawn as a point (a dot).
         <latex-code>
@@ -69,6 +71,9 @@ the license is included in gfdl.xml.
 
     <p>When we think of an element of <m>\R^n</m> as a vector, we will usually write it vertically, like a matrix with one column:
     <me>v = \vec{1 3}.</me>
+    We will also write <m>0</m> for the zero vector.
+    <notation><usage>{1\choose 2}</usage><description>A vector</description></notation>
+    <notation><usage>0</usage><description>The zero vector</description></notation>
     </p>
 
     <p>Why make the distinction between points and vectors?  A vector need not start at the origin: <em>it can be located anywhere</em>! In other words, an arrow is determined by its length and its direction, not by its location.  For instance, these arrows all represent the vector <m>\color{seq-green}\vec{1 2}</m>.
@@ -125,8 +130,10 @@ the license is included in gfdl.xml.
         <p><ul>
           <li>We can add two vectors together:
           <me>\vec{ a b c} + \vec{ x y z} = \vec{ a+x b+y c+z}.</me>
+          <idx><h>Vector</h><h>addition</h></idx>
           </li>
           <li>We can multiply, or <term>scale</term>, a vector by a real number <m>c</m>:
+          <idx><h>Vector</h><h>scalar multiplication</h></idx>
           <me>\def\r{\textcolor{red}}
 \r c\vec{ x y z} = \vec{ \r c\cdot x \r c\cdot y \r c\cdot z}.</me>
           We call <m>c</m> a <term>scalar</term> to distinguish it from a vector.  If <m>v</m> is a vector and <m>c</m> is a scalar, then <m>cv</m> is called a <term>scalar multiple</term> of <m>v</m>.
@@ -151,6 +158,7 @@ the license is included in gfdl.xml.
        + \textcolor{seq-green}{\vec{4 2}}
        = \vec{5 5}.
        </me>
+       <idx><h>Vector</h><h>addition</h><h>parallelogram law</h></idx>
       </p>
       <p>Why? The width of <m>v+w</m> is the sum of the widths, and likewise with
        the heights.
@@ -193,6 +201,7 @@ the license is included in gfdl.xml.
 
     <paragraphs>
       <title>Vector Subtraction</title>
+       <idx><h>Vector</h><h>subtraction</h><h>picture of</h></idx>
       <p>Geometrically, the difference of two vectors <m>v,w</m> is obtained as follows: place the tail of <m>v</m> and <m>w</m> at the same point.  Then <m>v-w</m> is the vector from the head of <m>v</m> to the head of <m>w</m>. For example,
        <me> \textcolor{seq-blue}{\vec{1 4}}
        - \textcolor{seq-green}{\vec{4 2}}
@@ -226,6 +235,7 @@ the license is included in gfdl.xml.
       <title>Scalar Multiplication</title>
 
       <p>A scalar multiple of a vector <m>v</m> has the same (or opposite) direction, but a different length.  For instance, <m>2v</m> is the vector in the direction of <m>v</m> but twice as long, and <m>-\frac 12v</m> is the vector in the opposite direction of <m>v</m>, but half as long.  Note that the set of all scalar multiples of a (nonzero) vector <m>v</m> is a <em>line</em>.
+      <idx><h>Vector</h><h>scalar multiplication</h><h>picture of</h></idx>
       <latex-code>
             <![CDATA[
   \begin{tikzpicture}
@@ -263,6 +273,8 @@ the license is included in gfdl.xml.
     <p>We can add and scalar-multiply vectors in the same equation.</p>
 
     <definition>
+      <idx><h>Linear combination</h><h>definition of</h></idx>
+      <idx><h>Vector</h><h>linear combination of</h><see>Linear combination</see></idx>
       <statement>
         <p>Let <m>c_1,c_2,\ldots,c_p</m> be scalars, and let <m>v_1,v_2,\ldots,v_p</m> be vectors in <m>\R^n</m>.  The vector in <m>\R^n</m>
         <me>c_1v_1 + c_2v_2 + \cdots + c_pv_p
@@ -312,6 +324,7 @@ the license is included in gfdl.xml.
   \end{tikzpicture}
             ]]>
       </latex-code>
+      <idx><h>Linear combination</h><h>two vectors, picture of</h></idx>
       The locations of these points are found using the parallelogram law for vector addition.  Any vector on the plane is a linear combination of <m>v_1</m> and <m>v_2</m>, with suitable coefficients.</p>
     </example>
 
@@ -330,6 +343,7 @@ the license is included in gfdl.xml.
 
     <specialcase>
       <title>Linear Combinations of a Single Vector</title>
+      <idx><h>Linear combination</h><h>single vector, picture of</h></idx>
       <p>A linear combination of a single vector <m>v = {1\choose 2}</m> is just a scalar multiple of <m>v</m>.  So some examples include
       <me>v=\vec{1 2},\quad \frac 32v=\vec{3/2 3},\quad -\frac12v = \vec{-1/2 -1},\quad\ldots
       </me>
@@ -349,6 +363,7 @@ the license is included in gfdl.xml.
 
     <specialcase>
       <title>Linear Combinations of Collinear Vectors</title>
+      <idx><h>Linear combination</h><h>collinear vectors, picture of</h></idx>
       <p>The set of all linear combinations of the vectors
       <me>v_1 = \vec{2 2} \sptxt{and} v_2 = \vec{-1 -1}</me>
       is the <em>line</em> containing both vectors.

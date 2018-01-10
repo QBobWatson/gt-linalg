@@ -36,6 +36,7 @@ the license is included in gfdl.xml.
     </p>
 
     <definition>
+      <idx><h>Difference equation</h></idx>
       <statement>
         <p>
           A <term>difference equation</term> is an equation of the form
@@ -62,6 +63,7 @@ the license is included in gfdl.xml.
     </p>
 
     <specialcase xml:id="stochastic-redbox-eg1">
+      <idx><h>Red Box</h></idx>
       <p>
         Red Box has kiosks all over Atlanta where you can rent movies.  You can return them to any other kiosk.  For simplicity, pretend that there are three kiosks in Atlanta, and that every customer returns their movie the next day.  Let <m>v_t</m> be the vector whose entries <m>x_t,y_t,z_t</m> are the number of copies of Prognosis Negative at kiosks <m>1,2,</m> and <m>3</m>, respectively.  Let <m>A</m> be the matrix whose <m>i,j</m>-entry is the probability that a customer renting Prognosis Negative from kiosk <m>j</m> returns it to kiosk <m>i</m>.  For example, the matrix
         <me>
@@ -130,6 +132,8 @@ the license is included in gfdl.xml.
     </p>
 
     <definition>
+      <idx><h>Stochastic matrix</h><h>definition of</h></idx>
+      <idx><h>Matrix</h><h>stochastic</h><see>Stochastic matrix</see></idx>
       <statement>
         <p>
           A square matrix <m>A</m> is <term>stochastic</term> if all of its entries are nonnegative, and the entries of each column sum to one.
@@ -141,6 +145,7 @@ the license is included in gfdl.xml.
     </definition>
 
     <specialcase xml:id="stochastic-redbox-eg2">
+      <idx><h>Red Box</h></idx>
       <p>
         Continuing with the <xref ref="stochastic-redbox-eg1">Red Box example</xref>, the matrix
         <me>
@@ -183,6 +188,7 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
+      <idx><h>Stochastic matrix</h><h>sum of entries of vector</h></idx>
       <p>
         Let <m>A</m> be a stochastic matrix, let <m>v_t</m> be a vector, and let <m>v_{t+1} = Av_t</m>.  Then the sum of the entries of <m>v_t</m> equals the sum of the entries of <m>v_{t+1}</m>.
       </p>
@@ -193,6 +199,8 @@ the license is included in gfdl.xml.
     </p>
 
     <theorem type-name="Fact">
+      <idx><h>Stochastic matrix</h><h>eigenvalues of</h></idx>
+      <idx><h>Eigenvalue</h><h>and stochastic matrices</h></idx>
       <statement>
         <p>
           Let <m>A</m> be a stochastic matrix.  Then:
@@ -239,6 +247,9 @@ the license is included in gfdl.xml.
     </p>
 
     <definition>
+      <idx><h>Stochastic matrix</h><h>steady state of</h></idx>
+      <idx><h>Steady state</h><see>Stochastic matrix</see></idx>
+      <idx><h>Eigenvector</h><h>and stochastic matrices</h></idx>
       <statement>
         <p>
           A <em>steady state</em> of a stochastic matrix <m>A</m> is an eigenvector <m>w</m> with eigenvalue <m>1</m>, such that the entries are <em>positive</em> and sum to <m>1</m>.
@@ -252,6 +263,8 @@ the license is included in gfdl.xml.
 
     <theorem hide-type="true">
       <title>Perron<ndash/>Frobenius Theorem</title>
+      <idx><h>Stochastic matrix</h><h>long-term behavior of</h></idx>
+      <idx><h>Perron<ndash/>Frobenius Theorem</h></idx>
       <statement>
         <p>
           Let <m>A</m> be a positive stochastic matrix.  Then <m>A</m> admits a unique steady state vector <m>w</m>, which spans the <m>1</m>-eigenspace.
@@ -285,6 +298,7 @@ the license is included in gfdl.xml.
 
     <warning>
       <title>Recipe 1: Compute the steady state vector</title>
+      <idx><h>Stochastic matrix</h><h>steady state of</h><h>computing</h></idx>
       <p>
         Let <m>A</m> be a positive stochastic matrix.  Here is how to compute the steady-state vector of <m>A.</m>
         <ol>
@@ -307,6 +321,7 @@ the license is included in gfdl.xml.
 
     <warning>
       <title>Recipe 2: Compute the steady state vector by computer</title>
+      <idx><h>Stochastic matrix</h><h>steady state of</h><h>computing</h></idx>
       <p>
         Let <m>A</m> be a positive stochastic matrix.  Here is how to compute the steady-state vector of <m>A</m> with a computer.
         <ol>
@@ -389,11 +404,13 @@ the license is included in gfdl.xml.
       </p>
       <figure>
         <caption>Dynamics of the stochastic matrix <m>A</m>.  Click <q>iterate</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.  Note that on both sides, all vectors are <q>sucked into the <m>1</m>-eigenspace</q> (the red line).</caption>
+        <idx><h>Stochastic matrix</h><h>picture of</h></idx>
         <mathbox source="demos/similarity.html?C=1,1:1,-1&amp;B=1,0:0,1/2&amp;BName=D&amp;dynamics=on&amp;snap=off" height="600px"/>
       </figure>
     </example>
 
     <specialcase xml:id="stochastic-redbox-eg3">
+      <idx><h>Red Box</h></idx>
       <p>
         Continuing with the <xref ref="stochastic-redbox-eg2">Red Box example</xref>, we can illustrate the Perron<ndash/>Frobenius Theorem explicitly.  The matrix
         <me>
@@ -462,6 +479,7 @@ the license is included in gfdl.xml.
       </p>
       <figure>
         <caption>Dynamics of the stochastic matrix <m>A</m>.  Click <q>iterate</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.  Note that on both sides, all vectors are <q>sucked into the <m>1</m>-eigenspace</q> (the red line).</caption>
+        <idx><h>Stochastic matrix</h><h>picture of</h></idx>
         <mathbox source="demos/similarity.html?C=7,-1,1:6,0,-3:5,1,2&amp;B=1,0,0:0,-.2,0:0,0,.1&amp;BName=D&amp;dynamics=on&amp;reference=none&amp;snap=off" height="600px"/>
       </figure>
     </specialcase>
@@ -489,6 +507,7 @@ the license is included in gfdl.xml.
 
     <definition hide-type="true">
       <title>The Importance Rule</title>
+      <idx><h>Google PageRank</h><h>Importance Rule</h></idx>
       <statement>
         <p>
           If a page <m>P</m> links to <m>n</m> other pages <m>Q_1,Q_2,\ldots,Q_n</m>, then each page <m>Q_i</m> inherits <m>\frac 1n</m> of <m>P</m><rsq/>s importance.
@@ -514,6 +533,7 @@ the license is included in gfdl.xml.
 
     <definition hide-type="true">
       <title>The Importance Matrix</title>
+      <idx><h>Google PageRank</h><h>Importance Matrix</h></idx>
       <statement>
         <p>
           Consider an Internet with <m>n</m> pages.  The <term>importance matrix</term> is the <m>n\times n</m> matrix <m>A</m> whose <m>i,j</m>-entry is the importance that page <m>j</m> passes to page <m>i.</m>
@@ -594,6 +614,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
 
     <warning>
       <title>Key Observation</title>
+      <idx><h>Google PageRank</h><h>Importance Matrix</h><h>eigenvector of</h></idx>
       <p>
         The rank vector is an eigenvector of the importance matrix with eigenvalue one.
       </p>
@@ -687,6 +708,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
 
     <definition hide-type="true">
       <title>The Google Matrix</title>
+      <idx><h>Google PageRank</h><h>Google Matrix</h></idx>
       <statement>
         <p>
           Let <m>A</m> be the Importance Matrix for an Internet with <m>n</m> pages.  The <term>Google Matrix</term> is the matrix
@@ -720,6 +742,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
 
     <warning>
       <title>The 25 Billion Dollar Eigenvector</title>
+      <idx><h>Google PageRank</h><h>Google Matrix</h><h>eigenvector of</h></idx>
       <p>
         The PageRank vector is the steady state of the Google Matrix.
       </p>

@@ -37,6 +37,10 @@ the license is included in gfdl.xml.
    <p>The <em>reciprocal</em> or <em>inverse</em> of a nonzero number <m>a</m> is the number <m>b</m> which is characterized by the property that <m>ab = 1</m>.  For instance, the inverse of <m>7</m> is <m>1/7</m>.  We use this formulation to define the inverse of a matrix.</p>
 
    <definition>
+     <idx><h>Invertible matrix</h><h>definition of</h></idx>
+     <idx><h>Matrix</h><h>inverse of</h><see>Invertible matrix</see></idx>
+     <idx><h>Matrix</h><h>invertible</h><see>Invertible matrix</see></idx>
+     <notation><usage>A\inv</usage><description>Inverse of a matrix</description></notation>
      <statement>
        <p>
          Let <m>A</m> be an <m>n\times n</m> (square) matrix.  We say that <m>A</m> is <term>invertible</term> if there is an <m>n\times n</m> matrix <m>B</m> such that
@@ -83,12 +87,19 @@ the license is included in gfdl.xml.
 
    <proposition type-name="Fact" hide-type="true" xml:id="matrix-inv-facts">
      <title>Facts about invertible matrices</title>
+     <idx><h>Invertible matrix</h><h>basic facts</h></idx>
      <statement>
        <p>
          Let <m>A</m> and <m>B</m> be invertible <m>n\times n</m> matrices.
          <ol>
-           <li><m>A\inv</m> is invertible, and its inverse is <m>(A\inv){}\inv = A.</m></li>
-           <li><m>AB</m> is invertible, and its inverse is <m>(AB)\inv = B\inv A\inv</m> (note the order).</li>
+           <li>
+             <idx><h>Invertible matrix</h><h>inverse of</h></idx>
+             <m>A\inv</m> is invertible, and its inverse is <m>(A\inv){}\inv = A.</m>
+           </li>
+           <li>
+             <idx><h>Matrix multiplication</h><h>inverse of</h></idx>
+             <m>AB</m> is invertible, and its inverse is <m>(AB)\inv = B\inv A\inv</m> (note the order).
+           </li>
          </ol>
        </p>
      </statement>
@@ -129,6 +140,7 @@ the license is included in gfdl.xml.
    </p>
 
    <definition xml:id="matrix-inv-def-det">
+     <idx><h>Determinant</h><h>of a <m>2\times 2</m> matrix</h></idx>
      <statement>
        <p>
          The <term>determinant</term> of a <m>2\times 2</m> matrix is the number
@@ -138,6 +150,7 @@ the license is included in gfdl.xml.
    </definition>
 
    <proposition xml:id="matrix-inv-22">
+     <idx><h>Invertible matrix</h><h>computation</h><h><m>2\times 2</m> case</h></idx>
      <statement>
        <p>
          Let <m>A = \mat{a b; c d}</m>.
@@ -209,6 +222,7 @@ the license is included in gfdl.xml.
    <p>The following Theorem gives a procedure for computing <m>A\inv</m> in general.</p>
 
    <theorem xml:id="matrix-inv-how-to-compute">
+     <idx><h>Invertible matrix</h><h>computation</h><h>in general</h></idx>
      <statement>
        <p>
          Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>(\,A\mid I_n\,)</m> be the matrix obtained by augmenting <m>A</m> by the identity matrix.
@@ -324,13 +338,16 @@ $\hmat{1 0 4 1 0 0; 0 1 2 0 1 0; 0 \r0 \r0 0 3 1}$.}
  </subsection>
 
  <subsection>
-   <title>Solving Linear Systems via Inverses</title>
+   <title>Solving Linear Systems using Inverses</title>
 
    <p>
      In this Subsection, we learn to solve <m>Ax=b</m> by <q>dividing by <m>A</m>.</q>
    </p>
 
    <theorem xml:id="matrix-inv-solve-system">
+     <idx><h>Invertible matrix</h><h>solving linear systems with</h></idx>
+     <idx><h>Matrix equation</h><h>solving with the inverse matrix</h></idx>
+     <idx><h>System of linear equations</h><h>solving with the inverse matrix</h></idx>
      <statement>
        <p>
          Let <m>A</m> be an invertible <m>n\times n</m> matrix, and let <m>b</m> be a vector in <m>\R^n.</m>  Then the matrix equation <m>Ax=b</m> has exactly one solution:
@@ -471,6 +488,11 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
     </p>
 
     <definition xml:id="matrix-inv-trans-inv-def">
+      <idx><h>Invertible transformation</h><h>definition of</h></idx>
+      <idx><h>Transformation</h><h>invertible</h><see>Invertible transformation</see></idx>
+      <idx><h>Linear transformation</h><h>invertible</h><see>Invertible transformation</see></idx>
+      <idx><h>Matrix transformation</h><h>invertible</h><see>Invertible transformation</see></idx>
+      <notation><usage>T\inv</usage><description>Inverse of a transformation</description></notation>
       <statement>
         <p>A transformation <m>T\colon\R^n\to\R^n</m> is <term>invertible</term> if there exists a transformation <m>U\colon\R^n\to\R^n</m> such that <m>T\circ U = \Id_{\R^n}</m> and <m>U\circ T = \Id_{\R^n}</m>.  In this case, the transformation <m>U</m> is called the <term>inverse</term> of <m>T</m>, and we write <m>U = T\inv</m>.</p>
       </statement>
@@ -512,6 +534,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
 
    <example>
      <title>Dilation</title>
+     <idx><h>Dilation</h><h>inverse of</h></idx>
      <statement>
        <p>Let <m>T\colon\R^2\to\R^2</m> be dilation by a factor of <m>3/2</m>: that is, <m>T(x) = 3/2x</m>.  Is <m>T</m> invertible?  If so, what is <m>T\inv</m>?</p>
      </statement>
@@ -568,6 +591,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
 
    <example>
      <title>Rotation</title>
+     <idx><h>Rotation</h><h>counterclockwise by <m>90^\circ</m></h><h>inverse of</h></idx>
      <statement>
        <p>Let <m>T\colon\R^2\to\R^2</m> be counterclockwise rotation by <m>45^\circ</m>.  Is <m>T</m> invertible?  If so, what is <m>T\inv</m>?</p>
      </statement>
@@ -623,6 +647,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
 
    <example>
      <title>Reflection</title>
+     <idx><h>Reflection</h><h>over the <m>y</m>-axis</h><h>inverse of</h></idx>
      <statement>
        <p>Let <m>T\colon\R^2\to\R^2</m> be the reflection over the <m>y</m>-axis.  Is <m>T</m> invertible?  If so, what is <m>T\inv</m>?</p>
      </statement>
@@ -670,6 +695,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
 
    <example type-name="Non-Example">
      <title>Projection</title>
+     <idx><h>Orthogonal projection</h><h>onto the <m>xy</m>-plane</h><h>noninvertibility of</h></idx>
      <statement>
        <p>Let <m>T\colon\R^3\to\R^3</m> be the projection onto the <m>xy</m>-plane, introduced in this <xref ref="matrix-trans-eg-projection"/>.  Is <m>T</m> invertible?</p>
      </statement>
@@ -690,6 +716,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
    </example>
 
    <proposition xml:id="matrix-inv-11-onto">
+     <idx><h>Invertible transformation</h><h>one-to-one and onto</h></idx>
      <statement>
        <p>
          <ol>
@@ -736,6 +763,8 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
    </remark>
 
    <theorem xml:id="matrix-inv-matrix-inv-comp">
+     <idx><h>Invertible transformation</h><h>and invertible matrices</h></idx>
+     <idx><h>Invertible matrix</h><h>and invertible transformation</h></idx>
      <statement>
        <p>
          Let <m>T\colon\R^n\to\R^n</m> be a linear transformation with standard matrix <m>A</m>.  Then <m>T</m> is invertible if and only if <m>A</m> is invertible, in which case <m>T\inv</m> is linear with standard matrix <m>A\inv</m>.
@@ -769,6 +798,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
 
    <example>
      <title>Dilation</title>
+     <idx><h>Dilation</h><h>inverse of</h></idx>
      <statement>
        <p>Let <m>T\colon\R^2\to\R^2</m> be dilation by a factor of <m>3/2</m>: that is, <m>T(x) = 3/2x</m>.  Is <m>T</m> invertible?  If so, what is <m>T\inv</m>?</p>
      </statement>
@@ -787,6 +817,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
 
    <example>
      <title>Rotation</title>
+     <idx><h>Rotation</h><h>counterclockwise by <m>90^\circ</m></h><h>inverse of</h></idx>
      <statement>
        <p>Let <m>T\colon\R^2\to\R^2</m> be counterclockwise rotation by <m>45^\circ</m>.  Is <m>T</m> invertible?  If so, what is <m>T\inv</m>?</p>
      </statement>
@@ -814,6 +845,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
 
    <example>
      <title>Reflection</title>
+     <idx><h>Reflection</h><h>over the <m>y</m>-axis</h><h>inverse of</h></idx>
      <statement>
        <p>Let <m>T\colon\R^2\to\R^2</m> be the reflection over the <m>y</m>-axis.  Is <m>T</m> invertible?  If so, what is <m>T\inv</m>?</p>
      </statement>
@@ -837,6 +869,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
 
    <theorem type-name="Invertible Matrix Theorem" hide-type="true" xml:id="imt-1">
      <title>The Invertible Matrix Theorem</title>
+     <idx><h>Invertible Matrix Theorem</h></idx>
      <statement>
        <p>
          Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>T\colon\R^n\to\R^n</m> be the matrix transformation <m>T(x) = Ax</m>.  The following statements are equivalent:

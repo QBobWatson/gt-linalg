@@ -26,6 +26,8 @@ the license is included in gfdl.xml.
   </p>
 
   <lemma xml:id="dimension-unique-coeff" type-name="Fact">
+    <idx><h>Basis</h><h>uniqueness with respect to</h></idx>
+    <idx><h>Basis</h><h>coordinates with respect to</h><see><m>\cB</m>-coordinates</see></idx>
     <statement>
       <p>
         If <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> is a basis for a subspace <m>V</m>, then any vector <m>x</m> in <m>V</m> can be written as a linear combination
@@ -66,6 +68,7 @@ the license is included in gfdl.xml.
   </p>
 
   <definition xml:id="dimension-defn-Bcoords">
+    <idx><h><m>\cB</m>-coordinates</h><h>definition of</h></idx>
     <statement>
       <p>
         Let <m>\cB=\{v_1,v_2,\ldots,v_m\}</m> be a basis of a subspace <m>V</m>, and let
@@ -77,6 +80,7 @@ the license is included in gfdl.xml.
   </definition>
 
   <p>
+    <idx><h><m>\cB</m>-coordinates</h><h>informally</h></idx>
     If we change the basis, then we can still give instructions for how to get to the point <m>(3,5,-2)</m>, but the instructions will be different. Say for example we take the basis
     <me>v_1=e_1+e_2 = \vec{1,1,0}, \quad v_2=e_2 = \vec{0 1 0},\quad v_3 =e_3 = \vec{0 0 1}.</me>
     We can write <m>(3,5,-2)</m> in this basis as <m>3v_1+2v_2-2v_3</m>. In other words: start at the origin, travel northeast <m>3</m> times as far as <m>v_1</m>, then <m>2</m> units east, then <m>2</m> units down.
@@ -84,6 +88,7 @@ the license is included in gfdl.xml.
   </p>
 
   <warning>
+    <idx><h><m>\cB</m>-coordinates</h><h>labeling points</h></idx>
     <p>
       The above <xref ref="dimension-defn-Bcoords"/> gives a way of using <m>\R^m</m> to <em>label</em> the points of a subspace of dimension <m>m</m>: a point is simply labeled by its <m>\cB</m>-coordinate vector.  For instance, if we choose a basis for a plane, we can label the points of that plane with the elements of <m>\R^2</m>.
     </p>
@@ -150,6 +155,7 @@ the license is included in gfdl.xml.
   </example>
 
   <specialcase>
+    <idx><h><m>\cB</m>-coordinates</h><h>nonstandard grid</h></idx>
     <p>
       Let
       <me>v_1 = \vec[r]{2 -1 1} \quad v_2 = \vec[r]{1 0 -1}.</me>
@@ -288,6 +294,7 @@ the license is included in gfdl.xml.
 
   <warning>
     <title>Recipes: <m>\cB</m>-coordinates</title>
+    <idx><h><m>\cB</m>-coordinates</h><h>computing</h><h>row reduction</h></idx>
     <p>
       If <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> is a basis for a subspace <m>V</m> and <m>x</m> is in <m>V</m>, then
       <me>[x]_\cB = \vec{c_1 c_2 \vdots, c_m} \sptxt{means}

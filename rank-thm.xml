@@ -35,6 +35,15 @@ the license is included in gfdl.xml.
   </p>
 
   <definition>
+    <idx><h>Matrix</h><h>rank of</h><see>Rank</see></idx>
+    <idx><h>Column space</h><h>and rank</h><see>Rank</see></idx>
+    <idx><h>Rank</h></idx>
+    <idx><h>Matrix</h><h>nullity of</h><see>Nullity</see></idx>
+    <idx><h>Nullity</h></idx>
+    <idx><h>Dimension</h><h>of a column space</h></idx>
+    <idx><h>Dimension</h><h>of a null space</h></idx>
+    <notation><usage>\rank(A)</usage><description>The rank of a matrix</description></notation>
+    <notation><usage>\nullity(A)</usage><description>The nullity of a matrix</description></notation>
     <statement>
       <p>
         The <term>rank</term> of a matrix <m>A</m>, written <m>\rank(A)</m>, is the dimension of the column space <m>\Col(A)</m>.
@@ -56,6 +65,8 @@ the license is included in gfdl.xml.
     </p>
 
     <theorem type-name="Rank Theorem" xml:id="rank-theorem">
+      <idx><h>Rank</h><h>Rank Theorem</h></idx>
+      <idx><h>Nullity</h><h>Rank Theorem</h></idx>
       <statement>
         <p>
           If <m>A</m> is an <m>m\times n</m> matrix, then
@@ -152,6 +163,7 @@ the license is included in gfdl.xml.
 
     <theorem hide-type="true" type-name="Basis Theorem" xml:id="basis-theorem">
       <title>The Basis Theorem</title>
+      <idx><h>Basis</h><h>Basis Theorem</h></idx>
       <statement>
         <p>
           Let <m>V</m> be a subspace of dimension <m>m</m>.  Then:

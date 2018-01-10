@@ -44,6 +44,8 @@ the license is included in gfdl.xml.
     </p>
 
     <definition>
+      <idx><h>Least-squares</h><h>definition of</h></idx>
+      <idx><h>Approximate solution</h><see>Least-squares</see></idx>
       <statement>
         <p>
           Let <m>A</m> be an <m>m\times n</m> matrix and let <m>b</m> be a vector in <m>\R^m</m>.  A <term>least-squares solution</term> of the matrix equation <m>Ax=b</m> is a vector <m>\hat x</m> in <m>\R^n</m> such that
@@ -59,6 +61,7 @@ the license is included in gfdl.xml.
 
     <paragraphs>
       <title>Least Squares: Picture</title>
+      <idx><h>Least-squares</h><h>picture of</h></idx>
     <p>
       Recall from this <xref ref="matrixeq-spans-consistency"/> that the column space of <m>A</m> is the set of all vectors <m>c</m> such that <m>Ax=c</m> is consistent.  Hence, the <xref ref="projections-closest-vector" text="title">closest vector</xref> of the form <m>Ax</m> to <m>b</m> is the orthogonal projection of <m>b</m> onto <m>\Col(A)</m>.
       <latex-code><![CDATA[
@@ -88,6 +91,8 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
+      <idx><h>Least-squares</h><h>and <m>Ax=b_{\Col(A)}</m></h></idx>
+      <idx><h>Orthogonal projection</h><h>onto a column space</h></idx>
       <p>
         A least-squares solution of <m>Ax=b</m> is a solution <m>\hat x</m> of the consistent equation <m>Ax=b_{\Col(A)}</m>.
       </p>
@@ -141,6 +146,7 @@ the license is included in gfdl.xml.
     </p>
 
     <theorem xml:id="leastsquares-ATA-method">
+      <idx><h>Least-squares</h><h>computation of</h><h>row reduction</h></idx>
       <statement>
         <p>
           Let <m>A</m> be an <m>m\times n</m> matrix and let <m>b</m> be a vector in <m>\R^m</m>.  The least-squares solutions of <m>Ax=b</m> are the solutions of the matrix equation
@@ -160,6 +166,7 @@ the license is included in gfdl.xml.
 
     <warning>
       <title>Recipe 1: Compute a least-squares solution</title>
+      <idx><h>Least-squares</h><h>computation of</h><h>row reduction</h></idx>
       <p>
         Let <m>A</m> be an <m>m\times n</m> matrix and let <m>b</m> be a vector in <m>\R^n</m>.  Here is a method for computing a least-squares solution of <m>Ax=b</m>:
         <ol>
@@ -288,6 +295,8 @@ the license is included in gfdl.xml.
     </p>
 
     <theorem>
+      <idx><h>Least-squares</h><h>uniqueness of</h></idx>
+      <idx><h>Least-squares</h><h>computation of</h><h>complicated matrix formula</h></idx>
       <statement>
         <p>
           Let <m>A</m> be an <m>m\times n</m> matrix and let <m>b</m> be a vector in <m>\R^m</m>.  The following are equivalent:
@@ -399,6 +408,8 @@ the license is included in gfdl.xml.
 
     <warning xml:id="leastsquares-recipe2">
       <title>Recipe 2: Compute a least-squares solution</title>
+      <idx><h>Least-squares</h><h>computation of</h><h>Projection Formula</h></idx>
+      <idx><h>Orthogonal set</h><h>and least squares</h></idx>
       <p>
         Let <m>A</m> be an <m>m\times n</m> matrix with <em>orthogonal</em> columns <m>u_1,u_2,\ldots,u_m</m>, and let <m>b</m> be a vector in <m>\R^n</m>.  Then the least-squares solution of <m>Ax=b</m> is the vector
         <me>
@@ -444,6 +455,7 @@ the license is included in gfdl.xml.
 
   <subsection>
     <title>Best-Fit Problems</title>
+    <idx><h>Best-fit problem</h></idx>
 
     <p>
       In this Subsection we give an application of the method of least squares to data modeling.  We begin with a basic example.
@@ -451,6 +463,7 @@ the license is included in gfdl.xml.
 
     <specialcase>
       <title>Best-fit line</title>
+      <idx><h>Best-fit problem</h><h>best-fit line</h></idx>
       <p>
         Suppose that we have measured three data points
         <me>
@@ -549,6 +562,7 @@ the license is included in gfdl.xml.
 
     <example>
       <title>Best-fit parabola</title>
+      <idx><h>Best-fit problem</h><h>best-fit parabola</h></idx>
       <statement>
         <p>
           Find the parabola that best approximates the data points
@@ -688,6 +702,7 @@ the license is included in gfdl.xml.
 
     <example xml:id="leastsquares-linear-eg">
       <title>Best-fit linear function</title>
+      <idx><h>Best-fit problem</h><h>best-fit linear equation</h></idx>
       <statement>
         <p>
           Find the linear function <m>f(x,y)</m> that best approximates the following data:
@@ -825,6 +840,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
+      <idx><h>Best-fit problem</h><h>general setup</h></idx>
       All of the above examples have the following form: some number of data points <m>(x,y)</m> are specified, and we want to find a function
       <me>
         y = B_1g_1(x) + B_2g_2(x) + \cdots + B_mg_m(x)
@@ -838,6 +854,7 @@ the license is included in gfdl.xml.
 
     <example>
       <title>Best-fit trigonometric function</title>
+      <idx><h>Best-fit problem</h><h>best-fit trigonometric function</h></idx>
       <statement>
         <p>
           What is the best-fit function of the form
@@ -983,6 +1000,8 @@ the license is included in gfdl.xml.
 
     <example>
       <title>Best-fit ellipse</title>
+      <idx><h>Best-fit problem</h><h>best-fit ellipse</h></idx>
+      <idx><h>Ellipse</h><h>best-fit problem</h></idx>
       <statement>
         <p>
           Find the best-fit ellipse through the points

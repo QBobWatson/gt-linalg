@@ -39,6 +39,10 @@ the license is included in gfdl.xml.
     </p>
 
     <essential>
+      <idx><h>Eigenvalue</h><h>definition of</h></idx>
+      <idx><h>Eigenvalue</h><h>eigenvector for</h></idx>
+      <idx><h>Eigenvector</h><h>definition of</h></idx>
+      <idx><h>Eigenvector</h><h>eigenvalue for</h></idx>
       <statement>
         <p>
           Let <m>A</m> be an <m>n\times n</m> matrix.
@@ -156,6 +160,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
+      <idx><h>Eigenvector</h><h>and collinearity</h></idx>
     To say that <m>Av=\lambda v</m> means that <m>Av</m> and <m>\lambda v</m> are <em>collinear</em>.  So, an eigenvector of <m>A</m> is a nonzero vector <m>v</m> such that <m>Av</m> and <m>v</m> lie on the same line through the origin.  In this case, <m>Av</m> is a scalar multiple of <m>v</m>; the eigenvalue is the scaling factor.
     <latex-code>
 \begin{tikzpicture}[thin border nodes, baseline]
@@ -181,6 +186,7 @@ the license is included in gfdl.xml.
 
     <example xml:id="evec-eg-reflection">
       <title>Reflection</title>
+      <idx><h>Reflection</h><h>eigenvectors of</h></idx>
       <statement>
         <p>
           Let <m>T\colon\R^2\to\R^2</m> be the linear transformation that reflects over the line <m>L</m> defined by <m>y=-x</m>, and let <m>A</m> be the matrix for <m>T</m>.  Find the eigenvalues and eigenvectors of <m>A</m> without doing any computations.
@@ -270,6 +276,7 @@ the license is included in gfdl.xml.
 
     <example>
       <title>Projection</title>
+      <idx><h>Orthogonal projection</h><h>eigenvectors of</h></idx>
       <statement>
         <p>
           Let <m>T\colon\R^2\to\R^2</m> be the linear transformation that projects a vector vertically onto the <m>x</m>-axis, and let <m>A</m> be the matrix for <m>T</m>.  Find the eigenvalues and eigenvectors of <m>A</m> without doing any computations.
@@ -354,6 +361,10 @@ the license is included in gfdl.xml.
 
     <example>
       <title>Identity</title>
+      <idx><h>Identity matrix</h><h>eigenvectors of</h></idx>
+      <idx><h>Eigenvalue</h><h>identity matrix</h></idx>
+      <idx><h>Identity matrix</h><h>eigenvalues of</h></idx>
+      <idx><h>Eigenvector</h><h>identity matrix</h></idx>
       <statement>
         <p>
           Find all eigenvalues and eigenvectors of the identity matrix <m>I_n</m>.
@@ -372,6 +383,7 @@ the license is included in gfdl.xml.
 
     <example>
       <title>Dilation</title>
+      <idx><h>Dilation</h><h>eigenvectors of</h></idx>
       <statement>
         <p>
           Let <m>T\colon\R^2\to\R^2</m> be the linear transformation that dilates by a factor of <m>1.5</m>, and let <m>A</m> be the matrix for <m>T</m>.  Find the eigenvalues and eigenvectors of <m>A</m> without doing any computations.
@@ -404,6 +416,7 @@ the license is included in gfdl.xml.
 
     <example xml:id="evecs-eg-shear">
       <title>Shear</title>
+      <idx><h>Shear</h><h>eigenvectors of</h></idx>
       <statement>
         <p>
           Let
@@ -455,6 +468,7 @@ the license is included in gfdl.xml.
 
     <example xml:id="evecs-eg-rotation">
       <title>Rotation</title>
+      <idx><h>Rotation</h><h>eigenvectors of</h></idx>
       <statement>
         <p>
           Let <m>T\colon\R^2\to\R^2</m> be the linear transformation that rotates counterclockwise by <m>90^\circ</m>, and let <m>A</m> be the matrix for <m>T</m>.  Find the eigenvalues and eigenvectors of <m>A</m> without doing any computations.
@@ -489,6 +503,7 @@ the license is included in gfdl.xml.
 
     <theorem type-name="Fact" xml:id="evecs-linindep">
       <title>Eigenvectors with distinct eigenvalues are linearly independent</title>
+      <idx><h>Eigenvector</h><h>linear independence of</h></idx>
       <statement>
         <p>
           Let <m>v_1,v_2,\ldots,v_k</m> be eigenvectors of a matrix <m>A</m>, and suppose that the corresponding eigenvalues <m>\lambda_1,\lambda_2,\ldots,\lambda_k</m> are <em>distinct</em> (all different from each other).  Then <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly independent.
@@ -532,6 +547,7 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
+      <idx><h>Eigenvalue</h><h>maximum number of</h></idx>
       <p>
         An <m>n\times n</m> matrix <m>A</m> has at most <m>n</m> eigenvalues.
       </p>
@@ -556,6 +572,7 @@ the license is included in gfdl.xml.
     </p>
 
     <p>
+      <idx><h>Eigenspace</h><h>is a solution set</h></idx>
       The above observation is important because it says that <em>finding the eigenvectors for a given eigenvalue means solving a homogeneous system of equations.</em>  For instance, if
       <me>
         A = \mat{7 1 3; -3 2 -3; -3 -2 -1},
@@ -584,6 +601,7 @@ the license is included in gfdl.xml.
     </p>
 
     <definition>
+      <idx><h>Eigenspace</h><h>definition of</h></idx>
       <statement>
         <p>
           Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>\lambda</m> be an eigenvalue of <m>A</m>.  The <term><m>\lambda</m>-eigenspace</term> of <m>A</m> is the solution set of <m>(A-\lambda I_n)v=0</m>, i.e., the subspace <m>\Nul(A-\lambda I_n)</m>.
@@ -592,6 +610,7 @@ the license is included in gfdl.xml.
     </definition>
 
     <p>
+      <idx><h>Eigenspace</h><h>is a subspace</h></idx>
       The <m>\lambda</m>-eigenspace is a subspace because it is the null space of a matrix, namely, the matrix <m>A-\lambda I_n</m>.  This subspace consists of the zero vector and all eigenvectors of <m>A</m> with eigenvalue <m>\lambda</m>.
     </p>
 
@@ -719,6 +738,7 @@ the license is included in gfdl.xml.
 
     <example>
       <title>Reflection</title>
+      <idx><h>Reflection</h><h>eigenspaces of</h></idx>
       <statement>
         <p>
           Let <m>T\colon\R^2\to\R^2</m> be the linear transformation that reflects over the line <m>L</m> defined by <m>y=-x</m>, and let <m>A</m> be the matrix for <m>T</m>.  Find all eigenspaces of <m>A</m>.
@@ -756,6 +776,8 @@ the license is included in gfdl.xml.
 
     <warning>
       <title>Recipes: Eigenspaces</title>
+      <idx><h>Eigenspace</h><h>computation</h></idx>
+      <idx><h>Eigenvector</h><h>computation</h></idx>
       <p>
         Let <m>A</m> be an <m>n\times n</m> matrix and let <m>\lambda</m> be a number.
         <ol>
@@ -780,6 +802,9 @@ the license is included in gfdl.xml.
     </p>
 
     <theorem type-name="Fact" xml:id="evecs-eval0">
+      <idx><h>Eigenvalue</h><h>zero</h></idx>
+      <idx><h>Eigenspace</h><h>and the null space</h></idx>
+      <idx><h>Null space</h><h>is the <m>0</m>-eigenspace</h></idx>
       <statement>
         <p>
           Let <m>A</m> be an <m>n\times n</m> matrix.
@@ -815,6 +840,24 @@ the license is included in gfdl.xml.
 
    <theorem type-name="Invertible Matrix Theorem" hide-type="true" xml:id="imt-2">
      <title>The Invertible Matrix Theorem</title>
+     <idx><h>Invertible Matrix Theorem</h></idx>
+     <idx><h>Invertible matrix</h><h>Invertible Matrix Theorem</h></idx>
+     <idx><h>Invertible transformation</h><h>and invertible matrices</h></idx>
+     <idx><h>Reduced row echelon form</h><h>and invertibility</h></idx>
+     <idx><h>System of linear equations</h><h>trivial solution</h><h>and invertibility</h></idx>
+     <idx><h>System of linear equations</h><h>nontrivial solution</h><h>and invertibility</h></idx>
+     <idx><h>Null space</h><h>and invertibility</h></idx>
+     <idx><h>Nullity</h><h>and invertibility</h></idx>
+     <idx><h>Linear independence</h><h>and invertibility</h></idx>
+     <idx><h>Basis</h><h>and invertibility</h></idx>
+     <idx><h>One-to-one</h><h>and invertibility</h></idx>
+     <idx><h>Onto</h><h>and invertibility</h></idx>
+     <idx><h>Matrix equation</h><h>always consistent</h><h>and invertibility</h></idx>
+     <idx><h>Column space</h><h>and invertibility</h></idx>
+     <idx><h>Rank</h><h>and invertibility</h></idx>
+     <idx><h>Invertible matrix</h><h>determinant of</h></idx>
+     <idx><h>Determinant</h><h>invertibility property</h></idx>
+     <idx><h>Eigenvalue</h><h>and invertibility</h></idx>
      <statement>
        <p>
          Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>T\colon\R^n\to\R^n</m> be the matrix transformation <m>T(x) = Ax</m>.  The following statements are equivalent:

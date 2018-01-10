@@ -40,6 +40,8 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
+      <idx><h>Eigenvalue</h><h>complex</h><see>Complex eigenvalue</see></idx>
+      <idx><h>Complex eigenvalue</h><h>existence of</h></idx>
       <p>
         Every matrix has a complex eigenvalue.
       </p>
@@ -211,6 +213,7 @@ A-\frac{4+3i}5I_3 =
     </p>
 
     <warning>
+      <idx><h>Complex eigenvalue</h><h>conjugate pairs</h></idx>
       <p>
         Let <m>A</m> be a matrix with real entries.  If
         <me>
@@ -230,6 +233,7 @@ A-\frac{4+3i}5I_3 =
 
     <note hide-type="true" xml:id="cplx-evals-22-trick">
       <title>Eigenvector Trick for <m>2\times 2</m> Matrices</title>
+      <idx><h>Eigenvector</h><h>computation</h><h>trick for <m>2\times 2</m> matrices</h></idx>
       <p>
         Let <m>A</m> be a <m>2\times 2</m> matrix, and let <m>\lambda</m> be a (real or complex) eigenvalue.  Then
         <me>
@@ -297,6 +301,8 @@ A-\frac{4+3i}5I_3 =
     </p>
 
     <definition>
+      <idx><h>Rotation-scaling matrix</h><h>definition of</h></idx>
+      <idx><h>Matrix</h><h>rotation-scaling</h><see>Rotation-scaling matrix</see></idx>
       <statement>
         <p>
           A <term>rotation-scaling matrix</term> is a <m>2\times 2</m> matrix of the form
@@ -311,6 +317,7 @@ A-\frac{4+3i}5I_3 =
     </p>
 
     <proposition xml:id="cplx-eval-rot-scale">
+      <idx><h>Rotation-scaling matrix</h><h>structure of</h></idx>
       <statement>
         <p>
           Let
@@ -607,6 +614,7 @@ A-\frac{4+3i}5I_3 =
     </p>
 
     <warning>
+      <idx><h>Rotation-scaling matrix</h><h>computing the angle</h></idx>
       <p>
         When finding the rotation angle of a vector <m>{a\choose b}</m>, do not blindly compute <m>\tan\inv(b/a)</m>, since this will give the wrong answer when <m>{a\choose b}</m> is in the second or third quadrant.  Instead, draw a picture.
       </p>
@@ -616,12 +624,16 @@ A-\frac{4+3i}5I_3 =
 
   <subsection>
     <title>Geometry of <m>2\times 2</m> Matrices with a Complex Eigenvalue</title>
+    <idx><h>Complex eigenvalue</h><h><m>2\times 2</m> matrices</h><h>geometry of</h></idx>
 
     <p>
       Let <m>A</m> be a <m>2\times 2</m> matrix with a complex, non-real eigenvalue <m>\lambda</m>.  Then <m>A</m> also has the eigenvalue <m>\bar\lambda\neq\lambda</m>.  In particular, <m>A</m> has distinct eigenvalues, so it is diagonalizable over the complex numbers.  However, the following construction is generally more useful, as all matrices involved have <em>real</em> entries.
     </p>
 
     <theorem type-name="Rotation-Scaling Theorem" xml:id="cplx-diagonalization-thm">
+      <idx><h>Complex eigenvalue</h><h><m>2\times 2</m> matrices</h><h>and rotation-scaling matrices</h></idx>
+      <idx><h>Rotation-Scaling Theorem</h></idx>
+      <idx><h>Rotation-scaling matrix</h><h>and complex eigenvalues</h></idx>
       <statement>
         <p>
           Let <m>A</m> be a <m>2\times 2</m> real matrix with a complex (non-real) eigenvalue <m>\lambda</m>, and let <m>v</m> be an eigenvector.  Then <m>A = CBC\inv</m> for
@@ -697,6 +709,10 @@ A-\frac{4+3i}5I_3 =
     </theorem>
 
     <p>
+      <notation><usage>\Re(v)</usage><description>Real part of a complex vector</description></notation>
+      <notation><usage>\Im(v)</usage><description>Imaginary part of a complex vector</description></notation>
+      <idx><h>Vector</h><h>real and imaginary parts of</h></idx>
+      <idx><h>Complex numbers</h><h>real and imaginary parts of</h><h>vectors</h></idx>
       Here <m>\Re</m> and <m>\Im</m> denote the real and imaginary parts, respectively:
       <me>
         \Re(a+bi) = a \quad \Im(a+bi) = b \quad
@@ -712,6 +728,7 @@ A-\frac{4+3i}5I_3 =
 
     <warning>
       <title>Recipe: A <m>2\times 2</m> matrix with a complex eigenvalue</title>
+      <idx><h>Complex eigenvalue</h><h><m>2\times 2</m> matrices</h><h>and rotation-scaling matrices, computing</h></idx>
       <p>
         Let <m>A</m> be a <m>2\times 2</m> real matrix.
         <ol>
@@ -1033,6 +1050,7 @@ A-\frac{4+3i}5I_3 =
     </example>
 
     <p>
+      <idx><h>Complex eigenvalue</h><h><m>2\times 2</m> matrices</h><h>different rotation-scaling matrices</h></idx>
       We saw in the above Examples that the <xref ref="cplx-diagonalization-thm"/> can be applied in two different ways to any given matrix: one has to choose one of the two conjugate eigenvalues to work with.  Replacing <m>\lambda</m> by <m>\bar\lambda</m> has the effect of replacing <m>v</m> by <m>\bar v</m>, which just negates all imaginary parts, so we also have <m>A=C'B'(C')\inv</m> for
       <me>
         C' = \mat{| |; \Re(v) -\Im(v); | |}
@@ -1067,6 +1085,7 @@ A-\frac{4+3i}5I_3 =
 
     <note hide-type="true">
       <title>Dynamics of a <m>2\times 2</m> Matrix with a Complex Eigenvalue</title>
+      <idx><h>Complex eigenvalue</h><h><m>2\times 2</m> matrices</h><h>dynamics of</h></idx>
       <p>
         Let <m>A</m> be a <m>2\times 2</m> matrix with a complex (non-real) eigenvalue <m>\lambda</m>.  By the <xref ref="cplx-diagonalization-thm"/>, the matrix <m>A</m> is similar to a matrix that rotates by some amount and scales by <m>|\lambda|</m>.  Hence, <m>A</m> rotates around an ellipse and scales by <m>|\lambda|</m>.  There are three different cases.
       </p>
@@ -1199,6 +1218,7 @@ A-\frac{4+3i}5I_3 =
 
     <example hide-type="true">
       <title>Interactive: <m>|\lambda|>1</m></title>
+      <idx><h>Complex eigenvalue</h><h><m>2\times 2</m> matrices</h><h>dynamics of</h></idx>
       <p>
         <me>
           A = \frac 1{\sqrt 2}\mat{\sqrt3+1 -2; 1 \sqrt3-1}
@@ -1219,6 +1239,7 @@ A-\frac{4+3i}5I_3 =
 
     <example hide-type="true">
       <title>Interactive: <m>|\lambda|=1</m></title>
+      <idx><h>Complex eigenvalue</h><h><m>2\times 2</m> matrices</h><h>dynamics of</h></idx>
       <p>
         <me>
           A = \frac 12\mat{\sqrt3+1 -2; 1 \sqrt3-1}
@@ -1239,6 +1260,7 @@ A-\frac{4+3i}5I_3 =
 
     <example hide-type="true">
       <title>Interactive: <m>|\lambda|\lt1</m></title>
+      <idx><h>Complex eigenvalue</h><h><m>2\times 2</m> matrices</h><h>dynamics of</h></idx>
       <p>
         <me>
           A = \frac 1{2\sqrt 2}\mat{\sqrt3+1 -2; 1 \sqrt3-1}
@@ -1259,6 +1281,7 @@ A-\frac{4+3i}5I_3 =
 
     <remark>
       <title>Classification of <m>2\times 2</m> matrices up to similarity</title>
+      <idx><h>Similarity</h><h>of <m>2\times 2</m> matrices</h></idx>
       <p>
         At this point, we can write down the <q>simplest</q> possible matrix which is similar to any given <m>2\times 2</m> matrix <m>A</m>.  There are four cases:
         <ol>
@@ -1296,6 +1319,7 @@ A-\frac{4+3i}5I_3 =
     </p>
 
     <theorem type-name="Block-Diagonalization Theorem" xml:id="block-diag-thm">
+      <idx><h>Block-Diagonalization Theorem</h></idx>
       <statement>
         <p>
           Let <m>A</m> be a real <m>n\times n</m> matrix.  Suppose that for each (real or complex) eigenvalue, the algebraic multiplicity equals the geometric multiplicity.  Then <m>A = CBC\inv</m>, where <m>B</m> and <m>C</m> are as follows:
@@ -1348,6 +1372,7 @@ B =
 
     <example>
       <title>Geometry of a <m>3\times 3</m> matrix with a complex eigenvalue</title>
+      <idx><h>Complex eigenvalue</h><h><m>3\times 3</m> matrices</h><h>dynamics of</h></idx>
       <statement>
         <p>
           What does the matrix

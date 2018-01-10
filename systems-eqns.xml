@@ -17,17 +17,24 @@ the license is included in gfdl.xml.
       <li>Understand the definition of <m>\R^n</m>, and how to use <m>\R^n</m> to label points.</li>
       <li>Learn to replace a system of linear equations by an augmented matrix.</li>
       <li>Learn how the elimination method corresponds to performing row operations on an augmented matrix.</li>
-      <li><em>Vocabulary words:</em> <term>consistent</term>, <term>inconsistent</term>, <term>solution set</term>, <term>row operation</term>, <term>row equivalence</term>, <term>augmented matrix</term>.</li>
+      <li><em>Vocabulary words:</em> <term>consistent</term>, <term>inconsistent</term>, <term>solution set</term>, <term>row operation</term>, <term>row equivalence</term>, <term>matrix</term>, <term>augmented matrix</term>.</li>
     </ol>
   </objectives>
 
   <subsection xml:id="subsection-Rn">
     <title>Preliminaries: Line, Plane, Space, Etc.</title>
 
-    <p>We use <m>\R</m> to denote the set of all real numbers, i.e., the number
-    line.  This contains numbers like <m>0, \frac 32, -\pi, 104, \ldots</m></p>
+    <p>
+      <notation><usage>0</usage><description>The number zero</description></notation>
+      We use <m>\R</m>
+      <idx><h>Real numbers <m>\R</m></h></idx>
+      <notation><usage>\R</usage><description>The real numbers</description></notation>
+      to denote the set of all real numbers, i.e., the number
+      line.  This contains numbers like <m>0, \frac 32, -\pi, 104, \ldots</m>
+    </p>
 
     <definition>
+      <idx><h>Real <m>n</m>-space</h></idx>
       <notation>
         <usage>\R^n</usage>
         <description>Real <m>n</m>-space</description>
@@ -42,6 +49,8 @@ the license is included in gfdl.xml.
 
     <specialcase>
       <title>The number line</title>
+      <idx><h>Real numbers <m>\R</m></h></idx>
+      <idx><h>Line</h><h>number line</h></idx>
       <p>When <m>n=1</m>, we just get <m>\R</m> back: <m>\R^1=\R</m>.  Geometrically, this is the number line.
       <latex-code>
     \begin{tikzpicture}
@@ -56,6 +65,7 @@ the license is included in gfdl.xml.
 
     <definition xml:id="defn-lines">
       <title>Lines</title>
+      <idx><h>Line</h><h>geometric definition of</h></idx>
       <statement>
         <p>For our purposes, a <term>line</term> is a ray that is <em>straight</em> and <em>infinite</em> in both directions.
         <latex-code><![CDATA[
@@ -75,6 +85,7 @@ the license is included in gfdl.xml.
 
     <specialcase>
       <title>The plane</title>
+      <idx><h>Plane</h><h><m>xy</m>-plane</h></idx>
       <p>When <m>n=2</m>, we can think of <m>\R^2</m> as the <m>xy</m>-plane.  We can do so because every point on the plane can be represented by an ordered pair of real numbers, namely, its <m>x</m>- and <m>y</m>-coordinates.
       <latex-code>
         <![CDATA[
@@ -94,6 +105,7 @@ the license is included in gfdl.xml.
 
     <definition>
       <title>Planes</title>
+      <idx><h>Plane</h><h>geometric definition of</h></idx>
       <statement>
         <p>A <term>plane</term> is a flat sheet that is infinite in all directions.
         <latex-code><![CDATA[
@@ -120,6 +132,7 @@ the license is included in gfdl.xml.
 
     <specialcase>
       <title>3-Space</title>
+      <idx><h>Space</h><h><m>\R^3</m></h></idx>
       <p>When <m>n=3</m>, we can think of <m>\R^3</m> as the <em>space</em> we (appear to) live in.  We can do so because every point in space can be represented by an ordered triple of real numebrs, namely, its <m>x</m>-, <m>y</m>-, and <m>z</m>-coordinates.
       <latex-code><![CDATA[
     \begin{tikzpicture}[myxyz, scale=.75,
@@ -145,6 +158,8 @@ the license is included in gfdl.xml.
 
     <example>
       <title>Color Space</title>
+      <idx><h>Space</h><h>color space</h></idx>
+      <idx><h>Color space</h></idx>
       <p>All colors you can see can be described by three quantities: the amount of red, green, and blue light in that color.  (Humans are <url href="https://en.wikipedia.org/wiki/Trichromacy">trichromatic</url>.)  So we can also think of <m>\R^3</m> as the space of all <em>colors</em>.
       <latex-code><![CDATA[
 \begin{tikzpicture}[x={(1cm,0cm)}, y={(-.5cm,-.3cm)}, z={(0cm,1cm)}, scale=1,
@@ -272,6 +287,7 @@ the license is included in gfdl.xml.
     <p>During the first half of this textbook, we will be primarily concerned with understanding the solutions to linear equations.</p>
 
     <definition>
+      <idx><h>Linear equation</h><h>definition of</h></idx>
       <statement>
         <p>An equation in the unknowns <m>x,y,z,\ldots</m> is called <term>linear</term> if both sides of the equation are a sum of (constant) multiples of <m>x,y,z,\ldots</m>, plus an optional constant.</p>
       </statement>
@@ -302,6 +318,8 @@ the license is included in gfdl.xml.
         2x - 3y + 2z = 14;
         3x + y - z = -2\rlap.
       }</men>
+      <idx><h>Linear equation</h><h>system of</h><see>System of linear equations</see></idx>
+      <idx><h>System of linear equations</h><h>definition of</h></idx>
     </p>
 
     <definition>
@@ -313,6 +331,9 @@ the license is included in gfdl.xml.
             <li>The <term>solution set</term> of a system of equations is the collection of all solutions.</li>
             <li><term>Solving</term> the system means describing the solution set parametrically.</li>
           </ul>
+          <idx><h>System of linear equations</h><h>solution of</h></idx>
+          <idx><h>Solution</h><see>System of linear equations</see></idx>
+          <idx><h>Solution set</h><h>definition of</h></idx>
         </p>
       </statement>
     </definition>
@@ -320,6 +341,7 @@ the license is included in gfdl.xml.
     <p>A solution of a system of equations in <m>n</m> variables is a list of <m>n</m> numbers: it is an element of <m>\R^n</m>.  For example, <m>(x,y,z) = (1,-2,3)</m> is a solution of <xref ref="systems-eqns-example"/>; this is an element of <m>\R^3</m>.</p>
 
     <paragraphs><title>The elimination method</title>
+    <idx><h>Elimination method</h></idx>
     <p>We will solve systems of linear equations using the <term>elimination</term> method.  In other words, we will combine the equations in various ways to try to eliminate as many variables as possible from each equation.  There are three valid operations we can perform on our system of equations:
     <ul>
       <li><alert>Scaling:</alert> we can multiply both sides of an equation by a nonzero number.
@@ -422,6 +444,7 @@ the license is included in gfdl.xml.
 
     <paragraphs><title>Augmented Matrices and Row Operations</title>
     <p>Solving equations by elimination requires writing the variables <m>x,y,z</m> and the equals sign <m>=</m> over and over again, merely as placeholders: all that is changing in the equations is the coefficient <em>numbers</em>.  We can make our life easier by extracting only the numbers, and putting them in a box:
+    <idx><h>Augmented matrix</h><see>Matrix</see></idx>
     <me>
       \syseq{x + 2y + 3z = 6;
       2x - 3y + 2z = 14;
@@ -434,9 +457,13 @@ the license is included in gfdl.xml.
       3  1  -1  -2
       }.
     </me>
-    This is called an <term>augmented matrix</term>.  The word <q>augmented</q> refers to the vertical line, which we draw to remind ourselves where the equals sign belongs.  In this notation, our three valid ways of manipulating our equations become <term>row operations</term>:
+    <idx><h>Matrix</h><h>definition of</h></idx>
+    <idx><h>Matrix</h><h>augmented</h></idx>
+    This is called an <term>augmented matrix</term>.  The word <q>augmented</q> refers to the vertical line, which we draw to remind ourselves where the equals sign belongs; a <term>matrix</term> is a grid of numbers without the vertical line.  In this notation, our three valid ways of manipulating our equations become <term>row operations</term>:
+    <idx><h>Row operations</h></idx>
     <ul>
       <li><alert>Scaling:</alert> multiply all entries in a row by a nonzero number.
+      <idx><h>Row operations</h><h>scaling</h></idx>
       <me>
         \amat{
         1  2  3  6 ;
@@ -451,8 +478,11 @@ the license is included in gfdl.xml.
         }
       </me>
       Here the notation <m>R_1</m> simply means <q>the first row</q>, and likewise for <m>R_2,R_3,</m> etc.
+      <notation><usage>R_i</usage><description>Row <m>i</m> of a matrix</description></notation>
       </li>
       <li><alert>Replacement:</alert> add a multiple of one row to another, replacing the second row with the result.
+      <idx><h>Row operations</h><h>replacement</h></idx>
+      <idx><h>Row replacement</h><see>Row operations, replacement</see></idx>
       <me>
         \amat{
         1  2  3  6 ;
@@ -468,6 +498,7 @@ the license is included in gfdl.xml.
       </me>
       </li>
       <li><alert>Swap:</alert> interchange two rows.
+      <idx><h>Row operations</h><h>swap</h></idx>
       <me>
         \amat{
         1  2  3  6 ;
@@ -582,6 +613,7 @@ the license is included in gfdl.xml.
     <p>Indeed, the whole point of doing these operations is to solve the equations using the elimination method.</p>
 
     <definition>
+      <idx><h>Row equivalence</h></idx>
       <statement>
         <p>Two matrices are called <term>row equivalent</term> if one can be obtained from the other by doing some number of row operations.</p>
       </statement>
@@ -639,6 +671,10 @@ the license is included in gfdl.xml.
     </example>
 
     <definition>
+      <idx><h>System of linear equations</h><h>inconsistent</h></idx>
+      <idx><h>System of linear equations</h><h>consistent</h></idx>
+      <idx><h>Consistent</h><see>System of linear equations</see></idx>
+      <idx><h>Inconsistent</h><see>System of linear equations</see></idx>
       <statement>
         <p>A system of equations is called <term>inconsistent</term> if it has no solutions.  It is called <term>consistent</term> otherwise.</p>
       </statement>

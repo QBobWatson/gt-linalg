@@ -26,6 +26,9 @@ the license is included in gfdl.xml.
   </p>
 
   <definition>
+    <idx><h>Orthogonal complement</h><h>definition of</h></idx>
+    <idx><h>Subspace</h><h>orthogonal complement of</h><see>Orthogonal complement</see></idx>
+    <notation><usage>W^\perp</usage><description>Orthogonal complement of a subspace</description></notation>
     <statement>
       <p>
         Let <m>W</m> be a subspace of <m>\R^n</m>.  Its <term>orthogonal complement</term> is the subspace
@@ -57,6 +60,7 @@ the license is included in gfdl.xml.
 
   <paragraphs>
     <title>Pictures of orthogonal complements</title>
+    <idx><h>Orthogonal complement</h><h>pictures of</h></idx>
 
     <p>
       The orthogonal complement of a line <m>\color{seq-blue}W</m> in <m>\R^2</m> is the perpendicular line <m>\color{seq-green}W^\perp</m>.
@@ -147,6 +151,8 @@ the license is included in gfdl.xml.
 
   <proposition xml:id="orthocomp-comp-of-span">
     <title>The orthogonal complement of a span</title>
+    <idx><h>Orthogonal complement</h><h>of a span</h></idx>
+    <idx><h>Span</h><h>orthogonal complement of</h></idx>
     <statement>
       <p>
         Let <m>v_1,v_2,\ldots,v_m</m> be vectors in <m>\R^n</m>, and let <m>W = \Span\{v_1,v_2,\ldots,v_m\}</m>.  Then
@@ -193,7 +199,8 @@ the license is included in gfdl.xml.
   </proposition>
 
   <p>
-    By the Proposition, computing the null space of a span means <em>solving a system of linear equations</em>.  For example, if
+    <idx><h>Orthogonal complement</h><h>system of linear equations</h></idx>    
+    By the Proposition, computing the orthogonal complement of a span means <em>solving a system of linear equations</em>.  For example, if
     <me>
       v_1 = \vec{1 7 2} \qquad v_2 = \vec{-2 3 1}
     </me>
@@ -291,6 +298,10 @@ the license is included in gfdl.xml.
 
   <theorem hide-type="true" type-name="Fact" xml:id="orthocomp-facts-basic">
     <title>Facts about Orthogonal Complements</title>
+    <idx><h>Orthogonal complement</h><h>basic facts</h></idx>
+    <idx><h>Orthogonal complement</h><h>dimension of</h></idx>
+    <idx><h>Orthogonal complement</h><h>orthogonal complement of</h></idx>
+    <idx><h>Dimension</h><h>of an orthogonal complement</h></idx>
     <statement>
       <p>
         Let <m>W</m> be a subspace of <m>\R^n</m>.  Then:
@@ -348,6 +359,8 @@ the license is included in gfdl.xml.
   </p>
 
   <definition>
+    <idx><h>Row space</h><h>definition of</h></idx>
+    <notation><usage>\Row(A)</usage><description>Row space of a matrix</description></notation>
     <statement>
       <p>
         The <term>row space</term> of a matrix <m>A</m> is the span of the rows of <m>A</m>, and is denoted <m>\Row(A)</m>.
@@ -356,6 +369,8 @@ the license is included in gfdl.xml.
   </definition>
 
   <p>
+    <idx><h>Row space</h><h>is column space of transpose</h></idx>
+    <idx><h>Column space</h><h>is row space of transpose</h></idx>
     If <m>A</m> is an <m>m\times n</m> matrix, then the rows of <m>A</m> are vectors with <m>n</m> entries, so <m>\Row(A)</m> is a subspace of <m>\R^n</m>.  Equivalently, since the rows of <m>A</m> are the columns of <m>A^T</m>, the row space of <m>A</m> is the column space of <m>A^T</m>:
     <me>\Row(A) = \Col(A^T).</me>
   </p>
@@ -372,6 +387,14 @@ the license is included in gfdl.xml.
 
   <warning>
     <title>Recipes: Shortcuts for computing orthogonal complements</title>
+    <idx><h>Orthogonal complement</h><h>of a span</h></idx>
+    <idx><h>Span</h><h>orthogonal complement of</h></idx>
+    <idx><h>Orthogonal complement</h><h>of a row space</h></idx>
+    <idx><h>Row space</h><h>orthogonal complement of</h></idx>
+    <idx><h>Orthogonal complement</h><h>of a column space</h></idx>
+    <idx><h>Column space</h><h>orthogonal complement of</h></idx>
+    <idx><h>Orthogonal complement</h><h>of a null space</h></idx>
+    <idx><h>Null space</h><h>orthogonal complement of</h></idx>
     <p>
       For any vectors <m>v_1,v_2,\ldots,v_m</m>, we have
       <me>
@@ -413,6 +436,8 @@ the license is included in gfdl.xml.
 
   <example>
     <title>Orthogonal complement of an eigenspace</title>
+    <idx><h>Eigenspace</h><h>orthogonal complement of</h></idx>
+    <idx><h>Orthogonal complement</h><h>of an eigenspace</h></idx>
     <statement>
       <p>
         Find the orthogonal complement of the <m>5</m>-eigenspace of the matrix
@@ -437,6 +462,9 @@ the license is included in gfdl.xml.
 
   <remark>
     <title>Row rank and column rank</title>
+    <idx><h>Rank</h><h>row and column</h></idx>
+    <idx><h>Row rank</h><see>Rank</see></idx>
+    <idx><h>Column rank</h><see>Rank</see></idx>
     <p>
       Let <m>A</m> be an <m>m\times n</m> matrix. By the <xref ref="rank-theorem"/>, we have
       <me>

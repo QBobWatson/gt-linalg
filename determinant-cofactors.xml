@@ -39,6 +39,12 @@ the license is included in gfdl.xml.
   </p>
 
   <definition xml:id="det-cofact-defn-minor">
+    <idx><h>Matrix</h><h>minor of</h></idx>
+    <idx><h>Minor</h><see>Matrix</see></idx>
+    <idx><h>Matrix</h><h>cofactor of</h></idx>
+    <idx><h>Cofactor</h><see>Matrix</see></idx>
+    <notation><usage>A_{ij}</usage><description>Minor of a matrix</description></notation>
+    <notation><usage>C_{ij}</usage><description>Cofactor of a matrix</description></notation>
     <statement>
       <p>Let <m>A</m> be an <m>n\times n</m> matrix.
       <ol>
@@ -55,6 +61,7 @@ the license is included in gfdl.xml.
   </definition>
 
   <p>
+    <idx><h>Matrix</h><h>cofactor of</h><h>sign of</h></idx>
     Note that the signs of the cofactors follow a <q>checkerboard pattern.</q> Namely, <m>(-1)^{i+j}</m> is pictured in this matrix:
     <me>\def\a{\textcolor{seq-green}{+}} \def\b{\textcolor{seq-blue}{-}}
     \mat{\a,\b,\a,\b ; \b,\a,\b,\a ; \a,\b,\a,\b; \b,\a,\b,\a}.</me>
@@ -105,6 +112,8 @@ the license is included in gfdl.xml.
 
   <theorem xml:id="det-cofact-expansion">
     <title>Cofactor expansion</title>
+    <idx><h>Determinant</h><h>computation of</h><h>cofactor expansion</h></idx>
+    <idx><h>Matrix</h><h>cofactor of</h><h>and determinants</h></idx>
     <statement>
       <p>
         Let <m>A</m> be an <m>n\times n</m> matrix with entries <m>a_{ij}</m>.
@@ -443,6 +452,7 @@ the license is included in gfdl.xml.
 
   <specialcase hide-type="true" xml:id="det-cofactor-22">
     <title>The determinant of a <m>2\times 2</m> matrix</title>
+    <idx><h>Determinant</h><h>of a <m>2\times 2</m> matrix</h></idx>
     <p>
       Let us compute (again) the determinant of a general <m>2\times2</m> matrix
       <me>A=\mat{a b;c d}.</me>
@@ -605,6 +615,7 @@ the license is included in gfdl.xml.
 
   <warning>
     <title>Recipe: Computing the Determinant of a <m>3\times 3</m> Matrix</title>
+    <idx><h>Determinant</h><h>of a <m>3\times 3</m> matrix</h></idx>
     <p>
       To compute the determinant of a <m>3\times 3</m> matrix, first draw a larger matrix with the first two columns repeated on the right.  Then add the products of the downward diagonals together, and subtract the products of the upward diagonals:
       <latex-code><![CDATA[
@@ -808,6 +819,7 @@ the license is included in gfdl.xml.
 
   <warning>
     <title>Summary: methods for computing determinants</title>
+    <idx><h>Determinant</h><h>methods of computation</h></idx>
     <p>
       We have several ways of computing determinants:
       <ol>
@@ -855,6 +867,9 @@ the license is included in gfdl.xml.
     </p>
 
     <theorem xml:id="det-cofact-inv-cramer">
+      <idx><h>Determinant</h><h>and computing inverses</h></idx>
+      <idx><h>Cramer<rsq/>s rule</h><h>and computing inverses</h></idx>
+      <idx><h>Invertible matrix</h><h>computation</h><h>using Cramer<rsq/> rule</h></idx>
       <statement>
         <p>
           Let <m>A</m> be an invertible <m>n\times n</m> matrix, with cofactors <m>C_{ij}</m>.  Then
@@ -871,6 +886,7 @@ the license is included in gfdl.xml.
     </theorem>
 
     <p>
+      <notation><usage>\adj(A)</usage><description>Adjugate matrix</description></notation>
       The matrix of cofactors is sometimes called the <term>adjugate matrix</term> of <m>A</m>, and is denoted <m>\adj(A)</m>:
       <me>
         \adj(A) = \mat{C_{11} C_{21} \cdots, C_{n-1,1} C_{n1};
@@ -953,6 +969,7 @@ the license is included in gfdl.xml.
 
     <theorem hide-type="true" xml:id="det-cofact-cramers-rule">
       <title>Cramer<rsq/>s Rule</title>
+      <idx><h>Cramer<rsq/>s rule</h></idx>
       <statement>
         <p>
           Let <m>x = (x_1,x_2,\ldots,x_n)</m> be the solution of <m>Ax=b</m>, where <m>A</m> is an invertible <m>n\times n</m> matrix and <m>b</m> is a vector in <m>\R^n</m>.  Let <m>A_i</m> be the matrix obtained from <m>A</m> by replacing the <m>i</m>th column by <m>b</m>.  Then

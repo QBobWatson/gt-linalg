@@ -30,6 +30,9 @@ the license is included in gfdl.xml.
     </p>
 
     <definition>
+      <idx><h>Complex numbers</h><h>definition of</h></idx>
+      <idx><h>Imaginary number</h><see>Complex numbers</see></idx>
+      <notation><usage>\C</usage><description>The complex numbers</description></notation>
       <statement>
         <p>
           <ol>
@@ -70,6 +73,7 @@ the license is included in gfdl.xml.
 
     <note hide-type="true">
       <title>Arithmetic of Complex Numbers</title>
+      <idx><h>Complex numbers</h><h>arithmetic of</h></idx>
       <p>
         We can perform all of the usual arithmetic operations on complex numbers: add, subtract, multiply, divide, absolute value.  There is also an important new operation called complex conjugation.
         <ul>
@@ -86,6 +90,9 @@ the license is included in gfdl.xml.
             </me>
           </li>
           <li>
+            <idx><h>Complex numbers</h><h>conjugation</h></idx>
+            <idx><h>Complex conjugation</h><see>Complex numbers</see></idx>
+            <notation><usage>\bar z</usage><description>Complex conjugate</description></notation>
             <em>Complex conjugation</em> replaces <m>i</m> with <m>-i</m>, and is denoted with a bar:
             <me>
               \bar{a+bi} = a - bi.
@@ -97,6 +104,7 @@ the license is included in gfdl.xml.
             Also, <m>(a+bi)(a-bi) = a^2 + b^2</m>, so <m>z\bar z</m> is a nonnegative <em>real</em> number for any complex number <m>z</m>.
           </li>
           <li>
+            <idx><h>Complex numbers</h><h>absolute value</h></idx>
             The <em>absolute value</em> of a complex number <m>z</m> is the real number <m>|z| = \sqrt{z\bar z}</m>:
             <me>
               |a+bi| = \sqrt{a^2 + b^2}.
@@ -114,6 +122,11 @@ the license is included in gfdl.xml.
             <me>\frac{1+i}{1-i} = \frac{(1+i)^2}{1^2+(-1)^2} = \frac{1+2i+i^2}2 = i.</me>
           </li>
           <li>
+            <idx><h>Complex numbers</h><h>real and imaginary parts of</h></idx>
+            <idx><h>Real part</h><see>Complex numbers</see></idx>
+            <idx><h>Imaginary part</h><see>Complex numbers</see></idx>
+            <notation><usage>\Re(z)</usage><description>Real part of a complex number</description></notation>
+            <notation><usage>\Im(z)</usage><description>Imaginary part of a complex number</description></notation>
             The <em>real</em> and <em>imaginary</em> parts of a complex number are
             <me>\Re(a+bi) = a \qquad \Im(a+bi) =  b.</me>
           </li>
@@ -126,6 +139,8 @@ the license is included in gfdl.xml.
     </p>
 
     <theorem type-name="Fundamental Theorem of Algebra" xml:id="fund-thm-alg">
+      <idx><h>Fundamental theorem of algebra</h></idx>
+      <idx><h>Polynomial</h><h>complex roots</h></idx>
       <statement>
         <p>
           Every polynomial of degree <m>n</m> has exactly <m>n</m> (real and) complex roots, counted with multiplicity.
@@ -142,6 +157,8 @@ the license is included in gfdl.xml.
 
     <specialcase hide-type="true">
       <title>Degree-2 Polynomials</title>
+      <idx><h>Quadratic formula</h></idx>
+      <idx><h>Polynomial</h><h>quadratic</h></idx>
       <p>
         The quadratic formula gives the roots of a degree-2 polynomial, real or complex:
         <me>
@@ -163,6 +180,7 @@ the license is included in gfdl.xml.
     </p>
 
     <warning type-name="Note" xml:id="cplx-nums-root-pairs">
+      <idx><h>Polynomial</h><h>conjugate roots</h></idx>
       <p>
         If <m>f</m> is a polynomial with real coefficients, and if <m>\lambda</m> is a complex root of <m>f</m>, then so is <m>\bar\lambda</m>:
         <me>
@@ -179,6 +197,7 @@ the license is included in gfdl.xml.
 
     <specialcase hide-type="true">
       <title>Degree-3 Polynomials</title>
+      <idx><h>Polynomial</h><h>cubic</h></idx>
       <p>
         A real cubic polynomial has either three real roots, or one real root and a conjugate pair of complex roots.
       </p>

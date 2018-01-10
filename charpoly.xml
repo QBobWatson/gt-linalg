@@ -26,6 +26,8 @@ the license is included in gfdl.xml.
   </p>
 
   <definition>
+    <idx><h>Characteristic polynomial</h><h>definition of</h></idx>
+    <idx><h>Polynomial</h><h>characteristic</h><see>Characteristic polynomial</see></idx>
     <statement>
       <p>
         Let <m>A</m> be an <m>n\times n</m> matrix.  The <term>characteristic polynomial</term> of <m>A</m> is the function
@@ -90,6 +92,8 @@ the license is included in gfdl.xml.
 
   <theorem>
     <title>Eigenvalues are roots of the characteristic polynomial</title>
+    <idx><h>Characteristic polynomial</h><h>and eigenvalues</h></idx>
+    <idx><h>Eigenvalue</h><h>and the characteristic polynomial</h><see>Characteristic polynomial</see></idx>
     <statement>
       <p>
         Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>f(\lambda) = \det(A-\lambda I_n)</m> be its characteristic polynomial.  Then <m>\lambda</m> is an eigenvalue of <m>A</m> if and only if <m>f(\lambda) = 0</m>.
@@ -224,6 +228,9 @@ the license is included in gfdl.xml.
   </p>
 
   <definition>
+    <idx><h>Trace</h><see>Matrix</see></idx>
+    <idx><h>Matrix</h><h>trace of</h></idx>
+    <notation><usage>\Tr(A)</usage><description>Trace of a matrix</description></notation>
     <statement>
       <p>
         The <term>trace</term> of a square matrix <m>A</m> is the number <m>\Tr(A)</m> obtained by summing the diagonal entries of <m>A</m>:
@@ -242,6 +249,7 @@ the license is included in gfdl.xml.
   </definition>
 
   <theorem xml:id="charpoly-is-poly">
+    <idx><h>Characteristic polynomial</h><h>form of</h></idx>
     <statement>
       <p>
         Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>f(\lambda)=\det(A-\lambda I_n)</m> be its characteristic polynomial.  Then <m>f(\lambda)</m> is a polynomial of degree <m>n</m>, of the form
@@ -276,6 +284,7 @@ the license is included in gfdl.xml.
 
   <warning>
     <title>Recipe: The characteristic polynomial of a <m>2\times 2</m> matrix</title>
+    <idx><h>Characteristic polynomial</h><h>of a <m>2\times 2</m> matrix</h></idx>
     <p>
       When <m>n=2</m>, the <xref ref="charpoly-is-poly"/> tells us all of the coefficients of the characteristic polynomial:
       <me>
@@ -311,6 +320,8 @@ the license is included in gfdl.xml.
 
   <paragraphs>
     <title>Factoring the characteristic polynomial</title>
+    <idx><h>Characteristic polynomial</h><h>factoring by hand</h></idx>
+    <idx><h>Polynomial</h><h>factoring by hand</h></idx>
 
     <p>
       If <m>A</m> is a <m>n\times n</m> matrix, then the above <xref ref="charpoly-is-poly"/> says that the characteristic polynomial <m>f(\lambda)</m> has degree <m>n</m>.  When <m>n=2</m>, one can use the quadratic formula to find the roots of <m>f(\lambda)</m>.  There exist algebraic formulas for the roots of <url href="https://en.wikipedia.org/wiki/Cubic_function#General_solution_to_the_cubic_equation_with_real_coefficients">cubic</url> and <url href="https://en.wikipedia.org/wiki/Quartic_function#Solving_a_quartic_equation">quartic</url> polynomials, but these are generally too cumbersome to apply by hand.  Even worse, it is known that there is <url href="https://en.wikipedia.org/wiki/Abel%E2%80%93Ruffini_theorem">no algebraic formula</url> for the roots of a general polynomial of degree at least <m>5</m>.
@@ -320,8 +331,9 @@ the license is included in gfdl.xml.
       In practice, the roots of the characteristic polynomial are found numerically by computer, for instance using <url href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton<rsq/>s method</url>.  That said, there do exist methods for finding roots by hand.  For instance, we have the following consequence of the <url href="https://en.wikipedia.org/wiki/Rational_root_theorem">rational root theorem</url> (which we also call the rational root theorem):
     </p>
 
-    <fact hide-type="true" xml:id="rational-root-thm">
-      <title>Rational Root Theorem</title>
+    <fact type-name="Rational Root Theorem" xml:id="rational-root-thm">
+      <idx><h>Rational Root Theorem</h></idx>
+      <idx><h>Polynomial</h><h>rational roots</h></idx>
       <p>
         Suppose that <m>A</m> is an <m>n\times n</m> matrix whose characteristic polynomial <m>f(\lambda)</m> has integer (whole-number) entries.  Then all rational roots of its characteristic polynomial are integer divisors of <m>\det(A)</m>.
       </p>
@@ -382,8 +394,8 @@ the license is included in gfdl.xml.
         = (2-\lambda)(\lambda^2-6\lambda+2).
       </me>
     </p>
-
   </paragraphs>
+
 
   <paragraphs>
     <title>Eigenvalues of a triangular matrix</title>
@@ -393,6 +405,9 @@ the license is included in gfdl.xml.
     </p>
 
     <corollary>
+      <idx><h>Eigenvalue</h><h>of a triangular matrix</h></idx>
+      <idx><h>Matrix</h><h>upper-triangular</h><h>eigenvalues of</h></idx>
+      <idx><h>Matrix</h><h>lower-triangular</h><h>eigenvalues of</h></idx>
       <statement>
         <p>
           If <m>A</m> is an upper- or lower-triangular matrix, then the eigenvalues of <m>A</m> are its diagonal entries.
@@ -437,8 +452,5 @@ the license is included in gfdl.xml.
     </example>
 
   </paragraphs>
-
-  <!-- TODO: algebraic multiplicity?  Or with geometric multiplicity? -->
-  <!-- TODO: expanded IMT?  Or wait until end? -->
 
 </section>

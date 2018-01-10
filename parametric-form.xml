@@ -86,6 +86,7 @@ the license is included in gfdl.xml.
     </example>
 
     <definition>
+      <idx><h>Free variable</h></idx>
       <statement>
         <p>Consider a <em>consistent</em> system of equations in the variables <m>x_1,x_2,\ldots,x_n</m>.  Let <m>A</m> be a row echelon form of the augmented matrix for this system.</p>
         <p>We say that <m>x_i</m> is a <term>free variable</term> if its corresponding column in <m>A</m> does <em>not</em> contain a pivot.</p>
@@ -107,6 +108,8 @@ the license is included in gfdl.xml.
 
     <warning>
       <title>Recipe: Parametric form</title>
+      <idx><h>Parametric form</h></idx>
+      <idx><h>System of linear equations</h><h>parametric form of</h><see>Parametric form</see></idx>
 
       <p>
         The <term>parametric form</term> of the solution set of a consistent system of linear equations is obtained as follows.
@@ -124,6 +127,8 @@ the license is included in gfdl.xml.
 
     <note hide-type="true">
       <title>Implicit Versus Parameterized Equations</title>
+      <idx><h>Implicit equation</h></idx>
+      <idx><h>Parameterized equation</h></idx>
       <p>The solution set of the system of linear equations
       <me>
         \syseq{2x + y + 12z = 1; x + 2y + 9z = -1}
@@ -192,6 +197,8 @@ the license is included in gfdl.xml.
 
   <subsection>
     <title>Number of Solutions</title>
+    <idx><h>System of linear equations</h><h>number of solutions of</h></idx>
+    <idx><h>Solution set</h><h>size of</h></idx>
 
     <p>There are <em>three possibilities</em> for the reduced row echelon form of the augmented matrix of a linear system.
     <ol>

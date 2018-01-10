@@ -53,6 +53,8 @@ the license is included in gfdl.xml.
     </p>
 
     <definition>
+      <idx><h>Similarity</h><h>definition of</h></idx>
+      <idx><h>Matrix</h><h>similar</h><see>Similarity</see></idx>
       <statement>
         <p>
           Two <m>n\times n</m> matrices <m>A</m> and <m>B</m> are <term>similar</term> if there exists an invertible <m>n\times n</m> matrix <m>C</m> such that <m>A = CBC\inv</m>.
@@ -88,6 +90,8 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
+      <idx><h>Similarity</h><h>identity matrix</h></idx>
+      <idx><h>Identity matrix</h><h>similarity</h></idx>
       As in the above Example, one can show that <m>I_n</m> is the only matrix that is similar to <m>I_n</m>, and likewise for any scalar multiple of <m>I_n</m>.
     </p>
 
@@ -104,6 +108,7 @@ the license is included in gfdl.xml.
     </p>
 
     <proposition xml:id="similarity-eq-reln">
+      <idx><h>Similarity</h><h>equivalence relation</h></idx>
       <statement>
         <p>
           Let <m>A,B</m>, and <m>C</m> be <m>n\times n</m> matrices.
@@ -166,6 +171,8 @@ the license is included in gfdl.xml.
     </p>
 
     <theorem type-name="Fact" xml:id="similarity-powers">
+      <idx><h>Similarity</h><h>and powers</h></idx>
+      <idx><h>Matrix multiplication</h><h>powers</h><h>and similarity</h></idx>
       <statement>
         <p>
           Let <m>A = CBC\inv</m>.  Then for any <m>n\geq 1</m>, we have
@@ -213,6 +220,7 @@ the license is included in gfdl.xml.
 
   <subsection>
     <title>Geometry of Similar Matrices</title>
+    <idx><h>Similarity</h><h>geometry of</h></idx>
 
     <p>
       Similarity is a very interesting construction when viewed geometrically.  We will see that, roughly, <em>similar matrices do the same thing in different coordinate systems.</em>  The reader might want to review <m>\cB</m>-coordinates and nonstandard coordinate grids in <xref ref="bases-as-coord-systems"/> before reading this Subsection.
@@ -229,6 +237,7 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
+      <idx><h><m>\cB</m>-coordinates</h><h>change of basis matrix</h></idx>
       <p>
         Let <m>C</m> be an invertible <m>n\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_n</m>, and let <m>\cB = \{v_1,v_2,\ldots,v_n\}</m>, a basis for <m>\R^n</m>.  Then for any <m>x</m> in <m>\R^n</m>, we have
         <me>
@@ -246,7 +255,8 @@ the license is included in gfdl.xml.
 
     <warning>
       <title>Recipe: Computing <m>Ax</m> in terms of <m>B</m></title>
-      <p>
+      <idx><h>Similarity</h><h>action on a vector</h></idx>
+    <p>
         Suppose that <m>A = CBC\inv,</m> where <m>C</m> is an invertible matrix with columns <m>v_1,v_2,\ldots,v_n.</m>  Let <m>\cB = \{v_1,v_2,\ldots,v_n\}</m>, a basis for <m>\R^n</m>.  Let <m>x</m> be a vector in <m>\R^n</m>.  To compute <m>Ax</m>, one does the following:
         <ol>
           <li>
@@ -299,6 +309,7 @@ the license is included in gfdl.xml.
     </p>
 
     <specialcase xml:id="similarity-worked-eg">
+      <idx><h>Similarity</h><h>worked example</h></idx>
       <p>
         Consider the matrices
         <me>
@@ -906,6 +917,8 @@ the license is included in gfdl.xml.
     </p>
 
     <theorem type-name="Fact" xml:id="similarity-charpoly">
+      <idx><h>Similarity</h><h>and the characteristic polynomial</h></idx>
+      <idx><h>Characteristic polynomial</h><h>of similar matrices</h></idx>
       <statement>
         <p>Similar matrices have the same characteristic polynomial.</p>
       </statement>
@@ -937,10 +950,20 @@ the license is included in gfdl.xml.
     </p>
 
     <warning>
+      <idx><h>Similarity</h><h>and eigenvalues</h></idx>
+      <idx><h>Eigenvalue</h><h>of similar matrices</h></idx>
       <p>
         Similar matrices have the same eigenvalues.
       </p>
     </warning>
+
+    <p>
+      <idx><h>Similarity</h><h>and the trace</h></idx>
+      <idx><h>Similarity</h><h>and the determinant</h></idx>
+      <idx><h>Determinant</h><h>of similar matrices</h></idx>
+      <idx><h>Matrix</h><h>trace of</h><h>similar matrices</h></idx>
+      By this <xref ref="charpoly-is-poly"/>, similar matrices also have the same trace and determinant.
+    </p>
 
     <note>
       <p>
@@ -955,6 +978,8 @@ the license is included in gfdl.xml.
     </p>
 
     <theorem type-name="Fact" xml:id="similarity-evecs">
+      <idx><h>Eigenvector</h><h>of similar matrices</h></idx>
+      <idx><h>Similarity</h><h>and eigenvectors</h></idx>
       <statement>
         <p>
           Suppose that <m>A = CBC\inv</m>.  Then
@@ -981,6 +1006,8 @@ the license is included in gfdl.xml.
     </theorem>
 
     <warning>
+      <idx><h>Eigenspace</h><h>of similar matrices</h></idx>
+      <idx><h>Similarity</h><h>and eigenspaces</h></idx>
       <p>
         If <m>A = CBC\inv</m>, then <m>C\inv</m> takes the <m>\lambda</m>-eigenspace of <m>A</m> to the <m>\lambda</m>-eigenspace of <m>B</m>, and <m>C</m> takes the <m>\lambda</m>-eigenspace of <m>B</m> to the <m>\lambda</m>-eigenspace of <m>A</m>.
       </p>

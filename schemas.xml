@@ -37,6 +37,7 @@
   <uri resource="matrix-trans.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="orthosets.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="orthocomp.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="projections.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="overview.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="rowreduction.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="solnsets.xml" uri="../mathbook/schema/pretext.rnc"/>

@@ -32,6 +32,8 @@ the license is included in gfdl.xml.
 
   <definition>
     <title>One-to-one transformations</title>
+    <idx><h>One-to-one</h><h>definition of</h></idx>
+    <idx><h>Transformation</h><h>one-to-one</h><see>One-to-one</see></idx>
     <statement>
       <p>
         A transformation <m>T\colon\R^n\to\R^m</m> is <term>one-to-one</term> if, for every vector <m>b</m> in <m>\R^m</m>, the equation <m>T(x)=b</m> has <em>at most one</em> solution <m>x</m> in <m>\R^n</m>.
@@ -46,6 +48,7 @@ the license is included in gfdl.xml.
   </remark>
 
   <p>
+    <idx><h>One-to-one</h><h>equivalent formulations</h></idx>
     Here are some equivalent ways of saying <q><m>T</m> is one-to-one:</q>
     <ul>
       <li>
@@ -117,6 +120,7 @@ the license is included in gfdl.xml.
   </p>
 
   <p>
+    <idx><h>One-to-one</h><h>negation of</h></idx>
     Here are some equivalent ways of saying <q><m>T</m> is <em>not</em> one-to-one:</q>
     <ul>
       <li>
@@ -183,6 +187,7 @@ the license is included in gfdl.xml.
 
   <example>
     <title>Functions of one variable</title>
+    <idx><h>One-to-one</h><h>functions of one variable</h></idx>
     <p>
       The function <m>\sin\colon\R\to\R</m> is not one-to-one.  Indeed, <m>\sin(0) = \sin(\pi) = 0</m>, so the inputs <m>0</m> and <m>\pi</m> have the same output <m>0</m>.  In fact, the equation <m>\sin(x) = 0</m> has infinitely many solutions <m>\ldots,-2\pi,-\pi,0,\pi,2\pi,\ldots</m>.
     </p>
@@ -307,6 +312,8 @@ the license is included in gfdl.xml.
 
   <theorem xml:id="matrix-trans-one-to-one">
     <title>One-to-one matrix transformations</title>
+    <idx><h>One-to-one</h><h>criteria for matrix transformations</h></idx>
+    <idx><h>Matrix transformation</h><h>one-to-one criteria</h></idx>
     <statement>
       <p>
         Let <m>A</m> be an <m>m\times n</m> matrix, and let <m>T(x)=Ax</m> be the associated matrix transformation.  The following statements are equivalent:
@@ -432,12 +439,16 @@ the license is included in gfdl.xml.
   </example>
 
   <p>
-    The previous three Examples can be summarized as follows.
-    Suppose that <m>T(x)=Ax</m> is a matrix transformation that is <em>not</em> one-to-one.  By the <xref ref="matrix-trans-one-to-one"/>, there is a nontrivial solution of <m>Ax=0</m>.  This means that the null space of <m>A</m> is not the zero space.  All of the vectors in the null space are solutions to <m>T(x)=0</m>.  If you compute a nonzero vector <m>v</m> in the null space (by row reducing and finding the parametric form of the solution set of <m>Ax=0</m>, for instance), then <m>v</m> and <m>0</m> both have the same output: <m>T(v) = Av = 0 = T(0).</m>
+    <idx><h>One-to-one</h><h>finding two vectors with the same image</h></idx>
+    The previous three Examples can be summarized as follows.  Suppose that <m>T(x)=Ax</m> is a matrix transformation that is <em>not</em> one-to-one.  By the <xref ref="matrix-trans-one-to-one"/>, there is a nontrivial solution of <m>Ax=0</m>.  This means that the null space of <m>A</m> is not the zero space.  All of the vectors in the null space are solutions to <m>T(x)=0</m>.  If you compute a nonzero vector <m>v</m> in the null space (by row reducing and finding the parametric form of the solution set of <m>Ax=0</m>, for instance), then <m>v</m> and <m>0</m> both have the same output: <m>T(v) = Av = 0 = T(0).</m>
   </p>
 
   <note hide-type="true" xml:id="one-to-one-wide-matrices">
     <title>Wide matrices do not have one-to-one transformations</title>
+    <idx><h>One-to-one</h><h>wide matrices</h></idx>
+    <idx><h>Matrix transformation</h><h>wide matrices</h></idx>
+    <idx><h>Wide matrix</h><see>Matrix transformation</see></idx>
+    <idx><h>Wide matrix</h><see>Linear independence</see></idx>
     <p>
       If <m>T\colon\R^n\to\R^m</m> is a one-to-one matrix transformation, what can we say about the relative sizes of <m>n</m> and <m>m</m>?
     </p>
@@ -461,6 +472,8 @@ the license is included in gfdl.xml.
 
   <definition>
     <title>Onto transformations</title>
+    <idx><h>Onto</h><h>definition of</h></idx>
+    <idx><h>Transformation</h><h>onto</h><see>Onto</see></idx>
     <statement>
       <p>A transformation <m>T\colon\R^n\to\R^m</m> is <term>onto</term> if, for every vector <m>b</m> in <m>\R^m</m>, the equation <m>T(x)=b</m> has <em>at least one</em> solution <m>x</m> in <m>\R^n</m>.</p>
     </statement>
@@ -473,6 +486,7 @@ the license is included in gfdl.xml.
   </remark>
 
   <p>
+    <idx><h>Onto</h><h>equivalent formulations</h></idx>
     Here are some equivalent ways of saying <q><m>T</m> is onto:</q>
     <ul>
       <li>The range of <m>T</m> is equal to the codomain of <m>T</m>.</li>
@@ -509,6 +523,7 @@ the license is included in gfdl.xml.
   </p>
 
   <p>
+    <idx><h>Onto</h><h>negation of</h></idx>
     Here are some equivalent ways of saying <q><m>T</m> is <em>not</em> onto:</q>
     <ul>
       <li>The range of <m>T</m> is smaller than the codomain of <m>T</m>.</li>
@@ -546,6 +561,7 @@ the license is included in gfdl.xml.
 
   <example>
     <title>Functions of one variable</title>
+    <idx><h>Onto</h><h>functions of one variable</h></idx>
     <p>
       The function <m>\sin\colon\R\to\R</m> is not onto.  Indeed, taking <m>b=2</m>, the equation <m>\sin(x)=2</m> has no solution.  The range of <m>\sin</m> is the closed interval <m>[-1,1]</m>, which is smaller than the codomain <m>\R^</m>.
     </p>
@@ -572,6 +588,8 @@ the license is included in gfdl.xml.
 
   <theorem>
     <title>Onto matrix transformations</title>
+    <idx><h>Onto</h><h>criteria for matrix transformations</h></idx>
+    <idx><h>Matrix transformation</h><h>onto criteria</h></idx>
     <statement>
       <p>
         Let <m>A</m> be an <m>m\times n</m> matrix, and let <m>T(x)=Ax</m> be the associated matrix transformation.  The following statements are equivalent:
@@ -664,11 +682,15 @@ the license is included in gfdl.xml.
   </example>
 
   <p>
+    <idx><h>Onto</h><h>finding a vector not in the range</h></idx>
     The previous two Examples illustrate the following observation.  Suppose that <m>T(x)=Ax</m> is a matrix transformation that is <em>not</em> onto.  This means that <m>\text{range}(T) = \Col(A)</m> is a subspace of <m>\R^m</m> of dimension less than <m>m</m>: perhaps it is a line in the plane, or a line in <m>3</m>-space, or a plane in <m>3</m>-space, etc.  Whatever the case, the range of <m>T</m> is <em>very small</em> compared to the codomain.  To find a vector not in the range of <m>T</m>, choose a random nonzero vector <m>b</m> in <m>\R^m</m>; you have to be extremely unlucky to choose a vector that is in the range of <m>T</m>.  Of course, to check whether a given vector <m>b</m> is in the range of <m>T</m>, you have to solve the matrix equation <m>Ax=b</m> to see whether it is consistent.
   </p>
 
   <note hide-type="true" xml:id="one-to-one-tall-matrices">
     <title>Tall matrices do not have onto transformations</title>
+    <idx><h>Onto</h><h>tall matrices</h></idx>
+    <idx><h>Matrix transformation</h><h>tall matrices</h></idx>
+    <idx><h>Tall matrix</h><see>Matrix transformation</see></idx>
     <p>
       If <m>T\colon\R^n\to\R^m</m> is an onto matrix transformation, what can we say about the relative sizes of <m>n</m> and <m>m</m>?
     </p>
@@ -692,6 +714,8 @@ the license is included in gfdl.xml.
   <title>Comparison</title>
 
   <p>
+    <idx><h>One-to-one</h><h>versus onto</h></idx>
+    <idx><h>Onto</h><h>versus one-to-one</h></idx>
     The above expositions of one-to-one and onto transformations were written to mirror each other.  However, <q>one-to-one</q> and <q>onto</q> are complementary notions: neither one implies the other.  Below we have provided a chart for comparing the two.  In the chart, <m>A</m> is an <m>m\times n</m> matrix, and <m>T\colon\R^n\to\R^m</m> is the matrix transformation <m>T(x)=Ax</m>.
     <latex-code>
 \parbox{2.5in}{\centering%
@@ -797,6 +821,8 @@ the license is included in gfdl.xml.
 
   <note hide-type="true">
     <title>One-to-one is the same as onto for square matrices</title>
+    <idx><h>One-to-one</h><h>square matrices</h></idx>
+    <idx><h>Onto</h><h>square matrices</h></idx>
     <p>
       We observed in the previous <xref ref="one-to-one-both-11-onto"/> that a square matrix has a pivot in every row if and only if it has a pivot in every column.  Therefore, a matrix transformation <m>T</m> from <m>\R^n</m> to itself is one-to-one if and only if it is onto: in this case, the two notions are equivalent.
     </p>

@@ -27,6 +27,7 @@ the license is included in gfdl.xml.
     <p>In <xref ref="systems-of-eqns"/> we saw how to translate a system of linear equations into an augmented matrix.  We want to find an <em>algorithm</em> for <q>solving</q> such an augmented matrix.  First we must decide what it means for an augmented matrix to be <q>solved</q>.</p>
 
     <definition>
+      <idx><h>Row echelon form</h></idx>
       <statement>
         <p>A matrix is in <term>row echelon form</term> if:
         <ol>
@@ -54,12 +55,14 @@ the license is included in gfdl.xml.
     </p>
 
     <definition>
+      <idx><h>Pivot</h></idx>
       <statement>
         <p>A <term>pivot</term> is the first nonzero entry of a row of a matrix in reduced echelon form.</p>
       </statement>
     </definition>
 
     <definition>
+      <idx><h>Reduced row echelon form</h></idx>
       <statement>
         <p>A matrix is in <term>reduced row echelon form</term> if it is in row echelon form, and in addition:
         <ol start="4">
@@ -125,6 +128,8 @@ the license is included in gfdl.xml.
 
     <algorithm xml:id="algo-row-reduction">
       <title>Row Reduction</title>
+      <idx><h>Row reduction</h><h>algorithm</h></idx>
+      <idx><h>Gaussian elimination</h><see>Row reduction</see></idx>
       <statement>
         <p>
           <ul label="">
@@ -342,6 +347,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>Here is the row reduction algorithm, summarized in pictures.
+    <idx><h>Row reduction</h><h>picture of</h></idx>
     <latex-code>
           <![CDATA[
 \begin{tikzpicture}
@@ -516,6 +522,7 @@ the license is included in gfdl.xml.
 
     <theorem hide-type="true">
       <title>The row echelon form of an inconsistent system</title>
+      <idx><h>System of linear equations</h><h>inconsistent</h><h>RREF criterion</h></idx>
       <p>An augmented matrix corresponds to an inconsistent system of equations if and only if the last column (i.e., the augmented column) is a <em>pivot column</em>.</p>
     </theorem>
 

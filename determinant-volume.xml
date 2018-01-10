@@ -37,6 +37,7 @@ the license is included in gfdl.xml.
     </p>
 
   <definition>
+    <idx><h>Parallelepiped</h><h>definition of</h></idx>
     <statement>
       <p>
         The <term>paralellepiped</term> determined by <m>n</m> vectors <m>v_1, v_2,\ldots,v_n</m> in <m>\R^n</m> is the subset
@@ -53,6 +54,7 @@ the license is included in gfdl.xml.
 
   <specialcase>
     <title>The unit cube</title>
+    <idx><h>Unit cube</h></idx>
     <p>
       The parallelepiped determined by the unit coordinate vectors <m>e_1,e_2,\ldots,e_n</m> is the unit <m>n</m>-dimensional cube.
       <latex-code mode="bare">
@@ -100,6 +102,8 @@ the license is included in gfdl.xml.
 
   <specialcase>
     <title>Parallelograms</title>
+    <idx><h>Parallelepiped</h><h>parallelogram</h></idx>
+    <idx><h>Parallelogram</h><see>Parallelepiped</see></idx>
     <p>
       When <m>n = 2</m>, a paralellepiped is just a paralellogram in <m>\R^2</m>.  Note that the edges come in parallel pairs.
       <latex-code><![CDATA[
@@ -181,12 +185,15 @@ the license is included in gfdl.xml.
   </p>
 
   <note type-name="Key Observation">
+    <idx><h>Parallelepiped</h><h>flat</h></idx>
     <p>
       The parallelepiped defined by <m>v_1,v_2,\ldots,v_n</m> has zero volume if and only if the matrix with rows <m>v_1,v_2,\ldots,v_n</m> has zero determinant.
     </p>
   </note>
 
   </subsection>
+
+
   <subsection>
     <title>Determinants and Volumes</title>
 
@@ -197,12 +204,17 @@ the license is included in gfdl.xml.
 
     <theorem xml:id="det-is-volume">
       <title>Determinants and volumes</title>
+      <idx><h>Parallelepiped</h><h>volume of</h></idx>
+      <idx><h>Matrix</h><h>parallelepiped determined by</h></idx>
+      <idx><h>Determinant</h><h>and volumes</h></idx>
+      <idx><h>Volume</h><h>of a parallelepiped</h></idx>
     <statement>
       <p>
         Let <m>v_1,v_2,\ldots,v_n</m> be vectors in <m>\R^n</m>, let <m>P</m> be the parallelepiped determined by these vectors, and let <m>A</m> be the matrix with rows <m>v_1,v_2,\ldots,v_n</m>.  Then the absolute value of the determinant of <m>A</m> is the volume of <m>P</m>:
         <me>
           |\det(A)| = \vol(P).
         </me>
+        <notation><usage>\vol(P)</usage><description>Volume of a region</description></notation>
       </p>
     </statement>
     <proof visible="true">
@@ -230,6 +242,7 @@ the license is included in gfdl.xml.
 	  </me>
       </p>
       <p>
+        <notation><usage>\vol(A)</usage><description>Volume of the parallelepiped of a matrix</description></notation>
         For a square matrix <m>A</m>, we abuse notation and let <m>\vol(A)</m> denote the volume of the paralellepiped determined by the rows of <m>A</m>.  Then we can regard <m>\vol</m> as a function from the set of square matrices to the real numbers.  We will show that <m>\vol</m> also satisfies the above four properties.
         <ol>
           <li>
@@ -406,6 +419,7 @@ the license is included in gfdl.xml.
 
   <specialcase>
     <title>Length</title>
+    <idx><h>Volume</h><h>and length</h></idx>
     <p>
       A <m>1\times 1</m> matrix <m>A</m> is just a number <m>\mat a</m>.  In this case, the parallelepiped <m>P</m> determined by its one row is just the interval <m>[0,a]</m> (or <m>[a,0]</m> if <m>a\lt0</m>).  The <q>volume</q> of a region in <m>\R^1 = \R</m> is just its length, so it is clear in this case that <m>\vol(P) = |a|</m>.
       <latex-code>
@@ -420,6 +434,7 @@ the license is included in gfdl.xml.
 
   <specialcase>
     <title>Area</title>
+    <idx><h>Parallelepiped</h><h>parallelogram</h><h>area of</h></idx>
     <p>
       When <m>A</m> is a <m>2\times 2</m> matrix, its rows determine a parallelogram in <m>\R^2</m>.  The <q>volume</q> of a region in <m>\R^2</m> is its area, so we obtain a formula for the area of a parallelogram: it is the determinant of the matrix whose rows are the vectors forming two adjacent sides of the parallelogram.
       <latex-code>
@@ -495,6 +510,8 @@ the license is included in gfdl.xml.
 
   <example>
     <title>Area of a triangle</title>
+    <idx><h>Triangle</h><h>area of</h><see>Volume</see></idx>
+    <idx><h>Volume</h><h>of a triangle</h></idx>
     <statement>
       <p>
         Find the area of the triangle with vertices
@@ -533,6 +550,7 @@ the license is included in gfdl.xml.
 
   <remark>
     <title>Signed volumes</title>
+    <idx><h>Volume</h><h>signed</h></idx>
     <p>
       The <xref ref="det-is-volume"/> on determinants and volumes tells us that the <em>absolute value</em> of the determinant is the volume of a paralellepiped.  This raises the question of whether the sign of the determinant has any geometric meaning.
     </p>
@@ -626,6 +644,8 @@ the license is included in gfdl.xml.
   </remark>
 
   </subsection>
+
+
   <subsection>
     <title>Volumes of Regions</title>
 
@@ -662,6 +682,9 @@ the license is included in gfdl.xml.
     </p>
 
     <theorem xml:id="det-vol-regions">
+      <idx><h>Volume</h><h>of a region</h></idx>
+      <idx><h>Matrix transformation</h><h>and volumes</h></idx>
+      <idx><h>Linear transformation</h><h>and volumes</h><see>Matrix transformation</see></idx>
       <statement>
         <p>
           Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>T\colon\R^n\to\R^n</m> be the associated matrix transformation <m>T(x)=Ax</m>.  If <m>S</m> is any region in <m>\R^n</m>, then
@@ -810,6 +833,8 @@ the license is included in gfdl.xml.
 
     <example>
       <title>Area of an ellipse</title>
+      <idx><h>Volume</h><h>of an ellipse</h></idx>
+      <idx><h>Ellipse</h><h>area of</h><see>Volume</see></idx>
       <statement>
         <p>
           Find the area of the interior <m>E</m> of the ellipse defined by the equation
@@ -867,6 +892,7 @@ the license is included in gfdl.xml.
 
     <remark>
       <title>Multiplicativity of <m>|\det|</m></title>
+      <idx><h>Determinant</h><h>multiplicativity property</h><h>and volumes</h></idx>
     <p>
       The above <xref ref="det-vol-regions"/> also gives a geometric reason for multiplicativity of the (absolute value of the) determinant.  Indeed, let <m>A</m> and <m>B</m> be <m>n\times n</m> matrices, and let <m>T,U\colon\R^n\to\R^n</m> be the corresponding matrix transformations.  If <m>C</m> is the unit cube, then
       <me>
