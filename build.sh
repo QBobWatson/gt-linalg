@@ -6,12 +6,16 @@ die() {
 }
 
 PRETEX_ALL=
+LATEX_TOO=
 CHUNKSIZE="250"
 
 while [[ $# -gt 0 ]]; do
     case $1 in
         --reprocess-latex)
             PRETEX_ALL="true"
+            ;;
+        --pdf-vers)
+            LATEX_TOO="true"
             ;;
         --chunk)
             shift
@@ -28,6 +32,7 @@ compile_dir="$(cd "$(dirname "$0")"; pwd)"
 base_dir="$compile_dir/.."
 base_dir="$(cd "$base_dir"; pwd)"
 build_dir="$base_dir/build"
+latex_dir="$base_dir/build-pdf"
 static_dir="$build_dir/static"
 figure_img_dir="$build_dir"/figure-images
 pretex="$base_dir/gt-text-common/pretex/pretex.py"
@@ -41,6 +46,7 @@ if [[ $? == 3 || $? == 4 ]]; then
     exit 1
 fi
 
+
 echo "Cleaning up previous build..."
 rm -rf "$build_dir"
 mkdir -p "$build_dir"
@@ -49,6 +55,29 @@ mkdir -p "$static_dir/js"
 mkdir -p "$static_dir/css"
 mkdir -p "$static_dir/fonts"
 mkdir -p "$static_dir/images"
+rm -rf "$latex_dir"
+mkdir -p "$latex_dir"
+
+compile_latex() {
+    cd "$latex_dir" && \
+        TEXINPUTS=".:$latex_dir/style:" pdflatex \
+                 -interaction=nonstopmode "\input{index}" \
+            || die "pdflatex failed"
+}
+
+if [ -n "$LATEX_TOO" ]; then
+    cp -r "$compile_dir/style" "$latex_dir/style"
+    cp -r "$compile_dir/figure-images" "$latex_dir/figure-images"
+    echo "Generating master LaTeX file"
+    xsltproc -o "$latex_dir/" --xinclude \
+             "$compile_dir/xsl/mathbook-latex.xsl" linalg.xml \
+        || die "xsltproc failed!"
+    echo "Compiling PDF version (pass 1)"
+    compile_latex
+    echo "Compiling PDF version (pass 2)"
+    compile_latex
+    mv "$latex_dir"/index.pdf "$latex_dir"/gt-linalg.pdf
+fi
 
 echo "Copying static files..."
 cp "$base_dir/gt-text-common/css/"*.css "$static_dir/css"

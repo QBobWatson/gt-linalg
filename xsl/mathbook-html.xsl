@@ -158,8 +158,8 @@
     </xsl:choose>
 </xsl:template>
 
-<xsl:template match="warning" mode="body-css-class">
-    <xsl:text>warning-like</xsl:text>
+<xsl:template match="bluebox" mode="body-css-class">
+    <xsl:text>bluebox</xsl:text>
 </xsl:template>
 
 <!-- JDR: mathbox support -->
@@ -220,8 +220,8 @@
     <xsl:value-of select="@hide-type"/>
 </xsl:template>
 
-<!-- Warnings hide type by default -->
-<xsl:template match="warning" mode="get-hide-type">
+<!-- Blue boxes hide type by default -->
+<xsl:template match="bluebox" mode="get-hide-type">
     <xsl:choose>
         <xsl:when test="@hide-type">
             <xsl:value-of select="@hide-type"/>

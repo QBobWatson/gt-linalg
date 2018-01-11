@@ -51,7 +51,6 @@ the license is included in gfdl.xml.
     \draw[grid lines] (-1,-1) grid (4, 4);
       \draw[thick vector, green!50!black] (0,0)
         -- node[midway, pin={[right]-10:the vector $1\choose3$}] {} (1,3);
-    \useasboundingbox (6,0);
   \end{tikzpicture}
               ]]>
         </latex-code>
@@ -304,7 +303,7 @@ the license is included in gfdl.xml.
     \point[seq8] at (2,0);
     \point[seq7] at (-1,-2);
 
-    \node[anchor=west] at (5, .75)
+    \node[anchor=west, overlay] at (5, .75)
       {
         \begin{minipage}{0.6\linewidth}
            \begin{itemize}

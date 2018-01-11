@@ -57,7 +57,7 @@ the license is included in gfdl.xml.
     <definition>
       <idx><h>Pivot</h></idx>
       <statement>
-        <p>A <term>pivot</term> is the first nonzero entry of a row of a matrix in reduced echelon form.</p>
+        <p>A <term>pivot</term> is the first nonzero entry of a row of a matrix in row echelon form.</p>
       </statement>
     </definition>
 
@@ -170,6 +170,9 @@ the license is included in gfdl.xml.
         <p><latex-code>
             <![CDATA[
 \begin{tikzpicture}[all nodes={font=\small}]
+  \ifpdfvers
+  \begin{scope}[transform canvas={scale=.8}]
+  \fi
   \tikzset{
     my matrix/.style={
       matrix, math matrix,
@@ -327,6 +330,10 @@ the license is included in gfdl.xml.
     let \p1=($(expl8.north west) + (5mm,0)$) in
       (\p1) |- (bm10-1-2.west);
 
+  \ifpdfvers
+  \end{scope}
+  \useasboundingbox (-3.5cm,.7cm) rectangle (8cm,-19.3cm);
+  \fi
 \end{tikzpicture}
             ]]>
           </latex-code>

@@ -214,7 +214,6 @@ the license is included in gfdl.xml.
     <p>
       Suppose you are building a robot arm with three joints that can move its hand around a plane, as in this <xref ref="matrix-trans-eg-robot"/>.
       <latex-code>
-\usetikzlibrary{ipe,angles}
 \tikzstyle{ipe stylesheet} = [
   ipe import,
   even odd rule,
@@ -563,7 +562,7 @@ the license is included in gfdl.xml.
     <title>Functions of one variable</title>
     <idx><h>Onto</h><h>functions of one variable</h></idx>
     <p>
-      The function <m>\sin\colon\R\to\R</m> is not onto.  Indeed, taking <m>b=2</m>, the equation <m>\sin(x)=2</m> has no solution.  The range of <m>\sin</m> is the closed interval <m>[-1,1]</m>, which is smaller than the codomain <m>\R^</m>.
+      The function <m>\sin\colon\R\to\R</m> is not onto.  Indeed, taking <m>b=2</m>, the equation <m>\sin(x)=2</m> has no solution.  The range of <m>\sin</m> is the closed interval <m>[-1,1]</m>, which is smaller than the codomain <m>\R</m>.
     </p>
 
     <p>

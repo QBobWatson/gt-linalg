@@ -44,12 +44,12 @@ Copyright 2017 Georgia Institute of Technology
   </macros>
 
   <!-- tikz package and libraries for images -->
-  <latex-image-preamble>
-    \usepackage{geometry}
-    \geometry{paperwidth=300mm, paperheight=300mm,
-      layoutwidth=300mm, layoutheight=300mm,
-      textwidth=300mm, textheight=300mm, ignoreall}
-  </latex-image-preamble>
+  <!-- <latex-image-preamble> -->
+  <!--   \usepackage{geometry} -->
+  <!--   \geometry{paperwidth=300mm, paperheight=300mm, -->
+  <!--     layoutwidth=300mm, layoutheight=300mm, -->
+  <!--     textwidth=300mm, textheight=300mm, ignoreall} -->
+  <!-- </latex-image-preamble> -->
 
   <search>
     <google>

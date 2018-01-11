@@ -364,7 +364,7 @@ the license is included in gfdl.xml.
               \det\mat{1 2 3; 0 4 5; 0 0 6} \amp= 1 \cdot 4 \cdot 6 = 24
             </mrow>
             <mrow>
-              \mat{-20 0 0; \pi, 0 0; 100 3 -7} \amp= -20 \cdot 0 \cdot -7 = 0
+              \det\mat{-20 0 0; \pi, 0 0; 100 3 -7} \amp= -20 \cdot 0 \cdot -7 = 0
             </mrow>
             <mrow>
               \det\mat{17 -3 4; 0 0 0; 11/2 1 e} \amp= 0.
@@ -411,6 +411,7 @@ the license is included in gfdl.xml.
         <p>
           We row reduce the matrix, keeping track of the number of row swaps and of the scaling factors used.
           <latex-code>
+\begin{minipage}{10cm}  % needed for pdf version
 \def\rowop#1#2#3{%
   \hbox to 4.2cm{\hss$\xrightarrow{#1}$\;}%
   \hbox to 3cm{#2\hss}%
@@ -422,6 +423,7 @@ the license is included in gfdl.xml.
 \rowop{R_3 = R_3 - 3R_1}{$\mat{1 2 3; 0 -7 -4; 0 1 -10}$}{}\\
 \rowop{R_2\longleftrightarrow R_3}{$\mat{1 2 3; 0 1 -10; 0 -7 -4}$}{$r=2$}\\
 \rowop{R_3 = R_3 + 7R_2}{$\mat{1 2 3; 0 1 -10; 0 0 -74}$}{}
+\end{minipage}
           </latex-code>
           We made two row swaps and scaled once by a factor of <m>1/2</m>, so the <xref ref="det-defn-ref-compute"/> says that
           <me>\det\mat{0 -7 -4; 2 4 6; 3 7 -1} = (-1)^2\cdot\frac{1\cdot 1\cdot -74}{1/2} = -148.</me>
@@ -437,6 +439,7 @@ the license is included in gfdl.xml.
         <p>
           We row reduce the matrix, keeping track of the number of row swaps and of the scaling factors used.
           <latex-code>
+\begin{minipage}{10cm}  % needed for pdf version
 \def\rowop#1#2#3#4{%
   \hbox to 4.5cm{\hss$\xrightarrow[#2]{#1}$\;}%
   \hbox to 2.7cm{#3\hss}%
@@ -446,6 +449,7 @@ the license is included in gfdl.xml.
 \rowop{R_2=R_2-2R_1}{R_3=R_3-3R_1}{$\mat{1 2 3; 0 -5 -5; 0 -6 -8}$}{}\\
 \rowop{R_2=R_2\div-5}{}{$\mat{1 2 3; 0 1 1; 0 -6 -8}$}{scaling factors${}=-\frac 15$}\\
 \rowop{R_3=R_3+6R_2}{}{$\mat{1 2 3; 0 1 1; 0 0 -2}$}{}
+\end{minipage}
           </latex-code>
           We did not make any row swaps, and we scaled once by a factor of <m>-1/5</m>, so the <xref ref="det-defn-ref-compute"/> says that
           <me>\det\mat{1 2 3; 2 -1 1; 3 0 1} = \frac{1\cdot 1\cdot -2}{-1/5} = 10.</me>
@@ -883,6 +887,7 @@ the license is included in gfdl.xml.
             = B^TA^T.
             \end{split}
           </me>
+          <em></em>               <!-- fix QED sign -->
         </p>
       </proof>
     </lemma>
@@ -999,6 +1004,7 @@ the license is included in gfdl.xml.
         <p>
           It takes fewer column operations than row operations to make this matrix upper-triangular:
           <latex-code>
+\begin{minipage}{8cm}
 \def\rowop#1#2#3{%
   \hbox to 4cm{\hss$\xrightarrow{#1}$\;}%
   \hbox to 3cm{#2\hss}%
@@ -1007,6 +1013,7 @@ the license is included in gfdl.xml.
 \leavevmode\rlap{\hbox{$\mat{2 7 4; 3 1 3; 4 0 1}$}}%
 \rowop{C_1=C_1-4C_3}{$\mat{-14 7 4; -9 1 3; 0 0 1}$}{}\\
 \rowop{C_1=C_1+9C_2}{$\mat{49 7 4; 0 1 3; 0 0 1}$}{}
+\end{minipage}
           </latex-code>
           We performed two column replacements, which does not change the determinant; therefore,
           <me>\det\mat{2 7 4; 3 1 3; 4 0 1} = \det\mat{49 7 4; 0 1 3; 0 0 1} = 49.</me>

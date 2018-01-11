@@ -256,7 +256,7 @@ the license is included in gfdl.xml.
   \draw[->,blue!50, shorten >=1pt] (rref.north) to[out=90,in=-90] (B-3-2.south);
   \draw[->,
         decoration={snake, amplitude=.4mm, segment length=1mm, post length=.5mm},
-        decorate]
+        \ifpdfvers\else decorate\fi]
       (rref.west) -- (orig.east);
 
 \end{tikzpicture}

@@ -688,7 +688,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
        </p>
        <figure>
          <caption>The transformation <m>T</m> is equal to its own inverse: applying <m>T</m> twice takes a vector back to where it started.</caption>
-         <mathbox source="demos/compose2d.html?closed=true&amp;mat1=-1,0,0,1&amp;mat2=-1,0,0,1&amp;show1&amp;names=T,T%20" height="500px"/>
+         <mathbox source="demos/compose2d.html?closed=true&amp;mat1=-1,0,0,1&amp;mat2=-1,0,0,1&amp;show1&amp;names=T,T'" height="500px"/>
        </figure>
      </solution>
    </example>

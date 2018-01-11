@@ -618,7 +618,8 @@ the license is included in gfdl.xml.
     <p>
       Suppose you are building a robot arm with three joints that can move its hand around a plane, as in the following picture.
       <latex-code>
-\usetikzlibrary{ipe,angles}
+\usetikzlibrary{ipe}
+\usetikzlibrary{angles}
 \tikzstyle{ipe stylesheet} = [
   ipe import,
   even odd rule,

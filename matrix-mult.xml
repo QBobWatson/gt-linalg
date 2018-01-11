@@ -367,10 +367,10 @@ the license is included in gfdl.xml.
     <p>In this Subsection, we translate the algebra of linear transformations from the previous Subsection into the language of matrices.  First we need some terminology.</p>
 
     <definition type-name="Notation">
-      <notation><usage>a_{ij}</usage><description>The <m>i,j</m>th entry of a matrix</description></notation>
+      <notation><usage>a_{ij}</usage><description>The <m>i,j</m> entry of a matrix</description></notation>
       <statement>
         <p>
-          Let <m>A</m> be an <m>m\times n</m> matrix.  We will generally write <m>a_{ij}</m> for the entry in the <m>i</m>th row and the <m>j</m>th column.  It is called the <term><m>i,j</m>th entry</term> of the matrix.
+          Let <m>A</m> be an <m>m\times n</m> matrix.  We will generally write <m>a_{ij}</m> for the entry in the <m>i</m>th row and the <m>j</m>th column.  It is called the <term><m>i,j</m> entry</term> of the matrix.
           <latex-code>
             <![CDATA[
 \def\spvdots{\vphantom{\vbox{\hbox{(}\kern0pt}}\smash{\vdots}}
@@ -379,16 +379,16 @@ the license is included in gfdl.xml.
       {
         a_{11} \& \cdots \& a_{1j} \& \cdots \& a_{1n} \\
         \spvdots \&        \& \spvdots \&        \& \spvdots \\
-        a_{i1} \& \cdots \& a_{ij} \& \cdots \& a_{in} \\
+        a_{i1} \& \cdots \& a_{ij} \& \cdots \&  a_{in} \\
         \spvdots \&        \& \spvdots \&        \& \spvdots \\
-        a_{m1} \& \cdots \& a_{mj} \& \cdots \& a_{mn} \\
+        a_{m1} \& \cdots \& a_{mj} \& \cdots \& a_{mn} \& \\
       };
       \node[fit=(aij-1-3) (aij-5-3), inner sep=2pt,
           draw=blue!50, thick, rounded corners,
           label={[text=blue!50]below:\small$j$th column}] {};
       \node[fit=(aij-3-1) (aij-3-5), inner sep=2pt,
           draw=green!70!black, thick, rounded corners] (row) {};
-      \node[text=green!70!black, rotate=90, anchor=north, yshift=1mm, font=\small]
+      \node[text=green!70!black, rotate=90, anchor=north, yshift=.5mm, font=\small]
         at (row.east) {$i$th row};
   \end{tikzpicture}
   ]]>
@@ -411,7 +411,7 @@ the license is included in gfdl.xml.
                 \mat{a_{11}+b_{11} a_{12}+b_{12} a_{13}+b_{13};
                      a_{21}+b_{21} a_{22}+b_{22} a_{23}+b_{23}}
               </me>
-              In other words, the <m>ij</m>th entry of <m>A+B</m> is the sum of the <m>ij</m>th entries of <m>A</m> and <m>B</m>.  Note that addition of matrices is only defined when both matrices have the same dimensions.<em></em> <!-- workaround css bug -->
+              In other words, the <m>i,j</m> entry of <m>A+B</m> is the sum of the <m>i,j</m> entries of <m>A</m> and <m>B</m>.  Note that addition of matrices is only defined when both matrices have the same dimensions.<em></em> <!-- workaround css bug -->
             </li>
             <li>
               The <term>scalar product</term> of a scalar <m>c</m> with a matrix <m>A</m> is obtained by scaling all entries of <m>A</m> by <m>c</m>:
@@ -420,7 +420,7 @@ the license is included in gfdl.xml.
                 \r c\mat{a_{11} a_{12} a_{13}; a_{21} a_{22} a_{23}} =
                 \mat{\r ca_{11} \r ca_{12} \r ca_{13}; \r ca_{21} \r ca_{22} \r ca_{23}}
               </me>
-              In other words, the <m>ij</m>th entry of <m>cA</m> is <m>c</m> times the <m>ij</m>th entry of <m>A</m>.
+              In other words, the <m>i,j</m> entry of <m>cA</m> is <m>c</m> times the <m>i,j</m> entry of <m>A</m>.
             </li>
           </ul>
         </p>
@@ -563,9 +563,9 @@ the license is included in gfdl.xml.
     };
   \node[fit=(aij-3-1) (aij-3-5), inner sep=2pt,
       draw=green!70!black, thick, rounded corners] (row) {};
-  \node[text=green!70!black, rotate=90, anchor=north, yshift=1.1mm, font=\small]
+  \node[text=green!70!black, rotate=90, anchor=north, yshift=2mm, font=\small]
       at (row.east) {$i$th row};
-\end{tikzpicture}
+\end{tikzpicture}\hskip-1mm
 \begin{tikzpicture}[baseline, scale=.95]
   \matrix[math matrix]  (bij)
     {
@@ -579,7 +579,7 @@ the license is included in gfdl.xml.
       draw=blue!50, thick, rounded corners,
       label={[text=blue!50]below:\small$j$th column}] {};
 \end{tikzpicture}
-=\hskip-4pt
+\hskip-4pt=\hskip-4pt
 \begin{tikzpicture}[baseline, scale=.95]
   \matrix[math matrix,
       label=below:$\textcolor{green!70!black}i\textcolor{blue!50}j$ entry]

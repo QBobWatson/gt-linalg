@@ -322,8 +322,8 @@ the license is included in gfdl.xml.
           <latex-code>
 \begin{tikzpicture}[scale=3]
   \draw[grid lines, step=.25] (-1,-1) grid (1,1);
-  \draw[seq4, &lt;->] (-1,0) -- (1,0);
-  \draw[seq4, &lt;->] (0,-1) -- (0,1);
+  \draw[seq4, &lt;->, thick] (-1,0) -- (1,0);
+  \draw[seq4, &lt;->, thick] (0,-1) -- (0,1);
   \node[seq4] at (.25,.25) {$V$};
 \end{tikzpicture}
           </latex-code>

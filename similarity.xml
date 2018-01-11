@@ -278,14 +278,14 @@ the license is included in gfdl.xml.
   \draw[seq-green, vector] (0, 0) to["{$[x]_\cB$}" above right] (-2, 1);
   \draw[seq-red, vector] (0, 0) to["{$B[x]_\cB$}"] (-2, -1);
 
-  \draw[->, shorten=2mm, thick] (9, 1) to[bend right]
+  \draw[->, shorten=2mm, thick] (8, 1) to[bend right]
      node[above=1mm] {multiply by $C\inv$} (3, 1);
   \draw[->, shorten=2mm, thick] (3, -1) to[bend right]
-     node[below=1mm] {multiply by $C$} (9, -1);
+     node[below=1mm] {multiply by $C$} (8, -1);
 
   \point at (0, 0);
 
-  \begin{scope}[xshift=12cm]
+  \begin{scope}[xshift=11cm]
     \draw[help lines] (-3,-3) grid (3,3);
     \node at (0, 3.5) {usual coordinates};
 
