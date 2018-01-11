@@ -185,6 +185,18 @@ window.demo = new (if is2D then Demo2D else Demo) {
             zIndex:  1
     @mathbox.select(".view-axes").set "visible", params.Axes
 
+    if @urlParams.captions == 'orthog'
+        view
+            .array
+                channels: 3
+                width:    1
+                live:     false
+                data:     [[0,0,0]]
+            .point
+                color:    "white"
+                size:     15
+                zIndex:   3
+
     ##################################################
     # labeled vectors
     lVectors = @vectors.slice()

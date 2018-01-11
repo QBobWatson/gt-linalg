@@ -58,12 +58,12 @@ the license is included in gfdl.xml.
     </p>
   </note>
 
-  <paragraphs>
+  <paragraphs xml:id="orthocomp-pictures">
     <title>Pictures of orthogonal complements</title>
     <idx><h>Orthogonal complement</h><h>pictures of</h></idx>
 
     <p>
-      The orthogonal complement of a line <m>\color{seq-blue}W</m> in <m>\R^2</m> is the perpendicular line <m>\color{seq-green}W^\perp</m>.
+      The orthogonal complement of a line <m>\color{seq-blue}W</m> through the origin in <m>\R^2</m> is the perpendicular line <m>\color{seq-green}W^\perp</m>.
       <latex-code>
     \begin{tikzpicture}[thin border nodes]
       \draw (-2,-2) rectangle (2,2);
@@ -73,6 +73,7 @@ the license is included in gfdl.xml.
       \draw[very thin]
         let \p1=($(0,0)!4mm!(-2,-3)$), \p2=($(0,0)!4mm!(3,-2)$) in
           (\p1) -- ($(\p1) + (\p2)$) -- (\p2);
+      \point at (0,0);
     \end{tikzpicture}
       </latex-code>
     </p>
@@ -142,6 +143,20 @@ the license is included in gfdl.xml.
         <mathbox source="demos/spans.html?v1=.957,0,-.287&amp;v2=0,1,0&amp;captions=orthog&amp;range=3&amp;labels=v,w" height="500px"/>
       </figure>
     </example>
+
+    <p>
+      We see in the above pictures that <m>(W^\perp)^\perp = W</m>.
+    </p>
+
+    <specialcase>
+      <p>
+        The orthogonal complement of <m>\R^n</m> is <m>\{0\}</m>, since the zero vector is the only vector that is orthogonal to all of the vectors in <m>\R^n</m>.
+      </p>
+      <p>
+        For the same reason, we have <m>\{0\}^\perp = \R^n</m>.
+      </p>
+    </specialcase>
+
   </paragraphs>
 
 
@@ -355,7 +370,15 @@ the license is included in gfdl.xml.
   </fact>
 
   <p>
-    For example, if <m>W</m> is a (<m>2</m>-dimensional) plane in <m>\R^4</m>, then the third property says that <m>W^\perp</m> is another (<m>2</m>-dimensional) plane.
+    See these <xref ref="orthocomp-pictures"/> for pictures of the second property.  As for the third: for example, if <m>W</m> is a (<m>2</m>-dimensional) plane in <m>\R^4</m>, then <m>W^\perp</m> is another (<m>2</m>-dimensional) plane.  Explicitly, we have
+    <me>
+      \begin{split}
+      \Span\bigl\{e_1,e_2\bigr\}^\perp
+      \amp= \left\{\vec{x y z w}\text{ in }\R^4\biggm|\vec{x y z w}\cdot\vec{1 0 0 0} = 0 \text{ and } \vec{x y z w}\vec{0 1 0 0} = 0\right\} \\
+      \amp= \Span\bigl\{e_3,e_4\}:
+      \end{split}
+    </me>
+    the orthogonal complement of the <m>xy</m>-plane is the <m>zw</m>-plane.
   </p>
 
   <definition>

@@ -234,6 +234,18 @@ window.demo = new (is2D ? Demo2D : Demo)({
     }
   });
   this.mathbox.select(".view-axes").set("visible", params.Axes);
+  if (this.urlParams.captions === 'orthog') {
+    view.array({
+      channels: 3,
+      width: 1,
+      live: false,
+      data: [[0, 0, 0]]
+    }).point({
+      color: "white",
+      size: 15,
+      zIndex: 3
+    });
+  }
   lVectors = this.vectors.slice();
   lColors = this.colors.slice();
   lLabels = this.labels.slice();
