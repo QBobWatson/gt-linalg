@@ -187,12 +187,12 @@ the license is included in gfdl.xml.
       The fact that the entries of the vectors <m>v_t</m> and <m>v_{t+1}</m> sum to the same number is a consequence of the fact that the columns of a stochastic matrix sum to one.
     </p>
 
-    <warning>
+    <bluebox>
       <idx><h>Stochastic matrix</h><h>sum of entries of vector</h></idx>
       <p>
         Let <m>A</m> be a stochastic matrix, let <m>v_t</m> be a vector, and let <m>v_{t+1} = Av_t</m>.  Then the sum of the entries of <m>v_t</m> equals the sum of the entries of <m>v_{t+1}</m>.
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       Computing the long-term behavior of a difference equation turns out to be an eigenvalue problem.  The eigenvalues of stochastic matrices have very special properties.
@@ -296,7 +296,7 @@ the license is included in gfdl.xml.
       The sum <m>c</m> of the entries of <m>v_0</m> is the <em>total number</em> of things in the system being modeled.  The total number does not change, so the long-term state of the system must approach <m>cw</m>: it is a multiple of <m>w</m> because it is contained in the <m>1</m>-eigenspace, and the entries of <m>cw</m> sum to <m>c</m>.
     </p>
 
-    <warning>
+    <bluebox>
       <title>Recipe 1: Compute the steady state vector</title>
       <idx><h>Stochastic matrix</h><h>steady state of</h><h>computing</h></idx>
       <p>
@@ -313,13 +313,13 @@ the license is included in gfdl.xml.
           </li>
         </ol>
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       The above Recipe is suitable for calculations by hand, but it does not take advantage of the fact that <m>A</m> is a stochastic matrix.    In practice, it is generally faster to compute a steady state vector by computer as follows:
     </p>
 
-    <warning>
+    <bluebox>
       <title>Recipe 2: Compute the steady state vector by computer</title>
       <idx><h>Stochastic matrix</h><h>steady state of</h><h>computing</h></idx>
       <p>
@@ -336,7 +336,7 @@ the license is included in gfdl.xml.
           </li>
         </ol>
       </p>
-    </warning>
+    </bluebox>
 
     <example>
       <title>A <m>2\times 2</m> stochastic matrix</title>
@@ -612,13 +612,13 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
       The above Example illustrates the key observation.
     </p>
 
-    <warning>
+    <bluebox>
       <title>Key Observation</title>
       <idx><h>Google PageRank</h><h>Importance Matrix</h><h>eigenvector of</h></idx>
       <p>
         The rank vector is an eigenvector of the importance matrix with eigenvalue one.
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       In light of the Key Observation, we would like to use the Perron<ndash/>Frobenius theorem to find the rank vector.  Unfortunately, the Importance Matrix is not always a <em>positive</em> stochastic matrix.
@@ -740,13 +740,13 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
       If we declare that the ranks of all of the pages must sum to one, then we find:
     </p>
 
-    <warning>
+    <bluebox>
       <title>The 25 Billion Dollar Eigenvector</title>
       <idx><h>Google PageRank</h><h>Google Matrix</h><h>eigenvector of</h></idx>
       <p>
         The PageRank vector is the steady state of the Google Matrix.
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       This exists and has positive entries by the Perron<ndash/>Frobenius theorem.  The hard part is calculating it: in real life, the Google Matrix has zillions of rows.

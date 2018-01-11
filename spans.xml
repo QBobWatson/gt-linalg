@@ -94,7 +94,7 @@ the license is included in gfdl.xml.
     and row reducing.  Note that <em>the columns of the augmented matrix are the vectors from the original vector equation</em>, so it is not actually necessary to write the system of equations: one can go directly from the vector equation to the augmented matrix by <q>smooshing the vectors together</q>.
     </p>
 
-    <warning>
+    <bluebox>
       <title>Recipe: Solving a vector equation</title>
       <idx><h>Vector equation</h><h>solving</h></idx>
       <p>In general, the vector equation
@@ -103,7 +103,7 @@ the license is included in gfdl.xml.
       <me>\amat[c]{| | ,{} , | |; v_1 v_2 \cdots, v_p b; | | ,{} , | |}</me>
       whose columns are the <m>v_i</m><rsq/>s and the <m>b</m><rsq/>s.
       </p>
-    </warning>
+    </bluebox>
 
     <p>Now we have (at least) <em>two</em> equivalent ways of thinking about systems of equations:
     <ol>

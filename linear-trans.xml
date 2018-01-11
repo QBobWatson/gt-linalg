@@ -129,9 +129,9 @@ the license is included in gfdl.xml.
       For example, <m>T(cu + dv) = cT(u) + dT(v)</m> for any vectors <m>u,v</m> and any scalars <m>c,d</m>.  To restate the first Fact:
     </p>
 
-    <warning xml:id="linear-trans-T0-0">
+    <bluebox xml:id="linear-trans-T0-0">
       <p>A linear transformation necessarily takes the zero vector to the zero vector.</p>
-    </warning>
+    </bluebox>
 
     <example xml:id="linear-trans-eg-T0-non0">
       <title>A non-linear transformation</title>
@@ -380,7 +380,7 @@ the license is included in gfdl.xml.
       In the next Subsection, we will present the relationship between linear transformations and matrix transformations.  Before doing so, we need the following important notation.
     </p>
 
-    <warning xml:id="defn-unit-coord-vectors" type-name="Notation">
+    <bluebox xml:id="defn-unit-coord-vectors" type-name="Notation">
       <title>Unit coordinate vectors</title>
       <idx><h>Unit coordinate vectors</h><h>definition of</h></idx>
       <p>
@@ -397,7 +397,7 @@ the license is included in gfdl.xml.
       <p>
         <em>From now on,</em> for the rest of the book, we will use the symbols <m>\color{red}e_1,e_2,\ldots</m> to denote the unit coordinate vectors.
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       There is an ambiguity in this notation: one has to know from context that <m>e_1</m> is meant to have <m>n</m> entries.  That is, the vectors
@@ -515,10 +515,10 @@ the license is included in gfdl.xml.
       The matrix <m>A</m> in the above Theorem is called the <term>standard matrix</term> for <m>T</m>.  The columns of <m>A</m> are the vectors obtained by evaluating <m>T</m> on the <m>n</m> unit coordinate vectors in <m>\R^n</m>.  To summarize part of the Theorem:
     </p>
 
-    <warning>
+    <bluebox>
       <idx><h>Linear transformation</h><h>are matrix transformations</h></idx>
       <p>Matrix transformations are the same as linear transformations.</p>
-    </warning>
+    </bluebox>
 
     <note hide-type="true">
       <title>Dictionary</title>

@@ -282,7 +282,7 @@ the license is included in gfdl.xml.
     </proof>
   </theorem>
 
-  <warning>
+  <bluebox>
     <title>Recipe: The characteristic polynomial of a <m>2\times 2</m> matrix</title>
     <idx><h>Characteristic polynomial</h><h>of a <m>2\times 2</m> matrix</h></idx>
     <p>
@@ -292,7 +292,7 @@ the license is included in gfdl.xml.
       </me>
       This is generally the fastest way to compute the characteristic polynomial of a <m>2\times 2</m> matrix.
     </p>
-  </warning>
+  </bluebox>
 
   <example>
     <statement>

@@ -99,9 +99,9 @@ the license is included in gfdl.xml.
       </p>
     </example>
 
-    <warning>
+    <bluebox>
       <p>When deciding if an augmented matrix is in (reduced) row echelon form, there is nothing special about the augmented column(s).  Just ignore the vertical line.</p>
-    </warning>
+    </bluebox>
 
     <p>If an augmented matrix is in reduced row echelon form, the corresponding linear system is viwed as <em>solved</em>.  We will see below why this is the case, and we will show that any matrix can be put into reduced row echelon form using only row operations.</p>
 
@@ -118,9 +118,9 @@ the license is included in gfdl.xml.
 
     <p>We will give an algorithm, called <term>row reduction</term> or <term>Gaussian elimination</term>, which demonstrates that every matrix is row equivalent to <em>at least one</em> matrix in reduced row echelon form.</p>
 
-    <warning>
+    <bluebox>
       <p>The uniqueness statement is interesting<mdash/>it means that, no matter <em>how</em> you row reduce, you <em>always</em> get the same matrix in reduced row echelon form.</p>
-    </warning>
+    </bluebox>
 
     <p>This assumes, of course, that you only do the three legal row operations, and you don<rsq/>t make any arithmetic errors.</p>
 
@@ -521,7 +521,7 @@ the license is included in gfdl.xml.
     </example>
 
     <theorem hide-type="true">
-      <title>The row echelon form of an inconsistent system</title>
+      <title>The Row Echelon Form of an Inconsistent System</title>
       <idx><h>System of linear equations</h><h>inconsistent</h><h>RREF criterion</h></idx>
       <p>An augmented matrix corresponds to an inconsistent system of equations if and only if the last column (i.e., the augmented column) is a <em>pivot column</em>.</p>
     </theorem>

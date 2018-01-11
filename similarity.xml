@@ -95,13 +95,13 @@ the license is included in gfdl.xml.
       As in the above Example, one can show that <m>I_n</m> is the only matrix that is similar to <m>I_n</m>, and likewise for any scalar multiple of <m>I_n</m>.
     </p>
 
-    <warning>
+    <bluebox>
       <p>
         Similarity is unrelated to row equivalence.  Any invertible matrix is row equivalent to <m>I_n</m>, but <m>I_n</m> is the only matrix similar to <m>I_n</m>.  For instance,
         <me>\mat{2 1; 0 2} \sptxt{and} \mat{1 0; 0 1}</me>
         are row equivalent but not similar.
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       As suggested by its name, similarity is what is called an <em>equivalence relation</em>.  This means that it satisfies the following properties.
@@ -236,7 +236,7 @@ the license is included in gfdl.xml.
       Since <m>C</m> is the matrix with columns <m>v_1,v_2,\ldots,v_n</m>, this says that <m>x = C[x]_\cB</m>.  Multiplying both sides by <m>C\inv</m> gives <m>[x]_\cB = C\inv x.</m>  To summarize:
     </p>
 
-    <warning>
+    <bluebox>
       <idx><h><m>\cB</m>-coordinates</h><h>change of basis matrix</h></idx>
       <p>
         Let <m>C</m> be an invertible <m>n\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_n</m>, and let <m>\cB = \{v_1,v_2,\ldots,v_n\}</m>, a basis for <m>\R^n</m>.  Then for any <m>x</m> in <m>\R^n</m>, we have
@@ -245,7 +245,7 @@ the license is included in gfdl.xml.
         </me>
         This says that <em><m>C</m> changes from the <m>\cB</m>-coordinates to the usual coordinates</em>, and <em><m>C\inv</m> changes from the usual coordinates to the <m>\cB</m>-coordinates.</em>
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       Suppose that <m>A = CBC\inv.</m>  The above observation gives us another way of computing <m>Ax</m> for a vector <m>x</m> in <m>\R^n</m>.  Recall that
@@ -253,7 +253,7 @@ the license is included in gfdl.xml.
       so that multiplying <m>CBC\inv</m> by <m>x</m> means <em>first</em> multiplying by <m>C\inv</m>, <em>then</em> by <m>B</m>, <em>then</em> by <m>C</m>.  See this <xref ref="matrix-mult-order-ops"/>.
     </p>
 
-    <warning>
+    <bluebox>
       <title>Recipe: Computing <m>Ax</m> in terms of <m>B</m></title>
       <idx><h>Similarity</h><h>action on a vector</h></idx>
     <p>
@@ -302,7 +302,7 @@ the license is included in gfdl.xml.
       <p>
         To summarize: if <m>A = CBC\inv</m>, then <m>A</m> and <m>B</m> do the same thing, only in different coordinate systems.
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       The following example is the heart of this Section.
@@ -949,13 +949,13 @@ the license is included in gfdl.xml.
       Since the eigenvalues of a matrix are the roots of its characteristic polynomial, we have shown:
     </p>
 
-    <warning>
+    <bluebox>
       <idx><h>Similarity</h><h>and eigenvalues</h></idx>
       <idx><h>Eigenvalue</h><h>of similar matrices</h></idx>
       <p>
         Similar matrices have the same eigenvalues.
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       <idx><h>Similarity</h><h>and the trace</h></idx>
@@ -1005,13 +1005,13 @@ the license is included in gfdl.xml.
       </proof>
     </theorem>
 
-    <warning>
+    <bluebox>
       <idx><h>Eigenspace</h><h>of similar matrices</h></idx>
       <idx><h>Similarity</h><h>and eigenspaces</h></idx>
       <p>
         If <m>A = CBC\inv</m>, then <m>C\inv</m> takes the <m>\lambda</m>-eigenspace of <m>A</m> to the <m>\lambda</m>-eigenspace of <m>B</m>, and <m>C</m> takes the <m>\lambda</m>-eigenspace of <m>B</m> to the <m>\lambda</m>-eigenspace of <m>A</m>.
       </p>
-    </warning>
+    </bluebox>
 
     <specialcase>
       <p>

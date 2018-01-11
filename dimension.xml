@@ -44,10 +44,10 @@ the license is included in gfdl.xml.
       Recall that a set of vectors is <em>linearly independent</em> if and only if, when you remove any vector from the set, the span shrinks (<xref ref="linindep-criterion-redundant" text="type-global"/>).  In other words, if <m>\{v_1,v_2,\ldots,v_m\}</m> is a basis of a subspace <m>V</m>, then no proper subset of <m>\{v_1,v_2,\ldots,v_m\}</m> will span <m>V</m>: it is a <em>minimal</em> spanning set.
     </p>
 
-    <warning>
+    <bluebox>
       <idx><h>Basis</h><h>infinitely many</h></idx>
       <p>A subspace generally has <em>infinitely many</em> different bases, but they all contain the same number of vectors.</p>
-    </warning>
+    </bluebox>
 
     <p>We leave it as an exercise to prove that any two bases have the same number of vectors; one might want to wait until after learning the invertible matrix theorem in <xref ref="matrix-inverses"/>.</p>
 
@@ -221,7 +221,7 @@ the license is included in gfdl.xml.
       </proof>
     </theorem>
 
-    <warning>
+    <bluebox>
       <p>
         The above Theorem is referring to the pivot columns in the <em>original</em> matrix, not its reduced row echelon form.  Indeed, a matrix and its reduced row echelon form generally have different column spaces.  For example, in the matrix <m>A</m> below:
         <latex-code>
@@ -269,7 +269,7 @@ the license is included in gfdl.xml.
         = \left\{\vec{a b 0}\Bigm|a, b \text{ in } \R\right\},</me>
         but <m>\Col(A)</m> contains vectors whose last coordinate is nonzero.
       </p>
-    </warning>
+    </bluebox>
     </paragraphs>
 
     <paragraphs>

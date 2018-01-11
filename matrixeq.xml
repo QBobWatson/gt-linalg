@@ -29,12 +29,12 @@ the license is included in gfdl.xml.
     <p>In this section we introduce a very concise way of writing a system of linear equations: <m>Ax=b</m>.  Here <m>A</m> is a matrix and <m>x,b</m> are vectors (generally of different sizes), so first we must explain how to multiply a matrix by a vector.
     </p>
 
-    <warning>
+    <bluebox>
       <p>When we say <q><m>A</m> is an <m>m\times n</m> matrix,</q> we mean that <m>A</m> has <m>m</m> rows and <m>n</m> columns.
       <idx><h>Matrix</h><h>dimensions of</h></idx>
       <notation><usage>m\times n\text{ matrix}</usage><description>Dimensions of a matrix</description></notation>
       </p>
-    </warning>
+    </bluebox>
 
     <remark>
       <p>In this book, we do <em>not</em> reserve the letters <m>m</m> and <m>n</m> for the numbers of rows and columns of a matrix.  If we write <q><m>A</m> is an <m>n\times m</m> matrix</q>, then <m>n</m> is the number of rows of <m>A</m> and <m>m</m> is the number of columns.</p>
@@ -68,10 +68,10 @@ the license is included in gfdl.xml.
     <p>In order for <m>Ax</m> to make sense, the number of entries of <m>x</m> has to be the same as the number of columns of <m>A</m>: we are using the entries of <m>x</m> as the coefficients of the columns of <m>A</m> in a linear combination.  The resulting vector has the same number of entries as the number of <em>rows</em> of <m>A</m>, since each column of <m>A</m> has that number of entries.
     </p>
 
-    <warning>
+    <bluebox>
       <p>If <m>A</m> is an <m>m\times n</m> matrix (<m>m</m> rows, <m>n</m> columns), then <m>Ax</m> makes sense when <m>x</m> has <m>n</m> entries.  The product <m>Ax</m> has <m>m</m> entries.
       </p>
-    </warning>
+    </bluebox>
 
     <p>The following properties are easy to verify.</p>
 
@@ -155,9 +155,9 @@ the license is included in gfdl.xml.
       </p>
     </note>
 
-    <warning>
+    <bluebox>
       <p>We will move back and forth freely between the four ways of writing a linear system, over and over again, for the rest of the book.</p>
-    </warning>
+    </bluebox>
 
     <paragraphs>
       <title>Another Way to Compute <m>Ax</m></title>
@@ -178,7 +178,7 @@ the license is included in gfdl.xml.
         </statement>
       </definition>
 
-      <warning xml:id="matrixeq-row-column">
+      <bluebox xml:id="matrixeq-row-column">
         <title>Recipe: The row-column rule for matrix-vector multiplication</title>
         <idx><h>Matrix-vector product</h><h>row-column rule</h></idx>
 
@@ -192,7 +192,7 @@ the license is included in gfdl.xml.
           = \vec{r_1x r_2x \vdots, r_mx}.
           </me>
         </p>
-      </warning>
+      </bluebox>
 
       <example>
         <p><me>
@@ -239,13 +239,13 @@ the license is included in gfdl.xml.
     </me>
     </p>
 
-    <warning xml:id="matrixeq-spans-consistency">
+    <bluebox xml:id="matrixeq-spans-consistency">
       <title>Spans and Consistency</title>
       <idx><h>Matrix equation</h><h>spans and consistency</h></idx>
       <idx><h>System of linear equations</h><h>consistent</h><h>span criterion</h></idx>
       <idx><h>Column span</h><see>Column space</see></idx>
       <p>The matrix equation <m>Ax=b</m> has a solution if and only if <m>b</m> is in the span of the columns of <m>A</m>.</p>
-    </warning>
+    </bluebox>
 
     <p>This gives an equivalence between an <em>algebraic</em> statement (<m>Ax=b</m> is consistent), and a <em>geometric</em> statement (<m>b</m> is in the span of the columns of <m>A</m>).
     </p>
@@ -464,10 +464,10 @@ the license is included in gfdl.xml.
       <p>Recall that <term>equivalent</term> means that, for any given matrix <m>A</m>, either <em>all</em> of the conditions of the above <xref ref="matrixeq-thm-full-span"/> are true, or they are all false.
       </p>
 
-      <warning>
+      <bluebox>
         <p>Be careful when reading the statement of the above <xref ref="matrixeq-thm-full-span"/>.  The first two conditions look very much like this <xref ref="matrixeq-spans-consistency">Note</xref>, but they are logically quite different because of the quantifier <q><em>for all</em> <m>b</m></q>.
         </p>
-      </warning>
+      </bluebox>
 
       <example hide-type="true">
         <title>Interactive: The criteria of the Theorem are satisfied</title>

@@ -106,7 +106,7 @@ the license is included in gfdl.xml.
       Since <m>x_W</m> is the closest vector on <m>W</m> to <m>x</m>, the distance from <m>x</m> to the subspace <m>W</m> is the length of the vector from <m>x_W</m> to <m>x</m>, i.e., the length of <m>x_{W^\perp}</m>.
     </p>
 
-    <warning xml:id="projections-closest-vector">
+    <bluebox xml:id="projections-closest-vector">
       <idx><h>Orthogonal projection</h><h>is the closest vector</h></idx>
       <idx><h>Orthogonal projection</h><h>distance from</h></idx>
       <p>
@@ -119,7 +119,7 @@ the license is included in gfdl.xml.
           </li>
         </ul>
       </p>
-    </warning>
+    </bluebox>
 
     <example xml:id="projections-eg-xy-plane">
       <title>Orthogonal decomposition with respect to the <m>xy</m>-plane</title>
@@ -250,7 +250,7 @@ the license is included in gfdl.xml.
 
     <p>To reiterate:</p>
 
-    <warning>
+    <bluebox>
       <title>Recipe: Orthogonal projection onto a line</title>
       <idx><h>Orthogonal projection</h><h>onto a line</h></idx>
       <idx><h>Line</h><h>orthogonal projection onto</h></idx>
@@ -263,7 +263,7 @@ the license is included in gfdl.xml.
         </me>
         for any vector <m>x</m>.
       </p>
-    </warning>
+    </bluebox>
 
     <example xml:id="projections-onto-line2">
       <title>Projection onto a line in <m>\R^2</m></title>
@@ -335,7 +335,7 @@ the license is included in gfdl.xml.
       When <m>W = \Span\{v_1,v_2,\ldots,v_m\}</m> has dimension greater than one, computing the orthogonal projection of <m>x</m> onto <m>W</m> means solving the matrix equation <m>A^TAc = A^Tx</m>, where <m>A</m> has columns <m>v_1,v_2,\ldots,v_m</m>.  In other words, it means <em>solving a system of linear equations</em>.
     </p>
 
-    <warning>
+    <bluebox>
       <title>Recipe: Compute an orthogonal decomposition</title>
       <idx><h>Orthogonal projection</h><h>computation of</h><h>row reduction</h></idx>
       <p>
@@ -355,7 +355,7 @@ the license is included in gfdl.xml.
           </li>
         </ol>
       </p>
-    </warning>
+    </bluebox>
 
     <example xml:id="projections-onto-xy-plane">
       <title>Projection onto the <m>xy</m>-plane</title>
@@ -728,7 +728,7 @@ the license is included in gfdl.xml.
       by the <xref ref="projections-ATA-formula2"/>.  In this case, we have already expressed <m>T</m> as a matrix transformation with matrix <m>A(A^TA)\inv A^T</m>.  See this <xref ref="projections-onto-plane2"/>.
     </p>
 
-    <warning>
+    <bluebox>
       <idx><h>Orthogonal projection</h><h>standard matrix of</h><h>complicated matrix formula</h></idx>
       <p>
         Let <m>W</m> be a subspace of <m>\R^n</m> with basis <m>v_1,v_2,\ldots,v_m</m>, and let <m>A</m> be the matrix with columns <m>v_1,v_2,\ldots,v_m</m>.  Then the standard matrix for <m>T(x) = x_W</m> is
@@ -736,7 +736,7 @@ the license is included in gfdl.xml.
           A(A^TA)\inv A^T.
         </me>
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       We can translate the above <xref ref="projections-properties-of">properties of orthogonal projections</xref> into properties of the associated standard matrix.

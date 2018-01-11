@@ -124,11 +124,11 @@ the license is included in gfdl.xml.
     This text is roughly half computational and half conceptual in nature.  The main goal is to present a library of linear algebra tools, and more importantly, to teach a conceptual framework for understanding which tools should be applied in a given context.
   </p>
 
-  <warning>
+  <bluebox>
     <p>
       If Matlab can find the answer faster than you can, then your question is just an algorithm: this is not real problem solving.
     </p>
-  </warning>
+  </bluebox>
 
   <p>
     The subtle part of the subject lies in understanging <em>what computation to ask the computer to do for you</em><mdash/>it is far less important to know how to perform computations that a computer can do better than you anyway.
@@ -143,14 +143,14 @@ the license is included in gfdl.xml.
     The vast majority of undergraduates at Georgia Tech have to take a course in linear algebra.  There is a reason for this:
   </p>
 
-  <warning>
+  <bluebox>
     <p>
       Large classes of engineering problems, no matter how complicated, can be reduced to linear algebra:
       <me>
         Ax=b \sptxt{or} Ax=\lambda x.
       </me>
     </p>
-  </warning>
+  </bluebox>
 
   <p>
     Here we present some sample problems in science and engineering that require linear algebra to solve.

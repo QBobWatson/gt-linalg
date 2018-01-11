@@ -378,7 +378,7 @@ the license is included in gfdl.xml.
       A matrix can always be transformed into row echelon form by a series of  row operations, and a matrix in row echelon form is upper-triangular.  Therefore, we have a systematic way of computing the determinant:
     </p>
 
-    <warning xml:id="det-defn-ref-compute" type-name="Recipe">
+    <bluebox xml:id="det-defn-ref-compute" type-name="Recipe">
       <title>Recipe: Computing determinants by row reducing</title>
       <idx><h>Determinant</h><h>computation of</h><h>row reduction</h></idx>
       <idx><h>Row reduction</h><h>computing determinants</h></idx>
@@ -391,7 +391,7 @@ the license is included in gfdl.xml.
 	  </me>
           where <m>r</m> is the number of row swaps performed.
 	</p>
-    </warning>
+    </bluebox>
 
     <p>
       In other words, the determinant of <m>A</m> is the product of diagonal entries of the row echelon form <m>B</m>, times a factor of <m>\pm1</m> coming from the number of row swaps you made, divided by the product of the scaling factors used in the row reduction.
@@ -500,11 +500,11 @@ the license is included in gfdl.xml.
       Again, the real content of the existence theorem is:
     </p>
 
-    <warning>
+    <bluebox>
       <p>
         No matter which row operations you do, you will always compute the same value for the determinant.
       </p>
-    </warning>
+    </bluebox>
 
   </subsection>
 
@@ -1187,7 +1187,7 @@ the license is included in gfdl.xml.
 
   </paragraphs>
 
-    <warning>
+    <bluebox>
       <title>Summary: Magical Properties of the Determinant</title>
       <idx><h>Determinant</h><h>properties of</h></idx>
       <p>
@@ -1215,7 +1215,7 @@ the license is included in gfdl.xml.
           </li>
         </ol>
       </p>
-    </warning>
+    </bluebox>
 
   </subsection>
 

@@ -121,11 +121,11 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       This is called a <term>linear dependence relation</term> or <term>equation of linear dependence</term>.
     </p>
 
-    <warning>
+    <bluebox>
       <p>
         Note that linear (in)dependence is a notion that applies to a <em>collection of vectors</em>, not to a single vector, or to one vector in the presence of some others.
       </p>
-    </warning>
+    </bluebox>
 
     <example>
       <title>Checking linear dependence</title>
@@ -184,7 +184,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       The above Examples lead to the following Recipe.
     </p>
 
-    <warning>
+    <bluebox>
       <title>Recipe: Checking linear (in)dependence</title>
       <idx><h>Linear Independence</h><h>verifying</h></idx>
     <p>
@@ -196,7 +196,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       <me>A = \mat{| |, , |; v_1 v_2 \cdots, v_p; | |, , |}.</me>
       This is true if and only if <m>A</m> has a pivot in every column.
     </p>
-    </warning>
+    </bluebox>
 
     <p>
       See this <xref ref="solnsets-nontrivial"/>.  To rephrase:
@@ -217,10 +217,10 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       Suppose that <m>A</m> has more columns than rows.  Then <m>A</m> cannot have a pivot in every column (it has at most one pivot per row), so its columns are automatically linearly dependent.
     </p>
 
-    <warning xml:id="linindep-wide-matrix">
+    <bluebox xml:id="linindep-wide-matrix">
       <idx><h>Linear Independence</h><h>wide matrices</h></idx>
       <p>A wide matrix has linearly dependent columns.</p>
-    </warning>
+    </bluebox>
 
       <p>For example, four vectors in <m>\R^3</m> are automatically linearly dependent.  Note that a tall matrix may or may not have linearly independent columns.</p>
 
@@ -294,9 +294,9 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       </proof>
     </theorem>
 
-    <warning type-name="Warning" xml:id="linindep-not-any"><p>
+    <bluebox type-name="Warning" xml:id="linindep-not-any"><p>
       In a linearly dependent set <m>\{v_1,v_2,\ldots,v_p\}</m>, it is not generally true that <em>any</em> vector <m>v_j</m> is in the span of the others, only that <em>at least one</em> of them is.  See this <xref ref="linindep-3d-4vecs"/> below.
-    </p></warning>
+    </p></bluebox>
 
     <theorem xml:id="linindep-criterion-redundant">
       <idx><h>Linear Independence</h><h>redundancy criterion</h></idx>
@@ -355,9 +355,9 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       </proof>
     </theorem>
 
-    <warning>
+    <bluebox>
       <p>If you make a set of vectors by adding one vector at a time, and if the span got bigger every time you added a vector, then your set is linearly independent.</p>
-    </warning>
+    </bluebox>
 
   </subsection>
 
@@ -825,7 +825,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       </p>
     </example>
 
-    <warning>
+    <bluebox>
       <title>Pivot Columns and Dimension</title>
       <p>
         Let <m>d</m> be the number of pivot columns in the matrix
@@ -837,7 +837,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
           <li>Et cetera.</li>
         </ul>
       </p>
-    </warning>
+    </bluebox>
 
   </subsection>
 

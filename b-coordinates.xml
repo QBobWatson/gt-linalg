@@ -87,12 +87,12 @@ the license is included in gfdl.xml.
     In this situation, we can say that <q><m>3</m> is the <m>v_1</m>-coordinate of <m>(3,5,-2)</m>, <m>2</m> is the <m>v_2</m>-coordinate of <m>(3,5,-2)</m>, and <m>-2</m> is the <m>v_3</m>-coordinate of <m>(3,5,-2)</m>.</q>
   </p>
 
-  <warning>
+  <bluebox>
     <idx><h><m>\cB</m>-coordinates</h><h>labeling points</h></idx>
     <p>
       The above <xref ref="dimension-defn-Bcoords"/> gives a way of using <m>\R^m</m> to <em>label</em> the points of a subspace of dimension <m>m</m>: a point is simply labeled by its <m>\cB</m>-coordinate vector.  For instance, if we choose a basis for a plane, we can label the points of that plane with the elements of <m>\R^2</m>.
     </p>
-  </warning>
+  </bluebox>
 
   <example>
     <title>A nonstandard coordinate system on <m>\R^2</m></title>
@@ -292,7 +292,7 @@ the license is included in gfdl.xml.
     </solution>
   </example>
 
-  <warning>
+  <bluebox>
     <title>Recipes: <m>\cB</m>-coordinates</title>
     <idx><h><m>\cB</m>-coordinates</h><h>computing</h><h>row reduction</h></idx>
     <p>
@@ -305,7 +305,7 @@ the license is included in gfdl.xml.
       in the unknowns <m>c_1,c_2,\ldots,c_m</m>.  This generally means row reducing the augmented matrix
       <me>\amat[c]{| | ,, | |; v_1 v_2 \cdots, v_m x; | | ,, | |}.</me>
     </p>
-  </warning>
+  </bluebox>
 
   <remark>
     <p>

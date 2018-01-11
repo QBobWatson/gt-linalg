@@ -75,11 +75,11 @@ the license is included in gfdl.xml.
       </p>
     </note>
 
-    <warning>
+    <bluebox>
       <p>
         If <m>x\cdot y = 0</m>, it does <em>not</em> follow that <m>x=0</m> or <m>y=0</m>.  For instance, <m>{1\choose 0}\cdot{0\choose 1} = 0.</m>
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       The dot product of a vector with itself is an important special case:
@@ -272,12 +272,12 @@ the license is included in gfdl.xml.
       </statement>
     </essential>
 
-    <warning>
+    <bluebox>
       <idx><h>Orthogonality</h><h>zero vector</h></idx>
       <p>
         Since <m>0 \cdot x = 0</m> for any vector <m>x</m>, the zero vector is orthogonal to every vector in <m>\R^n</m>.
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       In <m>\R^2</m>, this definition agrees with our usual notion of perpendicular vectors.  To see this, one uses the <em>law of cosines</em>.  In our language, the law of cosines asserts that if <m>x,y</m> are two nonzero vectors in <m>\R^2</m>, and if <m>\alpha</m> is the angle between them, then
@@ -309,14 +309,14 @@ the license is included in gfdl.xml.
       To reiterate:
     </p>
 
-    <warning>
+    <bluebox>
       <idx><h>Orthogonality</h><h>and the Pythagorean Theorem</h></idx>
       <p>
         <me>
           x\perp y \quad\iff\quad x\cdot y = 0 \quad\iff\quad \|y-x\|^2 = \|x\|^2 + \|y\|^2.
         </me>
       </p>
-    </warning>
+    </bluebox>
 
     <example>
       <statement>

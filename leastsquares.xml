@@ -90,13 +90,13 @@ the license is included in gfdl.xml.
 ]]></latex-code>
     </p>
 
-    <warning>
+    <bluebox>
       <idx><h>Least-squares</h><h>and <m>Ax=b_{\Col(A)}</m></h></idx>
       <idx><h>Orthogonal projection</h><h>onto a column space</h></idx>
       <p>
         A least-squares solution of <m>Ax=b</m> is a solution <m>\hat x</m> of the consistent equation <m>Ax=b_{\Col(A)}</m>.
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       Where is <m>\hat x</m> in this picture?  If <m>v_1,v_2,\ldots,v_n</m> are the columns of <m>A</m>, then
@@ -164,7 +164,7 @@ the license is included in gfdl.xml.
       In particular, finding a least-squares solution means solving a consistent system of linear equations.  We can translate the above Theorem into a recipe:
     </p>
 
-    <warning>
+    <bluebox>
       <title>Recipe 1: Compute a least-squares solution</title>
       <idx><h>Least-squares</h><h>computation of</h><h>row reduction</h></idx>
       <p>
@@ -181,7 +181,7 @@ the license is included in gfdl.xml.
           </li>
         </ol>
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       To reiterate: once you have found a least-squares solution <m>\hat x</m> of <m>Ax=b</m>, then <m>b_{\Col(A)}</m> is equal to <m>A\hat x</m>.
@@ -406,7 +406,7 @@ the license is included in gfdl.xml.
       Note that the least-squares solution is unique in this case, since <xref ref="orthosets-is-li" text="title">an orthogonal set is linearly independent</xref>.
     </p>
 
-    <warning xml:id="leastsquares-recipe2">
+    <bluebox xml:id="leastsquares-recipe2">
       <title>Recipe 2: Compute a least-squares solution</title>
       <idx><h>Least-squares</h><h>computation of</h><h>Projection Formula</h></idx>
       <idx><h>Orthogonal set</h><h>and least squares</h></idx>
@@ -420,7 +420,7 @@ the license is included in gfdl.xml.
           \right).
         </me>
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       This formula is particularly useful in the sciences, as matrices with orthogonal columns often arise in nature.

@@ -69,11 +69,11 @@ the license is included in gfdl.xml.
       </p>
     </note>
 
-    <warning>
+    <bluebox>
       <p>
         Eigenvectors are <em>by definition nonzero</em>.  Eigenvalues may be equal to zero.
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       We cannot consider the zero vector to be an eigenvector: since <m>A0 = 0 = \lambda 0</m> for <em>every</em> scalar <m>\lambda</m>, the associated eigenvalue would be undefined.
@@ -546,12 +546,12 @@ the license is included in gfdl.xml.
       As a consequence of the above <xref ref="evecs-linindep"/>, we see that:
     </p>
 
-    <warning>
+    <bluebox>
       <idx><h>Eigenvalue</h><h>maximum number of</h></idx>
       <p>
         An <m>n\times n</m> matrix <m>A</m> has at most <m>n</m> eigenvalues.
       </p>
-    </warning>
+    </bluebox>
 
   </subsection>
 
@@ -774,7 +774,7 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
-    <warning>
+    <bluebox>
       <title>Recipes: Eigenspaces</title>
       <idx><h>Eigenspace</h><h>computation</h></idx>
       <idx><h>Eigenvector</h><h>computation</h></idx>
@@ -795,7 +795,7 @@ the license is included in gfdl.xml.
           </li>
         </ol>
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       We conclude with an observation about the <m>0</m>-eigenspace of a matrix.

@@ -92,7 +92,7 @@ the license is included in gfdl.xml.
       By this <xref ref="similarity-powers"/>, if <m>A = CDC\inv</m> then <m>A^n = CD^nC\inv</m>, so it is also easy to take powers of <em>diagonalizable</em> matrices.  This will be very important in applications to difference equations in <xref ref="stochastic-matrices"/>.
     </p>
 
-    <warning xml:id="diag-powers">
+    <bluebox xml:id="diag-powers">
       <title>Recipe: Compute powers of a diagonalizable matrix</title>
       <idx><h>Diagonalizability</h><h>powers of</h></idx>
       <idx><h>Matrix multiplication</h><h>powers</h><h>and diagonalizability</h></idx>
@@ -103,7 +103,7 @@ the license is included in gfdl.xml.
           A^n = C\mat{x^n 0 0; 0 y^n 0; 0 0 z^n}C\inv.
         </me>
       </p>
-    </warning>
+    </bluebox>
 
     <example>
       <statement>
@@ -181,13 +181,13 @@ the license is included in gfdl.xml.
       By this <xref ref="evecs-linindep"/>, if an <m>n\times n</m> matrix <m>A</m> has <m>n</m> <em>distinct</em> eigenvalues <m>\lambda_1,\lambda_2,\ldots,\lambda_n</m>, then a choice of corresponding eigenvectors <m>v_1,v_2,\ldots,v_n</m> is automatically linearly independent.
     </p>
 
-    <warning>
+    <bluebox>
       <idx><h>Eigenvalue</h><h>and diagonalizability</h></idx>
       <idx><h>Diagonalizability</h><h>distinct eigenvalues</h></idx>
       <p>
         An <m>n\times n</m> matrix with <m>n</m> distinct eigenvalues is diagonalizable.
       </p>
-    </warning>
+    </bluebox>
 
     <example hide-type="true" xml:id="diag-easy-eg">
       <title>Easy Example</title>
@@ -371,7 +371,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
       Here is the procedure we used in the above Examples.
     </p>
 
-    <warning>
+    <bluebox>
       <title>Recipe: Diagonalization</title>
       <idx><h>Diagonalizability</h><h>recipe</h></idx>
       <p>
@@ -399,7 +399,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
           </li>
         </ol>
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       We will justify the linear independence assertion in part 4 in the proof of this <xref ref="diag-thm-variant"/> below.
@@ -482,14 +482,14 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
       The following point is often a source of confusion.
     </p>
 
-    <warning>
+    <bluebox>
       <title>Diagonalizability has nothing to do with invertibility</title>
       <idx><h>Diagonalizability</h><h>is unrelated to invertibility</h></idx>
       <p>
         Of the following matrices, the first is diagonalizable and invertible, the second is diagonalizable but not invertible, the third is invertible but not diagonalizable, and the fourth is neither invertible nor diagonalizable, as the reader can verify:
         <me>\mat{1 0; 0 1} \qquad \mat{1 0; 0 0} \qquad \mat{1 1; 0 1} \qquad \mat{0 1; 0 0}.</me>
       </p>
-    </warning>
+    </bluebox>
 
     <remark xml:id="diag-rem-all-nondiag">
       <title>Non-diagonalizable <m>2\times 2</m> matrices with an eigenvalue</title>
@@ -624,12 +624,12 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
       In particular, if the algebraic multiplicity of <m>\lambda</m> is equal to <m>1</m>, then so is the geometric multiplicity.
     </p>
 
-    <warning>
+    <bluebox>
       <idx><h>Algebraic multiplicity</h><h>equals one</h></idx>
       <p>
         If <m>A</m> has an eigenvalue <m>\lambda</m> with algebraic multiplicity <m>1</m>, then the <m>\lambda</m>-eigenspace is a <em>line.</em>
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       We can use the <xref ref="diag-amgm"/> to give another criterion for diagonalizability.
@@ -843,13 +843,13 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
       On the other hand, suppose that <m>A</m> and <m>B</m> are <em>diagonalizable</em> matrices with the same characteristic polynomial.  Since the geometric multiplicities of the eigenvalues coincide with the algebraic multiplicities, which are the same for <m>A</m> and <m>B</m>, we conclude that there exist <m>n</m> linearly independent eigenvectors of each matrix, all of which have the same eigenvalues.  This shows that <m>A</m> and <m>B</m> are both similar to the same diagonal matrix.  Using  the <xref ref="similarity-eq-reln" text="title">transitivity property</xref> of similar matrices, this shows:
     </p>
 
-    <warning>
+    <bluebox>
       <idx><h>Similarity</h><h>of diagonalizable matrices</h></idx>
       <idx><h>Diagonalizability</h><h>criterion for similarity</h></idx>
       <p>
         <em>Diagonalizable</em> matrices are similar if and only if they have the same characteristic polynomial, or equivalently, the same eigenvalues with the same algebraic multiplicities.
       </p>
-    </warning>
+    </bluebox>
 
     <example xml:id="diag-similarity">
       <statement>

@@ -356,11 +356,11 @@ the license is included in gfdl.xml.
     Remember, the determinant of a matrix is just a number, defined by the four <xref ref="det-defn-the-defn">defining properties</xref>, so to be clear:
   </p>
 
-  <warning>
+  <bluebox>
     <p>
       You obtain the same number by expanding cofactors along <m>any</m> row or column.
     </p>
-  </warning>
+  </bluebox>
 
   <p>
     Now that we have a recursive formula for the determinant, we can finally prove the <xref ref="det-defn-unique">existence theorem</xref>.
@@ -621,7 +621,7 @@ the license is included in gfdl.xml.
     The formula for the determinant of a <m>3\times 3</m> matrix looks too complicated to memorize outright.  Fortunately, there is the following mnemonic device.
   </p>
 
-  <warning>
+  <bluebox>
     <title>Recipe: Computing the Determinant of a <m>3\times 3</m> Matrix</title>
     <idx><h>Determinant</h><h>of a <m>3\times 3</m> matrix</h></idx>
     <p>
@@ -668,7 +668,7 @@ the license is included in gfdl.xml.
   \end{tikzpicture}
       ]]></latex-code>
     </p>
-  </warning>
+  </bluebox>
 
   <p>
     Alternatively, it is not necessary to repeat the first two columns if you allow your diagonals to <q>wrap around</q> the sides of a matrix, like in <url href="https://en.wikipedia.org/wiki/Pac-Man">Pac-Man</url> or <url href="https://en.wikipedia.org/wiki/Asteroids_(video_game)">Asteroids</url>.
@@ -825,7 +825,7 @@ the license is included in gfdl.xml.
     It is often most efficient to use a combination of several techniques when computing the determinant of a matrix.  Indeed, when expanding cofactors on a matrix, one can compute the determinants of the cofactors in whatever way is most convenient.  Or, one can perform row and column operations to clear some entries of a matrix before expanding cofactors, as in the previous example.
   </p>
 
-  <warning>
+  <bluebox>
     <title>Summary: methods for computing determinants</title>
     <idx><h>Determinant</h><h>methods of computation</h></idx>
     <p>
@@ -858,7 +858,7 @@ the license is included in gfdl.xml.
       </ol>
       Remember, <em>all methods for computing the determinant yield the same number.</em>
     </p>
-  </warning>
+  </bluebox>
 
   </subsection>
 

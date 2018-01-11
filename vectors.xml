@@ -88,10 +88,10 @@ the license is included in gfdl.xml.
           ]]>
     </latex-code></p>
 
-    <warning>
+    <bluebox>
       <p>Unless otherwise specified, we will assume that all vectors start at the origin.
       </p>
-    </warning>
+    </bluebox>
 
     <remark>
       <p>Vectors makes sense in the real world: many physical quantities, such as velocity, are represented as vectors.  But it makes more sense to think of the velocity of a car as being located at the car.</p>

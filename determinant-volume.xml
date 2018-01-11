@@ -764,11 +764,11 @@ $\quad\xrightarrow{\phantom{MMMM}}\quad$
       Since the unit cube has volume <m>1</m> and its image has volume <m>|\det(A)|</m>, the transformation <m>T</m> scaled the volume of the cube by a factor of <m>|\det(A)|</m>.  To rephrase:
     </p>
 
-    <warning>
+    <bluebox>
       <p>
         If <m>A</m> is an <m>n\times n</m> matrix with corresponding matrix transformation <m>T\colon\R^n\to\R^n</m>, and if <m>C</m> is the unit cube in <m>\R^n</m>, then the volume of <m>T(C)</m> is <m>|\det(A)|.</m>
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       <notation><usage>T(S)</usage><description>The image of a region under a transformation</description></notation>

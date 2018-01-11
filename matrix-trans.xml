@@ -770,7 +770,7 @@ the license is included in gfdl.xml.
     This is just a general linear combination of <m>v_1,v_2,\ldots,v_n</m>.  Therefore, the outputs of <m>T(x) = Ax</m> are exactly the linear combinations of the columns of <m>A</m>: the <em>range</em> of <m>T</m> is the column space of <m>A</m>.  See this <xref ref="matrixeq-spans-consistency"/>.
   </p>
 
-  <warning xml:id="matrix-trans-dictionary">
+  <bluebox xml:id="matrix-trans-dictionary">
     <idx><h>Matrix transformation</h><h>domain of</h></idx>
     <idx><h>Matrix transformation</h><h>codomain of</h></idx>
     <idx><h>Matrix transformation</h><h>range of</h></idx>
@@ -789,7 +789,7 @@ the license is included in gfdl.xml.
         </li>
       </ul>
     </p>
-  </warning>
+  </bluebox>
 
   <example hide-type="true">
     <title>Interactive: A <m>2\times 3</m> matrix: reprise</title>

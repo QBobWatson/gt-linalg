@@ -227,7 +227,7 @@ the license is included in gfdl.xml.
 </latex-code>
 </p>
 
-    <warning>
+    <bluebox>
       <title>Domain and codomain of a composition</title>
       <p>
         <ul>
@@ -236,7 +236,7 @@ the license is included in gfdl.xml.
           <li>The codomain of <m>T\circ U</m> is the codomain of <m>T</m>.</li>
         </ul>
       </p>
-    </warning>
+    </bluebox>
 
     <example>
       <title>Functions of one variable</title>
@@ -318,12 +318,12 @@ the license is included in gfdl.xml.
       In other words, both <m>S\circ (T\circ U)</m> and <m>(S\circ T)\circ U</m> are the transformation defined by first applying <m>U</m>, then <m>T</m>, then <m>S</m>.
     </p>
 
-    <warning>
+    <bluebox>
       <idx><h>Transformation</h><h>composition of</h><h>noncommutativity of</h></idx>
       <p>
         Composition of transformations is <em>not</em> commutative in general.  That is, in general, <m>T\circ U\neq U\circ T</m>, even when both compositions are defined.
       </p>
-    </warning>
+    </bluebox>
 
     <example>
       <title>Functions of one variable</title>
@@ -503,7 +503,7 @@ the license is included in gfdl.xml.
       In order for the vectors <m>Av_1,Av_2,\ldots,Av_p</m> to be defined, the numbers of rows of <m>B</m> has to equal the number of columns of <m>A</m>.
     </p>
 
-    <warning>
+    <bluebox>
       <title>Dimensions of the matrix product</title>
       <idx><h>Matrix multiplication</h><h>dimensions of</h></idx>
       <p>
@@ -518,7 +518,7 @@ the license is included in gfdl.xml.
             The product of an <m>\b m\times\r n</m> matrix and an <m>\r n\times\b p</m> matrix is an <m>\b m\times\b p</m> matrix.</li>
         </ul>
       </p>
-    </warning>
+    </bluebox>
 
     <p>
       <idx><h>Matrix multiplication</h><h>and the matrix-vector product</h></idx>
@@ -542,7 +542,7 @@ the license is included in gfdl.xml.
         The following procedure for finding the matrix product is much better adapted to computations by hand; the previous <xref ref="matrix-mult-defn-of"/> is more suitable for proving the <xref ref="matrix-mult-comp-is-prod"/> below.
       </p>
 
-      <warning xml:id="matrix-mult-row-column">
+      <bluebox xml:id="matrix-mult-row-column">
         <title>Recipe: The row-column rule for matrix multiplication</title>
         <idx><h>Matrix multiplication</h><h>row-column rule</h></idx>
         <p>
@@ -599,7 +599,7 @@ the license is included in gfdl.xml.
             ]]>
           </me>
         </p>
-      </warning>
+      </bluebox>
 
       <!-- If we don't end <paragraphs> here then the proof shows up twice... -->
     </paragraphs>
@@ -697,12 +697,12 @@ the license is included in gfdl.xml.
       The Theorem justifies our choice of definition of the matrix product.  This is the one and only reason that matrix products are defined in this way.  To rephrase:
     </p>
 
-    <warning>
+    <bluebox>
       <title>Products and compositions</title>
       <p>
         The matrix of the composition of two linear transformations is the product of the matrices of the transformations.
       </p>
-    </warning>
+    </bluebox>
 
     <example>
       <title>Composition of rotations</title>
@@ -907,7 +907,7 @@ $\xrightarrow{\text{reflect $xy$}}$
       Although matrix multiplication satisfies many of the properties one would expect, one must be careful when doing matrix arithmetic, as there are several properties that are not satisfied in general.
     </p>
 
-    <warning>
+    <bluebox>
       <title>Matrix multiplication caveats</title>
       <idx><h>Matrix multiplication</h><h>caveats</h></idx>
       <p>
@@ -926,7 +926,7 @@ $\xrightarrow{\text{reflect $xy$}}$
           </li>
         </ul>
       </p>
-    </warning>
+    </bluebox>
 
     <example hide-type="true" xml:id="matrix-mult-order-ops">
       <title>Order of Operations</title>

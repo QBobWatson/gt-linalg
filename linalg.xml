@@ -156,9 +156,7 @@ Free Documentation License"
 
     </chapter>
 
-    <!-- GFDL, Hints, Notation -->
     <xi:include href="./backmatter.xml" />
-
   </book>
 
 </mathbook>

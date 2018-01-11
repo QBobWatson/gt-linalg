@@ -134,7 +134,7 @@ the license is included in gfdl.xml.
       We saw in the previous example that it is easy to produce an orthonormal set of vectors from an orthogonal one by replacing each vector with the unit vector in the same direction.
     </p>
 
-    <warning>
+    <bluebox>
       <title>Recipe: An orthonormal set from an orthogonal set</title>
       <idx><h>Orthogonal set</h><h>making orthonormal</h></idx>
       <p>
@@ -144,7 +144,7 @@ the license is included in gfdl.xml.
         </me>
         is an orthonormal set.
       </p>
-    </warning>
+    </bluebox>
 
     <example>
       <statement>
@@ -407,7 +407,7 @@ the license is included in gfdl.xml.
       This gives us a way of expressing <m>x</m> as a linear combination of the basis vectors in <m>\cB</m>: we have computed the <m>\cB</m>-<xref ref="dimension-defn-Bcoords" text="title">coordinates</xref> of <m>x</m> without row reducing!
     </p>
 
-    <warning>
+    <bluebox>
       <title>Recipe: <m>\cB</m>-coordinates when <m>\cB</m> is an orthogonal set</title>
       <idx><h>Orthogonal set</h><h>and <m>\cB</m>-coordinates</h></idx>
       <idx><h>Orthogonal projection</h><h>and <m>\cB</m>-coordinates</h></idx>
@@ -422,7 +422,7 @@ the license is included in gfdl.xml.
           \right).
         </me>
       </p>
-    </warning>
+    </bluebox>
 
     <example>
       <title>Computing coordinates with respect to an orthogonal basis</title>
@@ -530,12 +530,12 @@ the license is included in gfdl.xml.
       </figure>
     </example>
 
-    <warning>
+    <bluebox>
       <idx><h>Orthogonal set</h><h>necessity of</h></idx>
       <p>
         You need an orthogonal basis to use the Projection Formula.
       </p>
-    </warning>
+    </bluebox>
 
   </subsection>
 
@@ -762,13 +762,13 @@ the license is included in gfdl.xml.
       </me>
     </p>
 
-    <warning>
+    <bluebox>
       <idx><h>Gram<ndash/>Schmidt Process</h><h>detecting linear dependence</h></idx>
       <idx><h>Linear independence</h><h>verifying</h><h>with Gram<ndash/>Schmidt</h></idx>
       <p>
         You can use the Gram<ndash/>Schmidt Process to produce an orthogonal basis from any spanning set: if some <m>u_i = 0</m>, just throw away <m>u_i</m> and <m>v_i</m>, and continue.
       </p>
-    </warning>
+    </bluebox>
 
   </subsection>
 

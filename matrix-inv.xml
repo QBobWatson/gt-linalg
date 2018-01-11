@@ -935,7 +935,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
      </proof>
    </theorem>
 
-   <warning>
+   <bluebox>
      <p>
        There are two kinds of <em>square</em> matrices:
        <ol>
@@ -949,7 +949,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
      <p>
        For non-invertible matrices, all of the statements of the Invertible Matrix Theorem are false.
      </p>
-   </warning>
+   </bluebox>
 
    <example>
      <statement>

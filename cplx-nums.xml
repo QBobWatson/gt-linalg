@@ -179,7 +179,7 @@ the license is included in gfdl.xml.
       A complex number <m>z</m> is real if and only if <m>z = \bar z</m>.  This leads to the following observation.
     </p>
 
-    <warning type-name="Note" xml:id="cplx-nums-root-pairs">
+    <bluebox type-name="Note" xml:id="cplx-nums-root-pairs">
       <idx><h>Polynomial</h><h>conjugate roots</h></idx>
       <p>
         If <m>f</m> is a polynomial with real coefficients, and if <m>\lambda</m> is a complex root of <m>f</m>, then so is <m>\bar\lambda</m>:
@@ -193,7 +193,7 @@ the license is included in gfdl.xml.
         </me>
         Therefore, complex roots of real polynomials come in <em>conjugate pairs</em>.
       </p>
-    </warning>
+    </bluebox>
 
     <specialcase hide-type="true">
       <title>Degree-3 Polynomials</title>

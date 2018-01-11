@@ -44,14 +44,14 @@ the license is included in gfdl.xml.
 
     <p>A homogeneous system is just a system of linear equations where all constants on the right side of the equals sign are zero.</p>
 
-    <warning>
+    <bluebox>
       <idx><h>System of linear equations</h><h>trivial solution</h></idx>
       <idx><h>System of linear equations</h><h>nontrivial solution</h></idx>
       <idx><h>System of linear equations</h><h>homogeneous</h><h>trivial solution</h></idx>
       <idx><h>Trivial solution</h><see>System of linear equations</see></idx>
       <idx><h>Nontrivial solution</h><see>System of linear equations</see></idx>
       <p>A homogeneous system always has the solution <m>x=0</m>.  This is called the <term>trivial solution</term>.  Any nonzero solution is called <term>nontrivial</term>.</p>
-    </warning>
+    </bluebox>
 
     <observation xml:id="solnsets-nontrivial">
       <idx><h>System of linear equations</h><h>nontrivial solution</h><h>and free variables</h></idx>
@@ -125,10 +125,10 @@ the license is included in gfdl.xml.
 
     <p>Since there were <em>two</em> variables in the above <xref ref="solnsets-eg-line"/>, the solution set is a subset of <m>\R^2</m>.  Since <em>one</em> of the variables was free, the solution set is a <em>line</em>.</p>
 
-    <warning>
+    <bluebox>
       <idx><h>System of linear equations</h><h>nontrivial solution</h><h>finding</h></idx>
       <p>In order to actually <em>find</em> a nontrivial solution to <m>Ax=0</m> in the above <xref ref="solnsets-eg-line"/>, it suffices to substitute any nonzero value for the free variable <m>x_2</m>.  For instance, taking <m>x_2=1</m> gives the nontrivial solution <m>x = 1\cdot{3\choose 1} = {3\choose 1}.</m></p>
-    </warning>
+    </bluebox>
 
     <example xml:id="solnsets-eg-plane">
       <title>The solution set is a plane</title>
@@ -239,7 +239,7 @@ the license is included in gfdl.xml.
 
     <p>Since there were <em>four</em> variables in the above <xref ref="solnsets-eg-R4"/>, the solution set is a subset of <m>\R^4</m>.  Since <em>two</em> of the variables were free, the solution set is a <em>plane</em>.</p>
 
-    <warning>
+    <bluebox>
       <title>Recipe: Parametric vector form (homogeneous case)</title>
       <idx><h>Parametric vector form</h><h>of a homogeneous equation</h></idx>
       <idx><h>System of linear equations</h><h>parametric vector form of</h><see>Parametric vector form</see></idx>
@@ -251,7 +251,7 @@ the license is included in gfdl.xml.
         <p>In this case, the solution set can be written
         <m>\Span\bigl\{v_i,\,v_j,\,v_k,\ldots\bigl\}.</m>
         </p>
-    </warning>
+    </bluebox>
 
     <p>
       Note that the solution set of a homogeneous equation <m>Ax=0</m> is a <em>span</em>!
@@ -403,7 +403,7 @@ the license is included in gfdl.xml.
     <p>In the previous <xref ref="solnsets-eg-plane2"/> and the <xref ref="solnsets-eg-line2"/> before it, the parametric vector form of the solution set of <m>Ax=b</m> was exactly the same as the parametric vector form of the solution set of <m>Ax=0</m> (from this <xref ref="solnsets-eg-plane"/> and this <xref ref="solnsets-eg-line"/>, respectively), plus a particular solution.
     </p>
 
-    <warning xml:id="solnsets-translate-span">
+    <bluebox xml:id="solnsets-translate-span">
       <title>Key Observation</title>
       <idx><h>Parametric vector form</h><h>particular solution</h></idx>
       <idx><h>Particular solution</h><see>Parametric vector form</see></idx>
@@ -414,7 +414,7 @@ the license is included in gfdl.xml.
       </p>
 
       <p>In particular, the solution set of <m>Ax=b</m> is either empty, or it is a <em>translate of a span</em>.</p>
-    </warning>
+    </bluebox>
 
     <p>
       <idx><h>Parametric vector form</h><h>of an inhomogeneous equation</h></idx>
@@ -476,7 +476,7 @@ the license is included in gfdl.xml.
 
     <p>See the interactive figures in the next <xref ref="solnsets-ss-and-cs"/> for visualizations of the above <xref ref="solnsets-translate-span">Observation</xref>.</p>
 
-    <warning><title>Dimension of the solution set</title>
+    <bluebox><title>Dimension of the solution set</title>
     <idx><h>Line</h><h>dimension-1 solution set</h></idx>
     <idx><h>Plane</h><h>dimension-2 solution set</h></idx>
     <idx><h>Space</h><h>dimension-3 solution set</h></idx>
@@ -485,7 +485,7 @@ the license is included in gfdl.xml.
     </p>
     <p>We will develop a rigorous definition of dimension in <xref ref="dimension"/>, but for now it is important to note that the <q>dimension</q> of the solution set of a consistent system is equal to the number of free variables.
     </p>
-    </warning>
+    </bluebox>
 
   </subsection>
 
@@ -518,7 +518,7 @@ the license is included in gfdl.xml.
     </ul>
     </p>
 
-    <warning><p>Do not confuse these two geometric constructions!</p></warning>
+    <bluebox><p>Do not confuse these two geometric constructions!</p></bluebox>
 
     <example hide-type="true">
       <title>Interactive: Solution set and column span (1)</title>

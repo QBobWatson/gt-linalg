@@ -29,6 +29,7 @@ Copyright 2017 Georgia Institute of Technology
     <type match="essential" text="phrase-hybrid"/>
     <type match="note" text="phrase-hybrid"/>
     <type match="warning" text="phrase-hybrid"/>
+    <type match="bluebox" text="phrase-hybrid"/>
     <type match="algorithm" text="phrase-hybrid"/>
     <type match="figure" text="phrase-hybrid"/>
     <type match="observation" text="phrase-hybrid"/>

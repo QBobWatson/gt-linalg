@@ -385,7 +385,7 @@ the license is included in gfdl.xml.
     To summarize:
   </p>
 
-  <warning>
+  <bluebox>
     <title>Recipes: Shortcuts for computing orthogonal complements</title>
     <idx><h>Orthogonal complement</h><h>of a span</h></idx>
     <idx><h>Span</h><h>orthogonal complement of</h></idx>
@@ -412,7 +412,7 @@ the license is included in gfdl.xml.
         \end{aligned}
       </me>
     </p>
-  </warning>
+  </bluebox>
 
   <example>
     <statement>
