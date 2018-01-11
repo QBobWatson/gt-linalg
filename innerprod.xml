@@ -21,6 +21,33 @@ the license is included in gfdl.xml.
     </ol>
   </objectives>
 
+  <introduction>
+    <p>
+      In this Chapter, it will be necessary to find the <em>closest</em> point on a subspace to a given point, like so:
+      <latex-code>
+\begin{tikzpicture}[myxyz, thin border nodes]
+  \coordinate (u) at (1,0,0);
+  \coordinate (v) at (0,1.1,-.2);
+  \coordinate (uxv) at (0,.2,1.1);
+  \coordinate (x) at ($-1.1*(u)+(v)+1.5*(uxv)$);
+  \begin{scope}[x=(u),y=(v),transformxy]
+    \fill[seq-violet!30] (-2,-2) rectangle (2,2);
+    \draw[seq-violet, help lines] (-2,-2) grid (2,2);
+  \end{scope}
+  \point[seq-blue, "closest point" {below,text=seq-blue}] (y) at ($-1.1*(u)+1*(v)$);
+  \coordinate (yu) at ($(y)+(u)$);
+  \coordinate (yv) at ($(y)+(v)$);
+  \pic[draw, right angle len=3mm] {right angle=(x)--(y)--(yu)};
+  \pic[draw, right angle len=3mm] {right angle=(x)--(y)--(yv)};
+  \point[seq-red, "$x$" {above,text=seq-red}] (xx) at (x);
+  \draw[vector, thin] (y) -- (xx);
+  \point at (0,0,0);
+\end{tikzpicture}
+      </latex-code>
+      The closest point has the property that the difference between the two points is <em>orthogonal</em>, or <em>perpendicular</em>, to the subspace.  For this reason, we need to develop robust notions of orthogonality, length, and distance.
+    </p>
+  </introduction>
+
   <subsection>
     <title>The Dot Product</title>
 
@@ -36,7 +63,7 @@ the license is included in gfdl.xml.
           The <term>dot product</term> of two vectors <m>x,y</m> in <m>\R^n</m> is
           <me>
             x\cdot y = \vec{x_1 x_2 \vdots, x_n} \cdot \vec{y_1 y_2 \vdots, y_n}
-            \;\overset{\rm def}=\; x_1y_1 + x_2y_2 + \cdots + x_ny_n.
+            \;=\; x_1y_1 + x_2y_2 + \cdots + x_ny_n.
           </me>
           Thinking of <m>x,y</m> as column vectors, this is the same as <m>x^Ty</m>.
         </p>
@@ -44,7 +71,7 @@ the license is included in gfdl.xml.
     </definition>
 
     <p>
-      The <q>def</q> above the equals sign means that the equality is a definition.  For example,
+      For example,
       <me>
         \vec{1 2 3}\cdot\vec{4 5 6} = \mat{1 2 3}\vec{4 5 6}
         = 1\cdot 4 + 2\cdot 5 + 3\cdot 6 = 32.
@@ -75,12 +102,6 @@ the license is included in gfdl.xml.
       </p>
     </note>
 
-    <bluebox>
-      <p>
-        If <m>x\cdot y = 0</m>, it does <em>not</em> follow that <m>x=0</m> or <m>y=0</m>.  For instance, <m>{1\choose 0}\cdot{0\choose 1} = 0.</m>
-      </p>
-    </bluebox>
-
     <p>
       The dot product of a vector with itself is an important special case:
       <me>
@@ -95,7 +116,7 @@ the license is included in gfdl.xml.
       This leads to a good definition of <em>length</em>.
     </p>
 
-    <definition>
+    <fact>
       <idx><h>Dot product</h><h>and length</h></idx>
       <idx><h>Vector</h><h>length of</h></idx>
       <statement>
@@ -106,10 +127,10 @@ the license is included in gfdl.xml.
           </me>
         </p>
       </statement>
-    </definition>
+    </fact>
 
     <p>
-      It is easy to see why this is a reasonable definition for vectors in <m>\R^2</m>, by the Pythagorean Theorem.
+      It is easy to see why this is true for vectors in <m>\R^2</m>, by the Pythagorean Theorem.
       <latex-code>
 \begin{tikzpicture}[scale=1,decoration={brace,raise=3pt}]
   \draw[grid lines] (0,0) grid (5,5);
@@ -125,7 +146,11 @@ the license is included in gfdl.xml.
 
 \end{tikzpicture}
       </latex-code>
-      For vectors in <m>\R^3</m>, one can check that the above definition of length agrees with the usual notion, although now this requires <em>two</em> applications of the Pythagorean theorem.
+      For vectors in <m>\R^3</m>, one can check that <m>\|x\|</m> really is the length of <m>x</m>, although now this requires <em>two</em> applications of the Pythagorean theorem.
+    </p>
+
+    <p>
+      Note that the length of a vector is the length of the <em>arrow</em>; if we think of an element of <m>\R^n</m> as a point, then its length is its distance from the origin.
     </p>
 
     <fact>
@@ -135,7 +160,7 @@ the license is included in gfdl.xml.
     </fact>
 
     <p>
-      For example,
+      This says that scaling a vector by <m>c</m> scales its length by <m>|c|</m>.  For example,
       <me>
         \left\|\vec{6 8}\right\| = \left\|2\vec{3 4}\right\|
         = 2\left\|\vec{3 4}\right\| = 10.
@@ -152,7 +177,7 @@ the license is included in gfdl.xml.
       <idx><h>Point</h><h>distance between</h></idx>
       <statement>
         <p>
-          The <term>distance</term> between two points <m>x,y</m> in <m>\R^n</m> is the length of the vector from <m>x</m> to <m>y</m>:
+          The <term>distance</term> between two points <m>x,y</m> in <m>\R^n</m> is the length of the <xref ref="vectors-diff-pts" text="title">vector from <m>x</m> to <m>y</m></xref>:
           <me>\dist(x,y) = \|y-x\|.</me>
         </p>
       </statement>
@@ -201,12 +226,12 @@ the license is included in gfdl.xml.
     <p>
       <idx><h>Unit coordinate vectors</h><h>are unit vectors</h></idx>
       <idx><h>Unit vector</h><h>unit coordinate vectors</h></idx>
-      The unit coordinate vectors are unit vectors (have length one):
+      The <xref ref="defn-unit-coord-vectors" text="title">unit coordinate vectors</xref> <m>e_1,e_2,e_3,\ldots</m> are unit vectors (have length one):
       <me>\|e_1\| = \left\|\vec{1 0 0}\right\| = \sqrt{1^2 + 0^2 + 0^2} = 1.</me>
       For any nonzero vector <m>x</m>, there is a unique unit vector pointing in the same direction.  It is obtained by dividing by the length of <m>x</m>.
     </p>
 
-    <definition xml:id="innerprod-unit-vec-dir">
+    <fact xml:id="innerprod-unit-vec-dir">
       <idx><h>Unit vector</h><h>in the direction of a vector</h></idx>
       <idx><h>Vector</h><h>unit vector in the direction of</h></idx>
       <statement>
@@ -214,10 +239,10 @@ the license is included in gfdl.xml.
           Let <m>x</m> be a nonzero vector in <m>\R^n</m>.  The <term>unit vector in the direction of <m>x</m></term> is the vector <m>x/\|x\|</m>.
         </p>
       </statement>
-    </definition>
+    </fact>
 
     <p>
-      This is in fact a unit vector (noting that <m>1/\|x\|</m> is a positive number):
+      This is in fact a unit vector (noting that <m>\|x\|</m> is a positive number, so <m>\bigl|1/\|x\|\bigr| = 1/\|x\|</m>):
       <me>
         \left\|\frac{x}{\|x\|}\right\| = \frac 1{\|x\|}\|x\| = 1.
       </me>
@@ -258,19 +283,20 @@ the license is included in gfdl.xml.
       In this section, we show how the dot product can be used to provide a robust notion of <em>orthogonality</em>, i.e., when two vectors are perpendicular to each other.
     </p>
 
-    <essential>
+    <fact type-name="Important Fact">
       <idx><h>Orthogonality</h><h>definition of</h></idx>
       <idx><h>Vector</h><h>orthogonal</h><see>Orthogonality</see></idx>
-      <notation><usage>x\perp y</usage><description><m>x</m> is orthogonal to <m>y</m></description></notation>
       <statement>
         <p>
-          Two vectors <m>x,y</m> in <m>\R^n</m> are <term>orthogonal</term> or <term>perpendicular</term> if <m>x\cdot y</m>.
-        </p>
-        <p>
-          <em>Notation:</em> <m>x\perp y</m> means <m>x\cdot y = 0</m>.
+          Two vectors <m>x,y</m> in <m>\R^n</m> are <term>orthogonal</term> or <term>perpendicular</term> if <m>x\cdot y = 0</m>.
         </p>
       </statement>
-    </essential>
+    </fact>
+
+    <p>
+      <notation><usage>x\perp y</usage><description><m>x</m> is orthogonal to <m>y</m></description></notation>
+      <alert>Notation:</alert> <m>x\perp y</m> means <m>x\cdot y = 0</m>.
+    </p>
 
     <bluebox>
       <idx><h>Orthogonality</h><h>zero vector</h></idx>
@@ -280,7 +306,7 @@ the license is included in gfdl.xml.
     </bluebox>
 
     <p>
-      In <m>\R^2</m>, this definition agrees with our usual notion of perpendicular vectors.  To see this, one uses the <em>law of cosines</em>.  In our language, the law of cosines asserts that if <m>x,y</m> are two nonzero vectors in <m>\R^2</m>, and if <m>\alpha</m> is the angle between them, then
+      We can see why the Important Fact is true using the <em>law of cosines</em>.  In our language, the law of cosines asserts that if <m>x,y</m> are two nonzero vectors, and if <m>\alpha</m> is the angle between them, then
       <me>\|y-x\|^2 = \|x\|^2 + \|y\|^2 - 2\|x\|\,\|y\|\cos\alpha.</me>
       <latex-code mode="bare">
         \usetikzlibrary{angles}
@@ -368,7 +394,7 @@ the license is included in gfdl.xml.
       <idx><h>Vector</h><h>angle between</h></idx>
       <idx><h>Dot product</h><h>and angles</h></idx>
       <p>
-        More generally, the law of cosines gives a formula for the angle <m>\alpha</m> between two nonzero vector <m>x,y</m> in <m>\R^2</m>:
+        More generally, the law of cosines gives a formula for the angle <m>\alpha</m> between two nonzero vectors:
         <me>
           \begin{split}
           2\|x\|\|y\|\cos(\alpha)
@@ -379,7 +405,6 @@ the license is included in gfdl.xml.
           \amp\quad\implies \alpha = \cos\inv\left(\frac{x\cdot y}{\|x\|\|y\|}\right).
           \end{split}
         </me>
-        Since the above formula makes sense in any dimension, we use it to <em>define</em> the angle between two vectors in <m>\R^n</m>.
       </p>
     </remark>
 

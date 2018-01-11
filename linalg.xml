@@ -143,7 +143,28 @@ Free Documentation License"
           We have now come to the third goal.
         </p>
         <p>
-          Finding approximate solutions of equations generally requires computing the closest vector on a subspace from a given vector.  This becomes an <em>orthogonality</em> problem: one needs to know which vectors are perpendicular to the subspace.  First we will define orthogonality and learn to find orthogonal complements of subspaces in <xref ref="dot-product"/> and <xref ref="orthogonal-complements"/>.  The core of this chapter is <xref ref="projections"/>, in which we discuss <em>the orthogonal projection</em> of a vector onto a subspace; this is a method of calculating the closest vector on a subspace to a given vector.  These calculations become easier in the presence of an orthogonal set, as we will see in <xref ref="orthogonal-sets"/>.  Finally in <xref ref="least-squares"/> we will present the least-squares method of approximately solving systems of equations, and we will give applications to data modeling.
+          Finding approximate solutions of equations generally requires computing the closest vector on a subspace from a given vector.  This becomes an <em>orthogonality</em> problem: one needs to know which vectors are perpendicular to the subspace.
+          <latex-code>
+\begin{tikzpicture}[myxyz, thin border nodes]
+  \coordinate (u) at (1,0,0);
+  \coordinate (v) at (0,1.1,-.2);
+  \coordinate (uxv) at (0,.2,1.1);
+  \coordinate (x) at ($-1.1*(u)+(v)+1.5*(uxv)$);
+  \begin{scope}[x=(u),y=(v),transformxy]
+    \fill[seq-violet!30] (-2,-2) rectangle (2,2);
+    \draw[seq-violet, help lines] (-2,-2) grid (2,2);
+  \end{scope}
+  \point[seq-blue, "closest point" {below,text=seq-blue}] (y) at ($-1.1*(u)+1*(v)$);
+  \coordinate (yu) at ($(y)+(u)$);
+  \coordinate (yv) at ($(y)+(v)$);
+  \pic[draw, right angle len=3mm] {right angle=(x)--(y)--(yu)};
+  \pic[draw, right angle len=3mm] {right angle=(x)--(y)--(yv)};
+  \point[seq-red, "$x$" {above,text=seq-red}] (xx) at (x);
+  \draw[vector, thin] (y) -- (xx);
+  \point at (0,0,0);
+\end{tikzpicture}
+          </latex-code>
+          First we will define orthogonality and learn to find orthogonal complements of subspaces in <xref ref="dot-product"/> and <xref ref="orthogonal-complements"/>.  The core of this chapter is <xref ref="projections"/>, in which we discuss <em>the orthogonal projection</em> of a vector onto a subspace; this is a method of calculating the closest vector on a subspace to a given vector.  These calculations become easier in the presence of an orthogonal set, as we will see in <xref ref="orthogonal-sets"/>.  Finally in <xref ref="least-squares"/> we will present the least-squares method of approximately solving systems of equations, and we will give applications to data modeling.
         </p>
       </introduction>
 

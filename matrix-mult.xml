@@ -476,9 +476,7 @@ the license is included in gfdl.xml.
           Let <m>A</m> be an <m>m\times n</m> matrix and let <m>B</m> be an <m>n\times p</m> matrix.  Denote the columns of <m>B</m> by <m>v_1,v_2,\ldots,v_p</m>:
           <me>B = \mat{| | ,, |; v_1 v_2 \cdots, v_p; | | ,, |}.</me>
           The <term>product</term> <m>AB</m> is the <m>m\times p</m> matrix with columns <m>Av_1,Av_2,\ldots,Av_p</m>:
-          <me>AB \overset{\rm def}=
-          \mat{| | ,, |; Av_1 Av_2 \cdots, Av_p; | | ,, |}.</me>
-          (The <q>def</q> above the equals sign means that the equality is a definition.)
+          <me>AB = \mat{| | ,, |; Av_1 Av_2 \cdots, Av_p; | | ,, |}.</me>
         </p>
       </statement>
     </definition>
