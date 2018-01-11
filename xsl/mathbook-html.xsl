@@ -30,6 +30,8 @@
 <xsl:param name="toc.level" select="2" />
 <!-- <xsl:param name="html.knowl.example" select="'no'" /> -->
 
+<xsl:param name="pdf.online" select="'http://people.math.gatech.edu/~jrabinoff/gt-linalg/gt-linalg.pdf'" />
+
 <!-- Mathbook Javascript header -->
 <xsl:template name="mathbook-js">
     <script src="static/js/jquery.sticky.js" ></script>
@@ -477,6 +479,21 @@
       <xsl:text>Comments, corrections or suggestions?</xsl:text>
     </xsl:element>
     <span class="feedback-link">(GT login required)</span>
+  </div>
+</xsl:template>
+
+<!-- JDR: pdf version -->
+<xsl:template name="pdf-version">
+  <div class="pdf-version">
+    <xsl:element name="a">
+      <xsl:attribute name="href">
+        <xsl:value-of select="pdf.online" />
+      </xsl:attribute>
+      <xsl:attribute name="target">
+        <xsl:text>_blank</xsl:text>
+      </xsl:attribute>
+      <xsl:text>PDF version</xsl:text>
+    </xsl:element>
   </div>
 </xsl:template>
 
