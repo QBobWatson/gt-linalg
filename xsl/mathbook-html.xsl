@@ -487,7 +487,7 @@
   <div class="pdf-version">
     <xsl:element name="a">
       <xsl:attribute name="href">
-        <xsl:value-of select="pdf.online" />
+        <xsl:value-of select="$pdf.online" />
       </xsl:attribute>
       <xsl:attribute name="target">
         <xsl:text>_blank</xsl:text>
