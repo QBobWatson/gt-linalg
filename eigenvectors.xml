@@ -81,11 +81,17 @@ the license is included in gfdl.xml.
 
     <example>
       <title>Verifying eigenvectors</title>
+      <statement>
+        <p>
+          Consider the matrix
+          <me>
+            A = \mat{2 2; -4 8} \sptxt{and vectors} v = \vec{1 1}  \qquad w = \vec{1 2}.
+          </me>
+          Which are eigenvectors?  What are their eigenvalues?
+        </p>
+      </statement>
+      <solution>
       <p>
-        Let
-        <me>
-          A = \mat{2 2; -4 8} \qquad v = \vec{1 1}  \qquad w = \vec{1 2}.
-        </me>
         We have
         <me>
           Av = \mat{2 2; -4 8}\vec{1 1} = \vec{4 4} = 4v.
@@ -112,16 +118,23 @@ the license is included in gfdl.xml.
 \end{minipage}
         </latex-code>
       </p>
+      </solution>
     </example>
 
     <example>
       <title>Verifying eigenvectors</title>
-      <p>
-        Let
-        <me>
+      <statement>
+        <p>
+          Consider the matrix
+          <me>
           A = \mat{0 6 8; \frac 12 0 0; 0 \frac 12 0}
-  \qquad v = \vec{16 4 1} \qquad w = \vec{2 2 2}.
-        </me>
+  \sptxt{and vectors} v = \vec{16 4 1} \qquad w = \vec{2 2 2}.
+          </me>
+          Which are eigenvectors?  What are their eigenvalues?
+        </p>
+      </statement>
+      <solution>
+      <p>
         We have
         <me>
           Av = \mat{0 6 8; \frac 12 0 0; 0 \frac 12 0}\vec{16 4 1}
@@ -134,6 +147,7 @@ the license is included in gfdl.xml.
         </me>
         which is not a scalar multiple of <m>w</m>.  Hence, <m>w</m> is not an eigenvector of <m>A</m>.
       </p>
+      </solution>
     </example>
 
     <example>
@@ -161,7 +175,7 @@ the license is included in gfdl.xml.
 
     <p>
       <idx><h>Eigenvector</h><h>and collinearity</h></idx>
-    To say that <m>Av=\lambda v</m> means that <m>Av</m> and <m>\lambda v</m> are <em>collinear</em>.  So, an eigenvector of <m>A</m> is a nonzero vector <m>v</m> such that <m>Av</m> and <m>v</m> lie on the same line through the origin.  In this case, <m>Av</m> is a scalar multiple of <m>v</m>; the eigenvalue is the scaling factor.
+    To say that <m>Av=\lambda v</m> means that <m>Av</m> and <m>\lambda v</m> are <em>collinear with the origin</em>.  So, an eigenvector of <m>A</m> is a nonzero vector <m>v</m> such that <m>Av</m> and <m>v</m> lie on the same line through the origin.  In this case, <m>Av</m> is a scalar multiple of <m>v</m>; the eigenvalue is the scaling factor.
     <latex-code>
 \begin{tikzpicture}[thin border nodes, baseline]
   \draw[grid lines] (-2,-2) rectangle (2,2);
@@ -211,7 +225,7 @@ the license is included in gfdl.xml.
 \end{tikzpicture}
   ]]>
           </latex-code>
-          The vector <m>\color{seq-red}u</m> is not an eigenvector, because <m>Au</m> is not collinear with <m>u</m>.
+          The vector <m>\color{seq-red}u</m> is not an eigenvector, because <m>Au</m> is not collinear with <m>u</m> and the origin.
           <latex-code><![CDATA[
 \begin{tikzpicture}[thin border nodes, scale=1, baseline]
   \draw[grid lines] (-2,-2) grid (2,2);
@@ -245,7 +259,7 @@ the license is included in gfdl.xml.
 \end{tikzpicture}
   ]]>
           </latex-code>
-          The vector <m>\color{seq2}v</m> is an eigenvector because <m>Av</m> is collinear with <m>v</m>.  The vector <m>Av</m> has the same length as <m>v</m>, but the opposite direction, so the associated eigenvalue is <m>-1</m>.
+          The vector <m>\color{seq2}v</m> is an eigenvector because <m>Av</m> is collinear with <m>v</m> and the origin.  The vector <m>Av</m> has the same length as <m>v</m>, but the opposite direction, so the associated eigenvalue is <m>-1</m>.
           <latex-code><![CDATA[
 \begin{tikzpicture}[thin border nodes, scale=1, baseline]
   \draw[grid lines] (-2,-2) grid (2,2);
@@ -262,13 +276,13 @@ the license is included in gfdl.xml.
 \end{tikzpicture}
   ]]>
           </latex-code>
-          The vector <m>\color{seq3}w</m> is an eigenvector because <m>Aw</m> is collinear with <m>w</m>: indeed, <m>Aw</m> is equal to <m>w</m>!  This means that <m>w</m> is an eigenvector with eigenvalue <m>1</m>.
+          The vector <m>\color{seq3}w</m> is an eigenvector because <m>Aw</m> is collinear with <m>w</m> and the origin: indeed, <m>Aw</m> is equal to <m>w</m>!  This means that <m>w</m> is an eigenvector with eigenvalue <m>1</m>.
         </p>
         <p>
           It appears that all eigenvectors lie either on <m>L</m>, or on the line perpendicular to <m>L</m>.  The vectors on <m>L</m> have eigenvalue <m>1</m>, and the vectors perpendicular to <m>L</m> have eigenvalue <m>-1</m>.
         </p>
         <figure>
-          <caption>An eigenvector of <m>A</m> is a vector <m>x</m> such that <m>Ax</m> is collinear with <m>x</m>.  Click and drag the head of <m>x</m> to convince yourself that all such vectors lie either on <m>L</m>, or on the line perpendicular to <m>L</m>.</caption>
+          <caption>An eigenvector of <m>A</m> is a vector <m>x</m> such that <m>Ax</m> is collinear with <m>x</m> and the origin.  Click and drag the head of <m>x</m> to convince yourself that all such vectors lie either on <m>L</m>, or on the line perpendicular to <m>L</m>.</caption>
           <mathbox source="demos/eigenspace.html?mat=0,-1:-1,0&amp;nospace" height="500px"/>
         </figure>
       </solution>
@@ -300,7 +314,7 @@ the license is included in gfdl.xml.
 \end{tikzpicture}
   ]]>
           </latex-code>
-          The vector <m>\color{seq-red}u</m> is not an eigenvector, because <m>Au</m> is not collinear with <m>u</m>.
+          The vector <m>\color{seq-red}u</m> is not an eigenvector, because <m>Au</m> is not collinear with <m>u</m> and the origin.
           <latex-code><![CDATA[
 \begin{tikzpicture}[thin border nodes, scale=1, baseline]
   \draw[grid lines] (-2,-2) grid (2,2);
@@ -332,7 +346,7 @@ the license is included in gfdl.xml.
 \end{tikzpicture}
   ]]>
           </latex-code>
-          The vector <m>\color{seq2}v</m> is an eigenvector.  Indeed, <m>Av</m> is the zero vector, which is collinear with <m>v</m>; since <m>Av = 0v</m>, the associated eigenvalue is <m>0</m>.
+          The vector <m>\color{seq2}v</m> is an eigenvector.  Indeed, <m>Av</m> is the zero vector, which is collinear with <m>v</m> and the origin; since <m>Av = 0v</m>, the associated eigenvalue is <m>0</m>.
           <latex-code><![CDATA[
 \begin{tikzpicture}[thin border nodes, scale=1, baseline]
   \draw[grid lines] (-2,-2) grid (2,2);
@@ -347,13 +361,13 @@ the license is included in gfdl.xml.
 \end{tikzpicture}
 ]]>
           </latex-code>
-          The vector <m>\color{seq3}w</m> is an eigenvector because <m>Aw</m> is collinear with <m>w</m>: indeed, <m>Aw</m> is equal to <m>w</m>!  This means that <m>w</m> is an eigenvector with eigenvalue <m>1</m>.
+          The vector <m>\color{seq3}w</m> is an eigenvector because <m>Aw</m> is collinear with <m>w</m> and the origin: indeed, <m>Aw</m> is equal to <m>w</m>!  This means that <m>w</m> is an eigenvector with eigenvalue <m>1</m>.
         </p>
         <p>
           It appears that all eigenvectors lie on the <m>x</m>-axis or the <m>y</m>-axis.  The vectors on the <m>x</m>-axis have eigenvalue <m>1</m>, and the vectors on the <m>y</m>-axis have eigenvalue <m>0</m>.
         </p>
         <figure>
-          <caption>An eigenvector of <m>A</m> is a vector <m>x</m> such that <m>Ax</m> is collinear with <m>x</m>.  Click and drag the head of <m>x</m> to convince yourself that all such vectors lie on the coordinate axes.</caption>
+          <caption>An eigenvector of <m>A</m> is a vector <m>x</m> such that <m>Ax</m> is collinear with <m>x</m> and the origin.  Click and drag the head of <m>x</m> to convince yourself that all such vectors lie on the coordinate axes.</caption>
           <mathbox source="demos/eigenspace.html?mat=1,0:0,0&amp;nospace" height="500px"/>
         </figure>
       </solution>
@@ -430,7 +444,7 @@ the license is included in gfdl.xml.
           <me>
             A\vec{x y} = \mat{1 1; 0 1}\vec{x y} = \vec{x+y y}.
           </me>
-          This tells us that a shear takes a vector and adds its <m>y</m>-coordinate to its <m>x</m>-coordinate.  Since the <m>x</m>-coordinate changes but not the <m>y</m>-coordinate, this tells us that any vector <m>v</m> with nonzero <m>y</m>-coordinate cannot be collinear with <m>Av</m>.
+          This tells us that a shear takes a vector and adds its <m>y</m>-coordinate to its <m>x</m>-coordinate.  Since the <m>x</m>-coordinate changes but not the <m>y</m>-coordinate, this tells us that any vector <m>v</m> with nonzero <m>y</m>-coordinate cannot be collinear with <m>Av</m> and the origin.
           <latex-code>
 \begin{tikzpicture}[thin border nodes, scale=1, baseline]
   \draw[grid lines] (-2,-2) grid (2,2);
@@ -460,7 +474,7 @@ the license is included in gfdl.xml.
           Accordingly, all eigenvectors of <m>A</m> lie on the <m>x</m>-axis, and have eigenvalue <m>1</m>.
         </p>
         <figure>
-          <caption>All eigenvectors of a shear lie on the <m>x</m>-axis.</caption>
+          <caption>All eigenvectors of a shear lie on the <m>x</m>-axis.  Click and drag the head of <m>x</m> to find the eigenvectors.</caption>
           <mathbox source="demos/eigenspace.html?mat=1,1:0,1&amp;nospace" height="500px"/>
         </figure>
       </solution>
@@ -491,7 +505,7 @@ the license is included in gfdl.xml.
           Therefore, this matrix <em>has no eigenvectors and eigenvalues.</em>
         </p>
         <figure>
-          <caption>This rotation matrix has no eigenvectors.</caption>
+          <caption>This rotation matrix has no eigenvectors.  Click and drag the head of <m>x</m> to find one.</caption>
           <mathbox source="demos/eigenspace.html?mat=0,-1:1,0&amp;nospace" height="500px"/>
         </figure>
       </solution>
