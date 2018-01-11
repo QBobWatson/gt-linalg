@@ -166,7 +166,7 @@ the license is included in gfdl.xml.
     </statement>
     <solution>
       <p>
-        In the above <xref ref="charpoly-eg-22"/> we computed the characteristic polynomial of <m>A</m> to be <m>f(\lambda) = -\lambda^3+3\lambda+2</m>.  We eyeball that <m>f(2) = -8 + 3\cdot 2 + 2 = 0</m>.  Thus <m>\lambda-2</m> divides <m>f(\lambda)</m>; to find the other roots, we perform <url href="https://en.wikipedia.org/wiki/Polynomial_long_division">polynomial long division</url>:
+        In the above <xref ref="charpoly-eg-33"/> we computed the characteristic polynomial of <m>A</m> to be <m>f(\lambda) = -\lambda^3+3\lambda+2</m>.  We eyeball that <m>f(2) = -8 + 3\cdot 2 + 2 = 0</m>.  Thus <m>\lambda-2</m> divides <m>f(\lambda)</m>; to find the other roots, we perform <url href="https://en.wikipedia.org/wiki/Polynomial_long_division">polynomial long division</url>:
         <me>
           \frac{-\lambda^3+3\lambda+2}{\lambda-2}
           = -\lambda^2-2\lambda-1 = -(\lambda+1)^2.
@@ -252,7 +252,7 @@ the license is included in gfdl.xml.
     <idx><h>Characteristic polynomial</h><h>form of</h></idx>
     <statement>
       <p>
-        Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>f(\lambda)=\det(A-\lambda I_n)</m> be its characteristic polynomial.  Then <m>f(\lambda)</m> is a polynomial of degree <m>n</m>, of the form
+        Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>f(\lambda)=\det(A-\lambda I_n)</m> be its characteristic polynomial.  Then <m>f(\lambda)</m> is a polynomial of degree <m>n</m>.  Moreover, <m>f(\lambda)</m> has the form
         <me>
           f(\lambda) = (-1)^n\lambda^n + (-1)^{n-1}\Tr(A)\lambda^{n-1} + \cdots + \det(A).
         </me>
@@ -324,11 +324,11 @@ the license is included in gfdl.xml.
     <idx><h>Polynomial</h><h>factoring by hand</h></idx>
 
     <p>
-      If <m>A</m> is a <m>n\times n</m> matrix, then the above <xref ref="charpoly-is-poly"/> says that the characteristic polynomial <m>f(\lambda)</m> has degree <m>n</m>.  When <m>n=2</m>, one can use the quadratic formula to find the roots of <m>f(\lambda)</m>.  There exist algebraic formulas for the roots of <url href="https://en.wikipedia.org/wiki/Cubic_function#General_solution_to_the_cubic_equation_with_real_coefficients">cubic</url> and <url href="https://en.wikipedia.org/wiki/Quartic_function#Solving_a_quartic_equation">quartic</url> polynomials, but these are generally too cumbersome to apply by hand.  Even worse, it is known that there is <url href="https://en.wikipedia.org/wiki/Abel%E2%80%93Ruffini_theorem">no algebraic formula</url> for the roots of a general polynomial of degree at least <m>5</m>.
+      If <m>A</m> is an <m>n\times n</m> matrix, then the characteristic polynomial <m>f(\lambda)</m> has degree <m>n</m> by the above <xref ref="charpoly-is-poly"/>.  When <m>n=2</m>, one can use the quadratic formula to find the roots of <m>f(\lambda)</m>.  There exist algebraic formulas for the roots of <url href="https://en.wikipedia.org/wiki/Cubic_function#General_solution_to_the_cubic_equation_with_real_coefficients">cubic</url> and <url href="https://en.wikipedia.org/wiki/Quartic_function#Solving_a_quartic_equation">quartic</url> polynomials, but these are generally too cumbersome to apply by hand.  Even worse, it is known that there is <url href="https://en.wikipedia.org/wiki/Abel%E2%80%93Ruffini_theorem">no algebraic formula</url> for the roots of a general polynomial of degree at least <m>5</m>.
     </p>
 
     <p>
-      In practice, the roots of the characteristic polynomial are found numerically by computer, for instance using <url href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton<rsq/>s method</url>.  That said, there do exist methods for finding roots by hand.  For instance, we have the following consequence of the <url href="https://en.wikipedia.org/wiki/Rational_root_theorem">rational root theorem</url> (which we also call the rational root theorem):
+      In practice, the roots of the characteristic polynomial are found <url href="https://en.wikipedia.org/wiki/Newton%27s_method">numerically by computer</url>.  That said, there do exist methods for finding roots by hand.  For instance, we have the following consequence of the <url href="https://en.wikipedia.org/wiki/Rational_root_theorem">rational root theorem</url> (which we also call the rational root theorem):
     </p>
 
     <fact type-name="Rational Root Theorem" xml:id="rational-root-thm">
@@ -343,7 +343,7 @@ the license is included in gfdl.xml.
       For example, if <m>A</m> has integer entries, then its characteristic polynomial has integer coefficients.  This gives us one way to find a root by hand, if <m>A</m> has an eigenvalue that is a rational number.  Once we have found one root, then we can reduce the degree by <url href="https://en.wikipedia.org/wiki/Polynomial_long_division">polynomial long division</url>.
     </p>
 
-    <example>
+    <example xml:id="charpoly-eg-rat-root">
       <statement>
         <p>
           Find the eigenvalues of the matrix
@@ -394,6 +394,59 @@ the license is included in gfdl.xml.
         = (2-\lambda)(\lambda^2-6\lambda+2).
       </me>
     </p>
+
+    <example xml:id="charpoly-eg-0-eval">
+      <statement>
+        <p>
+          Find the eigenvalues of the matrix
+          <me>A = \mat{7 0 3; -3 2 -3; 4 2 0}.</me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We compute the characteristic polynomial by expanding cofactors along the first row:
+          <me>
+            \begin{split}
+            f(\lambda) = \det(A - \lambda I_3)
+            \amp= \det\mat{7-\lambda, 0 3; -3 2-\lambda, -3; 4 2 -\lambda} \\
+            \amp= (7-\lambda)\bigl(-\lambda(2-\lambda)+6\bigr) + 3\bigl(-6-4(2-\lambda)\bigr) \\
+            \amp= -\lambda^3 + 9\lambda^2 - 8\lambda.
+            \end{split}
+          </me>
+          The constant term is zero, so <m>A</m> has determinant zero.  We factor out <m>\lambda</m>, then eyeball the roots of the quadratic factor:
+          <me>
+            f(\lambda) = -\lambda(\lambda^2-9\lambda+8) = -\lambda(\lambda-1)(\lambda-8).
+          </me>
+          Therefore, the eigenvalues of <m>A</m> are <m>0,1,</m> and <m>8</m>.
+        </p>
+      </solution>
+    </example>
+
+    <bluebox>
+      <title>Finding Eigenvalues of a <m>3\times 3</m> Matrix</title>
+      <p>
+        Let <m>A</m> be a <m>3\times 3</m> matrix.  Here are some strategies for factoring its characteristic polynomial <m>f(\lambda)</m>.  First, you must find one eigenvalue:
+        <ol>
+          <li>
+            Do not multiply out the characteristic polynomial if it is already partially factored!  This happens if you expand cofactors along the second column in this <xref ref="charpoly-eg-rat-root"/>.
+          </li>
+          <li>
+            If there is no constant term, you can factor out <m>\lambda</m>, as in this <xref ref="charpoly-eg-0-eval"/>.
+          </li>
+          <li>
+            If the matrix is triangular, the roots are the diagonal entries (see below).
+          </li>
+          <li>
+            Guess one eigenvalue using the <xref ref="rational-root-thm"/>: if <m>\det(A)</m> is an integer, substitute all (positive and negative) divisors of <m>\det(A)</m> into <m>f(\lambda)</m>.
+          </li>
+          <li>
+            Find an eigenvalue using the geometry of the matrix.  For instance, a <xref ref="evec-eg-reflection">reflection</xref> has eigenvalues <m>\pm 1</m>.
+          </li>
+        </ol>
+        After obtaining an eigenvalue <m>\lambda_1</m>, use <url href="https://en.wikipedia.org/wiki/Polynomial_long_division">polynomial long division</url> to compute <m>f(\lambda)/(\lambda-\lambda_1)</m>.  This is a quadratic polynomial, to which you can apply the quadratic formula to find the remaining roots.
+      </p>
+    </bluebox>
+
   </paragraphs>
 
 
@@ -446,7 +499,7 @@ the license is included in gfdl.xml.
       </statement>
       <solution>
         <p>
-          The eigenvalues are the diagonal entries <m>1,\pi,0</m>.  (The eigenvalue <m>1</m> occurs twice, but it counts as one eigenvalue; in <xref ref="diagonalization"/> we will define the notion of <em>multiplicity</em> of an eigenvalue.)
+          The eigenvalues are the diagonal entries <m>1,\pi,0</m>.  (The eigenvalue <m>1</m> occurs twice, but it counts as one eigenvalue; in <xref ref="diagonalization"/> we will define the notion of <em>algebraic multiplicity</em> of an eigenvalue.)
         </p>
       </solution>
     </example>
