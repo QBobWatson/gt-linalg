@@ -55,8 +55,6 @@ mkdir -p "$static_dir/js"
 mkdir -p "$static_dir/css"
 mkdir -p "$static_dir/fonts"
 mkdir -p "$static_dir/images"
-rm -rf "$latex_dir"
-mkdir -p "$latex_dir"
 
 compile_latex() {
     (cd "$latex_dir" && \
@@ -66,6 +64,8 @@ compile_latex() {
 }
 
 if [ -n "$LATEX_TOO" ]; then
+    rm -rf "$latex_dir"
+    mkdir -p "$latex_dir"
     cp -r "$compile_dir/style" "$latex_dir/style"
     cp -r "$compile_dir/figure-images" "$latex_dir/figure-images"
     echo "Generating master LaTeX file"
