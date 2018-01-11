@@ -30,7 +30,7 @@
 <xsl:param name="toc.level" select="2" />
 <!-- <xsl:param name="html.knowl.example" select="'no'" /> -->
 
-<xsl:param name="pdf.online" select="'http://people.math.gatech.edu/~jrabinoff/gt-linalg/gt-linalg.pdf'" />
+<xsl:param name="pdf.online" select="'gt-linalg.pdf'" />
 
 <!-- Mathbook Javascript header -->
 <xsl:template name="mathbook-js">
