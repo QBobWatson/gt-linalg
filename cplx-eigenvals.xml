@@ -31,6 +31,9 @@ the license is included in gfdl.xml.
     <p>
       In a certain sense, this entire Section is analogous to <xref ref="diagonalization"/>, with rotation-scaling matrices playing the role of diagonal matrices.
     </p>
+    <p>
+      See <xref ref="complex-numbers"/> for a review of the complex numbers.
+    </p>
   </introduction>
 
   <subsection>

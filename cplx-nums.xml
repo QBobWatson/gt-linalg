@@ -9,18 +9,18 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="complex-numbers">
+<appendix xml:id="complex-numbers">
   <title>Complex Numbers</title>
 
-  <objectives>
-    <ol>
-      <li>Become comfortable doing arithmetic with complex numbers.</li>
-      <li><em>Vocabulary words:</em> <term>imaginary number</term>, <term>complex number</term>, <term>complex conjugate</term>.</li>
-    </ol>
-  </objectives>
+  <!-- <objectives> -->
+  <!--   <ol> -->
+  <!--     <li>Become comfortable doing arithmetic with complex numbers.</li> -->
+  <!--     <li><em>Vocabulary words:</em> <term>imaginary number</term>, <term>complex number</term>, <term>complex conjugate</term>.</li> -->
+  <!--   </ol> -->
+  <!-- </objectives> -->
 
   <p>
-    In this section we give a brief review of the arithmetic and basic properties of the complex numbers.
+    In this Appendix we give a brief review of the arithmetic and basic properties of the complex numbers.
   </p>
 
     <p>
@@ -223,4 +223,4 @@ the license is included in gfdl.xml.
       </p>
     </specialcase>
 
-</section>
+  </appendix>

@@ -125,7 +125,6 @@ Free Documentation License"
       <xi:include href="./similarity.xml" />
       <xi:include href="./diagonalization.xml" />
       <xi:include href="./stochastic.xml" />
-      <xi:include href="./cplx-nums.xml" />
       <xi:include href="./cplx-eigenvals.xml" />
 
     </chapter>
