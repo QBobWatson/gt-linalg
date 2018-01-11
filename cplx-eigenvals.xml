@@ -46,7 +46,7 @@ the license is included in gfdl.xml.
       <idx><h>Eigenvalue</h><h>complex</h><see>Complex eigenvalue</see></idx>
       <idx><h>Complex eigenvalue</h><h>existence of</h></idx>
       <p>
-        Every matrix has a complex eigenvalue.
+        Every matrix has a (possibly real) complex eigenvalue.
       </p>
     </bluebox>
 
@@ -212,7 +212,7 @@ A-\frac{4+3i}5I_3 =
         \amp v_2 = \vec{-12+9i -9-12i 25}
         \end{split}
       </me>
-      In these cases, an eigenvector for the conjugate eigenvalue is simply the conjugate eigenvector.  This is always true; we leave the verification to the reader.
+      In these cases, an eigenvector for the conjugate eigenvalue is simply the \emp{conjugate eigenvector} (the eigenvector obtained by conjugating each entry of the first eigenvector).  This is always true; we leave the verification to the reader.
     </p>
 
     <bluebox>
@@ -245,14 +245,14 @@ A-\frac{4+3i}5I_3 =
           \vec{-w z}
           \text{ is an eigenvector with eigenvalue } \lambda,
         </me>
-        assuming the first row of <m>A</m> is nonzero.
+        assuming the first row of <m>A-\lambda I_2</m> is nonzero.
       </p>
     </note>
 
     <p>
-      Indeed, since <m>\lambda</m> is an eigenvalue, we know that <m>A-\lambda I_2</m> is not an invertible matrix.  It follows that the rows are collinear (otherwise the determinant is nonzero), so that the second row is automatically a multiple of the first.  Hence we can perform a row replacement
+      Indeed, since <m>\lambda</m> is an eigenvalue, we know that <m>A-\lambda I_2</m> is not an invertible matrix.  It follows that the rows are collinear (otherwise the determinant is nonzero), so that the second row is automatically a (complex) multiple of the first:
       <me>
-        \mat{z w; \star, \star} \;\xrightarrow{R_2 = R_2 - ? R_1}\; \mat{z w; 0 0}.
+        \mat{z w; \star, \star} = \mat{z w; cz cw}.
       </me>
       It is obvious that <m>{-w\choose z}</m> is in the null space of this matrix, as is <m>{w\choose -z}</m>, for that matter.  Note that we never had to compute the second row of <m>A-\lambda I_2</m>!
     </p>
@@ -286,12 +286,10 @@ A-\frac{4+3i}5I_3 =
     </example>
 
     <p>
-      In the above Example, note that
+      In this <xref ref="cplx-evals-eg22-a"/> we found the eigenvectors <m>{i\choose 1}</m> and <m>{-i\choose 1}</m> for the eigenvalues <m>1+i</m> and <m>1-i</m>, respectively, but in this <xref ref="cplx-evals-eg22-b"/> we found the eigenvectors <m>{1\choose -i}</m> and <m>{1\choose i}</m> for the same eigenvalues of the same matrix.  These vectors do not look like multiples of each other at first<mdash/>but since we now have complex numbers at our disposal, we can see that they actually are multiples:
       <me>
         -i\vec{i 1} = \vec{1 -i} \qquad i\vec{-i 1} = \vec{1 i}.
       </me>
-      It follows that the eigenvectors computed in the second <xref ref="cplx-evals-eg22-b"/>
-      are compatible with those computed in the first <xref ref="cplx-evals-eg22-a"/>: we are allowed to scale eigenvectors by <em>complex</em> numbers now.
     </p>
 
   </subsection>
@@ -1321,8 +1319,8 @@ A-\frac{4+3i}5I_3 =
       For matrices larger than <m>2\times 2</m>, there is a theorem that combines the <xref ref="diagonalization-thm"/> and the <xref ref="cplx-diagonalization-thm"/>.  It says essentially that a matrix is similar to a matrix with parts that look like a diagonal matrix, and parts that look like a rotation-scaling matrix.
     </p>
 
-    <theorem type-name="Block-Diagonalization Theorem" xml:id="block-diag-thm">
-      <idx><h>Block-Diagonalization Theorem</h></idx>
+    <theorem type-name="Block Diagonalization Theorem" xml:id="block-diag-thm">
+      <idx><h>Block Diagonalization Theorem</h></idx>
       <statement>
         <p>
           Let <m>A</m> be a real <m>n\times n</m> matrix.  Suppose that for each (real or complex) eigenvalue, the algebraic multiplicity equals the geometric multiplicity.  Then <m>A = CBC\inv</m>, where <m>B</m> and <m>C</m> are as follows:
