@@ -76,7 +76,7 @@ if [ -n "$LATEX_TOO" ]; then
     compile_latex
     echo "Compiling PDF version (pass 2)"
     compile_latex
-    mv "$latex_dir"/index.pdf "$latex_dir"/gt-linalg.pdf
+    mv "$latex_dir"/index.pdf "$build_dir"/gt-linalg.pdf
 fi
 
 echo "Copying static files..."
