@@ -59,10 +59,10 @@ rm -rf "$latex_dir"
 mkdir -p "$latex_dir"
 
 compile_latex() {
-    cd "$latex_dir" && \
-        TEXINPUTS=".:$latex_dir/style:" pdflatex \
-                 -interaction=nonstopmode "\input{index}" \
-            || die "pdflatex failed"
+    (cd "$latex_dir" && \
+            TEXINPUTS=".:$latex_dir/style:" pdflatex \
+                     -interaction=nonstopmode "\input{index}" \
+                || die "pdflatex failed")
 }
 
 if [ -n "$LATEX_TOO" ]; then
