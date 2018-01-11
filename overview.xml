@@ -338,13 +338,13 @@ the license is included in gfdl.xml.
   </p>
 
   <p>
-    This textbook is exclusively targeted at Math 1553 at Georgia Tech.  As such, it contains exactly the material that is taught in that class; no more, and no less: <em>students in Math 1553 are responsible for understanding all visible content.</em>  Some extra material (most examples and proofs, for instance) is <q>hidden,</q> in that one needs to click on a link to reveal it, like this:
+    This textbook is exclusively targeted at Math 1553 at Georgia Tech.  As such, it contains exactly the material that is taught in that class; no more, and no less: <em>students in Math 1553 are responsible for understanding all visible content.</em>  In the online version some extra material (most examples and proofs, for instance) is <q>hidden,</q> in that one needs to click on a link to reveal it, like this:
   </p>
 
   <remark hide-type="true">
     <title>Hidden Content</title>
     <p>
-      Hidden content is meant to enrich your understanding of the topic, but is not an official part of Math 1553.  That said, the text will be very hard to follow without understanding the examples, and studying the proofs is an excellent way to learn the conceptual part of the material.
+      Hidden content is meant to enrich your understanding of the topic, but is not an official part of Math 1553.  That said, the text will be very hard to follow without understanding the examples, and studying the proofs is an excellent way to learn the conceptual part of the material.  (Not applicable to the PDF version.)
     </p>
   </remark>
 
@@ -364,7 +364,7 @@ the license is included in gfdl.xml.
 <paragraphs>
   <title>Feedback</title>
   <p>
-    Every page has a link on the bottom for providing feedback.  This will take you to the GitHub Issues page for this book.  It requires a Georgia Tech login to access.
+    Every page of the online version has a link on the bottom for providing feedback.  This will take you to the GitHub Issues page for this book.  It requires a Georgia Tech login to access.
   </p>
 </paragraphs>
 
