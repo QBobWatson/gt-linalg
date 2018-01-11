@@ -237,7 +237,8 @@ the license is included in gfdl.xml.
     <p>
     </p>
 
-    <note>
+    <note hide-type="true">
+      <title>Non-Uniqueness of Diagonalization</title>
       <idx><h>Diagonalizability</h><h>order of eigenvalues</h></idx>
       <p>
         We saw in the above example that changing the order of the eigenvalues and eigenvectors produces a different diagonalization of the same matrix. There are generally many different ways to diagonalize a matrix, corresponding to different orderings of the eigenvalues of that matrix.  The important thing is that the eigenvalues and eigenvectors have to be listed in the same order.
@@ -251,6 +252,20 @@ the license is included in gfdl.xml.
           \mat{| | |; v_3 v_2 v_1; | | |}\inv.
           \end{split}
         </me>
+      </p>
+      <p>
+        There are other ways of finding different diagonalizations of the same matrix.  For instance, you can scale one of the eigenvectors by a constant <m>c</m>:
+        <me>
+          \begin{split}
+          A \amp= \mat{| | |; v_1 v_2 v_3; | | |}
+          \mat{\lambda_1 0 0; 0 \lambda_2 0; 0 0 \lambda_3}
+          \mat{| | |; v_1 v_2 v_3; | | |}\inv \\
+          \amp= \mat{| | |; cv_1 v_2 v_3; | | |}
+          \mat{\lambda_3 0 0; 0 \lambda_2 0; 0 0 \lambda_1}
+          \mat{| | |; cv_1 v_2 v_3; | | |}\inv,
+          \end{split}
+        </me>
+        you can find a different basis entirely for an eigenspace of dimension at least <m>2</m>, etc.
       </p>
     </note>
 
@@ -526,6 +541,12 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
       In this Subsection, we give a variant of the <xref ref="diagonalization-thm"/> that provides another criterion for diagonalizability.  It is stated in the language of <em>multiplicities</em> of eigenvalues.
     </p>
 
+    <p>
+      Recall that the <em>multiplicity</em> of a root <m>\lambda_0</m> of a polynomial <m>f(\lambda)</m> is equal to the number of factors of <m>\lambda-\lambda_0</m> that divide <m>f(\lambda).</m>  For instance, in the polynomial
+      <me>f(\lambda) = -\lambda^3 + 4\lambda^2 - 5\lambda + 2 = -(\lambda-1)^2(\lambda-2),</me>
+      the root <m>\lambda_0=2</m> has multiplicity <m>1</m>, and the root <m>\lambda_0=1</m> has multiplicity <m>2</m>.
+    </p>
+
     <definition>
       <idx><h>Algebraic multiplicity</h><h>definition of</h></idx>
       <idx><h>Geometric multiplicity</h><h>definition of</h></idx>
@@ -678,8 +699,14 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
     </theorem>
 
     <p>
-      The first part of the third statement simply says that the characteristic polynomial of <m>A</m> factors completely into linear polynomials over the real numbers: in other words, there are no complex (non-real) roots.  The second part of the third statement says in particular that <em>for any diagonalizable matrix, the algebraic and geometric multiplicities coincide.</em>
+      The first part of the third statement simply says that the characteristic polynomial of <m>A</m> factors completely into linear polynomials over the real numbers: in other words, there are no complex (non-real) roots.  The second part of the third statement says in particular that for any diagonalizable matrix, the algebraic and geometric multiplicities coincide.
     </p>
+
+    <bluebox>
+      <p>
+        Let <m>A</m> be a square matrix and let <m>\lambda</m> be an eigenvalue of <m>A</m>.  If the algebraic multiplicity of <m>\lambda</m> does not equal the geometric multiplicity, then <m>A</m> is not diagonalizable.
+      </p>
+    </bluebox>
 
     <p>
       The examples at the beginning of this Subsection illustrate the Theorem.  Here we give some general consequences for diagonalizability of <m>2\times 2</m> and <m>3\times 3</m> matrices.

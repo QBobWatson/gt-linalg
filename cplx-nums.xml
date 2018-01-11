@@ -99,7 +99,7 @@ the license is included in gfdl.xml.
             </me>
             The number <m>\bar{a+bi}</m> is called the <term>complex conjugate</term> of <m>a+bi</m>.  One checks that for any two complex numbers <m>z,w</m>, we have
             <me>
-              \bar{z+w} = \bar z + \bar w \sptxt{and} \bar{zw} = \bar z\bar w.
+              \bar{z+w} = \bar z + \bar w \sptxt{and} \bar{zw} = \bar z\cdot\bar w.
             </me>
             Also, <m>(a+bi)(a-bi) = a^2 + b^2</m>, so <m>z\bar z</m> is a nonnegative <em>real</em> number for any complex number <m>z</m>.
           </li>
