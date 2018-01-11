@@ -189,7 +189,7 @@ the license is included in gfdl.xml.
       A nice property enjoyed by orthogonal sets is that they are automatically linearly independent.
     </p>
 
-    <lemma type-name="Fact" xml:id="orthosets-is-li">
+    <fact xml:id="orthosets-is-li">
       <idx><h>Orthogonal set</h><h>linear independence of</h></idx>
       <idx><h>Linear independence</h><h>of an orthogonal set</h></idx>
       <idx><h>Basis</h><h>span of an orthogonal set</h></idx>
@@ -216,7 +216,7 @@ the license is included in gfdl.xml.
           because <m>u_1\cdot u_i = 0</m> for <m>i > 1</m>.  Since <m>u_1\neq 0</m> we have <m>u_1\cdot u_1\neq 0</m>, so <m>c_1 = 0</m>.  Similarly, taking the dot product with <m>u_i</m> shows that each <m>c_i = 0</m>, as desired.
         </p>
       </proof>
-    </lemma>
+    </fact>
 
     <p>
       One advantage of working with orthogonal sets is that it gives a simple formula for the <xref ref="projections-defn-of" text="title">orthogonal projection</xref> of a vector.

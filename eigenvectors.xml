@@ -501,7 +501,7 @@ the license is included in gfdl.xml.
       Here we mention one basic fact about eigenvectors.
     </p>
 
-    <theorem type-name="Fact" xml:id="evecs-linindep">
+    <fact xml:id="evecs-linindep">
       <title>Eigenvectors with distinct eigenvalues are linearly independent</title>
       <idx><h>Eigenvector</h><h>linear independence of</h></idx>
       <statement>
@@ -533,7 +533,7 @@ the license is included in gfdl.xml.
           Since <m>\lambda_i\neq\lambda_j</m> for <m>i \lt j</m>, this is an equation of linear dependence among <m>v_1,v_2,\ldots,v_{j-1}</m>, which is impossible because those vectors are linearly independent.  Therefore, <m>\{v_1,v_2,\ldots,v_k\}</m> must have been linearly independent after all.
         </p>
       </proof>
-    </theorem>
+    </fact>
 
     <p>
       When <m>k=2</m>, this says that if <m>v_1,v_2</m> are eigenvectors with eigenvalues <m>\lambda_1\neq\lambda_2</m>, then <m>v_2</m> is not a multiple of <m>v_1</m>.  In fact, any nonzero multiple <m>cv_1</m> of <m>v_1</m> is also an eigenvector with eigenvalue <m>\lambda_1</m>:
@@ -801,7 +801,7 @@ the license is included in gfdl.xml.
       We conclude with an observation about the <m>0</m>-eigenspace of a matrix.
     </p>
 
-    <theorem type-name="Fact" xml:id="evecs-eval0">
+    <fact xml:id="evecs-eval0">
       <idx><h>Eigenvalue</h><h>zero</h></idx>
       <idx><h>Eigenspace</h><h>and the null space</h></idx>
       <idx><h>Null space</h><h>is the <m>0</m>-eigenspace</h></idx>
@@ -823,7 +823,7 @@ the license is included in gfdl.xml.
           We know that <m>0</m> is an eigenvalue of <m>A</m> if and only if <m>\Nul(A - 0I_n) = \Nul(A)</m> is nonzero, which is equivalent to the noninvertibility of <m>A</m> by the <xref ref="imt-1"/>.  In this case, the <m>0</m>-eigenspace is by definition <m>\Nul(A-0I_n) = \Nul(A)</m>.
         </p>
       </proof>
-    </theorem>
+    </fact>
 
     <p>
       Concretely, an eigenvector with eigenvalue <m>0</m> is a nonzero vector <m>v</m> such that <m>Av=0v</m>, i.e., such that <m>Av = 0</m>.  These are exactly the nonzero vectors in the null space of <m>A</m>.

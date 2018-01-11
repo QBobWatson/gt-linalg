@@ -170,7 +170,7 @@ the license is included in gfdl.xml.
       We conclude with an observation about similarity and powers of matrices.
     </p>
 
-    <theorem type-name="Fact" xml:id="similarity-powers">
+    <fact xml:id="similarity-powers">
       <idx><h>Similarity</h><h>and powers</h></idx>
       <idx><h>Matrix multiplication</h><h>powers</h><h>and similarity</h></idx>
       <statement>
@@ -192,7 +192,7 @@ the license is included in gfdl.xml.
           The pattern is clear.
         </p>
       </proof>
-    </theorem>
+    </fact>
 
     <example>
       <statement>

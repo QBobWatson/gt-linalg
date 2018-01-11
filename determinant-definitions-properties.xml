@@ -839,7 +839,7 @@ the license is included in gfdl.xml.
       Like inversion, transposition reverses the order of matrix multiplication.
     </p>
 
-    <lemma xml:id="det-defn-prod-trans" type-name="Fact">
+    <fact xml:id="det-defn-prod-trans">
       <idx><h>Matrix</h><h>transpose of</h><h>and products</h></idx>
       <statement>
         <p>
@@ -890,7 +890,7 @@ the license is included in gfdl.xml.
           <em></em>               <!-- fix QED sign -->
         </p>
       </proof>
-    </lemma>
+    </fact>
 
     <proposition hide-type="true" xml:id="det-defn-trans-prop">
       <title>Transpose Property</title>

@@ -296,7 +296,7 @@ the license is included in gfdl.xml.
     In order to find shortcuts for computing orthogonal complements, we need the following basic facts.
   </p>
 
-  <theorem hide-type="true" type-name="Fact" xml:id="orthocomp-facts-basic">
+  <fact hide-type="true" xml:id="orthocomp-facts-basic">
     <title>Facts about Orthogonal Complements</title>
     <idx><h>Orthogonal complement</h><h>basic facts</h></idx>
     <idx><h>Orthogonal complement</h><h>dimension of</h></idx>
@@ -352,7 +352,7 @@ the license is included in gfdl.xml.
         Finally, we prove the second assertion.  Clearly <m>W</m> is contained in <m>(W^\perp)^\perp</m>: this says that everything in <m>W</m> is perpendicular to the set of all vectors perpendicular to everything in <m>W</m>.  Let <m>m=\dim(W).</m> By 3, we have <m>\dim(W^\perp) = n-m</m>, so <m>\dim((W^\perp)^\perp) = n - (n-m) = m</m>.  The only <m>m</m>-dimensional subspace of <m>(W^\perp)^\perp</m> is all of <m>(W^\perp)^\perp</m>, so <m>(W^\perp)^\perp = W.</m>
       </p>
     </proof>
-  </theorem>
+  </fact>
 
   <p>
     For example, if <m>W</m> is a (<m>2</m>-dimensional) plane in <m>\R^4</m>, then the third property says that <m>W^\perp</m> is another (<m>2</m>-dimensional) plane.

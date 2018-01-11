@@ -85,7 +85,7 @@ the license is included in gfdl.xml.
      </p>
    </remark>
 
-   <proposition type-name="Fact" hide-type="true" xml:id="matrix-inv-facts">
+   <fact hide-type="true" xml:id="matrix-inv-facts">
      <title>Facts about invertible matrices</title>
      <idx><h>Invertible matrix</h><h>basic facts</h></idx>
      <statement>
@@ -117,7 +117,7 @@ the license is included in gfdl.xml.
          </ol>
        </p>
      </proof>
-   </proposition>
+   </fact>
 
    <p>
      Why is the inverse of <m>AB</m> not equal to <m>A\inv B\inv</m>?  If it were, then we would have

@@ -458,7 +458,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
 \end{tikzpicture}
           ]]>
         </latex-code>
-    These three vectors <m>\{v,w,u\}</m> are linearly dependent: indeed, <m>\{v,w\}</m> is already linearly dependent, so we can use the third <xref ref="linindep-facts">Fact</xref>.
+    These three vectors <m>\{v,w,u\}</m> are linearly dependent: indeed, <m>\{v,w\}</m> is already linearly dependent, so we can use the third <xref ref="linindep-facts"/>.
     <latex-code>
           <![CDATA[
 \begin{tikzpicture}[scale=1.5, thin border nodes]

@@ -25,7 +25,7 @@ the license is included in gfdl.xml.
     In this Section, we interpret a basis of a subspace <m>V</m> as a <em>coordinate system</em> on <m>V</m>, and we learn how to write a vector in <m>V</m> in that coordinate system.
   </p>
 
-  <lemma xml:id="dimension-unique-coeff" type-name="Fact">
+  <fact xml:id="dimension-unique-coeff">
     <idx><h>Basis</h><h>uniqueness with respect to</h></idx>
     <idx><h>Basis</h><h>coordinates with respect to</h><see><m>\cB</m>-coordinates</see></idx>
     <statement>
@@ -47,7 +47,7 @@ the license is included in gfdl.xml.
         Since <m>\cB</m> is linearly independent, the only solution to the above equation is the trivial solution: all the coefficients must be zero.  It follows that <m>c_i-c_i'</m> for all <m>i</m>, which proves that <m>c_1=c_1',\,c_2=c_2',\ldots,\,c_m=c_m'</m>.
       </p>
     </proof>
-  </lemma>
+  </fact>
 
   <specialcase>
     <p>

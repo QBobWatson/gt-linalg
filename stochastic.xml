@@ -198,7 +198,7 @@ the license is included in gfdl.xml.
       Computing the long-term behavior of a difference equation turns out to be an eigenvalue problem.  The eigenvalues of stochastic matrices have very special properties.
     </p>
 
-    <theorem type-name="Fact">
+    <fact>
       <idx><h>Stochastic matrix</h><h>eigenvalues of</h></idx>
       <idx><h>Eigenvalue</h><h>and stochastic matrices</h></idx>
       <statement>
@@ -240,7 +240,7 @@ the license is included in gfdl.xml.
           where the last equality holds because <m>\sum_{i=1}^n a_{ij}=1</m>.  This implies <m>|\lambda|\leq 1.</m>
         </p>
       </proof>
-    </theorem>
+    </fact>
 
     <p>
       In fact, for a <em>positive</em> stochastic matrix <m>A</m>, one can show that if <m>\lambda\neq 1</m> is a (real or complex) eigenvalue of <m>A</m>, then <m>|\lambda|\lt 1.</m>  The <m>1</m>-eigenspace of a stochastic matrix is very important.
