@@ -172,7 +172,7 @@ Free Documentation License"
         </p>
 
         <p>
-          In <xref ref="eigenvectors"/>, we will define eigenvalues and eigenvectors, and show how to compute the latter; in <xref ref="characteristic-polynomial"/> we will learn to compute the former.  In <xref ref="similarity"/> we introduce the notion of <em>similar</em> matrices, and demonstrate that similar matrices do indeed behave similarly.  In <xref ref="diagonalization"/> we study matrices that are similar to diagonal matrices and in <xref ref="complex-eigenvalues"/> we study matrices that are similar to rotation-scaling matrices, thus gaining a solid geometric understanding of large classes of matrices.  We also spend <xref ref="stochastic-matrices"/> presenting a common kind of application of eigenvalues and eigenvectors to real-world problems, including searching the Internet using Google<rsq/>s PageRank algorithm.
+          In <xref ref="eigenvectors"/>, we will define eigenvalues and eigenvectors, and show how to compute the latter; in <xref ref="characteristic-polynomial"/> we will learn to compute the former.  In <xref ref="similarity"/> we introduce the notion of <em>similar</em> matrices, and demonstrate that similar matrices do indeed behave similarly.  In <xref ref="diagonalization"/> we study matrices that are similar to diagonal matrices and in <xref ref="complex-eigenvalues"/> we study matrices that are similar to rotation-scaling matrices, thus gaining a solid geometric understanding of large classes of matrices.  Finally, we spend <xref ref="stochastic-matrices"/> presenting a common kind of application of eigenvalues and eigenvectors to real-world problems, including searching the Internet using Google<rsq/>s PageRank algorithm.
         </p>
       </introduction>
 
@@ -180,8 +180,8 @@ Free Documentation License"
       <xi:include href="./charpoly.xml" />
       <xi:include href="./similarity.xml" />
       <xi:include href="./diagonalization.xml" />
-      <xi:include href="./stochastic.xml" />
       <xi:include href="./cplx-eigenvals.xml" />
+      <xi:include href="./stochastic.xml" />
 
     </chapter>
 

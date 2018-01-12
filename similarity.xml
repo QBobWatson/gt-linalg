@@ -24,24 +24,38 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      Some matrices are easy to understand.  For instance, a diagonal matrix just scales the coordinates of a vector:
+      Some matrices are easy to understand.  For instance, a diagonal matrix
       <me>
-        \mat{3 0; 0 -2}\vec{x y} = \vec{3x -2y}
+        D = \mat{2 0 ; 0 /12}
+      </me>
+      just scales the coordinates of a vector:
+      <me>
+        \mat{2 0; 0 1/2}\vec{x y} = \vec{2x 1/2y}
         \sptxt{or}
-        \mat{3 0; 0 -2}(xe_1 + ye_2) = 3xe_1 - 2ye_2.
+        \mat{2 0; 0 1/2}(xe_1 + ye_2) = 2xe_1 - \frac 12ye_2.
       </me>
       The purpose of most of the rest of this chapter is to understand complicated-looking matrices by analyzing to what extent they <q>behave like</q> simple matrices.  For instance, the matrix
       <me>
-        A = \mat{-12 15; -10 13}
+        A = \frac 1{10}\mat{11 6; 9 14}
       </me>
-      has eigenvalues <m>3,-2</m>, with corresponding eigenvectors <m>v_1 = {-2\choose 1}</m> and <m>v_2 = {3\choose -1}</m>.  Notice that
+      has eigenvalues <m>2</m> and <m>1/2</m>, with corresponding eigenvectors <m>v_1 = {2/3\choose 1}</m> and <m>v_2 = {-1\choose 1}</m>.  Notice that
       <me>
-        A(xv_1 + yv_2) = xAv_1 + yAv_2 = 3xv_1 - 2yv_2.
+        A(xv_1 + yv_2) = xAv_1 + yAv_2 = 2xv_1 - \frac 12yv_2.
       </me>
       Using <m>v_1,v_2</m> instead of the usual coordinates makes <m>A</m> <q>behave</q> like a diagonal matrix.
     </p>
+
+    <figure>
+      <caption>The matrices <m>A</m> and <m>D</m> behave similarly.  Click <q>iterate</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.  (We will see in <xref ref="diagonalization"/> why the points follow hyperbolic paths.)</caption>
+      <mathbox source="demos/similarity.html?C=2/3,-1:1,1&amp;B=2,0:0,1/2&amp;BName=D&amp;dynamics=on" height="600px"/>
+    </figure>
+
     <p>
-      In this section, we study in detail the situation when two matrices behave similarly with respect to different coordinate systems.
+      The other case of particular importance will be matrices that <q>behave</q> like a rotation matrix: indeed, this will be crucial for understanding <xref ref="complex-eigenvalues"/> geometrically.  See this <xref ref="similarity-to-rotation"/>.
+    </p>
+
+    <p>
+      In this section, we study in detail the situation when two matrices behave similarly with respect to different coordinate systems.  In <xref ref="diagonalization"/> and <xref ref="complex-eigenvalues"/>, we will show how to use eigenvalues and eigenvectors to find a simpler matrix that behaves like a given matrix.
     </p>
   </introduction>
 
@@ -870,9 +884,9 @@ the license is included in gfdl.xml.
   \draw[->, shorten=2mm, thick] (3, 1) to[bend left, "$B$" above=.5mm] (6, 1);
   \draw[->, shorten=2mm, thick, yshift=-9cm]
     (3, -1) to[bend right, "$A'$" above=.5mm] (6, -1);
-  \draw[->, shorten=2mm, thick] (-1, -6) to[bend left, "$(C')\inv$" right=.5mm] (-1, -3);
+  \draw[->, shorten=2mm, thick] (-1, -6) to[bend left, "$C\inv$" right=.5mm] (-1, -3);
   \draw[->, shorten=2mm, thick, xshift=9cm]
-    (1, -3) to[bend left, "$C'$" left=.5mm] (1, -6);
+    (1, -3) to[bend left, "$C$" left=.5mm] (1, -6);
 
 \end{tikzpicture}
         </latex-code>
@@ -882,6 +896,95 @@ the license is included in gfdl.xml.
         <mathbox source="demos/similarity.html?B=0,-1:1,0&amp;C=2,-1/2:1,1/2&amp;snap=off" height="600px"/>
       </figure>
     </example>
+
+    <p>
+      To summarize and generalize the previous example:
+    </p>
+
+    <bluebox xml:id="similarity-to-rotation">
+      <title>A Matrix Similar to a Rotation Matrix</title>
+      <p>
+        Let
+        <me>
+          B = \mat{\cos\theta,-\sin\theta; \sin\theta,\cos\theta}
+          \qquad
+          C = \mat{| |; v_1 v_2; | |}
+          \qquad
+          A = CBC\inv,
+        </me>
+        where <m>C</m> is assumed invertible.  Then:
+        <ul>
+          <li>
+            <m>B</m> rotates the plane by an angle of <m>\theta</m> around the circle centered at the origin and passing through <m>e_1</m> and <m>e_2</m>, in the direction from <m>e_1</m> to <m>e_2</m>.
+          </li>
+          <li>
+            <m>A</m> rotates the plane by an angle of <m>\theta</m> around the ellipse centered at the origin and passing through <m>v_1</m> and <m>v_2</m>, in the direction from <m>v_1</m> to <m>v_2</m>.
+          </li>
+        </ul>
+        <latex-code>
+\def\theo{\includegraphics[width=6cm]{theo10.jpg}}
+
+\begin{tikzpicture}[scale=.75, thin border nodes]
+
+  \node[transform shape] at (0, 0) {\theo};
+  \draw[seq-yellow, opacity=.5] (0,0) circle[radius=1];
+  \draw[seq-violet, opacity=1, vector] (0,0) -- (1,0) node[right] {$e_1$};
+  \draw[seq-blue,   opacity=1, vector] (0,0) -- (0,1) node[above] {$e_2$};
+
+  \point at (0, 0);
+
+  \begin{scope}[xshift=9cm, rotate=90]
+    \clip (-3, -3) rectangle (3, 3);
+
+    \node[transform shape] at (0, 0) {\theo};
+
+    \draw[seq-yellow, opacity=.5] (0,0) circle[radius=1];
+    \draw[seq-violet, opacity=1, vector] (0,0) -- (1, 0) node[right] {$Be_1$};
+    \draw[seq-blue,   opacity=1, vector] (0,0) -- (0, 1) node[below] {$Be_2$};
+
+    \point at (0, 0);
+  \end{scope}
+
+  \begin{scope}[yshift=-9cm]
+    \clip (-3, -3) rectangle (3, 3);
+    \begin{scope}[cm={(2,1,-1/2,1/2,(0,0))}]
+      \node[transform shape] at (0, 0) {\theo};
+      \draw[seq-yellow, opacity=.5] (0,0) circle[radius=1];
+      \draw[seq-violet, opacity=1, vector] (0,0) -- (1,0) node[above] {$v_1$};
+      \draw[seq-blue,   opacity=1, vector] (0,0) -- (0,1) node[left] {$v_2$};
+    \end{scope}
+    \point at (0, 0);
+
+  \end{scope}
+
+  \begin{scope}[yshift=-9cm, xshift=9cm]
+    \clip (-3, -3) rectangle (3, 3);
+    \begin{scope}[cm={(2,1,-1/2,1/2,(0,0))}, rotate=90]
+      \node[transform shape] at (0, 0) {\theo};
+      \draw[seq-yellow, opacity=.5] (0,0) circle[radius=1];
+      \draw[seq-violet, opacity=1, vector] (0,0) -- (1,0) node[above] {$Av_1$};
+      \draw[seq-blue,   opacity=1, vector] (0,0) -- (0,1) node[below] {$Av_2$};
+    \end{scope}
+    \point at (0, 0);
+
+  \end{scope}
+
+  \draw (-3, -3) rectangle (3, 3);
+  \draw[xshift=9cm] (-3, -3) rectangle (3, 3);
+  \draw[yshift=-9cm] (-3, -3) rectangle (3, 3);
+  \draw[xshift=9cm, yshift=-9cm] (-3, -3) rectangle (3, 3);
+
+  \draw[->, shorten=2mm, thick] (3, 1) to[bend left, "$B$" above=.5mm] (6, 1);
+  \draw[->, shorten=2mm, thick, yshift=-9cm]
+    (3, -1) to[bend right, "$A'$" above=.5mm] (6, -1);
+  \draw[->, shorten=2mm, thick] (-1, -6) to[bend left, "$C\inv$" right=.5mm] (-1, -3);
+  \draw[->, shorten=2mm, thick, xshift=9cm]
+    (1, -3) to[bend left, "$C$" left=.5mm] (1, -6);
+
+\end{tikzpicture}
+        </latex-code>
+      </p>
+    </bluebox>
 
     <example hide-type="true" xml:id="similarity-33-eg">
       <title>Interactive: Similar <m>3\times 3</m> matrices</title>

@@ -724,6 +724,10 @@ A-\frac{4+3i}5I_3 =
       <me>
         B = \mat{a -b; b a} \sptxt{with} a = \Re(\lambda),\; b = -\Im(\lambda).
       </me>
+      Geometrically, the rotation-scaling theorem says that a <m>2\times 2</m> matrix with a complex eigenvalue behaves similarly to a rotation-scaling matrix.  See this <xref ref="similarity-to-rotation"/>.
+    </p>
+
+    <p>
       One should regard the <xref ref="cplx-diagonalization-thm"/> as a close analogue of the <xref ref="diagonalization-thm"/>, with a rotation-scaling matrix playing the role of a diagonal matrix.  Before continuing, we restate the theorem as a recipe:
     </p>
 
