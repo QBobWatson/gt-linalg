@@ -22,7 +22,7 @@ the license is included in gfdl.xml.
   </objectives>
 
   <p>
-    In <xref ref="eigenvectors"/> we discussed how to decide whether a given number <m>\lambda</m> is an eigenvalue of a matrix, and if so, how to find all of the associated eigenvectors.  In this Section, we will give a method for computing all of the <em>eigenvalues</em> of a matrix.  This does not reduce to solving a system of linear equations: indeed, it requires solving a <em>nonlinear</em> equation in one variable, namely, finding the roots of the characteristic polynomial.
+    In <xref ref="eigenvectors"/> we discussed how to decide whether a given number <m>\lambda</m> is an eigenvalue of a matrix, and if so, how to find all of the associated eigenvectors.  In this section, we will give a method for computing all of the <em>eigenvalues</em> of a matrix.  This does not reduce to solving a system of linear equations: indeed, it requires solving a <em>nonlinear</em> equation in one variable, namely, finding the roots of the characteristic polynomial.
   </p>
 
   <definition>
@@ -384,7 +384,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      In the above Example, we could have expanded cofactors along the second column to obtain
+      In the above example, we could have expanded cofactors along the second column to obtain
       <me>
         f(\lambda) = (2-\lambda)\det\mat{7-\lambda, 3; -3 -1-\lambda}.
       </me>
@@ -440,7 +440,7 @@ the license is included in gfdl.xml.
             Guess one eigenvalue using the <xref ref="rational-root-thm"/>: if <m>\det(A)</m> is an integer, substitute all (positive and negative) divisors of <m>\det(A)</m> into <m>f(\lambda)</m>.
           </li>
           <li>
-            Find an eigenvalue using the geometry of the matrix.  For instance, a <xref ref="evec-eg-reflection">reflection</xref> has eigenvalues <m>\pm 1</m>.
+            Find an eigenvalue using the geometry of the matrix.  For instance, a <xref ref="evec-eg-reflection" text="title">reflection</xref> has eigenvalues <m>\pm 1</m>.
           </li>
         </ol>
         After obtaining an eigenvalue <m>\lambda_1</m>, use <url href="https://en.wikipedia.org/wiki/Polynomial_long_division">polynomial long division</url> to compute <m>f(\lambda)/(\lambda-\lambda_1)</m>.  This is a quadratic polynomial, to which you can apply the quadratic formula to find the remaining roots.

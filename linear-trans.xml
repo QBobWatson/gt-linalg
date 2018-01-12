@@ -125,8 +125,8 @@ the license is included in gfdl.xml.
 
     <p>
       <idx><h>Superposition principle</h></idx>
-      In engineering, the second Fact is called the <em>superposition principle</em>.
-      For example, <m>T(cu + dv) = cT(u) + dT(v)</m> for any vectors <m>u,v</m> and any scalars <m>c,d</m>.  To restate the first Fact:
+      In engineering, the second fact is called the <em>superposition principle</em>.
+      For example, <m>T(cu + dv) = cT(u) + dT(v)</m> for any vectors <m>u,v</m> and any scalars <m>c,d</m>.  To restate the first fact:
     </p>
 
     <bluebox xml:id="linear-trans-T0-0">
@@ -308,7 +308,7 @@ the license is included in gfdl.xml.
 
     <p>
       <idx><h>Linear transformation</h><h>when defined by a formula</h></idx>
-      One can show that, if a transformation is defined by formulas in the coordinates as in the above Example, then the transformation is linear if and only if each coordinate is a linear expression in the variables with no constant term.
+      One can show that, if a transformation is defined by formulas in the coordinates as in the above example, then the transformation is linear if and only if each coordinate is a linear expression in the variables with no constant term.
     </p>
 
     <example>
@@ -362,7 +362,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      When deciding whether a transformation <m>T</m> is linear, generally the first thing to do is to check whether <m>T(0)=0</m>; if not, <m>T</m> is automatically not linear. Note however that the non-linear transformations <m>T_1</m> and <m>T_2</m> of the above Example do take the zero vector to the zero vector.
+      When deciding whether a transformation <m>T</m> is linear, generally the first thing to do is to check whether <m>T(0)=0</m>; if not, <m>T</m> is automatically not linear. Note however that the non-linear transformations <m>T_1</m> and <m>T_2</m> of the above example do take the zero vector to the zero vector.
     </p>
 
     <remark type-name="Challenge">
@@ -377,7 +377,7 @@ the license is included in gfdl.xml.
     <title>The Standard Coordinate Vectors</title>
 
     <p>
-      In the next Subsection, we will present the relationship between linear transformations and matrix transformations.  Before doing so, we need the following important notation.
+      In the next subsection, we will present the relationship between linear transformations and matrix transformations.  Before doing so, we need the following important notation.
     </p>
 
     <bluebox xml:id="defn-standard-coord-vectors" type-name="Notation">
@@ -497,7 +497,7 @@ the license is included in gfdl.xml.
       </statement>
       <proof>
         <p>
-          We suppose for simplicity that <m>T</m> is a transformation from <m>\R^3</m> to <m>\R^2</m>.  Let <m>A</m> be the matrix given in the statement of the Theorem.  Then
+          We suppose for simplicity that <m>T</m> is a transformation from <m>\R^3</m> to <m>\R^2</m>.  Let <m>A</m> be the matrix given in the statement of the theorem.  Then
           <me>
 \begin{split}
   T\vec{x y z} \amp;= T\left( x\vec{1 0 0} + y\vec{0 1 0} + z\vec{0 0 1} \right) \\
@@ -512,7 +512,7 @@ the license is included in gfdl.xml.
     </theorem>
 
     <p>
-      The matrix <m>A</m> in the above Theorem is called the <term>standard matrix</term> for <m>T</m>.  The columns of <m>A</m> are the vectors obtained by evaluating <m>T</m> on the <m>n</m> standard coordinate vectors in <m>\R^n</m>.  To summarize part of the Theorem:
+      The matrix <m>A</m> in the above theorem is called the <term>standard matrix</term> for <m>T</m>.  The columns of <m>A</m> are the vectors obtained by evaluating <m>T</m> on the <m>n</m> standard coordinate vectors in <m>\R^n</m>.  To summarize part of the theorem:
     </p>
 
     <bluebox>
@@ -651,7 +651,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      We saw in the above Example that the matrix for counterclockwise rotation of the plane by an angle of <m>\theta</m> is
+      We saw in the above example that the matrix for counterclockwise rotation of the plane by an angle of <m>\theta</m> is
       <me>A = \mat{\cos(\theta) -\sin(\theta); \sin(\theta) \cos(\theta)}.</me>
     </p>
 
@@ -797,8 +797,6 @@ $\xrightarrow{\text{project $yz$}}$
     </p>
 
   </subsection>
-
-  <!-- TODO: rotation-scaling matrices -->
 
 
 </section>

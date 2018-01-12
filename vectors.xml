@@ -380,7 +380,7 @@ the license is included in gfdl.xml.
   \end{tikzpicture}
             ]]>
       </latex-code>
-      The difference between this and a previous <xref ref="vectors-eg-lincombo-plane"/> is that both vectors lie on the same line.  Hence any scalar multiples of <m>v_1,v_2</m> lie on that line, as does their sum.
+      The difference between this and a previous <xref ref="vectors-eg-lincombo-plane">example</xref> is that both vectors lie on the same line.  Hence any scalar multiples of <m>v_1,v_2</m> lie on that line, as does their sum.
       </p>
 
     </specialcase>

@@ -17,7 +17,7 @@ the license is included in gfdl.xml.
       <li>Learn examples of stochastic matrices and applications to difference equations.</li>
       <li><em>Recipe:</em> find the steady state of a positive stochastic matrix.</li>
       <li><em>Picture:</em> dynamics of a positive stochastic matrix.</li>
-      <li><em>Theorem:</em> the Perron<ndash/>Frobenius Theorem.</li>
+      <li><em>Theorem:</em> the Perron<ndash/>Frobenius theorem.</li>
       <li><em>Vocabulary words:</em> <term>difference equation</term>, <term>(positive) stochastic matrix</term>, <term>steady state</term>.</li>
     </ol>
   </objectives>
@@ -32,7 +32,7 @@ the license is included in gfdl.xml.
     <title>Difference Equations</title>
 
     <p>
-      Suppose that we are studying a system whose state can be described by a list of numbers: for instance, the numbers of rabbits aged <m>0,1,</m> and <m>2</m> years, respectively, or the number of copies of Prognosis Negative in each of the Red Box kiosks in Atlanta.  In each case, we can represent the state at time <m>t</m> by a vector <m>v_t</m>.  Suppose in addition that the state at time <m>t+1</m> is related to the state at time <m>t</m> in a linear way: <m>v_{t+1}=Av_t</m> for some matrix <m>A</m>.  This is the situation we will consider in this Subsection.
+      Suppose that we are studying a system whose state can be described by a list of numbers: for instance, the numbers of rabbits aged <m>0,1,</m> and <m>2</m> years, respectively, or the number of copies of Prognosis Negative in each of the Red Box kiosks in Atlanta.  In each case, we can represent the state at time <m>t</m> by a vector <m>v_t</m>.  Suppose in addition that the state at time <m>t+1</m> is related to the state at time <m>t</m> in a linear way: <m>v_{t+1}=Av_t</m> for some matrix <m>A</m>.  This is the situation we will consider in this subsection.
     </p>
 
     <definition>
@@ -59,7 +59,7 @@ the license is included in gfdl.xml.
     </p>
 
     <p>
-      We will use the following example in this Subsection and the next.  Understanding this Section amounts to understanding this example.
+      We will use the following example in this subsection and the next.  Understanding this section amounts to understanding this example.
     </p>
 
     <specialcase xml:id="stochastic-redbox-eg1">
@@ -95,7 +95,7 @@ the license is included in gfdl.xml.
     </specialcase>
 
     <p>
-      An important question to ask about a difference equation is: what is its long-term behavior?  Where will the movies be after 100 days?  In the next Subsection, we will answer this question for a particular type of difference equation.
+      An important question to ask about a difference equation is: what is its long-term behavior?  Where will the movies be after 100 days?  In the next subsection, we will answer this question for a particular type of difference equation.
     </p>
 
     <example>
@@ -128,7 +128,7 @@ the license is included in gfdl.xml.
     <title>Stochastic Matrices and the Steady State</title>
 
     <p>
-      In this Subsection, we discuss difference equations representing <em>probabilities</em>, like the <xref ref="stochastic-redbox-eg1">Red Box example</xref>.  Such systems are called <em>Markov chains</em>.  The most important result in this section is the Perron<ndash/>Frobenius Theorem, which describes the long-term behavior of a Markov chain.
+      In this subsection, we discuss difference equations representing <em>probabilities</em>, like the <xref ref="stochastic-redbox-eg1">Red Box example</xref>.  Such systems are called <em>Markov chains</em>.  The most important result in this section is the Perron<ndash/>Frobenius theorem, which describes the long-term behavior of a Markov chain.
     </p>
 
     <definition>
@@ -264,7 +264,7 @@ the license is included in gfdl.xml.
     <theorem hide-type="true">
       <title>Perron<ndash/>Frobenius Theorem</title>
       <idx><h>Stochastic matrix</h><h>long-term behavior of</h></idx>
-      <idx><h>Perron<ndash/>Frobenius Theorem</h></idx>
+      <idx><h>Perron<ndash/>Frobenius theorem</h></idx>
       <statement>
         <p>
           Let <m>A</m> be a positive stochastic matrix.  Then <m>A</m> admits a unique steady state vector <m>w</m>, which spans the <m>1</m>-eigenspace.
@@ -316,7 +316,7 @@ the license is included in gfdl.xml.
     </bluebox>
 
     <p>
-      The above Recipe is suitable for calculations by hand, but it does not take advantage of the fact that <m>A</m> is a stochastic matrix.    In practice, it is generally faster to compute a steady state vector by computer as follows:
+      The above recipe is suitable for calculations by hand, but it does not take advantage of the fact that <m>A</m> is a stochastic matrix.    In practice, it is generally faster to compute a steady state vector by computer as follows:
     </p>
 
     <bluebox>
@@ -412,7 +412,7 @@ the license is included in gfdl.xml.
     <specialcase xml:id="stochastic-redbox-eg3">
       <idx><h>Red Box</h></idx>
       <p>
-        Continuing with the <xref ref="stochastic-redbox-eg2">Red Box example</xref>, we can illustrate the Perron<ndash/>Frobenius Theorem explicitly.  The matrix
+        Continuing with the <xref ref="stochastic-redbox-eg2">Red Box example</xref>, we can illustrate the Perron<ndash/>Frobenius theorem explicitly.  The matrix
         <me>
           A = \mat{.3 .4 .5; .3 .4 .3; .4 .2 .2}
         </me>
@@ -441,7 +441,7 @@ the license is included in gfdl.xml.
         <me>
           A^tx = a_1u_1 - (0.2)^ta_2u_2 + (0.1)^ta_3u_3 \;\To\; a_1u_1
         </me>
-        as <m>t\to\infty</m>.  This shows that <m>A^tx</m> approaches <m>a_1u_1</m>, which is an <em>eigenvector with eigenvalue <m>1</m></em>, as guaranteed by the Perron<ndash/>Frobenius Theorem.
+        as <m>t\to\infty</m>.  This shows that <m>A^tx</m> approaches <m>a_1u_1</m>, which is an <em>eigenvector with eigenvalue <m>1</m></em>, as guaranteed by the Perron<ndash/>Frobenius theorem.
       </p>
       <p>
         What do the above calculations say about the number of copies of Prognosis Negative in the Atlanta Red Box kiosks?  Suppose that the kiosks start with 100 copies of the movie, with <m>30</m> copies at kiosk 1, <m>50</m> copies at kiosk <m>2</m>, and <m>20</m> copies at kiosk <m>3</m>.  Let <m>v_0 = (30,50,20)</m> be the vector describing this state.  Then there will be <m>v_1 = Av_0</m> movies in the kiosks the next day, <m>v_2 = Av_1</m> the day after that, and so on.  We let <m>v_t = (x_t,y_t,z_t).</m>
@@ -485,7 +485,7 @@ the license is included in gfdl.xml.
     </specialcase>
 
     <p>
-      The picture of a positive stochastic matrix is always the same, whether or not it is diagonalizable: <em>all vectors are <q>sucked into the <m>1</m>-eigenspace,</q></em> which is a line, without changing the sum of the entries of the vectors.  This is the geometric content of the Perron<ndash/>Frobenius Theorem.
+      The picture of a positive stochastic matrix is always the same, whether or not it is diagonalizable: <em>all vectors are <q>sucked into the <m>1</m>-eigenspace,</q></em> which is a line, without changing the sum of the entries of the vectors.  This is the geometric content of the Perron<ndash/>Frobenius theorem.
     </p>
 
   </subsection>
@@ -609,7 +609,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
     </specialcase>
 
     <p>
-      The above Example illustrates the key observation.
+      The above example illustrates the key observation.
     </p>
 
     <bluebox>
@@ -621,7 +621,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
     </bluebox>
 
     <p>
-      In light of the Key Observation, we would like to use the Perron<ndash/>Frobenius theorem to find the rank vector.  Unfortunately, the Importance Matrix is not always a <em>positive</em> stochastic matrix.
+      In light of the key observation, we would like to use the Perron<ndash/>Frobenius theorem to find the rank vector.  Unfortunately, the Importance Matrix is not always a <em>positive</em> stochastic matrix.
     </p>
 
     <example>
@@ -727,7 +727,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
     </p>
 
     <p>
-      The reader can verify the following important Fact.
+      The reader can verify the following important fact.
     </p>
 
     <fact>

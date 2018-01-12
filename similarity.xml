@@ -41,7 +41,7 @@ the license is included in gfdl.xml.
       Using <m>v_1,v_2</m> instead of the usual coordinates makes <m>A</m> <q>behave</q> like a diagonal matrix.
     </p>
     <p>
-      In this Section, we study in detail the situation when two matrices behave similarly with respect to different coordinate systems.
+      In this section, we study in detail the situation when two matrices behave similarly with respect to different coordinate systems.
     </p>
   </introduction>
 
@@ -92,7 +92,7 @@ the license is included in gfdl.xml.
     <p>
       <idx><h>Similarity</h><h>identity matrix</h></idx>
       <idx><h>Identity matrix</h><h>similarity</h></idx>
-      As in the above Example, one can show that <m>I_n</m> is the only matrix that is similar to <m>I_n</m>, and likewise for any scalar multiple of <m>I_n</m>.
+      As in the above example, one can show that <m>I_n</m> is the only matrix that is similar to <m>I_n</m>, and likewise for any scalar multiple of <m>I_n</m>.
     </p>
 
     <bluebox>
@@ -223,7 +223,7 @@ the license is included in gfdl.xml.
     <idx><h>Similarity</h><h>geometry of</h></idx>
 
     <p>
-      Similarity is a very interesting construction when viewed geometrically.  We will see that, roughly, <em>similar matrices do the same thing in different coordinate systems.</em>  The reader might want to review <m>\cB</m>-coordinates and nonstandard coordinate grids in <xref ref="bases-as-coord-systems"/> before reading this Subsection.
+      Similarity is a very interesting construction when viewed geometrically.  We will see that, roughly, <em>similar matrices do the same thing in different coordinate systems.</em>  The reader might want to review <m>\cB</m>-coordinates and nonstandard coordinate grids in <xref ref="bases-as-coord-systems"/> before reading this subsection.
     </p>
 
     <p>
@@ -305,7 +305,7 @@ the license is included in gfdl.xml.
     </bluebox>
 
     <p>
-      The following example is the heart of this Section.
+      The following example is the heart of this section.
     </p>
 
     <specialcase xml:id="similarity-worked-eg">
@@ -974,7 +974,7 @@ the license is included in gfdl.xml.
     </note>
 
     <p>
-      Given that similar matrices have the same eigenvalues, one might guess that they have the same eigen<em>vectors</em> as well.  Upon reflection, this is not what one should expect: indeed, the eigenvectors should only match up after changing from one coordinate system to another.  This is the content of the next Fact, remembering that <m>C</m> and <m>C\inv</m> change between the usual coordinates and the <m>\cB</m>-coordinates.
+      Given that similar matrices have the same eigenvalues, one might guess that they have the same eigen<em>vectors</em> as well.  Upon reflection, this is not what one should expect: indeed, the eigenvectors should only match up after changing from one coordinate system to another.  This is the content of the next fact, remembering that <m>C</m> and <m>C\inv</m> change between the usual coordinates and the <m>\cB</m>-coordinates.
     </p>
 
     <theorem type-name="Fact" xml:id="similarity-evecs">

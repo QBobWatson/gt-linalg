@@ -181,7 +181,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     </example>
 
     <p>
-      The above Examples lead to the following Recipe.
+      The above examples lead to the following recipe.
     </p>
 
     <bluebox>
@@ -257,7 +257,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     </fact>
 
     <p>
-      With regard to the first Fact, note that the zero vector is a multiple of any vector, so it is collinear with any other vector.  Hence Facts 1 and 2 are consistent with each other.
+      With regard to the first fact, note that the zero vector is a multiple of any vector, so it is collinear with any other vector.  Hence facts 1 and 2 are consistent with each other.
     </p>
 
   </subsection>
@@ -266,7 +266,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     <title>Criteria for Linear Independence</title>
 
     <p>
-      In this Subsection we give several criteria for a set of vectors to be linearly (in)dependent.  Keep in mind, however, that the actual <xref ref="linindep-defn-linindep"/> is above.
+      In this subsection we give several criteria for a set of vectors to be linearly (in)dependent.  Keep in mind, however, that the actual <xref ref="linindep-defn-linindep"/> is above.
     </p>
 
     <theorem xml:id="linindep-criterion-inspan">
@@ -294,7 +294,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       </proof>
     </theorem>
 
-    <bluebox type-name="Warning" xml:id="linindep-not-any"><p>
+    <bluebox type-name="Warning" hide-type="false" xml:id="linindep-not-any"><p>
       In a linearly dependent set <m>\{v_1,v_2,\ldots,v_p\}</m>, it is not generally true that <em>any</em> vector <m>v_j</m> is in the span of the others, only that <em>at least one</em> of them is.  See this <xref ref="linindep-3d-4vecs"/> below.
     </p></bluebox>
 
@@ -384,7 +384,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     </latex-code>
     A set of two noncollinear vectors <m>\{v,w\}</m> is linearly independent:
     <ul>
-      <li>Neither is in the span of the other, so we can apply the first <xref ref="linindep-criterion-inspan">Criterion</xref>.</li>
+      <li>Neither is in the span of the other, so we can apply the first <xref ref="linindep-criterion-inspan">criterion</xref>.</li>
       <li>The span got bigger when we added <m>w</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</li>
     </ul>
     <latex-code>
@@ -408,7 +408,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
         </latex-code>
     The set of three vectors <m>\{v,w,u\}</m> below is linearly dependent:
     <ul>
-      <li><m>u</m> is in <m>\Span\{v,w\}</m>, so we can apply the first <xref ref="linindep-criterion-inspan">Criterion</xref>.</li>
+      <li><m>u</m> is in <m>\Span\{v,w\}</m>, so we can apply the first <xref ref="linindep-criterion-inspan">criterion</xref>.</li>
       <li>The span did not increase when we added <m>u</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</li>
     </ul>
     In the picture below, note that <m>v</m> is in <m>\Span\{u,w\}</m>, and <m>w</m> is in <m>\Span\{u,v\}</m>, so we can remove any of the three vectors without shrinking the span.
@@ -437,8 +437,8 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     </latex-code>
     Two collinear vectors are always linearly dependent:
       <ul>
-        <li><m>w</m> is in <m>\Span\{v\}</m>, so we can apply the first <xref ref="linindep-criterion-inspan">Criterion</xref>.</li>
-        <li>We can remove <m>w</m> without shrinking the span, so we can apply the second <xref ref="linindep-criterion-redundant">Criterion</xref>.</li>
+        <li><m>w</m> is in <m>\Span\{v\}</m>, so we can apply the first <xref ref="linindep-criterion-inspan">criterion</xref>.</li>
+        <li>We can remove <m>w</m> without shrinking the span, so we can apply the second <xref ref="linindep-criterion-redundant">criterion</xref>.</li>
         <li>The span did not increase when we added <m>w</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</li>
       </ul>
       <latex-code>
@@ -599,8 +599,8 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     </latex-code>
     The three coplanar vectors <m>\{v,w,u\}</m> below are linearly dependent:
     <ul>
-      <li><m>u</m> is in <m>\Span\{v,w\}</m>, so we can apply the first <xref ref="linindep-criterion-inspan">Criterion</xref>.</li>
-      <li>We can remove <m>u</m> without shrinking the span, so we can apply the second <xref ref="linindep-criterion-redundant">Criterion</xref>.</li>
+      <li><m>u</m> is in <m>\Span\{v,w\}</m>, so we can apply the first <xref ref="linindep-criterion-inspan">criterion</xref>.</li>
+      <li>We can remove <m>u</m> without shrinking the span, so we can apply the second <xref ref="linindep-criterion-redundant">criterion</xref>.</li>
       <li>The span did not increase when we added <m>u</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</li>
     </ul>
     <latex-code>
@@ -664,7 +664,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     Note that three vectors are linearly dependent if and only if they are <em>coplanar</em>.  Indeed, <m>\{v,w,u\}</m> is linearly dependent if and only if one vector is in the span of the other two, which is a plane (or a line) (or <m>\{0\}</m>).
     </p>
 
-    <p>The four vectors <m>\{v,w,u,x\}</m> below are linearly dependent: they are the columns of a <xref ref="linindep-wide-matrix">wide matrix</xref>.  Note however that <m>u</m> is not contained in <m>\Span\{v,w,x\}</m>.  See this <xref ref="linindep-not-any">Warning</xref>.</p>
+    <p>The four vectors <m>\{v,w,u,x\}</m> below are linearly dependent: they are the columns of a <xref ref="linindep-wide-matrix">wide matrix</xref>.  Note however that <m>u</m> is not contained in <m>\Span\{v,w,x\}</m>.  See this <xref ref="linindep-not-any"/>.</p>
 
     <figure xml:id="linindep-3d-4vecs">
       <caption>The vectors <m>\{v,w,u,x\}</m> are linearly dependent, but <m>u</m> is not contained in <m>\Span\{v,w,x\}</m>.</caption>
@@ -756,7 +756,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     <title>Linear Dependence and Free Variables</title>
 
     <p>
-      In light of this <xref ref="linindep-matrix-cols"/> and this <xref ref="linindep-criterion-redundant">Criterion</xref>, it is natural to ask which columns of a matrix are <q>redundant</q>, i.e., which we can remove without affecting the column span.
+      In light of this <xref ref="linindep-matrix-cols"/> and this <xref ref="linindep-criterion-redundant">criterion</xref>, it is natural to ask which columns of a matrix are <q>redundant</q>, i.e., which we can remove without affecting the column span.
     </p>
 
     <theorem xml:id="linindep-pivot-cols">
@@ -807,7 +807,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     </theorem>
 
     <p>
-      Note that it is necessary to row reduce <m>A</m> to find which are its pivot columns.  However, the span of the columns of the row reduced matrix is generally <em>not</em> equal to the span of the columns of <m>A</m>.  See <xref ref="dimension-basis-colspace"/> for a restatement of the above Theorem.
+      Note that it is necessary to row reduce <m>A</m> to find which are its pivot columns.  However, the span of the columns of the row reduced matrix is generally <em>not</em> equal to the span of the columns of <m>A</m>.  See <xref ref="dimension-basis-colspace"/> for a restatement of the above theorem.
     </p>
 
     <example>
@@ -995,7 +995,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
         </p>
       </statement>
       <solution xml:id="solution-li-20">
-        <p>The requested set is described by <xref provisional="theorem-?"/>.  It is easiest to find by using the procedure of Example <xref provisional="example-?"/>.  Begin by row-reducing the matrix, viewing it as the coefficient matrix of a homogeneous system of equations.  We obtain
+        <p>The requested set is described by <xref provisional="theorem-?"/>.  It is easiest to find by using the procedure of example <xref provisional="example-?"/>.  Begin by row-reducing the matrix, viewing it as the coefficient matrix of a homogeneous system of equations.  We obtain
         <me>
           \mat{\leading1 0 1 -2; 0 \leading1 1 1; 0 0 0 0}.
         </me>

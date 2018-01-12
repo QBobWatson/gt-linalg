@@ -239,7 +239,7 @@ the license is included in gfdl.xml.
     </me>
     </p>
 
-    <bluebox xml:id="matrixeq-spans-consistency">
+    <bluebox xml:id="matrixeq-spans-consistency" type-name="Note">
       <title>Spans and Consistency</title>
       <idx><h>Matrix equation</h><h>spans and consistency</h></idx>
       <idx><h>System of linear equations</h><h>consistent</h><h>span criterion</h></idx>
@@ -414,7 +414,7 @@ the license is included in gfdl.xml.
     <paragraphs>
       <title>When Solutions Always Exist</title>
 
-      <p>Building on this <xref ref="matrixeq-spans-consistency">Note</xref>, we have the following criterion for when <m>Ax=b</m> is consistent for <em>every</em> choice of <m>b</m>.</p>
+      <p>Building on this <xref ref="matrixeq-spans-consistency">note</xref>, we have the following criterion for when <m>Ax=b</m> is consistent for <em>every</em> choice of <m>b</m>.</p>
 
       <theorem xml:id="matrixeq-thm-full-span">
         <idx><h>Matrix equation</h><h>always consistent</h></idx>
@@ -429,7 +429,7 @@ the license is included in gfdl.xml.
         </statement>
 
         <proof>
-          <p>The equivalence of 1 and 2 is established by this <xref ref="matrixeq-spans-consistency">Note</xref> as applied to every <m>b</m> in <m>\R^m</m>.
+          <p>The equivalence of 1 and 2 is established by this <xref ref="matrixeq-spans-consistency"/> as applied to every <m>b</m> in <m>\R^m</m>.
           </p>
 
           <p>Now we show that 1 and 3 are equivalent.  (Since we know 1 and 2 are equivalent, this implies 2 and 3 are equivalent as well.)  If <m>A</m> has a pivot in every row, then its reduced row echelon form looks like this:
@@ -465,12 +465,12 @@ the license is included in gfdl.xml.
       </p>
 
       <bluebox>
-        <p>Be careful when reading the statement of the above <xref ref="matrixeq-thm-full-span"/>.  The first two conditions look very much like this <xref ref="matrixeq-spans-consistency">Note</xref>, but they are logically quite different because of the quantifier <q><em>for all</em> <m>b</m></q>.
+        <p>Be careful when reading the statement of the above <xref ref="matrixeq-thm-full-span"/>.  The first two conditions look very much like this <xref ref="matrixeq-spans-consistency"/>, but they are logically quite different because of the quantifier <q><em>for all</em> <m>b</m></q>.
         </p>
       </bluebox>
 
       <example hide-type="true">
-        <title>Interactive: The criteria of the Theorem are satisfied</title>
+        <title>Interactive: The criteria of the theorem are satisfied</title>
         <figure>
           <caption>An example where the criteria of the above <xref ref="matrixeq-thm-full-span"/> are satisfied.  The red region is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.  If you drag <m>b</m>, the demo will solve <m>Ax=b</m> for you and move <m>x</m>.</caption>
           <mathbox source="demos/Axequalsb.html?mat=2,1,-1:1,0,2&amp;range2=5&amp;show=false&amp;closed=true" height="600px"/>
@@ -478,7 +478,7 @@ the license is included in gfdl.xml.
       </example>
 
       <example hide-type="true">
-        <title>Interactive: The critera of the Theorem are not satisfied</title>
+        <title>Interactive: The critera of the theorem are not satisfied</title>
         <figure>
           <caption>An example where the criteria of the above <xref ref="matrixeq-thm-full-span"/> are <em>not</em> satisfied.  The red region is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.  Try dragging <m>b</m> in and out of the column span.</caption>
           <mathbox source="demos/Axequalsb.html?show=false&amp;closed=true" height="600px"/>

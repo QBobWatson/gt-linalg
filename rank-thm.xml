@@ -14,16 +14,16 @@ the license is included in gfdl.xml.
 
   <objectives>
     <ol>
-      <li>Learn to use the Rank Theorem and the Basis Theorem.</li>
-      <li><em>Picture:</em> the Rank Theorem.</li>
-      <li><em>Theorems:</em> Rank Theorem, Basis Theorem.</li>
+      <li>Learn to use the rank theorem and the basis theorem.</li>
+      <li><em>Picture:</em> the rank theorem.</li>
+      <li><em>Theorems:</em> rank theorem, basis theorem.</li>
       <li><em>Vocabulary words:</em> <term>rank</term>, <term>nullity</term>.</li>
     </ol>
   </objectives>
 
   <introduction>
   <p>
-    In this Section we present two important general facts about dimensions and bases.
+    In this section we present two important general facts about dimensions and bases.
   </p>
   </introduction>
 
@@ -31,7 +31,7 @@ the license is included in gfdl.xml.
     <title>The Rank Theorem</title>
 
   <p>
-    With the Rank Theorem, we can finally relate the dimension of the solution set of a matrix equation with the dimension of the column space.
+    With the rank theorem, we can finally relate the dimension of the solution set of a matrix equation with the dimension of the column space.
   </p>
 
   <definition>
@@ -61,12 +61,12 @@ the license is included in gfdl.xml.
         <mrow>\nullity(A) = \dim\Nul(A) &amp;= \text{the number of free variables}</mrow>
         <mrow>&amp;= \text{the number of columns without pivots}</mrow>
       </md>
-      Clearly (the number of columns with pivots) plus (the number of columns without pivots) equals (the number of columns of <m>A</m>), so we have proved the following Theorem.
+      Clearly (the number of columns with pivots) plus (the number of columns without pivots) equals (the number of columns of <m>A</m>), so we have proved the following theorem.
     </p>
 
     <theorem type-name="Rank Theorem" xml:id="rank-theorem">
-      <idx><h>Rank</h><h>Rank Theorem</h></idx>
-      <idx><h>Nullity</h><h>Rank Theorem</h></idx>
+      <idx><h>Rank</h><h>rank theorem</h></idx>
+      <idx><h>Nullity</h><h>rank theorem</h></idx>
       <statement>
         <p>
           If <m>A</m> is an <m>m\times n</m> matrix, then
@@ -131,7 +131,7 @@ the license is included in gfdl.xml.
       </p>
 
       <p>
-        In this case, the Rank Theorem says that <m>2 + 2 = 4</m>, where 4 is the number of columns.
+        In this case, the rank theorem says that <m>2 + 2 = 4</m>, where 4 is the number of columns.
       </p>
     </example>
 
@@ -158,12 +158,11 @@ the license is included in gfdl.xml.
 
     <p>
       Recall from this <xref ref="dimension-eg-Rn-any"/> that <m>\{v_1,v_2,\ldots,v_n\}</m> forms a basis for <m>\R^n</m> if and only if the matrix <m>A</m> with columns <m>v_1,v_2,\ldots,v_n</m> has a pivot in every row and column.  Since <m>A</m> is an <m>n\times n</m> matrix, these two conditions are equivalent: the vectors span if and only if they are linearly independent.
-      The Basis Theorem is an abstract version of the preceding statement, that applies to any subspace.
+      The basis theorem is an abstract version of the preceding statement, that applies to any subspace.
     </p>
 
-    <theorem hide-type="true" type-name="Basis Theorem" xml:id="basis-theorem">
-      <title>The Basis Theorem</title>
-      <idx><h>Basis</h><h>Basis Theorem</h></idx>
+    <theorem type-name="Basis Theorem" xml:id="basis-theorem">
+      <idx><h>Basis</h><h>basis theorem</h></idx>
       <statement>
         <p>
           Let <m>V</m> be a subspace of dimension <m>m</m>.  Then:

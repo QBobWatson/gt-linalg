@@ -161,7 +161,7 @@ the license is included in gfdl.xml.
 
 
   <p>
-    Since any subspace is a span, the following Proposition gives a recipe for computing the orthogonal complement of any subspace.  However, below we will give several shortcuts for computing the orthogonal complements of other common kinds of subspaces.
+    Since any subspace is a span, the following proposition gives a recipe for computing the orthogonal complement of any subspace.  However, below we will give several shortcuts for computing the orthogonal complements of other common kinds of subspaces.
   </p>
 
   <proposition xml:id="orthocomp-comp-of-span">
@@ -215,7 +215,7 @@ the license is included in gfdl.xml.
 
   <p>
     <idx><h>Orthogonal complement</h><h>system of linear equations</h></idx>    
-    By the Proposition, computing the orthogonal complement of a span means <em>solving a system of linear equations</em>.  For example, if
+    By the proposition, computing the orthogonal complement of a span means <em>solving a system of linear equations</em>.  For example, if
     <me>
       v_1 = \vec{1 7 2} \qquad v_2 = \vec{-2 3 1}
     </me>
@@ -329,7 +329,7 @@ the license is included in gfdl.xml.
     </statement>
     <proof>
       <p>
-        For the first assertion, we verify the three <xref ref="subspaces-defn-of">defining properties of subspaces</xref>.
+        For the first assertion, we verify the three <xref ref="subspaces-defn-of" text="title">defining properties of subspaces</xref>.
         <ol>
           <li>
             The zero vector is in <m>W^\perp</m> because the zero vector is orthogonal to every vector in <m>\R^n</m>.
@@ -370,7 +370,7 @@ the license is included in gfdl.xml.
   </fact>
 
   <p>
-    See these <xref ref="orthocomp-pictures"/> for pictures of the second property.  As for the third: for example, if <m>W</m> is a (<m>2</m>-dimensional) plane in <m>\R^4</m>, then <m>W^\perp</m> is another (<m>2</m>-dimensional) plane.  Explicitly, we have
+    See these <xref lower="true" ref="orthocomp-pictures"/> for pictures of the second property.  As for the third: for example, if <m>W</m> is a (<m>2</m>-dimensional) plane in <m>\R^4</m>, then <m>W^\perp</m> is another (<m>2</m>-dimensional) plane.  Explicitly, we have
     <me>
       \begin{split}
       \Span\bigl\{e_1,e_2\bigr\}^\perp

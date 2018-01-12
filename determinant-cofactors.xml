@@ -22,10 +22,10 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      In this Section, we give a recursive formula for the determinant of a matrix, called a <em>cofactor expansion</em>.  The formula is recursive in that we will compute the determinant of an <m>n\times n</m> matrix <em>assuming</em> we already know how to compute the determinant of an <m>(n-1)\times(n-1)</m> matrix.
+      In this section, we give a recursive formula for the determinant of a matrix, called a <em>cofactor expansion</em>.  The formula is recursive in that we will compute the determinant of an <m>n\times n</m> matrix <em>assuming</em> we already know how to compute the determinant of an <m>(n-1)\times(n-1)</m> matrix.
     </p>
     <p>
-      At the end is a supplementary Subsection on Cramer<rsq/>s rule and a cofactor formula for the inverse of a matrix.
+      At the end is a supplementary subsection on Cramer<rsq/>s rule and a cofactor formula for the inverse of a matrix.
     </p>
   </introduction>
 
@@ -107,7 +107,7 @@ the license is included in gfdl.xml.
   </example>
 
   <p>
-    The cofactors <m>C_{ij}</m> of an <m>n\times n</m> matrix are determinants of <m>(n-1)\times(n-1)</m> submatrices.  Hence the following Theorem is in fact a recursive procedure for computing the determinant.
+    The cofactors <m>C_{ij}</m> of an <m>n\times n</m> matrix are determinants of <m>(n-1)\times(n-1)</m> submatrices.  Hence the following theorem is in fact a recursive procedure for computing the determinant.
   </p>
 
   <theorem xml:id="det-cofact-expansion">
@@ -194,10 +194,10 @@ the license is included in gfdl.xml.
               \amp= d(B) + d(C),
               \end{split}
             </me>
-            as desired.  This shows that <m>d(A)</m> satisfies the first <xref ref="linear-trans-defn">defining property</xref> in the rows of <m>A</m>.
+            as desired.  This shows that <m>d(A)</m> satisfies the first <xref ref="linear-trans-defn" text="title">defining property</xref> in the rows of <m>A</m>.
             </p>
             <p>
-            We still have to show that <m>d(A)</m> satisfies the second <xref ref="linear-trans-defn">defining property</xref> in the rows of <m>A</m>.  Let <m>B</m> be the matrix obtained by scaling the <m>i</m>th row of <m>A</m> by a factor of <m>c</m>:
+            We still have to show that <m>d(A)</m> satisfies the second <xref ref="linear-trans-defn" text="title">defining property</xref> in the rows of <m>A</m>.  Let <m>B</m> be the matrix obtained by scaling the <m>i</m>th row of <m>A</m> by a factor of <m>c</m>:
             <me>
               A = \mat{a_{11} a_{12} a_{13}; a_{21} a_{22} a_{23}; a_{31} a_{32} a_{33}}
               \qquad
@@ -345,7 +345,7 @@ the license is included in gfdl.xml.
   </theorem>
 
   <p>
-    Note that the Theorem actually gives <m>2n</m> different formulas for the determinant: one for each row and one for each column.  For instance, the formula for cofactor expansion along the first column is
+    Note that the theorem actually gives <m>2n</m> different formulas for the determinant: one for each row and one for each column.  For instance, the formula for cofactor expansion along the first column is
     <me>
       \begin{split}
       \det(A) = \sum_{i=1}^n a_{i1}C_{i1}
@@ -368,7 +368,7 @@ the license is included in gfdl.xml.
 
   <proof>
     <p>
-      Let us review what we actually proved in <xref ref="determinants-definitions-properties"/>.  We showed that if <m>\det\colon\{n\times n\text{ matrices}\}\to\R</m> is any function satisfying the four <xref ref="det-defn-the-defn">defining properties of the determinant</xref> (or the three <xref ref="det-defn-use-multi">alternative defining properties</xref>), then it also satisfies all of the wonderful properties proved in that Section.  In particular, since <m>\det</m> can be computed using row reduction by this <xref ref="det-defn-ref-compute"/>, it is uniquely characterized by the defining properties.  What we did not prove was the existence of such a function, since we did not know that two different row reduction procedures would always compute the same answer.
+      Let us review what we actually proved in <xref ref="determinants-definitions-properties"/>.  We showed that if <m>\det\colon\{n\times n\text{ matrices}\}\to\R</m> is any function satisfying the four <xref ref="det-defn-the-defn" text="title">defining properties of the determinant</xref> (or the three <xref ref="det-defn-use-multi" text="title">alternative defining properties</xref>), then it also satisfies all of the wonderful properties proved in that section.  In particular, since <m>\det</m> can be computed using row reduction by this <xref ref="det-defn-ref-compute"/>, it is uniquely characterized by the defining properties.  What we did not prove was the existence of such a function, since we did not know that two different row reduction procedures would always compute the same answer.
     </p>
     <p>
       Consider the function <m>d</m> defined by cofactor expansion along the first row:
@@ -726,7 +726,7 @@ the license is included in gfdl.xml.
 
 
   <p>
-    Cofactor expansions are most useful when computing the determinant of a matrix that has a row or column with several zero entries.  Indeed, if the <m>(i,j)</m> entry of <m>A</m> is zero, then there is no reason to compute the <m>(i,j)</m> cofactor.  In the following Example we compute the determinant of a matrix with two zeros in the fourth column by expanding cofactors along the fourth column.
+    Cofactor expansions are most useful when computing the determinant of a matrix that has a row or column with several zero entries.  Indeed, if the <m>(i,j)</m> entry of <m>A</m> is zero, then there is no reason to compute the <m>(i,j)</m> cofactor.  In the following example we compute the determinant of a matrix with two zeros in the fourth column by expanding cofactors along the fourth column.
   </p>
 
   <example>
@@ -960,7 +960,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      It is clear from the previous Example that <xref ref="det-cofact-inv-cramer-fn"/> is a very inefficient way of computing the inverse of a matrix, compared to augmenting by the identity matrix and row reducing, as in this <xref ref="matrix-inv-computing"/>.  However, it has its uses.
+      It is clear from the previous example that <xref ref="det-cofact-inv-cramer-fn"/> is a very inefficient way of computing the inverse of a matrix, compared to augmenting by the identity matrix and row reducing, as in this <xref ref="matrix-inv-computing"/>.  However, it has its uses.
       <ul>
         <li>
           If a matrix has unknown entries, then it is difficult to compute its inverse using row reduction, for the same reason it is difficult to compute the determinant that way: one cannot be sure whether an entry containing an unknown is a pivot or not.
@@ -1126,7 +1126,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      Now we use Cramer<rsq/>s rule to prove the first <xref ref="det-cofact-inv-cramer"/> of this Subsection.
+      Now we use Cramer<rsq/>s rule to prove the first <xref ref="det-cofact-inv-cramer"/> of this subsection.
     </p>
 
     <proof>

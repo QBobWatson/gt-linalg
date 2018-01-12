@@ -19,17 +19,17 @@ the license is included in gfdl.xml.
       <li>Understand the geometry of <m>2\times 2</m> and <m>3\times 3</m> matrices with a complex eigenvalue.</li>
       <li><em>Recipe:</em> a <m>2\times 2</m> matrix with a complex eigenvalue is similar to a rotation-scaling matrix.</li>
       <li><em>Pictures:</em> the geometry of matrices with a complex eigenvalue.</li>
-      <li><em>Theorems:</em> the Rotation-Scaling Theorem, the Block Diagonalization Theorem.</li>
+      <li><em>Theorems:</em> the rotation-scaling theorem, the block diagonalization theorem.</li>
       <li><em>Vocabulary word:</em> <term>rotation-scaling matrix</term>.</li>
     </ol>
   </objectives>
 
   <introduction>
     <p>
-      In <xref ref="diagonalization"/>, we saw that a matrix whose characteristic polynomial has distinct real roots is <em>diagonalizable</em>: it is similar to a diagonal matrix, which is much simpler to analyze.  In this Section, we study matrices whose characteristic polynomial has <em>complex</em> roots.  It turns out that such a matrix is similar (in the <m>2\times 2</m> case) to a <em>rotation-scaling matrix</em>, which is also relatively easy to understand.
+      In <xref ref="diagonalization"/>, we saw that a matrix whose characteristic polynomial has distinct real roots is <em>diagonalizable</em>: it is similar to a diagonal matrix, which is much simpler to analyze.  In this section, we study matrices whose characteristic polynomial has <em>complex</em> roots.  It turns out that such a matrix is similar (in the <m>2\times 2</m> case) to a <em>rotation-scaling matrix</em>, which is also relatively easy to understand.
     </p>
     <p>
-      In a certain sense, this entire Section is analogous to <xref ref="diagonalization"/>, with rotation-scaling matrices playing the role of diagonal matrices.
+      In a certain sense, this entire section is analogous to <xref ref="diagonalization"/>, with rotation-scaling matrices playing the role of diagonal matrices.
     </p>
     <p>
       See <xref ref="complex-numbers"/> for a review of the complex numbers.
@@ -194,7 +194,7 @@ A-\frac{4+3i}5I_3 =
     </example>
 
     <p>
-      If <m>A</m> is a matrix with real entries, then its characteristic polynomial has real coefficients, so this <xref ref="cplx-nums-root-pairs"/> implies that its complex eigenvalues come in conjugate pairs.  In the first Example, we notice that
+      If <m>A</m> is a matrix with real entries, then its characteristic polynomial has real coefficients, so this <xref ref="cplx-nums-root-pairs"/> implies that its complex eigenvalues come in conjugate pairs.  In the first example, we notice that
       <me>
         \begin{split}
         1+i \text{ has an eigenvector }
@@ -203,7 +203,7 @@ A-\frac{4+3i}5I_3 =
         \amp v_2 = \vec{-i 1}.
         \end{split}
       </me>
-      In the second Example,
+      In the second example,
       <me>
         \begin{split}
         \frac{4+3i}5 \text{ has an eigenvector }
@@ -212,7 +212,7 @@ A-\frac{4+3i}5I_3 =
         \amp v_2 = \vec{-12+9i -9-12i 25}
         \end{split}
       </me>
-      In these cases, an eigenvector for the conjugate eigenvalue is simply the \emp{conjugate eigenvector} (the eigenvector obtained by conjugating each entry of the first eigenvector).  This is always true; we leave the verification to the reader.
+      In these cases, an eigenvector for the conjugate eigenvalue is simply the <em>conjugate eigenvector</em> (the eigenvector obtained by conjugating each entry of the first eigenvector).  This is always true; we leave the verification to the reader.
     </p>
 
     <bluebox>
@@ -314,7 +314,7 @@ A-\frac{4+3i}5I_3 =
     </definition>
 
     <p>
-      The following Proposition justifies the name.
+      The following proposition justifies the name.
     </p>
 
     <proposition xml:id="cplx-eval-rot-scale">
@@ -582,7 +582,7 @@ A-\frac{4+3i}5I_3 =
     </example>
 
     <p>
-      The matrix in the second Example has second column <m>{-\sqrt 3\choose 1}</m>, which is rotated counterclockwise from the positive <m>x</m>-axis by an angle of <m>5\pi/6</m>.  This rotation angle is <em>not</em> equal to
+      The matrix in the second example has second column <m>{-\sqrt 3\choose 1}</m>, which is rotated counterclockwise from the positive <m>x</m>-axis by an angle of <m>5\pi/6</m>.  This rotation angle is <em>not</em> equal to
       <m>\tan\inv\bigl(1/(-\sqrt3)\bigr) = -\frac\pi 6.</m>
       The problem is that arctan always outputs values between <m>-\pi/2</m> and <m>\pi/2</m>: it does not account for points in the second or third quadrants.  This is why we drew a triangle and used its (positive) edge lengths to compute the angle <m>\varphi</m>:
       <latex-code mode="bare">
@@ -724,7 +724,7 @@ A-\frac{4+3i}5I_3 =
       <me>
         B = \mat{a -b; b a} \sptxt{with} a = \Re(\lambda),\; b = -\Im(\lambda).
       </me>
-      One should regard the <xref ref="cplx-diagonalization-thm"/> as a close analogue of the <xref ref="diagonalization-thm"/>, with a rotation-scaling matrix playing the role of a diagonal matrix.  Before continuing, we restate the Theorem as a Recipe:
+      One should regard the <xref ref="cplx-diagonalization-thm"/> as a close analogue of the <xref ref="diagonalization-thm"/>, with a rotation-scaling matrix playing the role of a diagonal matrix.  Before continuing, we restate the theorem as a recipe:
     </p>
 
     <bluebox>
@@ -1052,7 +1052,7 @@ A-\frac{4+3i}5I_3 =
 
     <p>
       <idx><h>Complex eigenvalue</h><h><m>2\times 2</m> matrices</h><h>different rotation-scaling matrices</h></idx>
-      We saw in the above Examples that the <xref ref="cplx-diagonalization-thm"/> can be applied in two different ways to any given matrix: one has to choose one of the two conjugate eigenvalues to work with.  Replacing <m>\lambda</m> by <m>\bar\lambda</m> has the effect of replacing <m>v</m> by <m>\bar v</m>, which just negates all imaginary parts, so we also have <m>A=C'B'(C')\inv</m> for
+      We saw in the above examples that the <xref ref="cplx-diagonalization-thm"/> can be applied in two different ways to any given matrix: one has to choose one of the two conjugate eigenvalues to work with.  Replacing <m>\lambda</m> by <m>\bar\lambda</m> has the effect of replacing <m>v</m> by <m>\bar v</m>, which just negates all imaginary parts, so we also have <m>A=C'B'(C')\inv</m> for
       <me>
         C' = \mat{| |; \Re(v) -\Im(v); | |}
         \sptxt{and}

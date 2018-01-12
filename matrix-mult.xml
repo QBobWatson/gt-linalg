@@ -33,7 +33,7 @@ the license is included in gfdl.xml.
     <title>Transformation algebra</title>
 
     <p>
-      In this Subsection we describe three operations that one can perform on  transformations: addition, scalar multiplication, and composition.  In the next Subsection, we will translate these operations into the language of matrices, for matrix transformations.
+      In this subsection we describe three operations that one can perform on  transformations: addition, scalar multiplication, and composition.  In the next subsection, we will translate these operations into the language of matrices, for matrix transformations.
     </p>
 
     <definition>
@@ -364,7 +364,7 @@ the license is included in gfdl.xml.
   <subsection>
     <title>Matrix algebra</title>
 
-    <p>In this Subsection, we translate the algebra of linear transformations from the previous Subsection into the language of matrices.  First we need some terminology.</p>
+    <p>In this subsection, we translate the algebra of linear transformations from the previous subsection into the language of matrices.  First we need some terminology.</p>
 
     <definition type-name="Notation">
       <notation><usage>a_{ij}</usage><description>The <m>i,j</m> entry of a matrix</description></notation>
@@ -438,7 +438,7 @@ the license is included in gfdl.xml.
     </fact>
 
     <p>
-      In view of the above Fact, the following properties are consequences of the corresponding <xref ref="matrix-mult-add-mult-trans">Properties</xref> of transformations.  They are easily verified directly from the definitions as well.
+      In view of the above fact, the following properties are consequences of the corresponding <xref ref="matrix-mult-add-mult-trans">properties</xref> of transformations.  They are easily verified directly from the definitions as well.
     </p>
 
     <note hide-type="true">
@@ -612,7 +612,7 @@ the license is included in gfdl.xml.
           x
           = \vec{r_1x r_2x \vdots, r_mx}.
           </me>
-          The <xref ref="matrix-mult-defn-of">Definition of matrix multiplication</xref> is
+          The <xref ref="matrix-mult-defn-of"/> of matrix multiplication is
           <me>A\mat{| | ,, |; c_1 c_2 \cdots, c_p; | | ,, |} =
           \mat{| | ,, |; Ac_1 Ac_2 \cdots, Ac_p; | | ,, |}.</me>
           It follows that
@@ -658,7 +658,7 @@ the license is included in gfdl.xml.
     <title>Composition and Matrix Multiplication</title>
 
     <p>
-      The point of this Subsection is to show that matrix multiplication corresponds to composition of transformations.
+      The point of this subsection is to show that matrix multiplication corresponds to composition of transformations.
     </p>
 
     <theorem xml:id="matrix-mult-comp-is-prod">
@@ -692,7 +692,7 @@ the license is included in gfdl.xml.
     </theorem>
 
     <p>
-      The Theorem justifies our choice of definition of the matrix product.  This is the one and only reason that matrix products are defined in this way.  To rephrase:
+      The theorem justifies our choice of definition of the matrix product.  This is the one and only reason that matrix products are defined in this way.  To rephrase:
     </p>
 
     <bluebox>
@@ -747,7 +747,7 @@ the license is included in gfdl.xml.
         <me>\sin(\alpha\pm\beta) = \sin(\alpha)\cos(\beta) \pm \cos(\alpha)\sin(\beta)</me>
         and
         <me>\cos(\alpha\pm\beta) = \cos(\alpha)\cos(\beta) \mp \sin(\alpha)\sin(\beta)</me>
-        using the <xref ref="matrix-mult-comp-is-prod"/> as applied to rotation transformations, as in the previous Example.
+        using the <xref ref="matrix-mult-comp-is-prod"/> as applied to rotation transformations, as in the previous example.
       </p>
     </remark>
 
@@ -867,7 +867,7 @@ $\xrightarrow{\text{reflect $xy$}}$
     </p>
 
     <p>
-      In view of the above <xref ref="matrix-mult-comp-is-prod"/>, the following properties are consequences of the corresponding <xref ref="matrix-mult-compose-trans">Properties</xref> of transformations.
+      In view of the above <xref ref="matrix-mult-comp-is-prod"/>, the following properties are consequences of the corresponding <xref ref="matrix-mult-compose-trans">properties</xref> of transformations.
     </p>
 
     <note hide-type="true">

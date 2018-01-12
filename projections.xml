@@ -26,7 +26,7 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  In this Section, we will learn to compute the <em>closest vector</em> <m>x_W</m> to <m>x</m> in <m>W</m>.  The vector <m>x_W</m> is called the <em>orthogonal projection</em> of <m>x</m> onto <m>W</m>.
+      Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  In this section, we will learn to compute the <em>closest vector</em> <m>x_W</m> to <m>x</m> in <m>W</m>.  The vector <m>x_W</m> is called the <em>orthogonal projection</em> of <m>x</m> onto <m>W</m>.
     </p>
   </introduction>
 
@@ -216,7 +216,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      Now we turn to the problem of computing <m>x_W</m> and <m>x_{W^\perp}</m>.  Of course, since <m>x_{W^\perp} = x - x_W</m>, really all we need is to compute <m>x_W</m>.  The following Theorem gives a method for computing the orthogonal projection in terms of a spanning set.
+      Now we turn to the problem of computing <m>x_W</m> and <m>x_{W^\perp}</m>.  Of course, since <m>x_{W^\perp} = x - x_W</m>, really all we need is to compute <m>x_W</m>.  The following theorem gives a method for computing the orthogonal projection in terms of a spanning set.
     </p>
 
     <theorem xml:id="projections-ATA-formula">
@@ -346,7 +346,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      When <m>W = \Span\{v_1,v_2,\ldots,v_m\}</m> has dimension greater than one, computing the orthogonal projection of <m>x</m> onto <m>W</m> means solving the matrix equation <m>A^TAc = A^Tx</m>, where <m>A</m> has columns <m>v_1,v_2,\ldots,v_m</m>.  In other words, we can compute the closest vector by <em>solving a system of linear equations</em>.  To be explicit, we state the <xref ref="projections-ATA-formula"/> as a Recipe:
+      When <m>W = \Span\{v_1,v_2,\ldots,v_m\}</m> has dimension greater than one, computing the orthogonal projection of <m>x</m> onto <m>W</m> means solving the matrix equation <m>A^TAc = A^Tx</m>, where <m>A</m> has columns <m>v_1,v_2,\ldots,v_m</m>.  In other words, we can compute the closest vector by <em>solving a system of linear equations</em>.  To be explicit, we state the <xref ref="projections-ATA-formula"/> as a recipe:
     </p>
 
     <bluebox>
@@ -562,7 +562,7 @@ the license is included in gfdl.xml.
     <idx><h>Orthogonal projection</h><h>as a transformation</h></idx>
 
     <p>
-      In this Subsection, we change perspective and think of the orthogonal projection <m>x_W</m> as a <em>function</em> of <m>x</m>.  This function turns out to be a linear transformation with many nice properties, and is a good example of a linear transformation which is not originally defined as a matrix transformation.
+      In this subsection, we change perspective and think of the orthogonal projection <m>x_W</m> as a <em>function</em> of <m>x</m>.  This function turns out to be a linear transformation with many nice properties, and is a good example of a linear transformation which is not originally defined as a matrix transformation.
     </p>
 
     <proposition hide-type="true" xml:id="projections-properties-of">

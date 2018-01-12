@@ -223,7 +223,7 @@ the license is included in gfdl.xml.
 
     <bluebox>
       <p>
-        The above Theorem is referring to the pivot columns in the <em>original</em> matrix, not its reduced row echelon form.  Indeed, a matrix and its reduced row echelon form generally have different column spaces.  For example, in the matrix <m>A</m> below:
+        The above theorem is referring to the pivot columns in the <em>original</em> matrix, not its reduced row echelon form.  Indeed, a matrix and its reduced row echelon form generally have different column spaces.  For example, in the matrix <m>A</m> below:
         <latex-code>
             <![CDATA[
 \begin{tikzpicture}
@@ -353,7 +353,7 @@ the license is included in gfdl.xml.
       </statement>
     </theorem>
 
-    <p>In lieu of a proof, we illustrate the Theorem with an example, and we leave it to the reader to generalize the argument.</p>
+    <p>In lieu of a proof, we illustrate the theorem with an example, and we leave it to the reader to generalize the argument.</p>
 
     <example xml:id="dimension-eg-basis-nul">
       <title>A basis of a null space</title>

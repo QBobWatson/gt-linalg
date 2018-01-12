@@ -516,7 +516,7 @@ the license is included in gfdl.xml.
     <title>Magical Properties of the Determinant</title>
 
     <p>
-      In this Subsection, we will discuss a number of the amazing properties enjoyed by the determinant: the <xref ref="det-defn-invert-prop">invertibility property</xref>, the <xref ref="det-defn-mult-prop">multiplicativity property</xref>, and the <xref ref="det-defn-trans-prop">transpose property</xref>.
+      In this subsection, we will discuss a number of the amazing properties enjoyed by the determinant: the <xref ref="det-defn-invert-prop">invertibility property</xref>, the <xref ref="det-defn-mult-prop">multiplicativity property</xref>, and the <xref ref="det-defn-trans-prop">transpose property</xref>.
     </p>
 
     <proposition hide-type="true" xml:id="det-defn-invert-prop">
@@ -993,7 +993,7 @@ the license is included in gfdl.xml.
     </corollary>
 
     <p>
-      The previous Corollary makes it easier to compute the determinant: one is allowed to do row <em>and</em> column operations when simplifying the matrix.  (Of course, one still has to keep track of how the row and column operations change the determinant.)
+      The previous corollary makes it easier to compute the determinant: one is allowed to do row <em>and</em> column operations when simplifying the matrix.  (Of course, one still has to keep track of how the row and column operations change the determinant.)
     </p>
 
     <example>

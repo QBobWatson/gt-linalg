@@ -80,7 +80,7 @@ the license is included in gfdl.xml.
     <ol>
       <li>
         <p>
-        Solve the matrix equation <m>Ax=b</m> (Chapters 2<ndash/>4).
+        Solve the matrix equation <m>Ax=b</m> (chapters 2<ndash/>4).
         <ul>
           <li>
             Solve systems of linear equations using matrices, row reduction, and inverses.
@@ -93,7 +93,7 @@ the license is included in gfdl.xml.
       </li>
       <li>
         <p>
-        Solve the matrix equation <m>Ax=\lambda x</m> (Chapters 5<ndash/>6).
+        Solve the matrix equation <m>Ax=\lambda x</m> (chapters 5<ndash/>6).
         <ul>
           <li>
             Solve eigenvalue problems using the characteristic polynomial.
@@ -106,7 +106,7 @@ the license is included in gfdl.xml.
       </li>
       <li>
         <p>
-        Approximately solve the matrix equation <m>Ax=b</m>.
+        Approximately solve the matrix equation <m>Ax=b</m> (chapter 7).
         <ul>
           <li>
             Find best-fit solutions to systems of linear equations that have no actual solution using least-squares approximations.

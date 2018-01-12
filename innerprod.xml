@@ -23,7 +23,7 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      In this Chapter, it will be necessary to find the <em>closest</em> point on a subspace to a given point, like so:
+      In this chapter, it will be necessary to find the <em>closest</em> point on a subspace to a given point, like so:
       <latex-code>
 \begin{tikzpicture}[myxyz, thin border nodes]
   \coordinate (u) at (1,0,0);
@@ -52,7 +52,7 @@ the license is included in gfdl.xml.
     <title>The Dot Product</title>
 
     <p>
-      The basic construction in this Section is the <em>dot product</em>, which measures angles between vectors and computes the length of a vector.
+      The basic construction in this section is the <em>dot product</em>, which measures angles between vectors and computes the length of a vector.
     </p>
 
     <definition>
@@ -130,7 +130,7 @@ the license is included in gfdl.xml.
     </fact>
 
     <p>
-      It is easy to see why this is true for vectors in <m>\R^2</m>, by the Pythagorean Theorem.
+      It is easy to see why this is true for vectors in <m>\R^2</m>, by the Pythagorean theorem.
       <latex-code>
 \begin{tikzpicture}[scale=1,decoration={brace,raise=3pt}]
   \draw[grid lines] (0,0) grid (5,5);
@@ -177,7 +177,7 @@ the license is included in gfdl.xml.
       <idx><h>Point</h><h>distance between</h></idx>
       <statement>
         <p>
-          The <term>distance</term> between two points <m>x,y</m> in <m>\R^n</m> is the length of the <xref ref="vectors-diff-pts" text="title">vector from <m>x</m> to <m>y</m></xref>:
+          The <term>distance</term> between two points <m>x,y</m> in <m>\R^n</m> is the length of the <xref ref="vectors-diff-pts" text="title">vector from</xref> <m>x</m> to <m>y</m>:
           <me>\dist(x,y) = \|y-x\|.</me>
         </p>
       </statement>
@@ -306,7 +306,7 @@ the license is included in gfdl.xml.
     </bluebox>
 
     <p>
-      We can see why the Important Fact is true using the <em>law of cosines</em>.  In our language, the law of cosines asserts that if <m>x,y</m> are two nonzero vectors, and if <m>\alpha</m> is the angle between them, then
+      We can see why the important fact is true using the <em>law of cosines</em>.  In our language, the law of cosines asserts that if <m>x,y</m> are two nonzero vectors, and if <m>\alpha</m> is the angle between them, then
       <me>\|y-x\|^2 = \|x\|^2 + \|y\|^2 - 2\|x\|\,\|y\|\cos\alpha.</me>
       <latex-code mode="bare">
         \usetikzlibrary{angles}
@@ -336,7 +336,7 @@ the license is included in gfdl.xml.
     </p>
 
     <bluebox>
-      <idx><h>Orthogonality</h><h>and the Pythagorean Theorem</h></idx>
+      <idx><h>Orthogonality</h><h>and the Pythagorean theorem</h></idx>
       <p>
         <me>
           x\perp y \quad\iff\quad x\cdot y = 0 \quad\iff\quad \|y-x\|^2 = \|x\|^2 + \|y\|^2.

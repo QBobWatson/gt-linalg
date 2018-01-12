@@ -22,7 +22,7 @@ the license is included in gfdl.xml.
   </objectives>
 
   <p>
-    In this Section, we interpret a basis of a subspace <m>V</m> as a <em>coordinate system</em> on <m>V</m>, and we learn how to write a vector in <m>V</m> in that coordinate system.
+    In this section, we interpret a basis of a subspace <m>V</m> as a <em>coordinate system</em> on <m>V</m>, and we learn how to write a vector in <m>V</m> in that coordinate system.
   </p>
 
   <fact xml:id="dimension-unique-coeff">

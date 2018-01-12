@@ -167,7 +167,7 @@ the license is included in gfdl.xml.
     </theorem>
 
     <p>
-      In particular, finding a least-squares solution means solving a consistent system of linear equations.  We can translate the above Theorem into a recipe:
+      In particular, finding a least-squares solution means solving a consistent system of linear equations.  We can translate the above theorem into a recipe:
     </p>
 
     <bluebox>
@@ -297,7 +297,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      The reader may have noticed that we have been careful to say <q>the least-squares solutions</q> in the plural, and <q>a least-squares solution</q> using the indefinite article.  This is because a least-squares solution need not be unique: indeed, if the columns of <m>A</m> are linearly dependent, then <m>Ax=b_{\Col(A)}</m> has infinitely many solutions.  The following Theorem, which gives equivalent criteria for uniqueness, is an analogue of this <xref ref="projections-ATA-formula2"/>.
+      The reader may have noticed that we have been careful to say <q>the least-squares solutions</q> in the plural, and <q>a least-squares solution</q> using the indefinite article.  This is because a least-squares solution need not be unique: indeed, if the columns of <m>A</m> are linearly dependent, then <m>Ax=b_{\Col(A)}</m> has infinitely many solutions.  The following theorem, which gives equivalent criteria for uniqueness, is an analogue of this <xref ref="projections-ATA-formula2"/>.
     </p>
 
     <theorem>
@@ -464,7 +464,7 @@ the license is included in gfdl.xml.
     <idx><h>Best-fit problem</h></idx>
 
     <p>
-      In this Subsection we give an application of the method of least squares to data modeling.  We begin with a basic example.
+      In this subsection we give an application of the method of least squares to data modeling.  We begin with a basic example.
     </p>
 
     <specialcase>
@@ -741,7 +741,7 @@ the license is included in gfdl.xml.
             \qquad x = \vec{B C D}
             \qquad b = \vec{0 1 3 4}.
           </me>
-          We observe that the columns <m>u_1,u_2,u_3</m> of <m>A</m> are <em>orthogonal</em>, so we can use <xref ref="leastsquares-recipe2">Recipe 2</xref>:
+          We observe that the columns <m>u_1,u_2,u_3</m> of <m>A</m> are <em>orthogonal</em>, so we can use <xref ref="leastsquares-recipe2">recipe 2</xref>:
           <me>
             \hat x = \left(\frac{b\cdot u_1}{u_1\cdot u_1},\;
               \frac{b\cdot u_2}{u_2\cdot u_2},\;

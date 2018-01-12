@@ -19,14 +19,14 @@ the license is included in gfdl.xml.
       <li>Understand what diagonalizability and multiplicity have to say about similarity.</li>
       <li><em>Recipes:</em> diagonalize a matrix, quickly compute powers of a matrix by diagonalization.</li>
       <li><em>Pictures:</em> the geometry of diagonal matrices, why a shear is not diagonalizable.</li>
-      <li><em>Theorem:</em> the Diagonalization Theorem (two variants).</li>
+      <li><em>Theorem:</em> the diagonalization theorem (two variants).</li>
       <li><em>Vocabulary words:</em> <term>diagonalizable</term>, <term>algebraic multiplicity</term>, <term>geometric multiplicity</term>.</li>
     </ol>
   </objectives>
 
   <introduction>
     <p>
-      Diagonal matrices are the easiest kind of matrices to understand: they just scale the coordinate directions by their diagonal entries.  In <xref ref="similarity"/>, we saw that similar matrices behave in the same way, with respect to different coordinate systems.  Therefore, if a matrix is similar to a diagonal matrix, it is also relatively easy to understand.  This Section is devoted to the question: <q>When is a matrix similar to a diagonal matrix?</q>
+      Diagonal matrices are the easiest kind of matrices to understand: they just scale the coordinate directions by their diagonal entries.  In <xref ref="similarity"/>, we saw that similar matrices behave in the same way, with respect to different coordinate systems.  Therefore, if a matrix is similar to a diagonal matrix, it is also relatively easy to understand.  This section is devoted to the question: <q>When is a matrix similar to a diagonal matrix?</q>
     </p>
   </introduction>
 
@@ -383,7 +383,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
     </example>
 
     <p>
-      Here is the procedure we used in the above Examples.
+      Here is the procedure we used in the above examples.
     </p>
 
     <bluebox>
@@ -538,7 +538,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
     <title>Algebraic and Geometric Multiplicity</title>
 
     <p>
-      In this Subsection, we give a variant of the <xref ref="diagonalization-thm"/> that provides another criterion for diagonalizability.  It is stated in the language of <em>multiplicities</em> of eigenvalues.
+      In this subsection, we give a variant of the <xref ref="diagonalization-thm"/> that provides another criterion for diagonalizability.  It is stated in the language of <em>multiplicities</em> of eigenvalues.
     </p>
 
     <p>
@@ -623,7 +623,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
     </example>
 
     <p>
-      We saw in the above Examples that the algebraic and geometric multiplicities need not coincide.  However, they do satisfy the following fundamental inequality, the proof of which is beyond the scope of this text.
+      We saw in the above examples that the algebraic and geometric multiplicities need not coincide.  However, they do satisfy the following fundamental inequality, the proof of which is beyond the scope of this text.
     </p>
 
     <theorem xml:id="diag-amgm">
@@ -709,7 +709,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
     </bluebox>
 
     <p>
-      The examples at the beginning of this Subsection illustrate the Theorem.  Here we give some general consequences for diagonalizability of <m>2\times 2</m> and <m>3\times 3</m> matrices.
+      The examples at the beginning of this subsection illustrate the theorem.  Here we give some general consequences for diagonalizability of <m>2\times 2</m> and <m>3\times 3</m> matrices.
     </p>
 
     <specialcase hide-type="true" xml:id="diag-cases-22">
@@ -1053,7 +1053,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
       </statement>
       <solution>
         <p>
-          This is the inverse of the matrix <m>A</m> from the previous <xref ref="diag-l1big-l2big"/>.  In that Example, we found <m>A = CDC\inv</m> for
+          This is the inverse of the matrix <m>A</m> from the previous <xref ref="diag-l1big-l2big"/>.  In that example, we found <m>A = CDC\inv</m> for
           <me>
             C = \mat{2/3 -1; 1 1} \qquad D = \mat{2 0; 0 3}.
           </me>

@@ -347,7 +347,7 @@ the license is included in gfdl.xml.
       The reduced row echelon form of the matrix tells us that the only solution is <m>(x,y,z) = (1,-2,3).</m>
       </p>
       <figure>
-        <caption>Animated slideshow of the row reduction in this Example.</caption>
+        <caption>Animated slideshow of the row reduction in this example.</caption>
         <mathbox source="demos/rowred2.html" height="500px"/>
       </figure>
     </solution>

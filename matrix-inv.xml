@@ -18,7 +18,7 @@ the license is included in gfdl.xml.
       <li>Learn about invertible transformations, and understand the relationship between invertible matrices and invertible transformations.</li>
       <li><em>Recipes:</em> compute the inverse matrix, solve a linear system by taking inverses.</li>
       <li><em>Picture:</em> the inverse of a transformation.</li>
-      <li><em>Theorem:</em> the Invertible Matrix Theorem.</li>
+      <li><em>Theorem:</em> the invertible matrix theorem.</li>
       <li><em>Vocabulary words:</em> <term>inverse matrix</term>, <term>inverse transformation</term>.</li>
     </ol>
   </objectives>
@@ -219,7 +219,7 @@ the license is included in gfdl.xml.
      </p>
    </example>
 
-   <p>The following Theorem gives a procedure for computing <m>A\inv</m> in general.</p>
+   <p>The following theorem gives a procedure for computing <m>A\inv</m> in general.</p>
 
    <theorem xml:id="matrix-inv-how-to-compute">
      <idx><h>Invertible matrix</h><h>computation</h><h>in general</h></idx>
@@ -236,7 +236,7 @@ the license is included in gfdl.xml.
              which is impossible as <m>v\neq 0</m>.  Therefore, <m>A</m> is not invertible.
        </p>
        <p>
-         Now suppose that the reduced row echelon form of <m>(\,A\mid I_n\,)</m> has the form <m>(\,I_n\mid B\,)</m>.  In this case, all pivots are contained in the non-augmented part of the matrix, so the augmented part plays no role in the row reduction: the entries of the augmented part do not influence the choice of row operations used.  Hence, row reducing <m>(\,A\mid I_n\,)</m> is equivalent to solving the <m>n</m> systems of linear equations <m>Ax_1 = e_1,\,Ax_2=e_2,\,\ldots,Ax_n=e_n</m>, where <m>e_1,e_2,\ldots,e_n</m> are the <xref ref="defn-standard-coord-vectors">standard coordinate vectors</xref>:
+         Now suppose that the reduced row echelon form of <m>(\,A\mid I_n\,)</m> has the form <m>(\,I_n\mid B\,)</m>.  In this case, all pivots are contained in the non-augmented part of the matrix, so the augmented part plays no role in the row reduction: the entries of the augmented part do not influence the choice of row operations used.  Hence, row reducing <m>(\,A\mid I_n\,)</m> is equivalent to solving the <m>n</m> systems of linear equations <m>Ax_1 = e_1,\,Ax_2=e_2,\,\ldots,Ax_n=e_n</m>, where <m>e_1,e_2,\ldots,e_n</m> are the <xref ref="defn-standard-coord-vectors" text="title">standard coordinate vectors</xref>:
          <me>
 \def\g{\color{light gray}}\begin{split}
 Ax_1 \amp= \def\o{\textcolor{blue}} \o{e_1}: \qquad
@@ -263,7 +263,7 @@ A\gg\vec{-2 -1 1/2} \amp= e_3: \qquad
          </me>
          By this <xref ref="linear-trans-pick-columns"/>, the product <m>Be_i</m> is just the <m>i</m>th column <m>x_i</m> of <m>B</m>, so
          <me>e_i = Ax_i = ABe_i</me>
-         for all <m>i</m>.  By the same Fact, the <m>i</m>th column of <m>AB</m> is <m>e_i</m>, which means that <m>AB</m> is the identity matrix.  Thus <m>B</m> is the inverse of <m>A</m>.
+         for all <m>i</m>.  By the same fact, the <m>i</m>th column of <m>AB</m> is <m>e_i</m>, which means that <m>AB</m> is the identity matrix.  Thus <m>B</m> is the inverse of <m>A</m>.
        </p>
      </proof>
    </theorem>
@@ -341,7 +341,7 @@ $\hmat{1 0 4 1 0 0; 0 1 2 0 1 0; 0 \r0 \r0 0 3 1}$.}
    <title>Solving Linear Systems using Inverses</title>
 
    <p>
-     In this Subsection, we learn to solve <m>Ax=b</m> by <q>dividing by <m>A</m>.</q>
+     In this subsection, we learn to solve <m>Ax=b</m> by <q>dividing by <m>A</m>.</q>
    </p>
 
    <theorem xml:id="matrix-inv-solve-system">
@@ -464,7 +464,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
    </example>
 
    <p>
-     The advantage of solving a linear system using inverses is that it becomes much faster to solve the matrix equation <m>Ax=b</m> for other, or even unknown, values of <m>b</m>.  For instance, in the above Example, the solution of the system of equations
+     The advantage of solving a linear system using inverses is that it becomes much faster to solve the matrix equation <m>Ax=b</m> for other, or even unknown, values of <m>b</m>.  For instance, in the above example, the solution of the system of equations
          <me>
            \syseq{2x_1 + 3x_2 + 2x_3 = b_1;
                    x_1 \+ \. + 3x_3 = b_2;
@@ -762,6 +762,12 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
      </p>
    </remark>
 
+    <remark type-name="Challenge">
+      <p>
+        Find an invertible (non-linear) transformation <m>T\colon\R^2\to\R</m>.
+      </p>
+    </remark>
+
    <theorem xml:id="matrix-inv-matrix-inv-comp">
      <idx><h>Invertible transformation</h><h>and invertible matrices</h></idx>
      <idx><h>Invertible matrix</h><h>and invertible transformation</h></idx>
@@ -865,11 +871,10 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
  <subsection>
    <title>Characterizing Invertible Matrices</title>
 
-   <p>This Subsection consists of a single important theorem, with many equivalent conditions for a matrix to be invertible.  This is one of the most important theorems in this textbook.  We will append two more criteria in <xref ref="eigenvectors"/>.</p>
+   <p>This subsection consists of a single important theorem, with many equivalent conditions for a matrix to be invertible.  This is one of the most important theorems in this textbook.  We will append two more criteria in <xref ref="eigenvectors"/>.</p>
 
-   <theorem type-name="Invertible Matrix Theorem" hide-type="true" xml:id="imt-1">
-     <title>The Invertible Matrix Theorem</title>
-     <idx><h>Invertible Matrix Theorem</h></idx>
+   <theorem type-name="Invertible Matrix Theorem" xml:id="imt-1">
+     <idx><h>Invertible matrix theorem</h></idx>
      <statement>
        <p>
          Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>T\colon\R^n\to\R^n</m> be the matrix transformation <m>T(x) = Ax</m>.  The following statements are equivalent:
@@ -944,10 +949,10 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
        </ol>
      </p>
      <p>
-       For invertible matrices, all of the statements of the Invertible Matrix Theorem are true.
+       For invertible matrices, all of the statements of the invertible matrix theorem are true.
      </p>
      <p>
-       For non-invertible matrices, all of the statements of the Invertible Matrix Theorem are false.
+       For non-invertible matrices, all of the statements of the invertible matrix theorem are false.
      </p>
    </bluebox>
 

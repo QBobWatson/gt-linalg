@@ -415,12 +415,12 @@ the license is included in gfdl.xml.
             Suppose that <m>u,v</m> are in <m>\Nul(A)</m>.  This means that
             <m>Au=0</m> and <m>Av=0</m>.  Hence
             <me> A(u+v) = Au + Av = 0 + 0 = 0 </me>
-            by the <xref ref="matrix-linearity">linearity of the matrix-vector product from</xref>.  Therefore, <m>u+v</m> is in <m>\Nul(A)</m>.
+            by the <xref ref="matrix-linearity">linearity of the matrix-vector product</xref>.  Therefore, <m>u+v</m> is in <m>\Nul(A)</m>.
           </li>
           <li>
             Suppose that <m>v</m> is in <m>\Nul(A)</m> and <m>c</m> is a scalar.  Then
             <me>A(cv) = cAv = c\cdot 0 = 0</me>
-            by the <xref ref="matrix-linearity">linearity of the matrix-vector product from</xref>, so <m>cv</m> is also in <m>\Nul(A)</m>.
+            by the <xref ref="matrix-linearity">linearity of the matrix-vector product</xref>, so <m>cv</m> is also in <m>\Nul(A)</m>.
           </li>
         </ol>
         Since <m>\Nul(A)</m> satisfies the three defining properties of a subspace, it is a subspace.

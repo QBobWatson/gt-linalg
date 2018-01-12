@@ -22,7 +22,7 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      In this Section, we give a formula for orthogonal projection that is considerably simpler than the one in <xref ref="projections"/>, in that it does not require row reduction or matrix inversion.  However, this formula, called the Projection Formula, only works in the presence of an <em>orthogonal</em> basis.  We will also present the Gram<ndash/>Schmidt process for turning an arbitrary basis into an orthogonal one.
+      In this section, we give a formula for orthogonal projection that is considerably simpler than the one in <xref ref="projections"/>, in that it does not require row reduction or matrix inversion.  However, this formula, called the Projection Formula, only works in the presence of an <em>orthogonal</em> basis.  We will also present the Gram<ndash/>Schmidt process for turning an arbitrary basis into an orthogonal one.
     </p>
   </introduction>
 
@@ -556,7 +556,7 @@ the license is included in gfdl.xml.
     <title>The Gram<ndash/>Schmidt Process</title>
 
     <p>
-      We saw in the previous Subsection that orthogonal projections and <m>\cB</m>-coordinates are much easier to compute in the presence of an <em>orthogonal</em> basis for a subspace.  In this Subsection, we give a method, called the <em>Gram<ndash/>Schmidt Process</em>, for computing an orthogonal basis of a subspace.
+      We saw in the previous subsection that orthogonal projections and <m>\cB</m>-coordinates are much easier to compute in the presence of an <em>orthogonal</em> basis for a subspace.  In this subsection, we give a method, called the <em>Gram<ndash/>Schmidt Process</em>, for computing an orthogonal basis of a subspace.
     </p>
 
     <theorem hide-type="true">
@@ -603,7 +603,7 @@ the license is included in gfdl.xml.
             = v_i - (v_i)_{\Span\{u_1,u_2,\ldots,u_{i-1}\}}
             = v_i - \sum_{j=1}^{i-1}\frac{v_i\cdot u_j}{u_j\cdot u_j}\,u_j
           </me>
-          in the statement of the Theorem.
+          in the statement of the theorem.
         </p>
         <p>
           Since <m>\{u_1,u_2,\ldots,u_m\}</m> is an orthogonal set, it is linearly independent.  Thus it is a set of <m>m</m> linearly independent vectors in <m>W</m>, so it is a basis for <m>W</m> by the <xref ref="basis-theorem"/>.  Similarly, for every <m>i</m>, we saw that the set <m>\{u_1,u_2,\ldots,u_i\}</m> is contained in the <m>i</m>-dimensional subspace <m>\Span\{v_1,v_2,\ldots,v_i\}</m>, so <m>\{u_1,u_2,\ldots,u_i\}</m> is an orthogonal basis for <m>\Span\{v_1,v_2,\ldots,v_i\}</m>.
@@ -789,7 +789,7 @@ the license is included in gfdl.xml.
     <title>Two Methods to Compute the Projection</title>
 
     <p>
-      We have now presented <em>two</em> methods for computing the orthogonal projection of a vector: <xref ref="projections-ATA-formula"/> involves row reduction, and the <xref ref="projection-formula"/> requires an orthogonal basis.  Here are some guidelines for which to use in a given situation.
+      We have now presented <em>two</em> methods for computing the orthogonal projection of a vector: this <xref ref="projections-ATA-formula"/> involves row reduction, and the <xref ref="projection-formula"/> requires an orthogonal basis.  Here are some guidelines for which to use in a given situation.
       <ol>
         <li>
           If you already have an orthogonal basis, it is almost always easier to use the <xref ref="projection-formula"/>.  This often happens in the sciences.
@@ -798,7 +798,7 @@ the license is included in gfdl.xml.
           If you are going to have to compute the projections of many vectors onto the same subspace, it is worth your time to run Gram<ndash/>Schmidt to produce an orthogonal basis, so that you can use the <xref ref="projection-formula"/>.
         </li>
         <li>
-          If you only have to project one or a few vectors onto a subspace, it is faster to use <xref ref="projections-ATA-formula"/>.  This is the method we will follow in <xref ref="least-squares"/>.
+          If you only have to project one or a few vectors onto a subspace, it is faster to use the <xref ref="projections-ATA-formula"/>.  This is the method we will follow in <xref ref="least-squares"/>.
         </li>
       </ol>
     </p>

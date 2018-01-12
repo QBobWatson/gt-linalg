@@ -19,7 +19,7 @@ the license is included in gfdl.xml.
       <li>Learn to decide if a number is an eigenvalue of a matrix, and if so, how to find an associated eigenvector.</li>
       <li><em>Recipe:</em> find a basis for the <m>\lambda</m>-eigenspace.</li>
       <li><em>Pictures:</em> whether or not a vector is an eigenvector, eigenvectors of standard matrix transformations.</li>
-      <li><em>Theorem:</em> the expanded Invertible Matrix Theorem.</li>
+      <li><em>Theorem:</em> the expanded invertible matrix theorem.</li>
       <li><em>Vocabulary word:</em> <term>eigenspace</term>.</li>
       <li><em>Essential vocabulary words:</em> <term>eigenvector</term>, <term>eigenvalue</term>.</li>
     </ol>
@@ -27,7 +27,7 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      In this Section, we define eigenvalues and eigenvectors.  These form the most important facet of the structure theory of square matrices.  As such, eigenvalues and eigenvectors tend to play a key role in the real-life applications of linear algebra.
+      In this section, we define eigenvalues and eigenvectors.  These form the most important facet of the structure theory of square matrices.  As such, eigenvalues and eigenvectors tend to play a key role in the real-life applications of linear algebra.
     </p>
   </introduction>
 
@@ -849,13 +849,12 @@ the license is included in gfdl.xml.
     <title>The Invertible Matrix Theorem: Addenda</title>
 
     <p>
-      We now have two new ways of saying that a matrix is invertible, so we add them to the <xref ref="imt-1"/>.
+      We now have two new ways of saying that a matrix is invertible, so we add them to the <xref ref="imt-1" text="title">invertible matrix theorem</xref>.
     </p>
 
-   <theorem type-name="Invertible Matrix Theorem" hide-type="true" xml:id="imt-2">
-     <title>The Invertible Matrix Theorem</title>
-     <idx><h>Invertible Matrix Theorem</h></idx>
-     <idx><h>Invertible matrix</h><h>Invertible Matrix Theorem</h></idx>
+   <theorem type-name="Invertible Matrix Theorem" xml:id="imt-2">
+     <idx><h>Invertible matrix theorem</h></idx>
+     <idx><h>Invertible matrix</h><h>invertible matrix theorem</h></idx>
      <idx><h>Invertible transformation</h><h>and invertible matrices</h></idx>
      <idx><h>Reduced row echelon form</h><h>and invertibility</h></idx>
      <idx><h>System of linear equations</h><h>trivial solution</h><h>and invertibility</h></idx>

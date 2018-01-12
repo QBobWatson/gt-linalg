@@ -403,7 +403,7 @@ the license is included in gfdl.xml.
     <p>In the previous <xref ref="solnsets-eg-plane2"/> and the <xref ref="solnsets-eg-line2"/> before it, the parametric vector form of the solution set of <m>Ax=b</m> was exactly the same as the parametric vector form of the solution set of <m>Ax=0</m> (from this <xref ref="solnsets-eg-plane"/> and this <xref ref="solnsets-eg-line"/>, respectively), plus a particular solution.
     </p>
 
-    <bluebox xml:id="solnsets-translate-span">
+    <bluebox xml:id="solnsets-translate-span" type-name="Key Observation">
       <title>Key Observation</title>
       <idx><h>Parametric vector form</h><h>particular solution</h></idx>
       <idx><h>Particular solution</h><see>Parametric vector form</see></idx>
@@ -421,13 +421,13 @@ the license is included in gfdl.xml.
       The <term>parametric vector form</term> of the solutions of <m>Ax=b</m> is just the parametric vector form of the solutions of <m>Ax=0</m>, plus a particular solution <m>p</m>.
     </p>
 
-    <p>It is not hard to see why the above <xref ref="solnsets-translate-span">Observation</xref> is true.  If <m>p</m> is a particular solution, then <m>Ap=b</m>, and if <m>x</m> is a solution to the homogeneous equation <m>Ax=0</m>, then
+    <p>It is not hard to see why the <xref ref="solnsets-translate-span"/> is true.  If <m>p</m> is a particular solution, then <m>Ap=b</m>, and if <m>x</m> is a solution to the homogeneous equation <m>Ax=0</m>, then
     <me>A(x+p) = Ax + Ap = 0 + b = b,</me>
     so <m>x+p</m> is another solution of <m>Ax=b</m>.
     </p>
 
     <remark>
-      <p>Row reducing to find the parametric vector form will give you one particular solution <m>p</m> of <m>Ax=b</m>.  But the above <xref ref="solnsets-translate-span">Observation</xref> is true for any solution <m>p</m>.</p>
+      <p>Row reducing to find the parametric vector form will give you one particular solution <m>p</m> of <m>Ax=b</m>.  But the <xref ref="solnsets-translate-span"/> is true for any solution <m>p</m>.</p>
     </remark>
 
     <example xml:id="solnsets-eg-point">
@@ -445,7 +445,7 @@ the license is included in gfdl.xml.
         The only solution is <m>p=\vec{-1 -1 1}</m>.
         </p>
 
-        <p>According to the above <xref ref="solnsets-translate-span">Observation</xref>, this is supposed to be a translate of a span by <m>p</m>.  Indeed, we saw in the first <xref ref="solnsets-eg-no-nontrivial"/> that the only solution of <m>Ax=0</m> is the trivial solution, i.e., that the solution set is the one-point set <m>\{0\}</m>.  The solution set of the inhomogeneous equation <m>Ax=b</m> is
+        <p>According to the <xref ref="solnsets-translate-span"/>, this is supposed to be a translate of a span by <m>p</m>.  Indeed, we saw in the first <xref ref="solnsets-eg-no-nontrivial"/> that the only solution of <m>Ax=0</m> is the trivial solution, i.e., that the solution set is the one-point set <m>\{0\}</m>.  The solution set of the inhomogeneous equation <m>Ax=b</m> is
         <me>\{0\} + \vec{-1 -1 1}.</me>
         Note that <m>\{0\} = \Span\{0\}</m>, so the homogeneous solution set is a span.
         <latex-code>
@@ -474,7 +474,7 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
-    <p>See the interactive figures in the next <xref ref="solnsets-ss-and-cs"/> for visualizations of the above <xref ref="solnsets-translate-span">Observation</xref>.</p>
+    <p>See the interactive figures in the next <xref ref="solnsets-ss-and-cs"/> for visualizations of the <xref ref="solnsets-translate-span"/>.</p>
 
     <bluebox><title>Dimension of the solution set</title>
     <idx><h>Line</h><h>dimension-1 solution set</h></idx>

@@ -36,7 +36,7 @@ Free Documentation License"
         </note>
 
         <p>
-          This Chapter is devoted to the algebraic study of systems of linear equations and their solutions.  We will learn a systematic way of solving equations of the form
+          This chapter is devoted to the algebraic study of systems of linear equations and their solutions.  We will learn a systematic way of solving equations of the form
         <me>
           \syseq{
     3x_1 + 4x_2 + 10x_3 + 19x_4 - 2x_5 - 3x_6 = 141;
@@ -71,12 +71,12 @@ Free Documentation License"
         </note>
 
         <p>
-          This Chapter is devoted to the geometric study of two objects:
+          This chapter is devoted to the geometric study of two objects:
           <ol>
             <li>the solution set of a system of linear equations, and</li>
             <li>the set of all constants that makes a particular system consistent.</li>
           </ol>
-          These objects are related in a beautiful way by the Rank Theorem in <xref ref="rank-thm"/>.
+          These objects are related in a beautiful way by the rank theorem in <xref ref="rank-thm"/>.
         </p>
 
         <p>
@@ -131,7 +131,7 @@ Free Documentation License"
             <li>Solve the matrix equation <m>Ax=\lambda x</m>, where <m>\lambda</m> is a number.</li>
             <li>Approximately solve the matrix equation <m>Ax=b</m>.</li>
           </ol>
-          At this point we have said all that we will say about the first part.  This Chapter belongs to the second.
+          At this point we have said all that we will say about the first part.  This chapter belongs to the second.
         </p>
 
         <note type-name="Primary Goal">
@@ -168,7 +168,7 @@ Free Documentation License"
         </note>
 
         <p>
-          This Chapter constitutes the core of any first course on linear algebra: eigenvalues and eigenvectors play a crucial role in most real-world applications of the subject.
+          This chapter constitutes the core of any first course on linear algebra: eigenvalues and eigenvectors play a crucial role in most real-world applications of the subject.
         </p>
 
         <p>

@@ -25,7 +25,7 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      In this Section we give a geometric interpretation of determinants, in terms of <em>volumes.</em>  This will shed light on the reason behind three of the four <xref ref="det-defn-the-defn">defining properties</xref>.  It is also a crucial ingredient in the change-of-variables formula in multivariable calculus.
+      In this section we give a geometric interpretation of determinants, in terms of <em>volumes.</em>  This will shed light on the reason behind three of the four <xref ref="det-defn-the-defn" text="title">defining properties of the determinant</xref>.  It is also a crucial ingredient in the change-of-variables formula in multivariable calculus.
     </p>
   </introduction>
 
@@ -198,7 +198,7 @@ the license is included in gfdl.xml.
     <title>Determinants and Volumes</title>
 
     <p>
-      The Key Observation above is only the beginning of the story:
+      The key observation above is only the beginning of the story:
       the volume of a parallelepiped is <em>always</em> a determinant.
     </p>
 
@@ -219,7 +219,7 @@ the license is included in gfdl.xml.
     </statement>
     <proof visible="true">
       <p>
-        Since the four <xref ref="det-defn-the-defn">defining properties</xref> characterize the determinant, they also characterize the absolute value of the determinant.  Explicitly, <m>|\det|</m> is a function on square matrices which satisfies these properties:
+        Since the four <xref ref="det-defn-the-defn" text="title">defining properties</xref> characterize the determinant, they also characterize the absolute value of the determinant.  Explicitly, <m>|\det|</m> is a function on square matrices which satisfies these properties:
 	<ol>
 	  <li>
 	    Doing a row replacement on <m>A</m> does not change <m>|\det(A)|</m>.
@@ -495,7 +495,7 @@ $\quad\xrightarrow{\phantom{MMMM}}\quad$
   </theorem>
 
   <p>
-    Since <m>\det(A) = \det(A^T)</m> by the <xref ref="det-defn-trans-prop">transpose property</xref>, the absolute value of <m>\det(A)</m> is also equal to the volume of the paralellepiped determined by the <em>columns</em> of <m>A</m> as well.
+    Since <m>\det(A) = \det(A^T)</m> by the <xref ref="det-defn-trans-prop" text="title">transpose property</xref>, the absolute value of <m>\det(A)</m> is also equal to the volume of the paralellepiped determined by the <em>columns</em> of <m>A</m> as well.
   </p>
 
   <specialcase>
@@ -630,7 +630,7 @@ $\quad\xrightarrow{\phantom{MMMM}}\quad$
   </example>
 
   <p>
-    You might be wondering: if the absolute value of the determinant is a volume, what is the geometric meaning of the determinant without the absolute value?  The next Remark explains that we can think of the determinant as a <em>signed</em> volume.  If you have taken an integral calculus course, you probably computed negative areas under curves; the idea here is similar.
+    You might be wondering: if the absolute value of the determinant is a volume, what is the geometric meaning of the determinant without the absolute value?  The next remark explains that we can think of the determinant as a <em>signed</em> volume.  If you have taken an integral calculus course, you probably computed negative areas under curves; the idea here is similar.
   </p>
 
   <remark>
@@ -794,7 +794,7 @@ $\quad\xrightarrow{\phantom{MMMM}}\quad$
       </statement>
       <proof visible="true">
         <p>
-          Let <m>C</m> be the unit cube, let <m>v_1,v_2,\ldots,v_n</m> be the columns of <m>A</m>, and let <m>P</m> be the paralellepiped determined by these vectors, so <m>T(C) = P</m> and <m>\vol(P) = |\det(A)|</m>.  For <m>\epsilon > 0</m> we let <m>\epsilon C</m> be the cube with side lengths <m>\epsilon</m>, i.e., the paralellepiped determined by the vectors <m>\epsilon e_1,\epsilon e_2,\ldots,\epsilon e_n</m>, and we define <m>\epsilon P</m> similarly.  By the second <xref ref="linear-trans-defn">defining property</xref>, <m>T</m> takes <m>\epsilon C</m> to <m>\epsilon P</m>.  The volume of <m>\epsilon C</m> is <m>\epsilon^n</m> (we scaled each of the <m>n</m> standard vectors by a factor of <m>\epsilon</m>) and the volume of <m>\epsilon P</m> is <m>\epsilon^n|\det(A)|</m> (for the same reason), so we have shown that <m>T</m> scales the volume of <m>\epsilon C</m> by <m>|\det(A)|</m>.
+          Let <m>C</m> be the unit cube, let <m>v_1,v_2,\ldots,v_n</m> be the columns of <m>A</m>, and let <m>P</m> be the paralellepiped determined by these vectors, so <m>T(C) = P</m> and <m>\vol(P) = |\det(A)|</m>.  For <m>\epsilon > 0</m> we let <m>\epsilon C</m> be the cube with side lengths <m>\epsilon</m>, i.e., the paralellepiped determined by the vectors <m>\epsilon e_1,\epsilon e_2,\ldots,\epsilon e_n</m>, and we define <m>\epsilon P</m> similarly.  By the second <xref ref="linear-trans-defn" text="title">defining property</xref>, <m>T</m> takes <m>\epsilon C</m> to <m>\epsilon P</m>.  The volume of <m>\epsilon C</m> is <m>\epsilon^n</m> (we scaled each of the <m>n</m> standard vectors by a factor of <m>\epsilon</m>) and the volume of <m>\epsilon P</m> is <m>\epsilon^n|\det(A)|</m> (for the same reason), so we have shown that <m>T</m> scales the volume of <m>\epsilon C</m> by <m>|\det(A)|</m>.
           <latex-code>
 \begin{tikzpicture}[thin border nodes, scale=1.3]
   \begin{scope}[scale=1.7, yshift=.3cm]
@@ -834,7 +834,7 @@ $\quad\xrightarrow{\phantom{MMMM}}\quad$
           </latex-code>
         </p>
         <p>
-          By the first <xref ref="linear-trans-defn">defining property</xref>, the image of a translate of <m>\epsilon C</m> is a translate of <m>\epsilon P</m>:
+          By the first <xref ref="linear-trans-defn" text="title">defining property</xref>, the image of a translate of <m>\epsilon C</m> is a translate of <m>\epsilon P</m>:
           <me>T(x + \epsilon C) = T(x) + \epsilon T(C) = T(x) + \epsilon P.</me>
           Since a translation does not change volumes, this proves that <m>T</m> scales the volume of a translate of <m>\epsilon C</m> by <m>|\det(A)|</m>.
         </p>
