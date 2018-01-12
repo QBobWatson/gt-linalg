@@ -50,10 +50,10 @@ the license is included in gfdl.xml.
     </p>
 
     <specialcase>
-      <idx><h>Orthogonal set</h><h>orthonormality of</h><h>unit coordinate vectors</h></idx>
-      <idx><h>Unit coordinate vectors</h><h>orthonormality of</h></idx>
+      <idx><h>Orthogonal set</h><h>orthonormality of</h><h>standard coordinate vectors</h></idx>
+      <idx><h>Standard coordinate vectors</h><h>orthonormality of</h></idx>
       <p>
-        The unit coordinate vectors in <m>\R^n</m> always form an orthonormal set.  For instance, in <m>\R^3</m> we check that
+        The standard coordinate vectors in <m>\R^n</m> always form an orthonormal set.  For instance, in <m>\R^3</m> we check that
         <me>
           \vec{1 0 0}\cdot\vec{0 1 0} = 0 \qquad
           \vec{1 0 0}\cdot\vec{0 0 1} = 0 \qquad
@@ -304,7 +304,7 @@ the license is included in gfdl.xml.
       </statement>
       <solution>
         <p>
-          A basis for the <m>xy</m>-plane is given by the two unit coordinate vectors
+          A basis for the <m>xy</m>-plane is given by the two standard coordinate vectors
           <me>
             e_1 = \vec{1 0 0} \qquad e_2 = \vec{0 1 0}.
           </me>

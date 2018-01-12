@@ -224,9 +224,9 @@ the license is included in gfdl.xml.
     </definition>
 
     <p>
-      <idx><h>Unit coordinate vectors</h><h>are unit vectors</h></idx>
-      <idx><h>Unit vector</h><h>unit coordinate vectors</h></idx>
-      The <xref ref="defn-unit-coord-vectors" text="title">unit coordinate vectors</xref> <m>e_1,e_2,e_3,\ldots</m> are unit vectors (have length one):
+      <idx><h>Standard coordinate vectors</h><h>are unit vectors</h></idx>
+      <idx><h>Unit vector</h><h>standard coordinate vectors</h></idx>
+      The <xref ref="defn-standard-coord-vectors" text="title">standard coordinate vectors</xref> <m>e_1,e_2,e_3,\ldots</m> are unit vectors (have length one):
       <me>\|e_1\| = \left\|\vec{1 0 0}\right\| = \sqrt{1^2 + 0^2 + 0^2} = 1.</me>
       For any nonzero vector <m>x</m>, there is a unique unit vector pointing in the same direction.  It is obtained by dividing by the length of <m>x</m>.
     </p>

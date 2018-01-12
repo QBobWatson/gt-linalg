@@ -236,7 +236,7 @@ the license is included in gfdl.xml.
              which is impossible as <m>v\neq 0</m>.  Therefore, <m>A</m> is not invertible.
        </p>
        <p>
-         Now suppose that the reduced row echelon form of <m>(\,A\mid I_n\,)</m> has the form <m>(\,I_n\mid B\,)</m>.  In this case, all pivots are contained in the non-augmented part of the matrix, so the augmented part plays no role in the row reduction: the entries of the augmented part do not influence the choice of row operations used.  Hence, row reducing <m>(\,A\mid I_n\,)</m> is equivalent to solving the <m>n</m> systems of linear equations <m>Ax_1 = e_1,\,Ax_2=e_2,\,\ldots,Ax_n=e_n</m>, where <m>e_1,e_2,\ldots,e_n</m> are the <xref ref="defn-unit-coord-vectors">unit coordinate vectors</xref>:
+         Now suppose that the reduced row echelon form of <m>(\,A\mid I_n\,)</m> has the form <m>(\,I_n\mid B\,)</m>.  In this case, all pivots are contained in the non-augmented part of the matrix, so the augmented part plays no role in the row reduction: the entries of the augmented part do not influence the choice of row operations used.  Hence, row reducing <m>(\,A\mid I_n\,)</m> is equivalent to solving the <m>n</m> systems of linear equations <m>Ax_1 = e_1,\,Ax_2=e_2,\,\ldots,Ax_n=e_n</m>, where <m>e_1,e_2,\ldots,e_n</m> are the <xref ref="defn-standard-coord-vectors">standard coordinate vectors</xref>:
          <me>
 \def\g{\color{light gray}}\begin{split}
 Ax_1 \amp= \def\o{\textcolor{blue}} \o{e_1}: \qquad

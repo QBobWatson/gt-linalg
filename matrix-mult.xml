@@ -686,7 +686,7 @@ the license is included in gfdl.xml.
           <me>T\circ U(e_1) = T(U(e_1)) = T(Be_1) = A(Be_1).</me>
           By definition, the first column of the product <m>AB</m> is the product of <m>A</m> with the first column of <m>B</m>, which is <m>Be_1</m>, so
           <me>Ce_1 = T\circ U(e_1) = A(Be_1) = (AB)e_1.</me>
-          It follows that <m>C</m> has the same first column as <m>AB</m>.  The same argument as applied to the <m>i</m>th unit coordinate vector <m>e_i</m> shows that <m>C</m> and <m>AB</m> have the same <m>i</m>th column; since they have the same columns, they are the same matrix.
+          It follows that <m>C</m> has the same first column as <m>AB</m>.  The same argument as applied to the <m>i</m>th standard coordinate vector <m>e_i</m> shows that <m>C</m> and <m>AB</m> have the same <m>i</m>th column; since they have the same columns, they are the same matrix.
         </p>
       </proof>
     </theorem>
@@ -863,7 +863,7 @@ $\xrightarrow{\text{reflect $xy$}}$
     </example>
 
     <p>
-      Recall from this <xref ref="linear-trans-identity-mat"/> that the <em>identity transformation</em> is the <m>n\times n</m> matrix <m>I_n</m> whose columns are the unit coordinate vectors in <m>\R^n</m>.  The identity matrix is the standard matrix of the identity transformation: that is, <m>x = \operatorname{Id}_{\R^n}(x) = I_nx</m> for all vectors <m>x</m> in <m>\R^n</m>.
+      Recall from this <xref ref="linear-trans-identity-mat"/> that the <em>identity transformation</em> is the <m>n\times n</m> matrix <m>I_n</m> whose columns are the standard coordinate vectors in <m>\R^n</m>.  The identity matrix is the standard matrix of the identity transformation: that is, <m>x = \operatorname{Id}_{\R^n}(x) = I_nx</m> for all vectors <m>x</m> in <m>\R^n</m>.
     </p>
 
     <p>

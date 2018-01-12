@@ -157,11 +157,11 @@ the license is included in gfdl.xml.
       </statement>
       <proof>
         <p>
-          First suppose that <m>A</m> has <m>n</m> linearly independent eigenvectors <m>v_1,v_2,\ldots,v_n</m>, with eigenvalues <m>\lambda_1,\lambda_2,\ldots,\lambda_n</m>.  Define <m>C</m> as above, so <m>C</m> is invertible by the <xref ref="imt-2"/>.  Let <m>D = C\inv A C</m>, so <m>A = CDC\inv</m>.  <xref ref="linear-trans-pick-columns" text="title">Multiplying by unit coordinate vectors</xref> picks out the columns of <m>C</m>: we have <m>Ce_i = v_i</m>, so <m>e_i = C\inv v_i</m>.  We multiply by the unit coordinate vectors to find the columns of <m>D</m>:
+          First suppose that <m>A</m> has <m>n</m> linearly independent eigenvectors <m>v_1,v_2,\ldots,v_n</m>, with eigenvalues <m>\lambda_1,\lambda_2,\ldots,\lambda_n</m>.  Define <m>C</m> as above, so <m>C</m> is invertible by the <xref ref="imt-2"/>.  Let <m>D = C\inv A C</m>, so <m>A = CDC\inv</m>.  <xref ref="linear-trans-pick-columns" text="title">Multiplying by standard coordinate vectors</xref> picks out the columns of <m>C</m>: we have <m>Ce_i = v_i</m>, so <m>e_i = C\inv v_i</m>.  We multiply by the standard coordinate vectors to find the columns of <m>D</m>:
           <me>
             De_i = C\inv A Ce_i = C\inv Av_i = C\inv\lambda_i v_i = \lambda_iC\inv v_i = \lambda_ie_i.
           </me>
-          Therefore, the columns of <m>D</m> are multiples of the unit coordinate vectors:
+          Therefore, the columns of <m>D</m> are multiples of the standard coordinate vectors:
           <me>
             D = \mat{\lambda_1 0 \cdots, 0 0; 0 \lambda_2 \cdots, 0 0;
             \vdots, \vdots, \ddots, \vdots, \vdots;
@@ -169,7 +169,7 @@ the license is included in gfdl.xml.
           </me>
         </p>
         <p>
-          Now suppose that <m>A = CDC\inv</m>, where <m>C</m> has columns <m>v_1,v_2,\ldots,v_n</m>, and <m>D</m> is diagonal with diagonal entries <m>\lambda_1,\lambda_2,\ldots,\lambda_n</m>.  Since <m>C</m> is invertible, its columns are linearly independent.  We have to show that <m>v_i</m> is an eigenvector of <m>A</m> with eigenvalue <m>\lambda_i</m>.  We know that the unit coordinate vector <m>e_i</m> is an eigenvector of <m>D</m> with eigenvalue <m>\lambda_i</m>, so:
+          Now suppose that <m>A = CDC\inv</m>, where <m>C</m> has columns <m>v_1,v_2,\ldots,v_n</m>, and <m>D</m> is diagonal with diagonal entries <m>\lambda_1,\lambda_2,\ldots,\lambda_n</m>.  Since <m>C</m> is invertible, its columns are linearly independent.  We have to show that <m>v_i</m> is an eigenvector of <m>A</m> with eigenvalue <m>\lambda_i</m>.  We know that the standard coordinate vector <m>e_i</m> is an eigenvector of <m>D</m> with eigenvalue <m>\lambda_i</m>, so:
           <me>
             Av_i = CDC\inv v_i = CDe_i = C\lambda_ie_i = \lambda_iCe_i = \lambda_i v_i.
           </me>
@@ -200,7 +200,7 @@ the license is included in gfdl.xml.
       </statement>
       <solution>
         <p>
-          This diagonal matrix is in particular upper-triangular, so its eigenvalues are the diagonal entries <m>1,2,3</m>.  The unit coordinate vectors are eigenvalues of a diagonal matrix:
+          This diagonal matrix is in particular upper-triangular, so its eigenvalues are the diagonal entries <m>1,2,3</m>.  The standard coordinate vectors are eigenvalues of a diagonal matrix:
           <me>
             \mat{1 0 0; 0 2 0; 0 0 3}\vec{1 0 0} = 1\cdot\vec{1 0 0} \qquad
             \mat{1 0 0; 0 2 0; 0 0 3}\vec{0 1 0} = 2\cdot\vec{0 1 0}
@@ -208,7 +208,7 @@ the license is included in gfdl.xml.
           <me>
             \mat{1 0 0; 0 2 0; 0 0 3}\vec{0 0 1} = 3\cdot\vec{0 0 1}.
           </me>
-          Therefore, the diagonalization theorem says that <m>A=CDC\inv</m>, where the columns of <m>C</m> are the unit coordinate vectors, and the <m>D</m> is the diagonal matrix with entries <m>1,2,3</m>:
+          Therefore, the diagonalization theorem says that <m>A=CDC\inv</m>, where the columns of <m>C</m> are the standard coordinate vectors, and the <m>D</m> is the diagonal matrix with entries <m>1,2,3</m>:
           <me>
             \mat{1 0 0; 0 2 0; 0 0 3} =
             \mat{1 0 0; 0 1 0; 0 0 1} \mat{1 0 0; 0 2 0; 0 0 3}

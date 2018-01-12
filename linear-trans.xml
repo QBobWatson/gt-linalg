@@ -18,7 +18,7 @@ the license is included in gfdl.xml.
       <li>Understand the relationship between linear transformations and matrix transformations.</li>
       <li><em>Recipe:</em> compute the matrix of a linear transformation.</li>
       <li><em>Theorem:</em> linear transformations and matrix transformations.</li>
-      <li><em>Notation:</em> the <term>unit coordinate vectors</term> <m>e_1,e_2,\ldots</m>.</li>
+      <li><em>Notation:</em> the <term>standard coordinate vectors</term> <m>e_1,e_2,\ldots</m>.</li>
       <li><em>Vocabulary words:</em> <term>linear transformation</term>, <term>standard matrix</term>, <term>identity matrix</term>.</li>
     </ol>
   </objectives>
@@ -374,18 +374,18 @@ the license is included in gfdl.xml.
   </subsection>
 
   <subsection>
-    <title>The Unit Coordinate Vectors</title>
+    <title>The Standard Coordinate Vectors</title>
 
     <p>
       In the next Subsection, we will present the relationship between linear transformations and matrix transformations.  Before doing so, we need the following important notation.
     </p>
 
-    <bluebox xml:id="defn-unit-coord-vectors" type-name="Notation">
-      <title>Unit coordinate vectors</title>
-      <idx><h>Unit coordinate vectors</h><h>definition of</h></idx>
+    <bluebox xml:id="defn-standard-coord-vectors" type-name="Notation">
+      <title>Standard coordinate vectors</title>
+      <idx><h>Standard coordinate vectors</h><h>definition of</h></idx>
       <p>
-        <notation><usage>e_1,e_2,\ldots</usage><description>Unit coordinate vectors</description></notation>
-        The <term>unit coordinate vectors in <m>\R^n</m></term> are the <m>n</m> vectors
+        <notation><usage>e_1,e_2,\ldots</usage><description>Standard coordinate vectors</description></notation>
+        The <term>standard coordinate vectors in <m>\R^n</m></term> are the <m>n</m> vectors
         <me>
           e_1=\vec{1 0 \vdots, 0 0},\quad
           e_2=\vec{0 1 \vdots, 0 0},\quad\ldots,\quad
@@ -395,7 +395,7 @@ the license is included in gfdl.xml.
         The <m>i</m>th entry of <m>e_i</m> is equal to 1, and the other entries are zero.
       </p>
       <p>
-        <em>From now on,</em> for the rest of the book, we will use the symbols <m>\color{red}e_1,e_2,\ldots</m> to denote the unit coordinate vectors.
+        <em>From now on,</em> for the rest of the book, we will use the symbols <m>\color{red}e_1,e_2,\ldots</m> to denote the standard coordinate vectors.
       </p>
     </bluebox>
 
@@ -406,8 +406,8 @@ the license is included in gfdl.xml.
     </p>
 
     <p>
-      <idx><h>Unit coordinate vectors</h><h>picture of</h></idx>
-      The unit coordinate vectors in <m>\R^2</m> and <m>\R^3</m> are pictured below.
+      <idx><h>Standard coordinate vectors</h><h>picture of</h></idx>
+      The standard coordinate vectors in <m>\R^2</m> and <m>\R^3</m> are pictured below.
       <latex-code>
 \begin{tikzpicture}[thin border nodes]
   \draw[grid lines] (-2,-2) grid (2,2);
@@ -435,9 +435,9 @@ the license is included in gfdl.xml.
     </p>
 
     <fact hide-type="true" xml:id="linear-trans-pick-columns">
-      <title>Multiplying a matrix by the unit coordinate vectors</title>
-      <idx><h>Unit coordinate vectors</h><h>and matrix columns</h></idx>
-      <idx><h>Matrix-vector product</h><h>with unit coordinate vectors</h></idx>
+      <title>Multiplying a matrix by the standard coordinate vectors</title>
+      <idx><h>Standard coordinate vectors</h><h>and matrix columns</h></idx>
+      <idx><h>Matrix-vector product</h><h>with standard coordinate vectors</h></idx>
       <p>
         If <m>A</m> is an <m>m\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_m</m>, then <m>\color{red}Ae_i = v_i</m> for each <m>i=1,2,\ldots,n</m>:
         <me>
@@ -458,12 +458,12 @@ the license is included in gfdl.xml.
 
     <definition xml:id="linear-trans-identity-mat">
       <idx><h>Identity matrix</h><h>definition of</h></idx>
-      <idx><h>Identity matrix</h><h>and unit coordinate vectors</h></idx>
-      <idx><h>Unit coordinate vectors</h><h>columns of the identity matrix</h></idx>
+      <idx><h>Identity matrix</h><h>and standard coordinate vectors</h></idx>
+      <idx><h>Standard coordinate vectors</h><h>columns of the identity matrix</h></idx>
       <notation><usage>I_n</usage><description><m>n\times n</m> identity matrix</description></notation>
       <statement>
         <p>
-          The <term><m>n\times n</m> identity matrix</term> is the matrix <m>I_n</m> whose columns are the <m>n</m> unit coordinate vectors in <m>\R^n</m>:
+          The <term><m>n\times n</m> identity matrix</term> is the matrix <m>I_n</m> whose columns are the <m>n</m> standard coordinate vectors in <m>\R^n</m>:
           <me>I_n = \mat{1 0 \cdots, 0 0; 0 1 \cdots, 0 0;
           \vdots, \vdots, \ddots, \vdots, \vdots;
           0 0 \cdots, 1 0; 0 0 \cdots, 0 1}.</me>
@@ -512,7 +512,7 @@ the license is included in gfdl.xml.
     </theorem>
 
     <p>
-      The matrix <m>A</m> in the above Theorem is called the <term>standard matrix</term> for <m>T</m>.  The columns of <m>A</m> are the vectors obtained by evaluating <m>T</m> on the <m>n</m> unit coordinate vectors in <m>\R^n</m>.  To summarize part of the Theorem:
+      The matrix <m>A</m> in the above Theorem is called the <term>standard matrix</term> for <m>T</m>.  The columns of <m>A</m> are the vectors obtained by evaluating <m>T</m> on the <m>n</m> standard coordinate vectors in <m>\R^n</m>.  To summarize part of the Theorem:
     </p>
 
     <bluebox>
@@ -550,7 +550,7 @@ the license is included in gfdl.xml.
       </statement>
       <solution>
         <p>
-          The columns of <m>A</m> are obtained by evaluating <m>T</m> on the unit coordinate vectors <m>e_1,e_2</m>.
+          The columns of <m>A</m> are obtained by evaluating <m>T</m> on the standard coordinate vectors <m>e_1,e_2</m>.
           <me>
 \left.\begin{aligned}
     T(e_1) \amp= 1.5e_1 = \vec{1.5 0} \\
@@ -575,7 +575,7 @@ the license is included in gfdl.xml.
       </statement>
       <solution>
         <p>
-          The columns of <m>A</m> are obtained by evaluating <m>T</m> on the unit coordinate vectors <m>e_1,e_2</m>.  In order to compute the entries of <m>T(e_1)</m> and <m>T(e_2)</m>, we have to do some trigonometry.
+          The columns of <m>A</m> are obtained by evaluating <m>T</m> on the standard coordinate vectors <m>e_1,e_2</m>.  In order to compute the entries of <m>T(e_1)</m> and <m>T(e_2)</m>, we have to do some trigonometry.
           <latex-code mode="bare">
             \usetikzlibrary{math}
           </latex-code>
@@ -666,7 +666,7 @@ the license is included in gfdl.xml.
       </statement>
       <solution>
         <p>
-          We substitute the unit coordinate vectors into the formula defining <m>T</m>:
+          We substitute the standard coordinate vectors into the formula defining <m>T</m>:
           <me>
 \left.\begin{aligned}
     T(e_1) \amp= T\vec{1 0} = \vec{3(1)-0 0 1} = \vec{3 0 1} \\
@@ -687,7 +687,7 @@ the license is included in gfdl.xml.
       </statement>
       <solution>
         <p>
-          This transformation is described geometrically, in two steps.  To find the columns of <m>A</m>, we need to follow the unit coordinate vectors through each of these steps.
+          This transformation is described geometrically, in two steps.  To find the columns of <m>A</m>, we need to follow the standard coordinate vectors through each of these steps.
           <latex-code mode="bare">
 \def\drawarrow#1{
 \begin{tikzpicture}[myxyz, scale=0.8, thin border nodes, baseline]
@@ -782,7 +782,7 @@ $\xrightarrow{\text{project $yz$}}$
         </p>
         <p>
           Now that we know that <m>\Id_{\R^n}</m> is linear, it makes sense to compute its standard matrix.
-          For each unit coordinate vector <m>e_i</m>, we have <m>\Id_{R^n}(e_i) = e_i</m>.  In other words, the columns of the standard matrix of <m>\Id_{\R^n}</m> are the unit coordinate vectors, so the standard matrix is the identity matrix
+          For each standard coordinate vector <m>e_i</m>, we have <m>\Id_{R^n}(e_i) = e_i</m>.  In other words, the columns of the standard matrix of <m>\Id_{\R^n}</m> are the standard coordinate vectors, so the standard matrix is the identity matrix
           <me>I_n = \mat{1 0 \cdots, 0 0; 0 1 \cdots, 0 0;
           \vdots, \vdots, \ddots, \vdots, \vdots;
           0 0 \cdots, 1 0; 0 0 \cdots, 0 1}.</me>

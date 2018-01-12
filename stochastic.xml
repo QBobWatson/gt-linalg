@@ -326,7 +326,7 @@ the license is included in gfdl.xml.
         Let <m>A</m> be a positive stochastic matrix.  Here is how to compute the steady-state vector of <m>A</m> with a computer.
         <ol>
           <li>
-            Choose any vector <m>v_0</m> whose entries sum to <m>1</m> (e.g., a unit coordinate vector).
+            Choose any vector <m>v_0</m> whose entries sum to <m>1</m> (e.g., a standard coordinate vector).
           </li>
           <li>
             Compute <m>v_1 = Av_0,\,v_2 = Av_1,\,v_3=Av_2,\,</m> etc.

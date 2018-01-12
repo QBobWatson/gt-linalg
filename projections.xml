@@ -380,7 +380,7 @@ the license is included in gfdl.xml.
       </statement>
       <solution>
         <p>
-          A basis for the <m>xy</m>-plane is given by the two unit coordinate vectors
+          A basis for the <m>xy</m>-plane is given by the two standard coordinate vectors
           <me>
             e_1 = \vec{1 0 0} \qquad e_2 = \vec{0 1 0}.
           </me>
@@ -617,7 +617,7 @@ the license is included in gfdl.xml.
     <p>
       <idx><h>Orthogonal projection</h><h>standard matrix of</h></idx>
       <idx><h>Linear transformation</h><h>standard matrix of</h><h>orthogonal projection</h></idx>
-      We compute the standard matrix of the orthogonal projection in the same way as for <xref ref="matrix-of-transformation" text="title">any other transformation</xref>: by evaluating on the unit coordinate vectors.  In this case, this means projecting the unit coordinate vectors onto the subspace.
+      We compute the standard matrix of the orthogonal projection in the same way as for <xref ref="matrix-of-transformation" text="title">any other transformation</xref>: by evaluating on the standard coordinate vectors.  In this case, this means projecting the standard coordinate vectors onto the subspace.
     </p>
 
     <example>

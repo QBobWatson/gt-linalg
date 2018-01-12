@@ -125,7 +125,7 @@ the license is included in gfdl.xml.
       <title>The standard basis of <m>\R^n</m></title>
       <idx><h>Basis</h><h>of <m>\R^n</m></h></idx>
       <p>
-        One shows exactly as in the above <xref ref="dimension-eg-R2"/> that the unit coordinate vectors
+        One shows exactly as in the above <xref ref="dimension-eg-R2"/> that the standard coordinate vectors
         <me>e_1=\vec{1 0 \vdots, 0 0},\quad e_2=\vec{0 1 \vdots, 0 0}, \quad\ldots,\quad
         e_{n-1}=\vec{0 0 \vdots, 1 0},\quad e_n=\vec{0 0 \vdots, 0 1}
         </me>
