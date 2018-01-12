@@ -106,11 +106,115 @@ Free Documentation License"
         </note>
 
         <p>
-          In practice, one is often lead to ask questions about the geometry of <em>transformations</em>.  This kind of question can be answered by linear algebra if the transformation can be expressed by a matrix.
+          In practice, one is often lead to ask questions about the geometry of a <em>transformation</em>: a function that takes an input and produces an output.  This kind of question can be answered by linear algebra if the transformation can be expressed by a matrix.
         </p>
 
+        <specialcase>
+          <p>
+            Suppose you are building a robot arm with three joints that can move its hand around a plane, as in the following picture.
+            <latex-code>
+\usetikzlibrary{ipe}
+\usetikzlibrary{angles}
+\tikzstyle{ipe stylesheet} = [
+  ipe import,
+  even odd rule,
+  line join=round,
+  line cap=butt,
+  ipe pen normal/.style={line width=0.4},
+  ipe pen heavier/.style={line width=0.8},
+  ipe pen fat/.style={line width=1.2},
+  ipe pen ultrafat/.style={line width=2},
+  ipe pen normal,
+  ipe mark normal/.style={ipe mark scale=3},
+  ipe mark large/.style={ipe mark scale=5},
+  ipe mark small/.style={ipe mark scale=2},
+  ipe mark tiny/.style={ipe mark scale=1.1},
+  ipe mark normal,
+  /pgf/arrow keys/.cd,
+  ipe arrow normal/.style={scale=7},
+  ipe arrow large/.style={scale=10},
+  ipe arrow small/.style={scale=5},
+  ipe arrow tiny/.style={scale=3},
+  ipe arrow normal,
+  /tikz/.cd,
+  ipe arrows, % update arrows
+  &lt;->/.tip = ipe normal,
+  ipe dash normal/.style={dash pattern=},
+  ipe dash dashed/.style={dash pattern=on 4bp off 4bp},
+  ipe dash dotted/.style={dash pattern=on 1bp off 3bp},
+  ipe dash dash dotted/.style={dash pattern=on 4bp off 2bp on 1bp off 2bp},
+  ipe dash dash dot dotted/.style={dash pattern=on 4bp off 2bp on 1bp off 2bp on 1bp off 2bp},
+  ipe dash normal,
+  ipe node/.append style={font=\normalsize},
+  ipe stretch normal/.style={ipe node stretch=1},
+  ipe stretch normal,
+  ipe opacity 10/.style={opacity=0.1},
+  ipe opacity 30/.style={opacity=0.3},
+  ipe opacity 50/.style={opacity=0.5},
+  ipe opacity 75/.style={opacity=0.75},
+  ipe opacity opaque/.style={opacity=1},
+  ipe opacity opaque,
+]
+\begin{tikzpicture}[ipe stylesheet, scale=.7]
+  \draw[fill=white!80!black]
+    (100, 528) -- (196, 656) -- (220, 656) -- (124, 528) -- cycle;
+  \draw[fill=white!80!black]
+    (208, 664) -- (320, 712) -- (320, 696) -- (208, 648) -- cycle;
+  \begin{scope}[shift={(321.91, 715.847)}, rotate=-9.1623]
+  \draw[fill=white!90!black]
+    (0, 0)
+     -- (48, 12)
+     -- (96, 0)
+     -- (96, -4)
+     -- (20, -4)
+     -- (20, -20)
+     -- (96, -20)
+     -- (96, -24)
+     -- (48, -36)
+     -- (0, -24) -- cycle;
+  \draw[fill=red] (96, -12) circle[radius=1mm]
+     node[right=2mm, red] {$\vec{x y} = f(\theta,\phi,\psi)$};
+  \end{scope}
+  \filldraw[fill=white]
+    (208, 656) circle[radius=16];
+  \filldraw[fill=white]
+    (320, 704) circle[radius=16];
+  \filldraw[fill=white]
+    (112, 528) circle[radius=24];
+  \filldraw[white!20!black]
+    (112, 528) circle[radius=4]
+    (208, 656) circle[radius=4]
+    (320, 704) circle[radius=4];
+  \coordinate (c1) at (112, 528);
+  \coordinate (c2) at (208, 656);
+  \coordinate (c3) at (320, 704);
+  \coordinate (x1) at ($(c1) + (2cm,0)$);
+  \coordinate (x3) at ($(c3) + (2cm,0)$);
+
+  \draw (c1) -- (x1);
+  \draw (c1) -- ($(c1)!2cm!(c2)$);
+  \pic[draw, "$\theta$", angle radius=1cm, angle eccentricity=.8] {angle=x1--c1--c2};
+
+  \draw (c2) -- ($(c2)!2cm!(c1)$);
+  \draw (c2) -- ($(c2)!2cm!(c3)$);
+  \pic[draw, "$\phi$", angle radius=1cm, angle eccentricity=.8] {angle=c1--c2--c3};
+
+  \coordinate (x3p) at ($(c3)!2cm!-9.1623:(x3)$);
+  \draw (c3) -- ($(c3)!2cm!(c2)$);
+  \draw (c3) -- (x3p);
+  \pic[draw, "$\psi$", angle radius=1cm, angle eccentricity=.8] {angle=c2--c3--x3p};
+
+\end{tikzpicture}
+            </latex-code>
+            Define a transformation <m>f</m> as follows: <m>f(\theta,\phi,\psi)</m> is the <m>(x,y)</m> position of the hand when the joints are rotated by angles <m>\theta, \phi, \psi</m>, respectively.  The output of <m>f</m> tells you where the hand will be on the plane when the joints are set at the given input angles.
+          </p>
+          <p>
+            Unfortunately, this kind of function does not come from a matrix, so one cannot use linear algebra to answer these kinds of questions.  In fact, these functions are rather complicated; their study is the subject of <url href="https://en.wikipedia.org/wiki/Inverse_kinematics">inverse kinematics</url>.
+          </p>
+        </specialcase>
+
         <p>
-          We are therefore concerned with the relationship between matrices and transformations.  In <xref ref="matrix-transformations"/>, we will consider the equation <m>b = Ax</m> as a function with independent variable <m>x</m> and dependent variable <m>b</m>, and we draw pictures accordingly.  We spend some time studying transformations in the abstract, and asking questions about a transformation, like whether it is one-to-one and/or onto (<xref ref="one-to-one-onto"/>).  In <xref ref="linear-transformations"/> we will answer the question: <q>when exactly can a transformation be expressed by a matrix?</q>  We then present matrix multiplication as a special case of composition of transformations (<xref ref="matrix-multiplication"/>).  This leads to the study of <em>matrix algebra</em>: that is, to what extent one can do arithmetic with matrices in the place of numbers.  With this in place, we learn to solve matrix equations by <em>dividing</em> by a matrix in <xref ref="matrix-inverses"/>.
+          In this chapter, we will be concerned with the relationship between matrices and transformations.  In <xref ref="matrix-transformations"/>, we will consider the equation <m>b = Ax</m> as a function with independent variable <m>x</m> and dependent variable <m>b</m>, and we draw pictures accordingly.  We spend some time studying transformations in the abstract, and asking questions about a transformation, like whether it is one-to-one and/or onto (<xref ref="one-to-one-onto"/>).  In <xref ref="linear-transformations"/> we will answer the question: <q>when exactly can a transformation be expressed by a matrix?</q>  We then present matrix multiplication as a special case of composition of transformations (<xref ref="matrix-multiplication"/>).  This leads to the study of <em>matrix algebra</em>: that is, to what extent one can do arithmetic with matrices in the place of numbers.  With this in place, we learn to solve matrix equations by <em>dividing</em> by a matrix in <xref ref="matrix-inverses"/>.
         </p>
       </introduction>
 
@@ -170,6 +274,23 @@ Free Documentation License"
         <p>
           This chapter constitutes the core of any first course on linear algebra: eigenvalues and eigenvectors play a crucial role in most real-world applications of the subject.
         </p>
+
+        <specialcase>
+          <p>
+            In a population of rabbits,
+            <ol>
+              <li>half of the newborn rabbits survive their first year;</li>
+              <li>of those, half survive their second year;</li>
+              <li>the maximum life span is three years;</li>
+              <li>rabbits produce 0, 6, 8 baby rabbits in their first, second, and third years, respectively.</li>
+            </ol>
+            What is the <em>asymptotic</em> behavior of this system?  What will the rabbit population look like in 100 years?
+          </p>
+          <figure>
+            <caption>Left: the population of rabbits in a given year.  Right: the proportions of rabbits in that year.  Choose any values you like for the starting population, and click <q>Advance 1 year</q> several times.  What do you notice about the long-term behavior of the ratios?  This phenomenon turns out to be due to eigenvectors.</caption>
+            <mathbox source="demos/rabbits/book_demo.html" height="300px"/>
+          </figure>
+        </specialcase>
 
         <p>
           In <xref ref="eigenvectors"/>, we will define eigenvalues and eigenvectors, and show how to compute the latter; in <xref ref="characteristic-polynomial"/> we will learn to compute the former.  In <xref ref="similarity"/> we introduce the notion of <em>similar</em> matrices, and demonstrate that similar matrices do indeed behave similarly.  In <xref ref="diagonalization"/> we study matrices that are similar to diagonal matrices and in <xref ref="complex-eigenvalues"/> we study matrices that are similar to rotation-scaling matrices, thus gaining a solid geometric understanding of large classes of matrices.  Finally, we spend <xref ref="stochastic-matrices"/> presenting a common kind of application of eigenvalues and eigenvectors to real-world problems, including searching the Internet using Google<rsq/>s PageRank algorithm.
@@ -233,7 +354,32 @@ Free Documentation License"
           First we will define orthogonality and learn to find orthogonal complements of subspaces in <xref ref="dot-product"/> and <xref ref="orthogonal-complements"/>.  The core of this chapter is <xref ref="projections"/>, in which we discuss <em>the orthogonal projection</em> of a vector onto a subspace; this is a method of calculating the closest vector on a subspace to a given vector.  These calculations become easier in the presence of an orthogonal set, as we will see in <xref ref="orthogonal-sets"/>.  Finally in <xref ref="least-squares"/> we will present the least-squares method of approximately solving systems of equations, and we will give applications to data modeling.
         </p>
 
-        <note>
+        <specialcase>
+          <p>
+            In data modeling, one often asks: <q>what line is my data supposed to lie on?</q>  This can be solved using a simple application of the least-squares method.
+            <latex-code>
+\begin{tikzpicture}[scale=.2]
+  \draw (0,25) rectangle (40,60);
+  \draw[help lines, step=5] (0,25) grid (40,60);
+  \clip (0,25) rectangle (40,60);
+  \point at (9,26);
+  \point at (13,32);
+  \point at (21,42);
+  \point at (30,53);
+  \point at (31,56);
+  \point at (31,55);
+  \point at (34,59);
+  \point at (25,50);
+  \point at (28,56);
+  \point at (20,44);
+  \point at (5,30);
+  \draw[thick, red] (0,19.39) -- (40,66.31);
+\end{tikzpicture}
+            </latex-code>
+          </p>
+        </specialcase>
+
+        <specialcase>
           <p>
             Gauss invented the method of least squares to find a best-fit ellipse:
 he correctly predicted the (elliptical) orbit of the asteroid Ceres as it passed behind
@@ -258,7 +404,7 @@ the sun in 1801.
 \end{tikzpicture}
 </latex-code>
           </p>
-        </note>
+        </specialcase>
       </introduction>
 
       <xi:include href="./innerprod.xml" />

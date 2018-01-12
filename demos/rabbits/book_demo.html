@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Rabbits</title>
+
+    <script src="plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    body {
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    body > div {
+        margin-top: 20px;
+    }
+    .button-div {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    #randomize-button {
+        margin-top: 25px;
+    }
+    input {
+        width: 8em;
+    }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-6">
+                <form class="form-horizontal">
+
+                    <div class="form-group">
+                        <div class="col-sm-12 button-div">
+                            <button id="randomize-button" class="btn btn-info">Randomize starting population</button>
+                        </div>
+                    </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4">Age 0-1</label>
+                    <div class="col-sm-8">
+                        <input id="zero_input" type="number">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4">Age 1-2</label>
+                    <div class="col-sm-8">
+                        <input id="one_input" type="number">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4">Age 2-3</label>
+                    <div class="col-sm-8">
+                        <input id="two_input" type="number">
+                    </div>
+                </div>
+
+                </form>
+            </div>
+
+            <div class="graphs col-md-6">
+                <div class="col-sm-12 button-div">
+                    <button class="btn btn-info" id="iterate-button" onclick="fastforward()">Advance 1 year</button>
+                </div>
+                <div class="col-sm-12">
+                    <div id="plot">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script>
+
+    function randomize(event) {
+        if(event) event.preventDefault();
+        $("#zero_input").val(Math.floor(Math.random() * 99) + 1);
+        $("#one_input").val(Math.floor(Math.random() * 99) + 1);
+        $("#two_input").val(Math.floor(Math.random() * 99) + 1);
+        setData();
+    }
+
+    function setData() {
+        var values = [1,1,1];
+        values[0] = $("#zero_input").val() / $("#two_input").val();
+        values[1] = $("#one_input").val() / $("#two_input").val();
+        Plotly.restyle('plot', 'values', [values]);
+        Plotly.restyle('plot', 'text', [[
+            values[0].toFixed(3), values[1].toFixed(3), '1.000'
+        ]]);
+    }
+
+    function fastforward() {
+        var oldData = [$("#zero_input").val(), $("#one_input").val(), $("#two_input").val()];
+        $("#zero_input").val(6 * oldData[1] + 8 * oldData[2]);
+        $("#one_input").val(Math.floor(oldData[0] / 2));
+        $("#two_input").val(Math.floor(oldData[1] / 2));
+        setData();
+    }
+
+    var data = [{
+        type:       'pie',
+        values:      [1, 1, 1],
+        labels:      ['Age 0-1', 'Age 1-2', 'Age 2-3'],
+        hoverinfo:   'label',
+        textinfo:    'text',
+        text:        ['1.000', '1.000', '1.000'],
+        sort:        false,
+        direction:   'clockwise',
+    }];
+    var layout = {
+        height: 200,
+        margin: {
+            l: 0,
+            r: 0,
+            t: 0,
+            b: 0,
+        },
+        legend: {
+            x: 1,
+            y: .5,
+        }
+    }
+    var options = {
+        showLink: false, // removes the link to edit on plotly - works
+        modeBarButtonsToRemove: ['toImage', 'zoom2d', 'pan', 'pan2d', 'autoScale2d'],
+        displayLogo: false, // this one also seems to not work
+        displayModeBar: false, //this one does work
+    };
+
+
+    $(document).ready(function () {
+        Plotly.newPlot('plot', data, layout, options);
+        randomize();
+
+        $("#randomize-button").click(randomize);
+
+        $("#zero_input, #one_input, #two_input").change(function(event) {
+            var e = $(event.target);
+            var val = parseFloat(e.val());
+            if(isNaN(val) || val < 1.0)
+                e.val(1);
+            else
+                e.val(Math.floor(val));
+            setData();
+        });
+
+        setData();
+    })
+    </script>
+</body>
+
+
+</html>
