@@ -56,7 +56,7 @@ the license is included in gfdl.xml.
         </me>
       </li>
       <li>
-        Often it is enough to know some information about the set of solutions, without having to solve the equations in the first place.  For instance, does there exist a solution?  What does the solution set look like geometrically?
+        Often it is enough to know some information about the set of solutions, without having to solve the equations in the first place.  For instance, does there exist a solution?  What does the solution set look like geometrically?  Is there still a solution if we change the <m>26</m> to a <m>27</m>?
       </li>
       <li>
         Sometimes the coefficients also contain parameters, like the <em>eigenvalue equation</em>
@@ -131,7 +131,7 @@ the license is included in gfdl.xml.
   </bluebox>
 
   <p>
-    The subtle part of the subject lies in understanging <em>what computation to ask the computer to do for you</em><mdash/>it is far less important to know how to perform computations that a computer can do better than you anyway.
+    The subtle part of the subject lies in understanding <em>what computation to ask the computer to do for you</em><mdash/>it is far less important to know how to perform computations that a computer can do better than you anyway.
   </p>
 
 </paragraphs>
@@ -145,9 +145,9 @@ the license is included in gfdl.xml.
 
   <bluebox>
     <p>
-      Large classes of engineering problems, no matter how complicated, can be reduced to linear algebra:
+      Most engineering problems, no matter how complicated, can be reduced to linear algebra:
       <me>
-        Ax=b \sptxt{or} Ax=\lambda x.
+        Ax=b \sptxt{or} Ax=\lambda x \sptxt{or} Ax\approx b.
       </me>
     </p>
   </bluebox>
@@ -224,7 +224,7 @@ the license is included in gfdl.xml.
   \underline{\hbox to 5mm{\hss{$z$}\hss}} CO$_2$ +
   \underline{\hbox to 5mm{\hss{$w$}\hss}} H$_2$O
       </latex-code>
-      What ratio of the molecules is needed to sustain the reaction?  The number of atoms on the left side has to equal the number of atoms on the right, so we are lead to solve the system of linear equations
+      What ratio of the molecules is needed to sustain the reaction?  The following three equations come from the fact that the number of atoms of carbon, hydrogen, and oxygen on the left side has to equal the number of atoms on the right, respectively:
       <me>
         \begin{split}
     2x \amp= z \\
@@ -338,7 +338,7 @@ the license is included in gfdl.xml.
   </p>
 
   <p>
-    This textbook is exclusively targeted at Math 1553 at Georgia Tech.  As such, it contains exactly the material that is taught in that class; no more, and no less: <em>students in Math 1553 are responsible for understanding all visible content.</em>  In the online version some extra material (most examples and proofs, for instance) is <q>hidden,</q> in that one needs to click on a link to reveal it, like this:
+    This textbook is exclusively targeted at Math 1553 at Georgia Tech.  As such, it contains exactly the material that is taught in that class; no more, and no less: <em>students in Math 1553 are responsible for understanding all visible content.</em>  In the online version some extra material (most examples and proofs, for instance) is hidden, in that one needs to click on a link to reveal it, like this:
   </p>
 
   <remark hide-type="true">
