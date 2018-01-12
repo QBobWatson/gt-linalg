@@ -16,7 +16,7 @@ the license is included in gfdl.xml.
     <ol>
       <li>Understand the orthogonal decomposition of a vector with respect to a subspace.</li>
       <li>Understand the relationship between orthogonal decomposition and orthogonal projection.</li>
-      <li>Understand the relationship between orthogonal decomposition and distance to a subspace.</li>
+      <li>Understand the relationship between orthogonal decomposition and the closest vector on / distance to a subspace.</li>
       <li>Learn the basic properties of orthogonal projections as linear transformations and as matrix transformations.</li>
       <li><em>Recipes:</em> orthogonal projection onto a line, orthogonal decomposition by solving a system of equations, orthogonal projection via a complicated matrix product.</li>
       <li><em>Pictures:</em> orthogonal decomposition, orthogonal projection.</li>
@@ -32,6 +32,18 @@ the license is included in gfdl.xml.
 
   <subsection>
     <title>Orthogonal Decomposition</title>
+
+    <p>
+      We begin by fixing some notation.
+    </p>
+
+    <definition type-name="Notation">
+      <statement>
+        <p>
+          Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  We denote the closest vector to <m>x</m> on <m>W</m> by <m>x_W</m>.
+        </p>
+      </statement>
+    </definition>
 
     <p>
       To say that <m>x_W</m> is the closest vector to <m>x</m> on <m>W</m> means that the difference <m>x-x_W</m> is <em>orthogonal</em> to the vectors in <m>W</m>:
@@ -56,7 +68,7 @@ the license is included in gfdl.xml.
   \point at (0,0,0);
 \end{tikzpicture}
       </latex-code>
-      In other words, if <m>x_{W^\perp} = x - x_W</m>, then we have <m>x = x_W + x_{W^\perp}</m>, where <m>x_W</m> is in <m>W</m> and <m>x_{W^\perp}</m> is in <m>W^\perp</m>.  The first order of business is to prove that such vectors always exist.
+      In other words, if <m>x_{W^\perp} = x - x_W</m>, then we have <m>x = x_W + x_{W^\perp}</m>, where <m>x_W</m> is in <m>W</m> and <m>x_{W^\perp}</m> is in <m>W^\perp</m>.  The first order of business is to prove that the closest vector always exists.
     </p>
 
     <theorem xml:id="projections-decomp-exists">
@@ -65,9 +77,9 @@ the license is included in gfdl.xml.
       <idx><h>Orthogonal projection</h><h>existence of</h></idx>
       <statement>
         <p>
-          Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  Then we can write <m>x</m> as
+          Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  Then we can write <m>x</m> uniquely as
           <me>x = x_W + x_{W^\perp}</me>
-          for unique vectors <m>x_W</m> in <m>W</m> and <m>x_{W^\perp}</m> in <m>W^\perp</m>.
+          where <m>x_W</m> is the closest vector to <m>x</m> on <m>W</m> and <m>x_{W^\perp}</m> is in <m>W^\perp</m>.
         </p>
       </statement>
       <proof>
@@ -77,7 +89,7 @@ the license is included in gfdl.xml.
             x = (c_1v_1 + \cdots + c_mv_m) + (c_{m+1}v_{m+1} + \cdots + c_nv_n)
             = x_W + x_{W^\perp},
           </me>
-          where <m>x_W = c_1v_1 + \cdots + c_mv_m</m> and <m>x_{W^\perp} = c_{m+1}v_{m+1} + \cdots + c_nv_n</m>.  This proves that such a decomposition exists.
+          where <m>x_W = c_1v_1 + \cdots + c_mv_m</m> and <m>x_{W^\perp} = c_{m+1}v_{m+1} + \cdots + c_nv_n</m>.  Since <m>x_{W^\perp}</m> is orthogonal to <m>W</m>, the vector <m>x_W</m> is the closest vector to <m>x</m> on <m>W</m>, so this proves that such a decomposition exists.
         </p>
         <p>
           As for uniqueness, suppose that
@@ -97,25 +109,27 @@ the license is included in gfdl.xml.
         <p>
           Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  The expression
           <me>x = x_W + x_{W^\perp}</me>
-          for <m>x_W</m> in <m>W</m> and <m>x_{W^\perp}</m> in <m>W^\perp</m>, is called the <term>orthogonal decomposition</term> of <m>x</m> with respect to <m>W</m>, and the vector <m>x_W</m> is the <term>orthogonal projection</term> of <m>x</m> onto <m>W</m>.
+          for <m>x_W</m> in <m>W</m> and <m>x_{W^\perp}</m> in <m>W^\perp</m>, is called the <term>orthogonal decomposition</term> of <m>x</m> with respect to <m>W</m>, and the closest vector <m>x_W</m> is the <term>orthogonal projection</term> of <m>x</m> onto <m>W</m>.
         </p>
       </statement>
     </definition>
 
     <p>
-      Since <m>x_W</m> is the closest vector on <m>W</m> to <m>x</m>, the distance from <m>x</m> to the subspace <m>W</m> is the length of the vector from <m>x_W</m> to <m>x</m>, i.e., the length of <m>x_{W^\perp}</m>.
+      Since <m>x_W</m> is the closest vector on <m>W</m> to <m>x</m>, the distance from <m>x</m> to the subspace <m>W</m> is the length of the vector from <m>x_W</m> to <m>x</m>, i.e., the length of <m>x_{W^\perp}</m>.  To restate:
     </p>
 
     <bluebox xml:id="projections-closest-vector">
+      <title>Closest vector and distance</title>
       <idx><h>Orthogonal projection</h><h>is the closest vector</h></idx>
       <idx><h>Orthogonal projection</h><h>distance from</h></idx>
       <p>
+        Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.
         <ul>
           <li>
-            The vector <m>x_W</m> is the <em>closest</em> vector to <m>x</m> in <m>W</m>.
+            The orthogonal projection <m>x_W</m> is the closest vector to <m>x</m> in <m>W</m>.
           </li>
           <li>
-            The <em>distance from <m>x</m> to <m>W</m></em> is <m>\|x_{W^\perp}\|</m>.
+            The distance from <m>x</m> to <m>W</m> is <m>\|x_{W^\perp}\|</m>.
           </li>
         </ul>
       </p>
@@ -231,7 +245,7 @@ the license is included in gfdl.xml.
       <title>Orthogonal projection onto a line</title>
       <p>
         Let <m>L = \Span\{u\}</m> be a line in <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  By the <xref ref="projections-ATA-formula"/>, to find <m>x_L</m> we must solve the matrix equation <m>u^Tuc = u^Tx</m>, where we regard <m>u</m> as an <m>n\times 1</m> matrix.  But <m>u^Tu = u\cdot u</m> and <m>u^Tx = u\cdot x</m>, so <m>c = (u\cdot x)/(u\cdot u)</m> is a solution of <m>u^Tuc = u^Tx</m>, and hence
-        <m>x_L = uc = (u\cdot x)(u\cdot u)\,u.</m>
+        <m>x_L = uc = (u\cdot x)/(u\cdot u)\,u.</m>
         <latex-code>
 \begin{tikzpicture}[thin border nodes]
   \draw[seq-violet] (-3,-2) -- node[below right, very near start] {$L$} (3,2);
@@ -332,7 +346,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      When <m>W = \Span\{v_1,v_2,\ldots,v_m\}</m> has dimension greater than one, computing the orthogonal projection of <m>x</m> onto <m>W</m> means solving the matrix equation <m>A^TAc = A^Tx</m>, where <m>A</m> has columns <m>v_1,v_2,\ldots,v_m</m>.  In other words, it means <em>solving a system of linear equations</em>.
+      When <m>W = \Span\{v_1,v_2,\ldots,v_m\}</m> has dimension greater than one, computing the orthogonal projection of <m>x</m> onto <m>W</m> means solving the matrix equation <m>A^TAc = A^Tx</m>, where <m>A</m> has columns <m>v_1,v_2,\ldots,v_m</m>.  In other words, we can compute the closest vector by <em>solving a system of linear equations</em>.  To be explicit, we state the <xref ref="projections-ATA-formula"/> as a Recipe:
     </p>
 
     <bluebox>
