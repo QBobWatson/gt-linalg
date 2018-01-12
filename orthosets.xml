@@ -14,6 +14,7 @@ the license is included in gfdl.xml.
 
   <objectives>
     <ol>
+      <li>Understand which is the best method to use to compute an orthogonal projection in a given situation.</li>
       <li><em>Recipes:</em> an orthonormal set from an orthogonal set, Projection Formula, <m>\cB</m>-coordinates when <m>\cB</m> is an orthogonal set, Gram<ndash/>Schmidt process.</li>
       <li><em>Vocabulary words:</em> <term>orthogonal set</term>, <term>orthonormal set</term>.</li>
     </ol>
@@ -29,7 +30,7 @@ the license is included in gfdl.xml.
     <title>Orthogonal Sets and the Projection Formula</title>
 
     <p>
-      Computations involving orthogonality tend to be much easier in the presence of an <em>orthogonal</em> set of vectors.
+      Computations involving projections tend to be much easier in the presence of an <em>orthogonal</em> set of vectors.
     </p>
 
     <definition>
@@ -261,6 +262,13 @@ the license is included in gfdl.xml.
       </proof>
     </theorem>
 
+    <p>
+      If <m>\{u_1,u_2,\ldots,u_m\}</m> is an ortho<em>normal</em> basis for <m>W</m>, then the denominators <m>u_i\cdot u_i = 1</m> go away, so the projection formula becomes even simpler:
+      <me>
+        x_W = (x\cdot u_1)\,u_1 + (x\cdot u_2)\,u_2 + \cdots + (x\cdot u_m)\,u_m.
+      </me>
+    </p>
+
     <specialcase>
       <idx><h>Orthogonal projection</h><h>onto a line</h></idx>
       <idx><h>Line</h><h>orthogonal projection onto</h></idx>
@@ -281,7 +289,7 @@ the license is included in gfdl.xml.
            \dfrac{x\cdot u_1}{u_1\cdot u_1}\,u_1
             + \dfrac{x\cdot u_2}{u_2\cdot u_2}\,u_2 + \cdots,
             + \dfrac{x\cdot u_m}{u_m\cdot u_m}\,u_m ;
-        \. = \phantom{\frac{u_1}{u_1}}x_{L_1} + x_{L_2} + \cdots, + x_{L_m}\rlap.}
+        \. = \vphantom{\frac{u_1}{u_1}}x_{L_1}\hfil, + x_{L_2}\hfil, + \cdots, + x_{L_m}\hfil\rlap.}
       </me>
       In other words, for an <em>orthogonal</em> basis, the projection of <m>x</m> onto <m>W</m> is the sum of the projections onto the lines spanned by the basis vectors.  In this sense, projection onto a line is the most important example of an orthogonal projection.
     </p>
@@ -423,6 +431,11 @@ the license is included in gfdl.xml.
         </me>
       </p>
     </bluebox>
+
+    <p>
+      As with orthogonal projections, if <m>\{u_1,u_2,\ldots,u_m\}</m> is an ortho<em>normal</em> basis of <m>W</m>, then the formula is even simpler:
+      <me>[x]_\cB = \bigl(x\cdot u_1,\; x\cdot u_2,\; \ldots,\; x\cdot u_m\bigr).</me>
+    </p>
 
     <example>
       <title>Computing coordinates with respect to an orthogonal basis</title>
@@ -770,6 +783,25 @@ the license is included in gfdl.xml.
       </p>
     </bluebox>
 
+  </subsection>
+
+  <subsection>
+    <title>Two Methods to Compute the Projection</title>
+
+    <p>
+      We have now presented <em>two</em> methods for computing the orthogonal projection of a vector: <xref ref="projections-ATA-formula"/> involves row reduction, and the <xref ref="projection-formula"/> requires an orthogonal basis.  Here are some guidelines for which to use in a given situation.
+      <ol>
+        <li>
+          If you already have an orthogonal basis, it is almost always easier to use the <xref ref="projection-formula"/>.  This often happens in the sciences.
+        </li>
+        <li>
+          If you are going to have to compute the projections of many vectors onto the same subspace, it is worth your time to run Gram<ndash/>Schmidt to produce an orthogonal basis, so that you can use the <xref ref="projection-formula"/>.
+        </li>
+        <li>
+          If you only have to project one or a few vectors onto a subspace, it is faster to use <xref ref="projections-ATA-formula"/>.  This is the method we will follow in <xref ref="least-squares"/>.
+        </li>
+      </ol>
+    </p>
   </subsection>
 
 </section>

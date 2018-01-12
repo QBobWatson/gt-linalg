@@ -395,7 +395,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      As usual, orthogonality calculations become easier in the presence of an orthogonal set.  Indeed, if <m>A</m> is an <m>m\times n</m> matrix with <em>orthogonal</em> columns <m>u_1,u_2,\ldots,u_m</m>, then we can use the <xref ref="projection-formula"/> to write
+      As usual, calculations involving projections become easier in the presence of an orthogonal set.  Indeed, if <m>A</m> is an <m>m\times n</m> matrix with <em>orthogonal</em> columns <m>u_1,u_2,\ldots,u_m</m>, then we can use the <xref ref="projection-formula"/> to write
       <me>
         b_{\Col(A)} = \frac{b\cdot u_1}{u_1\cdot u_1}\,u_1
             + \frac{b\cdot u_2}{u_2\cdot u_2}\,u_2 + \cdots
