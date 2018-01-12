@@ -70,8 +70,8 @@
 
 \graphicspath{{figure-images/}{.}}
 
-%\usepackage{macros}
-%\pdfverstrue
+\usepackage{macros}
+\pdfverstrue
 </xsl:param>
 
 <xsl:param name="latex.online" select="'http://people.math.gatech.edu/~jrabinoff/gt-linalg/'" />

@@ -254,10 +254,13 @@ the license is included in gfdl.xml.
       node[blue!50, font=\small,anchor=base] (rref) {pivot columns in RREF};
   \draw[->,blue!50, shorten >=1pt] (rref.north) to[out=90,in=-90] (B-3-1.south);
   \draw[->,blue!50, shorten >=1pt] (rref.north) to[out=90,in=-90] (B-3-2.south);
-  \draw[->,
+  \ifpdfvers
+    \draw[->] (rref.west) -- (orig.east);
+  \else
+    \draw[->,
         decoration={snake, amplitude=.4mm, segment length=1mm, post length=.5mm},
-        \ifpdfvers\else decorate\fi]
-      (rref.west) -- (orig.east);
+        decorate] (rref.west) -- (orig.east);
+  \fi
 
 \end{tikzpicture}
             ]]>
