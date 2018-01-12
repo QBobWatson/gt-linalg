@@ -40,7 +40,7 @@ the license is included in gfdl.xml.
     <title>Least-Squares Solutions</title>
 
     <p>
-      We begin by clarifying exactly what we will mean by a <q>best approximate solution</q> to a (generally inconsistent) matrix equation <m>Ax=b</m>.
+      We begin by clarifying exactly what we will mean by a <q>best approximate solution</q> to an inconsistent matrix equation <m>Ax=b</m>.
     </p>
 
     <definition>
@@ -62,8 +62,8 @@ the license is included in gfdl.xml.
     <paragraphs>
       <title>Least Squares: Picture</title>
       <idx><h>Least-squares</h><h>picture of</h></idx>
-    <p>
-      Recall from this <xref ref="matrixeq-spans-consistency"/> that the column space of <m>A</m> is the set of all vectors <m>c</m> such that <m>Ax=c</m> is consistent.  Hence, the <xref ref="projections-closest-vector" text="title">closest vector</xref> of the form <m>Ax</m> to <m>b</m> is the orthogonal projection of <m>b</m> onto <m>\Col(A)</m>.
+      <p>
+        Suppose that the equation <m>Ax=b</m> is inconsistent.  Recall from this <xref ref="matrixeq-spans-consistency"/> that the column space of <m>A</m> is the set of all other vectors <m>c</m> such that <m>Ax=c</m> is consistent.  In other words, <m>\Col(A)</m> is the set of all vectors of the form <m>Ax.</m>  Hence, the <xref ref="projections-closest-vector" text="title">closest vector</xref> of the form <m>Ax</m> to <m>b</m> is the orthogonal projection of <m>b</m> onto <m>\Col(A)</m>.  This is denoted <m>b_{\Col(A)}</m>, following this <xref ref="projections-closest-notn"/>.
       <latex-code><![CDATA[
 \begin{tikzpicture}[scale=1.5, myxyz, thin border nodes]
   \coordinate (u) at (1,0,0);
@@ -85,7 +85,7 @@ the license is included in gfdl.xml.
   \pic[draw, right angle len=3mm] {right angle=(x)--(y)--(yv)};
   \point[seq-red, "$b$" {above,text=seq-red}] (xx) at (x);
   \draw[vector] (y) -- node[auto,pos=.6] {$b-A\hat x = b_{\Col(A)^\perp}$} (xx);
-  \point at (0,0,0);
+  \point["$0$" above] at (0,0,0);
 \end{tikzpicture}
 ]]></latex-code>
     </p>
@@ -94,9 +94,15 @@ the license is included in gfdl.xml.
       <idx><h>Least-squares</h><h>and <m>Ax=b_{\Col(A)}</m></h></idx>
       <idx><h>Orthogonal projection</h><h>onto a column space</h></idx>
       <p>
-        A least-squares solution of <m>Ax=b</m> is a solution <m>\hat x</m> of the consistent equation <m>Ax=b_{\Col(A)}</m>.
+        A least-squares solution of <m>Ax=b</m> is a solution <m>\hat x</m> of the consistent equation <m>Ax=b_{\Col(A)}</m>
       </p>
     </bluebox>
+
+    <note>
+      <p>
+        If <m>Ax=b</m> is consistent, then <m>b_{\Col(A)} = b</m>, so that a least-squares solution is the same as a usual solution.
+      </p>
+    </note>
 
     <p>
       Where is <m>\hat x</m> in this picture?  If <m>v_1,v_2,\ldots,v_n</m> are the columns of <m>A</m>, then
@@ -130,7 +136,7 @@ the license is included in gfdl.xml.
   \pic[draw, right angle len=3mm] {right angle=(x)--(y)--(yv)};
   \point[seq-red, "$b$" {above,text=seq-red}] (xx) at (x);
   \draw[vector] (y) -- node[auto,pos=.6] {$b-A\hat x = b_{\Col(A)^\perp}$} (xx);
-  \point at (0,0,0);
+  \point["$0$" above] at (0,0,0);
 \end{tikzpicture}
       </latex-code>
     </p>
@@ -187,23 +193,23 @@ the license is included in gfdl.xml.
       To reiterate: once you have found a least-squares solution <m>\hat x</m> of <m>Ax=b</m>, then <m>b_{\Col(A)}</m> is equal to <m>A\hat x</m>.
     </p>
 
-    <example>
+    <example xml:id="leastsquares-eg-bestfit-line-a">
       <statement>
         <p>
           Find the least-squares solutions of <m>Ax=b</m> where:
-          <me>A = \mat{1 0; 1 1; 1 2} \qquad b = \vec{6 0 0}.</me>
+          <me>A = \mat{0 1; 1 1; 2 1} \qquad b = \vec{6 0 0}.</me>
           What quantity is being minimized?
         </p>
       </statement>
       <solution>
         <p>
           We have
-          <me>A^TA = \mat{1 1 1; 0 1 2}\mat{1 0; 1 1; 1 2} = \mat{3 3; 3 5}</me>
+          <me>A^TA = \mat{0 1 2; 1 1 1}\mat{0 1; 1 1; 2 1} = \mat{5 3; 3 3}</me>
           and
-          <me>A^T b = \mat{1 1 1; 0 1 2}\vec{6 0 0} = \vec{6 0}.</me>
+          <me>A^T b = \mat{0 1 2; 1 1 1}\vec{6 0 0} = \vec{0 6}.</me>
           We form an augmented matrix and row reduce:
-          <me>\amat{3 3 6; 3 5 0} \rref \amat{1 0 5; 0 1 -3}.</me>
-          Therefore, the only least-squares solution is <m>\hat x = {5\choose -3}.</m>
+          <me>\amat{5 3 0; 3 3 6} \rref \amat{1 0 -3; 0 1 5}.</me>
+          Therefore, the only least-squares solution is <m>\hat x = {-3\choose 5}.</m>
         </p>
         <p>
           This solution minimizes the distance from <m>A\hat x</m> to <m>b</m>, i.e., the sum of the squares of the entries of <m>b-A\hat x = b-b_{\Col(A)} = b_{\Col(A)^\perp}</m>.  In this case, we have
@@ -227,13 +233,13 @@ the license is included in gfdl.xml.
     \draw[help lines, seq-violet!50] (-1,-4) grid (6,2);
     \fill[seq-violet!50, opacity=.7] (-1,-4) rectangle (6,2);
     \node[seq-violet] at (3,-5) {$\Col A$};
-    \draw[vector] (0,0) to["$v_1$"'] (1,0);
+    \draw[vector] (0,0) to["$v_2$"'] (1,0);
     \draw[vector] (0,0) -- (0,1)
-      node[anchor=south] {$v_2$};
+      node[anchor=south] {$v_1$};
 
     \draw[dashed] (0,0) -|
-      node[pos=.25, above=1pt] {$5v_1$}
-      node[pos=.75, right] {$-3v_2$}
+      node[pos=.25, above=1pt] {$5v_2$}
+      node[pos=.75, right] {$-3v_1$}
         (5,-3);
   \end{scope}
 
@@ -245,7 +251,7 @@ the license is included in gfdl.xml.
       text=seq-blue,
       pin edge={<-,very thin, seq-blue, shorten <=1pt},
       pin distance=.6cm]
-      below right:$b_{\Col(A)}=A\vec{5 -3}$}] at (bh);
+      below right:$b_{\Col(A)}=A\vec{-3 5}$}] at (bh);
   \point[seq-red, "$b$" text=seq-red] at (b);
   \pic[draw] {right angle=(b)--(bh)--(b1)};
   \pic[draw] {right angle=(b)--(bh)--(b2)};
@@ -255,7 +261,7 @@ the license is included in gfdl.xml.
         </p>
         <figure>
           <caption>The red plane is <m>\Col(A)</m>.  The closest that <m>Ax</m> can get to <m>b</m> is the closest vector on <m>\Col(A)</m> to <m>b</m>, which is the orthogonal projection <m>b_{\Col(A)}</m> (in light blue).  The vectors <m>v_1,v_2</m> are the columns of <m>A</m>, and the coefficients of <m>\hat x</m> are the <m>\cB</m>-coordinates of <m>b_{\Col(A)}</m>, where <m>\cB = \{v_1,v_2\}</m>.</caption>
-          <mathbox source="demos/leastsquares.html?v1=1,1,1&amp;v2=0,1,2&amp;range=6.5&amp;vec=6,0,0" height="500px"/>
+          <mathbox source="demos/leastsquares.html?v2=1,1,1&amp;v1=0,1,2&amp;range=6.5&amp;vec=6,0,0" height="500px"/>
         </figure>
       </solution>
     </example>
@@ -499,15 +505,7 @@ the license is included in gfdl.xml.
         <me>
           A = \mat{0 1; 1 1; 2 1}  \qquad x = \vec{M B}\qquad b = \vec{6 0 0}.
         </me>
-        We have
-        <me>
-          A^TA = \mat{5 3; 3 3} \qquad A^Tb = \vec{0 6}.
-        </me>
-        We form an augmented matrix and row reduce:
-        <me>
-          \amat{5 3 0; 3 3 6} \rref \amat{1 0 -3; 0 1 5}.
-        </me>
-        Hence the least-squares solution to <m>Ax=b</m> is <m>\hat x = {M\choose B} = {-3\choose 5}</m>, so the best-fit line is
+        We solved this least-squares problem in this <xref ref="leastsquares-eg-bestfit-line-a"/>: the only least-squares solution to <m>Ax=b</m> is <m>\hat x = {M\choose B} = {-3\choose 5}</m>, so the best-fit line is
         <me>y = -3x + 5.</me>
         <latex-code>
 \begin{tikzpicture}[thin border nodes]
@@ -1176,13 +1174,13 @@ A\hat x =
       </solution>
     </example>
 
-    <remark>
+    <note>
       <p>
         Gauss invented the method of least squares to find a best-fit ellipse:
 he correctly predicted the (elliptical) orbit of the asteroid Ceres as it passed behind
 the sun in 1801.
       </p>
-    </remark>
+    </note>
 
   </subsection>
 

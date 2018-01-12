@@ -37,7 +37,7 @@ the license is included in gfdl.xml.
       We begin by fixing some notation.
     </p>
 
-    <definition type-name="Notation">
+    <definition type-name="Notation" xml:id="projections-closest-notn">
       <statement>
         <p>
           Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  We denote the closest vector to <m>x</m> on <m>W</m> by <m>x_W</m>.

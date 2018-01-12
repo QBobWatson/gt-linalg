@@ -56,6 +56,18 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
         draw:   true
         hilite: size == 3
 
+    # Zero point
+    view
+        .array
+            channels: 3
+            width:    1
+            live:     false
+            data:     [[0,0,0]]
+        .point
+            color:    "white"
+            size:     15
+            zIndex:   3
+
     ##################################################
     # Compute and draw subspace and its complement
     subspace = @subspace

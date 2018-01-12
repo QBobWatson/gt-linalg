@@ -166,6 +166,33 @@ Free Documentation License"
           </latex-code>
           First we will define orthogonality and learn to find orthogonal complements of subspaces in <xref ref="dot-product"/> and <xref ref="orthogonal-complements"/>.  The core of this chapter is <xref ref="projections"/>, in which we discuss <em>the orthogonal projection</em> of a vector onto a subspace; this is a method of calculating the closest vector on a subspace to a given vector.  These calculations become easier in the presence of an orthogonal set, as we will see in <xref ref="orthogonal-sets"/>.  Finally in <xref ref="least-squares"/> we will present the least-squares method of approximately solving systems of equations, and we will give applications to data modeling.
         </p>
+
+        <note>
+          <p>
+            Gauss invented the method of least squares to find a best-fit ellipse:
+he correctly predicted the (elliptical) orbit of the asteroid Ceres as it passed behind
+the sun in 1801.
+<latex-code>
+\begin{tikzpicture}[thin border nodes, whitebg nodes]
+  \draw[grid lines] (-4,-3) grid (4,3);
+  \draw[->] (-4,0) -- (4,0);
+  \draw[->] (0,-3) -- (0,3);
+
+  \point at (0,2);
+  \point at (2,1);
+  \point at (1,-1);
+  \point at (-1,-2);
+  \point at (-3,1);
+  \point at (-1,1);
+
+  \draw[thick, seq-red] (-0.760768, -0.0153293)
+      ellipse[x radius=2.61837, y radius=1.84472, rotate=26.0068];
+%  \node[text=seq-red, font=\normalsize] at (0, -3.3)
+%    {$266 x^2 + 405 y^2 - 178 xy + 402 x - 123 y - 1374 = 0$};
+\end{tikzpicture}
+</latex-code>
+          </p>
+        </note>
       </introduction>
 
       <xi:include href="./innerprod.xml" />

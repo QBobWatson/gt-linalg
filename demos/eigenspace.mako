@@ -69,6 +69,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {
             depthWrite:  false
             depthTest:   true
 
+    # Zero point
     view
         .array
             channels: 3
