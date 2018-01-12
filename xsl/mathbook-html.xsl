@@ -49,6 +49,7 @@
     <!-- JDR: preprocessed inline pretex stylesheet is inserted here -->
     <style id="pretex-style"></style>
     <style id="pretex-fonts"></style>
+    <link rel="shortcut icon" href="static/images/gatech.gif"/>
 </xsl:template>
 
 <!-- Primary Navigation -->
