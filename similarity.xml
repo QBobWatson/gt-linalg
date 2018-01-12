@@ -26,21 +26,17 @@ the license is included in gfdl.xml.
     <p>
       Some matrices are easy to understand.  For instance, a diagonal matrix
       <me>
-        D = \mat{2 0 ; 0 /12}
+        D = \mat{2 0 ; 0 1/2}
       </me>
-      just scales the coordinates of a vector:
-      <me>
-        \mat{2 0; 0 1/2}\vec{x y} = \vec{2x 1/2y}
-        \sptxt{or}
-        \mat{2 0; 0 1/2}(xe_1 + ye_2) = 2xe_1 - \frac 12ye_2.
-      </me>
-      The purpose of most of the rest of this chapter is to understand complicated-looking matrices by analyzing to what extent they <q>behave like</q> simple matrices.  For instance, the matrix
+      just scales the coordinates of a vector: <m>D{x\choose y} = {2x\choose y/2}</m>. The purpose of most of the rest of this chapter is to understand complicated-looking matrices by analyzing to what extent they <q>behave like</q> simple matrices.  For instance, the matrix
       <me>
         A = \frac 1{10}\mat{11 6; 9 14}
       </me>
       has eigenvalues <m>2</m> and <m>1/2</m>, with corresponding eigenvectors <m>v_1 = {2/3\choose 1}</m> and <m>v_2 = {-1\choose 1}</m>.  Notice that
       <me>
-        A(xv_1 + yv_2) = xAv_1 + yAv_2 = 2xv_1 - \frac 12yv_2.
+        \spalignsysdelims..\syseq{
+        D(xe_1+ye_2) = xDe_1+yDe_2 = 2xe_1-\frac12ye_2;
+        A(xv_1+yv_2) = xAv_1+yAv_2\hfil, = 2xv_1-\frac12yv_2\rlap.}
       </me>
       Using <m>v_1,v_2</m> instead of the usual coordinates makes <m>A</m> <q>behave</q> like a diagonal matrix.
     </p>

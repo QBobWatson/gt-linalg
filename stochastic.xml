@@ -120,6 +120,17 @@ the license is included in gfdl.xml.
         <me>\mat{0 6 8; \frac12 0 0; 0 \frac12 0} v_t = v_{t+1}.</me>
         This system is modeled by a difference equation.
       </p>
+      <p>
+        Define
+        <me>A = \mat{0 6 8; \frac12 0 0; 0 \frac12 0}.</me>
+        We compute <m>A</m> has eigenvalues <m>2</m> and <m>-1</m>, and that an eigenvector with eigenvalue <m>2</m> is
+        <me>v = \vec{16 4 1}.</me>
+        This partially explains why the ratio <m>x_t:y_t:z_t</m> approaches <m>16:4:1</m> and why all three quantities eventually double each year in this demo:
+      </p>
+      <figure>
+        <caption>Left: the population of rabbits in a given year.  Right: the proportions of rabbits in that year.  Choose any values you like for the starting population, and click <q>Advance 1 year</q> several times.  Notice that the ratio <m>x_t:y_t:z_t</m> approaches <m>16:4:1</m>, and that all three quantities eventually double each year.</caption>
+        <mathbox source="demos/rabbits/book_demo.html" height="300px"/>
+      </figure>
     </example>
 
   </subsection>
