@@ -31,8 +31,24 @@ Free Documentation License"
       <title>Systems of Linear Equations: Algebra</title>
 
       <introduction>
+        <note type-name="Primary Goal">
+          <p>Solve a system of linear equations algebraically in parametric form.</p>
+        </note>
+
         <p>
-          In this Chapter, we will introduce <em>systems of linear equations</em>, the class of equations whose study forms the subject of linear algebra.  We will present a procedure, called <em>row reduction</em>, for finding all solutions of a system of linear equations.  You will see how to express all solutions of a system of linear equations in a unique way using the <em>parametric form</em> of the general solution.
+          This Chapter is devoted to the algebraic study of systems of linear equations and their solutions.  We will learn a systematic way of solving equations of the form
+        <me>
+          \syseq{
+    3x_1 + 4x_2 + 10x_3 + 19x_4 - 2x_5 - 3x_6 = 141;
+    7x_1 + 2x_2 - 13x_3 - 7x_4 + 21x_5 + 8x_6 = 2567;
+    -x_1 + 9x_2 + \frac 32x_3 + x_4 + 14x_5 + 27x_6 = 26;
+    \frac 12x_1 + 4x_2 + 10x_3 + 11x_4 + 2x_5 + x_6 = -15\rlap.
+  }
+        </me>
+        </p>
+
+        <p>
+          In <xref ref="systems-of-eqns"/>, we will introduce <em>systems of linear equations</em>, the class of equations whose study forms the subject of linear algebra.  In <xref ref="row-reduction"/>, will present a procedure, called <em>row reduction</em>, for finding all solutions of a system of linear equations.  In <xref ref="parametric-form"/>, you will see hnow to express all solutions of a system of linear equations in a unique way using the <em>parametric form</em> of the general solution.
         </p>
       </introduction>
 
@@ -45,13 +61,26 @@ Free Documentation License"
       <title>Systems of Linear Equations: Geometry</title>
 
       <introduction>
+        <note type-name="Primary Goals">
+          <p>
+            <ol>
+              <li>Understand what the solution set of <m>Ax=b</m> looks like.</li>
+              <li>Understand the set of <m>b</m> such that <m>Ax=b</m> is consistent.</li>
+            </ol>
+          </p>
+        </note>
+
         <p>
           This Chapter is devoted to the geometric study of two objects:
           <ol>
             <li>the solution set of a system of linear equations, and</li>
             <li>the set of all constants that makes a particular system consistent.</li>
           </ol>
-          These objects are related in a beautiful way by the Rank Theorem in <xref ref="rank-thm"/>.  We will develop a large list of vocabulary words that we will use to describe these objects: vectors, spans, linear independence, subspaces, dimension, coordinate systems, etc.  We will use these concepts to give a precise geometric description of the solution set of any system of equations.  We will also learn how to express systems of equations more simply using matrix equations and non-standard coordinate systems.
+          These objects are related in a beautiful way by the Rank Theorem in <xref ref="rank-thm"/>.
+        </p>
+
+        <p>
+          We will develop a large amount of vocabulary that we will use to describe the above objects: vectors (<xref ref="vectors"/>), spans (<xref ref="spans"/>), linear independence (<xref ref="linear-independence"/>), subspaces (<xref ref="subspaces"/>), dimension (<xref ref="dimension"/>), coordinate systems (<xref ref="bases-as-coord-systems"/>), etc.  We will use these concepts to give a precise geometric description of the solution set of any system of equations (<xref ref="solution-sets"/>).  We will also learn how to express systems of equations more simply using matrix equations (<xref ref="matrix-equations"/>).
         </p>
       </introduction>
 
@@ -70,8 +99,18 @@ Free Documentation License"
       <title>Linear Transformations and Matrix Algebra</title>
 
       <introduction>
+        <note type-name="Primary Goal">
+          <p>
+            Learn about linear transformations and their relationship to matrices.
+          </p>
+        </note>
+
         <p>
-          In this Chapter, we are concerned with understanding the geometry of matrices as functions.  Namely, we consider the equation <m>b = Ax</m> as a function with independent variable <m>x</m> and dependent variable <m>b</m>, and we draw pictures accordingly.  We spend some time studying transformations in the abstract, and asking questions about a transformation, like whether it is one-to-one and/or onto.  We then present matrix multiplication and matrix inversion as special cases of composition and inversion of transformations, respectively.  This leads to the study of <em>matrix algebra</em>: that is, to what extent one can do arithmetic with matrices in the place of numbers.
+          In practice, one is often lead to ask questions about the geometry of <em>transformations</em>.  This kind of question can be answered by linear algebra if the transformation can be expressed by a matrix.
+        </p>
+
+        <p>
+          We are therefore concerned with the relationship between matrices and transformations.  In <xref ref="matrix-transformations"/>, we will consider the equation <m>b = Ax</m> as a function with independent variable <m>x</m> and dependent variable <m>b</m>, and we draw pictures accordingly.  We spend some time studying transformations in the abstract, and asking questions about a transformation, like whether it is one-to-one and/or onto (<xref ref="one-to-one-onto"/>).  In <xref ref="linear-transformations"/> we will answer the question: <q>when exactly can a transformation be expressed by a matrix?</q>  We then present matrix multiplication as a special case of composition of transformations (<xref ref="matrix-multiplication"/>).  This leads to the study of <em>matrix algebra</em>: that is, to what extent one can do arithmetic with matrices in the place of numbers.  With this in place, we learn to solve matrix equations by <em>dividing</em> by a matrix in <xref ref="matrix-inverses"/>.
         </p>
       </introduction>
 
@@ -86,21 +125,28 @@ Free Documentation License"
       <title>Determinants</title>
       <introduction>
         <p>
-          We begin by recalling the three primary goals of this book:
+          We begin by recalling the overall structure of this book:
           <ol>
             <li>Solve the matrix equation <m>Ax=b</m>.</li>
             <li>Solve the matrix equation <m>Ax=\lambda x</m>, where <m>\lambda</m> is a number.</li>
             <li>Approximately solve the matrix equation <m>Ax=b</m>.</li>
           </ol>
-          At this point we have said all that we will say about the first goal.  This Chapter belongs primarily to the second main topic.
+          At this point we have said all that we will say about the first part.  This Chapter belongs to the second.
         </p>
+
+        <note type-name="Primary Goal">
+          <p>
+            Learn about determinants: their computation and their properties.
+          </p>
+        </note>
+
         <p>
-          The <em>determinant</em> of a square matrix <m>A</m> is a number <m>\det(A)</m>.  In <xref ref="determinants-definitions-properties"/>, we will define the determinant in terms of its behavior with respect to row operations.  The determinant satisfies many wonderful properties: for instance, <m>\det(A) \neq 0</m> if and only if <m>A</m> is invertible.  We will discuss some of these properties in <xref ref="determinants-definitions-properties"/> as well.
+          The <em>determinant</em> of a square matrix <m>A</m> is a number <m>\det(A)</m>.  This incredible quantity is one of the most important invariants of a matrix; as such, it forms the basis of most advanced computations involving matrices.
         </p>
+
         <p>
+          In <xref ref="determinants-definitions-properties"/>, we will define the determinant in terms of its behavior with respect to row operations.  The determinant satisfies many wonderful properties: for instance, <m>\det(A) \neq 0</m> if and only if <m>A</m> is invertible.  We will discuss some of these properties in <xref ref="determinants-definitions-properties"/> as well.
           In <xref ref="determinants-cofactors"/>, we will give a recursive formula for the determinant of a matrix.  This formula is very useful, for instance, when taking the determinant of a matrix with unknown entries; this will be important in <xref ref="chap-eigenvalues"/>.
-        </p>
-        <p>
           Finally, in <xref ref="determinants-volumes"/>, we will relate determinants to volumes.  This gives a geometric interpretation for determinants, and explains why the determinant is defined the way it is.  This interpretation of determinants is a crucial ingredient in the change-of-variables formula in multivariable calculus.
         </p>
 
@@ -115,8 +161,18 @@ Free Documentation License"
       <title>Eigenvalues and Eigenvectors</title>
 
       <introduction>
+        <note type-name="Primary Goal">
+          <p>
+            Solve the matrix equation <m>Ax=\lambda x.</m>
+          </p>
+        </note>
+
         <p>
-          This Chapter constitutes the core of any first course on linear algebra: eigenvalues and eigenvectors play a crucial role in most real-world applications of the subject.  After defining eigenvalues and eigenvectors and showing how to compute them, we will study the geometry of matrices using diagonalization and complex eigenvalues.  We also spend <xref ref="stochastic-matrices"/> presenting a common kind of application of eigenvalues and eigenvectors to real-world problems, including searching the Internet using Google<rsq/>s PageRank algorithm.
+          This Chapter constitutes the core of any first course on linear algebra: eigenvalues and eigenvectors play a crucial role in most real-world applications of the subject.
+        </p>
+
+        <p>
+          In <xref ref="eigenvectors"/>, we will define eigenvalues and eigenvectors, and show how to compute the latter; in <xref ref="characteristic-polynomial"/> we will learn to compute the former.  In <xref ref="similarity"/> we introduce the notion of <em>similar</em> matrices, and demonstrate that similar matrices do indeed behave similarly.  In <xref ref="diagonalization"/> we study matrices that are similar to diagonal matrices and in <xref ref="complex-eigenvalues"/> we study matrices that are similar to rotation-scaling matrices, thus gaining a solid geometric understanding of large classes of matrices.  We also spend <xref ref="stochastic-matrices"/> presenting a common kind of application of eigenvalues and eigenvectors to real-world problems, including searching the Internet using Google<rsq/>s PageRank algorithm.
         </p>
       </introduction>
 
@@ -140,8 +196,15 @@ Free Documentation License"
             <li>Solve the matrix equation <m>Ax=\lambda x</m>, where <m>\lambda</m> is a number.</li>
             <li>Approximately solve the matrix equation <m>Ax=b</m>.</li>
           </ol>
-          We have now come to the third goal.
+          We have now come to the third part.
         </p>
+
+        <note type-name="Primary Goal">
+          <p>
+            Approximately solve the matrix equation <m>Ax=b.</m>
+          </p>
+        </note>
+
         <p>
           Finding approximate solutions of equations generally requires computing the closest vector on a subspace from a given vector.  This becomes an <em>orthogonality</em> problem: one needs to know which vectors are perpendicular to the subspace.
           <latex-code>
@@ -164,6 +227,9 @@ Free Documentation License"
   \point at (0,0,0);
 \end{tikzpicture}
           </latex-code>
+        </p>
+
+        <p>
           First we will define orthogonality and learn to find orthogonal complements of subspaces in <xref ref="dot-product"/> and <xref ref="orthogonal-complements"/>.  The core of this chapter is <xref ref="projections"/>, in which we discuss <em>the orthogonal projection</em> of a vector onto a subspace; this is a method of calculating the closest vector on a subspace to a given vector.  These calculations become easier in the presence of an orthogonal set, as we will see in <xref ref="orthogonal-sets"/>.  Finally in <xref ref="least-squares"/> we will present the least-squares method of approximately solving systems of equations, and we will give applications to data modeling.
         </p>
 
