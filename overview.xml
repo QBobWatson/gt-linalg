@@ -255,6 +255,10 @@ the license is included in gfdl.xml.
       </me>
       A common question is: what is the <em>asymptotic</em> behavior of this system?  What will the rabbit population look like in 100 years?  This turns out to be an eigenvalue problem.
     </p>
+    <figure>
+      <caption>Left: the population of rabbits in a given year.  Right: the proportions of rabbits in that year.  Choose any values you like for the starting population, and click <q>Advance 1 year</q> several times.  What do you notice about the long-term behavior of the ratios?  This phenomenon turns out to be due to eigenvectors.</caption>
+      <mathbox source="demos/rabbits/book_demo.html" height="300px"/>
+    </figure>
   </specialcase>
 
   <specialcase>
