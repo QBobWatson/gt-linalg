@@ -357,7 +357,7 @@ the license is included in gfdl.xml.
   </p>
 
   <figure>
-    <caption>Click and drag the points on grid on the right.</caption>
+    <caption>Click and drag the points on the grid on the right.</caption>
     <mathbox source="demos/bestfit-implicit.html?func=x^2+A*y^2+B*x*y+C*x+D*y+EE&amp;v1=0,2&amp;v2=2,1&amp;v3=1,-1&amp;v4=-1,-2&amp;v5=-3,1&amp;v6=-1,1&amp;range=5&amp;rangez=25&amp;camera1=-2.14,.814,1.69" height="500px"/>
   </figure>
 
