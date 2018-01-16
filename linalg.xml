@@ -19,7 +19,7 @@ Free Documentation License"
   <xi:include href="./bookinfo.xml" />
 
   <book xml:id="index">
-    <title>Introduction to Linear Algebra</title>
+    <title>Interactive Linear Algebra</title>
 
     <!-- Title Page, Preface, etc. -->
     <xi:include href="./frontmatter.xml" />
