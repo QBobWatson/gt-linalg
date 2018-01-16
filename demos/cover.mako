@@ -166,10 +166,7 @@ vec4 getSize(vec4 xyzw) {
 
 # TODO:
 #  * Speed based on deltaAngle?
-#  * change color saturation/brightness and size when moving?  (via shaders)
 #  * make this interactive
-#  * splash (via css?)
-#  * ellipses instead of random radius distribution?
 
 ######################################################################
 # Utility functions
@@ -190,11 +187,14 @@ HSVtoRGB = (h, s, v) ->
 
 expLerp = (a, b) -> (t) -> Math.pow(b, t) * Math.pow(a, 1-t)
 linLerp = (a, b) -> (t) -> b*t + a*(1-t)
+discLerp = (a, b, n) -> (t) -> Math.floor(Math.random() * (n+1)) * (b-a)/n + a
+randElt = (l) -> l[Math.floor(Math.random() * l.length)]
+randSign = () -> randElt [-1, 1]
+
 mult22 = (m, v) -> [m[0]*v[0]+m[1]*v[1], m[2]*v[0]+m[3]*v[1]]
 inv22 = (m) ->
     det = m[0]*m[3] - m[1]*m[2]
     [m[3]/det, -m[1]/det, -m[2]/det, m[0]/det]
-randSign = () -> if Math.random() < 0.5 then 1 else -1
 
 
 ######################################################################
@@ -202,7 +202,15 @@ randSign = () -> if Math.random() < 0.5 then 1 else -1
 
 ortho = 1e5
 
-mathbox = window.mathbox = mathBox
+myMathBox = (options) ->
+  three = THREE.Bootstrap options
+  if !three.fallback
+    three.install 'time'      if !three.Time
+    # Get rid of splash scree
+    three.install ['mathbox'] if !three.MathBox
+  three.mathbox ? three
+
+mathbox = window.mathbox = myMathBox
     plugins: ['core']
     mathbox:
         inspect: false
@@ -224,7 +232,7 @@ mathbox.camera
     fov:      Math.atan(1/ortho) * 360 / π
 mathbox.set 'focus', ortho/1.5
 
-view = mathbox.cartesian
+view0 = mathbox.cartesian
     range: [[-1, 1], [-1, 1]]
     scale: [1, 1]
 
@@ -262,10 +270,14 @@ colors = [[0, 0, 0, 1]].concat([Math.random(), 1, 0.7, 1] for [0...numPoints])
 ######################################################################
 # Change of basis
 
+view = null
+farthest = null
+
 # Choose random (but not too wonky) coordinate system
-v1 = [0, 0]
-v2 = [0, 0]
-do () ->
+makeCoordMat = () ->
+    v1 = [0, 0]
+    v2 = [0, 0]
+
     # Vector length between 1/2 and 2
     distribution = linLerp 0.5, 2
     len = distribution Math.random()
@@ -278,19 +290,24 @@ do () ->
     v2[0] = Math.cos(θ + θoff) * len
     v2[1] = Math.sin(θ + θoff) * len
 
-coordMat = [v1[0], v2[0], v1[1], v2[1]]
-# Find the farthest corner in the un-transformed coord system
-coordMatInv = inv22 coordMat
-corners = [[1, 1], [-1, 1]].map (c) -> mult22 coordMatInv, c
-farthest = Math.max.apply null, corners.map (c) -> c[0]*c[0] + c[1]*c[1]
-farthest = Math.sqrt farthest
+    coordMat = [v1[0], v2[0], v1[1], v2[1]]
+    # Find the farthest corner in the un-transformed coord system
+    coordMatInv = inv22 coordMat
+    corners = [[1, 1], [-1, 1]].map (c) -> mult22 coordMatInv, c
+    farthest = Math.max.apply null, corners.map (c) -> c[0]*c[0] + c[1]*c[1]
+    farthest = Math.sqrt farthest
 
-view0 = view
-view = view.transform
-    matrix: [coordMat[0], coordMat[1], 0, 0,
-             coordMat[2], coordMat[3], 0, 0,
-             0, 0, 1, 0,
-             0, 0, 0, 1]
+    transformMat = [coordMat[0], coordMat[1], 0, 0,
+                    coordMat[2], coordMat[3], 0, 0,
+                    0, 0, 1, 0,
+                    0, 0, 0, 1]
+
+    if view
+        view.set 'matrix', transformMat
+    else
+        view = view0.transform matrix: transformMat
+
+makeCoordMat()
 
 
 ######################################################################
@@ -315,11 +332,9 @@ for i in [1, 2]
 initialized = false
 shaderElt = null
 linesElt = null
+linesDataElt = null
 
 class Dynamics
-    constructor: () ->
-        @mat = []
-
     install: () =>
         for i in [1..numPoints]
             @newPoint i, true
@@ -327,7 +342,8 @@ class Dynamics
 
         if initialized
             shaderElt.set @shaderParams()
-            linesElt.set @linesParams()
+            linesDataElt.set @linesParams()
+            linesElt.set "closed", @refClosed()
 
         else
             view0
@@ -380,43 +396,40 @@ class Dynamics
                     sizes:  "#sizes"
                     zBias:  1
                     zIndex: 2
-            view
-                .array @linesParams()
-                .line
-                    color:    "rgb(0, 80, 255)"
-                    width:    2
-                    opacity:  0.75
-                    zBias:    0
-                    zIndex:   1
-                    #closed:   true
+
+            # Reference lines
+            linesDataElt = view.array @linesParams()
+            linesElt = view.line
+                color:    "rgb(0, 80, 255)"
+                width:    2
+                opacity:  0.75
+                zBias:    0
+                zIndex:   1
+                closed:   @refClosed()
+
             initialized = true
 
-class SpiralIn extends Dynamics
+    linesParams: () =>
+        @reference = @makeReference()
+        channels: 2
+        width:    @reference.length
+        items:    @reference[0].length
+        data:     @reference
+        live:     false
+
+    refClosed: () => false
+
+
+class Complex extends Dynamics
     constructor: () ->
         super
         @deltaAngle = randSign() * linLerp(π/6, 5*π/6)(Math.random())
-        @scale = linLerp(0.3, 0.8)(Math.random())
+        @scale = @getScale()
 
         stepMat = [Math.cos(@deltaAngle) * @scale, -Math.sin(@deltaAngle) * @scale,
                    Math.sin(@deltaAngle) * @scale,  Math.cos(@deltaAngle) * @scale]
 
-        @close  = 0.01
-        @medium = farthest
-        @far    = farthest / @scale
-
-        # Reference spirals
-        @spiral = []
-        for t in [-10*π...10*π] by π/72
-            s = Math.pow(@scale, t / @deltaAngle)
-            row = []
-            for j in [0...2*π] by π/4
-                row.push [s * Math.cos(t+j), s * Math.sin(t+j)]
-            @spiral.push row
-
-        # Original points
-        @origDist = expLerp @close, @far
-        # For new points
-        @newDist = expLerp @medium, @far
+        @makeDistributions()
 
     newPoint: (i, first) =>
         distribution = if first then @origDist else @newDist
@@ -425,12 +438,6 @@ class SpiralIn extends Dynamics
         timings[i] = [0, duration]
         points[i] = [Math.cos(θ) * r, Math.sin(θ) * r, 0, 0]
 
-    updatePoint: (i) =>
-        point = points[i]
-        if point[0]*point[0] + point[1]*point[1] < @close*@close
-            @newPoint i
-        points[i]
-
     shaderParams: () =>
         code: '#rotate-shader'
         sources: ["#timings"]
@@ -438,15 +445,102 @@ class SpiralIn extends Dynamics
             deltaAngle: { type: 'f', value: @deltaAngle }
             scale:      { type: 'f', value: @scale }
 
-    linesParams: () =>
-        channels: 2
-        width:    @spiral.length
-        items:    @spiral[0].length
-        data:     @spiral
-        live:     false
 
-current = new SpiralIn()
+class Circle extends Complex
+    getScale: () => 1
+
+    makeDistributions: () =>
+        @newDist = @origDist = linLerp 0.01, farthest
+
+    makeReference: () =>
+        for t in [0...2*π] by π/72
+            row = []
+            for s in [farthest/10...farthest] by farthest/10
+                row.push [s * Math.cos(t), s * Math.sin(t)]
+            row
+
+    updatePoint: (i) => points[i]
+
+    refClosed: () => true
+
+
+class Spiral extends Complex
+    makeReference: () =>
+        for t in [-10*π...10*π] by π/72
+            s = Math.pow(@scale, t / @deltaAngle)
+            row = []
+            for j in [0...2*π] by π/4
+                row.push [s * Math.cos(t+j), s * Math.sin(t+j)]
+            row
+
+
+class SpiralIn extends Spiral
+    getScale: () -> linLerp(0.3, 0.8)(Math.random())
+
+    makeDistributions: () =>
+        @close  = 0.01
+        @medium = farthest
+        @far    = farthest / @scale
+
+        switch randElt ['cont', 'disc']
+            when 'cont'
+                @origDist = expLerp @close, @far
+                @newDist = expLerp @medium, @far
+            when 'disc'
+                distances = []
+                distance = @far
+                while distance > @close
+                    distances.push distance
+                    distance *= @scale
+                @origDist = (t) -> distances[Math.floor(t * distances.length)]
+                @newDist = (t) => @far
+
+    updatePoint: (i) =>
+        point = points[i]
+        if point[0]*point[0] + point[1]*point[1] < @close*@close
+            @newPoint i
+        points[i]
+
+
+class SpiralOut extends Spiral
+    getScale: () -> linLerp(1/0.8, 1/0.3)(Math.random())
+
+    makeDistributions: () =>
+        @veryClose = 0.01 / @scale
+        @close     = 0.01
+        @medium    = farthest
+
+        switch randElt ['cont', 'disc']
+            when 'cont'
+                @origDist = expLerp @veryClose, @medium
+                @newDist = expLerp @veryClose, @close
+            when 'disc'
+                distances = []
+                distance = @veryClose
+                while distance < @medium
+                    distances.push distance
+                    distance *= @scale
+                @origDist = (t) -> distances[Math.floor(t * distances.length)]
+                @newDist = (t) => @veryClose
+
+    updatePoint: (i) =>
+        point = points[i]
+        if point[0]*point[0] + point[1]*point[1] > @medium * @medium
+            @newPoint i
+        points[i]
+
+
+types = [Circle, SpiralIn, SpiralOut]
+
+current = new Circle()
 current.install()
+
+setInterval () ->
+    makeCoordMat()
+    type = randElt types
+    current = new type()
+    current.install()
+, 5000
 
 setInterval () ->
     for point, i in points
