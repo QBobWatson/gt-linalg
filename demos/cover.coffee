@@ -149,31 +149,36 @@ myMathBox = (options) ->
     three.install ['mathbox'] if !three.MathBox
   three.mathbox ? three
 
-mathbox = window.mathbox = myMathBox
-    plugins: ['core']
-    mathbox:
-        inspect: false
-        splash: false
-    camera:
-        near:    ortho/4
-        far:     ortho*4
-    element: document.getElementById "mathbox"
-if mathbox.fallback
-    throw "WebGL not supported"
+# globals
+mathbox = null
+view0 = null
 
-three = window.three = mathbox.three
-three.renderer.setClearColor new THREE.Color(0xffffff), 1.0
-mathbox.camera
-    proxy:    false
-    position: [0, 0, ortho]
-    lookAt:   [0, 0, 0]
-    up:       [1, 0, 0]
-    fov:      Math.atan(1/ortho) * 360 / π
-mathbox.set 'focus', ortho/1.5
+setupMathbox = () ->
+    mathbox = window.mathbox = myMathBox
+        plugins: ['core']
+        mathbox:
+            inspect: false
+            splash: false
+        camera:
+            near:    ortho/4
+            far:     ortho*4
+        element: document.getElementById "mathbox"
+    if mathbox.fallback
+        throw "WebGL not supported"
 
-view0 = mathbox.cartesian
-    range: [[-1, 1], [-1, 1]]
-    scale: [1, 1]
+    three = window.three = mathbox.three
+    three.renderer.setClearColor new THREE.Color(0xffffff), 1.0
+    mathbox.camera
+        proxy:    false
+        position: [0, 0, ortho]
+        lookAt:   [0, 0, 0]
+        up:       [1, 0, 0]
+        fov:      Math.atan(1/ortho) * 360 / π
+    mathbox.set 'focus', ortho/1.5
+
+    view0 = mathbox.cartesian
+        range: [[-1, 1], [-1, 1]]
+        scale: [1, 1]
 
 
 ######################################################################
@@ -243,29 +248,27 @@ makeCoordMat = () ->
                     coordMat[2], coordMat[3], 0, 0,
                     0, 0, 1, 0,
                     0, 0, 0, 1]
-
     if view
         view.set 'matrix', transformMat
     else
         view = view0.transform matrix: transformMat
 
-makeCoordMat()
-
 
 ######################################################################
 # Axes
 
-for i in [1, 2]
-    view.axis
-        axis:    i
-        end:     false
-        width:   3
-        size:    5
-        zBias:   -1
-        depth:   1
-        color:   "black"
-        opacity: 0.5
-        range:   [-10,10]
+makeAxes = () ->
+    for i in [1, 2]
+        view.axis
+            axis:    i
+            end:     false
+            width:   3
+            size:    5
+            zBias:   -1
+            depth:   1
+            color:   "black"
+            opacity: 0.5
+            range:   [-10,10]
 
 
 ######################################################################
@@ -485,31 +488,91 @@ class SpiralOut extends Spiral
         points[i]
 
 
-setInterval () ->
-    for point, i in points
-        if i == 0  # Origin
-            continue
-        end = timings[i][0] + timings[i][1]
-        if end < curTime
-            # Reset point
-            [point[0], point[1]] = mult22 stepMat, point
-            point = current.updatePoint i
-            # Reset timer
-            timings[i][0] = curTime + delay()
-    null
-, 100
+types =
+    any:          null
+    circle:       Circle
+    "spiral in":  SpiralIn
+    "spiral out": SpiralOut
+typesList = [Circle, SpiralIn, SpiralOut]
+select = null
 
-
-types = [Circle, SpiralIn, SpiralOut]
-
-window.doCover = () ->
-    window.current = current = new Circle()
+reset = () ->
+    makeCoordMat()
+    if select
+        type = types[select.value]
+    unless type
+        type = randElt typesList
+    current = window.current = new type()
     current.install()
 
-    # setInterval () ->
-    #     makeCoordMat()
-    #     type = randElt types
-    #     current = new type()
-    #     current.install()
-    # , 5000
+window.doCover = startup = () ->
+    setupMathbox()
+    makeCoordMat()
+    makeAxes()
+    reset()
+
+    setInterval () ->
+        for point, i in points
+            if i == 0  # Origin
+                continue
+            end = timings[i][0] + timings[i][1]
+            if end < curTime
+                # Reset point
+                [point[0], point[1]] = mult22 stepMat, point
+                point = current.updatePoint i
+                # Reset timer
+                timings[i][0] = curTime + delay()
+        null
+    , 100
+
+addScript = (href, callback) ->
+    script = document.createElement 'script'
+    script.onload = callback
+    script.src = href
+    s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore script, s
+
+makeControls = (elt) ->
+    div = document.createElement "div"
+    div.id = "cover-controls"
+    button = document.createElement "button"
+    button.innerText = "Randomize"
+    button.onclick = reset
+    div.appendChild button
+    select = document.createElement "select"
+    for key, val of types
+        option = document.createElement "option"
+        option.innerText = key
+        select.appendChild option
+    div.appendChild select
+    elt.appendChild div
+
+install = (elt) ->
+    # Add mathbox stylesheet
+    head = document.getElementsByTagName("head")[0]
+    link = document.createElement "link"
+    link.rel  = "stylesheet"
+    link.type = "text/css"
+    link.href = "demos/mathbox/mathbox.css"
+    head.appendChild link
+    # Create containers
+    div = document.createElement "div"
+    div.id = "mathbox-container"
+    div2 = document.createElement "div"
+    div2.id = "mathbox"
+    div.appendChild div2
+    elt.appendChild div
+    # Adjust width
+    main = document.getElementsByClassName("main")[0]
+    elt.style.width = main.clientWidth + "px"
+    content = document.getElementById "content"
+    elt.style.marginLeft = "-" + getComputedStyle(content, null).marginLeft
+    # Add controls
+    makeControls elt
+    # Add scripts
+    addScript 'demos/mathbox/mathbox-bundle.js?version=3', startup
+
+element = document.getElementById "cover"
+if element
+    install element
 

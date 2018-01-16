@@ -498,4 +498,11 @@
   </div>
 </xsl:template>
 
+<!-- JDR: cover animation -->
+<xsl:template name="cover">
+  <div id="cover">
+    <script src="demos/cover.js"></script>
+  </div>
+</xsl:template>
+
 </xsl:stylesheet>
