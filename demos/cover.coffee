@@ -1,172 +1,110 @@
-<!DOCTYPE html> <!-- -*- coffee -*-
-###
--->
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-  <title>Cover</title>
-
-  <link rel="stylesheet" href="mathbox/mathbox.css">
-
-  <style>
-  #content {
-      width:        80%;
-      margin-left:  auto;
-      margin-right: auto;
-  }
-  #mathbox-container {
-      width:       100%;
-      height:      0;
-      padding-top: 100%;
-      overflow:    hidden;
-      position:    relative;
-  }
-  #mathbox {
-      position: absolute;
-      top:      0;
-      left:     0;
-      width:    100%;
-      height:   100%;
-  }
-  </style>
-</head>
-<body>
-    <div id="content">
-        <div id="mathbox-container">
-            <div id="mathbox">
-            </div>
-        </div>
-    </div>
-
-  <script src="mathbox/mathbox-bundle.js?version=3"></script>
-  <script src="lib/domready.js"></script>
-
-  <script type="application/glsl" id="rotate-shader">
-
-#define M_PI 3.1415926535897932384626433832795
-
-uniform float deltaAngle;
-uniform float scale;
-uniform float time;
-
-vec4 getTimingsSample(vec4 xyzw);
-vec4 getPointSample(vec4 xyzw);
-
-float easeInOutSine(float pos) {
-    return 0.5 * (1.0 - cos(M_PI * pos));
-}
-
-vec4 rotate(vec4 xyzw) {
-    vec4 timings = getTimingsSample(xyzw);
-    vec4 point = getPointSample(xyzw);
-    float start = timings.x;
-    float duration = timings.y;
-    if(time < start) {
-        return vec4(point.xy, 0.0, 0.0);
-    }
-    float pos = min((time - start) / duration, 1.0);
-    pos = easeInOutSine(pos);
-    float c = cos(deltaAngle * pos);
-    float s = sin(deltaAngle * pos);
-    point.xy = vec2(point.x * c - point.y * s, point.x * s + point.y * c)
-        * pow(scale, pos);
-    return vec4(point.xy, 0.0, 0.0);
-}
-
-  </script>
-
-  <script type="application/glsl" id="color-shader">
-
-#define M_PI 3.1415926535897932384626433832795
-
-uniform float time;
-
-vec4 getTimingsSample(vec4 xyzw);
-vec4 getColorSample(vec4 xyzw);
-
-float easeInOutSine(float pos) {
-    return 0.5 * (1.0 - cos(M_PI * pos));
-}
-
-vec3 hsv2rgb(vec3 c) {
-  vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-  vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-  return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
-}
-
-#define TRANSITION 0.2
-
-vec4 getColor(vec4 xyzw) {
-    vec4 color = getColorSample(xyzw);
-    vec4 timings = getTimingsSample(xyzw);
-    float start = timings.x;
-    float duration = timings.y;
-    float pos, ease;
-    pos = max(0.0, min(1.0, (time - start) / duration));
-    if(pos < TRANSITION) {
-        ease = easeInOutSine(pos / TRANSITION);
-        color.w *= ease * 0.6 + 0.4;
-        color.y *= ease * 0.6 + 0.4;
-    }
-    else if(pos > 1.0 - TRANSITION) {
-        ease = easeInOutSine((1.0 - pos) / TRANSITION);
-        color.w *= ease * 0.6 + 0.4;
-        color.y *= ease * 0.6 + 0.4;
-    }
-    return vec4(hsv2rgb(color.xyz), color.w);
-}
-
-  </script>
-
-  <script type="application/glsl" id="size-shader">
-
-#define M_PI 3.1415926535897932384626433832795
-
-uniform float time;
-
-vec4 getTimingsSample(vec4 xyzw);
-
-float easeInOutSine(float pos) {
-    return 0.5 * (1.0 - cos(M_PI * pos));
-}
-
-#define TRANSITION 0.2
-#define SMALL 5.0
-#define BIG 7.0
-
-vec4 getSize(vec4 xyzw) {
-    vec4 timings = getTimingsSample(xyzw);
-    float start = timings.x;
-    float duration = timings.y;
-    float pos, ease, size = BIG;
-    pos = max(0.0, min(1.0, (time - start) / duration));
-    if(pos < TRANSITION) {
-        ease = easeInOutSine(pos / TRANSITION);
-        size = SMALL * (1.0-ease) + BIG * ease;
-    }
-    else if(pos > 1.0 - TRANSITION) {
-        ease = easeInOutSine((1.0 - pos) / TRANSITION);
-        size = SMALL * (1.0-ease) + BIG * ease;
-    }
-    return vec4(size, 0.0, 0.0, 0.0);
-}
-
-  </script>
-
-  <script type="text/javascript">
-      "use strict";
-      DomReady.ready(function() {
-
-/*
-###
-*/
-
-<%block filter="coffee">
-
 # TODO:
 #  * Speed based on deltaAngle?
 #  * make this interactive
+
+######################################################################
+# Shaders
+
+easeCode = \
+    """
+    #define M_PI 3.1415926535897932384626433832795
+
+    float easeInOutSine(float pos) {
+        return 0.5 * (1.0 - cos(M_PI * pos));
+    }
+    """
+
+rotateShader = easeCode + \
+    """
+    uniform float deltaAngle;
+    uniform float scale;
+    uniform float time;
+
+    vec4 getTimingsSample(vec4 xyzw);
+    vec4 getPointSample(vec4 xyzw);
+
+    vec4 rotate(vec4 xyzw) {
+        vec4 timings = getTimingsSample(xyzw);
+        vec4 point = getPointSample(xyzw);
+        float start = timings.x;
+        float duration = timings.y;
+        if(time < start) {
+            return vec4(point.xy, 0.0, 0.0);
+        }
+        float pos = min((time - start) / duration, 1.0);
+        pos = easeInOutSine(pos);
+        float c = cos(deltaAngle * pos);
+        float s = sin(deltaAngle * pos);
+        point.xy = vec2(point.x * c - point.y * s, point.x * s + point.y * c)
+            * pow(scale, pos);
+        return vec4(point.xy, 0.0, 0.0);
+    }
+    """
+
+colorShader = easeCode + \
+    """
+    uniform float time;
+
+    vec4 getTimingsSample(vec4 xyzw);
+    vec4 getColorSample(vec4 xyzw);
+
+    vec3 hsv2rgb(vec3 c) {
+      vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+      vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+      return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+    }
+
+    #define TRANSITION 0.2
+
+    vec4 getColor(vec4 xyzw) {
+        vec4 color = getColorSample(xyzw);
+        vec4 timings = getTimingsSample(xyzw);
+        float start = timings.x;
+        float duration = timings.y;
+        float pos, ease;
+        pos = max(0.0, min(1.0, (time - start) / duration));
+        if(pos < TRANSITION) {
+            ease = easeInOutSine(pos / TRANSITION);
+            color.w *= ease * 0.6 + 0.4;
+            color.y *= ease * 0.6 + 0.4;
+        }
+        else if(pos > 1.0 - TRANSITION) {
+            ease = easeInOutSine((1.0 - pos) / TRANSITION);
+            color.w *= ease * 0.6 + 0.4;
+            color.y *= ease * 0.6 + 0.4;
+        }
+        return vec4(hsv2rgb(color.xyz), color.w);
+    }
+    """
+
+sizeShader = easeCode + \
+    """
+    uniform float time;
+
+    vec4 getTimingsSample(vec4 xyzw);
+
+    #define TRANSITION 0.2
+    #define SMALL 5.0
+    #define BIG 7.0
+
+    vec4 getSize(vec4 xyzw) {
+        vec4 timings = getTimingsSample(xyzw);
+        float start = timings.x;
+        float duration = timings.y;
+        float pos, ease, size = BIG;
+        pos = max(0.0, min(1.0, (time - start) / duration));
+        if(pos < TRANSITION) {
+            ease = easeInOutSine(pos / TRANSITION);
+            size = SMALL * (1.0-ease) + BIG * ease;
+        }
+        else if(pos > 1.0 - TRANSITION) {
+            ease = easeInOutSine((1.0 - pos) / TRANSITION);
+            size = SMALL * (1.0-ease) + BIG * ease;
+        }
+        return vec4(size, 0.0, 0.0, 0.0);
+    }
+    """
+
 
 ######################################################################
 # Utility functions
@@ -260,6 +198,8 @@ stepMat = []
 # Per-point animation timings
 timings = [[1, 1]]
 
+numPointsRow = 50
+numPointsCol = numPoints / numPointsRow
 
 ######################################################################
 # Colors
@@ -371,7 +311,7 @@ class Dynamics
                     data:     colors
                     live:     false
                 .shader
-                    code:    "#color-shader"
+                    code:    colorShader
                     sources: ["#timings"]
                 ,
                     time: (t) -> t
@@ -380,7 +320,7 @@ class Dynamics
             # Size pipeline
             view0
                 .shader
-                    code:   "#size-shader"
+                    code: sizeShader
                 ,
                     time: (t) -> t
                 .resample
@@ -398,7 +338,7 @@ class Dynamics
                     zIndex: 2
 
             # Reference lines
-            linesDataElt = view.array @linesParams()
+            linesDataElt = view.matrix @linesParams()
             linesElt = view.line
                 color:    "rgb(0, 80, 255)"
                 width:    2
@@ -412,8 +352,9 @@ class Dynamics
     linesParams: () =>
         @reference = @makeReference()
         channels: 2
-        width:    @reference.length
-        items:    @reference[0].length
+        width:    @reference.length / @reference[0].length
+        height:   @reference[0].length
+        items:    @reference[0][0].length
         data:     @reference
         live:     false
 
@@ -439,7 +380,7 @@ class Complex extends Dynamics
         points[i] = [Math.cos(θ) * r, Math.sin(θ) * r, 0, 0]
 
     shaderParams: () =>
-        code: '#rotate-shader'
+        code: rotateShader,
         sources: ["#timings"]
         uniforms:
             deltaAngle: { type: 'f', value: @deltaAngle }
@@ -453,11 +394,13 @@ class Circle extends Complex
         @newDist = @origDist = linLerp 0.01, farthest
 
     makeReference: () =>
+        ret = []
         for t in [0...2*π] by π/72
             row = []
             for s in [farthest/10...farthest] by farthest/10
                 row.push [s * Math.cos(t), s * Math.sin(t)]
-            row
+            ret.push row
+        [ret]
 
     updatePoint: (i) => points[i]
 
@@ -466,12 +409,19 @@ class Circle extends Complex
 
 class Spiral extends Complex
     makeReference: () =>
-        for t in [-10*π...10*π] by π/72
-            s = Math.pow(@scale, t / @deltaAngle)
+        ret = []
+        # Have to put this in a matrix to avoid texture size limits
+        for i in [-10...10]
             row = []
-            for j in [0...2*π] by π/4
-                row.push [s * Math.cos(t+j), s * Math.sin(t+j)]
-            row
+            for t in [0..72]
+                u = (i + t/72) * π
+                s = Math.pow(@scale, u / @deltaAngle)
+                items = []
+                for j in [0...2*π] by π/4
+                    items.push [s * Math.cos(u+j), s * Math.sin(u+j)]
+                row.push items
+            ret.push row
+        ret
 
 
 class SpiralIn extends Spiral
@@ -530,18 +480,6 @@ class SpiralOut extends Spiral
         points[i]
 
 
-types = [Circle, SpiralIn, SpiralOut]
-
-current = new Circle()
-current.install()
-
-setInterval () ->
-    makeCoordMat()
-    type = randElt types
-    current = new type()
-    current.install()
-, 5000
-
 setInterval () ->
     for point, i in points
         if i == 0  # Origin
@@ -556,15 +494,17 @@ setInterval () ->
     null
 , 100
 
-</%block>
-/*
-###
-*/
-        });
-  </script>
-</body>
-</html>
-<!--
-###
 
--->
+types = [Circle, SpiralIn, SpiralOut]
+
+window.doCover = () ->
+    window.current = current = new Circle()
+    current.install()
+
+    # setInterval () ->
+    #     makeCoordMat()
+    #     type = randElt types
+    #     current = new type()
+    #     current.install()
+    # , 5000
+
