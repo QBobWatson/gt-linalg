@@ -125,6 +125,7 @@ HSVtoRGB = (h, s, v) ->
 
 expLerp = (a, b) -> (t) -> Math.pow(b, t) * Math.pow(a, 1-t)
 linLerp = (a, b) -> (t) -> b*t + a*(1-t)
+polyLerp = (a, b, n) -> (t) -> Math.pow(t, n) * (b-a) + a
 discLerp = (a, b, n) -> (t) -> Math.floor(Math.random() * (n+1)) * (b-a)/n + a
 randElt = (l) -> l[Math.floor(Math.random() * l.length)]
 randSign = () -> randElt [-1, 1]
@@ -181,7 +182,10 @@ view0 = mathbox.cartesian
 # Current demo
 current = null
 
-numPoints = 5000
+numPointsRow = 50
+numPointsCol = 100
+
+numPoints = numPointsRow * numPointsCol - 1
 duration = 3.0
 delay = (first) ->
     scale = numPoints / 1000
@@ -198,8 +202,6 @@ stepMat = []
 # Per-point animation timings
 timings = [[1, 1]]
 
-numPointsRow = 50
-numPointsCol = numPoints / numPointsRow
 
 ######################################################################
 # Colors
@@ -287,27 +289,30 @@ class Dynamics
 
         else
             view0
-                .array
+                .matrix
                     id:       "timings"
                     channels: 2
-                    width:    timings.length
+                    width:    numPointsRow
+                    height:   numPointsCol
                     data:     timings
                     live:     true
 
             pointsElt = view
-                .array
+                .matrix
                     id:       "points-orig"
                     channels: 4
-                    width:    points.length
+                    width:    numPointsRow
+                    height:   numPointsCol
                     data:     points
             shaderElt = pointsElt.shader @shaderParams(), time: (t) -> curTime = t
             shaderElt.resample id: "points"
 
             # Coloring pipeline
             view0
-                .array
+                .matrix
                     channels: 4
-                    width:    colors.length
+                    width:    numPointsRow
+                    height:   numPointsCol
                     data:     colors
                     live:     false
                 .shader
@@ -391,7 +396,7 @@ class Circle extends Complex
     getScale: () => 1
 
     makeDistributions: () =>
-        @newDist = @origDist = linLerp 0.01, farthest
+        @newDist = @origDist = polyLerp 0.01, farthest, 1/2
 
     makeReference: () =>
         ret = []
