@@ -8,7 +8,19 @@ Copyright 2017 Georgia Institute of Technology
 
   <titlepage>
     <author>
-      <personname>by the Faculty of the School of Mathematics</personname>
+      <personname>Joseph Rabinoff</personname>
+      <!-- <department>School of Mathematics</department> -->
+      <!-- <institution>Georgia Institute of Technology</institution> -->
+      <!-- <email>judsontw@sfasu.edu</email> -->
+    </author>
+    <author>
+      <personname>Dan Margalit</personname>
+      <!-- <department>School of Mathematics</department> -->
+      <!-- <institution>Georgia Institute of Technology</institution> -->
+      <!-- <email>judsontw@sfasu.edu</email> -->
+    </author>
+    <author>
+      <personname>and the Faculty of the School of Mathematics</personname>
       <!-- <department>School of Mathematics</department> -->
       <institution>Georgia Institute of Technology</institution>
       <!-- <email>judsontw@sfasu.edu</email> -->
@@ -63,18 +75,18 @@ Copyright 2017 Georgia Institute of Technology
     <title>Contributors to this textbook</title>
 
     <contributors>
+      <contributor xml:id="jdr">
+        <personname>Joseph Rabinoff</personname>
+        <department>School of Mathematics</department>
+        <institution>Georgia Institute of Technology</institution>
+        <email>jrabinoff@math.gatech.edu</email>
+      </contributor>
+
       <contributor xml:id="dan">
         <personname>Dan Margalit</personname>
         <department>School of Mathematics</department>
         <institution>Georgia Institute of Technology</institution>
         <email>dmargalit7@math.gatech.edu</email>
-      </contributor>
-
-      <contributor xml:id="jdr">
-        <personname>Joe Rabinoff</personname>
-        <department>School of Mathematics</department>
-        <institution>Georgia Institute of Technology</institution>
-        <email>jrabinoff@math.gatech.edu</email>
       </contributor>
 
       <contributor xml:id="larry">
