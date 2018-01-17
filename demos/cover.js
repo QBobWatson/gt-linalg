@@ -570,8 +570,8 @@
   })(Spiral);
 
   types = {
-    any: null,
-    circle: Circle,
+    all: null,
+    ellipse: Circle,
     "spiral in": SpiralIn,
     "spiral out": SpiralOut
   };
@@ -630,9 +630,8 @@
     div = document.createElement("div");
     div.id = "cover-controls";
     button = document.createElement("button");
-    button.innerText = "Randomize";
+    button.innerText = "Go";
     button.onclick = reset;
-    div.appendChild(button);
     select = document.createElement("select");
     for (key in types) {
       val = types[key];
@@ -641,6 +640,7 @@
       select.appendChild(option);
     }
     div.appendChild(select);
+    div.appendChild(button);
     return elt.appendChild(div);
   };
 

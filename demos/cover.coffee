@@ -489,8 +489,8 @@ class SpiralOut extends Spiral
 
 
 types =
-    any:          null
-    circle:       Circle
+    all:          null
+    ellipse:      Circle
     "spiral in":  SpiralIn
     "spiral out": SpiralOut
 typesList = [Circle, SpiralIn, SpiralOut]
@@ -536,15 +536,15 @@ makeControls = (elt) ->
     div = document.createElement "div"
     div.id = "cover-controls"
     button = document.createElement "button"
-    button.innerText = "Randomize"
+    button.innerText = "Go"
     button.onclick = reset
-    div.appendChild button
     select = document.createElement "select"
     for key, val of types
         option = document.createElement "option"
         option.innerText = key
         select.appendChild option
     div.appendChild select
+    div.appendChild button
     elt.appendChild div
 
 install = (elt) ->
