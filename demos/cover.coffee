@@ -41,6 +41,31 @@ rotateShader = easeCode + \
     }
     """
 
+diagShader = easeCode + \
+    """
+    uniform float scaleX;
+    uniform float scaleY;
+    uniform float time;
+
+    vec4 getTimingsSample(vec4 xyzw);
+    vec4 getPointSample(vec4 xyzw);
+
+    vec4 rotate(vec4 xyzw) {
+        vec4 timings = getTimingsSample(xyzw);
+        vec4 point = getPointSample(xyzw);
+        float start = timings.x;
+        float duration = timings.y;
+        if(time < start) {
+            return vec4(point.xy, 0.0, 0.0);
+        }
+        float pos = min((time - start) / duration, 1.0);
+        pos = easeInOutSine(pos);
+        point.x *= pow(scaleX, pos);
+        point.y *= pow(scaleY, pos);
+        return vec4(point.xy, 0.0, 0.0);
+    }
+    """
+
 colorShader = easeCode + \
     """
     uniform float time;
@@ -205,7 +230,7 @@ mode = 'spiralIn'
 points = [[0, 0, 0, 0]]
 stepMat = []
 # Per-point animation timings
-timings = [[1, 1]]
+timings = [[-10, 1e15]]
 
 
 ######################################################################
@@ -218,7 +243,9 @@ colors = [[0, 0, 0, 1]].concat([Math.random(), 1, 0.7, 1] for [0...numPoints])
 # Change of basis
 
 view = null
-farthest = null
+farthest  = 0
+farthestX = 0
+farthestY = 0
 
 # Choose random (but not too wonky) coordinate system
 makeCoordMat = () ->
@@ -243,6 +270,8 @@ makeCoordMat = () ->
     corners = [[1, 1], [-1, 1]].map (c) -> mult22 coordMatInv, c
     farthest = Math.max.apply null, corners.map (c) -> c[0]*c[0] + c[1]*c[1]
     farthest = Math.sqrt farthest
+    farthestX = Math.max.apply null, corners.map (c) -> Math.abs c[0]
+    farthestY = Math.max.apply null, corners.map (c) -> Math.abs c[1]
 
     transformMat = [coordMat[0], coordMat[1], 0, 0,
                     coordMat[2], coordMat[3], 0, 0,
@@ -267,12 +296,12 @@ makeAxes = () ->
             zBias:   -1
             depth:   1
             color:   "black"
-            opacity: 0.5
+            opacity: 0.3
             range:   [-10,10]
 
 
 ######################################################################
-# Type of matrices and dynamics
+# Dynamics base class
 
 initialized = false
 shaderElt = null
@@ -348,9 +377,9 @@ class Dynamics
             # Reference lines
             linesDataElt = view.matrix @linesParams()
             linesElt = view.line
-                color:    "rgb(0, 80, 255)"
+                color:    "rgb(80, 120, 255)"
                 width:    2
-                opacity:  0.75
+                opacity:  0.4
                 zBias:    0
                 zIndex:   1
                 closed:   @refClosed()
@@ -360,14 +389,17 @@ class Dynamics
     linesParams: () =>
         @reference = @makeReference()
         channels: 2
-        width:    @reference.length / @reference[0].length
-        height:   @reference[0].length
+        height:   @reference.length
+        width:    @reference[0].length
         items:    @reference[0][0].length
         data:     @reference
         live:     false
 
     refClosed: () => false
 
+
+######################################################################
+# Complex eigenvalues
 
 class Complex extends Dynamics
     constructor: () ->
@@ -488,11 +520,83 @@ class SpiralOut extends Spiral
         points[i]
 
 
+######################################################################
+# Real eigenvalues, diagonalizable
+
+class Real extends Dynamics
+    constructor: () ->
+        super
+        @makeScales()
+        stepMat = [@scaleX, 0, 0, @scaleY]
+
+    shaderParams: () =>
+        code: diagShader,
+        sources: ["#timings"]
+        uniforms:
+            scaleX: { type: 'f', value: @scaleX }
+            scaleY: { type: 'f', value: @scaleY }
+
+
+class Hyperbolas extends Real
+    makeScales: () ->
+        @scaleX = linLerp(0.3, 0.8)(Math.random())
+        @scaleY = linLerp(1/0.8, 1/0.3)(Math.random())
+        @logScaleX = Math.log @scaleX
+        @logScaleY = Math.log @scaleY
+        # Implicit equations for paths are x^{log(scaleY)}y^{-log(scaleX)} = r
+        # @close means (@close, @close) is the closest point to the origin
+        @close = 0.05
+        @closeR = Math.pow(@close, @logScaleY - @logScaleX)
+        @farR = Math.pow(farthestX, @logScaleY) * Math.pow(farthestY, -@logScaleX)
+        @lerpR = linLerp(@closeR, @farR)
+
+    newPoint: (i, first) =>
+        # First choose r uniformly between @closeR and @farR
+        r = @lerpR Math.random()
+        if first
+            # x value on that hyperbola at y = farthestY
+            closeX = Math.pow(r * Math.pow(farthestY, @logScaleX), 1/@logScaleY)
+            # Choose x value exponentially along that hyperbola
+            x = expLerp(closeX, farthestX / @scaleX)(Math.random())
+        else
+            # As above, but out of sight
+            x = expLerp(farthestX, farthestX / @scaleX)(Math.random())
+        # Corresponding y
+        y = Math.pow(1/r * Math.pow(x, @logScaleY), 1/@logScaleX)
+        timings[i] = [0, duration]
+        points[i] = [randSign() * x, randSign() * y, 0, 0]
+
+    makeReference: () =>
+        ret = []
+        # Uniformly spaced hyperbolas through these (c, c)
+        for c in [farthest/20...farthest] by farthest/20
+            r = Math.pow(c, @logScaleY - @logScaleX)
+            closeX = Math.pow(r * Math.pow(farthestY, @logScaleX), 1/@logScaleY)
+            lerp = expLerp closeX, farthestX
+            row = []
+            for i in [0..100]
+                x = lerp i/100
+                y = Math.pow(1/r * Math.pow(x, @logScaleY), 1/@logScaleX)
+                row.push [[x,  y], [-x,  y], [ x, -y], [-x, -y]]
+            ret.push row
+        ret
+
+    updatePoint: (i) =>
+        point = points[i]
+        if Math.abs(point[1]) > farthestY
+            @newPoint i
+        points[i]
+
+
+######################################################################
+# Entry point
+
 types = [
     ["all", null],
     ["ellipse", Circle],
     ["spiral in", SpiralIn],
     ["spiral out", SpiralOut]
+    ["hyperbolas", Hyperbolas]
 ]
 typesList = (t[1] for t in types.slice(1))
 select = null
@@ -503,6 +607,7 @@ reset = () ->
         type = types.filter((x) -> x[0] == select.value)[0][1]
     unless type
         type = randElt typesList
+        type = Hyperbolas
     current = window.current = new type()
     current.install()
 

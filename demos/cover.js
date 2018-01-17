@@ -1,5 +1,5 @@
 (function() {
-  var Circle, Complex, Dynamics, HSVtoRGB, Spiral, SpiralIn, SpiralOut, addScript, colorShader, colors, curTime, current, delay, discLerp, duration, easeCode, element, expLerp, farthest, initialized, install, inv22, linLerp, linesDataElt, linesElt, makeAxes, makeControls, makeCoordMat, mathbox, mode, mult22, myMathBox, numPoints, numPointsCol, numPointsRow, ortho, points, polyLerp, randElt, randSign, reset, rotateShader, select, setupMathbox, shaderElt, sizeShader, startup, stepMat, t, timings, types, typesList, view, view0,
+  var Circle, Complex, Dynamics, HSVtoRGB, Hyperbolas, Real, Spiral, SpiralIn, SpiralOut, addScript, colorShader, colors, curTime, current, delay, diagShader, discLerp, duration, easeCode, element, expLerp, farthest, farthestX, farthestY, initialized, install, inv22, linLerp, linesDataElt, linesElt, makeAxes, makeControls, makeCoordMat, mathbox, mode, mult22, myMathBox, numPoints, numPointsCol, numPointsRow, ortho, points, polyLerp, randElt, randSign, reset, rotateShader, select, setupMathbox, shaderElt, sizeShader, startup, stepMat, t, timings, types, typesList, view, view0,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
@@ -7,6 +7,8 @@
   easeCode = "#define M_PI 3.1415926535897932384626433832795\n\nfloat easeInOutSine(float pos) {\n    return 0.5 * (1.0 - cos(M_PI * pos));\n}";
 
   rotateShader = easeCode + "uniform float deltaAngle;\nuniform float scale;\nuniform float time;\n\nvec4 getTimingsSample(vec4 xyzw);\nvec4 getPointSample(vec4 xyzw);\n\nvec4 rotate(vec4 xyzw) {\n    vec4 timings = getTimingsSample(xyzw);\n    vec4 point = getPointSample(xyzw);\n    float start = timings.x;\n    float duration = timings.y;\n    if(time < start) {\n        return vec4(point.xy, 0.0, 0.0);\n    }\n    float pos = min((time - start) / duration, 1.0);\n    pos = easeInOutSine(pos);\n    float c = cos(deltaAngle * pos);\n    float s = sin(deltaAngle * pos);\n    point.xy = vec2(point.x * c - point.y * s, point.x * s + point.y * c)\n        * pow(scale, pos);\n    return vec4(point.xy, 0.0, 0.0);\n}";
+
+  diagShader = easeCode + "uniform float scaleX;\nuniform float scaleY;\nuniform float time;\n\nvec4 getTimingsSample(vec4 xyzw);\nvec4 getPointSample(vec4 xyzw);\n\nvec4 rotate(vec4 xyzw) {\n    vec4 timings = getTimingsSample(xyzw);\n    vec4 point = getPointSample(xyzw);\n    float start = timings.x;\n    float duration = timings.y;\n    if(time < start) {\n        return vec4(point.xy, 0.0, 0.0);\n    }\n    float pos = min((time - start) / duration, 1.0);\n    pos = easeInOutSine(pos);\n    point.x *= pow(scaleX, pos);\n    point.y *= pow(scaleY, pos);\n    return vec4(point.xy, 0.0, 0.0);\n}";
 
   colorShader = easeCode + "uniform float time;\n\nvec4 getTimingsSample(vec4 xyzw);\nvec4 getColorSample(vec4 xyzw);\n\nvec3 hsv2rgb(vec3 c) {\n  vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);\n  vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);\n  return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);\n}\n\n#define TRANSITION 0.2\n\nvec4 getColor(vec4 xyzw) {\n    vec4 color = getColorSample(xyzw);\n    vec4 timings = getTimingsSample(xyzw);\n    float start = timings.x;\n    float duration = timings.y;\n    float pos, ease;\n    pos = max(0.0, min(1.0, (time - start) / duration));\n    if(pos < TRANSITION) {\n        ease = easeInOutSine(pos / TRANSITION);\n        color.w *= ease * 0.6 + 0.4;\n        color.y *= ease * 0.6 + 0.4;\n    }\n    else if(pos > 1.0 - TRANSITION) {\n        ease = easeInOutSine((1.0 - pos) / TRANSITION);\n        color.w *= ease * 0.6 + 0.4;\n        color.y *= ease * 0.6 + 0.4;\n    }\n    return vec4(hsv2rgb(color.xyz), color.w);\n}";
 
@@ -159,7 +161,7 @@
 
   stepMat = [];
 
-  timings = [[1, 1]];
+  timings = [[-10, 1e15]];
 
   colors = [[0, 0, 0, 1]].concat((function() {
     var k, ref, results;
@@ -172,7 +174,11 @@
 
   view = null;
 
-  farthest = null;
+  farthest = 0;
+
+  farthestX = 0;
+
+  farthestY = 0;
 
   makeCoordMat = function() {
     var coordMat, coordMatInv, corners, distribution, len, transformMat, v1, v2, θ, θoff;
@@ -196,6 +202,12 @@
       return c[0] * c[0] + c[1] * c[1];
     }));
     farthest = Math.sqrt(farthest);
+    farthestX = Math.max.apply(null, corners.map(function(c) {
+      return Math.abs(c[0]);
+    }));
+    farthestY = Math.max.apply(null, corners.map(function(c) {
+      return Math.abs(c[1]);
+    }));
     transformMat = [coordMat[0], coordMat[1], 0, 0, coordMat[2], coordMat[3], 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
     if (view) {
       return view.set('matrix', transformMat);
@@ -220,7 +232,7 @@
         zBias: -1,
         depth: 1,
         color: "black",
-        opacity: 0.5,
+        opacity: 0.3,
         range: [-10, 10]
       }));
     }
@@ -313,9 +325,9 @@
         });
         linesDataElt = view.matrix(this.linesParams());
         linesElt = view.line({
-          color: "rgb(0, 80, 255)",
+          color: "rgb(80, 120, 255)",
           width: 2,
-          opacity: 0.75,
+          opacity: 0.4,
           zBias: 0,
           zIndex: 1,
           closed: this.refClosed()
@@ -328,8 +340,8 @@
       this.reference = this.makeReference();
       return {
         channels: 2,
-        width: this.reference.length / this.reference[0].length,
-        height: this.reference[0].length,
+        height: this.reference.length,
+        width: this.reference[0].length,
         items: this.reference[0][0].length,
         data: this.reference,
         live: false
@@ -569,7 +581,104 @@
 
   })(Spiral);
 
-  types = [["all", null], ["ellipse", Circle], ["spiral in", SpiralIn], ["spiral out", SpiralOut]];
+  Real = (function(superClass) {
+    extend(Real, superClass);
+
+    function Real() {
+      this.shaderParams = bind(this.shaderParams, this);
+      Real.__super__.constructor.apply(this, arguments);
+      this.makeScales();
+      stepMat = [this.scaleX, 0, 0, this.scaleY];
+    }
+
+    Real.prototype.shaderParams = function() {
+      return {
+        code: diagShader,
+        sources: ["#timings"],
+        uniforms: {
+          scaleX: {
+            type: 'f',
+            value: this.scaleX
+          },
+          scaleY: {
+            type: 'f',
+            value: this.scaleY
+          }
+        }
+      };
+    };
+
+    return Real;
+
+  })(Dynamics);
+
+  Hyperbolas = (function(superClass) {
+    extend(Hyperbolas, superClass);
+
+    function Hyperbolas() {
+      this.updatePoint = bind(this.updatePoint, this);
+      this.makeReference = bind(this.makeReference, this);
+      this.newPoint = bind(this.newPoint, this);
+      return Hyperbolas.__super__.constructor.apply(this, arguments);
+    }
+
+    Hyperbolas.prototype.makeScales = function() {
+      this.scaleX = linLerp(0.3, 0.8)(Math.random());
+      this.scaleY = linLerp(1 / 0.8, 1 / 0.3)(Math.random());
+      this.logScaleX = Math.log(this.scaleX);
+      this.logScaleY = Math.log(this.scaleY);
+      this.close = 0.05;
+      this.closeR = Math.pow(this.close, this.logScaleY - this.logScaleX);
+      this.farR = Math.pow(farthestX, this.logScaleY) * Math.pow(farthestY, -this.logScaleX);
+      return this.lerpR = linLerp(this.closeR, this.farR);
+    };
+
+    Hyperbolas.prototype.newPoint = function(i, first) {
+      var closeX, r, x, y;
+      r = this.lerpR(Math.random());
+      if (first) {
+        closeX = Math.pow(r * Math.pow(farthestY, this.logScaleX), 1 / this.logScaleY);
+        x = expLerp(closeX, farthestX / this.scaleX)(Math.random());
+      } else {
+        x = expLerp(farthestX, farthestX / this.scaleX)(Math.random());
+      }
+      y = Math.pow(1 / r * Math.pow(x, this.logScaleY), 1 / this.logScaleX);
+      timings[i] = [0, duration];
+      return points[i] = [randSign() * x, randSign() * y, 0, 0];
+    };
+
+    Hyperbolas.prototype.makeReference = function() {
+      var c, closeX, i, k, lerp, o, r, ref, ref1, ref2, ret, row, x, y;
+      ret = [];
+      for (c = k = ref = farthest / 20, ref1 = farthest, ref2 = farthest / 20; ref2 > 0 ? k < ref1 : k > ref1; c = k += ref2) {
+        r = Math.pow(c, this.logScaleY - this.logScaleX);
+        closeX = Math.pow(r * Math.pow(farthestY, this.logScaleX), 1 / this.logScaleY);
+        lerp = expLerp(closeX, farthestX);
+        row = [];
+        for (i = o = 0; o <= 100; i = ++o) {
+          x = lerp(i / 100);
+          y = Math.pow(1 / r * Math.pow(x, this.logScaleY), 1 / this.logScaleX);
+          row.push([[x, y], [-x, y], [x, -y], [-x, -y]]);
+        }
+        ret.push(row);
+      }
+      return ret;
+    };
+
+    Hyperbolas.prototype.updatePoint = function(i) {
+      var point;
+      point = points[i];
+      if (Math.abs(point[1]) > farthestY) {
+        this.newPoint(i);
+      }
+      return points[i];
+    };
+
+    return Hyperbolas;
+
+  })(Real);
+
+  types = [["all", null], ["ellipse", Circle], ["spiral in", SpiralIn], ["spiral out", SpiralOut], ["hyperbolas", Hyperbolas]];
 
   typesList = (function() {
     var k, len1, ref, results;
@@ -594,6 +703,7 @@
     }
     if (!type) {
       type = randElt(typesList);
+      type = Hyperbolas;
     }
     current = window.current = new type();
     return current.install();
