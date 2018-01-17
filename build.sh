@@ -5,6 +5,48 @@ die() {
     exit 1
 }
 
+compile_latex() {
+    (cd "$latex_dir" && \
+            TEXINPUTS=".:$latex_dir/style:" pdflatex \
+                     -interaction=nonstopmode "\input{index}" \
+                || die "pdflatex failed")
+}
+
+make_hashes() {
+    cat >xsl/git-hash.xsl <<EOF
+<?xml version='1.0'?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
+    xmlns:exsl="http://exslt.org/common"
+    extension-element-prefixes="exsl">
+  <xsl:template name="git-hash">
+    <xsl:text>$(git rev-parse HEAD)</xsl:text>
+  </xsl:template>
+  <xsl:template name="versioned-file">
+    <xsl:param name="file"/>
+    <xsl:variable name="commit">
+      <xsl:choose>
+        <xsl:when test="\$file='static/js/GTMathbook.js'">
+          <xsl:text>$(cd ../gt-text-common && git log -n 1 --pretty=format:%h -- js/GTMathbook.js)</xsl:text>
+        </xsl:when>
+        <xsl:when test="\$file='static/css/mathbook-gt.css'">
+          <xsl:text>$(cd ../mathbook-assets && git log -n 1 --pretty=format:%h -- stylesheets/mathbook-gt.css)</xsl:text>
+        </xsl:when>
+        <xsl:when test="\$file='static/css/mathbook-add-on.css'">
+          <xsl:text>$(cd ../mathbook && git log -n 1 --pretty=format:%h -- css/mathbook-add-on.css)</xsl:text>
+        </xsl:when>
+        <xsl:when test="\$file='static/css/mathbook-gt-add-on.css'">
+          <xsl:text>$(cd ../gt-text-common && git log -n 1 --pretty=format:%h -- css/mathbook-gt-add-on.css)</xsl:text>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:value-of select="\$file"/>
+    <xsl:text>?vers=</xsl:text>
+    <xsl:value-of select="\$commit"/>
+  </xsl:template>
+</xsl:stylesheet>
+EOF
+}
+
 PRETEX_ALL=
 LATEX_TOO=
 CHUNKSIZE="250"
@@ -56,13 +98,6 @@ mkdir -p "$static_dir/css"
 mkdir -p "$static_dir/fonts"
 mkdir -p "$static_dir/images"
 
-compile_latex() {
-    (cd "$latex_dir" && \
-            TEXINPUTS=".:$latex_dir/style:" pdflatex \
-                     -interaction=nonstopmode "\input{index}" \
-                || die "pdflatex failed")
-}
-
 if [ -n "$LATEX_TOO" ]; then
     rm -rf "$latex_dir"
     mkdir -p "$latex_dir"
@@ -92,16 +127,7 @@ ln -s "static/images" "$build_dir/images"
 cp "$compile_dir/extra/google9ccfcae89045309c.html" "$build_dir"
 
 echo "Converting xml to html..."
-cat >xsl/git-hash.xsl <<EOF
-<?xml version='1.0'?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-    xmlns:exsl="http://exslt.org/common"
-    extension-element-prefixes="exsl">
-  <xsl:template name="git-hash">
-    <xsl:text>$(git rev-parse HEAD)</xsl:text>
-  </xsl:template>
-</xsl:stylesheet>
-EOF
+make_hashes
 xsltproc -o "$build_dir/" --xinclude \
          "$compile_dir/xsl/mathbook-html.xsl" linalg.xml \
     || die "xsltproc failed!"

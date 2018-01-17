@@ -16,10 +16,6 @@
 <!-- JDR: for caching -->
 <xsl:param name="debug.datedfiles">no</xsl:param>
 
-<xsl:param name="html.css.extra">
-  static/css/mathbook-gt-add-on.css
-</xsl:param>
-
 <xsl:param name="extra.mathjax">
   <xsl:text>MathJax.Ajax.config.path["Extra"] = "static/js";&#xa;</xsl:text>
   <xsl:text>MathJax.Hub.Config({&#xa;</xsl:text>
@@ -35,17 +31,44 @@
 <!-- Mathbook Javascript header -->
 <xsl:template name="mathbook-js">
     <script src="static/js/jquery.sticky.js" ></script>
-    <script src="static/js/GTMathbook.js"></script>
+    <xsl:element name="script">
+        <xsl:attribute name="src">
+            <xsl:call-template name="versioned-file">
+                <xsl:with-param name="file" select="'static/js/GTMathbook.js'"/>
+            </xsl:call-template>
+        </xsl:attribute>
+    </xsl:element>
 </xsl:template>
 
 <!-- CSS header -->
 <xsl:template name="css">
-    <link href="static/css/mathbook-gt.css" rel="stylesheet" type="text/css" />
-    <link href="static/css/mathbook-add-on.css"
-          rel="stylesheet" type="text/css" />
-    <xsl:call-template name="external-css">
-        <xsl:with-param name="css-list" select="normalize-space($html.css.extra)" />
-    </xsl:call-template>
+    <xsl:element name="link">
+        <xsl:attribute name="href">
+            <xsl:call-template name="versioned-file">
+                <xsl:with-param name="file" select="'static/css/mathbook-gt.css'"/>
+            </xsl:call-template>
+        </xsl:attribute>
+        <xsl:attribute name="rel">stylesheet</xsl:attribute>
+        <xsl:attribute name="type">text/css</xsl:attribute>
+    </xsl:element>
+    <xsl:element name="link">
+        <xsl:attribute name="href">
+            <xsl:call-template name="versioned-file">
+                <xsl:with-param name="file" select="'static/css/mathbook-add-on.css'"/>
+            </xsl:call-template>
+        </xsl:attribute>
+        <xsl:attribute name="rel">stylesheet</xsl:attribute>
+        <xsl:attribute name="type">text/css</xsl:attribute>
+    </xsl:element>
+    <xsl:element name="link">
+        <xsl:attribute name="href">
+            <xsl:call-template name="versioned-file">
+                <xsl:with-param name="file" select="'static/css/mathbook-gt-add-on.css'"/>
+            </xsl:call-template>
+        </xsl:attribute>
+        <xsl:attribute name="rel">stylesheet</xsl:attribute>
+        <xsl:attribute name="type">text/css</xsl:attribute>
+    </xsl:element>
     <!-- JDR: preprocessed inline pretex stylesheet is inserted here -->
     <style id="pretex-style"></style>
     <style id="pretex-fonts"></style>
