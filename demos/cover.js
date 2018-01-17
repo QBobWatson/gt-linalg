@@ -1,5 +1,5 @@
 (function() {
-  var Circle, Complex, Dynamics, HSVtoRGB, Hyperbolas, Real, Spiral, SpiralIn, SpiralOut, addScript, colorShader, colors, curTime, current, delay, diagShader, discLerp, duration, easeCode, element, expLerp, farthest, farthestX, farthestY, initialized, install, inv22, linLerp, linesDataElt, linesElt, makeAxes, makeControls, makeCoordMat, mathbox, mode, mult22, myMathBox, numPoints, numPointsCol, numPointsRow, ortho, points, polyLerp, randElt, randSign, reset, rotateShader, select, setupMathbox, shaderElt, sizeShader, startup, stepMat, t, timings, types, typesList, view, view0,
+  var Circle, Complex, Dynamics, HSVtoRGB, Hyperbolas, Real, Spiral, SpiralIn, SpiralOut, colorShader, colors, curTime, current, delay, diagShader, discLerp, duration, easeCode, element, expLerp, farthest, farthestX, farthestY, initialized, install, inv22, linLerp, linesDataElt, linesElt, makeAxes, makeControls, makeCoordMat, mathbox, mode, mult22, myMathBox, numPoints, numPointsCol, numPointsRow, ortho, points, polyLerp, randElt, randSign, reset, rotateShader, select, setupMathbox, shaderElt, sizeShader, startup, stepMat, t, timings, types, typesList, view, view0,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
@@ -703,7 +703,6 @@
     }
     if (!type) {
       type = randElt(typesList);
-      type = Hyperbolas;
     }
     current = window.current = new type();
     return current.install();
@@ -732,15 +731,6 @@
     }, 100);
   };
 
-  addScript = function(href, callback) {
-    var s, script;
-    script = document.createElement('script');
-    script.onload = callback;
-    script.src = href;
-    s = document.getElementsByTagName('script')[0];
-    return s.parentNode.insertBefore(script, s);
-  };
-
   makeControls = function(elt) {
     var button, div, k, key, len1, option, ref, val;
     div = document.createElement("div");
@@ -761,13 +751,7 @@
   };
 
   install = function(elt) {
-    var content, div, div2, head, link, main;
-    head = document.getElementsByTagName("head")[0];
-    link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.type = "text/css";
-    link.href = "demos/mathbox/mathbox.css";
-    head.appendChild(link);
+    var content, div, div2, main;
     div = document.createElement("div");
     div.id = "mathbox-container";
     div2 = document.createElement("div");
@@ -779,7 +763,7 @@
     content = document.getElementById("content");
     elt.style.marginLeft = "-" + getComputedStyle(content, null).marginLeft;
     makeControls(elt);
-    return addScript('demos/mathbox/mathbox-bundle.js?version=3', startup);
+    return startup();
   };
 
   element = document.getElementById("cover");

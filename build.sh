@@ -40,6 +40,12 @@ make_hashes() {
         <xsl:when test="\$file='demos/cover.js'">
           <xsl:text>$(git log -n 1 --pretty=format:%h -- demos/cover.js)</xsl:text>
         </xsl:when>
+        <xsl:when test="\$file='demos/mathbox/mathbox.css'">
+          <xsl:text>$(git log -n 1 --pretty=format:%h -- demos/mathbox/mathbox.css)</xsl:text>
+        </xsl:when>
+        <xsl:when test="\$file='demos/mathbox/mathbox-bundle.js'">
+          <xsl:text>$(git log -n 1 --pretty=format:%h -- demos/mathbox/mathbox-bundle.js)</xsl:text>
+        </xsl:when>
       </xsl:choose>
     </xsl:variable>
     <xsl:value-of select="\$file"/>

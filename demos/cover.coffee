@@ -1,6 +1,5 @@
 # TODO:
 #  * Speed based on deltaAngle?
-#  * make this interactive
 
 ######################################################################
 # Shaders
@@ -607,7 +606,7 @@ reset = () ->
         type = types.filter((x) -> x[0] == select.value)[0][1]
     unless type
         type = randElt typesList
-        type = Hyperbolas
+        #type = Hyperbolas
     current = window.current = new type()
     current.install()
 
@@ -631,13 +630,6 @@ window.doCover = startup = () ->
         null
     , 100
 
-addScript = (href, callback) ->
-    script = document.createElement 'script'
-    script.onload = callback
-    script.src = href
-    s = document.getElementsByTagName('script')[0]
-    s.parentNode.insertBefore script, s
-
 makeControls = (elt) ->
     div = document.createElement "div"
     div.id = "cover-controls"
@@ -654,13 +646,6 @@ makeControls = (elt) ->
     elt.appendChild div
 
 install = (elt) ->
-    # Add mathbox stylesheet
-    head = document.getElementsByTagName("head")[0]
-    link = document.createElement "link"
-    link.rel  = "stylesheet"
-    link.type = "text/css"
-    link.href = "demos/mathbox/mathbox.css"
-    head.appendChild link
     # Create containers
     div = document.createElement "div"
     div.id = "mathbox-container"
@@ -675,8 +660,7 @@ install = (elt) ->
     elt.style.marginLeft = "-" + getComputedStyle(content, null).marginLeft
     # Add controls
     makeControls elt
-    # Add scripts
-    addScript 'demos/mathbox/mathbox-bundle.js?version=3', startup
+    startup()
 
 element = document.getElementById "cover"
 if element

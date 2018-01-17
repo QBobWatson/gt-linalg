@@ -69,6 +69,21 @@
         <xsl:attribute name="rel">stylesheet</xsl:attribute>
         <xsl:attribute name="type">text/css</xsl:attribute>
     </xsl:element>
+    <!-- JDR: extra includes for cover animation -->
+    <xsl:variable name="internal-id">
+        <xsl:apply-templates select="." mode="internal-id" />
+    </xsl:variable>
+    <xsl:if test="$internal-id='index'">
+        <xsl:element name="link">
+            <xsl:attribute name="href">
+                <xsl:call-template name="versioned-file">
+                    <xsl:with-param name="file" select="'demos/mathbox/mathbox.css'"/>
+                </xsl:call-template>
+            </xsl:attribute>
+            <xsl:attribute name="rel">stylesheet</xsl:attribute>
+            <xsl:attribute name="type">text/css</xsl:attribute>
+    </xsl:element>
+    </xsl:if>
     <!-- JDR: preprocessed inline pretex stylesheet is inserted here -->
     <style id="pretex-style"></style>
     <style id="pretex-fonts"></style>
@@ -524,6 +539,13 @@
 <!-- JDR: cover animation -->
 <xsl:template name="cover">
   <div id="cover">
+    <xsl:element name="script">
+        <xsl:attribute name="src">
+            <xsl:call-template name="versioned-file">
+                <xsl:with-param name="file" select="'demos/mathbox/mathbox-bundle.js'"/>
+            </xsl:call-template>
+        </xsl:attribute>
+    </xsl:element>
     <xsl:element name="script">
         <xsl:attribute name="src">
             <xsl:call-template name="versioned-file">
