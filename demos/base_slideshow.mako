@@ -7,8 +7,8 @@
 <%inherit file="base2.mako"/>
 
 <%block name="extra_css">
-    <link rel="stylesheet" href="css/rrmat.css">
-    <link rel="stylesheet" href="css/slideshow.css">
+    <link rel="stylesheet" href="${"css/rrmat.css" | vers}">
+    <link rel="stylesheet" href="${"css/slideshow.css" | vers}">
 </%block>
 
 <%block name="inline_style">
@@ -39,7 +39,7 @@
 </%block>
 
 <%block name="extra_js">
-  <script src="js/rrmat.js"></script>
+  <script src="${"js/rrmat.js" | vers}"></script>
 </%block>
 
 <%block name="body_html">

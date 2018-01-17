@@ -37,6 +37,9 @@ make_hashes() {
         <xsl:when test="\$file='static/css/mathbook-gt-add-on.css'">
           <xsl:text>$(cd ../gt-text-common && git log -n 1 --pretty=format:%h -- css/mathbook-gt-add-on.css)</xsl:text>
         </xsl:when>
+        <xsl:when test="\$file='demos/cover.js'">
+          <xsl:text>$(git log -n 1 --pretty=format:%h -- demos/cover.js)</xsl:text>
+        </xsl:when>
       </xsl:choose>
     </xsl:variable>
     <xsl:value-of select="\$file"/>

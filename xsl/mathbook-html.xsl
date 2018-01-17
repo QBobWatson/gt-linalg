@@ -524,7 +524,13 @@
 <!-- JDR: cover animation -->
 <xsl:template name="cover">
   <div id="cover">
-    <script src="demos/cover.js"></script>
+    <xsl:element name="script">
+        <xsl:attribute name="src">
+            <xsl:call-template name="versioned-file">
+                <xsl:with-param name="file" select="'demos/cover.js'"/>
+            </xsl:call-template>
+        </xsl:attribute>
+    </xsl:element>
   </div>
 </xsl:template>
 
