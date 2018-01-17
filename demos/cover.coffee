@@ -488,18 +488,19 @@ class SpiralOut extends Spiral
         points[i]
 
 
-types =
-    all:          null
-    ellipse:      Circle
-    "spiral in":  SpiralIn
-    "spiral out": SpiralOut
-typesList = [Circle, SpiralIn, SpiralOut]
+types = [
+    ["all", null],
+    ["ellipse", Circle],
+    ["spiral in", SpiralIn],
+    ["spiral out", SpiralOut]
+]
+typesList = (t[1] for t in types.slice(1))
 select = null
 
 reset = () ->
     makeCoordMat()
     if select
-        type = types[select.value]
+        type = types.filter((x) -> x[0] == select.value)[0][1]
     unless type
         type = randElt typesList
     current = window.current = new type()
@@ -539,7 +540,7 @@ makeControls = (elt) ->
     button.innerText = "Go"
     button.onclick = reset
     select = document.createElement "select"
-    for key, val of types
+    for [key, val] in types
         option = document.createElement "option"
         option.innerText = key
         select.appendChild option

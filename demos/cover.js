@@ -1,5 +1,5 @@
 (function() {
-  var Circle, Complex, Dynamics, HSVtoRGB, Spiral, SpiralIn, SpiralOut, addScript, colorShader, colors, curTime, current, delay, discLerp, duration, easeCode, element, expLerp, farthest, initialized, install, inv22, linLerp, linesDataElt, linesElt, makeAxes, makeControls, makeCoordMat, mathbox, mode, mult22, myMathBox, numPoints, numPointsCol, numPointsRow, ortho, points, polyLerp, randElt, randSign, reset, rotateShader, select, setupMathbox, shaderElt, sizeShader, startup, stepMat, timings, types, typesList, view, view0,
+  var Circle, Complex, Dynamics, HSVtoRGB, Spiral, SpiralIn, SpiralOut, addScript, colorShader, colors, curTime, current, delay, discLerp, duration, easeCode, element, expLerp, farthest, initialized, install, inv22, linLerp, linesDataElt, linesElt, makeAxes, makeControls, makeCoordMat, mathbox, mode, mult22, myMathBox, numPoints, numPointsCol, numPointsRow, ortho, points, polyLerp, randElt, randSign, reset, rotateShader, select, setupMathbox, shaderElt, sizeShader, startup, stepMat, t, timings, types, typesList, view, view0,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
@@ -569,14 +569,18 @@
 
   })(Spiral);
 
-  types = {
-    all: null,
-    ellipse: Circle,
-    "spiral in": SpiralIn,
-    "spiral out": SpiralOut
-  };
+  types = [["all", null], ["ellipse", Circle], ["spiral in", SpiralIn], ["spiral out", SpiralOut]];
 
-  typesList = [Circle, SpiralIn, SpiralOut];
+  typesList = (function() {
+    var k, len1, ref, results;
+    ref = types.slice(1);
+    results = [];
+    for (k = 0, len1 = ref.length; k < len1; k++) {
+      t = ref[k];
+      results.push(t[1]);
+    }
+    return results;
+  })();
 
   select = null;
 
@@ -584,7 +588,9 @@
     var type;
     makeCoordMat();
     if (select) {
-      type = types[select.value];
+      type = types.filter(function(x) {
+        return x[0] === select.value;
+      })[0][1];
     }
     if (!type) {
       type = randElt(typesList);
@@ -626,15 +632,15 @@
   };
 
   makeControls = function(elt) {
-    var button, div, key, option, val;
+    var button, div, k, key, len1, option, ref, val;
     div = document.createElement("div");
     div.id = "cover-controls";
     button = document.createElement("button");
     button.innerText = "Go";
     button.onclick = reset;
     select = document.createElement("select");
-    for (key in types) {
-      val = types[key];
+    for (k = 0, len1 = types.length; k < len1; k++) {
+      ref = types[k], key = ref[0], val = ref[1];
       option = document.createElement("option");
       option.innerText = key;
       select.appendChild(option);
