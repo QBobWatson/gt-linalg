@@ -9,22 +9,22 @@ Copyright 2017 Georgia Institute of Technology
   <titlepage>
     <author>
       <personname>Joseph Rabinoff</personname>
-      <!-- <department>School of Mathematics</department> -->
-      <!-- <institution>Georgia Institute of Technology</institution> -->
-      <!-- <email>judsontw@sfasu.edu</email> -->
+      <department>School of Mathematics</department>
+      <institution>Georgia Institute of Technology</institution>
+      <!-- <email>jrabinoff@math.gatech.edu</email> -->
     </author>
     <author>
       <personname>Dan Margalit</personname>
+      <department>School of Mathematics</department>
+      <institution>Georgia Institute of Technology</institution>
+      <!-- <email>dmargalit7@math.gatech.edu</email> -->
+    </author>
+    <!-- <author> -->
+    <!--   <personname>and the Faculty of the School of Mathematics</personname> -->
       <!-- <department>School of Mathematics</department> -->
       <!-- <institution>Georgia Institute of Technology</institution> -->
       <!-- <email>judsontw@sfasu.edu</email> -->
-    </author>
-    <author>
-      <personname>and the Faculty of the School of Mathematics</personname>
-      <!-- <department>School of Mathematics</department> -->
-      <institution>Georgia Institute of Technology</institution>
-      <!-- <email>judsontw@sfasu.edu</email> -->
-    </author>
+    <!-- </author> -->
 
     <date><today /></date>
   </titlepage>
