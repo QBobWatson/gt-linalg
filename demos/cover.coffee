@@ -104,12 +104,12 @@ colorShader = easeCode + \
 sizeShader = easeCode + \
     """
     uniform float time;
+    uniform float small;
 
     vec4 getTimingsSample(vec4 xyzw);
 
     #define TRANSITION 0.2
-    #define SMALL 5.0
-    #define BIG 7.0
+    #define BIG (small * 7.0 / 5.0)
 
     vec4 getSize(vec4 xyzw) {
         vec4 timings = getTimingsSample(xyzw);
@@ -119,11 +119,11 @@ sizeShader = easeCode + \
         pos = max(0.0, min(1.0, (time - start) / duration));
         if(pos < TRANSITION) {
             ease = easeInOutSine(pos / TRANSITION);
-            size = SMALL * (1.0-ease) + BIG * ease;
+            size = small * (1.0-ease) + BIG * ease;
         }
         else if(pos > 1.0 - TRANSITION) {
             ease = easeInOutSine((1.0 - pos) / TRANSITION);
-            size = SMALL * (1.0-ease) + BIG * ease;
+            size = small * (1.0-ease) + BIG * ease;
         }
         return vec4(size, 0.0, 0.0, 0.0);
     }
@@ -310,6 +310,8 @@ linesDataElt = null
 
 class Dynamics
     install: () =>
+        canvas = mathbox._context.canvas
+
         for i in [1..numPoints]
             @newPoint i, true
             timings[i][0] = curTime + delay(true)
@@ -359,7 +361,8 @@ class Dynamics
                 .shader
                     code: sizeShader
                 ,
-                    time: (t) -> t
+                    time:  (t) -> t
+                    small: () -> 5 / 739 * canvas.clientWidth
                 .resample
                     source: "#timings"
                     id:     "sizes"
@@ -802,9 +805,10 @@ install = (elt) ->
     elt.appendChild div
     # Adjust width
     main = document.getElementsByClassName("main")[0]
-    elt.style.width = main.clientWidth + "px"
-    content = document.getElementById "content"
-    elt.style.marginLeft = "-" + getComputedStyle(content, null).marginLeft
+    if main
+        elt.style.width = main.clientWidth + "px"
+        content = document.getElementById "content"
+        elt.style.marginLeft = "-" + getComputedStyle(content, null).marginLeft
     # Add controls
     makeControls elt
     startup()

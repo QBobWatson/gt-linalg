@@ -12,7 +12,7 @@
 
   colorShader = easeCode + "uniform float time;\n\nvec4 getTimingsSample(vec4 xyzw);\nvec4 getColorSample(vec4 xyzw);\n\nvec3 hsv2rgb(vec3 c) {\n  vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);\n  vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);\n  return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);\n}\n\n#define TRANSITION 0.2\n\nvec4 getColor(vec4 xyzw) {\n    vec4 color = getColorSample(xyzw);\n    vec4 timings = getTimingsSample(xyzw);\n    float start = timings.x;\n    float duration = timings.y;\n    float pos, ease;\n    pos = max(0.0, min(1.0, (time - start) / duration));\n    if(pos < TRANSITION) {\n        ease = easeInOutSine(pos / TRANSITION);\n        color.w *= ease * 0.6 + 0.4;\n        color.y *= ease * 0.6 + 0.4;\n    }\n    else if(pos > 1.0 - TRANSITION) {\n        ease = easeInOutSine((1.0 - pos) / TRANSITION);\n        color.w *= ease * 0.6 + 0.4;\n        color.y *= ease * 0.6 + 0.4;\n    }\n    return vec4(hsv2rgb(color.xyz), color.w);\n}";
 
-  sizeShader = easeCode + "uniform float time;\n\nvec4 getTimingsSample(vec4 xyzw);\n\n#define TRANSITION 0.2\n#define SMALL 5.0\n#define BIG 7.0\n\nvec4 getSize(vec4 xyzw) {\n    vec4 timings = getTimingsSample(xyzw);\n    float start = timings.x;\n    float duration = timings.y;\n    float pos, ease, size = BIG;\n    pos = max(0.0, min(1.0, (time - start) / duration));\n    if(pos < TRANSITION) {\n        ease = easeInOutSine(pos / TRANSITION);\n        size = SMALL * (1.0-ease) + BIG * ease;\n    }\n    else if(pos > 1.0 - TRANSITION) {\n        ease = easeInOutSine((1.0 - pos) / TRANSITION);\n        size = SMALL * (1.0-ease) + BIG * ease;\n    }\n    return vec4(size, 0.0, 0.0, 0.0);\n}";
+  sizeShader = easeCode + "uniform float time;\nuniform float small;\n\nvec4 getTimingsSample(vec4 xyzw);\n\n#define TRANSITION 0.2\n#define BIG (small * 7.0 / 5.0)\n\nvec4 getSize(vec4 xyzw) {\n    vec4 timings = getTimingsSample(xyzw);\n    float start = timings.x;\n    float duration = timings.y;\n    float pos, ease, size = BIG;\n    pos = max(0.0, min(1.0, (time - start) / duration));\n    if(pos < TRANSITION) {\n        ease = easeInOutSine(pos / TRANSITION);\n        size = small * (1.0-ease) + BIG * ease;\n    }\n    else if(pos > 1.0 - TRANSITION) {\n        ease = easeInOutSine((1.0 - pos) / TRANSITION);\n        size = small * (1.0-ease) + BIG * ease;\n    }\n    return vec4(size, 0.0, 0.0, 0.0);\n}";
 
   HSVtoRGB = function(h, s, v) {
     var f, i, p, q, t;
@@ -255,7 +255,8 @@
     }
 
     Dynamics.prototype.install = function() {
-      var i, k, pointsElt, ref;
+      var canvas, i, k, pointsElt, ref;
+      canvas = mathbox._context.canvas;
       for (i = k = 1, ref = numPoints; 1 <= ref ? k <= ref : k >= ref; i = 1 <= ref ? ++k : --k) {
         this.newPoint(i, true);
         timings[i][0] = curTime + delay(true);
@@ -309,6 +310,9 @@
         }, {
           time: function(t) {
             return t;
+          },
+          small: function() {
+            return 5 / 739 * canvas.clientWidth;
           }
         }).resample({
           source: "#timings",
@@ -996,9 +1000,11 @@
     div.appendChild(div2);
     elt.appendChild(div);
     main = document.getElementsByClassName("main")[0];
-    elt.style.width = main.clientWidth + "px";
-    content = document.getElementById("content");
-    elt.style.marginLeft = "-" + getComputedStyle(content, null).marginLeft;
+    if (main) {
+      elt.style.width = main.clientWidth + "px";
+      content = document.getElementById("content");
+      elt.style.marginLeft = "-" + getComputedStyle(content, null).marginLeft;
+    }
     makeControls(elt);
     return startup();
   };
