@@ -264,6 +264,7 @@ makeCoordMat = () ->
     v2[1] = Math.sin(θ + θoff) * len
 
     coordMat = [v1[0], v2[0], v1[1], v2[1]]
+    # coordMat = [1,0,0,1]
     # Find the farthest corner in the un-transformed coord system
     coordMatInv = inv22 coordMat
     corners = [[1, 1], [-1, 1]].map (c) -> mult22 coordMatInv, c
@@ -492,7 +493,7 @@ class SpiralIn extends Spiral
 
 
 class SpiralOut extends Spiral
-    getScale: () -> linLerp(1/0.8, 1/0.3)(Math.random())
+    getScale: () => linLerp(1/0.8, 1/0.3)(Math.random())
 
     makeDistributions: () =>
         @veryClose = 0.01 / @scale
@@ -522,7 +523,7 @@ class SpiralOut extends Spiral
 ######################################################################
 # Real eigenvalues, diagonalizable
 
-class Real extends Dynamics
+class Diagonalizable extends Dynamics
     constructor: () ->
         super
         @makeScales()
@@ -536,13 +537,13 @@ class Real extends Dynamics
             scaleY: { type: 'f', value: @scaleY }
 
 
-class Hyperbolas extends Real
-    makeScales: () ->
+class Hyperbolas extends Diagonalizable
+    makeScales: () =>
         @scaleX = linLerp(0.3, 0.8)(Math.random())
         @scaleY = linLerp(1/0.8, 1/0.3)(Math.random())
+        # Implicit equations for paths are x^{log(scaleY)}y^{-log(scaleX)} = r
         @logScaleX = Math.log @scaleX
         @logScaleY = Math.log @scaleY
-        # Implicit equations for paths are x^{log(scaleY)}y^{-log(scaleX)} = r
         # @close means (@close, @close) is the closest point to the origin
         @close = 0.05
         @closeR = Math.pow(@close, @logScaleY - @logScaleX)
@@ -567,9 +568,8 @@ class Hyperbolas extends Real
 
     makeReference: () =>
         ret = []
-        # Uniformly spaced hyperbolas through these (c, c)
-        for c in [farthest/20...farthest] by farthest/20
-            r = Math.pow(c, @logScaleY - @logScaleX)
+        for t in [0...20]
+            r = @lerpR t/20
             closeX = Math.pow(r * Math.pow(farthestY, @logScaleX), 1/@logScaleY)
             lerp = expLerp closeX, farthestX
             row = []
@@ -587,15 +587,162 @@ class Hyperbolas extends Real
         points[i]
 
 
+class AttractRepel extends Diagonalizable
+    makeScales: () =>
+        # Implicit equations for paths are x^{log(scaleY)}y^{-log(scaleX)} = r
+        @logScaleX = Math.log @scaleX
+        @logScaleY = Math.log @scaleY
+        # Choose points on paths between the ones going through
+        # (.95,.05) and (.05,.95)
+        offset = 0.05
+        # Interpolate r by choosing the path that goes through a random point on
+        # the line y = 1-x
+        @lerpR = (t) ->
+            t = linLerp(offset, 1-offset)(t)
+            Math.pow(t, @logScaleY) * Math.pow(1-t, -@logScaleX)
+        # Assume this is >1
+        a = @logScaleY/@logScaleX
+        # Points expand in/out in "wave fronts" of the form x^a + y = s
+        # Acting (x,y) by stepMat multiplies this equation by scaleY
+        # Last wave front is through (farthestX, farthestY)
+        @sMin = 0.01
+        @sMax = Math.pow(farthestX, a) + farthestY
+        # The y-value of the point of intersection of the curves
+        # x^a+y=s and x^lsy y^{-lsx} = r
+        @yValAt = (r, s) -> s / (1 + Math.pow(r, 1/@logScaleX))
+        # x as a function of y on the curve blah=r
+        @xOfY = (y, r) -> Math.pow(r * Math.pow(y, @logScaleX), 1/@logScaleY)
+
+    makeReference: () =>
+        ret = []
+        for i in [0...15]
+            r = @lerpR i/15
+            lerp = expLerp 0.01, farthestY
+            row = []
+            for i in [0..100]
+                y = lerp i/100
+                x = @xOfY y, r
+                row.push [[x,  y], [-x,  y], [ x, -y], [-x, -y]]
+            ret.push row
+        ret
+
+
+class Attract extends AttractRepel
+    makeScales: () =>
+        # scaleX >= scaleY implies logScaleY/logScaleX > 1
+        @scaleX = linLerp(0.3, 0.9)(Math.random())
+        @scaleY = linLerp(0.3, @scaleX)(Math.random())
+        super
+
+    newPoint: (i, first) =>
+        # First choose r
+        r = @lerpR Math.random()
+        farY = @yValAt r, @sMax / @scaleY
+        if first
+            closeY = @yValAt r, @sMin
+        else
+            closeY = @yValAt r, @sMax
+        y = expLerp(closeY, farY)(Math.random())
+        x = @xOfY y, r
+        timings[i] = [0, duration]
+        points[i] = [randSign() * x, randSign() * y, 0, 0]
+
+    updatePoint: (i) =>
+        point = points[i]
+        if Math.abs(point[1]) < .01
+            @newPoint i
+        points[i]
+
+
+class Repel extends AttractRepel
+    makeScales: () =>
+        # scaleX <= scaleY implies logScaleY/logScaleX > 1
+        @scaleY = linLerp(1/0.9, 1/0.3)(Math.random())
+        @scaleX = linLerp(1/0.9, @scaleY)(Math.random())
+        super
+
+    newPoint: (i, first) =>
+        # First choose r
+        r = @lerpR Math.random()
+        closeY = @yValAt r, @sMin / @scaleY
+        if first
+            farY = @yValAt r, @sMax
+        else
+            farY = @yValAt r, @sMin
+        y = expLerp(closeY, farY)(Math.random())
+        x = @xOfY y, r
+        timings[i] = [0, duration]
+        points[i] = [randSign() * x, randSign() * y, 0, 0]
+
+    updatePoint: (i) =>
+        point = points[i]
+        if Math.abs(point[0]) > farthestX or Math.abs(point[1]) > farthestY
+            @newPoint i
+        points[i]
+
+
+class AttractRepelLine extends Diagonalizable
+    makeScales: () =>
+        @scaleX = 1
+        @lerpX = linLerp -farthestX, farthestX
+
+    newPoint: (i, first) =>
+        x = @lerpX Math.random()
+        y = (if first then @origLerpY else @newLerpY)(Math.random())
+        timings[i] = [0, duration]
+        points[i] = [x, randSign() * y, 0, 0]
+
+    makeReference: () =>
+        item1 = []
+        item2 = []
+        for i in [0...20]
+            x = @lerpX (i+.5)/20
+            item1.push [x, -farthestY]
+            item2.push [x,  farthestY]
+        [[item1, item2]]
+
+
+class AttractLine extends AttractRepelLine
+    makeScales: () =>
+        super
+        @scaleY = linLerp(0.3, 0.8)(Math.random())
+        @origLerpY = expLerp 0.01, farthestY / @scaleY
+        @newLerpY = expLerp farthestY, farthestY / @scaleY
+
+    updatePoint: (i) =>
+        point = points[i]
+        if Math.abs(point[1]) < 0.01
+            @newPoint i
+        points[i]
+
+
+class RepelLine extends AttractRepelLine
+    makeScales: () =>
+        super
+        @scaleY = linLerp(1/0.8, 1/0.3)(Math.random())
+        @origLerpY = expLerp 0.01 / @scaleY, farthestY
+        @newLerpY = expLerp 0.01 / @scaleY, 0.01
+
+    updatePoint: (i) =>
+        point = points[i]
+        if Math.abs(point[1]) > farthestY
+            @newPoint i
+        points[i]
+
+
 ######################################################################
 # Entry point
 
 types = [
-    ["all", null],
-    ["ellipse", Circle],
-    ["spiral in", SpiralIn],
-    ["spiral out", SpiralOut]
-    ["hyperbolas", Hyperbolas]
+    ["all",           null],
+    ["ellipse",       Circle],
+    ["spiral in",     SpiralIn],
+    ["spiral out",    SpiralOut]
+    ["hyperbolas",    Hyperbolas]
+    ["attract point", Attract]
+    ["repel point",   Repel]
+    ["attract line",  AttractLine]
+    ["repel line",    RepelLine]
 ]
 typesList = (t[1] for t in types.slice(1))
 select = null
@@ -606,7 +753,7 @@ reset = () ->
         type = types.filter((x) -> x[0] == select.value)[0][1]
     unless type
         type = randElt typesList
-        #type = Hyperbolas
+        # type = Repel
     current = window.current = new type()
     current.install()
 

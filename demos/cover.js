@@ -1,5 +1,5 @@
 (function() {
-  var Circle, Complex, Dynamics, HSVtoRGB, Hyperbolas, Real, Spiral, SpiralIn, SpiralOut, colorShader, colors, curTime, current, delay, diagShader, discLerp, duration, easeCode, element, expLerp, farthest, farthestX, farthestY, initialized, install, inv22, linLerp, linesDataElt, linesElt, makeAxes, makeControls, makeCoordMat, mathbox, mode, mult22, myMathBox, numPoints, numPointsCol, numPointsRow, ortho, points, polyLerp, randElt, randSign, reset, rotateShader, select, setupMathbox, shaderElt, sizeShader, startup, stepMat, t, timings, types, typesList, view, view0,
+  var Attract, AttractLine, AttractRepel, AttractRepelLine, Circle, Complex, Diagonalizable, Dynamics, HSVtoRGB, Hyperbolas, Repel, RepelLine, Spiral, SpiralIn, SpiralOut, colorShader, colors, curTime, current, delay, diagShader, discLerp, duration, easeCode, element, expLerp, farthest, farthestX, farthestY, initialized, install, inv22, linLerp, linesDataElt, linesElt, makeAxes, makeControls, makeCoordMat, mathbox, mode, mult22, myMathBox, numPoints, numPointsCol, numPointsRow, ortho, points, polyLerp, randElt, randSign, reset, rotateShader, select, setupMathbox, shaderElt, sizeShader, startup, stepMat, t, timings, types, typesList, view, view0,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
@@ -534,6 +534,7 @@
     function SpiralOut() {
       this.updatePoint = bind(this.updatePoint, this);
       this.makeDistributions = bind(this.makeDistributions, this);
+      this.getScale = bind(this.getScale, this);
       return SpiralOut.__super__.constructor.apply(this, arguments);
     }
 
@@ -581,17 +582,17 @@
 
   })(Spiral);
 
-  Real = (function(superClass) {
-    extend(Real, superClass);
+  Diagonalizable = (function(superClass) {
+    extend(Diagonalizable, superClass);
 
-    function Real() {
+    function Diagonalizable() {
       this.shaderParams = bind(this.shaderParams, this);
-      Real.__super__.constructor.apply(this, arguments);
+      Diagonalizable.__super__.constructor.apply(this, arguments);
       this.makeScales();
       stepMat = [this.scaleX, 0, 0, this.scaleY];
     }
 
-    Real.prototype.shaderParams = function() {
+    Diagonalizable.prototype.shaderParams = function() {
       return {
         code: diagShader,
         sources: ["#timings"],
@@ -608,7 +609,7 @@
       };
     };
 
-    return Real;
+    return Diagonalizable;
 
   })(Dynamics);
 
@@ -619,6 +620,7 @@
       this.updatePoint = bind(this.updatePoint, this);
       this.makeReference = bind(this.makeReference, this);
       this.newPoint = bind(this.newPoint, this);
+      this.makeScales = bind(this.makeScales, this);
       return Hyperbolas.__super__.constructor.apply(this, arguments);
     }
 
@@ -648,10 +650,10 @@
     };
 
     Hyperbolas.prototype.makeReference = function() {
-      var c, closeX, i, k, lerp, o, r, ref, ref1, ref2, ret, row, x, y;
+      var closeX, i, k, lerp, o, r, ret, row, t, x, y;
       ret = [];
-      for (c = k = ref = farthest / 20, ref1 = farthest, ref2 = farthest / 20; ref2 > 0 ? k < ref1 : k > ref1; c = k += ref2) {
-        r = Math.pow(c, this.logScaleY - this.logScaleX);
+      for (t = k = 0; k < 20; t = ++k) {
+        r = this.lerpR(t / 20);
         closeX = Math.pow(r * Math.pow(farthestY, this.logScaleX), 1 / this.logScaleY);
         lerp = expLerp(closeX, farthestX);
         row = [];
@@ -676,9 +678,244 @@
 
     return Hyperbolas;
 
-  })(Real);
+  })(Diagonalizable);
 
-  types = [["all", null], ["ellipse", Circle], ["spiral in", SpiralIn], ["spiral out", SpiralOut], ["hyperbolas", Hyperbolas]];
+  AttractRepel = (function(superClass) {
+    extend(AttractRepel, superClass);
+
+    function AttractRepel() {
+      this.makeReference = bind(this.makeReference, this);
+      this.makeScales = bind(this.makeScales, this);
+      return AttractRepel.__super__.constructor.apply(this, arguments);
+    }
+
+    AttractRepel.prototype.makeScales = function() {
+      var a, offset;
+      this.logScaleX = Math.log(this.scaleX);
+      this.logScaleY = Math.log(this.scaleY);
+      offset = 0.05;
+      this.lerpR = function(t) {
+        t = linLerp(offset, 1 - offset)(t);
+        return Math.pow(t, this.logScaleY) * Math.pow(1 - t, -this.logScaleX);
+      };
+      a = this.logScaleY / this.logScaleX;
+      this.sMin = 0.01;
+      this.sMax = Math.pow(farthestX, a) + farthestY;
+      this.yValAt = function(r, s) {
+        return s / (1 + Math.pow(r, 1 / this.logScaleX));
+      };
+      return this.xOfY = function(y, r) {
+        return Math.pow(r * Math.pow(y, this.logScaleX), 1 / this.logScaleY);
+      };
+    };
+
+    AttractRepel.prototype.makeReference = function() {
+      var i, k, lerp, o, r, ret, row, x, y;
+      ret = [];
+      for (i = k = 0; k < 15; i = ++k) {
+        r = this.lerpR(i / 15);
+        lerp = expLerp(0.01, farthestY);
+        row = [];
+        for (i = o = 0; o <= 100; i = ++o) {
+          y = lerp(i / 100);
+          x = this.xOfY(y, r);
+          row.push([[x, y], [-x, y], [x, -y], [-x, -y]]);
+        }
+        ret.push(row);
+      }
+      return ret;
+    };
+
+    return AttractRepel;
+
+  })(Diagonalizable);
+
+  Attract = (function(superClass) {
+    extend(Attract, superClass);
+
+    function Attract() {
+      this.updatePoint = bind(this.updatePoint, this);
+      this.newPoint = bind(this.newPoint, this);
+      this.makeScales = bind(this.makeScales, this);
+      return Attract.__super__.constructor.apply(this, arguments);
+    }
+
+    Attract.prototype.makeScales = function() {
+      this.scaleX = linLerp(0.3, 0.9)(Math.random());
+      this.scaleY = linLerp(0.3, this.scaleX)(Math.random());
+      return Attract.__super__.makeScales.apply(this, arguments);
+    };
+
+    Attract.prototype.newPoint = function(i, first) {
+      var closeY, farY, r, x, y;
+      r = this.lerpR(Math.random());
+      farY = this.yValAt(r, this.sMax / this.scaleY);
+      if (first) {
+        closeY = this.yValAt(r, this.sMin);
+      } else {
+        closeY = this.yValAt(r, this.sMax);
+      }
+      y = expLerp(closeY, farY)(Math.random());
+      x = this.xOfY(y, r);
+      timings[i] = [0, duration];
+      return points[i] = [randSign() * x, randSign() * y, 0, 0];
+    };
+
+    Attract.prototype.updatePoint = function(i) {
+      var point;
+      point = points[i];
+      if (Math.abs(point[1]) < .01) {
+        this.newPoint(i);
+      }
+      return points[i];
+    };
+
+    return Attract;
+
+  })(AttractRepel);
+
+  Repel = (function(superClass) {
+    extend(Repel, superClass);
+
+    function Repel() {
+      this.updatePoint = bind(this.updatePoint, this);
+      this.newPoint = bind(this.newPoint, this);
+      this.makeScales = bind(this.makeScales, this);
+      return Repel.__super__.constructor.apply(this, arguments);
+    }
+
+    Repel.prototype.makeScales = function() {
+      this.scaleY = linLerp(1 / 0.9, 1 / 0.3)(Math.random());
+      this.scaleX = linLerp(1 / 0.9, this.scaleY)(Math.random());
+      return Repel.__super__.makeScales.apply(this, arguments);
+    };
+
+    Repel.prototype.newPoint = function(i, first) {
+      var closeY, farY, r, x, y;
+      r = this.lerpR(Math.random());
+      closeY = this.yValAt(r, this.sMin / this.scaleY);
+      if (first) {
+        farY = this.yValAt(r, this.sMax);
+      } else {
+        farY = this.yValAt(r, this.sMin);
+      }
+      y = expLerp(closeY, farY)(Math.random());
+      x = this.xOfY(y, r);
+      timings[i] = [0, duration];
+      return points[i] = [randSign() * x, randSign() * y, 0, 0];
+    };
+
+    Repel.prototype.updatePoint = function(i) {
+      var point;
+      point = points[i];
+      if (Math.abs(point[0]) > farthestX || Math.abs(point[1]) > farthestY) {
+        this.newPoint(i);
+      }
+      return points[i];
+    };
+
+    return Repel;
+
+  })(AttractRepel);
+
+  AttractRepelLine = (function(superClass) {
+    extend(AttractRepelLine, superClass);
+
+    function AttractRepelLine() {
+      this.makeReference = bind(this.makeReference, this);
+      this.newPoint = bind(this.newPoint, this);
+      this.makeScales = bind(this.makeScales, this);
+      return AttractRepelLine.__super__.constructor.apply(this, arguments);
+    }
+
+    AttractRepelLine.prototype.makeScales = function() {
+      this.scaleX = 1;
+      return this.lerpX = linLerp(-farthestX, farthestX);
+    };
+
+    AttractRepelLine.prototype.newPoint = function(i, first) {
+      var x, y;
+      x = this.lerpX(Math.random());
+      y = (first ? this.origLerpY : this.newLerpY)(Math.random());
+      timings[i] = [0, duration];
+      return points[i] = [x, randSign() * y, 0, 0];
+    };
+
+    AttractRepelLine.prototype.makeReference = function() {
+      var i, item1, item2, k, x;
+      item1 = [];
+      item2 = [];
+      for (i = k = 0; k < 20; i = ++k) {
+        x = this.lerpX((i + .5) / 20);
+        item1.push([x, -farthestY]);
+        item2.push([x, farthestY]);
+      }
+      return [[item1, item2]];
+    };
+
+    return AttractRepelLine;
+
+  })(Diagonalizable);
+
+  AttractLine = (function(superClass) {
+    extend(AttractLine, superClass);
+
+    function AttractLine() {
+      this.updatePoint = bind(this.updatePoint, this);
+      this.makeScales = bind(this.makeScales, this);
+      return AttractLine.__super__.constructor.apply(this, arguments);
+    }
+
+    AttractLine.prototype.makeScales = function() {
+      AttractLine.__super__.makeScales.apply(this, arguments);
+      this.scaleY = linLerp(0.3, 0.8)(Math.random());
+      this.origLerpY = expLerp(0.01, farthestY / this.scaleY);
+      return this.newLerpY = expLerp(farthestY, farthestY / this.scaleY);
+    };
+
+    AttractLine.prototype.updatePoint = function(i) {
+      var point;
+      point = points[i];
+      if (Math.abs(point[1]) < 0.01) {
+        this.newPoint(i);
+      }
+      return points[i];
+    };
+
+    return AttractLine;
+
+  })(AttractRepelLine);
+
+  RepelLine = (function(superClass) {
+    extend(RepelLine, superClass);
+
+    function RepelLine() {
+      this.updatePoint = bind(this.updatePoint, this);
+      this.makeScales = bind(this.makeScales, this);
+      return RepelLine.__super__.constructor.apply(this, arguments);
+    }
+
+    RepelLine.prototype.makeScales = function() {
+      RepelLine.__super__.makeScales.apply(this, arguments);
+      this.scaleY = linLerp(1 / 0.8, 1 / 0.3)(Math.random());
+      this.origLerpY = expLerp(0.01 / this.scaleY, farthestY);
+      return this.newLerpY = expLerp(0.01 / this.scaleY, 0.01);
+    };
+
+    RepelLine.prototype.updatePoint = function(i) {
+      var point;
+      point = points[i];
+      if (Math.abs(point[1]) > farthestY) {
+        this.newPoint(i);
+      }
+      return points[i];
+    };
+
+    return RepelLine;
+
+  })(AttractRepelLine);
+
+  types = [["all", null], ["ellipse", Circle], ["spiral in", SpiralIn], ["spiral out", SpiralOut], ["hyperbolas", Hyperbolas], ["attract point", Attract], ["repel point", Repel], ["attract line", AttractLine], ["repel line", RepelLine]];
 
   typesList = (function() {
     var k, len1, ref, results;
