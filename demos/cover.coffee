@@ -1,5 +1,4 @@
 # TODO:
-#  * Speed based on deltaAngle?
 
 ######################################################################
 # Shaders
@@ -19,14 +18,12 @@ rotateShader = easeCode + \
     uniform float scale;
     uniform float time;
 
-    vec4 getTimingsSample(vec4 xyzw);
     vec4 getPointSample(vec4 xyzw);
 
     vec4 rotate(vec4 xyzw) {
-        vec4 timings = getTimingsSample(xyzw);
         vec4 point = getPointSample(xyzw);
-        float start = timings.x;
-        float duration = timings.y;
+        float start = point.z;
+        float duration = point.w;
         if(time < start) {
             return vec4(point.xy, 0.0, 0.0);
         }
@@ -46,14 +43,12 @@ diagShader = easeCode + \
     uniform float scaleY;
     uniform float time;
 
-    vec4 getTimingsSample(vec4 xyzw);
     vec4 getPointSample(vec4 xyzw);
 
     vec4 rotate(vec4 xyzw) {
-        vec4 timings = getTimingsSample(xyzw);
         vec4 point = getPointSample(xyzw);
-        float start = timings.x;
-        float duration = timings.y;
+        float start = point.z;
+        float duration = point.w;
         if(time < start) {
             return vec4(point.xy, 0.0, 0.0);
         }
@@ -65,11 +60,35 @@ diagShader = easeCode + \
     }
     """
 
+shearShader = easeCode + \
+    """
+    uniform float scale;
+    uniform float translate;
+    uniform float time;
+
+    vec4 getPointSample(vec4 xyzw);
+
+    vec4 shear(vec4 xyzw) {
+        vec4 point = getPointSample(xyzw);
+        float start = point.z;
+        float duration = point.w;
+        if(time < start) {
+            return vec4(point.xy, 0.0, 0.0);
+        }
+        float pos = min((time - start) / duration, 1.0);
+        pos = easeInOutSine(pos);
+        float s = pow(scale, pos);
+        point.x  = s * (point.x + translate * pos * point.y);
+        point.y *= s;
+        return vec4(point.xy, 0.0, 0.0);
+    }
+    """
+
 colorShader = easeCode + \
     """
     uniform float time;
 
-    vec4 getTimingsSample(vec4 xyzw);
+    vec4 getPointSample(vec4 xyzw);
     vec4 getColorSample(vec4 xyzw);
 
     vec3 hsv2rgb(vec3 c) {
@@ -82,9 +101,9 @@ colorShader = easeCode + \
 
     vec4 getColor(vec4 xyzw) {
         vec4 color = getColorSample(xyzw);
-        vec4 timings = getTimingsSample(xyzw);
-        float start = timings.x;
-        float duration = timings.y;
+        vec4 point = getPointSample(xyzw);
+        float start = point.z;
+        float duration = point.w;
         float pos, ease;
         pos = max(0.0, min(1.0, (time - start) / duration));
         if(pos < TRANSITION) {
@@ -106,15 +125,15 @@ sizeShader = easeCode + \
     uniform float time;
     uniform float small;
 
-    vec4 getTimingsSample(vec4 xyzw);
+    vec4 getPointSample(vec4 xyzw);
 
     #define TRANSITION 0.2
     #define BIG (small * 7.0 / 5.0)
 
     vec4 getSize(vec4 xyzw) {
-        vec4 timings = getTimingsSample(xyzw);
-        float start = timings.x;
-        float duration = timings.y;
+        vec4 point = getPointSample(xyzw);
+        float start = point.z;
+        float duration = point.w;
         float pos, ease, size = BIG;
         pos = max(0.0, min(1.0, (time - start) / duration));
         if(pos < TRANSITION) {
@@ -226,10 +245,8 @@ delay = (first) ->
 
 curTime = 0
 mode = 'spiralIn'
-points = [[0, 0, 0, 0]]
+points = [[0, 0, -1, 1e15]]
 stepMat = []
-# Per-point animation timings
-timings = [[-10, 1e15]]
 
 
 ######################################################################
@@ -314,7 +331,7 @@ class Dynamics
 
         for i in [1..numPoints]
             @newPoint i, true
-            timings[i][0] = curTime + delay(true)
+            points[i][2] = curTime + delay(true)
 
         if initialized
             shaderElt.set @shaderParams()
@@ -322,15 +339,6 @@ class Dynamics
             linesElt.set "closed", @refClosed()
 
         else
-            view0
-                .matrix
-                    id:       "timings"
-                    channels: 2
-                    width:    numPointsRow
-                    height:   numPointsCol
-                    data:     timings
-                    live:     true
-
             pointsElt = view
                 .matrix
                     id:       "points-orig"
@@ -351,7 +359,7 @@ class Dynamics
                     live:     false
                 .shader
                     code:    colorShader
-                    sources: ["#timings"]
+                    sources: [pointsElt]
                 ,
                     time: (t) -> t
                 .resample id: "colors"
@@ -359,12 +367,12 @@ class Dynamics
             # Size pipeline
             view0
                 .shader
-                    code: sizeShader
+                    code:   sizeShader
                 ,
                     time:  (t) -> t
                     small: () -> 5 / 739 * canvas.clientWidth
                 .resample
-                    source: "#timings"
+                    source: pointsElt
                     id:     "sizes"
 
             view
@@ -419,12 +427,10 @@ class Complex extends Dynamics
         distribution = if first then @origDist else @newDist
         r = distribution Math.random()
         θ = Math.random() * 2 * π
-        timings[i] = [0, duration]
-        points[i] = [Math.cos(θ) * r, Math.sin(θ) * r, 0, 0]
+        points[i] = [Math.cos(θ) * r, Math.sin(θ) * r, 0, duration]
 
     shaderParams: () =>
         code: rotateShader,
-        sources: ["#timings"]
         uniforms:
             deltaAngle: { type: 'f', value: @deltaAngle }
             scale:      { type: 'f', value: @scale }
@@ -453,15 +459,21 @@ class Circle extends Complex
 class Spiral extends Complex
     makeReference: () =>
         ret = []
+        close = 0.05
+        # How many iterations does it take to get from close to farthest?
+        s = if @scale > 1 then @scale else 1/@scale
+        iters = (Math.log(farthest) - Math.log(close))/Math.log(s)
+        # How many full rotations in that many iterations?
+        rotations = Math.ceil(@deltaAngle * iters / 2*π)
         # Have to put this in a matrix to avoid texture size limits
-        for i in [-10...10]
+        for i in [0..rotations]
             row = []
-            for t in [0..72]
-                u = (i + t/72) * π
-                s = Math.pow(@scale, u / @deltaAngle)
+            for t in [0..100]
+                u = (i + t/100) * 2*π
+                ss = close * Math.pow(s, u / @deltaAngle)
                 items = []
                 for j in [0...2*π] by π/4
-                    items.push [s * Math.cos(u+j), s * Math.sin(u+j)]
+                    items.push [ss * Math.cos(u+j), ss * Math.sin(u+j)]
                 row.push items
             ret.push row
         ret
@@ -534,7 +546,6 @@ class Diagonalizable extends Dynamics
 
     shaderParams: () =>
         code: diagShader,
-        sources: ["#timings"]
         uniforms:
             scaleX: { type: 'f', value: @scaleX }
             scaleY: { type: 'f', value: @scaleY }
@@ -566,8 +577,7 @@ class Hyperbolas extends Diagonalizable
             x = expLerp(farthestX, farthestX / @scaleX)(Math.random())
         # Corresponding y
         y = Math.pow(1/r * Math.pow(x, @logScaleY), 1/@logScaleX)
-        timings[i] = [0, duration]
-        points[i] = [randSign() * x, randSign() * y, 0, 0]
+        points[i] = [randSign() * x, randSign() * y, 0, duration]
 
     makeReference: () =>
         ret = []
@@ -647,8 +657,7 @@ class Attract extends AttractRepel
             closeY = @yValAt r, @sMax
         y = expLerp(closeY, farY)(Math.random())
         x = @xOfY y, r
-        timings[i] = [0, duration]
-        points[i] = [randSign() * x, randSign() * y, 0, 0]
+        points[i] = [randSign() * x, randSign() * y, 0, duration]
 
     updatePoint: (i) =>
         point = points[i]
@@ -674,8 +683,7 @@ class Repel extends AttractRepel
             farY = @yValAt r, @sMin
         y = expLerp(closeY, farY)(Math.random())
         x = @xOfY y, r
-        timings[i] = [0, duration]
-        points[i] = [randSign() * x, randSign() * y, 0, 0]
+        points[i] = [randSign() * x, randSign() * y, 0, duration]
 
     updatePoint: (i) =>
         point = points[i]
@@ -692,8 +700,7 @@ class AttractRepelLine extends Diagonalizable
     newPoint: (i, first) =>
         x = @lerpX Math.random()
         y = (if first then @origLerpY else @newLerpY)(Math.random())
-        timings[i] = [0, duration]
-        points[i] = [x, randSign() * y, 0, 0]
+        points[i] = [x, randSign() * y, 0, duration]
 
     makeReference: () =>
         item1 = []
@@ -734,18 +741,146 @@ class RepelLine extends AttractRepelLine
 
 
 ######################################################################
+# Real eigenvalues, not diagonalizable
+
+class Shear extends Dynamics
+    constructor: () ->
+        @translate = randSign() * linLerp(0.2, 2.0)(Math.random())
+        stepMat = [1, @translate, 0, 1]
+        @lerpY = linLerp 0.01, farthestY
+        # For reference
+        @lerpY2 = linLerp -farthestY, farthestY
+
+    newPoint: (i, first) =>
+        a = @translate
+        if first
+            y = @lerpY Math.random()
+            # Put a few points on the x-axis
+            if Math.random() < 0.005
+                y = 0
+                x = linLerp(-farthestX, farthestX)(Math.random())
+            else
+                if a < 0
+                    x = linLerp(-farthestX, farthestX - a*y)(Math.random())
+                else
+                    x = linLerp(-farthestX - a*y, farthestX)(Math.random())
+        else
+            # Don't change path
+            y = points[i][1]
+            if a < 0
+                x = linLerp(farthestX, farthestX - a*y)(Math.random())
+            else
+                x = linLerp(-farthestX - a*y, -farthestX)(Math.random())
+        s = randSign()
+        points[i] = [s*x, s*y, 0, duration]
+
+    shaderParams: () =>
+        code: shearShader,
+        uniforms:
+            scale:     { type: 'f', value: 1.0 }
+            translate: { type: 'f', value: @translate }
+
+    makeReference: () =>
+        item1 = []
+        item2 = []
+        for i in [0...20]
+            y = @lerpY2 (i+.5)/20
+            item1.push [-farthestX, y]
+            item2.push [farthestX, y]
+        [[item1, item2]]
+
+    updatePoint: (i) =>
+        point = points[i]
+        if Math.abs(point[0]) > farthestX
+            @newPoint i
+        points[i]
+
+
+class ScaleInOutShear extends Dynamics
+    constructor: () ->
+        @translate = randSign() * linLerp(0.2, 2.0)(Math.random())
+        λ = @scale
+        a = @translate
+        stepMat = [λ, λ*a, 0, λ]
+        # Paths have the form λ^t(r+ta, 1)
+        @xOfY = (r, y) -> y * (r + a*Math.log(y)/Math.log(λ))
+        # tan gives a nice looking plot
+        @lerpR = (t) -> Math.tan((t - 0.5) * π)
+        # for points
+        @lerpR2 = (t) -> Math.tan((t/0.99 + 0.005 - 0.5) * π)
+
+    newPoint: (i, first) =>
+        # Choose a path
+        r = @lerpR2 Math.random()
+        y = (if first then @lerpY else @lerpYNew)(Math.random())
+        x = @xOfY r, y
+        s = randSign()
+        points[i] = [s*x, s*y, 0, duration]
+
+    shaderParams: () =>
+        code: shearShader,
+        uniforms:
+            scale:     { type: 'f', value: @scale }
+            translate: { type: 'f', value: @translate }
+
+    makeReference: () =>
+        ret = []
+        numLines = 40
+        for i in [1...numLines]
+            r = @lerpR i/numLines
+            row = []
+            for j in [0...100]
+                y = @lerpY j/100
+                x = @xOfY r, y
+                row.push [[x, y], [-x, -y]]
+            ret.push row
+        return ret
+
+
+class ScaleOutShear extends ScaleInOutShear
+    constructor: () ->
+        @scale = linLerp(1/0.7, 1/0.3)(Math.random())
+        @lerpY = expLerp 0.01/@scale, farthestY
+        @lerpYNew = expLerp 0.01/@scale, 0.01
+        super
+
+    updatePoint: (i) =>
+        point = points[i]
+        if Math.abs(point[1]) > farthestY
+            @newPoint i
+        points[i]
+
+
+class ScaleInShear extends ScaleInOutShear
+    constructor: () ->
+        @scale = linLerp(0.3, 0.7)(Math.random())
+        @lerpY = expLerp 0.01, farthestY / @scale
+        @lerpYNew = expLerp farthestY, farthestY / @scale
+        super
+
+    updatePoint: (i) =>
+        point = points[i]
+        if Math.abs(point[1]) < .01
+            @newPoint i
+        points[i]
+
+
+######################################################################
 # Entry point
 
 types = [
-    ["all",           null],
-    ["ellipse",       Circle],
-    ["spiral in",     SpiralIn],
-    ["spiral out",    SpiralOut]
-    ["hyperbolas",    Hyperbolas]
-    ["attract point", Attract]
-    ["repel point",   Repel]
-    ["attract line",  AttractLine]
-    ["repel line",    RepelLine]
+    ["all",             null],
+    ["ellipse",         Circle],
+    ["spiral in",       SpiralIn],
+    ["spiral out",      SpiralOut]
+    ["hyperbolas",      Hyperbolas]
+    ["attract point",   Attract]
+    ["repel point",     Repel]
+    ["attract line",    AttractLine]
+    ["repel line",      RepelLine]
+    ["shear",           Shear]
+    ["scale out shear", ScaleOutShear]
+    ["scale in shear",  ScaleInShear]
 ]
 typesList = (t[1] for t in types.slice(1))
 select = null
@@ -756,7 +891,7 @@ reset = () ->
         type = types.filter((x) -> x[0] == select.value)[0][1]
     unless type
         type = randElt typesList
-        # type = Repel
+        #type = Shear
     current = window.current = new type()
     current.install()
 
@@ -770,13 +905,13 @@ window.doCover = startup = () ->
         for point, i in points
             if i == 0  # Origin
                 continue
-            end = timings[i][0] + timings[i][1]
+            end = point[2] + point[3]
             if end < curTime
                 # Reset point
                 [point[0], point[1]] = mult22 stepMat, point
                 point = current.updatePoint i
                 # Reset timer
-                timings[i][0] = curTime + delay()
+                point[2] = curTime + delay()
         null
     , 100
 
