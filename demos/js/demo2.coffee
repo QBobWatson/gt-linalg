@@ -3,6 +3,16 @@
 ################################################################################
 # * Utility functions
 
+# Test via a getter in the options object to see if the passive property is accessed
+supportsPassive = false
+try
+    opts = Object.defineProperty({}, 'passive',
+        get: () -> supportsPassive = true
+    )
+    window.addEventListener "testPassive", null, opts
+    window.removeEventListener "testPassive", null, opts
+catch e then
+
 # Extend an object by another
 extend = (obj, src) ->
     for key, val of src

@@ -213,6 +213,7 @@
           <xsl:attribute name="src">
             <xsl:value-of select="@source"/>
           </xsl:attribute>
+          <xsl:attribute name="title">Interactive Figure</xsl:attribute>
         </xsl:element>
     </xsl:element>
 

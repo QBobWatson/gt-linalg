@@ -1,10 +1,24 @@
 (function() {
   "use strict";
-  var Animation, Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledPoints, LabeledVectors, LinearCombo, MathboxAnimation, OrbitControls, Popup, Subspace, URLParams, View, addEvents, clipFragment, clipShader, eigenvalues, evExpr, extend, groupControls, makeTvec, noShadeFragment, orthogonalize, rowReduce, setTvec, shadeFragment, urlParams,
+  var Animation, Caption, ClipCube, Demo, Demo2D, Draggable, Grid, LabeledPoints, LabeledVectors, LinearCombo, MathboxAnimation, OrbitControls, Popup, Subspace, URLParams, View, addEvents, clipFragment, clipShader, e, eigenvalues, error, evExpr, extend, groupControls, makeTvec, noShadeFragment, opts, orthogonalize, rowReduce, setTvec, shadeFragment, supportsPassive, urlParams,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     slice = [].slice,
     extend1 = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
+
+  supportsPassive = false;
+
+  try {
+    opts = Object.defineProperty({}, 'passive', {
+      get: function() {
+        return supportsPassive = true;
+      }
+    });
+    window.addEventListener("testPassive", null, opts);
+    window.removeEventListener("testPassive", null, opts);
+  } catch (error) {
+    e = error;
+  }
 
   extend = function(obj, src) {
     var key, results, val;
@@ -219,7 +233,7 @@
   };
 
   eigenvalues = function(mat) {
-    var a, b, c, charPoly, d, e, f, g, h, i, ref, ref1, ref2, ref3, ref4;
+    var a, b, c, charPoly, d, f, g, h, i, ref, ref1, ref2, ref3, ref4;
     switch (mat.length) {
       case 2:
         (ref = mat[0], a = ref[0], b = ref[1]), (ref1 = mat[1], c = ref1[0], d = ref1[1]);
@@ -291,10 +305,10 @@
   shadeFragment = "varying vec3 vNormal;\nvarying vec3 vLight;\nvarying vec3 vPosition;\n\nvec3 offSpecular(vec3 color) {\n  vec3 c = 1.0 - color;\n  return 1.0 - c * c;\n}\n\nvec4 getShadedColor(vec4 rgba) {\n\n  vec3 color = rgba.xyz;\n  vec3 color2 = offSpecular(rgba.xyz);\n\n  vec3 normal = normalize(vNormal);\n  vec3 light = normalize(vLight);\n  vec3 position = normalize(vPosition);\n\n  float side    = gl_FrontFacing ? -1.0 : 1.0;\n  float cosine  = side * dot(normal, light);\n  float diffuse = mix(max(0.0, cosine), .5 + .5 * cosine, .1);\n\n  vec3  halfLight = normalize(light + position);\n	float cosineHalf = max(0.0, side * dot(normal, halfLight));\n	float specular = pow(cosineHalf, 16.0);\n\n	return vec4(color * (diffuse * .9 + .05) + .25 * color2 * specular, rgba.a);\n}";
 
   evExpr = function(expr) {
-    var error;
+    var error1;
     try {
       return exprEval.Parser.evaluate(expr);
-    } catch (error) {
+    } catch (error1) {
       return 0;
     }
   };
