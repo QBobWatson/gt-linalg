@@ -28,62 +28,31 @@
 
 <xsl:param name="pdf.online" select="'gt-linalg.pdf'" />
 
-<!-- Mathbook Javascript header -->
-<xsl:template name="mathbook-js">
-    <script src="static/js/jquery.sticky.js" ></script>
+<!-- JDR: one js file to rule them all -->
+<xsl:template name="jquery-sagecell">
     <xsl:element name="script">
         <xsl:attribute name="src">
             <xsl:call-template name="versioned-file">
-                <xsl:with-param name="file" select="'static/js/GTMathbook.js'"/>
+                <xsl:with-param name="file" select="'static/gt-linalg.js'"/>
             </xsl:call-template>
         </xsl:attribute>
     </xsl:element>
 </xsl:template>
 
-<!-- CSS header -->
+<xsl:template name="mathbook-js">
+</xsl:template>
+
+<!-- JDR: one css file to rule them all -->
 <xsl:template name="css">
     <xsl:element name="link">
         <xsl:attribute name="href">
             <xsl:call-template name="versioned-file">
-                <xsl:with-param name="file" select="'static/css/mathbook-gt.css'"/>
+                <xsl:with-param name="file" select="'static/gt-linalg.css'"/>
             </xsl:call-template>
         </xsl:attribute>
         <xsl:attribute name="rel">stylesheet</xsl:attribute>
         <xsl:attribute name="type">text/css</xsl:attribute>
     </xsl:element>
-    <xsl:element name="link">
-        <xsl:attribute name="href">
-            <xsl:call-template name="versioned-file">
-                <xsl:with-param name="file" select="'static/css/mathbook-add-on.css'"/>
-            </xsl:call-template>
-        </xsl:attribute>
-        <xsl:attribute name="rel">stylesheet</xsl:attribute>
-        <xsl:attribute name="type">text/css</xsl:attribute>
-    </xsl:element>
-    <xsl:element name="link">
-        <xsl:attribute name="href">
-            <xsl:call-template name="versioned-file">
-                <xsl:with-param name="file" select="'static/css/mathbook-gt-add-on.css'"/>
-            </xsl:call-template>
-        </xsl:attribute>
-        <xsl:attribute name="rel">stylesheet</xsl:attribute>
-        <xsl:attribute name="type">text/css</xsl:attribute>
-    </xsl:element>
-    <!-- JDR: extra includes for cover animation -->
-    <xsl:variable name="internal-id">
-        <xsl:apply-templates select="." mode="internal-id" />
-    </xsl:variable>
-    <xsl:if test="$internal-id='index'">
-        <xsl:element name="link">
-            <xsl:attribute name="href">
-                <xsl:call-template name="versioned-file">
-                    <xsl:with-param name="file" select="'demos/mathbox/mathbox.css'"/>
-                </xsl:call-template>
-            </xsl:attribute>
-            <xsl:attribute name="rel">stylesheet</xsl:attribute>
-            <xsl:attribute name="type">text/css</xsl:attribute>
-    </xsl:element>
-    </xsl:if>
     <!-- JDR: preprocessed inline pretex stylesheet is inserted here -->
     <style id="pretex-style"></style>
     <style id="pretex-fonts"></style>
@@ -423,17 +392,7 @@
     </xsl:element>
 </xsl:template>
 
-<!-- JDR: remove external dependencies -->
-<xsl:template name="jquery-sagecell">
-    <script type="text/javascript" src="static/js/jquery.min.js"></script>
-    <xsl:if test="$document-root//sage">
-        <script type="text/javascript" src="https://sagecell.sagemath.org/embedded_sagecell.js"></script>
-    </xsl:if>
-</xsl:template>
-
 <xsl:template name="knowl">
-<link href="static/css/knowlstyle.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="static/js/knowl.js"></script>
 </xsl:template>
 
 <!-- JDR: we're using CharterBT -->
@@ -539,13 +498,6 @@
 <!-- JDR: cover animation -->
 <xsl:template name="cover">
   <div id="cover">
-    <xsl:element name="script">
-        <xsl:attribute name="src">
-            <xsl:call-template name="versioned-file">
-                <xsl:with-param name="file" select="'demos/mathbox/mathbox-bundle.js'"/>
-            </xsl:call-template>
-        </xsl:attribute>
-    </xsl:element>
     <xsl:element name="script">
         <xsl:attribute name="src">
             <xsl:call-template name="versioned-file">

@@ -25,26 +25,14 @@ make_hashes() {
     <xsl:param name="file"/>
     <xsl:variable name="commit">
       <xsl:choose>
-        <xsl:when test="\$file='static/js/GTMathbook.js'">
-          <xsl:text>$(cd ../gt-text-common && git log -n 1 --pretty=format:%h -- js/GTMathbook.js)</xsl:text>
+        <xsl:when test="\$file='static/gt-linalg.js'">
+          <xsl:text>$(git hash-object "$build_dir"/static/gt-linalg.js | cut -c 1-6)</xsl:text>
         </xsl:when>
-        <xsl:when test="\$file='static/css/mathbook-gt.css'">
-          <xsl:text>$(cd ../mathbook-assets && git log -n 1 --pretty=format:%h -- stylesheets/mathbook-gt.css)</xsl:text>
-        </xsl:when>
-        <xsl:when test="\$file='static/css/mathbook-add-on.css'">
-          <xsl:text>$(cd ../mathbook && git log -n 1 --pretty=format:%h -- css/mathbook-add-on.css)</xsl:text>
-        </xsl:when>
-        <xsl:when test="\$file='static/css/mathbook-gt-add-on.css'">
-          <xsl:text>$(cd ../gt-text-common && git log -n 1 --pretty=format:%h -- css/mathbook-gt-add-on.css)</xsl:text>
+        <xsl:when test="\$file='static/gt-linalg.css'">
+          <xsl:text>$(git hash-object "$build_dir"/static/gt-linalg.css | cut -c 1-6)</xsl:text>
         </xsl:when>
         <xsl:when test="\$file='demos/cover.js'">
-          <xsl:text>$(git log -n 1 --pretty=format:%h -- demos/cover.js)</xsl:text>
-        </xsl:when>
-        <xsl:when test="\$file='demos/mathbox/mathbox.css'">
-          <xsl:text>$(git log -n 1 --pretty=format:%h -- demos/mathbox/mathbox.css)</xsl:text>
-        </xsl:when>
-        <xsl:when test="\$file='demos/mathbox/mathbox-bundle.js'">
-          <xsl:text>$(git log -n 1 --pretty=format:%h -- demos/mathbox/mathbox-bundle.js)</xsl:text>
+          <xsl:text>$(git hash-object "$build_dir"/demos/cover.js | cut -c 1-6)</xsl:text>
         </xsl:when>
       </xsl:choose>
     </xsl:variable>
@@ -56,8 +44,26 @@ make_hashes() {
 EOF
 }
 
+combine_css() {
+    if [ -n "$MINIFY" ]; then
+        ./node_modules/clean-css-cli/bin/cleancss --skip-rebase "$@"
+    else
+        cat "$@"
+    fi
+}
+
+combine_js() {
+    if [ -n "$MINIFY" ]; then
+        ./node_modules/uglify-js/bin/uglifyjs -m -- "$@"
+    else
+        cat "$@"
+    fi
+}
+
+
 PRETEX_ALL=
 LATEX_TOO=
+MINIFY=
 CHUNKSIZE="250"
 
 while [[ $# -gt 0 ]]; do
@@ -67,6 +73,9 @@ while [[ $# -gt 0 ]]; do
             ;;
         --pdf-vers)
             LATEX_TOO="true"
+            ;;
+        --minify)
+            MINIFY="true"
             ;;
         --chunk)
             shift
@@ -102,8 +111,6 @@ echo "Cleaning up previous build..."
 rm -rf "$build_dir"
 mkdir -p "$build_dir"
 mkdir -p "$static_dir"
-mkdir -p "$static_dir/js"
-mkdir -p "$static_dir/css"
 mkdir -p "$static_dir/fonts"
 mkdir -p "$static_dir/images"
 
@@ -124,16 +131,28 @@ if [ -n "$LATEX_TOO" ]; then
 fi
 
 echo "Copying static files..."
-cp "$base_dir/gt-text-common/css/"*.css "$static_dir/css"
-cp "$base_dir/mathbook/css/mathbook-add-on.css" "$static_dir/css"
-cp "$base_dir/gt-text-common/js/"*.js "$static_dir/js"
-cp "$base_dir/mathbook-assets/stylesheets/"*.css "$static_dir/css"
+combine_css "$base_dir/mathbook-assets/stylesheets/mathbook-gt.css" \
+            "$base_dir/mathbook/css/mathbook-add-on.css" \
+            "$base_dir/gt-text-common/css/mathbook-gt-add-on.css" \
+            "$base_dir/gt-text-common/css/knowlstyle.css" \
+            "$compile_dir/demos/mathbox/mathbox.css" \
+            > "$static_dir/gt-linalg.css"
+combine_js "$base_dir/gt-text-common/js/jquery.min.js" \
+           "$base_dir/gt-text-common/js/jquery.sticky.js" \
+           "$base_dir/gt-text-common/js/knowl.js" \
+           "$base_dir/gt-text-common/js/GTMathbook.js" \
+           > "$static_dir/gt-linalg.js"
+
 cp "$base_dir/mathbook-assets/stylesheets/fonts/ionicons/fonts/"* "$static_dir/fonts"
 cp -r "$base_dir/gt-text-common/fonts/"* "$static_dir/fonts"
 cp "$compile_dir/images/"* "$static_dir/images"
-cp -r "$compile_dir/demos" "$build_dir/demos"
-ln -s "static/images" "$build_dir/images"
 cp "$compile_dir/extra/google9ccfcae89045309c.html" "$build_dir"
+
+cp -r "$compile_dir/demos" "$build_dir/demos"
+combine_js "$build_dir/demos/mathbox/mathbox-bundle.js" \
+           "$build_dir/demos/cover.js" \
+           > "$build_dir/demos/cover2.js"
+mv "$build_dir/demos/cover2.js" "$build_dir/demos/cover.js"
 
 echo "Converting xml to html..."
 make_hashes

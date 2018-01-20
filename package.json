@@ -1,0 +1,16 @@
+{
+  "name": "gt-linalg",
+  "version": "1.0.0",
+  "description": "npm dependencies are only for local use when generating static files",
+  "main": "index.js",
+  "dependencies": {
+    "clean-css-cli": "4.1.6",
+    "uglify-js": "3.0.26"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "GPL-3.0"
+}

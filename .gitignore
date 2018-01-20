@@ -1,4 +1,5 @@
 .DS_Store
 figure
 pretex-cache
+node_modules
 
