@@ -29,7 +29,7 @@
 <xsl:param name="pdf.online" select="'gt-linalg.pdf'" />
 
 <!-- JDR: one js file to rule them all -->
-<xsl:template name="jquery-sagecell">
+<xsl:template name="combined-js">
     <xsl:element name="script">
         <xsl:attribute name="src">
             <xsl:call-template name="versioned-file">
@@ -39,8 +39,8 @@
     </xsl:element>
 </xsl:template>
 
-<xsl:template name="mathbook-js">
-</xsl:template>
+<xsl:template name="mathbook-js"/>
+<xsl:template name="jquery-sagecell"/>
 
 <!-- JDR: one css file to rule them all -->
 <xsl:template name="css">
@@ -218,9 +218,8 @@
         <xsl:attribute name="href">
           <xsl:value-of select="@source"/>
         </xsl:attribute>
-        <xsl:attribute name="target">
-          <xsl:text>_blank</xsl:text>
-        </xsl:attribute>
+        <xsl:attribute name="target">_blank</xsl:attribute>
+        <xsl:attribute name="rel">noopener</xsl:attribute>
         <xsl:text>Click to view in a new window</xsl:text>
       </xsl:element>
     </xsl:element>
@@ -471,9 +470,8 @@
       <xsl:attribute name="class">
         <xsl:text>feedback-link</xsl:text>
       </xsl:attribute>
-      <xsl:attribute name="target">
-        <xsl:text>_blank</xsl:text>
-      </xsl:attribute>
+      <xsl:attribute name="target">_blank</xsl:attribute>
+      <xsl:attribute name="rel">noopener</xsl:attribute>
       <xsl:text>Comments, corrections or suggestions?</xsl:text>
     </xsl:element>
     <span class="feedback-link">(GT login required)</span>
@@ -487,9 +485,8 @@
       <xsl:attribute name="href">
         <xsl:value-of select="$pdf.online" />
       </xsl:attribute>
-      <xsl:attribute name="target">
-        <xsl:text>_blank</xsl:text>
-      </xsl:attribute>
+      <xsl:attribute name="target">_blank</xsl:attribute>
+      <xsl:attribute name="rel">noopener</xsl:attribute>
       <xsl:text>PDF version</xsl:text>
     </xsl:element>
   </div>
