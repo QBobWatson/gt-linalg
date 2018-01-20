@@ -56,7 +56,12 @@ combine_js() {
     if [ -n "$MINIFY" ]; then
         ./node_modules/uglify-js/bin/uglifyjs -m -- "$@"
     else
-        cat "$@"
+        (
+            for file in "$@"; do
+                cat "$file"
+                echo ";"
+            done
+        )
     fi
 }
 
