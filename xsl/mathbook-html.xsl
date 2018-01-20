@@ -78,6 +78,7 @@
       <div class="toolbar-buttons-left">
         <!-- Toggle button -->
         <a class="toggle-button button toolbar-item"
+           title="Toggle Menu" alt="Toggle Menu"
            href="javascript:void(0)"></a>
         <!-- A page either has an/the index as    -->
         <!-- a child, and gets the "jump to" bar, -->
@@ -96,31 +97,32 @@
       <div class="toolbar-buttons-right">
         <!-- Each button gets an id for keypress recognition/action -->
         <xsl:apply-templates select="." mode="previous-button">
-          <xsl:with-param name="id-label" select="'previousbutton'" />
+          <xsl:with-param name="id-label" select="'previousbutton-top'" />
         </xsl:apply-templates>
         <xsl:if test="$nav-upbutton='yes'">
           <xsl:apply-templates select="." mode="up-button">
-            <xsl:with-param name="id-label" select="'upbutton'" />
+            <xsl:with-param name="id-label" select="'upbutton-top'" />
           </xsl:apply-templates>
         </xsl:if>
         <xsl:apply-templates select="." mode="next-button">
-          <xsl:with-param name="id-label" select="'nextbutton'" />
+          <xsl:with-param name="id-label" select="'nextbutton-top'" />
         </xsl:apply-templates>
       </div>
     </div>
     <div class="navbar-bottom-buttons toolbar">
       <a class="toggle-button button toolbar-item"
+         title="Toggle Menu" alt="Toggle Menu"
          href="javascript:void(0)"></a>
       <xsl:apply-templates select="." mode="previous-button">
-        <xsl:with-param name="id-label" select="'previousbutton'" />
+        <xsl:with-param name="id-label" select="'previousbutton-bot'" />
       </xsl:apply-templates>
       <xsl:if test="$nav-upbutton='yes'">
         <xsl:apply-templates select="." mode="up-button">
-          <xsl:with-param name="id-label" select="'upbutton'" />
+          <xsl:with-param name="id-label" select="'upbutton-bot'" />
         </xsl:apply-templates>
       </xsl:if>
       <xsl:apply-templates select="." mode="next-button">
-        <xsl:with-param name="id-label" select="'nextbutton'" />
+        <xsl:with-param name="id-label" select="'nextbutton-bot'" />
       </xsl:apply-templates>
     </div>
   </nav>
