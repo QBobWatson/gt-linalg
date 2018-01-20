@@ -18,7 +18,7 @@ the license is included in gfdl.xml.
       <li>Learn some ways to eyeball a matrix with zero determinant, and how to compute determinants of upper- and lower-triangular matrices.</li>
       <li>Learn the basic properties of the determinant, and how to apply them.</li>
       <li><em>Recipe:</em> compute the determinant using row and column operations.</li>
-      <li><em>Theorems:</em> invertibility property, multiplicativity property, transpose property.</li>
+      <li><em>Theorems:</em> existence theorem, invertibility property, multiplicativity property, transpose property.</li>
       <li><em>Vocabulary words:</em> <term>diagonal</term>, <term>upper-triangular</term>, <term>lower-triangular</term>, <term>transpose</term>.</li>
       <li><em>Essential vocabulary word:</em> <term>determinant</term>.</li>
     </ol>

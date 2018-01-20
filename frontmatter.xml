@@ -11,7 +11,7 @@ Copyright 2017 Georgia Institute of Technology
       <personname>Joseph Rabinoff</personname>
       <department>School of Mathematics</department>
       <institution>Georgia Institute of Technology</institution>
-      <!-- <email>jrabinoff@math.gatech.edu</email> -->
+      <!-- <email>rabinoff@math.gatech.edu</email> -->
     </author>
     <author>
       <personname>Dan Margalit</personname>
@@ -79,7 +79,7 @@ Copyright 2017 Georgia Institute of Technology
         <personname>Joseph Rabinoff</personname>
         <department>School of Mathematics</department>
         <institution>Georgia Institute of Technology</institution>
-        <email>jrabinoff@math.gatech.edu</email>
+        <email>rabinoff@math.gatech.edu</email>
       </contributor>
 
       <contributor xml:id="dan">
