@@ -151,6 +151,7 @@ combine_js "$base_dir/gt-text-common/js/jquery.min.js" \
 cp "$base_dir/mathbook-assets/stylesheets/fonts/ionicons/fonts/"* "$static_dir/fonts"
 cp -r "$base_dir/gt-text-common/fonts/"* "$static_dir/fonts"
 cp "$compile_dir/images/"* "$static_dir/images"
+cp "$compile_dir/manifest.json" "$build_dir"
 cp "$compile_dir/extra/google9ccfcae89045309c.html" "$build_dir"
 
 cp -r "$compile_dir/demos" "$build_dir/demos"

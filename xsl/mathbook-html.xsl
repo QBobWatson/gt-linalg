@@ -53,6 +53,10 @@
         <xsl:attribute name="rel">stylesheet</xsl:attribute>
         <xsl:attribute name="type">text/css</xsl:attribute>
     </xsl:element>
+    <xsl:element name="link">
+        <xsl:attribute name="rel">manifest</xsl:attribute>
+        <xsl:attribute name="href">manifest.json</xsl:attribute>
+    </xsl:element>
     <!-- JDR: preprocessed inline pretex stylesheet is inserted here -->
     <style id="pretex-style"></style>
     <style id="pretex-fonts"></style>

@@ -1,0 +1,22 @@
+{
+  "short_name": "GT LinAlg",
+  "name": "Interactive Linear Algebra",
+  "icons": [
+    {
+      "src": "static/images/icon-1x.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "static/images/icon-2x.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "static/images/icon-4x.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "index.html"
+}
