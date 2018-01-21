@@ -766,7 +766,7 @@ class Shear extends Dynamics
                     x = linLerp(-farthestX - a*y, farthestX)(Math.random())
         else
             # Don't change path
-            y = points[i][1]
+            y = Math.abs points[i][1]
             if a < 0
                 x = linLerp(farthestX, farthestX - a*y)(Math.random())
             else

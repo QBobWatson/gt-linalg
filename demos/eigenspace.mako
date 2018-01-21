@@ -1,7 +1,5 @@
 ## -*- coffee -*-
 
-<%! roots=True %>
-
 <%inherit file="base2.mako"/>
 
 <%block name="title">Eigenspaces</%block>

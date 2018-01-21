@@ -314,6 +314,7 @@
                 <xsl:attribute name="class">
                     <xsl:text>important</xsl:text>
                 </xsl:attribute>
+                <xsl:attribute name="alt">Exclamation Point</xsl:attribute>
             </xsl:element>
         </xsl:if>
         <xsl:variable name="the-number">

@@ -3,7 +3,10 @@
 <%inherit file="base2.mako"/>
 
 <%block name="title">Transformation challenges</%block>
-<%block name="extra_js"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script></%block>
+<%block name="js">
+    ${parent.js()}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</%block>
 
 <%block name="inline_style">
 #help-text {

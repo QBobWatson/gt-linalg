@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Mixing colors</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+    <style>
+        .colorbox {
+            width: 10vw;
+            height: 10vw;
+            border: solid;
+            border-width: 3pt;
+        }
+
+        #rgb_cube {
+            width: 30vw;
+        }
+
+        .colorgroup {
+            display: inline-block;
+            margin: 0 2vw;
+        }
+        h1, .row {
+            text-align: center;
+        }
+
+        #question {
+            text-align: center;
+            font-size: 1.5em;
+            margin: 6vh 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Color mixer</h1>
+    <p>Here are two colors:</p>
+    <div class="row">
+        <div id="start-color1" class="colorgroup">
+            <div class="coordinates"></div>
+            <div class="colorbox"></div>
+            <div class="caption">Color 1</div>
+        </div>
+        <div id="start-color2" class="colorgroup">
+            <div class="coordinates"></div>
+            <div class="colorbox"></div>
+            <div class="caption">Color 2</div>
+        </div>
+    </div>
+    <p>We can form new colors by making a combination of the two original colors. Move the slider bar to get the different combinations.</p>    
+    <div class="row">
+    <div id="mix" class="colorgroup">
+        <div class="coordinates"></div>
+        <div class="colorbox"></div>
+        <div class="caption">Mix</div>
+    </div>
+    </div>
+    <p>Which color below can obtained by mixing Color 1 and Color 2?</p>
+    <div class="row">
+        <div id="one" class="colorgroup">
+            <div class="coordinates"></div>
+            <div class="colorbox"></div>
+            <div class="caption">Answer 1</div>
+        </div>
+        <div id="two" class="colorgroup">
+            <div class="coordinates"></div>
+            <div class="colorbox"></div>
+            <div class="caption">Answer 2</div>
+        </div>
+        <div id="three" class="colorgroup">
+            <div class="coordinates"></div>
+            <div class="colorbox"></div>
+            <div class="caption">Answer 3</div>
+        </div>
+        <div id="four" class="colorgroup">
+            <div class="coordinates"></div>
+            <div class="colorbox"></div>
+            <div class="caption">Answer 4</div>
+        </div>
+        <div id="five" class="colorgroup">
+            <div class="coordinates"></div>
+            <div class="colorbox"></div>
+            <div class="caption">Answer 5</div>
+        </div>
+    </div>
+    <p>Let us explain the connection to linear algebra.  We can represent
+            colors in the RGB color model, so each color is a point in <span id="R3_1"></span>, the
+            first coordinate corresponding to red, the second to green, and the
+            third to blue.</p>
+    <div class="row">
+        <img src="img/rgb_cube.png" id="rgb_cube">
+    </div>
+    <p>We can denote the RGB coordinates for Color 1 and Color 2 by the vectors
+            <span id="v1"></span> and <span id="v2"></span> in <span id="R3_2"></span>.  When we mix Color 1 and Color 2 with ratio r, The
+            mixed color is: </p>
+    <div class="row">
+            <span id="formula"></span>
+    </div>
+    <p>This is a linear combination of Color 1 and Color 2.  So we can rephrase
+            the question above as: Which color below lies in the span of Color 1 and
+            Color 2?</p>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="lib/dat.gui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
+    <script>
+        katex.render("v_1", document.getElementById("v1"));
+        katex.render("v_2", document.getElementById("v2"));
+        katex.render("\\mathbb{R}^3", document.getElementById("R3_1"));
+        katex.render("\\mathbb{R}^3", document.getElementById("R3_2"));
+        katex.render("r v_1 + (1-r) v_2.", document.getElementById("formula"));
+
+        var params = {
+            'mixingRatio': 0,
+            'showRGB': false
+        }
+
+        function add(array1, array2) {
+            return [array1[0] + array2[0],
+            array1[1] + array2[1],
+            array1[2] + array2[2]];
+        }
+
+        function mult(c, array) {
+            return [c * array[0], c * array[1], c * array[2]];
+        }
+
+        var color1 = [200, 100, 0];
+        var color2 = [0, 0, 200];
+        var mix = [0, 0, 0];
+        var diff = [20, -10, 20];
+        var answerRatio = 0.7;
+        var rightAnswer = add(mult(answerRatio, color1), mult(1 - answerRatio, color2));
+        var answers = [
+            add(rightAnswer, mult(-3, diff)),
+            add(rightAnswer, mult(-2, diff)),
+            add(rightAnswer, mult(-1, diff)),
+            rightAnswer,
+            add(rightAnswer, diff)
+        ];
+
+        var gui = new dat.GUI();
+        gui.add(params, 'mixingRatio', 0, 1).step(0.02).onChange(updateMix);
+        gui.add(params, 'showRGB').onChange(toggleCoordinates);
+
+        function toggleCoordinates() {
+            $('.coordinates').toggle();
+        }
+
+        function addColor(elem, array) {
+            arr = [Math.round(array[0]), Math.round(array[1]), Math.round(array[2])];
+            $(elem + ' div.colorbox').css({ 'background-color': `rgb(${arr[0]},${arr[1]},${arr[2]})` });
+            $(elem + ' div.coordinates').text(`(${arr[0]},${arr[1]},${arr[2]})`);
+        }
+
+        function initColors() {
+            var ls = [
+                ["#start-color1", color1],
+                ["#start-color2", color2],
+                ["#one", answers[0]],
+                ["#two", answers[1]],
+                ["#three", answers[2]],
+                ["#four", answers[3]],
+                ["#five", answers[4]]
+            ];
+
+            for (const item of ls) {
+                addColor(item[0], item[1]);
+            }
+        }
+
+        function updateMix() {
+            mix = add(mult(params['mixingRatio'], color1), mult(1 - params['mixingRatio'], color2));
+            addColor("#mix", mix);
+        }
+
+        $(document).ready(function () {
+            initColors();
+            updateMix();
+            toggleCoordinates();
+            ls = ["one", "two", "three", "four", "five"];
+            for (let i = 0; i < ls.length; i++) {
+                $div = $("#" + ls[i] + " div.colorbox");
+                $div.hover(function () {
+                    $(this).css({ "border-color": "yellow" });
+                }, function () {
+                    $(this).css({ "border-color": "black" });
+                });
+                if (i == 3) {
+                    $div.click(
+                        function () {
+                            alert("Correct!");
+                        }
+                    );
+                } else {
+                    $div.click(
+                        function () {
+                            alert("No, it's another one. You can use the slider to help find the right color.");
+                        }
+                    );
+                }
+            }
+        })
+    </script>
+</body>
+
+
+</html>

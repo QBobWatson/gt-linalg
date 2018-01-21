@@ -1,0 +1,96 @@
+# This contains instructions for creating the build-demos/ directory
+
+- css/demo.css:
+    - css/demo.css
+    - css/katex.min.css
+    - mathbox/mathbox.css
+- js/demo2.js:
+    source: js/demo2.coffee
+    copy: false
+- js/demo.js:
+    - mathbox/mathbox-bundle.js
+    - lib/katex.min.js
+    - lib/domready.js
+    - js/demo2.js
+    - lib/dat.gui.min.js
+    - lib/screenfull.min.js
+    - lib/roots.js
+    - lib/expreval.js
+- css/fonts
+- color_mixing.html
+- transform_game.html: transform_game.mako
+- Axequalsb.html:    Axequalsb.mako
+- bestfit.html:      bestfit.mako
+- bestfit-implicit.html: bestfit-implicit.mako
+- compose2d.html:    compose2d.mako
+- compose3d.html:    compose3d.mako
+- eigenspace.html:   eigenspace.mako
+- leastsquares.html: leastsquares.mako
+- parametric1.html:  parametric1.mako
+- plane.html:        plane.mako
+- planes.html:       planes.mako
+- projection.html:   projection.mako
+- similarity.html:   similarity.mako
+- spans.html:        spans.mako
+- steps.html:        steps.mako
+- twobytwo.html:     twobytwo.mako
+- vector-add.html:   vector-add.mako
+- vector.html:       vector.mako
+- vector-mul.html:   vector-mul.mako
+- vector-sub.html:   vector-sub.mako
+- empty.html:
+    source: empty.mako
+    copy: false
+- image-test.html:
+    source: image-test.mako
+    copy: false
+- cover.js:
+    source: cover.coffee
+    copy: false
+- cover.js:
+    - mathbox/mathbox-bundle.js
+    - cover.js
+- rrmat/animstate.js:
+    source: rrmat/animstate.coffee
+    copy: false
+- rrmat/rrmat.js:
+    source: rrmat/rrmat.coffee
+    copy: false
+- rrmat/rrinter.js:
+    source: rrmat/rrinter.coffee
+    copy: false
+- css/slideshow.css:
+    - css/katex.min.css
+    - mathbox/mathbox.css
+    - css/rrmat.css
+    - css/slideshow.css
+- js/slideshow.js:
+    - mathbox/mathbox-bundle.js
+    - lib/katex.min.js
+    - lib/domready.js
+    - lib/expreval.js
+    - rrmat/animstate.js
+    - rrmat/rrmat.js
+- rowred1.html: rowred1.mako
+- rowred2.html: rowred2.mako
+- css/rrinter.css:
+    - css/katex.min.css
+    - mathbox/mathbox.css
+    - css/rrmat.css
+    - css/slideshow.css
+    - css/rrinter.css
+- js/rrinter.js:
+    - mathbox/mathbox-bundle.js
+    - lib/katex.min.js
+    - lib/domready.js
+    - lib/expreval.js
+    - rrmat/animstate.js
+    - rrmat/rrmat.js
+    - rrmat/rrinter.js
+- rrinter.html: rrinter.mako
+- rabbits/bundle.js:
+    - rabbits/jquery.min.js
+    - rabbits/bootstrap.min.js
+    - rabbits/plotly-latest.min.js
+- rabbits/book_demo.html
+- rabbits/bootstrap.min.css

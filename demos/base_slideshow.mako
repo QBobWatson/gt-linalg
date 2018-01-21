@@ -1,14 +1,13 @@
 ## -*- mode: coffee; coding: utf-8 -*-
 
-<%! datgui=False %>
-<%! screenfull=False %>
-<%! demojs=False %>
-
 <%inherit file="base2.mako"/>
 
-<%block name="extra_css">
-    <link rel="stylesheet" href="${"css/rrmat.css" | vers}">
+<%block name="css">
     <link rel="stylesheet" href="${"css/slideshow.css" | vers}">
+</%block>
+
+<%block name="js">
+    <script src="${"js/slideshow.js" | vers}"></script>
 </%block>
 
 <%block name="inline_style">
@@ -36,10 +35,6 @@
       width: 30%;
       text-align: center;
   }
-</%block>
-
-<%block name="extra_js">
-  <script src="${"js/rrmat.js" | vers}"></script>
 </%block>
 
 <%block name="body_html">

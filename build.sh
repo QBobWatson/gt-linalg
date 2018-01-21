@@ -154,11 +154,17 @@ cp "$compile_dir/images/"* "$static_dir/images"
 cp "$compile_dir/manifest.json" "$build_dir"
 cp "$compile_dir/extra/google9ccfcae89045309c.html" "$build_dir"
 
-cp -r "$compile_dir/demos" "$build_dir/demos"
-combine_js "$build_dir/demos/mathbox/mathbox-bundle.js" \
-           "$build_dir/demos/cover.js" \
-           > "$build_dir/demos/cover2.js"
-mv "$build_dir/demos/cover2.js" "$build_dir/demos/cover.js"
+cp -r "$compile_dir/build-demos" "$build_dir/demos"
+if [ -n "$MINIFY" ]; then
+    for js in "$build_dir/demos/"*.js "$build_dir/demos/"*/*.js; do
+        ./node_modules/uglify-js/bin/uglifyjs -m -- "$js" > "$js".min
+        mv "$js".min "$js"
+    done
+    for css in "$build_dir/demos/css/"*.css; do
+        ./node_modules/clean-css-cli/bin/cleancss --skip-rebase "$css" > "$css".min
+        mv "$css".min "$css"
+    done
+fi
 
 echo "Converting xml to html..."
 make_hashes
@@ -177,9 +183,6 @@ cp pretex-cache/*.png "$figure_img_dir"
 
 echo "Cleaning up..."
 rm "$build_dir"/preamble.tex
-rm "$build_dir"/demos/*.mako
-rm "$build_dir"/demos/js/*.coffee
-rm "$build_dir"/demos/generate.py
 
 echo "Build successful!  Open or reload"
 echo "     $build_dir/index.html"

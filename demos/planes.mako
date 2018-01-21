@@ -1,7 +1,5 @@
 ## -*- coffee -*-
 
-<%! datgui=False %>
-
 <%inherit file="base2.mako"/>
 
 <%block name="title">Two Planes Intersecting</%block>
