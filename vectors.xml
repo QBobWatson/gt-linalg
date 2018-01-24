@@ -203,7 +203,7 @@ the license is included in gfdl.xml.
     <paragraphs>
       <title>Vector Subtraction</title>
        <idx><h>Vector</h><h>subtraction</h><h>picture of</h></idx>
-      <p>Geometrically, the difference of two vectors <m>v,w</m> is obtained as follows: place the tail of <m>v</m> and <m>w</m> at the same point.  Then <m>v-w</m> is the vector from the head of <m>v</m> to the head of <m>w</m>. For example,
+      <p>Geometrically, the difference of two vectors <m>v,w</m> is obtained as follows: place the tail of <m>v</m> and <m>w</m> at the same point.  Then <m>v-w</m> is the vector from the head of <m>w</m> to the head of <m>v</m>. For example,
        <me> \textcolor{seq-blue}{\vec{1 4}}
        - \textcolor{seq-green}{\vec{4 2}}
        = \vec{-3 2}.
