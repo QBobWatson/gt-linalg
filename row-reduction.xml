@@ -103,7 +103,7 @@ the license is included in gfdl.xml.
       <p>When deciding if an augmented matrix is in (reduced) row echelon form, there is nothing special about the augmented column(s).  Just ignore the vertical line.</p>
     </bluebox>
 
-    <p>If an augmented matrix is in reduced row echelon form, the corresponding linear system is viwed as <em>solved</em>.  We will see below why this is the case, and we will show that any matrix can be put into reduced row echelon form using only row operations.</p>
+    <p>If an augmented matrix is in reduced row echelon form, the corresponding linear system is viewed as <em>solved</em>.  We will see below why this is the case, and we will show that any matrix can be put into reduced row echelon form using only row operations.</p>
 
   </subsection>
 
