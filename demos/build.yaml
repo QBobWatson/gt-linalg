@@ -16,7 +16,10 @@
     - lib/screenfull.min.js
     - lib/roots.js
     - lib/expreval.js
+- js/dat.gui.min.js:
+    - lib/dat.gui.min.js
 - css/fonts
+- img
 - color_mixing.html
 - transform_game.html: transform_game.mako
 - Axequalsb.html:    Axequalsb.mako
