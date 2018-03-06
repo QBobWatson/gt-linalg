@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<section xml:id="ch2exercises">
+  <title>Exercises for Chapter 2</title>
+
+
+
+  <subsection xml:id="subsection-Rn">
+    <title>Preliminaries: Line, Plane, Space, Etc.</title>
+
+	<p>
+		Questions:
+    <ol>
+		<li>
+			State whether the following are true or false. If false, give a counterexample/reason, and if true, explain why it is true. 
+			<ol>
+				<li>
+					A system of 5 linear equations can have 5 solutions.
+				</li>
+				<li>
+					The solution set to any consistent system of linear equations is a subspace.
+				</li>
+				<li>
+					The solution set to a consistent system of linear equations of the form <m>Ax=0</m> is a subspace. 
+				</li>
+				<li>
+					The intersection of any two subspaces (i.e., the collection of points that are in both subspaces) is a subspace. 
+				</li>
+				<li>
+					The union of any two subspaces (i.e., the collection of points that are in at least on of the subspaces) is a subspace. 
+	</li>
+			</ol>
+		</li>
+	</ol>
+</p>
+
+<p>
+	Answers:
+	<ol>
+		<li>
+			<ol>
+				<li>
+				    False. The solution set to any system of linear equations is either empty (inconsistent equations), has a unique solution (consistent equations, no free variables), or infinite (if there is a free variable, since this free variable can then take on the value of any of the infinitely many real numbers).
+				</li>
+				<li>
+					False. For example, the solution set of the set of equations <m>x+y=3</m> in <m>\mathbb R^2</m> is a line, but doesn't pass through the origin.
+				</li>
+				<li>
+					True. Here, we can check the axioms in the definition of a subspace. Given the shape of the equation <m>Ax=0</m>, we clearly have that the zero vector solves this equation, and so the solution set contains the origin (which solves the problem encountered in the last example). Now, suppose that <m>x</m> and <m>y</m> are solutions. Then <m>A(x+y)=Ax+Ay=0+0=0</m>, and so <m>x+y</m> also solves the system, and  for a real number <m>\alpha</m>, <m>A(\alpha x)=\alpha Ax=\alpha0=0</m>, and so <m>\alpha x</m> is a solution too. Thus, the solution set satisfies parts 2 and 3 of the definition of a subspace, and hence is a subspace. 
+				</li>
+				<li>
+					True. Suppose that <m>V</m> and <m>W</m> are both subspaces of <m>\mathbb R^n</m>. Then we can check each part of the definition is satisfied by the intersection of <m>V</m> and <m>W</m>. Firstly, since 0 is in both subspaces, its in the intersection, so it is a nonempty set. Furthermore, if <m>x</m> and <m>y</m> are in the intersection and <m>\alpha</m> is a real number, then <m>\alpha x+y</m> is in the intersection, using the axioms in the definition of subspace applied twice, once using the fact that <m>x</m> and <m>y</m> are in particular both in <m>V</m>, and once using that they are both in <m>W</m>. Note that this implies both the second and third parts of the definition of subspace, as we can take <m>\alpha=1</m> for part 2 of the definition, and choose <m>y=0</m> for part 3 of the definition. 
+				</li>
+				<li>
+					False. Although the union of two intersections always contained the origin, it will usually not be a subspace. For instance, consider the two lines <m>y=\pm x</m> in <m>\mathbb R^2</m>. Their union is not closed under addition. To see this, we just need a counter example. For instance, choose <m>(1,-1)</m> on the line <m>y=-x</m> and the point <m>(2,2)</m> on the line <m>y=x</m>. In particular, both of these points are on the union of these two lines (which looks like an "X" in the plane). However, the sum of these two points, <m>(1,-1)+(2,2)=(3,-1)</m>, is not on the union of the two lines, as <m>3\neq\pm(-1)</m>. 
+				</li>
+			</ol>
+		</li>
+	</ol>
+</p>
+
+
+
+  </subsection>
+
+
+
+
+
+</section>
