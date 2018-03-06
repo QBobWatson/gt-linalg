@@ -40,8 +40,62 @@ the license is included in gfdl.xml.
 	</li>
 			</ol>
 		</li>
+		<li>
+			    Use Gaussian elimination to find the unique solution for each system.
+				<ol>
+					<li>
+					    <me>\begin{aligned}
+					           2x  &amp;+  &amp;3y  &amp;=  &amp;13  \\
+					           x   &amp;-  &amp;y   &amp;=  &amp;-1
+					           \end{aligned}
+						   </me>
+					</li>
+					<li>
+						<me>\begin{aligned}
+						          x   &amp;  &amp;  &amp;-  &amp;z  &amp;=  &amp;0  \\
+						          3x  &amp;+ &amp;y &amp;   &amp;   &amp;=  &amp;1  \\
+						          -x  &amp;+ &amp;y &amp;+  &amp;z  &amp;=  &amp;4
+						        \end{aligned}</me>
+							</li>
+				</ol>
+		</li>
+		
 	</ol>
 </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <p>
 	Answers:
@@ -62,6 +116,41 @@ the license is included in gfdl.xml.
 				</li>
 				<li>
 					False. Although the union of two intersections always contained the origin, it will usually not be a subspace. For instance, consider the two lines <m>y=\pm x</m> in <m>\mathbb R^2</m>. Their union is not closed under addition. To see this, we just need a counter example. For instance, choose <m>(1,-1)</m> on the line <m>y=-x</m> and the point <m>(2,2)</m> on the line <m>y=x</m>. In particular, both of these points are on the union of these two lines (which looks like an "X" in the plane). However, the sum of these two points, <m>(1,-1)+(2,2)=(3,-1)</m>, is not on the union of the two lines, as <m>3\neq\pm(-1)</m>. 
+				</li>
+			</ol>
+		</li>
+		<li>
+			<ol>
+				<li>
+					Adding <m>-1/2</m> times the first equation to the second equation reduces us to the set of equations
+					<me>
+						\begin{aligned}
+					               2x  &amp;+  &amp;3y      &amp;=  &amp;3  \\
+					                   &amp;-  &amp;(5/2)y  &amp;=  &amp;-15/2,              
+					            \end{aligned}
+					          </me>
+					          giving that the solution is <m>y=3</m> and <m>x=2</m>.
+				</li>
+				<li>
+					Here, we apply Gaussian elimination be adding <m>-3</m> times the first equation to the second equation, and adding the first equation to the second equation to give
+					              <me>
+					            \begin{aligned}
+					              x   &amp;  &amp;  &amp;-  &amp;z  &amp;=  &amp;0  \\
+					                  &amp;  &amp;y &amp;+  &amp;3z &amp;=  &amp;1  \\
+					                  &amp;  &amp;y &amp;   &amp;   &amp;=  &amp;4
+					                  .
+									  \end{aligned}
+								  </me>
+					        
+					            We then subtract the second equation from the third:
+					            <me>
+					            \begin{aligned}
+					              x   &amp;  &amp;  &amp;-  &amp;z    &amp;=  &amp;0  \\
+					                  &amp;  &amp;y &amp;+  &amp;3z   &amp;=  &amp;1  \\
+					                  &amp;  &amp;  &amp;   &amp;-3z  &amp;=  &amp;3,
+					           \end{aligned}
+						   </me>
+					          giving <m>x=-1</m>, <m>y=4</m>, and <m>z=-1</m>.
 				</li>
 			</ol>
 		</li>
