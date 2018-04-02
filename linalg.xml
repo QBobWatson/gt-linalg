@@ -55,7 +55,7 @@ Free Documentation License"
       <xi:include href="./systems-eqns.xml" />
       <xi:include href="./row-reduction.xml" />
       <xi:include href="./parametric-form.xml" />
-	  <xi:include href="./ch2exercises.xml" />
+	<!--  <xi:include href="./ch2exercises.xml" /> -->
     </chapter>
 
     <chapter xml:id="chap-geometry">
