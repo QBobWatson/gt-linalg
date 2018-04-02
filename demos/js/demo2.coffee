@@ -418,14 +418,26 @@ class OrbitControls
             ((event) -> event.preventDefault()), false
         @domElement.addEventListener 'mousedown',      @onMouseDown,  false
         @domElement.addEventListener 'mousewheel',     @onMouseWheel, false
-        @domElement.addEventListener 'DOMMouseScroll', @onMouseWheel, false
         @domElement.addEventListener 'touchstart',     @touchStart,   false
-        @domElement.addEventListener 'touchend',       @touchEnd,     false
-        @domElement.addEventListener 'touchmove',      @touchMove,    false
         window     .addEventListener 'keydown',        @onKeyDown,    false
 
         # force an update at start
         @update()
+
+    enable: (val) =>
+        @enabled = val
+        if not @enabled
+            de = document.documentElement
+            if @state in [@STATE.ROTATE, @STATE.DOLLY, @STATE.PAN]
+                de.removeEventListener 'mousemove', @onMouseMove, false
+                de.removeEventListener 'mouseup',   @onMouseUp,   false
+                @dispatchEvent @endEvent
+            else if @state in [@STATE.TOUCH_ROTATE, @STATE.TOUCH_DOLLY, @STATE.TOUCH_PAN]
+                de.removeEventListener 'touchend',    @touchEnd,  false
+                de.removeEventListener 'touchmove',   @touchMove, false
+                de.removeEventListener 'touchcancel', @touchEnd,  false
+                @dispatchEvent @endEvent
+            @state = @STATE.NONE
 
     updateCamera: () =>
         # so camera.up is the orbit axis
@@ -630,29 +642,33 @@ class OrbitControls
 
     touchStart: (event) =>
         return unless @enabled
+        event.preventDefault()
 
         switch event.touches.length
             # one-fingered touch: rotate
             when 1
                 return if @noRotate
                 @state = @STATE.TOUCH_ROTATE
-                @rotateStart.set event.touches[0].pageX, event.touches[0].pageY
+                @rotateStart.set event.touches[0].clientX, event.touches[0].clientY
             # two-fingered touch: dolly
             when 2
                 return if @noZoom
                 @state = @STATE.TOUCH_DOLLY
-                dx = event.touches[0].pageX - event.touches[1].pageX
-                dy = event.touches[0].pageY - event.touches[1].pageY
+                dx = event.touches[0].clientX - event.touches[1].clientX
+                dy = event.touches[0].clientY - event.touches[1].clientY
                 distance = Math.sqrt(dx * dx + dy * dy)
                 @dollyStart.set 0, distance
             # three-fingered touch: pan
             when 3
                 return if @noPan
                 @state = @STATE.TOUCH_PAN
-                @panStart.set event.touches[0].pageX, event.touches[0].pageY
+                @panStart.set event.touches[0].clientX, event.touches[0].clientY
             else
                 @state = @STATE.NONE
 
+        document.documentElement.addEventListener 'touchend',    @touchEnd,  false
+        document.documentElement.addEventListener 'touchmove',   @touchMove, false
+        document.documentElement.addEventListener 'touchcancel', @touchEnd,  false
         @dispatchEvent @startEvent
 
     touchMove: (event) =>
@@ -666,7 +682,7 @@ class OrbitControls
             # one-fingered touch: rotate
             when 1
                 return if @noRotate or @state != @STATE.TOUCH_ROTATE
-                @rotateEnd.set event.touches[0].pageX, event.touches[0].pageY
+                @rotateEnd.set event.touches[0].clientX, event.touches[0].clientY
                 @rotateDelta.subVectors @rotateEnd, @rotateStart
                 # rotating across whole screen goes 360 degrees around
                 @rotateLeft(
@@ -674,13 +690,13 @@ class OrbitControls
                 # rotating up and down along whole screen attempts to go 360,
                 # but limited to 180
                 @rotateUp(
-                    2 * Math.PI * rotateDelta.y / element.clientHeight * @rotateSpeed)
+                    2 * Math.PI * @rotateDelta.y / element.clientHeight * @rotateSpeed)
                 @rotateStart.copy @rotateEnd
             # two-fingered touch: dolly
             when 2
                 return if @noZoom or @state != @STATE.TOUCH_DOLLY
-                dx = event.touches[0].pageX - event.touches[1].pageX
-                dy = event.touches[0].pageY - event.touches[1].pageY
+                dx = event.touches[0].clientX - event.touches[1].clientX
+                dy = event.touches[0].clientY - event.touches[1].clientY
                 distance = Math.sqrt(dx * dx + dy * dy)
                 @dollyEnd.set 0, distance
                 @dollyDelta.subVectors @dollyEnd, @dollyStart
@@ -689,18 +705,21 @@ class OrbitControls
             # three-fingered touch: pan
             when 3
                 return if @noPan or @state != @STATE.TOUCH_PAN
-                @panEnd.set event.touches[0].pageX, event.touches[0].pageY
+                @panEnd.set event.touches[0].clientX, event.touches[0].clientY
                 @panDelta.subVectors @panEnd, @panStart
                 @pan @panDelta.x, @panDelta.y
                 @panStart.copy @panEnd
             else
-                @state = @STATE.NONE
+                @touchEnd()
                 return
 
         @update()
 
     touchEnd: () =>
         return unless @enabled
+        document.documentElement.removeEventListener 'touchend',    @touchEnd,  false
+        document.documentElement.removeEventListener 'touchmove',   @touchMove, false
+        document.documentElement.removeEventListener 'touchcancel', @touchEnd,  false
         @dispatchEvent @endEvent
         @state = @STATE.NONE
 
@@ -1634,9 +1653,10 @@ class Draggable
             source: "##{name}-rtt"
             type:   'unsignedByte'
 
-        @canvas.addEventListener 'mousedown', @onMouseDown, false
-        @canvas.addEventListener 'mousemove', @onMouseMove, false
-        @canvas.addEventListener 'mouseup',   @onMouseUp,   false
+        @canvas.addEventListener 'mousedown',  @onMouseDown, false
+        @canvas.addEventListener 'mousemove',  @onMouseMove, false
+        @canvas.addEventListener 'mouseup',    @onMouseUp,   false
+        @canvas.addEventListener 'touchstart', @touchStart,  false
         @three.on 'post', @post
 
     onMouseDown: (event) =>
@@ -1646,13 +1666,22 @@ class Draggable
         @activePoint = @points[@dragging]
 
     onMouseMove: (event) =>
-        @mouse = [event.offsetX * window.devicePixelRatio,
-                  event.offsetY * window.devicePixelRatio]
+        dpr = window.devicePixelRatio
+        @mouse = [event.offsetX * dpr, event.offsetY * dpr]
         @hovered = @getIndexAt @mouse[0], @mouse[1]
         return if @dragging < 0 or not @enabled
         event.preventDefault()
-        mouseX = event.offsetX / @canvas.offsetWidth * 2 - 1.0
-        mouseY = -(event.offsetY / @canvas.offsetHeight * 2 - 1.0)
+        @movePoint event.offsetX, event.offsetY
+
+    onMouseUp: (event) =>
+        return if @dragging < 0 or not @enabled
+        event.preventDefault()
+        @dragging = -1
+        @activePoint = undefined
+
+    movePoint: (x, y) =>
+        screenX = x / @canvas.offsetWidth * 2 - 1.0
+        screenY = -(y / @canvas.offsetHeight * 2 - 1.0)
         # Move the point in the plane parallel to the camera.
         @projected
             .set(@activePoint[0], @activePoint[1], @activePoint[2])
@@ -1660,7 +1689,7 @@ class Draggable
         @matrix.multiplyMatrices @camera.projectionMatrix, @eyeMatrix
         @matrix.multiply @matrixInv.getInverse @camera.matrixWorld
         @projected.applyProjection @matrix
-        @vector.set mouseX, mouseY, @projected.z
+        @vector.set screenX, screenY, @projected.z
         @vector.applyProjection @matrixInv.getInverse @matrix
         @vector.applyMatrix4 @viewMatrixInv
         @vector.z = 0 if @is2D
@@ -1670,7 +1699,33 @@ class Draggable
         @activePoint[2] = @vector.z
         @postDrag.call @
 
-    onMouseUp: (event) =>
+    touchStart: (event) =>
+        return unless event.touches.length == 1 and event.targetTouches.length == 1
+        return unless @enabled
+        touch = event.targetTouches[0]
+        rect = event.target.getBoundingClientRect()
+        offsetX = touch.pageX - rect.left
+        offsetY = touch.pageY - rect.top
+        dpr = window.devicePixelRatio
+        @dragging = @getIndexAt offsetX * dpr, offsetY * dpr
+        return if @dragging < 0
+        @activePoint = @points[@dragging]
+        event.preventDefault()
+        @canvas.addEventListener 'touchend',    @touchEnd,  false
+        @canvas.addEventListener 'touchmove',   @touchMove, false
+        @canvas.addEventListener 'touchcancel', @touchEnd,  false
+
+    touchMove: (event) =>
+        return unless event.touches.length == 1 and event.targetTouches.length == 1
+        return if @dragging < 0 or not @enabled
+        event.preventDefault()
+        touch = event.targetTouches[0]
+        rect = event.target.getBoundingClientRect()
+        offsetX = touch.pageX - rect.left
+        offsetY = touch.pageY - rect.top
+        @movePoint offsetX, offsetY
+
+    touchEnd: (event) =>
         return if @dragging < 0 or not @enabled
         event.preventDefault()
         @dragging = -1
@@ -1678,7 +1733,7 @@ class Draggable
 
     post: () =>
         if not @enabled
-            @three.controls?.enabled = true
+            @three.controls?.enable true
             return
         if @dragging >= 0
             @canvas.style.cursor = 'pointer'
@@ -1688,8 +1743,7 @@ class Draggable
             @canvas.style.cursor = 'move'
         else
             @canvas.style.cursor = ''
-        if @three.controls
-            @three.controls.enabled = @hovered < 0 and @dragging < 0
+        @three.controls?.enable(@hovered < 0 and @dragging < 0)
 
     getIndexAt: (x, y) =>
         data = @readback.get 'data'

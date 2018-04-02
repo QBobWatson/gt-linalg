@@ -78625,6 +78625,7 @@ group:"textord",replace:"\u03a5"},"\\Phi":{font:"main",group:"textord",replace:"
       this.rotateLeft = bind(this.rotateLeft, this);
       this.getAutoRotationAngle = bind(this.getAutoRotationAngle, this);
       this.updateCamera = bind(this.updateCamera, this);
+      this.enable = bind(this.enable, this);
       THREE.EventDispatcher.prototype.apply(this);
       this.domElement = domElement != null ? domElement : document;
       this.enabled = true;
@@ -78693,13 +78694,29 @@ group:"textord",replace:"\u03a5"},"\\Phi":{font:"main",group:"textord",replace:"
       }), false);
       this.domElement.addEventListener('mousedown', this.onMouseDown, false);
       this.domElement.addEventListener('mousewheel', this.onMouseWheel, false);
-      this.domElement.addEventListener('DOMMouseScroll', this.onMouseWheel, false);
       this.domElement.addEventListener('touchstart', this.touchStart, false);
-      this.domElement.addEventListener('touchend', this.touchEnd, false);
-      this.domElement.addEventListener('touchmove', this.touchMove, false);
       window.addEventListener('keydown', this.onKeyDown, false);
       this.update();
     }
+
+    OrbitControls.prototype.enable = function(val) {
+      var de, ref, ref1;
+      this.enabled = val;
+      if (!this.enabled) {
+        de = document.documentElement;
+        if ((ref = this.state) === this.STATE.ROTATE || ref === this.STATE.DOLLY || ref === this.STATE.PAN) {
+          de.removeEventListener('mousemove', this.onMouseMove, false);
+          de.removeEventListener('mouseup', this.onMouseUp, false);
+          this.dispatchEvent(this.endEvent);
+        } else if ((ref1 = this.state) === this.STATE.TOUCH_ROTATE || ref1 === this.STATE.TOUCH_DOLLY || ref1 === this.STATE.TOUCH_PAN) {
+          de.removeEventListener('touchend', this.touchEnd, false);
+          de.removeEventListener('touchmove', this.touchMove, false);
+          de.removeEventListener('touchcancel', this.touchEnd, false);
+          this.dispatchEvent(this.endEvent);
+        }
+        return this.state = this.STATE.NONE;
+      }
+    };
 
     OrbitControls.prototype.updateCamera = function() {
       this.quat = new THREE.Quaternion().setFromUnitVectors(this.camera.up, new THREE.Vector3(0, 1, 0));
@@ -78950,21 +78967,22 @@ group:"textord",replace:"\u03a5"},"\\Phi":{font:"main",group:"textord",replace:"
       if (!this.enabled) {
         return;
       }
+      event.preventDefault();
       switch (event.touches.length) {
         case 1:
           if (this.noRotate) {
             return;
           }
           this.state = this.STATE.TOUCH_ROTATE;
-          this.rotateStart.set(event.touches[0].pageX, event.touches[0].pageY);
+          this.rotateStart.set(event.touches[0].clientX, event.touches[0].clientY);
           break;
         case 2:
           if (this.noZoom) {
             return;
           }
           this.state = this.STATE.TOUCH_DOLLY;
-          dx = event.touches[0].pageX - event.touches[1].pageX;
-          dy = event.touches[0].pageY - event.touches[1].pageY;
+          dx = event.touches[0].clientX - event.touches[1].clientX;
+          dy = event.touches[0].clientY - event.touches[1].clientY;
           distance = Math.sqrt(dx * dx + dy * dy);
           this.dollyStart.set(0, distance);
           break;
@@ -78973,11 +78991,14 @@ group:"textord",replace:"\u03a5"},"\\Phi":{font:"main",group:"textord",replace:"
             return;
           }
           this.state = this.STATE.TOUCH_PAN;
-          this.panStart.set(event.touches[0].pageX, event.touches[0].pageY);
+          this.panStart.set(event.touches[0].clientX, event.touches[0].clientY);
           break;
         default:
           this.state = this.STATE.NONE;
       }
+      document.documentElement.addEventListener('touchend', this.touchEnd, false);
+      document.documentElement.addEventListener('touchmove', this.touchMove, false);
+      document.documentElement.addEventListener('touchcancel', this.touchEnd, false);
       return this.dispatchEvent(this.startEvent);
     };
 
@@ -78994,18 +79015,18 @@ group:"textord",replace:"\u03a5"},"\\Phi":{font:"main",group:"textord",replace:"
           if (this.noRotate || this.state !== this.STATE.TOUCH_ROTATE) {
             return;
           }
-          this.rotateEnd.set(event.touches[0].pageX, event.touches[0].pageY);
+          this.rotateEnd.set(event.touches[0].clientX, event.touches[0].clientY);
           this.rotateDelta.subVectors(this.rotateEnd, this.rotateStart);
           this.rotateLeft(2 * Math.PI * this.rotateDelta.x / element.clientWidth * this.rotateSpeed);
-          this.rotateUp(2 * Math.PI * rotateDelta.y / element.clientHeight * this.rotateSpeed);
+          this.rotateUp(2 * Math.PI * this.rotateDelta.y / element.clientHeight * this.rotateSpeed);
           this.rotateStart.copy(this.rotateEnd);
           break;
         case 2:
           if (this.noZoom || this.state !== this.STATE.TOUCH_DOLLY) {
             return;
           }
-          dx = event.touches[0].pageX - event.touches[1].pageX;
-          dy = event.touches[0].pageY - event.touches[1].pageY;
+          dx = event.touches[0].clientX - event.touches[1].clientX;
+          dy = event.touches[0].clientY - event.touches[1].clientY;
           distance = Math.sqrt(dx * dx + dy * dy);
           this.dollyEnd.set(0, distance);
           this.dollyDelta.subVectors(this.dollyEnd, this.dollyStart);
@@ -79020,13 +79041,13 @@ group:"textord",replace:"\u03a5"},"\\Phi":{font:"main",group:"textord",replace:"
           if (this.noPan || this.state !== this.STATE.TOUCH_PAN) {
             return;
           }
-          this.panEnd.set(event.touches[0].pageX, event.touches[0].pageY);
+          this.panEnd.set(event.touches[0].clientX, event.touches[0].clientY);
           this.panDelta.subVectors(this.panEnd, this.panStart);
           this.pan(this.panDelta.x, this.panDelta.y);
           this.panStart.copy(this.panEnd);
           break;
         default:
-          this.state = this.STATE.NONE;
+          this.touchEnd();
           return;
       }
       return this.update();
@@ -79036,6 +79057,9 @@ group:"textord",replace:"\u03a5"},"\\Phi":{font:"main",group:"textord",replace:"
       if (!this.enabled) {
         return;
       }
+      document.documentElement.removeEventListener('touchend', this.touchEnd, false);
+      document.documentElement.removeEventListener('touchmove', this.touchMove, false);
+      document.documentElement.removeEventListener('touchcancel', this.touchEnd, false);
       this.dispatchEvent(this.endEvent);
       return this.state = this.STATE.NONE;
     };
@@ -79912,6 +79936,10 @@ group:"textord",replace:"\u03a5"},"\\Phi":{font:"main",group:"textord",replace:"
       this.opts = opts1;
       this.getIndexAt = bind(this.getIndexAt, this);
       this.post = bind(this.post, this);
+      this.touchEnd = bind(this.touchEnd, this);
+      this.touchMove = bind(this.touchMove, this);
+      this.touchStart = bind(this.touchStart, this);
+      this.movePoint = bind(this.movePoint, this);
       this.onMouseUp = bind(this.onMouseUp, this);
       this.onMouseMove = bind(this.onMouseMove, this);
       this.onMouseDown = bind(this.onMouseDown, this);
@@ -80028,6 +80056,7 @@ group:"textord",replace:"\u03a5"},"\\Phi":{font:"main",group:"textord",replace:"
       this.canvas.addEventListener('mousedown', this.onMouseDown, false);
       this.canvas.addEventListener('mousemove', this.onMouseMove, false);
       this.canvas.addEventListener('mouseup', this.onMouseUp, false);
+      this.canvas.addEventListener('touchstart', this.touchStart, false);
       this.three.on('post', this.post);
     }
 
@@ -80041,20 +80070,35 @@ group:"textord",replace:"\u03a5"},"\\Phi":{font:"main",group:"textord",replace:"
     };
 
     Draggable.prototype.onMouseMove = function(event) {
-      var mouseX, mouseY;
-      this.mouse = [event.offsetX * window.devicePixelRatio, event.offsetY * window.devicePixelRatio];
+      var dpr;
+      dpr = window.devicePixelRatio;
+      this.mouse = [event.offsetX * dpr, event.offsetY * dpr];
       this.hovered = this.getIndexAt(this.mouse[0], this.mouse[1]);
       if (this.dragging < 0 || !this.enabled) {
         return;
       }
       event.preventDefault();
-      mouseX = event.offsetX / this.canvas.offsetWidth * 2 - 1.0;
-      mouseY = -(event.offsetY / this.canvas.offsetHeight * 2 - 1.0);
+      return this.movePoint(event.offsetX, event.offsetY);
+    };
+
+    Draggable.prototype.onMouseUp = function(event) {
+      if (this.dragging < 0 || !this.enabled) {
+        return;
+      }
+      event.preventDefault();
+      this.dragging = -1;
+      return this.activePoint = void 0;
+    };
+
+    Draggable.prototype.movePoint = function(x, y) {
+      var screenX, screenY;
+      screenX = x / this.canvas.offsetWidth * 2 - 1.0;
+      screenY = -(y / this.canvas.offsetHeight * 2 - 1.0);
       this.projected.set(this.activePoint[0], this.activePoint[1], this.activePoint[2]).applyMatrix4(this.viewMatrix);
       this.matrix.multiplyMatrices(this.camera.projectionMatrix, this.eyeMatrix);
       this.matrix.multiply(this.matrixInv.getInverse(this.camera.matrixWorld));
       this.projected.applyProjection(this.matrix);
-      this.vector.set(mouseX, mouseY, this.projected.z);
+      this.vector.set(screenX, screenY, this.projected.z);
       this.vector.applyProjection(this.matrixInv.getInverse(this.matrix));
       this.vector.applyMatrix4(this.viewMatrixInv);
       if (this.is2D) {
@@ -80067,7 +80111,47 @@ group:"textord",replace:"\u03a5"},"\\Phi":{font:"main",group:"textord",replace:"
       return this.postDrag.call(this);
     };
 
-    Draggable.prototype.onMouseUp = function(event) {
+    Draggable.prototype.touchStart = function(event) {
+      var dpr, offsetX, offsetY, rect, touch;
+      if (!(event.touches.length === 1 && event.targetTouches.length === 1)) {
+        return;
+      }
+      if (!this.enabled) {
+        return;
+      }
+      touch = event.targetTouches[0];
+      rect = event.target.getBoundingClientRect();
+      offsetX = touch.pageX - rect.left;
+      offsetY = touch.pageY - rect.top;
+      dpr = window.devicePixelRatio;
+      this.dragging = this.getIndexAt(offsetX * dpr, offsetY * dpr);
+      if (this.dragging < 0) {
+        return;
+      }
+      this.activePoint = this.points[this.dragging];
+      event.preventDefault();
+      this.canvas.addEventListener('touchend', this.touchEnd, false);
+      this.canvas.addEventListener('touchmove', this.touchMove, false);
+      return this.canvas.addEventListener('touchcancel', this.touchEnd, false);
+    };
+
+    Draggable.prototype.touchMove = function(event) {
+      var offsetX, offsetY, rect, touch;
+      if (!(event.touches.length === 1 && event.targetTouches.length === 1)) {
+        return;
+      }
+      if (this.dragging < 0 || !this.enabled) {
+        return;
+      }
+      event.preventDefault();
+      touch = event.targetTouches[0];
+      rect = event.target.getBoundingClientRect();
+      offsetX = touch.pageX - rect.left;
+      offsetY = touch.pageY - rect.top;
+      return this.movePoint(offsetX, offsetY);
+    };
+
+    Draggable.prototype.touchEnd = function(event) {
       if (this.dragging < 0 || !this.enabled) {
         return;
       }
@@ -80077,10 +80161,10 @@ group:"textord",replace:"\u03a5"},"\\Phi":{font:"main",group:"textord",replace:"
     };
 
     Draggable.prototype.post = function() {
-      var ref;
+      var ref, ref1;
       if (!this.enabled) {
         if ((ref = this.three.controls) != null) {
-          ref.enabled = true;
+          ref.enable(true);
         }
         return;
       }
@@ -80093,9 +80177,7 @@ group:"textord",replace:"\u03a5"},"\\Phi":{font:"main",group:"textord",replace:"
       } else {
         this.canvas.style.cursor = '';
       }
-      if (this.three.controls) {
-        return this.three.controls.enabled = this.hovered < 0 && this.dragging < 0;
-      }
+      return (ref1 = this.three.controls) != null ? ref1.enable(this.hovered < 0 && this.dragging < 0) : void 0;
     };
 
     Draggable.prototype.getIndexAt = function(x, y) {
