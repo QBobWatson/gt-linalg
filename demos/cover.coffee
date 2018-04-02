@@ -465,6 +465,7 @@ class Spiral extends Complex
         iters = (Math.log(farthest) - Math.log(close))/Math.log(s)
         # How many full rotations in that many iterations?
         rotations = Math.ceil(@deltaAngle * iters / 2*π)
+        d = @direction
         # Have to put this in a matrix to avoid texture size limits
         for i in [0..rotations]
             row = []
@@ -473,13 +474,17 @@ class Spiral extends Complex
                 ss = close * Math.pow(s, u / @deltaAngle)
                 items = []
                 for j in [0...2*π] by π/4
-                    items.push [ss * Math.cos(u+j), ss * Math.sin(u+j)]
+                    items.push [ss * Math.cos(d*(u+j)), ss * Math.sin(d*(u+j))]
                 row.push items
             ret.push row
         ret
 
 
 class SpiralIn extends Spiral
+    constructor: () ->
+        super
+        @direction = -1
+
     getScale: () -> linLerp(0.3, 0.8)(Math.random())
 
     makeDistributions: () =>
@@ -508,6 +513,10 @@ class SpiralIn extends Spiral
 
 
 class SpiralOut extends Spiral
+    constructor: () ->
+        super
+        @direction = 1
+
     getScale: () => linLerp(1/0.8, 1/0.3)(Math.random())
 
     makeDistributions: () =>

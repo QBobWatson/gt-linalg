@@ -448,12 +448,13 @@
     }
 
     Spiral.prototype.makeReference = function() {
-      var close, i, items, iters, j, k, o, ref, ref1, ref2, ret, rotations, row, s, ss, t, u, w;
+      var close, d, i, items, iters, j, k, o, ref, ref1, ref2, ret, rotations, row, s, ss, t, u, w;
       ret = [];
       close = 0.05;
       s = this.scale > 1 ? this.scale : 1 / this.scale;
       iters = (Math.log(farthest) - Math.log(close)) / Math.log(s);
       rotations = Math.ceil(this.deltaAngle * iters / 2 * π);
+      d = this.direction;
       for (i = k = 0, ref = rotations; 0 <= ref ? k <= ref : k >= ref; i = 0 <= ref ? ++k : --k) {
         row = [];
         for (t = o = 0; o <= 100; t = ++o) {
@@ -461,7 +462,7 @@
           ss = close * Math.pow(s, u / this.deltaAngle);
           items = [];
           for (j = w = 0, ref1 = 2 * π, ref2 = π / 4; ref2 > 0 ? w < ref1 : w > ref1; j = w += ref2) {
-            items.push([ss * Math.cos(u + j), ss * Math.sin(u + j)]);
+            items.push([ss * Math.cos(d * (u + j)), ss * Math.sin(d * (u + j))]);
           }
           row.push(items);
         }
@@ -480,7 +481,8 @@
     function SpiralIn() {
       this.updatePoint = bind(this.updatePoint, this);
       this.makeDistributions = bind(this.makeDistributions, this);
-      return SpiralIn.__super__.constructor.apply(this, arguments);
+      SpiralIn.__super__.constructor.apply(this, arguments);
+      this.direction = -1;
     }
 
     SpiralIn.prototype.getScale = function() {
@@ -534,7 +536,8 @@
       this.updatePoint = bind(this.updatePoint, this);
       this.makeDistributions = bind(this.makeDistributions, this);
       this.getScale = bind(this.getScale, this);
-      return SpiralOut.__super__.constructor.apply(this, arguments);
+      SpiralOut.__super__.constructor.apply(this, arguments);
+      this.direction = 1;
     }
 
     SpiralOut.prototype.getScale = function() {
