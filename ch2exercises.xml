@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<section xml:id="ch2exercises">
+  <title>Exercises</title>
+
+
+
+  <subsection xml:id="subsection-Rn">
+    <title>Exercises for Chapter 2</title>
+
+	<p>
+		Questions:
+    <ol>
+		<li>
+			State whether the following are true or false. If false, give a counterexample/reason, and if true, explain why it is true. 
+			<ol>
+				<li>
+					A system of 5 linear equations can have 5 solutions.
+				</li>
+				<li>
+					The solution set to any consistent system of linear equations is a subspace.
+				</li>
+				<li>
+					The solution set to a consistent system of linear equations of the form <m>Ax=0</m> is a subspace. 
+				</li>
+				<li>
+					The intersection of any two subspaces (i.e., the collection of points that are in both subspaces) is a subspace. 
+				</li>
+				<li>
+					The union of any two subspaces (i.e., the collection of points that are in at least on of the subspaces) is a subspace. 
+	</li>
+			</ol>
+		</li>
+		<li>
+			    Use Gaussian elimination to find the unique solution for each system.
+				<ol>
+					<li>
+					    <me>\begin{aligned}
+					           2x  &amp;+  &amp;3y  &amp;=  &amp;13  \\
+					           x   &amp;-  &amp;y   &amp;=  &amp;-1
+					           \end{aligned}
+						   </me>
+					</li>
+					<li>
+						<me>\begin{aligned}
+						          x   &amp;  &amp;  &amp;-  &amp;z  &amp;=  &amp;0  \\
+						          3x  &amp;+ &amp;y &amp;   &amp;   &amp;=  &amp;1  \\
+						          -x  &amp;+ &amp;y &amp;+  &amp;z  &amp;=  &amp;4
+						        \end{aligned}</me>
+							</li>
+				</ol>
+		</li>
+		
+		
+		
+		
+		
+		
+		
+		<li>
+		
+		Each system of linear equations is in echelon form (that is, the corresponding matrix is in echelon form). 
+			    For each, say whether the system has a unique solution, 
+			  no solution, or infinitely many solutions.
+			    <ol>
+					<li>
+			        <me>
+						\begin{aligned}
+			           -3x &amp;+ &amp;2y   &amp;= &amp;0  \\          
+			               &amp;  &amp;-2y  &amp;= &amp;0            
+						   \end{aligned}
+					   </me>
+					
+				</li>
+			      
+				  
+				  <li> 
+  			        <me>
+  						\begin{aligned}
+			             x &amp;+ &amp;y &amp;  &amp;   &amp;= &amp;4  \\          
+			               &amp;  &amp;y &amp;- &amp;z  &amp;= &amp;0          
+			        \end{aligned}
+				</me>
+					
+				</li>
+				
+				
+				
+				<li>
+			        <me>
+						\begin{aligned}
+			             x &amp;+ &amp;y &amp;  &amp;   &amp;= &amp;4  \\          
+			               &amp;  &amp;y &amp;  &amp;-z  &amp;= &amp;0  \\ 
+			               &amp;  &amp;  &amp;  &amp;0  &amp;= &amp;0  
+			        \end{aligned}
+				</me>
+					
+				</li>
+				
+				
+				
+				<li>
+					
+			        <me>
+						\begin{aligned}
+			             x &amp;+ &amp;y    &amp;= &amp;4  \\          
+			               &amp;  &amp;0    &amp;= &amp;4            
+			        \end{aligned}
+				</me>
+					
+				</li>
+				
+				
+				
+				
+				<li>
+					
+			        <me>
+						\begin{aligned}
+			            3x &amp;+ &amp;6y &amp;+  &amp;z  &amp;= &amp;-0.5  \\          
+			               &amp;  &amp;   &amp;   &amp;-z &amp;= &amp;2.5  \\           
+			        \end{aligned}
+				</me>
+					
+				</li>
+				
+				
+			    <li>
+					
+			        <me>
+						\begin{aligned}
+			             x &amp;- &amp;3y    &amp;= &amp;2  \\          
+			               &amp;  &amp;0    &amp;= &amp;0            
+			        \end{aligned}
+				</me>
+					
+				</li>
+				
+				<li>
+			        <me>
+						\begin{aligned}
+			             2x &amp;+ &amp;2y    &amp;= &amp;4  \\
+			                &amp;  &amp;y     &amp;= &amp;1 \\          
+			                 &amp;  &amp;0    &amp;= &amp;4         
+							 \end{aligned}   
+						 </me>
+					
+				</li>
+				
+				
+				<li>
+			        <me>
+						\begin{aligned}
+			              2x &amp;+ &amp;y   &amp;= &amp;0  
+			        \end{aligned}
+				</me>
+					
+				</li>
+				
+				
+				
+				<li>
+			        <me>
+						\begin{aligned}
+			              x &amp;- &amp;y    &amp;= &amp;-1  \\
+			                &amp;  &amp;0     &amp;= &amp;0 \\          
+			                 &amp;  &amp;0    &amp;= &amp;4            
+			        \end{aligned}
+				</me>
+					
+				</li>
+				
+				
+				
+				<li>
+			        <me>
+						\begin{aligned}
+			              x &amp;+ &amp;y  &amp;- &amp;3z  &amp;= &amp;-1  \\
+			                &amp;  &amp;y  &amp;- &amp;z  &amp;= &amp;2  \\
+			                &amp;  &amp;  &amp;  &amp;z    &amp;= &amp;0  \\
+			                &amp;  &amp;  &amp;  &amp;0   &amp;= &amp;0  
+			        \end{aligned}
+				</me>
+					
+				</li>
+		
+				</ol>
+		
+		
+		</li>
+		
+		
+		<li>
+			
+			Use Gaussian elimination to solve each system
+			    or conclude `many solutions' or `no solutions'.
+			    <ol>
+			 <li><me>
+			        \begin{aligned}
+			                  2x  &amp;+  &amp;2y  &amp;=  &amp;5  \\
+			                   x  &amp;-  &amp;4y  &amp;=  &amp;0  
+							   \end{aligned}</me>
+							   </li>
+						 
+						 
+	<li><me>
+			        \begin{aligned}
+			                  -x  &amp;+  &amp;y   &amp;=  &amp;1  \\
+			                   x  &amp;+  &amp;y   &amp;=  &amp;2  
+							   \end{aligned}
+							   </me>
+							   </li>
+								   
+								   
+				
+		<li><me>
+			  \begin{aligned}
+			                   x  &amp;-  &amp;3y  &amp;+  &amp;z  &amp;=  &amp;1  \\
+			                   x  &amp;+  &amp;y   &amp;+  &amp;2z &amp;=  &amp;14 
+							   \end{aligned}
+							   </me>
+							   </li>
+								   
+		<li><me>
+	\begin{aligned}
+			                  -x  &amp;-  &amp;y   &amp;=  &amp;1  \\
+			                 -3x  &amp;-  &amp;3y  &amp;=  &amp;2  
+						   \end{aligned}
+						   </me>
+						   </li>
+							   
+			  <li><me>
+			           \begin{aligned}
+			                      &amp;   &amp;4y  &amp;+  &amp;z  &amp;=  &amp;20 \\
+			                  2x  &amp;-  &amp;2y  &amp;+  &amp;z  &amp;=  &amp;0  \\
+			                   x  &amp;   &amp;    &amp;+  &amp;z  &amp;=  &amp;5  \\
+			                   x  &amp;+  &amp;y   &amp;-  &amp;z  &amp;=  &amp;10 
+			             
+						 
+							   \end{aligned}
+							   </me>
+							   </li>
+<li><me>\begin{aligned}
+			                 2x  &amp;   &amp;   &amp;+  &amp;z  &amp;+  &amp;w  &amp;=  &amp;5  \\
+			                     &amp;   &amp;y  &amp;   &amp;   &amp;-  &amp;w  &amp;=  &amp;-1 \\
+			                 3x  &amp;   &amp;   &amp;-  &amp;z  &amp;-  &amp;w  &amp;=  &amp;0  \\
+			                 4x  &amp;+  &amp;y  &amp;+  &amp;2z &amp;+  &amp;w  &amp;=  &amp;9  
+						   \end{aligned}
+					   </me>
+						   </li>
+						
+						</ol>
+		
+		</li>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</ol>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+	Answers:
+	<ol>
+		<li>
+			<ol>
+				<li>
+				    False. The solution set to any system of linear equations is either empty (inconsistent equations), has a unique solution (consistent equations, no free variables), or infinite (if there is a free variable, since this free variable can then take on the value of any of the infinitely many real numbers).
+				</li>
+				<li>
+					False. For example, the solution set of the set of equations <m>x+y=3</m> in <m>\mathbb R^2</m> is a line, but doesn't pass through the origin.
+				</li>
+				<li>
+					True. Here, we can check the axioms in the definition of a subspace. Given the shape of the equation <m>Ax=0</m>, we clearly have that the zero vector solves this equation, and so the solution set contains the origin (which solves the problem encountered in the last example). Now, suppose that <m>x</m> and <m>y</m> are solutions. Then <m>A(x+y)=Ax+Ay=0+0=0</m>, and so <m>x+y</m> also solves the system, and  for a real number <m>\alpha</m>, <m>A(\alpha x)=\alpha Ax=\alpha0=0</m>, and so <m>\alpha x</m> is a solution too. Thus, the solution set satisfies parts 2 and 3 of the definition of a subspace, and hence is a subspace. 
+				</li>
+				<li>
+					True. Suppose that <m>V</m> and <m>W</m> are both subspaces of <m>\mathbb R^n</m>. Then we can check each part of the definition is satisfied by the intersection of <m>V</m> and <m>W</m>. Firstly, since 0 is in both subspaces, its in the intersection, so it is a nonempty set. Furthermore, if <m>x</m> and <m>y</m> are in the intersection and <m>\alpha</m> is a real number, then <m>\alpha x+y</m> is in the intersection, using the axioms in the definition of subspace applied twice, once using the fact that <m>x</m> and <m>y</m> are in particular both in <m>V</m>, and once using that they are both in <m>W</m>. Note that this implies both the second and third parts of the definition of subspace, as we can take <m>\alpha=1</m> for part 2 of the definition, and choose <m>y=0</m> for part 3 of the definition. 
+				</li>
+				<li>
+					False. Although the union of two intersections always contained the origin, it will usually not be a subspace. For instance, consider the two lines <m>y=\pm x</m> in <m>\mathbb R^2</m>. Their union is not closed under addition. To see this, we just need a counter example. For instance, choose <m>(1,-1)</m> on the line <m>y=-x</m> and the point <m>(2,2)</m> on the line <m>y=x</m>. In particular, both of these points are on the union of these two lines (which looks like an "X" in the plane). However, the sum of these two points, <m>(1,-1)+(2,2)=(3,-1)</m>, is not on the union of the two lines, as <m>3\neq\pm(-1)</m>. 
+				</li>
+			</ol>
+		</li>
+		<li>
+			<ol>
+				<li>
+					Adding <m>-1/2</m> times the first equation to the second equation reduces us to the set of equations
+					<me>
+						\begin{aligned}
+					               2x  &amp;+  &amp;3y      &amp;=  &amp;3  \\
+					                   &amp;-  &amp;(5/2)y  &amp;=  &amp;-15/2,              
+					            \end{aligned}
+					          </me>
+					          giving that the solution is <m>y=3</m> and <m>x=2</m>.
+				</li>
+				<li>
+					Here, we apply Gaussian elimination be adding <m>-3</m> times the first equation to the second equation, and adding the first equation to the second equation to give
+					              <me>
+					            \begin{aligned}
+					              x   &amp;  &amp;  &amp;-  &amp;z  &amp;=  &amp;0  \\
+					                  &amp;  &amp;y &amp;+  &amp;3z &amp;=  &amp;1  \\
+					                  &amp;  &amp;y &amp;   &amp;   &amp;=  &amp;4
+					                  .
+									  \end{aligned}
+								  </me>
+					        
+					            We then subtract the second equation from the third:
+					            <me>
+					            \begin{aligned}
+					              x   &amp;  &amp;  &amp;-  &amp;z    &amp;=  &amp;0  \\
+					                  &amp;  &amp;y &amp;+  &amp;3z   &amp;=  &amp;1  \\
+					                  &amp;  &amp;  &amp;   &amp;-3z  &amp;=  &amp;3,
+					           \end{aligned}
+						   </me>
+					          giving <m>x=-1</m>, <m>y=4</m>, and <m>z=-1</m>.
+				</li>
+			</ol>
+		</li>
+		
+		
+		<li>
+	        If a system has a contradictory equation then it has no solution.
+	        Otherwise, if there are any variables that are not leading a row
+	        then it has infinitely many solution.
+	        In the final case, where there is no contradictory equation and
+	        every variable leads some row, it has a unique solution.
+	        <ol>
+	          <li>Unique solution</li>
+	          <li>Infinitely many solutions</li>
+	          <li> Infinitely many solutions</li>
+	          <li> No solution</li>
+	   <li>Infinitely many solutions</li>
+	        <li>Infinitely many solutions</li>
+	  <li>No solution</li>
+	 <li>Infinitely many solutions</li>
+	     <li>No solution</li>
+	          <li>Unique solution</li>
+			  
+		  </ol>
+		</li>
+		
+	<li>
+	    <ol>
+	        <li>
+				We add <m>-1/2</m> times the first equation to the second to find
+	 <me>\begin{aligned}
+	              2x  &amp;+  &amp;2y  &amp;=  &amp;5  \\
+	                  &amp;   &amp;-5y &amp;=  &amp;-5/2 ,
+\end{aligned}</me>
+			 
+	         which shows that <m> y=1/2 </m> and <m> x=2 </m> is the unique solution.
+	       
+		   </li>
+		   <li>
+			   
+			   Gaussian elimination says that we should add the first and second equations:
+	 <me>\begin{aligned}
+	              -x  &amp;+  &amp;y   &amp;=  &amp;1  \\
+	                  &amp;   &amp;2y  &amp;=  &amp;3  
+\end{aligned}</me>
+			 
+			 
+	         giving <m> y=3/2 </m> and <m> x=1/2 </m> as the only solution.
+			 
+			 </li>
+	       <li>
+			   
+			    Row reduction (specifically, subtracting the first equation from the second)
+	 <me>\begin{aligned}
+	                 x  &amp;-  &amp;3y  &amp;+  &amp;z  &amp;=  &amp;1  \\
+	                    &amp;   &amp;4y  &amp;+  &amp;z  &amp;=  &amp;13 
+\end{aligned}</me>
+			 
+			 
+	         shows, because the variable <m>z</m> does not have a pivot in the corresponding column, and hence is a free variable,
+	        that there are many solutions.
+			
+			</li>
+	     <li>
+			 
+			 Row reduction (subtracting 3 times the first equation from the second)
+	 <me>\begin{aligned}
+	              -x  &amp;-  &amp;y   &amp;=  &amp;1  \\
+	                  &amp;   &amp;0   &amp;=  &amp;-1 
+\end{aligned}</me>
+			 
+			 
+	         shows that there is no solution.
+			 
+			 </li>
+	      <li>
+			  
+			  Interchanging the first and fourth equations gives
+	 <me>\begin{aligned}
+	                 x  &amp;+  &amp;y   &amp;-  &amp;z  &amp;=  &amp;10 \\
+	                2x  &amp;-  &amp;2y  &amp;+  &amp;z  &amp;=  &amp;0  \\
+	                 x  &amp;   &amp;    &amp;+  &amp;z  &amp;=  &amp;5  \\
+	                    &amp;   &amp;4y  &amp;+  &amp;z  &amp;=  &amp;20.
+\end{aligned}</me>
+				  
+				  
+	              Now subtracting the first equation from the third and adding <m>-2</m> times the first equation to the second equation yields
+	 <me>\begin{aligned}
+		 
+	                 x  &amp;+  &amp;y   &amp;-  &amp;z  &amp;=  &amp;10 \\
+	                    &amp;   &amp;-4y &amp;+  &amp;3z &amp;=  &amp;-20\\
+	                    &amp;   &amp;-y  &amp;+  &amp;2z &amp;=  &amp;-5 \\
+	                    &amp;   &amp;4y  &amp;+  &amp;z  &amp;=  &amp;20 .
+\end{aligned}</me>
+				  
+				  
+	              Finally, we add the second and fourth equations and subtract <m>1/4</m> times the second row from the third row to obtain
+	 <me>\begin{aligned}
+	                 x  &amp;+  &amp;y   &amp;-  &amp;z      &amp;=  &amp;10 \\
+	                    &amp;   &amp;-4y &amp;+  &amp;3z     &amp;=  &amp;-20\\
+	                    &amp;   &amp;    &amp;   &amp;(5/4)z &amp;=  &amp;0  \\
+	                    &amp;   &amp;    &amp;   &amp;4z     &amp;=  &amp;0,
+\end{aligned}</me>
+			 
+			 
+	        which  gives the unique solution<m> (x,y,z)=(5,5,0) </m>.
+			
+			</li>
+	      <li>
+			  
+			  We begin by subtracting twice the first equation from the fourth equation and adding <m>-3/2</m> times the first equation to the third equation to obtain the system
+	 <me>\begin{aligned}
+		 
+		
+	                2x  &amp;   &amp;   &amp;+  &amp;z       &amp;+  &amp;w       &amp;=  &amp;5  \\
+	                    &amp;   &amp;y  &amp;   &amp;        &amp;-  &amp;w       &amp;=  &amp;-1 \\
+	                    &amp;   &amp;   &amp;-  &amp;(5/2)z  &amp;-  &amp;(5/2)w  &amp;=  &amp;-15/2  \\
+	                    &amp;   &amp;y  &amp;   &amp;        &amp;-  &amp;w       &amp;=  &amp;-1.
+\end{aligned}</me>
+				  
+				  
+	              Subtracting the second equation from the fourth gives us the system
+	 <me>\begin{aligned}
+		 
+		 
+	                2x  &amp;  &amp;   &amp;+  &amp;z       &amp;+  &amp;w       &amp;=  &amp;5  \\
+	                    &amp;   &amp;y  &amp;   &amp;        &amp;-  &amp;w       &amp;=  &amp;-1 \\
+	                    &amp;   &amp;   &amp;-  &amp;(5/2)z  &amp;-  &amp;(5/2)w  &amp;=  &amp;-15/2  \\
+	                    &amp;   &amp;   &amp;   &amp;        &amp;   &amp;0       &amp;=  &amp;0,
+\end{aligned}</me>
+			  
+			  
+	          which shows that there are many solutions.
+	       
+		   </li>
+		   
+	   </ol>
+		
+	</li>	
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		
+		
+		
+		
+		
+	</ol>
+</p>
+
+
+
+  </subsection>
+
+
+
+
+
+</section>
