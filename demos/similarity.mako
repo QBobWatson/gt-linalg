@@ -312,7 +312,7 @@ class ShaderAnimation extends Animation
 class Dynamics
     constructor: (@range) ->
         # Vectors: array of numVecs x numVecs
-        @numVecs = urlParams.get 'numvecs', 'int', 500*5*5
+        @numVecs = urlParams.get 'numvecs', 'int', 4096
         @vecs = ([0, 0, 0] for [0...@numVecs])
         col = () -> Math.random() * .5 + .5
         @colors = ([col(), col(), col(), 1] for [0...@numVecs])
@@ -513,13 +513,13 @@ class Dynamics
                     sy = Math.pow(scaleY, i/6)
                     row = []
                     if (scaleX > 1 and scaleY < 1) or (scaleX < 1 and scaleY > 1)
-                        for j in [1/10..10] by .3
+                        for j in [1/5..5] by .5
                             row.push [ sx * j,  sy * j, 0]
                             row.push [-sx * j,  sy * j, 0]
                             row.push [ sx * j, -sy * j, 0]
                             row.push [-sx * j, -sy * j, 0]
                     else
-                        for j in [0.05..0.96] by .05
+                        for j in [0.05..0.96] by .1
                             row.push [ sx * j,  sy * (1-j), 0]
                             row.push [-sx * j,  sy * (1-j), 0]
                             row.push [ sx * j, -sy * (1-j), 0]

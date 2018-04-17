@@ -89,7 +89,7 @@ html, body {
 
 
     
-        <script src="js/demo.js?vers=15c323"></script>
+        <script src="js/demo.js?vers=c2c0e1"></script>
     
 
     <script type="text/javascript">
@@ -358,7 +358,7 @@ Dynamics = (function() {
     this.hide = bind(this.hide, this);
     this.show = bind(this.show, this);
     this.install = bind(this.install, this);
-    this.numVecs = urlParams.get('numvecs', 'int', 500 * 5 * 5);
+    this.numVecs = urlParams.get('numvecs', 'int', 4096);
     this.vecs = (function() {
       var k, ref3, results;
       results = [];
@@ -686,14 +686,14 @@ Dynamics = (function() {
           sy = Math.pow(scaleY, i / 6);
           row = [];
           if ((scaleX > 1 && scaleY < 1) || (scaleX < 1 && scaleY > 1)) {
-            for (j = o = ref8 = 1 / 10; o <= 10; j = o += .3) {
+            for (j = o = ref8 = 1 / 5; o <= 5; j = o += .5) {
               row.push([sx * j, sy * j, 0]);
               row.push([-sx * j, sy * j, 0]);
               row.push([sx * j, -sy * j, 0]);
               row.push([-sx * j, -sy * j, 0]);
             }
           } else {
-            for (j = p = 0.05; p <= 0.96; j = p += .05) {
+            for (j = p = 0.05; p <= 0.96; j = p += .1) {
               row.push([sx * j, sy * (1 - j), 0]);
               row.push([-sx * j, sy * (1 - j), 0]);
               row.push([sx * j, -sy * (1 - j), 0]);
