@@ -21,6 +21,9 @@ make_hashes() {
   <xsl:template name="git-hash">
     <xsl:text>$(git rev-parse HEAD)</xsl:text>
   </xsl:template>
+  <xsl:template name="git-hash-short">
+    <xsl:text>$(git rev-parse HEAD | cut -c 1-6)</xsl:text>
+  </xsl:template>
   <xsl:template name="versioned-file">
     <xsl:param name="file"/>
     <xsl:variable name="commit">

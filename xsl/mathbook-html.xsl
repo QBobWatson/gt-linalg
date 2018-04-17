@@ -196,6 +196,21 @@
       </xsl:choose>
     </xsl:variable>
 
+    <xsl:variable name="src">
+      <xsl:choose>
+        <xsl:when test="contains(@source, '?')">
+          <xsl:value-of select="@source"/>
+          <xsl:text>&amp;vers=</xsl:text>
+          <xsl:call-template name="git-hash-short" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="@source"/>
+          <xsl:text>?vers=</xsl:text>
+          <xsl:call-template name="git-hash-short" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
     <xsl:element name="div">
         <xsl:attribute name="id">
             <xsl:apply-templates select="." mode="internal-id" />
@@ -211,7 +226,7 @@
 
         <xsl:element name="iframe">
           <xsl:attribute name="src">
-            <xsl:value-of select="@source"/>
+            <xsl:value-of select="$src"/>
           </xsl:attribute>
           <xsl:attribute name="title">Interactive Figure</xsl:attribute>
         </xsl:element>
@@ -223,7 +238,7 @@
       </xsl:attribute>
       <xsl:element name="a">
         <xsl:attribute name="href">
-          <xsl:value-of select="@source"/>
+          <xsl:value-of select="$src"/>
         </xsl:attribute>
         <xsl:attribute name="target">_blank</xsl:attribute>
         <xsl:attribute name="rel">noopener</xsl:attribute>
