@@ -46,9 +46,9 @@ the license is included in gfdl.xml.
       <idx><h>Vector</h><h>product with matrix</h><see>Matrix-vector product</see></idx>
       <statement>
         <p>Let <m>A</m> be an <m>m\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_n</m>:
-        <me>A = \mat{| | ,{}, |; v_1 v_1 \cdots, v_n;| | ,{}, | }</me>
+        <me>A = \mat{| | ,{}, |; v_1 v_2 \cdots, v_n;| | ,{}, | }</me>
         The <term>product</term> of <m>A</m> with a vector <m>x</m> in <m>\R^n</m> is the linear combination
-        <me>Ax = \mat{| | ,{}, |; v_1 v_1 \cdots, v_n;| | ,{}, | }
+        <me>Ax = \mat{| | ,{}, |; v_1 v_2 \cdots, v_n;| | ,{}, | }
         \vec{x_1 x_2 \vdots, x_n} = x_1v_1 + x_2v_2 + \cdots + x_nv_n.</me>
         This is a vector in <m>\R^m</m>.
         </p>
