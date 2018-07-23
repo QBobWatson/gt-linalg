@@ -147,8 +147,8 @@ the license is included in gfdl.xml.
         We wrote the redundant equations <m>x_2=x_2</m> and <m>x_3=x_3</m> in order to turn the above system into a <em>vector equation</em>:
         <me>x = \vec{x_1 x_2 x_3} = x_2\vec{1 1 0} + x_3\vec{-2 0 1}.</me>
         This vector equation is called the <term>parametric vector form</term> of the solution set.
-        Since <m>x_2</m> and <m>x_3</m> are allowed to be anything, this says that the solution set is the set of all linear combinations of <m>\vec{1 1 1}</m> and <m>\vec{-2 0 1}</m>.  In other words, the solution set is
-        <me>\Span\left\{\vec{1 1 1},\;\vec{-2 0 1}\right\}.</me>
+        Since <m>x_2</m> and <m>x_3</m> are allowed to be anything, this says that the solution set is the set of all linear combinations of <m>\vec{1 1 0}</m> and <m>\vec{-2 0 1}</m>.  In other words, the solution set is
+        <me>\Span\left\{\vec{1 1 0},\;\vec{-2 0 1}\right\}.</me>
         We know how to draw the span of two noncollinear vectors in <m>\R^3</m>: it is a plane.  Therefore, this is a picture of the solution set:
         <latex-code>
               <![CDATA[
