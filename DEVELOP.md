@@ -30,15 +30,15 @@ support files needed to build the book.  The last repository contains the source
 
 ## Setup the build system
 
-The build system has a large number of complicated dependencies.  For this reason, I've packaged everything needed to build the book into a [Vagrant](https://www.vagrantup.com/) box.  This is a prepackaged virtual machine that can be launched from any Unix, Mac, or Windows box.  It has two prerequisites:
+The build system has a large number of complicated dependencies.  For this reason, I've packaged everything needed to build the book into a [Vagrant](https://www.vagrantup.com/) box.  This is a prepackaged virtual machine that can be launched from any Unix, Mac, or Windows computer.  It has two prerequisites:
 * VirtualBox: the underlying virtual machine software.  [Download](https://www.virtualbox.org/wiki/Downloads).
 * Vagrant: the program that manages the virtual machine.  [Download](https://www.vagrantup.com/downloads.html).
 
-The build environment box itself can be found here: [Download](blah).  This file is very large (over 6GB; mostly LaTeX and relatives), so be patient.
+The build environment `build_env.box` can be found here: [Download](blah).  This file is very large (over 6GB; mostly LaTeX and relatives), so be patient.
 
 To install the build environment, change into `gt-linalg`, and type:
 ```
-vagrant box add --name build_env location/of/build_env.box
+vagrant box add --name build_env /path/to/build_env.box
 vagrant up
 ```
 
@@ -48,7 +48,12 @@ If you want to poke around the virtual machine, use `vagrant ssh`.  To stop it, 
 
 I've created a build script that should do everything for you.  Change into `gt-linalg`, then type `./build.sh`.  This starts the Vagrant box if it is not already running, then does an enormous amount of work to build the site.  Beware that the first build can take several hours on a laptop computer.
 
-The result of the build is contained in the box, which conveniently runs a web server.  Point your browser at `http://localhost:8081/` to see the version you just built.  Type `./export.sh` to export the built book; it will appear in the file `../book.tar.gz`.
+The build script has several options:
+* `--reprocess-latex` The build system caches the results of LaTeX compilation.  This option deletes the cache.
+* `--pdf-vers` Also compile the pdf version of the book.
+* `--minify` Mangle `.js` and `.css` files to save space at the expense of readability.
+
+The result of the build is contained in the virtual machine, which conveniently runs a web server.  Point your browser at `http://localhost:8081/` to see the version you just built.  Type `./export.sh` to export the built book; it will appear in the file `../book.tar.gz`.
 
 
 ## Editing XML
@@ -68,6 +73,8 @@ use Emacs, then be sure to open the xml files in `nxml-mode`; it should
 automatically read the appropriate schema file from the file `schemas.xml`,
 which I've included in the repository.
 
+Note that `build.sh` will refuse to compile malformed `xml` files.
+
 
 ## Resources
 
@@ -75,8 +82,6 @@ which I've included in the repository.
     https://mathbook.pugetsound.edu/
 * Author's guide:
     http://mathbook.pugetsound.edu/doc/author-guide/html/
-* Intro to git:
-    http://mathbook.pugetsound.edu/gfa/html/
 * FCLA source:
     https://github.com/rbeezer/fcla
 
