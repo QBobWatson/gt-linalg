@@ -1,5 +1,26 @@
 #!/bin/bash
 
+base_dir="/base"
+compile_dir="$base_dir/gt-linalg"
+build_base="/home/vagrant"
+build_dir="$build_base/build"
+latex_dir="$build_base/build-pdf"
+cache_dir="$build_base/pretex-cache"
+static_dir="$build_dir/static"
+figure_img_dir="$build_dir"/figure-images
+pretex="$base_dir/gt-text-common/pretex/pretex.py"
+node_dir="$build_base/node_modules"
+
+# Run in the vagrant build vm
+if [ ! -d "$base_dir" ]; then
+    if [ ! $(vagrant status --machine-readable | grep state,running) ]; then
+        vagrant up || die "Cannot start build environment virtual machine"
+    fi
+    vagrant ssh -- "$compile_dir/build.sh" "$@"
+    exit $?
+fi
+
+
 die() {
     echo "$@"
     exit 1
@@ -49,7 +70,7 @@ EOF
 
 combine_css() {
     if [ -n "$MINIFY" ]; then
-        ./node_modules/clean-css-cli/bin/cleancss --skip-rebase "$@"
+        "$node_dir"/clean-css-cli/bin/cleancss --skip-rebase "$@"
     else
         cat "$@"
     fi
@@ -57,7 +78,7 @@ combine_css() {
 
 combine_js() {
     if [ -n "$MINIFY" ]; then
-        ./node_modules/uglify-js/bin/uglifyjs -m -- "$@"
+        "$node_dir"/uglify-js/bin/uglifyjs -m -- "$@"
     else
         (
             for file in "$@"; do
@@ -96,14 +117,9 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
-compile_dir="$(cd "$(dirname "$0")"; pwd)"
-base_dir="$compile_dir/.."
-base_dir="$(cd "$base_dir"; pwd)"
-build_dir="$base_dir/build"
-latex_dir="$base_dir/build-pdf"
-static_dir="$build_dir/static"
-figure_img_dir="$build_dir"/figure-images
-pretex="$base_dir/gt-text-common/pretex/pretex.py"
+echo "Generating demos..."
+"$compile_dir/demos/generate.py" \
+    || die "Can't generate demos"
 
 echo "Checking xml..."
 cd "$compile_dir"
@@ -160,11 +176,11 @@ cp "$compile_dir/extra/google9ccfcae89045309c.html" "$build_dir"
 cp -r "$compile_dir/build-demos" "$build_dir/demos"
 if [ -n "$MINIFY" ]; then
     for js in "$build_dir/demos/"*.js "$build_dir/demos/"*/*.js; do
-        ./node_modules/uglify-js/bin/uglifyjs -m -- "$js" > "$js".min
+        "$node_dir"/uglify-js/bin/uglifyjs -m -- "$js" > "$js".min
         mv "$js".min "$js"
     done
     for css in "$build_dir/demos/css/"*.css; do
-        ./node_modules/clean-css-cli/bin/cleancss --skip-rebase "$css" > "$css".min
+        "$node_dir"/clean-css-cli/bin/cleancss --skip-rebase "$css" > "$css".min
         mv "$css".min "$css"
     done
 fi
@@ -176,17 +192,17 @@ xsltproc -o "$build_dir/" --xinclude \
     || die "xsltproc failed!"
 
 echo "Preprocessing LaTeX (be patient)..."
-[ -n "$PRETEX_ALL" ] && rm -r pretex-cache
+[ -n "$PRETEX_ALL" ] && rm -r "$cache_dir"
 python3 "$pretex" --chunk-size $CHUNKSIZE --preamble "$build_dir/preamble.tex" \
-        --cache-dir pretex-cache --style-path "$compile_dir"/style \
-        "$build_dir"/*.html "$build_dir"/knowl/*.html \
+        --cache-dir "$cache_dir" --style-path "$compile_dir"/style \
+        --build-dir "$build_dir" \
     || die "Can't process html!"
 mkdir "$figure_img_dir"
-cp pretex-cache/*.png "$figure_img_dir"
+cp "$cache_dir"/*.png "$figure_img_dir"
 
 echo "Cleaning up..."
 rm "$build_dir"/preamble.tex
 
 echo "Build successful!  Open or reload"
-echo "     $build_dir/index.html"
+echo "     http://localhost:8081/"
 echo "in your browser to see the result."
