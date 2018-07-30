@@ -8,16 +8,16 @@ Copyright 2017 Georgia Institute of Technology
 
   <titlepage>
     <author>
-      <personname>Joseph Rabinoff</personname>
-      <department>School of Mathematics</department>
-      <institution>Georgia Institute of Technology</institution>
-      <!-- <email>rabinoff@math.gatech.edu</email> -->
-    </author>
-    <author>
       <personname>Dan Margalit</personname>
       <department>School of Mathematics</department>
       <institution>Georgia Institute of Technology</institution>
       <!-- <email>dmargalit7@math.gatech.edu</email> -->
+    </author>
+    <author>
+      <personname>Joseph Rabinoff</personname>
+      <department>School of Mathematics</department>
+      <institution>Georgia Institute of Technology</institution>
+      <!-- <email>rabinoff@math.gatech.edu</email> -->
     </author>
     <!-- <author> -->
     <!--   <personname>and the Faculty of the School of Mathematics</personname> -->
@@ -63,30 +63,24 @@ Copyright 2017 Georgia Institute of Technology
     <p>Acknowledgments go here.</p>
   </acknowledgement>
 
-  <preface>
-    <p>Preface goes here.</p>
-    <attribution>
-      <line>Attribution here.</line>
-    </attribution>
-    </preface>
-    -->
+  -->
 
   <preface>
     <title>Contributors to this textbook</title>
 
     <contributors>
-      <contributor xml:id="jdr">
-        <personname>Joseph Rabinoff</personname>
-        <department>School of Mathematics</department>
-        <institution>Georgia Institute of Technology</institution>
-        <email>rabinoff@math.gatech.edu</email>
-      </contributor>
-
       <contributor xml:id="dan">
         <personname>Dan Margalit</personname>
         <department>School of Mathematics</department>
         <institution>Georgia Institute of Technology</institution>
         <email>dmargalit7@math.gatech.edu</email>
+      </contributor>
+
+      <contributor xml:id="jdr">
+        <personname>Joseph Rabinoff</personname>
+        <department>School of Mathematics</department>
+        <institution>Georgia Institute of Technology</institution>
+        <email>rabinoff@math.gatech.edu</email>
       </contributor>
 
       <contributor xml:id="larry">
@@ -96,6 +90,30 @@ Copyright 2017 Georgia Institute of Technology
         <email>	larry.rolen@math.gatech.edu</email>
       </contributor>
     </contributors>
+
+    <p>
+      Dan Margalit had the idea to write a free online textbook for Math 1553 at Georgia Tech.  His idea was to create a text that is specifically aimed at the corresponding course: the content that you see corresponds exactly to the material that will be covered on the final exam.  He also wanted the book to be for Georgia Tech, by Georgia Tech, and about Georgia Tech: this is why many of the examples come from Georgia Tech faculty and students.  Margalit is also responsible for editing the book, and for collaborating on its design.
+    </p>
+
+    <p>
+      Joseph Rabinoff contributed all of the primary exposition, the figures, the demos, and the technical aspects of the project, as detailed below.
+      <ul>
+        <li>
+          The textbook is written in XML and compiled using a variant of Robert Beezer's <url href="https://mathbook.pugetsound.edu/">MathBook XML</url>, as heavily modified by Rabinoff.
+        </li>
+        <li>
+          The mathematical content of the textbook is written in LaTeX, then converted to HTML-friendly SVG format using a collection of scripts called PreTeX: this was coded by Rabinoff and depends heavily on <url href="https://inkscape.org/">Inkscape</url> for pdf decoding and <url href="https://fontforge.github.io/">FontForge</url> for font embedding.  The figures are written in <url href="https://en.wikipedia.org/wiki/PGF/TikZ">PGF/TikZ</url> and processed with PreTeX as well.
+        </li>
+        <li>
+          The demonstrations are written in JavaScript+WebGL using Steven Wittens' brilliant framework called <url href="https://github.com/unconed/mathbox">MathBox</url>.
+        </li>
+      </ul>
+      All source code can be found on <url href="https://github.com/QBobWatson/gt-linalg">GitHub</url>.  It can be freely copied, modified, and redistributed, as detailed in the appendix entitled <q>GNU Free Documentation License.</q>
+    </p>
+
+    <p>
+      Larry Rolen wrote many of the exercises.
+    </p>
 
   </preface>
 
