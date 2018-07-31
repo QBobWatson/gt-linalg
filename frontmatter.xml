@@ -92,11 +92,7 @@ Copyright 2017 Georgia Institute of Technology
     </contributors>
 
     <p>
-      Dan Margalit had the idea to write a free online textbook for Math 1553 at Georgia Tech.  His idea was to create a text that is specifically aimed at the corresponding course: the content that you see corresponds exactly to the material that will be covered on the final exam.  He also wanted the book to be for Georgia Tech, by Georgia Tech, and about Georgia Tech: this is why many of the examples come from Georgia Tech faculty and students.  Margalit is also responsible for editing the book, and for collaborating on its design.
-    </p>
-
-    <p>
-      Joseph Rabinoff contributed all of the primary exposition, the figures, the demos, and the technical aspects of the project, as detailed below.
+      Joseph Rabinoff contributed all of the figures, the demos, and the technical aspects of the project, as detailed below.
       <ul>
         <li>
           The textbook is written in XML and compiled using a variant of Robert Beezer's <url href="https://mathbook.pugetsound.edu/">MathBook XML</url>, as heavily modified by Rabinoff.
@@ -108,7 +104,7 @@ Copyright 2017 Georgia Institute of Technology
           The demonstrations are written in JavaScript+WebGL using Steven Wittens' brilliant framework called <url href="https://github.com/unconed/mathbox">MathBox</url>.
         </li>
       </ul>
-      All source code can be found on <url href="https://github.com/QBobWatson/gt-linalg">GitHub</url>.  It can be freely copied, modified, and redistributed, as detailed in the appendix entitled <q>GNU Free Documentation License.</q>
+      All source code can be found on <url href="https://github.com/QBobWatson/gt-linalg">GitHub</url>.  It may be freely copied, modified, and redistributed, as detailed in the appendix entitled <q>GNU Free Documentation License.</q>
     </p>
 
     <p>
