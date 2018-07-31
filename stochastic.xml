@@ -9,6 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
+<restrict-version versions="1554 default">
 <section xml:id="stochastic-matrices">
   <title>Stochastic Matrices</title>
 
@@ -825,3 +826,4 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
   </subsection>
 
 </section>
+</restrict-version>

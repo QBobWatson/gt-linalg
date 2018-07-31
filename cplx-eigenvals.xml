@@ -9,6 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
+<restrict-version versions="1554 default">
 <section xml:id="complex-eigenvalues">
   <title>Complex Eigenvalues</title>
 
@@ -1462,4 +1463,4 @@ B =
 
   </subsection>
 
-</section>
+</section></restrict-version>

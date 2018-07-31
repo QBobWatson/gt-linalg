@@ -19,7 +19,13 @@ Free Documentation License"
   <xi:include href="./bookinfo.xml" />
 
   <book xml:id="index">
-    <title>Interactive Linear Algebra</title>
+
+    <restrict-version versions="default">
+      <title>Interactive Linear Algebra</title>
+    </restrict-version>
+    <restrict-version versions="1553">
+      <title>Interactive Linear Algebra [1553]</title>
+    </restrict-version>
 
     <!-- Title Page, Preface, etc. -->
     <xi:include href="./frontmatter.xml" />

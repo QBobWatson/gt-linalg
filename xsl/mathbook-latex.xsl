@@ -114,4 +114,36 @@
     <xsl:text>}{Use this link to view the online demo}}</xsl:text>
 </xsl:template>
 
+<!-- Numbering overrides -->
+<xsl:template match="part" mode="number-override">
+  <xsl:param name="number" />
+  <xsl:text>\setcounter{part}{</xsl:text>
+  <xsl:value-of select="$number - 1"/>
+  <xsl:text>}&#xa;</xsl:text>
+</xsl:template>
+<xsl:template match="chapter|appendix" mode="number-override">
+  <xsl:param name="number" />
+  <xsl:text>\setcounter{chapter}{</xsl:text>
+  <xsl:value-of select="$number - 1"/>
+  <xsl:text>}&#xa;</xsl:text>
+</xsl:template>
+<xsl:template match="section" mode="number-override">
+  <xsl:param name="number" />
+  <xsl:text>\setcounter{section}{</xsl:text>
+  <xsl:value-of select="$number - 1"/>
+  <xsl:text>}&#xa;</xsl:text>
+</xsl:template>
+<xsl:template match="subsection" mode="number-override">
+  <xsl:param name="number" />
+  <xsl:text>\setcounter{subsection}{</xsl:text>
+  <xsl:value-of select="$number - 1"/>
+  <xsl:text>}&#xa;</xsl:text>
+</xsl:template>
+<xsl:template match="subsubsection" mode="number-override">
+  <xsl:param name="number" />
+  <xsl:text>\setcounter{subsubsection}{</xsl:text>
+  <xsl:value-of select="$number - 1"/>
+  <xsl:text>}&#xa;</xsl:text>
+</xsl:template>
+
 </xsl:stylesheet>

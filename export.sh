@@ -10,16 +10,15 @@ if [ ! -d "$base_dir" ]; then
     if [ ! $(vagrant status --machine-readable | grep state,running) ]; then
         vagrant up || die "Cannot start build environment virtual machine"
     fi
-    vagrant ssh -c "$compile_dir/export.sh" "$@"
+    vagrant ssh -- "$compile_dir/export.sh" "$@"
     exit $?
 fi
 
 
+VERSION=$1
+[ -n "$VERSION" ] || VERSION=default
+
 cd "$build_base"
-if [ -d build ]; then
-    rm -rf book
-    mv build book
-fi
-
-tar cvzf "$base_dir/book.tar.gz" book
-
+mv build $VERSION
+tar cvzf "$base_dir/$VERSION.tar.gz" $VERSION
+mv $VERSION build

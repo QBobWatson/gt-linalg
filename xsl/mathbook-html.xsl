@@ -26,7 +26,7 @@
 <xsl:param name="toc.level" select="2" />
 <!-- <xsl:param name="html.knowl.example" select="'no'" /> -->
 
-<xsl:param name="pdf.online" select="'gt-linalg.pdf'" />
+<xsl:param name="pdf.online" select="'ila.pdf'" />
 
 <!-- JDR: one js file to rule them all -->
 <xsl:template name="combined-js">
@@ -514,6 +514,28 @@
     </xsl:element>
   </div>
 </xsl:template>
+
+<!-- JDR: number overrides -->
+<xsl:template match="part[@number]" mode="raw-serial-number">
+    <xsl:number format="I" value="@number" />
+</xsl:template>
+<!-- TODO: condition on part/chapter style to use  level='any'; from="book/part"  to cross part boundaries -->
+<xsl:template match="chapter[@number]" mode="raw-serial-number">
+    <xsl:number value="@number" format="1" />
+</xsl:template>
+<xsl:template match="appendix[@number]" mode="raw-serial-number">
+    <xsl:number value="@number" format="A" />
+</xsl:template>
+<xsl:template match="section[@number]" mode="raw-serial-number">
+    <xsl:number value="@number" format="1" />
+</xsl:template>
+<xsl:template match="subsection[@number]" mode="raw-serial-number">
+    <xsl:number value="@number" format="1" />
+</xsl:template>
+<xsl:template match="subsubsection[@number]" mode="raw-serial-number">
+    <xsl:number value="@number" format="1" />
+</xsl:template>
+
 
 <!-- JDR: cover animation -->
 <xsl:template name="cover">

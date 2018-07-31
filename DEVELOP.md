@@ -49,11 +49,13 @@ If you want to poke around the virtual machine, use `vagrant ssh`.  To stop it, 
 I've created a build script that should do everything for you.  Change into `gt-linalg`, then type `./build.sh`.  This starts the Vagrant box if it is not already running, then does an enormous amount of work to build the site.  Beware that the first build can take several hours on a laptop computer.
 
 The build script has several options:
+* `--version` Build a particular version of the book (default, 1553, 1554).
 * `--reprocess-latex` The build system caches the results of LaTeX compilation.  This option deletes the cache.
 * `--pdf-vers` Also compile the pdf version of the book.
+* `--demos` Also regenerate the demos.
 * `--minify` Mangle `.js` and `.css` files to save space at the expense of readability.
 
-The result of the build is contained in the virtual machine, which conveniently runs a web server.  Point your browser at `http://localhost:8081/` to see the version you just built.  Type `./export.sh` to export the built book; it will appear in the file `../book.tar.gz`.
+The result of the build is contained in the virtual machine, which conveniently runs a web server.  Point your browser at `http://localhost:8081/` to see the version you just built.  Type `./export.sh` to export the built book; it will appear in the file `../default.tar.gz`.
 
 
 ## Editing XML

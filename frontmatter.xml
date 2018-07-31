@@ -4,7 +4,7 @@
 Copyright 2017 Georgia Institute of Technology
 *********************************************************************-->
 
-<frontmatter xml:id="index" xmlns:xi="http://www.w3.org/2001/XInclude">
+<frontmatter xml:id="index2" xmlns:xi="http://www.w3.org/2001/XInclude">
 
   <titlepage>
     <author>
@@ -109,6 +109,34 @@ Copyright 2017 Georgia Institute of Technology
 
     <p>
       Larry Rolen wrote many of the exercises.
+    </p>
+
+  </preface>
+
+  <preface>
+    <title>Variants of this textbook</title>
+
+    <p>
+      There are several variants of this textbook available.
+      <ul>
+        <li>
+          The <url href="/ila">master version</url> is the default version of the book.
+        </li>
+        <li>
+          The <url href="/ila/1553">version for math 1553</url> is fine-tuned to contain only the material covered in Math 1553 at Georgia Tech.
+        </li>
+      </ul>
+      The section numbering is consistent across versions.  This explains why Section 6.3 does not exist in the Math 1553 version, for example.
+    </p>
+
+    <p>
+      You are currently viewing the
+      <restrict-version versions="default">
+        <em>master version</em>.
+      </restrict-version>
+      <restrict-version versions="1553">
+        <em>version for math 1553</em>.
+      </restrict-version>
     </p>
 
   </preface>

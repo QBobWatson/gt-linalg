@@ -90,13 +90,19 @@ combine_js() {
 }
 
 
+VERSION=default
 PRETEX_ALL=
 LATEX_TOO=
 MINIFY=
+DEMOS=
 CHUNKSIZE="250"
 
 while [[ $# -gt 0 ]]; do
     case $1 in
+        --version)
+            shift
+            VERSION=$1
+            ;;
         --reprocess-latex)
             PRETEX_ALL="true"
             ;;
@@ -105,6 +111,9 @@ while [[ $# -gt 0 ]]; do
             ;;
         --minify)
             MINIFY="true"
+            ;;
+        --demos)
+            DEMOS="true"
             ;;
         --chunk)
             shift
@@ -117,14 +126,26 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
-echo "Generating demos..."
-"$compile_dir/demos/generate.py" \
-    || die "Can't generate demos"
+if [ -n "$DEMOS" ]; then
+    echo "Generating demos..."
+    "$compile_dir/demos/generate.py" \
+        || die "Can't generate demos"
+fi
+
+echo "Preprocessing "
+XML_FILE="$build_base/$VERSION.xml"
+if [ $VERSION == "default" ]; then
+    PDF_FILE="ila.pdf"
+else
+    PDF_FILE="ila-$VERSION.pdf"
+fi
+cd "$compile_dir"
+xsltproc -o "$XML_FILE" --xinclude --stringparam version $VERSION \
+         xsl/versioning.xsl linalg.xml
 
 echo "Checking xml..."
-cd "$compile_dir"
 xmllint --xinclude --noout --relaxng "$base_dir/mathbook/schema/pretext.rng" \
-        linalg.xml
+        "$XML_FILE"
 if [[ $? == 3 || $? == 4 ]]; then
     echo "Input is not valid MathBook XML; exiting"
     exit 1
@@ -139,20 +160,27 @@ mkdir -p "$static_dir/fonts"
 mkdir -p "$static_dir/images"
 
 if [ -n "$LATEX_TOO" ]; then
+    echo "***************************************************************************"
+    echo "BUILDING PDF"
+    echo "***************************************************************************"
     rm -rf "$latex_dir"
     mkdir -p "$latex_dir"
     cp -r "$compile_dir/style" "$latex_dir/style"
     cp -r "$compile_dir/figure-images" "$latex_dir/figure-images"
     echo "Generating master LaTeX file"
     xsltproc -o "$latex_dir/" --xinclude \
-             "$compile_dir/xsl/mathbook-latex.xsl" linalg.xml \
+             "$compile_dir/xsl/mathbook-latex.xsl" "$XML_FILE" \
         || die "xsltproc failed!"
     echo "Compiling PDF version (pass 1)"
     compile_latex
     echo "Compiling PDF version (pass 2)"
     compile_latex
-    mv "$latex_dir"/index.pdf "$build_dir"/gt-linalg.pdf
+    mv "$latex_dir"/index.pdf "$build_dir/$PDF_FILE"
 fi
+
+echo "***************************************************************************"
+echo "BUILDING HTML"
+echo "***************************************************************************"
 
 echo "Copying static files..."
 combine_css "$base_dir/mathbook-assets/stylesheets/mathbook-gt.css" \
@@ -187,8 +215,8 @@ fi
 
 echo "Converting xml to html..."
 make_hashes
-xsltproc -o "$build_dir/" --xinclude \
-         "$compile_dir/xsl/mathbook-html.xsl" linalg.xml \
+xsltproc -o "$build_dir/" --xinclude --stringparam pdf.online $PDF_FILE \
+         "$compile_dir/xsl/mathbook-html.xsl" "$XML_FILE" \
     || die "xsltproc failed!"
 
 echo "Preprocessing LaTeX (be patient)..."
@@ -201,6 +229,7 @@ mkdir "$figure_img_dir"
 cp "$cache_dir"/*.png "$figure_img_dir"
 
 echo "Cleaning up..."
+cp "$build_dir"/index2.html "$build_dir"/index.html
 rm "$build_dir"/preamble.tex
 
 echo "Build successful!  Open or reload"
