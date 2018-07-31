@@ -34,7 +34,7 @@ The build system has a large number of complicated dependencies.  For this reaso
 * VirtualBox: the underlying virtual machine software.  [Download](https://www.virtualbox.org/wiki/Downloads).
 * Vagrant: the program that manages the virtual machine.  [Download](https://www.vagrantup.com/downloads.html).
 
-The build environment `build_env.box` can be found here: [Download](blah).  This file is very large (over 6GB; mostly LaTeX and relatives), so be patient.
+The build environment `build_env.box` can be found here: [Download](https://www.dropbox.com/s/8ldk0xymt8dmqxi/build_env.box).  This file is very large (over 6GB; mostly LaTeX and relatives), so be patient.
 
 To install the build environment, change into `gt-linalg`, and type:
 ```
