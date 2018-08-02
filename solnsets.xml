@@ -161,13 +161,13 @@ the license is included in gfdl.xml.
   \node[coordinate] (X) at \v {};
   \node[coordinate] (Y) at \w {};
 
+  \draw (0,0,-3) -- (0,0,0);
+
   \begin{scope}[x=(X), y=(Y), transformxy]
     \path[clip] (-5, 0) -- (-5, -5) -- (5, -5) -- (5, 0) -- cycle;
     \fill[seq4!30, nearly opaque] (-3,-2) rectangle (3,2);
     \draw[step=1cm, seq4, very thin] (-3,-2) grid (3,2);
   \end{scope}
-
-  \draw (0,0,-3) -- (0,0,0);
 
   \begin{scope}[transformxy]
     \fill[white, nearly opaque] (-3, -3) rectangle (3, 3);
@@ -176,18 +176,19 @@ the license is included in gfdl.xml.
     \draw[->] (0,-3) -- (0,3);
   \end{scope}
 
-  \draw[->] (0,0,0) -- (0,0,3);
-
   \begin{scope}[x=(X), y=(Y), transformxy]
     \path[clip] (-5, 0) -- (-5, 5) -- (5, 5) -- (5, 0) -- cycle;
     \fill[seq4!30, nearly opaque] (-3,-2) rectangle (3,2);
     \draw[step=1cm, seq4, very thin] (-3,-2) grid (3,2);
-    \node[seq4, anchor=east] at (1.3, 2) {$Ax=0$};
   \end{scope}
+
+  \draw[->] (0,0,0) -- (0,0,3);
 
   \draw[vector, seq1] (0,0,0) -- \v;
   \draw[vector, seq2] (0,0,0) -- \w;
   \draw[thin, densely dotted] \w -- \projxy\w;
+
+  \node[seq4, anchor=south east] at (-3,-2.5,.5) {$Ax=0$};
 
   \point at (0,0,0);
 
@@ -352,7 +353,7 @@ the license is included in gfdl.xml.
   \node[coordinate] (Y) at \w  {};
   \node[coordinate] (P) at \pp {};
 
-  \begin{scope}[x=(X), y=(Y), xshift=1cm, transformxy]
+  \begin{scope}[x=(X), y=(Y), , xshift=-.8cm, yshift=-.5cm, transformxy]
     \path[clip] (-5, 0) -- (-5, -5) -- (5, -5) -- (5, 0) -- cycle;
     \fill[seq4!30, nearly opaque] (-3,-2) rectangle (3,2);
     \draw[step=1cm, seq4, very thin] (-3,-2) grid (3,2);
@@ -369,17 +370,18 @@ the license is included in gfdl.xml.
 
   \draw[->] (0,0,0) -- (0,0,3);
 
-  \begin{scope}[x=(X), y=(Y), xshift=1cm, transformxy]
+  \begin{scope}[x=(X), y=(Y), xshift=-.8cm, yshift=-.5cm, transformxy]
     \path[clip] (-5, 0) -- (-5, 5) -- (5, 5) -- (5, 0) -- cycle;
     \fill[seq4!30, nearly opaque] (-3,-2) rectangle (3,2);
     \draw[step=1cm, seq4, very thin] (-3,-2) grid (3,2);
-    \node[seq4, anchor=east] at (1.3, 2) {$Ax=b$};
   \end{scope}
 
   \draw[vector, seq1] \pp -- ($(X) + (P)$);
   \draw[vector, seq2] \pp -- ($(Y) + (P)$);
   \draw[thin, densely dotted] ($(Y) + (P)$) -- (-1, 0, 0);
-  \draw[vector, seq3] (0,0,0) -- \pp;
+  \draw[vector, seq3, opacity=.5] (0,0,0) -- node[below right, thin border] {$p$} \pp;
+
+  \node[seq4, anchor=south east] at (-2,-2.5,.5) {$Ax=0$};
 
   \point at \pp;
   \point at (0,0,0);
@@ -450,7 +452,7 @@ the license is included in gfdl.xml.
         Note that <m>\{0\} = \Span\{0\}</m>, so the homogeneous solution set is a span.
         <latex-code>
               <![CDATA[
-\begin{tikzpicture}[myxyz, y={(-.8cm,-.6cm)}, thin border nodes]
+\begin{tikzpicture}[myxyz, x={(-.3cm,-.5cm)}, z={(0cm,1.3cm)}, thin border nodes]
   \path[clip, resetxy] (-6,-4) rectangle (6,4);
 
   \def\v{(-1, -1, 1)}
@@ -465,7 +467,7 @@ the license is included in gfdl.xml.
   \draw[vector, seq3] (0,0,0) -- \v;
 
   \draw[thin, densely dotted] \v -- (-1, -1, 0);
-  \point[fill=seq-violet, "$Ax=b\,$" {left, seq-violet}] at \v;
+  \point[fill=seq-violet, "$Ax=b\,$" {above, seq-violet}] at \v;
   \point[fill=seq-blue, "$Ax=0$" {below right, seq-blue}] at (0,0,0);
 
 \end{tikzpicture}

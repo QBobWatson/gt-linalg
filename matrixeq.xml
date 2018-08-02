@@ -264,7 +264,7 @@ the license is included in gfdl.xml.
         and the target vector (on the right-hand side of the equation) is <m>\textcolor{seq-green}{w = \vec{0 2 2}}.</m>  The equation <m>Ax=w</m> is consistent if and only if <m>w</m> is contained in the span of the columns of <m>A</m>.  So we draw a picture:
         <latex-code>
               <![CDATA[
-\begin{tikzpicture}[myxyz, thin border nodes]
+\begin{tikzpicture}[myxyz, z={(0,0,1.2)}, thin border nodes]
   \path[clip, resetxy] (-4,-4) rectangle (4,4);
 
   \def\v{(2,-1,1)}
@@ -292,18 +292,26 @@ the license is included in gfdl.xml.
   \end{scope}
 
   \draw[vector, seq1] (0,0,0) --
-    node [midway, above left] {$v_1$} \v;
+    node [midway, above right] {$v_1$} \v;
   \draw[thin, densely dotted] \v -- \projxy\v;
 
-  \draw[vector, seq2!50!white] (0,0,0) --
-    node [midway, below left] {$v_2$} \w;
+  \begin{scope}
+    \path[clip, transformxy] (-2, -2) rectangle (3, 3);
+    \draw[vector, seq2!50!white] (0,0,0) --
+      node [pos=1.0, below left] {$v_2$} \w;
+  \end{scope}
+  \begin{scope}
+    \path[clip, transformxy] (5, -2) rectangle (3, 3);
+    \draw[vector, seq2] (0,0,0) --
+      node [pos=1.0, below left] {$v_2$} \w;
+  \end{scope}
   \draw[thin, densely dotted, black!50!white] \w -- \projxy\w;
 
   \draw[vector, seq3] (0,0,0) --
-    node [midway, above right] {$w$} \b;
+    node [pos=0.8, above left] {$w$} \b;
   \draw[thin, densely dotted] \b -- \projxy\b;
 
-  \node[seq4] at (-1.5cm, 2cm) {$\Span\{v_1,v_2\}$};
+  \node[seq4] at (-1.5cm, 2.3cm) {$\Span\{v_1,v_2\}$};
 
   \point at (0,0,0);
 
@@ -344,7 +352,7 @@ the license is included in gfdl.xml.
         and the target vector (on the right-hand side of the equation) is <m>\textcolor{seq-green}{w = \vec{1 -1 2}}.</m>  The equation <m>Ax=w</m> is consistent if and only if <m>w</m> is contained in the span of the columns of <m>A</m>.  So we draw a picture:
         <latex-code>
               <![CDATA[
-\begin{tikzpicture}[myxyz, thin border nodes]
+\begin{tikzpicture}[myxyz, z={(0,0,1.2)}, thin border nodes]
   \path[clip, resetxy] (-4,-4) rectangle (4,4);
 
   \def\v{(2,-1,1)}
@@ -372,18 +380,26 @@ the license is included in gfdl.xml.
   \end{scope}
 
   \draw[vector, seq1] (0,0,0) --
-    node [midway, below right] {$v_1$} \v;
+    node [midway, above right] {$v_1$} \v;
   \draw[thin, densely dotted] \v -- \projxy\v;
 
-  \draw[vector, seq2!50!white] (0,0,0) --
-    node [midway, below left] {$v_2$} \w;
+  \begin{scope}
+    \path[clip, transformxy] (-2, -2) rectangle (3, 3);
+    \draw[vector, seq2!50!white] (0,0,0) --
+      node [pos=1.0, below left] {$v_2$} \w;
+  \end{scope}
+  \begin{scope}
+    \path[clip, transformxy] (5, -2) rectangle (3, 3);
+    \draw[vector, seq2] (0,0,0) --
+      node [pos=1.0, below left] {$v_2$} \w;
+  \end{scope}
   \draw[thin, densely dotted, black!50!white] \w -- \projxy\w;
 
   \draw[vector, seq3] (0,0,0) --
-    node [midway, above left] {$w$} \b;
+    node [midway, above right] {$w$} \b;
   \draw[thin, densely dotted] \b -- \projxy\b;
 
-  \node[seq4] at (-1.75cm, 2.45cm) {$\Span\{v_1,v_2\}$};
+  \node[seq4] at (1.75cm, 2.1cm) {$\Span\{v_1,v_2\}$};
 
   \point at (0,0,0);
 \end{tikzpicture}

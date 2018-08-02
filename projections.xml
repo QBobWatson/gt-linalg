@@ -49,9 +49,9 @@ the license is included in gfdl.xml.
       To say that <m>x_W</m> is the closest vector to <m>x</m> on <m>W</m> means that the difference <m>x-x_W</m> is <em>orthogonal</em> to the vectors in <m>W</m>:
       <latex-code>
 \begin{tikzpicture}[myxyz, thin border nodes]
-  \coordinate (u) at (1,0,0);
-  \coordinate (v) at (0,1.1,-.2);
-  \coordinate (uxv) at (0,.2,1.1);
+  \coordinate (u) at (0,1,0);
+  \coordinate (v) at (1.1,0,-.2);
+  \coordinate (uxv) at (.2,0,1.1);
   \coordinate (x) at ($-1.1*(u)+(v)+1.5*(uxv)$);
   \begin{scope}[x=(u),y=(v),transformxy]
     \fill[seq-violet!30] (-2,-2) rectangle (2,2);
@@ -155,17 +155,17 @@ the license is included in gfdl.xml.
   \draw[->] (-2.5,0,0)--(2.5,0,0);
   \draw[->] (0,-2.5,0)--(0,2.5,0);
   \draw[->] (0,0,0)--(0,0,2);
-  \point[seq-red, "$x$" {above, text=seq-red}] (x) at (1,2,3);
-  \coordinate (xW) at (1,2,0);
+  \point[seq-red, "$x$" {above, text=seq-red}] (x) at (2,1,3);
+  \coordinate (xW) at (2,1,0);
   \draw[vector, seq-blue] (0,0,0) -- node [right=1pt, text=seq-blue] {$x_W$} (xW);
   \point (o) at (0,0,0);
   \draw[vector, seq-green] (xW) --
     node[auto, seq-green!80!black] {$x_{W^\perp}$} (x);
-  \coordinate (xWu) at ($(xW)+(1,0,0)$);
-  \coordinate (xWv) at ($(xW)+(0,1,0)$);
+  \coordinate (xWu) at ($(xW)+(0,1,0)$);
+  \coordinate (xWv) at ($(xW)+(1,0,0)$);
   \pic[draw] {right angle=(x)--(xW)--(xWu)};
   \pic[draw] {right angle=(x)--(xW)--(xWv)};
-  \node[seq-violet] at (3,1,0) {$W$};
+  \node[seq-violet] at (1,3,0) {$W$};
 \end{tikzpicture}
         </latex-code>
       </p>

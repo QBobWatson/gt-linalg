@@ -240,18 +240,18 @@ the license is included in gfdl.xml.
 \begin{scope}
   \path[clip, resetxy] (-4,-3) rectangle (4,3);
 
-  \draw[seq4] ($-3*(2,-1,1)$) -- (0,0,0);
+  \draw[seq4] ($-3*(-1,2,1)$) -- (0,0,0);
 
   \begin{scope}[transformxy]
     \fill[white, nearly opaque] (-2, -2) rectangle (3, 3);
     \draw[grid lines] (-2, -2) grid (3, 3);
   \end{scope}
 
-  \draw[seq4] (0,0,0) -- ($3*(2,-1,1)$);
+  \draw[seq4] (0,0,0) -- ($3*(-1,2,1)$);
   \node[seq4] at (-1cm, 2cm) {$\Span\{v\}$};
 
-  \draw[vector, seq1] (0,0,0) to["$v$"] (2,-1,1);
-  \draw[thin, densely dotted] (2,-1,1) -- (2,-1,0);
+  \draw[vector, seq1] (0,0,0) to["$v$"] (-1,2,1);
+  \draw[thin, densely dotted] (-1,2,1) -- (-1,2,0);
 
   \point at (0,0,0);
 \end{scope}
@@ -259,8 +259,8 @@ the license is included in gfdl.xml.
 \begin{scope}[xshift=9cm]
   \path[clip, resetxy] (-4,-3) rectangle (4,3);
 
-  \def\v{(2,-1,1)}
-  \def\w{(2,1,.3)}
+  \def\v{(-1,2,1)}
+  \def\w{(1,2,.3)}
 
   \node[coordinate] (X) at \v {};
   \node[coordinate] (Y) at \w {};
@@ -302,12 +302,12 @@ the license is included in gfdl.xml.
     \draw[grid lines] (-2, -2) grid (3, 3);
   \end{scope}
 
-  \draw[vector, seq1] (0,0,0) to["$v$"] (2,-1,1);
-  \draw[thin, densely dotted] (2,-1,1) -- (2,-1,0);
-  \draw[vector, seq2] (0,0,0) to["\strut$w$"'] (2,1,.3);
-  \draw[thin, densely dotted] (2,1,.3) -- (2,1,0);
-  \draw[vector, seq3] (0,0,0) to["$u$"] (-.5,.5,1);
-  \draw[thin, densely dotted] (-.5,.5,1) -- (-.5,.5,0);
+  \draw[vector, seq1] (0,0,0) to["$v$"] (-1,2,1);
+  \draw[thin, densely dotted] (-1,2,1) -- (-1,2,0);
+  \draw[vector, seq2] (0,0,0) to["\strut$w$"'] (1,2,.3);
+  \draw[thin, densely dotted] (1,2,.3) -- (1,2,0);
+  \draw[vector, seq3] (0,0,0) to["$u$"] (.5,-.5,1);
+  \draw[thin, densely dotted] (.5,-.5,1) -- (.5,-.5,0);
 
   \point at (0,0,0);
 
@@ -319,9 +319,9 @@ the license is included in gfdl.xml.
 \begin{scope}[xshift=9cm, yshift=-7cm]
   \path[clip, resetxy] (-4,-3) rectangle (4,3);
 
-  \def\v{(2,-1,1)}
-  \def\w{(2,1,.3)}
-  \def\u{(2,0,.65)}
+  \def\v{(-1,2,1)}
+  \def\w{(1,2,.3)}
+  \def\u{(0,2,.65)}
 
   \node[coordinate] (X) at \v {};
   \node[coordinate] (Y) at \w {};

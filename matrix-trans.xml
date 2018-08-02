@@ -64,8 +64,8 @@ the license is included in gfdl.xml.
   \begin{scope}[myxyz, xshift=8cm]
     \path[clip, resetxy] (-3,-3) rectangle (3,3);
 
-    \def\v{(2,-1,1)}
-    \def\w{(1,0,-1)}
+    \def\v{(-1,2,1)}
+    \def\w{(0,1,-1)}
 
     \node[coordinate] (X) at \v {};
     \node[coordinate] (Y) at \w {};
@@ -132,8 +132,8 @@ the license is included in gfdl.xml.
   \begin{scope}[arrows={|[width=4pt]->[width=4pt]}, shorten=4pt]
     \draw (-1,-1,-2.5) node[point, seq2] {}
       -- (-1,-1,0);
-    \draw (-2,2,-1) node[point, seq5] {}
-      -- (-2,2,0);
+    \draw (2,-2,-1) node[point, seq5] {}
+      -- (2,-2,0);
   \end{scope}
 
   \begin{scope}[transformxy]
@@ -142,14 +142,14 @@ the license is included in gfdl.xml.
   \end{scope}
 
   \begin{scope}[arrows={|[width=4pt]->[width=4pt]}, shorten=4pt]
-    \draw (1,2,3) node[point,seq1] {}
-      -- (1,2,0) node[point,seq1] {};
+    \draw (2,1,3) node[point,seq1] {}
+      -- (2,1,0) node[point,seq1] {};
     \point[seq2] at (-1,-1,0);
-    \point[seq5] at (-2,2,0);
-    \draw (2,-1,2) node[point,seq3] {}
-      -- (2,-1,0) node[point,seq3] {};
-    \draw (0,-2,1) node[point,seq4] {}
-      -- (0,-2,0) node[point,seq4] {};
+    \point[seq5] at (2,-2,0);
+    \draw (-1,2,2) node[point,seq3] {}
+      -- (-1,2,0) node[point,seq3] {};
+    \draw (-2,0,1) node[point,seq4] {}
+      -- (-2,0,0) node[point,seq4] {};
   \end{scope}
 
 \end{tikzpicture}
@@ -493,8 +493,8 @@ the license is included in gfdl.xml.
   \begin{scope}[myxyz, xshift=10cm]
     \path[clip, resetxy] (-3,-3) rectangle (3,3);
 
-    \def\v{(2,-1,1)}
-    \def\w{(1,0,-1)}
+    \def\v{(-1,2,1)}
+    \def\w{(0,1,-1)}
 
     \node[coordinate] (X) at \v {};
     \node[coordinate] (Y) at \w {};
@@ -838,8 +838,8 @@ the license is included in gfdl.xml.
   \begin{scope}[arrows={|[width=4pt]->[width=4pt]}, shorten=4pt]
     \draw (-1,-1,-2.5) node[point, seq2] {}
       -- (-1,-1,0);
-    \draw (-2,2,-1) node[point, seq5] {}
-      -- (-2,2,0);
+    \draw (2,-2,-1) node[point, seq5] {}
+      -- (2,-2,0);
   \end{scope}
 
   \begin{scope}[transformxy]
@@ -848,14 +848,14 @@ the license is included in gfdl.xml.
   \end{scope}
 
   \begin{scope}[arrows={|[width=4pt]->[width=4pt]}, shorten=4pt]
-    \draw (1,2,3) node[point,seq1] {}
-      -- (1,2,0) node[point,seq1] {};
+    \draw (2,1,3) node[point,seq1] {}
+      -- (2,1,0) node[point,seq1] {};
     \point[seq2] at (-1,-1,0);
-    \point[seq5] at (-2,2,0);
-    \draw (2,-1,2) node[point,seq3] {}
-      -- (2,-1,0) node[point,seq3] {};
-    \draw (0,-2,1) node[point,seq4] {}
-      -- (0,-2,0) node[point,seq4] {};
+    \point[seq5] at (2,-2,0);
+    \draw (-1,2,2) node[point,seq3] {}
+      -- (-1,2,0) node[point,seq3] {};
+    \draw (-2,0,1) node[point,seq4] {}
+      -- (-2,0,0) node[point,seq4] {};
   \end{scope}
 
 \end{tikzpicture}

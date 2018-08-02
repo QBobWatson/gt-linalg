@@ -337,9 +337,9 @@ Free Documentation License"
           Finding approximate solutions of equations generally requires computing the closest vector on a subspace from a given vector.  This becomes an <em>orthogonality</em> problem: one needs to know which vectors are perpendicular to the subspace.
           <latex-code>
 \begin{tikzpicture}[myxyz, thin border nodes]
-  \coordinate (u) at (1,0,0);
-  \coordinate (v) at (0,1.1,-.2);
-  \coordinate (uxv) at (0,.2,1.1);
+  \coordinate (u) at (0,1,0);
+  \coordinate (v) at (1.1,0,-.2);
+  \coordinate (uxv) at (.2,0,1.1);
   \coordinate (x) at ($-1.1*(u)+(v)+1.5*(uxv)$);
   \begin{scope}[x=(u),y=(v),transformxy]
     \fill[seq-violet!30] (-2,-2) rectangle (2,2);

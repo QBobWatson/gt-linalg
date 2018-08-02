@@ -26,9 +26,9 @@ the license is included in gfdl.xml.
       In this chapter, it will be necessary to find the <em>closest</em> point on a subspace to a given point, like so:
       <latex-code>
 \begin{tikzpicture}[myxyz, thin border nodes]
-  \coordinate (u) at (1,0,0);
-  \coordinate (v) at (0,1.1,-.2);
-  \coordinate (uxv) at (0,.2,1.1);
+  \coordinate (u) at (0,1,0);
+  \coordinate (v) at (1.1,0,-.2);
+  \coordinate (uxv) at (.2,0,1.1);
   \coordinate (x) at ($-1.1*(u)+(v)+1.5*(uxv)$);
   \begin{scope}[x=(u),y=(v),transformxy]
     \fill[seq-violet!30] (-2,-2) rectangle (2,2);

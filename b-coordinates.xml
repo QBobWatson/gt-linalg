@@ -161,34 +161,34 @@ the license is included in gfdl.xml.
       <me>v_1 = \vec[r]{2 -1 1} \quad v_2 = \vec[r]{1 0 -1}.</me>
       These form a basis <m>\cB</m> for a plane <m>V = \Span\{v_1,v_2\}</m> in <m>\R^3</m>.  We indicate the coordinate system defined by <m>\cB</m> by drawing lines parallel to the <q><m>v_1</m>-axis</q> and <q><m>v_2</m>-axis</q>:
       <latex-code>
-        \begin{tikzpicture}[myxyz, thin border nodes]
-        \useasboundingbox[resetxy] (-3,-3) rectangle (3,2.3);
+  \begin{tikzpicture}[myxyz, z={(0cm,1.2cm)}, thin border nodes]
+    \useasboundingbox[resetxy] (-3,-3) rectangle (3,2.3);
 
-        \def\v{(2,-1,1)}
-        \def\w{(1,0,-1)}
+    \def\v{(2,-1,1)}
+    \def\w{(1,0,-1)}
 
-        \node[coordinate] (X) at \v {};
-        \node[coordinate] (Y) at \w {};
+    \node[coordinate] (X) at \v {};
+    \node[coordinate] (Y) at \w {};
 
-        \begin{scope}[x=(X), y=(Y), transformxy]
-        \fill[seq4!10, nearly opaque] (-1,-1) rectangle (1,1);
-        \draw[step=.5cm, seq4!80, thin] (-1,-1) grid (1,1);
-        \end{scope}
+    \begin{scope}[x=(X), y=(Y), transformxy]
+      \fill[seq4!10, nearly opaque] (-1,-1) rectangle (1,1);
+      \draw[step=.5cm, seq4!80, thin] (-1,-1) grid (1,1);
+    \end{scope}
 
-        \begin{scope}[x=($.5*(X)$), y=($.5*(Y)$), every label/.append style={fill=none}]
-        \point[minimum size=1.5mm, seq1, "$u_1$" seq1] at (1,1);
-        \point[minimum size=1.5mm, seq2, "$u_2$" seq2] at (-1,.5);
-        \point[minimum size=1.5mm, seq3, "$u_3$" seq3] at (1.5,-.5);
-        \point[minimum size=1.5mm, seq5, "$u_4$" {seq5, right}] at (0,1.5);
-        \end{scope}
+    \begin{scope}[x=($.5*(X)$), y=($.5*(Y)$), every label/.append style={fill=none}]
+      \point[minimum size=1.5mm, seq1, "$u_1$" {seq1, xshift=-2mm}] at (1,1);
+      \point[minimum size=1.5mm, seq2, "$u_2$" {seq2, right}] at (-1,.5);
+      \point[minimum size=1.5mm, seq3, "$u_3$" seq3] at (1.5,-.5);
+      \point[minimum size=1.5mm, seq5, "$u_4$" {seq5, right}] at (0,1.5);
+    \end{scope}
 
-        \draw[vector] (0,0,0) to["$v_1$"] ($.5*(X)$);
-        \draw[vector] (0,0,0) to["$v_2$"'] ($.5*(Y)$);
+    \draw[vector] (0,0,0) to["$v_1$"'] ($.5*(X)$);
+    \draw[vector] (0,0,0) to["$v_2$"] ($.5*(Y)$);
 
-        \node[x=(X),y=(Y),seq-violet] at (0,-1.2) {$V$};
+    \node[x=(X),y=(Y),seq-violet] at (0,-1.2) {$V$};
 
-        \point at (0,0,0);
-        \end{tikzpicture}
+    \point at (0,0,0);
+  \end{tikzpicture}
       </latex-code>
       We can see from the picture that the <m>v_1</m>-coordinate of <m>\color{seq-red}u_1</m> is equal to <m>1</m>, as is the <m>v_2</m>-coordinate, so
       <m>[\textcolor{seq1}{u_1}]_\cB = {1\choose 1}.</m>

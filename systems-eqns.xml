@@ -118,8 +118,8 @@ the license is included in gfdl.xml.
       \fill[help lines, seq1!50, fill opacity=.7] (-3, -3) rectangle (2.5, 2.5);
       \draw[help lines, seq1!50] (-3, -3) grid (2.5, 2.5);
     \end{scope}
-    \draw[->] (1,0,0) -- (3,0,0) node[right] {$x$};
-    \draw[->] (0,1,0) -- (0,3,0) node[below left] {$y$};
+    \draw[->] (1,0,0) -- (3,0,0) node[below left] {$x$};
+    \draw[->] (0,1,0) -- (0,3,0) node[right] {$y$};
     \draw[->] (0,0,1) -- (0,0,3) node[above] {$z$};
   \end{tikzpicture}
             ]]>
@@ -160,7 +160,7 @@ the license is included in gfdl.xml.
       <title>Color Space</title>
       <idx><h>Space</h><h>color space</h></idx>
       <idx><h>Color space</h></idx>
-      <p>All colors you can see can be described by three quantities: the amount of red, green, and blue light in that color.  (Humans are <url href="https://en.wikipedia.org/wiki/Trichromacy">trichromatic</url>.)  So we can also think of <m>\R^3</m> as the space of all <em>colors</em>.
+      <p>All colors you can see can be described by three quantities: the amount of green, red, and blue light in that color.  (Humans are <url href="https://en.wikipedia.org/wiki/Trichromacy">trichromatic</url>.)  So we can also think of <m>\R^3</m> as the space of all <em>colors</em>.
       <latex-code><![CDATA[
 \begin{tikzpicture}[x={(1cm,0cm)}, y={(-.5cm,-.3cm)}, z={(0cm,1cm)}, scale=1,
     every node/.append style={transform shape}]

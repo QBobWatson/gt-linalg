@@ -425,8 +425,8 @@ the license is included in gfdl.xml.
   \draw[->] (-2,0,0) -- (2,0,0);
   \draw[->] (0,-2,0) -- (0,2,0);
   \draw[->] (0,0,-2) -- (0,0,2);
-  \draw[vector, seq1] (0,0,0) to["$e_1$" below=1pt] (1,0,0);
-  \draw[vector, seq2] (0,0,0) to["$e_2$" pos=.8] (0,1,0);
+  \draw[vector, seq1] (0,0,0) to["$e_1$" pos=.8] (1,0,0);
+  \draw[vector, seq2] (0,0,0) to["$e_2$" below=1pt] (0,1,0);
   \draw[vector, seq3] (0,0,0) to["$e_3$"] (0,0,1);
   \point at (0,0,0);
 \end{tikzpicture}
@@ -690,7 +690,7 @@ the license is included in gfdl.xml.
           This transformation is described geometrically, in two steps.  To find the columns of <m>A</m>, we need to follow the standard coordinate vectors through each of these steps.
           <latex-code mode="bare">
 \def\drawarrow#1{
-\begin{tikzpicture}[myxyz, scale=0.8, thin border nodes, baseline]
+\begin{tikzpicture}[myxyz, y={(1cm,-.28cm)}, scale=0.8, thin border nodes, baseline]
   \path[clip, resetxy] (-2,-2) rectangle (2,2);
 
   \begin{scope}[transformxy]
@@ -699,7 +699,7 @@ the license is included in gfdl.xml.
       (-1.5, -1.5) grid (1.5, 1.5);
   \end{scope}
 
-  \node[blue!40!black,right] at (-.9,1,-.5) {$xy$};
+  \node[blue!40!black,right] at (-.5,.8,-.5) {$xy$};
 
   \begin{scope}[transformyz]
     \fill[green, opacity=.05] (-1.5,-1.5) rectangle (1.5,1.5);
@@ -715,7 +715,7 @@ the license is included in gfdl.xml.
 }
           </latex-code>
           <latex-code>
-\drawarrow{\draw[vector] (0,0,0) -- (1,0,0) node[above] {$e_1$};}
+\drawarrow{\draw[vector] (0,0,0) -- (1,0,0) node[below right, pos=.5] {$e_1$};}
 $\xrightarrow{\text{reflect $xy$}}$
 \drawarrow{\draw[vector] (0,0,0) -- (1,0,0);}
 $\xrightarrow{\text{project $yz$}}$
@@ -724,7 +724,7 @@ $\xrightarrow{\text{project $yz$}}$
           Since <m>e_1</m> lies on the <m>xy</m>-plane, reflecting over the <m>xy</m>-plane does not move <m>e_1</m>.  Since <m>e_1</m> is perpendicular to the <m>yz</m>-plane, projecting <m>e_1</m> onto the <m>yz</m>-plane sends it to zero.  Therefore,
           <me>T(e_1) = \vec{0 0 0}.</me>
           <latex-code>
-\drawarrow{\draw[vector] (0,0,0) -- (0,1,0) node[below right=-.5mm] {$e_2$};}
+\drawarrow{\draw[vector] (0,0,0) -- (0,1,0) node[below left, pos=.6] {$e_2$};}
 $\xrightarrow{\text{reflect $xy$}}$
 \drawarrow{\draw[vector] (0,0,0) -- (0,1,0);}
 $\xrightarrow{\text{project $yz$}}$
@@ -734,7 +734,7 @@ $\xrightarrow{\text{project $yz$}}$
           Therefore,
           <me>T(e_2) = e_2 = \vec{0 1 0}.</me>
           <latex-code>
-\drawarrow{\draw[vector] (0,0,0) -- (0,0,1) node[right] {$e_3$};}
+\drawarrow{\draw[vector] (0,0,0) -- (0,0,1) node[left, pos=.4] {$e_3$};}
 $\xrightarrow{\text{reflect $xy$}}$
 \drawarrow{\draw[vector] (0,0,0) -- (0,0,-1);}
 $\xrightarrow{\text{project $yz$}}$

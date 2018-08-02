@@ -73,8 +73,8 @@ the license is included in gfdl.xml.
   \pic[draw, right angle len=3mm] {right angle=(e1)--(o)--(e2)};
   \pic[draw, right angle len=3mm] {right angle=(e1)--(o)--(e3)};
   \pic[draw, right angle len=3mm] {right angle=(e2)--(o)--(e3)};
-  \draw[vector, seq1] (0,0,0) to["$e_1$" below=1pt] (1,0,0);
-  \draw[vector, seq2] (0,0,0) to["$e_2$" pos=.8] (0,1,0);
+  \draw[vector, seq1] (0,0,0) to["$e_1$" pos=.8] (1,0,0);
+  \draw[vector, seq2] (0,0,0) to["$e_2$" below=1pt] (0,1,0);
   \draw[vector, seq3] (0,0,0) to["$e_3$"] (0,0,1);
   \point at (0,0,0);
 \end{tikzpicture}
@@ -99,7 +99,7 @@ the license is included in gfdl.xml.
           </me>
           Therefore, <m>\cB</m> is orthogonal.
           <latex-code>
-\begin{tikzpicture}[scale=1.5, myxyz, thin border nodes]
+\begin{tikzpicture}[scale=1.5, myxyz, x={(-1.2cm,-.5cm)}, y={(1cm,-.2cm)}, thin border nodes]
   \draw[grid lines, transformxy] (-2,-2) grid (2,2);
   \draw[->] (-2.5,0,0) -- (2.5,0,0);
   \draw[->] (0,-2.5,0) -- (0,2.5,0);
@@ -634,7 +634,7 @@ the license is included in gfdl.xml.
         <p>
           Geometrically, we are simply replacing <m>v_2</m> with the part of <m>v_2</m> that is perpendicular to the line <m>L_1 = \Span\{v_1\}</m>:
           <latex-code>
-\begin{tikzpicture}[x={(1cm,.3cm)}, y={(.8cm,-.5cm)}, z={(0cm,1cm)},
+\begin{tikzpicture}[x={(-1cm,.3cm)}, y={(-.8cm,-.5cm)}, z={(0cm,1cm)},
     scale=2, thin border nodes]
   \coordinate (v1) at (1,1,0);
   \coordinate (v2) at (1,1,1);
@@ -648,8 +648,8 @@ the license is included in gfdl.xml.
 
   \point (o) at (0,0,0);
   \draw[vector] (o) -- node[midway,sloped,below] {$v_1=u_1\mathstrut$} (v1);
-  \draw[vector] (o) -- node[auto] {$v_2$} (v2);
-  \draw[vector] (v1) -- node[auto,swap] {$\,u_2 = (v_2)_{L_1^\perp}$} ($(v2)$) ;
+  \draw[vector] (o) -- node[auto,swap] {$v_2$} (v2);
+  \draw[vector] (v1) -- node[auto] {$\,u_2 = (v_2)_{L_1^\perp}$} ($(v2)$) ;
   \pic[draw, right angle len=3mm] {right angle=(v2)--(v1)--(o)};
 \end{tikzpicture}
           </latex-code>
@@ -691,7 +691,7 @@ the license is included in gfdl.xml.
         <p>
           Geometrically, once we have <m>u_1</m> and <m>u_2</m>, we replace <m>v_3</m> by the part that is orthogonal to <m>W_2 = \Span\{u_1,u_2\} = \Span\{v_1,v_2\}</m>:
           <latex-code>
-\begin{tikzpicture}[x={(.4cm,-.8cm)}, y={(-1cm,0cm)}, z={(0cm,1cm)},
+\begin{tikzpicture}[x={(-.4cm,-.8cm)}, y={(1cm,0cm)}, z={(0cm,1cm)},
     scale=2, thin border nodes]
   \coordinate (v1) at (1,1,0);
   \coordinate (v2) at (1,1,1);
@@ -704,17 +704,17 @@ the license is included in gfdl.xml.
   \begin{scope}[x=(v1), y=(u2), transformxy]
     \fill[seq-violet!50, opacity=.7] (-1,-1) rectangle (2.3,2);
     \node[seq-violet] at (-.5,1.5) {$W_2$};
-    \draw[seq-blue] (-1,0) -- node[auto, very near end] {$L_1$} (2.3,0);
+    \draw[seq-blue] (-1,0) -- node[auto, very near end, swap] {$L_1$} (2.3,0);
     \coordinate (p31) at (2,0);
     \coordinate (p32) at (0,1);
   \end{scope}
 
   \point (o) at (0,0,0);
-  \draw[vector, black!50] (o) -- node[auto] {$u_1$} (u1);
-  \draw[vector, black!50] (o) -- node[auto,swap] {$u_2$} (u2);
+  \draw[vector, black!50] (o) -- node[auto,swap] {$u_1$} (u1);
+  \draw[vector, black!50] (o) -- node[auto] {$u_2$} (u2);
   \pic[draw] {right angle=(u1)--(o)--(u2)};
 
-  \draw[vector] (o) -- node[auto] {$v_3$} (v3);
+  \draw[vector] (o) -- node[auto,swap] {$v_3$} (v3);
   \draw[vector] (p3) -- node[midway,swap,sloped,below=2pt] {$u_3=(v_3)_{W_2^\perp}$} (v3);
   \draw[vector] (o) -- node[sloped,midway,above=1pt]
     {$(v_3)_{W_2}$} (p3);

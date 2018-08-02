@@ -76,8 +76,8 @@ the license is included in gfdl.xml.
   \begin{scope}[myxyz, xshift=12cm]
     \path[clip, resetxy] (-3,-3) rectangle (3,3);
 
-    \def\v{(2,-1,1)}
-    \def\w{(1,0,-1)}
+    \def\v{(-1,2,1)}
+    \def\w{(0,1,-1)}
 
     \node[coordinate] (X) at \v {};
     \node[coordinate] (Y) at \w {};
@@ -149,7 +149,7 @@ the license is included in gfdl.xml.
       every label/.style={font=\small, fill=none, inner sep=.5pt}]
     \path[clip, resetxy] (-3,-3) rectangle (3,3);
 
-    \def\v{(1,-1,2)}
+    \def\v{(-1,1,2)}
     \node[coordinate] (V) at \v {};
 
     \draw[very thin] (-2,0,0) -- (0,0,0);

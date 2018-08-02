@@ -91,9 +91,9 @@ the license is included in gfdl.xml.
       <latex-code>
     \begin{tikzpicture}[myxyz, thin border nodes]
       \clip[resetxy] (-4,-2) rectangle (4,2);
-      \coordinate (x) at ($1/sqrt(1.09)*(.3,0,1)$);
-      \coordinate (y) at (0.957826, 0., -0.287348);
-      \coordinate (z) at (0,1,0);
+      \coordinate (x) at ($1/sqrt(1.09)*(0,.3,1)$);
+      \coordinate (y) at ( 0.,0.957826, -0.287348);
+      \coordinate (z) at (1,0,0);
       \draw[seq-blue] (0,0) -- ($-3*(x)$);
       \begin{scope}[x=(y), y=(z), transformxy]
         \filldraw[seq-green,fill opacity=.5] (-1.5,-1.5) rectangle (1.5,1.5);
@@ -120,9 +120,9 @@ the license is included in gfdl.xml.
       <latex-code>
     \begin{tikzpicture}[myxyz, thin border nodes]
       \clip[resetxy] (-4,-2) rectangle (4,2);
-      \coordinate (x) at ($1/sqrt(1.09)*(.3,0,1)$);
-      \coordinate (y) at (0.957826, 0., -0.287348);
-      \coordinate (z) at (0,1,0);
+      \coordinate (x) at ($1/sqrt(1.09)*(0,.3,1)$);
+      \coordinate (y) at ( 0.,0.957826, -0.287348);
+      \coordinate (z) at (1,0,0);
       \draw[seq-green] (0,0) -- ($-3*(x)$);
       \begin{scope}[x=(y), y=(z), transformxy]
         \filldraw[seq-blue,fill opacity=.5] (-1.5,-1.5) rectangle (1.5,1.5);

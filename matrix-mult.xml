@@ -776,7 +776,7 @@ the license is included in gfdl.xml.
         Let us compute the matrix <m>B</m> for <m>U</m>.
           <latex-code mode="bare">
 \def\drawarrow#1{
-\begin{tikzpicture}[myxyz, scale=1, thin border nodes, baseline]
+\begin{tikzpicture}[myxyz, y={(1cm,-.28cm)}, scale=1, thin border nodes, baseline]
   \path[clip, resetxy] (-2,-2) rectangle (2,2);
 
   \begin{scope}[transformxy]
@@ -785,7 +785,7 @@ the license is included in gfdl.xml.
       (-1.5, -1.5) grid (1.5, 1.5);
   \end{scope}
 
-  \node[blue!40!black,right] at (-.9,1,-.5) {$xy$};
+  \node[blue!40!black,right] at (-.5,.8,-.5) {$xy$};
 
   \begin{scope}[transformyz]
     \fill[green, opacity=.05] (-1.5,-1.5) rectangle (1.5,1.5);
@@ -801,23 +801,23 @@ the license is included in gfdl.xml.
 }
           </latex-code>
           <latex-code>
-\drawarrow{\draw[vector] (0,0,0) -- (1,0,0) node[above] {$e_1$};}
+\drawarrow{\draw[vector] (0,0,0) -- (1,0,0) node[above left, pos=.5] {$e_1$};}
 $\xrightarrow{\text{reflect $xy$}}$
-\drawarrow{\draw[vector] (0,0,0) -- (1,0,0) node[above] {$U(e_1)$};}
+\drawarrow{\draw[vector] (0,0,0) -- (1,0,0) node[above left, pos=.5] {$U(e_1)$};}
           </latex-code>
           Since <m>e_1</m> lies on the <m>xy</m>-plane, reflecting it over the <m>xy</m>-plane does not move it:
           <me>U(e_1) = \vec{1 0 0}.</me>
           <latex-code>
-\drawarrow{\draw[vector] (0,0,0) -- (0,1,0) node[below right=-.5mm] {$e_2$};}
+\drawarrow{\draw[vector] (0,0,0) -- (0,1,0) node[below left, pos=.5] {$e_2$};}
 $\xrightarrow{\text{reflect $xy$}}$
-\drawarrow{\draw[vector] (0,0,0) -- (0,1,0) node[below right=-.5mm] {$U(e_2)$};}
+\drawarrow{\draw[vector] (0,0,0) -- (0,1,0) node[below left, pos=.5] {$U(e_2)$};}
           </latex-code>
           Since <m>e_2</m> lies on the <m>xy</m>-plane, reflecting over the <m>xy</m>-plane does not move it either:
           <me>U(e_2) = e_2 = \vec{0 1 0}.</me>
           <latex-code>
-\drawarrow{\draw[vector] (0,0,0) -- (0,0,1) node[right] {$e_3$};}
+\drawarrow{\draw[vector] (0,0,0) -- (0,0,1) node[left, pos=.4] {$e_3$};}
 $\xrightarrow{\text{reflect $xy$}}$
-\drawarrow{\draw[vector] (0,0,0) -- (0,0,-1) node[right] {$U(e_3)$};}
+\drawarrow{\draw[vector] (0,0,0) -- (0,0,-1) node[left, pos=.5] {$U(e_3)$};}
           </latex-code>
           Since <m>e_3</m> is perpendicular to the <m>xy</m>-plane, reflecting over the <m>xy</m>-plane takes <m>e_3</m> to its negative:
           <me>U(e_3) = -e_3 = \vec{0 0 -1}.</me>
