@@ -396,7 +396,7 @@
         </xsl:attribute>
         <xsl:element name="a">
             <xsl:attribute name="knowl">
-                <xsl:apply-templates select="." mode="hidden-knowl-filename" />
+                <xsl:apply-templates select="." mode="hidden-knowl-url" />
             </xsl:attribute>
             <xsl:attribute name="knowl-id">
                 <xsl:text>hidden-</xsl:text>
