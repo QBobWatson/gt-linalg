@@ -14,6 +14,9 @@
 
 ortho = 10000
 
+color1 = new Color "green"
+color2 = new Color "red"
+
 window.demo = new Demo2D {
     preload:
         image: 'img/' + (urlParams.pic ? "theo2.jpg")
@@ -36,8 +39,8 @@ window.demo = new Demo2D {
 
     updateCaption = () =>
         str = @texMatrix [[matrix[0], matrix[2]], [matrix[1], matrix[3]]]
-        str += @texVector inVec, color: '#00ff00'
-        str += '=' + @texVector outVec, color: '#ffff00'
+        str += @texVector inVec, color: color1
+        str += '=' + @texVector outVec, color: color2
         katex.render str, eqnElt
 
     computeMatrix = (first) =>
@@ -194,10 +197,11 @@ window.demo = new Demo2D {
         zIndex: 2
         size:   15
     labelOpts =
-        offset:  [0, 25]
-        size:    15
-        zIndex:  3
-        outline: 1
+        offset:     [0, 25]
+        size:       15
+        zIndex:     3
+        outline:    0
+        background: "white"
     hiliteOpts =
         zTest:   true
         zWrite:  true
@@ -208,7 +212,7 @@ window.demo = new Demo2D {
     @labeledVectors view1,
         name:          'labeled1'
         vectors:       [inVec]
-        colors:        [[0, 1, 0, 1]]
+        colors:        [color1.brighten .1]
         labels:        ['x']
         live:          true
         zeroPoints:    true
@@ -228,7 +232,7 @@ window.demo = new Demo2D {
     @labeledVectors view2,
         name:          'labeled2'
         vectors:       [outVec]
-        colors:        [[1, 1, 0, 1]]
+        colors:        [color2.brighten .1]
         labels:        ['b']
         live:          true
         zeroPoints:    true

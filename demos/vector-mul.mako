@@ -20,8 +20,8 @@ window.demo = new Demo {
     view = @view axes: false
     vector1 = [3, -5,  4]
     vector2 = [3*1.5, -5*1.5,  4*1.5]
-    color1 = [1, .3, 1, 1]
-    color2 = [1,  1, 0, 1]
+    color1 = new Color "green"
+    color2 = new Color "red"
 
     @labeledVectors view,
         vectors: [vector1]
@@ -66,9 +66,9 @@ window.demo = new Demo {
     update = () =>
         katex.render \
             params.c.toFixed(2) + "\\cdot" \
-          + @texVector(vector1, color: "#ff4dff") \
+          + @texVector(vector1, color: color1) \
           + "=" \
-          + @texVector(vector2, color: "#ffff00"),
+          + @texVector(vector2, color: color2),
           @vecElt
 
     update()

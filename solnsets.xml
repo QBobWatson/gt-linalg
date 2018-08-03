@@ -110,7 +110,7 @@ the license is included in gfdl.xml.
   \draw[thick] (0,-2) -- (0,2);
   \draw[seq4] (-6,-2) -- node[pos=.4, above left=1pt, whitebg, thin border]
    {$Ax=0$} (6,2);
-  \draw[vector, seq1] (0,0) -- (3,1);
+  \draw[vector, seq-green] (0,0) -- (3,1);
 \end{tikzpicture}
               ]]>
         </latex-code>
@@ -197,7 +197,7 @@ the license is included in gfdl.xml.
         </latex-code></p>
 
         <figure>
-          <caption>Interactive picture of the solution set of <m>Ax=0</m>.  If you drag <m>x</m> along the red plane, the product <m>Ax</m> is always equal to zero.  This is what it means for the plane to be the solution set of <m>Ax=0</m>.</caption>
+          <caption>Interactive picture of the solution set of <m>Ax=0</m>.  If you drag <m>x</m> along the violet plane, the product <m>Ax</m> is always equal to zero.  This is what it means for the plane to be the solution set of <m>Ax=0</m>.</caption>
           <mathbox source="demos/Axequalsb.html?lock=true&amp;closed=true&amp;x=0,0,0" height="600px"/>
         </figure>
       </solution>
@@ -308,7 +308,7 @@ the license is included in gfdl.xml.
         </latex-code></p>
 
         <figure>
-          <caption>Interactive picture of the solution set of <m>Ax=b</m>.  If you drag <m>x</m> along the red line, the product <m>Ax</m> is always equal to <m>b</m>.  This is what it means for the line to be the solution set of <m>Ax=b</m>.</caption>
+          <caption>Interactive picture of the solution set of <m>Ax=b</m>.  If you drag <m>x</m> along the violet line, the product <m>Ax</m> is always equal to <m>b</m>.  This is what it means for the line to be the solution set of <m>Ax=b</m>.</caption>
           <mathbox source="demos/Axequalsb.html?x=-3,0&amp;mat=1,-3:2,-6&amp;lock=true&amp;closed=true" height="600px"/>
         </figure>
       </solution>
@@ -391,7 +391,7 @@ the license is included in gfdl.xml.
         </latex-code></p>
 
         <figure>
-          <caption>Interactive picture of the solution set of <m>Ax=b</m>.  If you drag <m>x</m> along the red plane, the product <m>Ax</m> is always equal to <m>b</m>.  This is what it means for the plane to be the solution set of <m>Ax=b</m>.</caption>
+          <caption>Interactive picture of the solution set of <m>Ax=b</m>.  If you drag <m>x</m> along the violet plane, the product <m>Ax</m> is always equal to <m>b</m>.  This is what it means for the plane to be the solution set of <m>Ax=b</m>.</caption>
           <mathbox source="demos/Axequalsb.html?lock=true&amp;closed=true&amp;range1=3&amp;x=1,0,0" height="600px"/>
         </figure>
       </solution>
@@ -525,7 +525,7 @@ the license is included in gfdl.xml.
     <example hide-type="true">
       <title>Interactive: Solution set and column span (1)</title>
       <figure>
-        <caption>Left: the solution set of <m>Ax=b</m> is in red.  Right: the column span of <m>A</m> is in red.  As you move <m>x</m>, you change <m>b</m>, so the solution set changes<mdash/>but all solution sets are parallel planes.  If you move <m>b</m> within the column span, the solution set also changes, and the demo solves the equation to find a particular solution <m>x</m>.  If you move <m>b</m> outside of the column span, the system becomes inconsistent, and the solution set disappears.
+        <caption>Left: the solution set of <m>Ax=b</m> is in violet.  Right: the column span of <m>A</m> is in violet.  As you move <m>x</m>, you change <m>b</m>, so the solution set changes<mdash/>but all solution sets are parallel planes.  If you move <m>b</m> within the column span, the solution set also changes, and the demo solves the equation to find a particular solution <m>x</m>.  If you move <m>b</m> outside of the column span, the system becomes inconsistent, and the solution set disappears.
         </caption>
         <mathbox source="demos/Axequalsb.html" height="600px"/>
       </figure>
@@ -534,7 +534,7 @@ the license is included in gfdl.xml.
     <example hide-type="true">
       <title>Interactive: Solution set and column span (2)</title>
       <figure>
-        <caption>Left: the solution set of <m>Ax=b</m> is in red.  Right: the column span of <m>A</m> is in red.  As you move <m>x</m>, you change <m>b</m>, so the solution set changes<mdash/>but all solution sets are parallel planes.  If you move <m>b</m> within the column span, the solution set also changes, and the demo solves the equation to find a particular solution <m>x</m>.  If you move <m>b</m> outside of the column span, the system becomes inconsistent, and the solution set disappears.
+        <caption>Left: the solution set of <m>Ax=b</m> is in violet.  Right: the column span of <m>A</m> is in violet.  As you move <m>x</m>, you change <m>b</m>, so the solution set changes<mdash/>but all solution sets are parallel planes.  If you move <m>b</m> within the column span, the solution set also changes, and the demo solves the equation to find a particular solution <m>x</m>.  If you move <m>b</m> outside of the column span, the system becomes inconsistent, and the solution set disappears.
         </caption>
         <mathbox source="demos/Axequalsb.html?mat=1,0,-1:0,1,1:1,1,0" height="600px"/>
       </figure>

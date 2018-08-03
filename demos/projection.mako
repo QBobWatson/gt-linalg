@@ -8,6 +8,13 @@
 
 range = urlParams.get 'range', 'float', 10
 
+surfaceColor    = new Color "violet"
+complementColor = new Color "green"
+vectorColor     = new Color 0,0,0
+vector1Color    = new Color "orange"
+vector2Color    = new Color "brown"
+projColor       = new Color "red"
+
 vector1 = urlParams.get 'u1',  'float[]', [1,0,0]
 vector2 = urlParams.get 'u2',  'float[]', [0,1,0]
 vector  = urlParams.get 'vec', 'float[]', [1,1,0]
@@ -146,6 +153,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
         vectors: vectors
         live:    false
         noPlane: size == 2
+        color:   surfaceColor
         # Lines before planes for transparency
         lineOpts:
             zOrder: 0
@@ -154,15 +162,16 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
     subspace.draw clipCube.clipped
 
     @grid clipCube.clipped,
-        vectors: vectors
-        live: false
+        vectors:  vectors
+        live:     false
+        lineOpts: color: surfaceColor
     mathbox.select('#vecgrid').set 'visible', showGrid
 
     if showComplement
         complement = @subspace
             vectors: subspace.complementFull(size == 2)
             name:    'complement'
-            color:   0x00aaaa
+            color:   complementColor
             noPlane: size == 2
             live:    false
             # Lines before planes for transparency
@@ -176,7 +185,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
     # Labeled vectors
     @labeledVectors view,
         vectors:    [vector]
-        colors:     [[1, 1, 1, 1]]
+        colors:     [vectorColor]
         labels:     [vecLabel]
         live:       true
         vectorOpts: zIndex: 4
@@ -185,7 +194,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
     @labeledVectors view,
         name:       'basis'
         vectors:    vectors
-        colors:     [[0.8, .5, 0, .7], [0.8, 0, .5, .7]].slice(0, numVecs)
+        colors:     [vector1Color.arr(.7), vector2Color.arr(.7)].slice(0, numVecs)
         labels:     labels
         live:       false
         vectorOpts: zIndex: 2
@@ -194,7 +203,8 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
     @labeledVectors view,
         name:       'summands'
         vectors:    summands
-        colors:     [[0.3020,0.6863,0.2902, .9], [0.2157,0.4941,0.7216, .9]].slice(0, numVecs)
+        colors:     [vector1Color.brighten(.3).arr(.9),
+                     vector2Color.brighten(.3).arr(.9)].slice(0, numVecs)
         labels:     null
         live:       true
         vectorOpts: zIndex: 3
@@ -203,17 +213,20 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
         name:       'decomp'
         vectors:    [decompProj, vector]
         origins:    [[0, 0, 0], decompProj]
-        colors:     [[1, 0.3, .3, 1], [0, .8, .8, 1]]
+        colors:     [surfaceColor.darken(.1), complementColor.darken(.1)]
         labels:     ["#{vecLabel}_#{subName}", "#{vecLabel}_#{subName}\u27C2"]
         live:       true
         vectorOpts: zIndex: 4
-        labelOpts:  zIndex: 5
+        labelOpts:
+            zIndex:     5
+            outline:    1
+            background: "white"
 
     if showProj
         @labeledVectors view,
             name:       'proj'
             vectors:    [decompProj]
-            colors:     [[1, 0.3, .3, 1]]
+            colors:     [projColor]
             labels:     ['?']
             live:       true
             vectorOpts: zIndex: 4
@@ -238,7 +251,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
             .line
                 width:  2
                 points: "<<"
-                color:  "white"
+                color:  "black"
                 colors: "<"
 
     decompLabels = ['x_W', "1.0"]
@@ -246,12 +259,15 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
         name:       'distance'
         vectors:    [decompProj, vector]
         origins:    [[0, 0, 0], decompProj]
-        colors:     [[1, 0.3, .3, 1], [0, .8, .8, 1]]
+        colors:     [surfaceColor.darken(.1), complementColor.darken(.1)]
         labels:     decompLabels
         live:       true
         labelsLive: true
         vectorOpts: {zIndex: 4, end: false}
-        labelOpts:  zIndex: 5
+        labelOpts:
+            zIndex:     5
+            outline:    1
+            background: "white"
 
     view
         .array
@@ -260,16 +276,16 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
             data:     [decompProj]
         .point
             size:     15
-            color:    [1, 0.3, 0.3]
+            color:    surfaceColor.darken(.1).arr()
             classes:  ['distance']
         .text
             live:  false
             width: 1
             data:  ['closest']
         .label
-            classes: ['distance']
-            color:   [1, 0.3, 0.3]
-            outline:    2
+            classes:    ['distance']
+            color:      surfaceColor.darken(.1).arr()
+            outline:    0
             background: "black"
             size:       15
             offset:     [0, -25]
@@ -318,12 +334,12 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
     ##################################################
     # Caption
 
-    hexColorProj   = "#" + new THREE.Color(1, .3, .3).getHexString()
-    hexColorPerp   = "#" + new THREE.Color(0, .8, .8).getHexString()
-    hexColorBasis1 = "#" + new THREE.Color(.8, .5, 0).getHexString()
-    hexColorBasis2 = "#" + new THREE.Color(.8, 0, .5).getHexString()
-    hexColorSummand1 = '#' + new THREE.Color(0.3020,0.6863,0.2902).getHexString()
-    hexColorSummand2 = '#' + new THREE.Color(0.2157,0.4941,0.7216).getHexString()
+    hexColorProj     = surfaceColor.str()
+    hexColorPerp     = complementColor.str()
+    hexColorBasis1   = vector1Color.str()
+    hexColorBasis2   = vector2Color.str()
+    hexColorSummand1 = vector1Color.brighten(.1).str()
+    hexColorSummand2 = vector2Color.brighten(.1).str()
 
     switch mode
         when 'full'
@@ -334,7 +350,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
                 str += @texVector decompProj, color: hexColorProj
                 str += '='
                 str += @texCombo vectors, coeffs,
-                    colors:      [hexColorSummand1, hexColorSummand2].slice(0, numVecs)
+                    colors:      [hexColorBasis1,   hexColorBasis2  ].slice(0, numVecs)
                     coeffColors: [hexColorSummand1, hexColorSummand2].slice(0, numVecs)
                 katex.render str, sumElt
         when 'decomp'
@@ -357,7 +373,9 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
                 str += @texVector decompProj, color: hexColorProj
                 str += '='
                 str += @texCombo vectors, coeffs,
-                    colors: [hexColorBasis1, hexColorBasis2].slice(0, numVecs)
+                    colors:      [hexColorBasis1,   hexColorBasis2  ].slice(0, numVecs)
+                    coeffColors: [hexColorSummand1, hexColorSummand2].slice(0, numVecs)
+
                 katex.render str, sumElt
                 str =  "\\|\\color{#{hexColorPerp}}{x_{W^\\perp}}\\| ="
                 str += "\\left\\|"
@@ -377,12 +395,13 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
                 str += @texVector vector
                 str += '='
                 str += @texCombo vectors, coeffs,
-                    colors:      [hexColorSummand1, hexColorSummand2].slice(0, numVecs)
+                    colors:      [hexColorBasis1,   hexColorBasis2  ].slice(0, numVecs)
                     coeffColors: [hexColorSummand1, hexColorSummand2].slice(0, numVecs)
                 katex.render str, comboElt
                 str = '[x]_{\\mathcal B} = '
                 str += '\\big('
-                str += "#{coeffs[0].toFixed 2},\\;#{coeffs[1].toFixed 2}"
+                str += "\\color{#{hexColorSummand1}}{#{coeffs[0].toFixed 2}},\\;" \
+                    +  "\\color{#{hexColorSummand2}}{#{coeffs[1].toFixed 2}}"
                 str += '\\big)'
                 katex.render str, basisElt
         when 'badbasis'
@@ -394,10 +413,10 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
                 str += @texVector vector
                 str += "\\neq"
                 str += @texCombo vectors, coeffs,
-                    colors:      [hexColorSummand1, hexColorSummand2].slice(0, numVecs)
+                    colors:      [hexColorBasis1,   hexColorBasis2  ].slice(0, numVecs)
                     coeffColors: [hexColorSummand1, hexColorSummand2].slice(0, numVecs)
                 str += '='
-                str += @texVector decompProj, color: hexColorProj
+                str += @texVector decompProj, color: projColor
                 katex.render str, comboElt
 
     # Project if necessary

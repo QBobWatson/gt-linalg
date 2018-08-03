@@ -317,7 +317,7 @@ the license is included in gfdl.xml.
           </me>
         </p>
       <figure>
-        <caption>Orthogonal projection of a vector onto the <m>xy</m>-plane in <m>\R^3</m>.  Note that <m>x_W</m> is the sum of the projections of <m>x</m> onto the <m>e_1</m>- and <m>e_2</m>-coordinate axes (shown in green and blue, respectively).</caption>
+        <caption>Orthogonal projection of a vector onto the <m>xy</m>-plane in <m>\R^3</m>.  Note that <m>x_W</m> is the sum of the projections of <m>x</m> onto the <m>e_1</m>- and <m>e_2</m>-coordinate axes (shown in orange and brown, respectively).</caption>
         <mathbox source="demos/projection.html?u1=1,0,0&amp;u2=0,1,0&amp;labels=e1,e2&amp;vec=-1.1,2,1.5&amp;range=3&amp;closed" height="500px"/>
       </figure>
       </solution>
@@ -355,7 +355,7 @@ the license is included in gfdl.xml.
           </me>
         </p>
       <figure>
-        <caption>Orthogonal projection of a vector onto the plane <m>W</m>.  Note that <m>x_W</m> is the sum of the projections of <m>x</m> onto the lines spanned by <m>u_1</m> and <m>u_2</m> (shown in green and blue, respectively).</caption>
+        <caption>Orthogonal projection of a vector onto the plane <m>W</m>.  Note that <m>x_W</m> is the sum of the projections of <m>x</m> onto the lines spanned by <m>u_1</m> and <m>u_2</m> (shown in orange and brown, respectively).</caption>
         <mathbox source="demos/projection.html?u1=1,0,-1&amp;u2=1,1,1&amp;vec=2,3,-2&amp;range=3.5&amp;closed" height="500px"/>
       </figure>
       </solution>
@@ -538,7 +538,7 @@ the license is included in gfdl.xml.
         </latex-code>
       </p>
       <figure>
-        <caption>When <m>v_1</m> and <m>v_2</m> are not orthogonal, then <m>x_{\R^2} = x</m> is not necessarily equal to the sum (orange) of the projections (green and blue) of <m>x</m> onto the lines spanned by <m>v_1</m> and <m>v_2</m>.</caption>
+        <caption>When <m>v_1</m> and <m>v_2</m> are not orthogonal, then <m>x_{\R^2} = x</m> is not necessarily equal to the sum (red) of the projections (orange and brown) of <m>x</m> onto the lines spanned by <m>v_1</m> and <m>v_2</m>.</caption>
         <mathbox source="demos/projection.html?u1=2,-.5&amp;u2=1,2&amp;vec=1,1&amp;range=3&amp;mode=badbasis&amp;labels=v1,v2&amp;closed" height="500px"/>
       </figure>
     </example>

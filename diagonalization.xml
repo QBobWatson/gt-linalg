@@ -313,7 +313,7 @@ the license is included in gfdl.xml.
           </me>
         </p>
         <figure>
-          <caption>The red line is the <m>-1</m>-eigenspace of <m>A</m>, and the green line is the <m>2</m>-eigenspace. There are two linearly independent (noncollinear) eigenvectors visible in the picture: choose any nonzero vector on the red line, and any nonzero vector on the green line.</caption>
+          <caption>The green line is the <m>-1</m>-eigenspace of <m>A</m>, and the violet line is the <m>2</m>-eigenspace. There are two linearly independent (noncollinear) eigenvectors visible in the picture: choose any nonzero vector on the green line, and any nonzero vector on the violet line.</caption>
           <mathbox source="demos/eigenspace.html?mat=1/2,3/2:3/2,1/2&amp;nomult" height="500px"/>
         </figure>
       </solution>
@@ -376,7 +376,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
           </me>
         </p>
         <figure>
-          <caption>The red plane is the <m>1</m>-eigenspace of <m>A</m>, and the green line is the <m>2</m>-eigenspace. There are three linearly independent eigenvectors visible in the picture: choose any two noncollinear vectors on the red plane, and any nonzero vector on the green line.</caption>
+          <caption>The green plane is the <m>1</m>-eigenspace of <m>A</m>, and the violet line is the <m>2</m>-eigenspace. There are three linearly independent eigenvectors visible in the picture: choose any two noncollinear vectors on the green plane, and any nonzero vector on the violet line.</caption>
           <mathbox source="demos/eigenspace.html?mat=4,-3,0:2,-1,0:1,-1,1&amp;nomult" height="500px"/>
         </figure>
       </solution>
@@ -608,7 +608,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
         The characteristic polynomial is <m>f(\lambda) = -(\lambda-1)^2(\lambda-2)</m>, so that <m>1</m> and <m>2</m> are the eigenvalues, with algebraic multiplicities <m>2</m> and <m>1</m>, respectively.  We computed that the <m>1</m>-eigenspace is a plane and the <m>2</m>-eigenspace is a line, so that <m>1</m> and <m>2</m> also have geometric multiplicities <m>2</m> and <m>1</m>, respectively.  This matrix is diagonalizable.
       </p>
       <figure>
-        <caption>The red plane is the <m>1</m>-eigenspace of <m>A</m>, and the green line is the <m>2</m>-eigenspace.  Hence the geometric multiplicity of the <m>1</m>-eigenspace is <m>2</m>, and the geometric multiplicity of the <m>2</m>-eigenspace is <m>1</m>.</caption>
+        <caption>The green plane is the <m>1</m>-eigenspace of <m>A</m>, and the violet line is the <m>2</m>-eigenspace.  Hence the geometric multiplicity of the <m>1</m>-eigenspace is <m>2</m>, and the geometric multiplicity of the <m>2</m>-eigenspace is <m>1</m>.</caption>
         <mathbox source="demos/eigenspace.html?mat=4,-3,0:2,-1,0:1,-1,1" height="500px"/>
       </figure>
       <p>
@@ -829,7 +829,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
         The <m>1</m>-eigenspace of <m>D</m> is the <m>xy</m>-plane, and the <m>2</m>-eigenspace is the <m>z</m>-axis.  The matrix <m>C</m> takes the <m>xy</m>-plane to the <m>1</m>-eigenspace of <m>A</m>, which is again a plane, and the <m>z</m>-axis to the <m>2</m>-eigenspace of <m>A</m>, which is again a line.  This shows that the geometric multiplicities of <m>A</m> and <m>D</m> coincide.
       </p>
       <figure>
-        <caption>The matrix <m>C</m> takes the <m>xy</m>-plane to the <m>1</m>-eigenspace of <m>A</m> (the grid) and the <m>z</m>-axis to the <m>2</m>-eigenspace (the blue line).</caption>
+        <caption>The matrix <m>C</m> takes the <m>xy</m>-plane to the <m>1</m>-eigenspace of <m>A</m> (the grid) and the <m>z</m>-axis to the <m>2</m>-eigenspace (the green line).</caption>
         <mathbox source="demos/similarity.html?C=1,0,3:1,0,2:0,1,1&amp;B=1,0,0:0,1,0:0,0,2" height="500px"/>
       </figure>
     </example>

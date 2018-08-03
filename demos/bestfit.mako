@@ -7,10 +7,10 @@
 <%block name="inline_style">
 ${parent.inline_style()}
   #eqn-here {
-    color: red
+    color: var(--palette-red);
   }
   #sumsq-here {
-    color: #cc00ff
+    color: var(--palette-violet);
   }
 </%block>
 
@@ -147,7 +147,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
     @labeledPoints view,
         name:      'targets'
         points:    targets
-        colors:    ([0, .5, .8, 1] for [0...numTargets])
+        colors:    (new Color("blue") for [0...numTargets])
         live:      true
         pointOpts: zIndex: 2
 
@@ -162,13 +162,12 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
                 expr: (emit, x) ->
                     emit(x, bestfit x)
             .line
-                color:  "red"
+                color:  new Color("red").arr()
                 width:  4
                 zIndex: 1
     if size == 3
         clipCube = @clipCube view,
             draw:     true
-            color:    new THREE.Color .75, .75, .75
         clipCube.clipped
             .area
                 channels: 3
@@ -179,8 +178,8 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
                 expr: (emit, x, y) ->
                     emit(x, y, bestfit(x, y))
             .surface
-                color:   0xaa0000
-                opacity: .5
+                color:   new Color("red").arr()
+                opacity: .25
                 zIndex:  1
                 fill:    true
                 lineX:   false
@@ -191,7 +190,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
                 width:   1/10
                 height:  1/10
             .surface
-                color:   0xbb0000
+                color:   new Color("red").arr()
                 opacity: .6
                 zIndex:  1
                 zBias:   2
@@ -222,7 +221,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
                         else
                             emit(x, y, z)
         .line
-            color:  0xcc00ff
+            color:  new Color("violet").arr()
             width:  3
             zIndex: 3
 

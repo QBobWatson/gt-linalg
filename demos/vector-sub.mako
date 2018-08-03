@@ -21,9 +21,9 @@ new Demo {
     view = @view axes: false
     vector1 = [3, -5,  4]
     vector2 = [4, -1, -2]
-    color1 = [1, .3, 1, 1]
-    color2 = [0,  1, 0, 1]
-    color3 = [1,  1, 0, 1]
+    color1 = new Color "blue"
+    color2 = new Color "green"
+    color3 = new Color "red"
     origins = [[0, 0, 0], [0, 0, 0], vector2]
     vectors = [vector1,   vector2,   vector1]
     colors  = [color1,    color2,    color3]
@@ -47,11 +47,11 @@ new Demo {
     @vecElt = document.getElementById "vectors-here"
     update = () =>
         katex.render \
-            @texVector(vector1, color: "#ff4dff") \
+            @texVector(vector1, color: color1) \
           + "-" \
-          + @texVector(vector2, color: "#00ff00") \
+          + @texVector(vector2, color: color2) \
           + "=" \
-          + @texVector([vector1[0]-vector2[0], vector1[1]-vector2[1], vector1[2]-vector2[2]], color: "#ffff00"),
+          + @texVector([vector1[0]-vector2[0], vector1[1]-vector2[1], vector1[2]-vector2[2]], color: color3),
           @vecElt
 
     update()

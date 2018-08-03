@@ -291,23 +291,23 @@ the license is included in gfdl.xml.
     \draw[step=.5cm, seq4, very thin] (-1.5,-1) grid (1.5,2);
   \end{scope}
 
-  \draw[vector, seq1] (0,0,0) --
+  \draw[vector, seq-blue] (0,0,0) --
     node [midway, above right] {$v_1$} \v;
   \draw[thin, densely dotted] \v -- \projxy\v;
 
   \begin{scope}
     \path[clip, transformxy] (-2, -2) rectangle (3, 3);
-    \draw[vector, seq2!50!white] (0,0,0) --
+    \draw[vector, seq-green!50!white] (0,0,0) --
       node [pos=1.0, below left] {$v_2$} \w;
   \end{scope}
   \begin{scope}
     \path[clip, transformxy] (5, -2) rectangle (3, 3);
-    \draw[vector, seq2] (0,0,0) --
+    \draw[vector, seq-green] (0,0,0) --
       node [pos=1.0, below left] {$v_2$} \w;
   \end{scope}
   \draw[thin, densely dotted, black!50!white] \w -- \projxy\w;
 
-  \draw[vector, seq3] (0,0,0) --
+  \draw[vector, black] (0,0,0) --
     node [pos=0.8, above left] {$w$} \b;
   \draw[thin, densely dotted] \b -- \projxy\b;
 
@@ -379,23 +379,23 @@ the license is included in gfdl.xml.
     \draw[step=.5cm, seq4, very thin] (-1.5,-1.5) grid (1.5,2);
   \end{scope}
 
-  \draw[vector, seq1] (0,0,0) --
+  \draw[vector, seq-blue] (0,0,0) --
     node [midway, above right] {$v_1$} \v;
   \draw[thin, densely dotted] \v -- \projxy\v;
 
   \begin{scope}
     \path[clip, transformxy] (-2, -2) rectangle (3, 3);
-    \draw[vector, seq2!50!white] (0,0,0) --
+    \draw[vector, seq-green!50!white] (0,0,0) --
       node [pos=1.0, below left] {$v_2$} \w;
   \end{scope}
   \begin{scope}
     \path[clip, transformxy] (5, -2) rectangle (3, 3);
-    \draw[vector, seq2] (0,0,0) --
+    \draw[vector, seq-green] (0,0,0) --
       node [pos=1.0, below left] {$v_2$} \w;
   \end{scope}
   \draw[thin, densely dotted, black!50!white] \w -- \projxy\w;
 
-  \draw[vector, seq3] (0,0,0) --
+  \draw[vector, black] (0,0,0) --
     node [midway, above right] {$w$} \b;
   \draw[thin, densely dotted] \b -- \projxy\b;
 
@@ -488,7 +488,7 @@ the license is included in gfdl.xml.
       <example hide-type="true">
         <title>Interactive: The criteria of the theorem are satisfied</title>
         <figure>
-          <caption>An example where the criteria of the above <xref ref="matrixeq-thm-full-span"/> are satisfied.  The red region is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.  If you drag <m>b</m>, the demo will solve <m>Ax=b</m> for you and move <m>x</m>.</caption>
+          <caption>An example where the criteria of the above <xref ref="matrixeq-thm-full-span"/> are satisfied.  The violet region is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.  If you drag <m>b</m>, the demo will solve <m>Ax=b</m> for you and move <m>x</m>.</caption>
           <mathbox source="demos/Axequalsb.html?mat=2,1,-1:1,0,2&amp;range2=5&amp;show=false&amp;closed=true" height="600px"/>
         </figure>
       </example>
@@ -496,7 +496,7 @@ the license is included in gfdl.xml.
       <example hide-type="true">
         <title>Interactive: The critera of the theorem are not satisfied</title>
         <figure>
-          <caption>An example where the criteria of the above <xref ref="matrixeq-thm-full-span"/> are <em>not</em> satisfied.  The red region is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.  Try dragging <m>b</m> in and out of the column span.</caption>
+          <caption>An example where the criteria of the above <xref ref="matrixeq-thm-full-span"/> are <em>not</em> satisfied.  The violet line is the span of the columns <m>v_1,v_2,v_3</m> of <m>A</m>, which is the same as the set of all <m>b</m> such that <m>Ax=b</m> has a solution.  Try dragging <m>b</m> in and out of the column span.</caption>
           <mathbox source="demos/Axequalsb.html?show=false&amp;closed=true" height="600px"/>
         </figure>
       </example>

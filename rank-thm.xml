@@ -138,7 +138,7 @@ the license is included in gfdl.xml.
     <example hide-type="true">
       <title>Interactive: Rank is 1, nullity is 2</title>
       <figure>
-        <caption>This <m>3\times 3</m> matrix has rank 1 and nullity 2.  The red plane on the left is the null space, and the red line on the right is the column space.</caption>
+        <caption>This <m>3\times 3</m> matrix has rank 1 and nullity 2.  The violet plane on the left is the null space, and the violet line on the right is the column space.</caption>
         <mathbox source="demos/Axequalsb.html?captions=rankthm" height="500px"/>
       </figure>
     </example>
@@ -146,7 +146,7 @@ the license is included in gfdl.xml.
     <example hide-type="true">
       <title>Interactive: Rank is 2, nullity is 1</title>
       <figure>
-        <caption>This <m>3\times 3</m> matrix has rank 2 and nullity 1.  The red line on the left is the null space, and the red plane on the right is the column space.</caption>
+        <caption>This <m>3\times 3</m> matrix has rank 2 and nullity 1.  The violet line on the left is the null space, and the violet plane on the right is the column space.</caption>
         <mathbox source="demos/Axequalsb.html?mat=1,-1,2:-1,2,4&amp;captions=rankthm" height="500px"/>
       </figure>
     </example>

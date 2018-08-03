@@ -141,7 +141,7 @@ the license is included in gfdl.xml.
       </latex-code>
     </p>
     <figure>
-      <caption>The red plane is <m>\Col(A)</m>.  The closest that <m>Ax</m> can get to <m>b</m> is the closest vector on <m>\Col(A)</m> to <m>b</m>, which is the orthogonal projection <m>b_{\Col(A)}</m> (in light blue).  The vectors <m>v_1,v_2</m> are the columns of <m>A</m>, and the coefficients of <m>\hat x</m> are the lengths of the purple and green lines.  Click and drag <m>b</m> to move it.</caption>
+      <caption>The violet plane is <m>\Col(A)</m>.  The closest that <m>Ax</m> can get to <m>b</m> is the closest vector on <m>\Col(A)</m> to <m>b</m>, which is the orthogonal projection <m>b_{\Col(A)}</m> (in blue).  The vectors <m>v_1,v_2</m> are the columns of <m>A</m>, and the coefficients of <m>\hat x</m> are the lengths of the green lines.  Click and drag <m>b</m> to move it.</caption>
       <mathbox source="demos/leastsquares.html?v1=0,1,0&amp;v2=1.1,0,-.2&amp;range=2&amp;vec=1.4,-1.1,1.45" height="500px"/>
     </figure>
 
@@ -260,7 +260,7 @@ the license is included in gfdl.xml.
           ]]></latex-code>
         </p>
         <figure>
-          <caption>The red plane is <m>\Col(A)</m>.  The closest that <m>Ax</m> can get to <m>b</m> is the closest vector on <m>\Col(A)</m> to <m>b</m>, which is the orthogonal projection <m>b_{\Col(A)}</m> (in light blue).  The vectors <m>v_1,v_2</m> are the columns of <m>A</m>, and the coefficients of <m>\hat x</m> are the <m>\cB</m>-coordinates of <m>b_{\Col(A)}</m>, where <m>\cB = \{v_1,v_2\}</m>.</caption>
+          <caption>The violet plane is <m>\Col(A)</m>.  The closest that <m>Ax</m> can get to <m>b</m> is the closest vector on <m>\Col(A)</m> to <m>b</m>, which is the orthogonal projection <m>b_{\Col(A)}</m> (in blue).  The vectors <m>v_1,v_2</m> are the columns of <m>A</m>, and the coefficients of <m>\hat x</m> are the <m>\cB</m>-coordinates of <m>b_{\Col(A)}</m>, where <m>\cB = \{v_1,v_2\}</m>.</caption>
           <mathbox source="demos/leastsquares.html?v1=0,1,2&amp;v2=1,1,1&amp;range=6.5&amp;vec=6,0,0&amp;camera=3,-1.5,-.1" height="500px"/>
         </figure>
       </solution>
@@ -290,7 +290,7 @@ the license is included in gfdl.xml.
           Therefore, the only least-squares solution is <m>\hat x = \frac 13{1\choose -1}.</m>
         </p>
         <figure>
-          <caption>The red plane is <m>\Col(A)</m>.  The closest that <m>Ax</m> can get to <m>b</m> is the closest vector on <m>\Col(A)</m> to <m>b</m>, which is the orthogonal projection <m>b_{\Col(A)}</m> (in light blue).  The vectors <m>v_1,v_2</m> are the columns of <m>A</m>, and the coefficients of <m>\hat x</m> are the <m>\cB</m>-coordinates of <m>b_{\Col(A)}</m>, where <m>\cB = \{v_1,v_2\}</m>.</caption>
+          <caption>The red plane is <m>\Col(A)</m>.  The closest that <m>Ax</m> can get to <m>b</m> is the closest vector on <m>\Col(A)</m> to <m>b</m>, which is the orthogonal projection <m>b_{\Col(A)}</m> (in blue).  The vectors <m>v_1,v_2</m> are the columns of <m>A</m>, and the coefficients of <m>\hat x</m> are the <m>\cB</m>-coordinates of <m>b_{\Col(A)}</m>, where <m>\cB = \{v_1,v_2\}</m>.</caption>
           <mathbox source="demos/leastsquares.html?v1=2,-1,0&amp;v2=0,1,2&amp;vec=1,0,-1&amp;range=3" height="500px"/>
         </figure>
       </solution>
@@ -553,7 +553,7 @@ the license is included in gfdl.xml.
     <example hide-type="true">
       <title>Interactive: Best-fit line</title>
       <figure>
-        <caption>The best-fit line minimizes the sum of the squares of the vertical distances (purple).  Click and drag the points to see how the best-fit line changes.</caption>
+        <caption>The best-fit line minimizes the sum of the squares of the vertical distances (violet).  Click and drag the points to see how the best-fit line changes.</caption>
         <mathbox source="demos/bestfit.html?v1=0,6&amp;v2=1,0&amp;v3=2,0&amp;range=7" height="500px"/>
       </figure>
     </example>
@@ -692,7 +692,7 @@ the license is included in gfdl.xml.
           The best-fit parabola minimizes the sum of the squares of these vertical distances.
         </p>
       <figure>
-        <caption>The best-fit parabola minimizes the sum of the squares of the vertical distances (purple).  Click and drag the points to see how the best-fit parabola changes.</caption>
+        <caption>The best-fit parabola minimizes the sum of the squares of the vertical distances (violet).  Click and drag the points to see how the best-fit parabola changes.</caption>
         <mathbox source="demos/bestfit.html?func=A*x^2+B*x+C&amp;v1=-1,.5&amp;v2=1,-1&amp;v3=2,-.5&amp;v4=3,2&amp;range=5" height="500px"/>
       </figure>
       </solution>
@@ -831,7 +831,7 @@ the license is included in gfdl.xml.
           In other words, <m>A\hat x</m> is the vector whose entries are the values of <m>f</m> evaluated on the points <m>(x,y)</m> we specified in our data table, and <m>b</m> is the vector whose entries are the desired values of <m>f</m> evaluated at those points.  The difference <m>b-A\hat x</m> is the vertical distance of the graph from the data points, as indicated in the above picture.  The best-fit linear function minimizes the sum of these vertical distances.
         </p>
         <figure>
-          <caption>The best-fit linear function minimizes the sum of the squares of the vertical distances (purple).  Click and drag the points to see how the best-fit linear function changes.</caption>
+          <caption>The best-fit linear function minimizes the sum of the squares of the vertical distances (violet).  Click and drag the points to see how the best-fit linear function changes.</caption>
           <mathbox source="demos/bestfit.html?func=A*x+B*y+C&amp;v1=1,0,0&amp;v2=0,1,1&amp;v3=-1,0,3&amp;v4=0,-1,4&amp;range=5" height="500px"/>
         </figure>
       </solution>
@@ -986,7 +986,7 @@ the license is included in gfdl.xml.
           As in the previous examples, the best-fit function minimizes the sum of the squares of the vertical distances from the graph of <m>y = f(x)</m> to the data points.
         </p>
         <figure>
-          <caption>The best-fit function minimizes the sum of the squares of the vertical distances (purple).  Click and drag the points to see how the best-fit function changes.</caption>
+          <caption>The best-fit function minimizes the sum of the squares of the vertical distances (violet).  Click and drag the points to see how the best-fit function changes.</caption>
           <mathbox source="demos/bestfit.html?func=A+B*cos(x)+C*sin(x)+D*cos(2*x)+EE*sin(2*x)+F*cos(3*x)+G*sin(3*x)&amp;v1=-4,-1&amp;v2=-3,0&amp;v3=-2,-1.5&amp;v4=-1,.5&amp;v5=0,1&amp;v6=1,-1&amp;v7=2,-.5&amp;v8=3,2&amp;v9=4,-1&amp;range=5" height="500px"/>
         </figure>
       </solution>
@@ -1168,7 +1168,7 @@ A\hat x =
           The resulting function minimizes the sum of the squares of the vertical distances from these data points <m>(0,2,0),\,(2,1,0),\,\ldots</m>, which lie on the <m>xy</m>-plane, to the graph of <m>f(x,y)</m>.
         </p>
         <figure>
-          <caption>The best-fit ellipse minimizes the sum of the squares of the vertical distances (purple) from the points <m>(x,y,0)</m> to the graph of <m>f(x,y)</m> on the left.  The ellipse itself is the zero set of <m>f(x,y)</m>, on the right.  Click and drag the points on the right to see how the best-fit ellipse changes.  Can you arrange the points so that the best-fit conic section is actually a hyperbola?</caption>
+          <caption>The best-fit ellipse minimizes the sum of the squares of the vertical distances (violet) from the points <m>(x,y,0)</m> to the graph of <m>f(x,y)</m> on the left.  The ellipse itself is the zero set of <m>f(x,y)</m>, on the right.  Click and drag the points on the right to see how the best-fit ellipse changes.  Can you arrange the points so that the best-fit conic section is actually a hyperbola?</caption>
           <mathbox source="demos/bestfit-implicit.html?func=x^2+A*y^2+B*x*y+C*x+D*y+EE&amp;v1=0,2&amp;v2=2,1&amp;v3=1,-1&amp;v4=-1,-2&amp;v5=-3,1&amp;v6=-1,1&amp;range=5&amp;rangez=25&amp;camera1=-2.14,.814,1.69" height="500px"/>
         </figure>
       </solution>

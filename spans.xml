@@ -226,7 +226,7 @@ the license is included in gfdl.xml.
       <example hide-type="true">
         <title>Interactive: Span of two vectors in <m>\R^2</m></title>
         <figure>
-          <caption>Interactive picture of a span of two vectors in <m>\R^2</m>.  Check <q>Show x.v + y.w</q> and move the sliders to see how every point in the red region is in fact a linear combination of the two vectors.</caption>
+          <caption>Interactive picture of a span of two vectors in <m>\R^2</m>.  Check <q>Show x.v + y.w</q> and move the sliders to see how every point in the violet region is in fact a linear combination of the two vectors.</caption>
           <mathbox source="demos/spans.html?v1=1,2&amp;v2=1,0&amp;showPlane=true&amp;range=5&amp;labels=v,w" height="500px"/>
         </figure>
       </example>
@@ -369,7 +369,7 @@ the license is included in gfdl.xml.
       <example hide-type="true">
         <title>Interactive: Span of two vectors in <m>\R^3</m></title>
         <figure>
-          <caption>Interactive picture of a span of two vectors in <m>\R^3</m>.  Check <q>Show x.v + y.w</q> and move the sliders to see how every point in the red region is in fact a linear combination of the two vectors.</caption>
+          <caption>Interactive picture of a span of two vectors in <m>\R^3</m>.  Check <q>Show x.v + y.w</q> and move the sliders to see how every point in the violet region is in fact a linear combination of the two vectors.</caption>
           <mathbox source="demos/spans.html?v1=3,2,4&amp;v2=-4,2,1&amp;labels=v,w" height="500px"/>
         </figure>
       </example>
@@ -377,7 +377,7 @@ the license is included in gfdl.xml.
       <example hide-type="true">
         <title>Interactive: Span of three vectors in <m>\R^3</m></title>
         <figure>
-          <caption>Interactive picture of a span of three vectors in <m>\R^3</m>.  Check <q>Show x.v + y.w + z.u</q> and move the sliders to see how every point in the red region is in fact a linear combination of the three vectors.</caption>
+          <caption>Interactive picture of a span of three vectors in <m>\R^3</m>.  Check <q>Show x.v + y.w + z.u</q> and move the sliders to see how every point in the violet region is in fact a linear combination of the three vectors.</caption>
           <mathbox source="demos/spans.html?labels=v,w,u" height="500px"/>
         </figure>
       </example>

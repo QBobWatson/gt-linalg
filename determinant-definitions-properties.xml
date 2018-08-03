@@ -399,7 +399,7 @@ the license is included in gfdl.xml.
 
     <remark>
       <p>
-        This is an efficient way of computing the determinant of a large matrix, either by hand or by computer.  The computational complexity of row reduction is <m>O(n^3)</m>; by contrast, the cofactor expansion algorithm we will learn in <xref ref="determinants-cofactors"/> has complexity <m>O(n!)\approx O(n^n\sqrt n)</m>, which is much larger.
+        This is an efficient way of computing the determinant of a large matrix, either by hand or by computer.  The computational complexity of row reduction is <m>O(n^3)</m>; by contrast, the cofactor expansion algorithm we will learn in <xref ref="determinants-cofactors"/> has complexity <m>O(n!)\approx O(n^n\sqrt n)</m>, which is much larger.  (Cofactor expansion has other uses.)
       </p>
     </remark>
 

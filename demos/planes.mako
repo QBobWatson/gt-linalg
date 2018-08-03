@@ -6,6 +6,10 @@
 
 ##
 
+plane1Color = new Color "violet"
+plane2Color = new Color "green"
+lineColor   = new Color "yellow"
+
 new Demo camera: position: [-1.3,3,1.5], () ->
     window.mathbox = @mathbox
 
@@ -13,28 +17,28 @@ new Demo camera: position: [-1.3,3,1.5], () ->
 
     clipCube = @clipCube view,
         draw:   true
-        color:  new THREE.Color .75, .75, .75
 
     # Plane 1
     subspace1 = @subspace
         vectors: [[-1, 1, 0], [-1, 0, 1]]
-        live: false
-        name: "plane1"
+        live:    false
+        name:    "plane1"
+        color:   plane1Color
     subspace1.draw clipCube.clipped.transform position: [1, 0, 0]
 
     # Plane 2
     subspace2 = @subspace
         vectors: [[1, 0 ,1], [0, 1, 0]]
-        surfaceOpts: color: "rgb(0, 128, 0)"
-        live: false
-        name: "plane2"
+        live:    false
+        name:    "plane2"
+        color:   plane2Color
     subspace2.draw clipCube.clipped
 
     # Line
     subspace3 = @subspace
         vectors: [[1, -2, 1]]
+        color:   lineColor
         lineOpts:
-            color:   "rgb(200, 200, 0)"
             opacity: 1.0
             width:   4
             zIndex:  3
@@ -43,5 +47,5 @@ new Demo camera: position: [-1.3,3,1.5], () ->
     subspace3.draw clipCube.clipped.transform position: [0, 1, 0]
 
     @caption '<p><span id="eqn1-here"></span><br><span id="eqn2-here"></span></p>'
-    katex.render "\\color{red}{x+y+z=1}", document.getElementById 'eqn1-here'
-    katex.render "\\color{green}{x-z=0}", document.getElementById 'eqn2-here'
+    katex.render "\\color{#{plane1Color.str()}}{x+y+z=1}", document.getElementById 'eqn1-here'
+    katex.render "\\color{#{plane2Color.str()}}{x-z=0}", document.getElementById 'eqn2-here'

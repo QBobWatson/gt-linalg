@@ -11,7 +11,7 @@ ${parent.inline_style()}
     font-size:     120%;
     padding-left:  1em;
     padding-right: 1em;
-    color:         red;
+    color:         var(--palette-red);
     display:       none;
 }
 #matrix-here {
@@ -72,12 +72,13 @@ for i in [0...3]
         tmp[i][j] = matrix[j]?[i] ? 0
 matrix = tmp
 
-color1 = [.3, .7, .8, .8]
-color2 = [.7,  0, .7, .8]
-color3 = [.8, .5, .3, .8]
-hexColor1 = '#' + new THREE.Color(color1[0], color1[1], color1[2]).getHexString()
-hexColor2 = '#' + new THREE.Color(color2[0], color2[1], color2[2]).getHexString()
-hexColor3 = '#' + new THREE.Color(color3[0], color3[1], color3[2]).getHexString()
+vecColor     = new Color("green")
+outVecColor  = new Color("red")
+surfaceColor = new Color("violet")
+
+color1 = new Color("orange")
+color2 = new Color("brown")
+color3 = new Color("pink")
 
 window.demo1 = new (if cols == 3 then Demo else Demo2D) {
     mathbox: element: document.getElementById "mathbox1"
@@ -157,19 +158,19 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
     ##################################################
     # labeled vector(s)
     vectors = [vector]
-    colors  = [[0, 1, 0, 1]]
+    colors  = [vecColor]
     labels  = []
     if basisMode
         labels.push '[x]_B'
         vectors.push [1,0,0]
-        colors.push  color1
+        colors.push  color1.arr(.8)
         labels.push  'e1'
         vectors.push [0,1,0]
-        colors.push  color2
+        colors.push  color2.arr(.8)
         labels.push  'e2'
         if cols == 3
             vectors.push [0,0,1]
-            colors.push  color3
+            colors.push  color3.arr(.8)
             labels.push  'e3'
     else
         labels.push 'x'
@@ -190,9 +191,8 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
     clipCube = @clipCube view,
         draw:   cols == 3
         hilite: cols == 3
-        color:  new THREE.Color .75, .75, .75
         material: new THREE.MeshBasicMaterial
-            color:       new THREE.Color 0.5, 0, 0
+            color:       surfaceColor.three()
             opacity:     0.5
             transparent: true
             visible:     false
@@ -205,6 +205,7 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
         @grid clipCube.clipped,
             vectors: [[1,0,0], [0,1,0], [0,0,1]][0...cols]
             live:    false
+            lineOpts: color: surfaceColor
 
     ##################################################
     # Solution set
@@ -215,6 +216,7 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
         vectors: nulBasis
         live:    false
         mesh:    clipCube.mesh
+        color:   surfaceColor
     tform = clipCube.clipped.transform().bind position: () => vector
     solnspace.draw tform
     if solnspace.dim == 3
@@ -272,16 +274,16 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
             xBelt       = document.getElementById 'x-B-here'
             vectorEqElt = document.getElementById 'vector-eq-here'
             updateCaption = () =>
-                str  = '\\color{#00ff00}{[x]_{\\mathcal B}} = '
-                str += @texVector vector, {dim: cols, color: '#00ff00'}
+                str  = "\\color{#{vecColor.str()}}{[x]_{\\mathcal B}} = "
+                str += @texVector vector, {dim: cols, color: vecColor.str()}
                 katex.render str, xBelt
-                str  = '\\color{#ffff00}{x} ='
-                str += @texVector outVec, {dim: rows, color: '#ffff00'}
+                str  = "\\color{#{outVecColor.str()}}{x} ="
+                str += @texVector outVec, {dim: rows, color: outVecColor.str()}
                 str += '='
                 str += @texCombo matrix[0...cols], vector[0...cols],
                     dim:         rows
-                    colors:      [hexColor1, hexColor2, hexColor3][0...cols]
-                    coeffColors: '#00ff00'
+                    colors:      [color1, color2, color3][0...cols]
+                    coeffColors: vecColor.str()
                 katex.render str, vectorEqElt
         else
             updateCaption = () =>
@@ -291,16 +293,16 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
                     precision: -1
                 if labeled.hidden
                     katex.render str \
-                        + '\\color{#00ff00}{x}' \
+                        + "\\color{#{vecColor.str()}}{x}" \
                         + ' = ' \
-                        + @texVector(outVec, {color: '#ffff00', dim: rows}),
+                        + @texVector(outVec, {color: outVecColor.str(), dim: rows}),
                         eqnElt
                     inconsElt.style.display = 'inline'
                 else
                     katex.render str \
-                        + @texVector(vector, color: '#00ff00', dim: cols) \
+                        + @texVector(vector, color: vecColor.str(), dim: cols) \
                         + ' = ' \
-                        + @texVector(outVec, {color: '#ffff00', dim: rows}),
+                        + @texVector(outVec, {color: outVecColor.str(), dim: rows}),
                         eqnElt
                     inconsElt.style.display = 'none'
 
@@ -327,19 +329,19 @@ window.demo2 = new (if rows == 3 then Demo else Demo2D) {
     ##################################################
     # labeled vector
     vectors = [outVec]
-    colors  = [[1, 1, 0, 1]]
+    colors  = [outVecColor]
     labels  = []
     if basisMode
         labels.push 'x'
         vectors.push matrix[0]
-        colors.push  color1
+        colors.push  color1.arr(.8)
         labels.push  'v1'
         vectors.push matrix[1]
-        colors.push  color2
+        colors.push  color2.arr(.8)
         labels.push  'v2'
         if cols == 3
             vectors.push matrix[2]
-            colors.push  color3
+            colors.push  color3.arr(.8)
             labels.push  'v3'
     else
         labels.push 'b'
@@ -360,9 +362,8 @@ window.demo2 = new (if rows == 3 then Demo else Demo2D) {
     clipCube = @clipCube view,
         draw:   rows == 3
         hilite: rows == 3
-        color:  new THREE.Color .75, .75, .75
         material: new THREE.MeshBasicMaterial
-            color:       new THREE.Color 0.5, 0, 0
+            color:       surfaceColor.three()
             opacity:     0.5
             transparent: true
             visible:     false
@@ -375,6 +376,7 @@ window.demo2 = new (if rows == 3 then Demo else Demo2D) {
         @grid clipCube.clipped,
             vectors: matrix[0...rows]
             live:    false
+            lineOpts: color: surfaceColor
 
     ##################################################
     # Column span
@@ -383,6 +385,7 @@ window.demo2 = new (if rows == 3 then Demo else Demo2D) {
         vectors: colBasis
         live:    false
         noPlane: basisMode and rows == 2
+        color:   surfaceColor
     subspace.draw clipCube.clipped
 
     if subspace.dim == 3

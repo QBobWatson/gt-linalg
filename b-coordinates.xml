@@ -135,8 +135,8 @@ the license is included in gfdl.xml.
   \clip (-6, -6) rectangle (6, 6);
 
   \draw[scale={sqrt(2)}, rotate=45, help lines] (-7, -7) grid (7, 7);
-  \draw[vector, seq-green] (0, 0) to["$v_1$" above left] (1, 1);
-  \draw[vector, seq-blue] (0, 0) to["$v_2$" below left] (1, -1);
+  \draw[vector, seq-blue] (0, 0) to["$v_1$" above left] (1, 1);
+  \draw[vector, seq-green] (0, 0) to["$v_2$" below left] (1, -1);
 
   \point[seq-red, "$w$" {above,text=seq-red}] at (3, -1);
   \point[seq-orange, "$v$" {above,text=seq-orange}] at (5, 3);
@@ -203,7 +203,7 @@ the license is included in gfdl.xml.
       </me>
     </p>
     <figure xml:id="dimension-coordinates">
-      <caption>Left: the <m>\cB</m>-coordinates of a vector <m>x</m>.  Right: the vector <m>x</m>.  The light red grid on the right is a picture of the coordinate system defined by the basis <m>\cB</m>; one set of lines measures the <m>v_1</m>-coordinate, and the other set measures the <m>v_2</m>-coordinate.  Drag the heads of the vectors <m>x</m> and <m>[x]_\cB</m> to understand the correspondence between <m>x</m> and its <m>\cB</m>-coordinate vector.
+      <caption>Left: the <m>\cB</m>-coordinates of a vector <m>x</m>.  Right: the vector <m>x</m>.  The violet grid on the right is a picture of the coordinate system defined by the basis <m>\cB</m>; one set of lines measures the <m>v_1</m>-coordinate, and the other set measures the <m>v_2</m>-coordinate.  Drag the heads of the vectors <m>x</m> and <m>[x]_\cB</m> to understand the correspondence between <m>x</m> and its <m>\cB</m>-coordinate vector.
       </caption>
       <mathbox source="demos/Axequalsb.html?captions=basis&amp;mat=2,1:-1,0:1,-1&amp;range2=5" height="500px"/>
     </figure>
@@ -246,7 +246,7 @@ the license is included in gfdl.xml.
         </ol>
       </p>
       <figure xml:id="dimension-coordinates-1">
-        <caption>A picture of the plane <m>V</m> and the basis <m>\cB = \{v_1,v_2\}</m>.  The light red grid is a picture of the coordinate system defined by the basis <m>\cB</m>; one set of lines measures the <m>v_1</m>-coordinate, and the other set measures the <m>v_2</m>-coordinate.  Use the sliders to find the <m>\cB</m>-coordinates of <m>v</m>.</caption>
+        <caption>A picture of the plane <m>V</m> and the basis <m>\cB = \{v_1,v_2\}</m>.  The violet grid is a picture of the coordinate system defined by the basis <m>\cB</m>; one set of lines measures the <m>v_1</m>-coordinate, and the other set measures the <m>v_2</m>-coordinate.  Use the sliders to find the <m>\cB</m>-coordinates of <m>v</m>.</caption>
         <mathbox source="demos/spans.html?v1=1,0,1&amp;v2=1,1,1&amp;target=5,3,5&amp;range=6&amp;camera=-3,0,2&amp;tlabel=v" height="500px"/>
       </figure>
     </solution>
@@ -286,7 +286,7 @@ the license is included in gfdl.xml.
         </ol>
       </p>
       <figure xml:id="dimension-coordinates-2">
-        <caption>A picture of the plane <m>V</m> and the basis <m>\cB = \{v_1,v_2\}</m>.  The light red grid is a picture of the coordinate system defined by the basis <m>\cB</m>; one set of lines measures the <m>v_1</m>-coordinate, and the other set measures the <m>v_2</m>-coordinate.  Use the sliders to find the <m>\cB</m>-coordinates of <m>x</m>.</caption>
+        <caption>A picture of the plane <m>V</m> and the basis <m>\cB = \{v_1,v_2\}</m>.  The violet grid is a picture of the coordinate system defined by the basis <m>\cB</m>; one set of lines measures the <m>v_1</m>-coordinate, and the other set measures the <m>v_2</m>-coordinate.  Use the sliders to find the <m>\cB</m>-coordinates of <m>x</m>.</caption>
         <mathbox source="demos/spans.html?v1=2,3,2&amp;v2=-1,1,1&amp;target=4,11,8&amp;tlabel=x&amp;range=12&amp;camera=.5,-3,2&amp;tlabel=x" height="500px"/>
       </figure>
     </solution>

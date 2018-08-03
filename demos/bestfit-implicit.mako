@@ -7,10 +7,10 @@
 <%block name="inline_style">
 ${parent.inline_style()}
   #eqn-here {
-    color: red
+    color: var(--palette-red);
   }
   #sumsq-here {
-    color: #cc00ff
+    color: var(--palette-violet);
   }
 </%block>
 
@@ -287,7 +287,7 @@ window.demo1 = new Demo {
     @labeledPoints view,
         name:      'targets'
         points:    targets
-        colors:    ([0, .5, .8, 1] for [0...numTargets])
+        colors:    (new Color("blue") for [0...numTargets])
         live:      true
         pointOpts: zIndex: 2
 
@@ -312,7 +312,7 @@ window.demo1 = new Demo {
     geo  = new THREE.BoxGeometry 2, 2, 2
     mesh = new THREE.Mesh geo, new THREE.MeshBasicMaterial()
     cube = new THREE.BoxHelper mesh
-    cube.material.color = new THREE.Color .75, .75, .75
+    cube.material.color = new THREE.Color .7, .7, .7
     @three.scene.add cube
 
     clipCube
@@ -325,7 +325,7 @@ window.demo1 = new Demo {
             expr: (emit, x, y) ->
                 emit(x, y, bestfit(x, y))
         .surface
-            color:   0xaa0000
+            color:   new Color("red").arr()
             opacity: 0.7
             fill:    true
 
@@ -346,7 +346,7 @@ window.demo1 = new Demo {
                     else
                         emit(x, y, z)
         .line
-            color:  0xcc00ff
+            color:  new Color("violet").arr()
             width:  3
             zIndex: 3
 
@@ -368,7 +368,7 @@ window.demo2 = new Demo2D {
     @labeledPoints view,
         name:      'targets'
         points:    targets
-        colors:    ([0, .5, .8, 1] for [0...numTargets])
+        colors:    (new Color("blue") for [0...numTargets])
         live:      true
         pointOpts: zIndex: 2
 
@@ -391,7 +391,7 @@ window.demo2 = new Demo2D {
             data:     [[[-range,-range], [-range,range]],
                        [[ range,-range], [ range,range]]]
         .surface
-            color:   0xaa0000
+            color:   new Color("red").arr()
             opacity: 1.0
             fill:    true
 

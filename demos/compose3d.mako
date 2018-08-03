@@ -30,9 +30,9 @@ vector1 = urlParams.get 'x', 'float[]', [-1, 2, 3]
 vector2 = [0, 0, 0]
 vector3 = [0, 0, 0]
 
-color1 = [0, 1, 0, 1]
-color2 = [1, 0, 1, 1]
-color3 = [1, 1, 0, 1]
+color1 = new Color("green")
+color2 = new Color("violet")
+color3 = new Color("red")
 
 matrix1 = urlParams.get 'mat1', 'matrix', [[1, 0, 0],
                                            [0, 1, 0],
@@ -169,7 +169,6 @@ setupDemo = (opts) ->
         @clipCubeObj = @clipCube @viewObj,
             draw:   @dim == 3
             hilite: @dim == 3
-            color:  new THREE.Color .75, .75, .75
             material: new THREE.MeshBasicMaterial
                 color:       new THREE.Color 0, 0, 0
                 opacity:     0.5
@@ -210,32 +209,35 @@ demo1.draggable demo1.viewObj,
 
 ##################################################
 # ranges
+dark1 = color1.darken .1
 demo2.rangeU = demo2.subspace
     name:    'rangeU'
     vectors: matrix1
     live:    false
-    color:   new THREE.Color color1[0]/2, color1[1]/2, color1[2]/2
+    color:   dark1
     mesh:    demo2.clipCubeObj.mesh
 if demo2.rangeU.dim == 3
     demo2.clipCubeObj.installMesh()
-    demo2.clipCubeObj.mesh.material.color.setRGB color1[0]/2, color1[1]/2, color1[2]/2
+    demo2.clipCubeObj.mesh.material.color.copy dark1
 demo2.rangeU.draw demo2.clipCubeObj.clipped
 demo2.rangeU.setVisibility params['range U']
 
+dark2 = color2.darken .1
 demo3.rangeT = demo3.subspace
     name:    'rangeT'
     vectors: matrix2
     live:    false
-    color:   new THREE.Color color2[0]/2, color2[1]/2, color2[2]/2
+    color:   dark2
     mesh:    demo3.clipCubeObj.mesh
 demo3.rangeT.draw demo3.clipCubeObj.clipped
 demo3.rangeT.setVisibility params['range T']
 
+dark3 = color1.darken .1
 demo3.rangeTU = demo3.subspace
     name:    'rangeTU'
     vectors: matrix3
     live:    false
-    color:   new THREE.Color color3[0]/2, color3[1]/2, color3[2]/2
+    color:   dark3
     mesh:    demo3.clipCubeObj.mesh
 demo3.rangeTU.draw demo3.clipCubeObj.clipped
 demo3.rangeTU.setVisibility params['range TU']
@@ -244,40 +246,35 @@ demo3.clipCubeObj.installMesh() if demo3.rangeT.dim == 3 or demo3.rangeTU.dim ==
 gui.add(params, 'range U').onFinishChange demo2.rangeU.setVisibility
 gui.add(params, 'range T').onFinishChange (val) ->
     if val and demo3.rangeT.dim == 3
-        demo3.clipCubeObj.mesh.material.color.setRGB \
-            color2[0]/2, color2[1]/2, color2[2]/2
+        demo3.clipCubeObj.mesh.material.color.copy dark2
     demo3.rangeT.setVisibility val
 gui.add(params, 'range TU').onFinishChange (val) ->
     if val and demo3.rangeTU.dim == 3
-        demo3.clipCubeObj.mesh.material.color.setRGB \
-            color3[0]/2, color3[1]/2, color3[2]/2
+        demo3.clipCubeObj.mesh.material.color.copy dark3
     demo3.rangeTU.setVisibility val
 
 matrix1Elt = document.getElementById 'matrix1-here'
 matrix2Elt = document.getElementById 'matrix2-here'
 matrix3Elt = document.getElementById 'matrix3-here'
-hexColor1 = "#" + new THREE.Color(color1[0], color1[1], color1[2]).getHexString()
-hexColor2 = "#" + new THREE.Color(color2[0], color2[1], color2[2]).getHexString()
-hexColor3 = "#" + new THREE.Color(color3[0], color3[1], color3[2]).getHexString()
 
 updateCaption = () ->
-    str  = "U(\\color{#{hexColor1}}{x}) = "
+    str  = "U(\\color{#{color1.str()}}{x}) = "
     str += demo1.texMatrix matrix1, {cols: dim1, rows: dim2}
-    str += demo1.texVector vector1, {color: hexColor1}
+    str += demo1.texVector vector1, {color: color1.str()}
     str += "="
-    str += demo2.texVector vector2, {color: hexColor2}
+    str += demo2.texVector vector2, {color: color2.str()}
     katex.render str, matrix1Elt
-    str  = "T(\\color{#{hexColor2}}{U(x)}) = "
+    str  = "T(\\color{#{color2.str()}}{U(x)}) = "
     str += demo2.texMatrix matrix2, {cols: dim2, rows: dim3}
-    str += demo2.texVector vector2, {color: hexColor2}
+    str += demo2.texVector vector2, {color: color2.str()}
     str += "="
-    str += demo3.texVector vector3, {color: hexColor3}
+    str += demo3.texVector vector3, {color: color3.str()}
     katex.render str, matrix2Elt
-    str  = "T\\circ U(\\color{#{hexColor1}}{x}) = "
+    str  = "T\\circ U(\\color{#{color1.str()}}{x}) = "
     str += demo1.texMatrix matrix3, {cols: dim1, rows: dim3}
-    str += demo1.texVector vector1, {color: hexColor1}
+    str += demo1.texVector vector1, {color: color1.str()}
     str += "="
-    str += demo3.texVector vector3, {color: hexColor3}
+    str += demo3.texVector vector3, {color: color3.str()}
     katex.render str, matrix3Elt
 
 computeOut()

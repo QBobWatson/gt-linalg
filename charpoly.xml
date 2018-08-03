@@ -148,7 +148,7 @@ the license is included in gfdl.xml.
         The parametric form of the general solution is <m>x=(1+\sqrt 2)y</m>, so the <m>(3+2\sqrt 2)</m>-eigenspace is the line spanned by <m>{1+\sqrt 2\choose 1}</m>.  We compute in the same way that the <m>(3-2\sqrt 2)</m>-eigenspace is the line spanned by <m>{1-\sqrt 2\choose 1}</m>.
       </p>
       <figure>
-        <caption>The red line is the <m>(3-2\sqrt 2)</m>-eigenspace, and the green line is the <m>(3+2\sqrt 2)</m>-eigenspace.</caption>
+        <caption>The green line is the <m>(3-2\sqrt 2)</m>-eigenspace, and the violet line is the <m>(3+2\sqrt 2)</m>-eigenspace.</caption>
         <mathbox source="demos/eigenspace.html?mat=5,2:2,1&amp;nomult" height="500px"/>
       </figure>
     </solution>
@@ -214,7 +214,7 @@ the license is included in gfdl.xml.
         </me>
       </p>
       <figure>
-        <caption>The red line is the <m>-1</m>-eigenspace, and the green line is the <m>2</m>-eigenspace.</caption>
+        <caption>The green line is the <m>-1</m>-eigenspace, and the violet line is the <m>2</m>-eigenspace.</caption>
         <mathbox source="demos/eigenspace.html?mat=0,6,8:1/2,0,0:0,1/2,0&amp;nomult" height="500px"/>
       </figure>
     </solution>

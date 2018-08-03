@@ -7,10 +7,10 @@
 <%block name="inline_style">
 ${parent.inline_style()}
 .color1 {
-    color: rgb(55, 126, 184);
+    color: var(--palette-green);
 }
 .color2 {
-    color: rgb(77, 175, 74);
+    color: var(--palette-blue);
 }
 </%block>
 
@@ -98,36 +98,40 @@ setupDemo = (opts) ->
                 height:  7
                 live:    false
             .surface
-                color:   "rgb(55, 126, 184)"
+                color:   new Color("green").arr()
                 lineX:   true
                 lineY:   true
                 fill:    false
                 opacity: 0.75
             .swizzle order: "zxyw"
             .surface
-                color:   "rgb(77, 175, 74)"
+                color:   new Color("blue").arr()
                 lineX:   true
                 lineY:   true
                 fill:    false
                 opacity: 0.75
 
+color1 = new Color("green")
+color2 = new Color("violet")
+color3 = new Color("red")
+
 inLabel = urlParams.in ? 'u'
 window.demo1 = setupDemo
     index:  1
     vector: vector1
-    color:  [0, 1, 0, 1]
+    color:  color1
     label:  inLabel
 
 window.demo2 = setupDemo
     index:  2
     vector: vector2
-    color:  [1, 0, 1, 1]
+    color:  color2
 
 outLabel = urlParams.out ? 'T'
 window.demo3 = setupDemo
     index:  3
     vector: vector3
-    color:  [1, 1, 0, 1]
+    color:  color3
     label:  "#{outLabel}(#{inLabel})"
 
 ##################################################
@@ -144,11 +148,11 @@ vector2Elt = document.getElementById 'vector2-here'
 vector3Elt = document.getElementById 'vector3-here'
 
 updateCaption = () ->
-    str = demo1.texVector vector1, color: '#00ff00'
+    str = demo1.texVector vector1, color: color1
     katex.render str, vector1Elt
-    str = demo2.texVector vector2, color: '#ff00ff'
+    str = demo2.texVector vector2, color: color2
     katex.render str, vector2Elt
-    str = demo3.texVector vector3, color: '#ffff00'
+    str = demo3.texVector vector3, color: color3
     katex.render str, vector3Elt
 
 computeOut()

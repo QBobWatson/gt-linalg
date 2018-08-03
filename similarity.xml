@@ -1251,7 +1251,7 @@ the license is included in gfdl.xml.
         In other words, the <m>xy</m>-plane is the <m>-1</m>-eigenspace of <m>B</m>, and the <m>z</m>-axis is the <m>2</m>-eigenspace of <m>B</m>; likewise, the <q><m>v_1,v_2</m>-plane</q> is the <m>-1</m>-eigenspace of <m>A</m>, and the <q><m>v_3</m>-axis</q> is the <m>2</m>-eigenspace of <m>A</m>.  This is consistent with the <xref ref="similarity-evecs"/>, as multiplication by <m>C</m> changes <m>e_1</m> into <m>Ce_1 = v_1</m>, <m>e_2</m> into <m>Ce_2 = v_2</m>, and <m>e_3</m> into <m>Ce_3 = v_3</m>.
       </p>
       <figure>
-        <caption>The <m>-1</m>-eigenspace of <m>A</m> is the red plane, and the <m>2</m>-eigenspace of <m>A</m> is the green line.  These are the images under <m>C</m> of the <m>xy</m>-plane and the <m>z</m>-axis, respectively, which are the eigenspaces of <m>B</m>.</caption>
+        <caption>The <m>-1</m>-eigenspace of <m>A</m> is the green plane, and the <m>2</m>-eigenspace of <m>A</m> is the violet line.  These are the images under <m>C</m> of the <m>xy</m>-plane and the <m>z</m>-axis, respectively, which are the eigenspaces of <m>B</m>.</caption>
         <mathbox source="demos/eigenspace.html?mat=-1,0,0:-1,0,2:-1,1,1&amp;nomult" height="600px"/>
       </figure>
     </example>

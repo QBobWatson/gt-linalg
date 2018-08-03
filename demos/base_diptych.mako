@@ -6,7 +6,7 @@
 html, body {
     margin:           0;
     height:           100%;
-    background-color: #111111;
+    background-color: white;
     overflow-x:       hidden;
 }
 .mathbox-wrapper {
@@ -31,10 +31,10 @@ html, body {
     position:  absolute;
     left:      50%;
     top:       10px;
-    color:     white;
+    color:     black;
     opacity:   1.0;
-    background-color: rgba(50, 50, 50, .5);
-    border:    solid 1px rgba(200, 200, 200, .5);
+    background-color: rgba(220, 220, 220, .5);
+    border:    solid 1px rgba(50, 50, 50, .5);
     padding:   5px;
     transform: translate(-50%, 0);
 }

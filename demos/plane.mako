@@ -6,6 +6,9 @@
 
 ##
 
+pointColor   = new Color "red"
+surfaceColor = new Color "violet"
+
 new Demo {}, () ->
     window.mathbox = @mathbox
 
@@ -15,7 +18,7 @@ new Demo {}, () ->
     updateCaption = () =>
         katex.render """(x,\\,y,\\,z)
                           = (1-#{coeffs[0]}-#{coeffs[1]},\\,#{coeffs[0]},\\,#{coeffs[1]})
-                          = \\color{#00ff00}{({#{(1-cf(0)-cf(1)).toFixed(2)}},\\,
+                          = \\color{#{pointColor.str()}}{({#{(1-cf(0)-cf(1)).toFixed(2)}},\\,
                              {#{cf(0).toFixed(2)}},\\,
                              {#{cf(1).toFixed(2)}})}
                      """, @vecElt
@@ -36,15 +39,17 @@ new Demo {}, () ->
     clipCube = @clipCube view,
         draw:   true
         hilite: false
-        color:  new THREE.Color .75, .75, .75
     trans = clipCube.clipped.transform position: [1, 0, 0]
 
     subspace = @subspace
         vectors: vectors
-        live: false
+        live:    false
+        color:   surfaceColor
     subspace.draw trans
 
-    @grid trans, vectors: vectors
+    @grid trans,
+        vectors: vectors
+        lineOpts: color: surfaceColor
 
     # Parameterized point
     view
@@ -54,7 +59,7 @@ new Demo {}, () ->
             expr: (emit) ->
                 emit 1 - cf(0) - cf(1), cf(0), cf(1)
         .point
-            color:  "rgb(0,200,0)"
+            color:  pointColor.arr()
             size:   15
             zTest:  false
             zWrite: false
@@ -64,11 +69,10 @@ new Demo {}, () ->
                     + y.toPrecision(2) + ", " \
                     + z.toPrecision(2) + ")"
         .label
-            outline:    2
-            background: "black"
-            color:      "white"
+            color:      pointColor.arr()
             offset:     [0,20]
-            size:       20
+            size:       13
+            outline:    0
             zTest:      false
             zWrite:     false
 
@@ -76,6 +80,7 @@ new Demo {}, () ->
     @caption '''<p><span id="eqn-here"></span></p>
                 <p><span id="vec-here"></span></p>
              '''
-    katex.render "\\color{red}{x+y+z=1}", document.getElementById 'eqn-here'
+    katex.render "\\color{#{surfaceColor.str()}}{x+y+z=1}",
+        document.getElementById 'eqn-here'
     @vecElt = document.getElementById 'vec-here'
     updateCaption()

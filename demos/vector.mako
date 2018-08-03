@@ -6,6 +6,9 @@
 
 ##
 
+vecColor  = new Color "green"
+lineColor = new Color "blue"
+
 new Demo {
     mathbox:
         mathbox:
@@ -17,7 +20,7 @@ new Demo {
 }, () ->
     window.mathbox = @mathbox
 
-    view = @view axes: false
+    view = @view axes: true
 
     @caption '''<p><span id="vector-here"></span></p>
                 <p>[click and drag the arrow head and tail]</p>
@@ -25,7 +28,7 @@ new Demo {
 
     origin = [0, 0, 0]
     vector = [5, 3, 4]
-    color  = [0, 1, 0, 1]
+    color  = vecColor
 
     @labeledVectors view,
         vectors:    [vector]
@@ -45,7 +48,7 @@ new Demo {
                     when 3 then emit.apply null, vector
         .line
             classes: ["linear-combo"]
-            color:   "yellow"
+            color:   lineColor.arr()
             opacity: 0.75
             width:   4
             zIndex:  1
@@ -63,9 +66,9 @@ new Demo {
             width: 3
             expr: (emit, i) -> emit (vector[i] - origin[i]).toFixed(2)
         .label
-            outline:    2
+            outline:    0
             background: "black"
-            color:      "yellow"
+            color:      lineColor.arr()
             offset:     [25, 0]
             size:       15
             zIndex:     3
@@ -84,8 +87,8 @@ new Demo {
         vector[0] = params.a + origin[0]
         vector[1] = params.b + origin[1]
         vector[2] = params.c + origin[2]
-        katex.render "\\color{#00ff00}v = " \
-            + @texVector([params.a, params.b, params.c]),
+        katex.render "\\color{#{vecColor.str()}}v = " \
+            + @texVector([params.a, params.b, params.c], color: lineColor),
             document.getElementById "vector-here"
     a.onChange update
     b.onChange update

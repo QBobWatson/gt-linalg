@@ -120,8 +120,16 @@ Ce1 = C[0]
 Ce2 = C[1]
 Ce3 = C[2]
 
-colors = [[1, 1, 0, 1], [.7, .7, 0, .7],
-          [.7, 0, 0, .8], [0, .7, 0, .8], [0, .3, .9, .8],
+bColor     = new Color "yellow"
+bxBColor   = bColor.darken .2
+xColor     = new Color "violet"
+aXColor    = xColor.darken .2
+axis1Color = new Color "red"
+axis2Color = new Color "blue"
+axis3Color = new Color "green"
+
+colors = [bColor.arr(1), bxBColor.arr(.7),
+          axis1Color.arr(.8), axis2Color.arr(.8), axis3Color.arr(.8),
           ][0...size+2]
 updateCaption = null
 resetMode = null
@@ -314,7 +322,7 @@ class Dynamics
         # Vectors: array of numVecs x numVecs
         @numVecs = urlParams.get 'numvecs', 'int', 4096
         @vecs = ([0, 0, 0] for [0...@numVecs])
-        col = () -> Math.random() * .5 + .5
+        col = () -> Math.random() * .5 + .25
         @colors = ([col(), col(), col(), 1] for [0...@numVecs])
         @makeVecs()
 
@@ -442,8 +450,8 @@ class Dynamics
                     live:     false
             refLine = view
                 .line
-                    color:   "rgb(0, 80, 255)"
-                    width:   4
+                    color:   new Color("blue").arr(.5)
+                    width:   2
                     opacity: .75
                     zBias:   2
                     closed:  true
@@ -617,7 +625,10 @@ window.demo1 = new (if size == 3 then Demo else Demo2D) {
         zeroPoints:    dynamicsMode == 'disabled'
         zeroThreshold: 0.3
         vectorOpts:    zIndex: 2
-        labelOpts:     zIndex: 3
+        labelOpts:
+            zIndex:     3
+            outline:    1
+            background: "white"
         zeroOpts:      zIndex: 3
 
     ##################################################
@@ -625,7 +636,6 @@ window.demo1 = new (if size == 3 then Demo else Demo2D) {
     clipCube = @clipCube view,
         draw:   true
         hilite: size == 3
-        color:  new THREE.Color .75, .75, .75
 
     ##################################################
     # Dynamics
@@ -643,7 +653,7 @@ window.demo1 = new (if size == 3 then Demo else Demo2D) {
             rangeX:   [-r, r]
             rangeY:   [-r, r]
         .surface
-            color:    "white"
+            color:    [0.5, 0.5, 0.5, 0.5]
             opacity:  0.5
             lineX:    true
             lineY:    true
@@ -707,7 +717,7 @@ window.demo1 = new (if size == 3 then Demo else Demo2D) {
             if diff.lengthSq() <= snapThreshold
                 vec.copy snapped
 
-    @draggable view,
+    @drag = @draggable view,
         points:   [vectorIn1]
         onDrag:   onDrag
         postDrag: computeOut
@@ -734,6 +744,7 @@ window.demo1 = new (if size == 3 then Demo else Demo2D) {
             dynamics.show()
             for demo in [demo1, demo2]
                 demo.mathbox.select('.labeled').set 'visible', false
+                demo.drag.enabled = false
         else
             document.getElementsByClassName('overlay-text')[0].innerHTML = '''
                 <p><span id="mats-here"></span></p>
@@ -753,19 +764,20 @@ window.demo1 = new (if size == 3 then Demo else Demo2D) {
 
             updateCaption = () =>
                 str  = @texMatrix B, {rows: size, cols: size}
-                str += @texVector vectorIn1, {dim: size, color: "#ffff00"}
+                str += @texVector vectorIn1, {dim: size, color: bColor}
                 str += '='
-                str += @texVector vectorOut1, {dim: size, color: "#888800"}
+                str += @texVector vectorOut1, {dim: size, color: bxBColor}
                 katex.render str, eq1Elt
                 str  = @texMatrix A, {rows: size, cols: size}
-                str += @texVector vectorIn2, {dim: size, color: "#ff00ff"}
+                str += @texVector vectorIn2, {dim: size, color: xColor}
                 str += '='
-                str += @texVector vectorOut2, {dim: size, color: "#880088"}
+                str += @texVector vectorOut2, {dim: size, color: aXColor}
                 katex.render str, eq2Elt
             if dynamics
                 dynamics.hide()
                 for demo in [demo1, demo2]
                     demo.mathbox.select('.labeled').set 'visible', true
+                    demo.drag.enabled = true
 
 
 window.demo2 = new (if size == 3 then Demo else Demo2D) {
@@ -786,8 +798,8 @@ window.demo2 = new (if size == 3 then Demo else Demo2D) {
     ##################################################
     # labeled vectors
     colors2 = colors.slice()
-    colors2[0] = [ 1, 0,  1,  1]
-    colors2[1] = [.7, 0, .7, .7]
+    colors2[0] = xColor.arr 1
+    colors2[1] = aXColor.arr .7
     labeled = @labeledVectors view,
         vectors:       [vectorIn2, vectorOut2, Ce1, Ce2, Ce3][0...size+2]
         colors:        colors2
@@ -796,7 +808,10 @@ window.demo2 = new (if size == 3 then Demo else Demo2D) {
         zeroPoints:    dynamicsMode == 'disabled'
         zeroThreshold: 0.3
         vectorOpts:    zIndex: 2
-        labelOpts:     zIndex: 3
+        labelOpts:
+            zIndex: 3
+            outline:    1
+            background: "white"
         zeroOpts:      zIndex: 3
 
     ##################################################
@@ -804,7 +819,6 @@ window.demo2 = new (if size == 3 then Demo else Demo2D) {
     clipCube = @clipCube view,
         draw:   true
         hilite: size == 3
-        color:  new THREE.Color .75, .75, .75
 
     ##################################################
     # Grid
@@ -823,7 +837,7 @@ window.demo2 = new (if size == 3 then Demo else Demo2D) {
             rangeX:   [-r2, r2]
             rangeY:   [-r2, r2]
         .surface
-            color:    "white"
+            color:    [0.5, 0.5, 0.5, 0.5]
             opacity:  0.5
             lineX:    true
             lineY:    true
@@ -891,7 +905,7 @@ window.demo2 = new (if size == 3 then Demo else Demo2D) {
             if diff.lengthSq() <= snapThreshold
                 vec.copy snapped
 
-    @draggable view,
+    @drag = @draggable view,
         points:   [vectorIn2]
         onDrag:   onDrag
         postDrag: computeIn

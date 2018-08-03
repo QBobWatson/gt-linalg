@@ -8,6 +8,11 @@
 
 ortho = 10000
 
+color1 = new Color("green")
+color2 = new Color("violet")
+color3 = new Color("red")
+
+
 window.demo = new Demo2D {
     ortho: ortho
     camera:
@@ -181,7 +186,7 @@ window.demo = new Demo2D {
                             0, 0, 1, 0,
                             0, 0, 0, 1]
             .surface
-                color:   color
+                color:   color.arr()
                 points:  gridData
                 fill:    false
                 lineX:   true
@@ -191,11 +196,11 @@ window.demo = new Demo2D {
                 zOrder:  0
                 classes: [klass]
 
-    makeSurface view1,             [1,0,0,1], 'rgb(0, 255, 0)',   'grid1'
-    makeSurface clipCube2.clipped, [1,0,0,1], 'rgb(255, 0, 255)', 'grid2'
-    makeSurface clipCube2.clipped, matrix1,   'rgb(0, 200, 0)',   'grid1'
-    makeSurface clipCube3.clipped, matrix2,   'rgb(200, 0, 200)', 'grid2'
-    makeSurface clipCube3.clipped, matrix3,   'rgb(0, 150, 0)',   'grid1'
+    makeSurface view1,             [1,0,0,1], color1,             'grid1'
+    makeSurface clipCube2.clipped, [1,0,0,1], color2,             'grid2'
+    makeSurface clipCube2.clipped, matrix1,   color1.darken(.15), 'grid1'
+    makeSurface clipCube3.clipped, matrix2,   color2.darken(.15), 'grid2'
+    makeSurface clipCube3.clipped, matrix3,   color1.darken(.3),  'grid1'
     mathbox.select('.grid1').set 'visible', paramses[0]['show grid']
     mathbox.select('.grid2').set 'visible', paramses[1]['show grid']
 
@@ -212,7 +217,7 @@ window.demo = new Demo2D {
         offset:  [0, 25]
         size:    15
         zIndex:  3
-        outline: 1
+        outline: 0
     hiliteOpts =
         zTest:   true
         zWrite:  true
@@ -222,7 +227,7 @@ window.demo = new Demo2D {
     @labeledVectors view1,
         name:          'labeled1'
         vectors:       [vector1]
-        colors:        [[0, 1, 0, 1]]
+        colors:        [color1]
         labels:        ['x']
         live:          true
         zeroPoints:    true
@@ -234,7 +239,7 @@ window.demo = new Demo2D {
     @labeledVectors view2,
         name:          'labeled2'
         vectors:       [vector2]
-        colors:        [[1, 0, 1, 1]]
+        colors:        [color2]
         labels:        ["#{names[1]}(x)"]
         live:          true
         zeroPoints:    true
@@ -246,7 +251,7 @@ window.demo = new Demo2D {
     @labeledVectors view3,
         name:          'labeled3'
         vectors:       [vector3]
-        colors:        [[1, 1, 0, 1]]
+        colors:        [color3]
         labels:        ["#{names[0]}(#{names[1]}(x))"]
         live:          true
         zeroPoints:    true
@@ -278,23 +283,23 @@ window.demo = new Demo2D {
         [[mat[0], mat[2]], [mat[1], mat[3]]]
 
     updateCaption = () =>
-        str  = "#{names[1]}(\\color{#00ff00}{x}) = "
+        str  = "#{names[1]}(\\color{#{color1.str()}}{x}) = "
         str += @texMatrix cols(matrix1)
-        str += @texVector vector1, color: '#00ff00'
+        str += @texVector vector1, color: color1.str()
         str += "="
-        str += @texVector vector2, color: '#ff00ff'
+        str += @texVector vector2, color: color2.str()
         katex.render str, matrix1Elt
-        str  = "#{names[0]}(\\color{#ff00ff}{#{names[1]}(x)}) = "
+        str  = "#{names[0]}(\\color{#{color2.str()}}{#{names[1]}(x)}) = "
         str += @texMatrix cols(matrix2)
-        str += @texVector vector2, color: '#ff00ff'
+        str += @texVector vector2, color: color2.str()
         str += "="
-        str += @texVector vector3, color: '#ffff00'
+        str += @texVector vector3, color: color3.str()
         katex.render str, matrix2Elt
-        str  = "#{names[0]}\\circ #{names[1]}(\\color{#00ff00}{x}) = "
+        str  = "#{names[0]}\\circ #{names[1]}(\\color{#{color1.str()}}{x}) = "
         str += @texMatrix cols(matrix3)
-        str += @texVector vector1, color: '#00ff00'
+        str += @texVector vector1, color: color1.str()
         str += "="
-        str += @texVector vector3, color: '#ffff00'
+        str += @texVector vector3, color: color3.str()
         katex.render str, matrix3Elt
 
     computeProduct()

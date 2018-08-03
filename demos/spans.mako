@@ -6,17 +6,14 @@
 
 <%block name="inline_style">
   .overlay-popup h2 {
-      color:      green;
+      color:      var(--palette-green);
       text-align: center;
   }
-  .span-type {
-      border: solid 1px white;
-      padding: 5px;
-      margin: 5px;
-      background-color: rgb(100, 0, 0);
+  .span-type, #span-type {
+      color: var(--palette-violet);
   }
   .complement {
-      background-color: rgb(0, 100, 100);
+      color: var(--palette-red);
   }
   .inter-is {
       padding: 10px;
@@ -86,12 +83,10 @@ window.demo = new (if is2D then Demo2D else Demo) {
     @labels   = @urlParams.get 'labels', 'str[]', ['v1', 'v2', 'v3']
     @coeffs   = @urlParams.get 'coeffs', 'str[]', ['x', 'y', 'z']
     @lcstart  = @urlParams.get 'lcstart', 'float[]', [1.0, 1.0, 1.0]
-    @colors   = [[1, 0.3, 1, 1],
-                 [0,   1, 0, 1],
-                 [1,   1, 0, 1]]
+    @colors   = [new Color("blue"), new Color("green"), new Color("brown")]
     @doTarget = false
     @target = null
-    @targetColor = [1, 1, 1, 1]
+    @targetColor = new Color(0, 0, 0)
     @doComplement = false
     @hideSpace = false
 
@@ -127,11 +122,6 @@ window.demo = new (if is2D then Demo2D else Demo) {
     @labels  = @labels[0...@numVecs]
     @coeffs  = @coeffs[0...@numVecs]
     @lcstart = @lcstart[0...@numVecs]
-
-    @hexColors = ("#" + new THREE.Color(c[0], c[1], c[2]).getHexString() \
-                  for c in @colors)
-    @targetHexColor = "#" + new THREE.Color(
-        @targetColor[0], @targetColor[1], @targetColor[2]).getHexString()
 
     @isLive = !@urlParams.nomove? or @urlParams.nomove == "false"
 
@@ -193,7 +183,7 @@ window.demo = new (if is2D then Demo2D else Demo) {
                 live:     false
                 data:     [[0,0,0]]
             .point
-                color:    "white"
+                color:    "black"
                 size:     15
                 zIndex:   3
 
@@ -224,21 +214,20 @@ window.demo = new (if is2D then Demo2D else Demo) {
             coeffs:    params
             coeffVars: @coeffs
             vectors:   @vectors
-            colors:    @colors
+            colors:    @colors.slice()
             labels:    @labels
         @mathbox.select(".lincombo").set "visible", params[checkLabel]
 
     ##################################################
     # Clip cube
-    surfaceColor = new THREE.Color 0.5, 0, 0
-    complementColor = new THREE.Color 0, 0.7, 0.7
+    surfaceColor = new Color "violet"
+    complementColor = new Color "red"
 
     clipCube = @clipCube view,
         draw:     true
-        color:    new THREE.Color .75, .75, .75
         material: new THREE.MeshBasicMaterial
-            color:       surfaceColor
-            opacity:     0.5
+            color:       surfaceColor.three()
+            opacity:     0.25
             transparent: true
             visible:     false
             depthWrite:  false
@@ -259,6 +248,7 @@ window.demo = new (if is2D then Demo2D else Demo) {
         zeroThreshold: zeroThreshold
         live:          @isLive
         range:         range
+        color:         surfaceColor
         # Lines before planes for transparency
         lineOpts:
             zOrder: 0
@@ -274,7 +264,7 @@ window.demo = new (if is2D then Demo2D else Demo) {
             zeroThreshold: zeroThreshold
             live:          @isLive
             range:         range
-            color:         0x00aaaa
+            color:         complementColor
             pointOpts:     {size: 20, zIndex: 4}
             # Lines before planes for transparency
             lineOpts:
@@ -331,7 +321,7 @@ window.demo = new (if is2D then Demo2D else Demo) {
             mesh.material.color = complementColor
             mesh.material.visible = true
         else if subspace.dim == 3
-            mesh.material.color = surfaceColor
+            mesh.material.color = surfaceColor.three()
             mesh.material.visible = true
         else
             mesh.material.visible = false
@@ -364,12 +354,12 @@ window.demo = new (if is2D then Demo2D else Demo) {
 
             updateCaption = () =>
                 if @urlParams.capopt == 'matrix'
-                    str = @texMatrix @vectors, colors: @hexColors
+                    str = @texMatrix @vectors, colors: @colors.slice()
                     str += @texVector (params[c] for c in @coeffs)
                 else
                     str = @texCombo @vectors,
                                     (params[c] for c in @coeffs),
-                                    colors: @hexColors
+                                    colors: @colors.slice()
                 lc = linCombo.combine()
                 str += " = " + @texVector lc
                 equal = (lc[0] == @target[0] and
@@ -394,12 +384,12 @@ window.demo = new (if is2D then Demo2D else Demo) {
             eqnElt = document.getElementById 'eqn-here'
             updateCaption = () =>
                 if @urlParams.capopt == 'matrix'
-                    str = @texMatrix @vectors, colors: @hexColors
+                    str = @texMatrix @vectors, colors: @colors.slice()
                     str += @texVector (params[c] for c in @coeffs)
                 else
                     str = @texCombo @vectors,
                                     (params[c] for c in @coeffs),
-                                    colors: @hexColors
+                                    colors: @colors.slice()
                 lc = linCombo.combine()
                 str += " = " + @texVector lc
                 katex.render str, eqnElt
@@ -415,7 +405,7 @@ window.demo = new (if is2D then Demo2D else Demo) {
             vectorsElt = document.getElementById 'vectors-here'
             spanElt    = document.getElementById 'span-type'
             updateCaption = () =>
-                katex.render @texSet(@vectors, colors: @hexColors), vectorsElt
+                katex.render @texSet(@vectors, colors: @colors.slice()), vectorsElt
 
                 if subspace.dim == @numVecs
                     spanElt.innerText = "linearly independent"
@@ -451,9 +441,9 @@ window.demo = new (if is2D then Demo2D else Demo) {
             spanElt    = document.getElementById 'span-type'
             updateCaption = () =>
                 if @urlParams.capopt == 'matrix'
-                    katex.render @texMatrix(@vectors, colors: @hexColors), vectorsElt
+                    katex.render @texMatrix(@vectors, colors: @colors.slice()), vectorsElt
                 else
-                    katex.render @texSet(@vectors, colors: @hexColors), vectorsElt
+                    katex.render @texSet(@vectors, colors: @colors.slice()), vectorsElt
 
                 spanElt.innerText = \
                     ["a point", "a line", "a plane", "space"][subspace.dim]

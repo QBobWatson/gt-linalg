@@ -16,6 +16,12 @@ vector3 = urlParams.get 'v3', 'float[]', [3,3,0]
 vector  = urlParams.get 'vec', 'float[]', [5,5,5]
 size = vector1.length
 
+surfaceColor  = new Color "violet"
+spanVecColor  = new Color "orange"
+linComboColor = new Color "green"
+bColor        = new Color "red"
+bHatColor     = new Color "blue"
+
 numVecs = 2
 if urlParams.v3?
     numVecs = 3
@@ -64,7 +70,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
             live:     false
             data:     [[0,0,0]]
         .point
-            color:    "white"
+            color:    "black"
             size:     15
             zIndex:   3
 
@@ -74,6 +80,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
         vectors: vectors
         live:    false
         noPlane: size == 2
+        color:   surfaceColor
         # Lines before planes for transparency
         lineOpts:
             zOrder: 0
@@ -84,15 +91,18 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
     @grid clipCube.clipped,
         vectors: vectors
         live: false
+        lineOpts:
+            color: surfaceColor
+            opacity: .35
 
     ##################################################
     # Labeled vectors
     @labeledVectors view,
         name:       'basis'
         vectors:    vectors
-        colors:     [[0.9, 0, 0, 0.9],
-                     [0.9, 0, 0, 0.9],
-                     [0.9, 0, 0, 0.9]].slice(0, numVecs)
+        colors:     [spanVecColor.arr(.9),
+                     spanVecColor.arr(.9),
+                     spanVecColor.arr(.9)].slice(0, numVecs)
         labels:     labels
         live:       false
         vectorOpts: zIndex: 2
@@ -101,7 +111,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
     @labeledPoints view,
         name:      'bandbhat'
         points:    [vector, projection]
-        colors:    [[1, 0.3, .3, 1], [0, .8, .8, 1]]
+        colors:    [bColor, bHatColor]
         labels:    [vecLabel, "#{vecLabel}_Col(A)"]
         live:      true
         pointOpts: zIndex: 4
@@ -122,9 +132,8 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
         coeffs:    solution
         coeffVars: [0, 1, 2]
         vectors:   vectors
-        colors:    [[1, 0.3, 1, 1],
-                    [0,   1, 0, 1],
-                    [1,   1, 0, 1]]
+        colors:    [linComboColor, linComboColor, linComboColor]
+        lineOpts:  zIndex: 3
 
     ##################################################
     # Dragging and snapping
@@ -168,34 +177,36 @@ window.demo = new (if size == 2 then Demo2D else Demo) {}, () ->
     vectorElt = document.getElementById 'vectoreqn-here'
     matrixElt = document.getElementById 'matrixeqn-here'
 
-    hexColorProj = "#" + new THREE.Color(0, .8, .8).getHexString()
-
     updateCaptions = () =>
         a = solution[0].toFixed 2
-        str = "\\color{#ffff00}{#{a}}\\, \\color{#dd0000}{#{texLabels[0]}}"
+        coeffColor = linComboColor
+        str = "\\color{#{coeffColor.str()}}{#{a}}\\, " \
+            + "\\color{#{spanVecColor.str()}}{#{texLabels[0]}}"
         if numVecs >= 2
             if solution[1] < 0
                 sign = ''
             else
                 sign = '+'
             a = solution[1].toFixed 2
-            str += "#{sign}\\color{#ffff00}{#{a}}\\, \\color{#dd0000}{#{texLabels[1]}}"
+            str += "#{sign}\\color{#{coeffColor.str()}}{#{a}}\\, " \
+                +  "\\color{#{spanVecColor.str()}}{#{texLabels[1]}}"
         if numVecs >= 3
             if solution[2] < 0
                 sign = ''
             else
                 sign = '+'
             a = solution[2].toFixed 2
-            str += "#{sign}\\color{#ffff00}{#{a}}\\, \\color{#dd0000}{#{texLabels[2]}}"
-        str += "= \\color{#{hexColorProj}}{#{vecLabel}_{\\text{Col}(A)}}"
+            str += "#{sign}\\color{#{coeffColor.str()}}{#{a}}\\, " \
+                +  "\\color{#{spanVecColor.str()}}{#{texLabels[2]}}"
+        str += "= \\color{#{bHatColor.str()}}{#{vecLabel}_{\\text{Col}(A)}}"
         katex.render str, vectorElt
 
-        str  = "A \\color{#ffff00}{\\hat x} ="
+        str  = "A \\color{#{coeffColor.str()}}{\\hat x} ="
         str += @texMatrix matrix
-        str += @texVector solution, color: '#ffff00'
+        str += @texVector solution, color: coeffColor
         str += '='
-        str += @texVector projection, color: hexColorProj
-        str += "= \\color{#{hexColorProj}}{#{vecLabel}_{\\text{Col}(A)}}"
+        str += @texVector projection, color: bHatColor
+        str += "= \\color{#{bHatColor.str()}}{#{vecLabel}_{\\text{Col}(A)}}"
         katex.render str, matrixElt
 
     computeOut()

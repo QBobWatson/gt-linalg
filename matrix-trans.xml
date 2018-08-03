@@ -101,7 +101,7 @@ the license is included in gfdl.xml.
   <example hide-type="true">
     <title>Interactive: A <m>2\times 3</m> matrix</title>
     <figure>
-      <caption>A picture of a <m>2\times 3</m> matrix, regarded as a function.  The input vector is <m>x</m>, which is a vector in <m>\R^3</m>, and the output vector is <m>b=Ax</m>, which is a vector in <m>\R^2</m>.  The red line on the right is the column space; as you vary <m>x</m>, the output <m>b</m> is constrained to lie on this line.</caption>
+      <caption>A picture of a <m>2\times 3</m> matrix, regarded as a function.  The input vector is <m>x</m>, which is a vector in <m>\R^3</m>, and the output vector is <m>b=Ax</m>, which is a vector in <m>\R^2</m>.  The violet line on the right is the column space; as you vary <m>x</m>, the output <m>b</m> is constrained to lie on this line.</caption>
       <mathbox source="demos/Axequalsb.html?show=false" height="500px"/>
     </figure>
   </example>
@@ -109,7 +109,7 @@ the license is included in gfdl.xml.
   <example hide-type="true">
     <title>Interactive: A <m>3\times 2</m> matrix</title>
     <figure>
-      <caption>A picture of a <m>3\times 2</m> matrix, regarded as a function.  The input vector is <m>x</m>, which is a vector in <m>\R^2</m>, and the output vector is <m>b=Ax</m>, which is a vector in <m>\R^3</m>.  The red plane on the right is the column space; as you vary <m>x</m>, the output <m>b</m> is constrained to lie on this plane.</caption>
+      <caption>A picture of a <m>3\times 2</m> matrix, regarded as a function.  The input vector is <m>x</m>, which is a vector in <m>\R^2</m>, and the output vector is <m>b=Ax</m>, which is a vector in <m>\R^3</m>.  The violet plane on the right is the column space; as you vary <m>x</m>, the output <m>b</m> is constrained to lie on this plane.</caption>
       <mathbox source="demos/Axequalsb.html?mat=1,0:0,1:1,0&amp;range2=5&amp;closed=true&amp;show=false" height="500px"/>
     </figure>
   </example>
@@ -802,7 +802,7 @@ the license is included in gfdl.xml.
       and define <m>T(x) = Ax</m>.  The domain of <m>T</m> is <m>\R^3</m>, and the codomain is <m>\R^2</m>.  The range of <m>T</m> is the column space; since all three columns are collinear, the range is a line in <m>\R^2</m>.
     </p>
     <figure>
-      <caption>A picture of the matrix transformation <m>T</m>.  The input vector is <m>x</m>, which is a vector in <m>\R^3</m>, and the output vector is <m>b=T(x)=Ax</m>, which is a vector in <m>\R^2</m>.  The red line on the right is the range of <m>T</m>; as you vary <m>x</m>, the output <m>b</m> is constrained to lie on this line.</caption>
+      <caption>A picture of the matrix transformation <m>T</m>.  The input vector is <m>x</m>, which is a vector in <m>\R^3</m>, and the output vector is <m>b=T(x)=Ax</m>, which is a vector in <m>\R^2</m>.  The violet line on the right is the range of <m>T</m>; as you vary <m>x</m>, the output <m>b</m> is constrained to lie on this line.</caption>
       <mathbox source="demos/Axequalsb.html?show=false" height="500px"/>
     </figure>
   </example>
@@ -817,7 +817,7 @@ the license is included in gfdl.xml.
       and define <m>T(x) = Ax</m>.  The domain of <m>T</m> is <m>\R^2</m>, and the codomain is <m>\R^3</m>.  The range of <m>T</m> is the column space; since <m>A</m> has two columns which are not collinear, the range is a plane in <m>\R^3</m>.
     </p>
     <figure>
-      <caption>A picture of the matrix transformation <m>T</m>.  The input vector is <m>x</m>, which is a vector in <m>\R^2</m>, and the output vector is <m>b=T(x)=Ax</m>, which is a vector in <m>\R^3</m>.  The red plane on the right is the range of <m>T</m>; as you vary <m>x</m>, the output <m>b</m> is constrained to lie on this plane.</caption>
+      <caption>A picture of the matrix transformation <m>T</m>.  The input vector is <m>x</m>, which is a vector in <m>\R^2</m>, and the output vector is <m>b=T(x)=Ax</m>, which is a vector in <m>\R^3</m>.  The violet plane on the right is the range of <m>T</m>; as you vary <m>x</m>, the output <m>b</m> is constrained to lie on this plane.</caption>
       <mathbox source="demos/Axequalsb.html?mat=1,0:0,1:1,0&amp;range2=5&amp;closed=true&amp;show=false" height="500px"/>
     </figure>
   </example>

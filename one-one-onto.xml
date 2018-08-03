@@ -377,7 +377,7 @@ the license is included in gfdl.xml.
         Geometrically, <m>T</m> is projection onto the <m>xy</m>-plane.  Any two vectors that lie on the same vertical line will have the same projection.  For <m>b</m> on the <m>xy</m>-plane, the solution set of <m>T(x) = b</m> is the entire vertical line containing <m>b</m>.  In particular, <m>T(x) = b</m> has <em>infinitely many</em> solutions.
       </p>
       <figure>
-        <caption>A picture of the matrix transformation <m>T</m>.  The transformation <m>T</m> projects a vector onto the <m>xy</m>-plane.  The red line is the solution set of <m>T(x)=0</m>.  If you drag <m>x</m> along the red line, the output <m>T(x) = Ax</m> does not change.  This demonstrates that <m>T(x)=0</m> has more than one solution, so <m>T</m> is not one-to-one.</caption>
+        <caption>A picture of the matrix transformation <m>T</m>.  The transformation <m>T</m> projects a vector onto the <m>xy</m>-plane.  The violet line is the solution set of <m>T(x)=0</m>.  If you drag <m>x</m> along the violet line, the output <m>T(x) = Ax</m> does not change.  This demonstrates that <m>T(x)=0</m> has more than one solution, so <m>T</m> is not one-to-one.</caption>
         <mathbox source="demos/Axequalsb.html?mat=1,0,0:0,1,0:0,0,0&amp;range2=5&amp;closed=true&amp;lock=true&amp;x=0,0,0" height="500px"/>
       </figure>
     </solution>
@@ -405,7 +405,7 @@ the license is included in gfdl.xml.
         <me>T\vec{1 -1 1} = \mat{1 1 0; 0 1 1}\vec{1 -1 1} = 0 = T\vec{0 0 0}.</me>
       </p>
       <figure>
-        <caption>A picture of the matrix transformation <m>T</m>.  The red line is the null space of <m>A</m>, i.e., solution set of <m>T(x)=0</m>.  If you drag <m>x</m> along the red line, the output <m>T(x) = Ax</m> does not change.  This demonstrates that <m>T(x)=0</m> has more than one solution, so <m>T</m> is not one-to-one.</caption>
+        <caption>A picture of the matrix transformation <m>T</m>.  The violet line is the null space of <m>A</m>, i.e., solution set of <m>T(x)=0</m>.  If you drag <m>x</m> along the violet line, the output <m>T(x) = Ax</m> does not change.  This demonstrates that <m>T(x)=0</m> has more than one solution, so <m>T</m> is not one-to-one.</caption>
         <mathbox source="demos/Axequalsb.html?mat=1,1,0:0,1,1&amp;range2=5&amp;closed=true&amp;show=true&amp;lock=true&amp;x=0,0,0" height="500px"/>
       </figure>
     </solution>
@@ -431,7 +431,7 @@ the license is included in gfdl.xml.
         <me>T\vec{1 1 0} = \mat{1 -1 2; -2 2 -4}\vec{1 1 0} = 0 = T\vec{0 0 0}.</me>
       </p>
       <figure>
-        <caption>A picture of the matrix transformation <m>T</m>.  The red plane is the solution set of <m>T(x)=0</m>.  If you drag <m>x</m> along the red plane, the output <m>T(x) = Ax</m> does not change.  This demonstrates that <m>T(x)=0</m> has more than one solution, so <m>T</m> is not one-to-one.</caption>
+        <caption>A picture of the matrix transformation <m>T</m>.  The violet plane is the solution set of <m>T(x)=0</m>.  If you drag <m>x</m> along the violet plane, the output <m>T(x) = Ax</m> does not change.  This demonstrates that <m>T(x)=0</m> has more than one solution, so <m>T</m> is not one-to-one.</caption>
         <mathbox source="demos/Axequalsb.html?show=true&amp;closed=true&amp;lock=true&amp;x=0,0,0" height="500px"/>
       </figure>
     </solution>
@@ -648,7 +648,7 @@ the license is included in gfdl.xml.
         we see that for every output vector of <m>T</m>, the third entry is equal to the first.  Therefore, <me>b=(1,2,3)</me> is not in the range of <m>T</m>.
       </p>
       <figure>
-        <caption>A picture of the matrix transformation <m>T</m>.  The range of <m>T</m> is the red plane on the right; this is smaller than the codomain <m>\R^3</m>.  If you drag <m>b</m> off of the red plane, then the equation <m>Ax=b</m> becomes inconsistent; this means <m>T(x)=b</m> has no solution.</caption>
+        <caption>A picture of the matrix transformation <m>T</m>.  The range of <m>T</m> is the violet plane on the right; this is smaller than the codomain <m>\R^3</m>.  If you drag <m>b</m> off of the violet plane, then the equation <m>Ax=b</m> becomes inconsistent; this means <m>T(x)=b</m> has no solution.</caption>
         <mathbox source="demos/Axequalsb.html?mat=1,0:0,1:1,0&amp;range2=5&amp;closed=true&amp;show=false" height="500px"/>
       </figure>
     </solution>
@@ -674,7 +674,7 @@ the license is included in gfdl.xml.
         since all three columns of <m>A</m> are collinear.  Therefore, any vector not on the line through <m>1\choose-2</m> is not in the range of <m>T</m>.  For instance, if <m>b={1\choose 1}</m> then <m>T(x)=b</m> has no solution.
       </p>
       <figure>
-        <caption>A picture of the matrix transformation <m>T</m>.  The range of <m>T</m> is the red line on the right; this is smaller than the codomain <m>\R^2</m>.  If you drag <m>b</m> off of the red line, then the equation <m>Ax=b</m> becomes inconsistent; this means <m>T(x)=b</m> has no solution.</caption>
+        <caption>A picture of the matrix transformation <m>T</m>.  The range of <m>T</m> is the violet line on the right; this is smaller than the codomain <m>\R^2</m>.  If you drag <m>b</m> off of the violet line, then the equation <m>Ax=b</m> becomes inconsistent; this means <m>T(x)=b</m> has no solution.</caption>
         <mathbox source="demos/Axequalsb.html?show=false&amp;closed=true" height="500px"/>
       </figure>
     </solution>
@@ -758,7 +758,7 @@ the license is included in gfdl.xml.
       and define <m>T\colon\R^3\to\R^2</m> by <m>T(x) = Ax</m>.  This transformation is neither one-to-one nor onto, as we saw in this <xref ref="one-to-one-eg-neither1"/> and this <xref ref="one-to-one-eg-neither2"/>.
     </p>
     <figure>
-      <caption>A picture of the matrix transformation <m>T</m>.  The red plane is the solution set of <m>T(x)=0</m>.  If you drag <m>x</m> along the red plane, the output <m>T(x) = Ax</m> does not change.  This demonstrates that <m>T(x)=0</m> has more than one solution, so <m>T</m> is not one-to-one.   The range of <m>T</m> is the red line on the right; this is smaller than the codomain <m>\R^2</m>.  If you drag <m>b</m> off of the red line, then the equation <m>Ax=b</m> becomes inconsistent; this means <m>T(x)=b</m> has no solution.</caption>
+      <caption>A picture of the matrix transformation <m>T</m>.  The violet plane is the solution set of <m>T(x)=0</m>.  If you drag <m>x</m> along the violet plane, the output <m>T(x) = Ax</m> does not change.  This demonstrates that <m>T(x)=0</m> has more than one solution, so <m>T</m> is not one-to-one.   The range of <m>T</m> is the violet line on the right; this is smaller than the codomain <m>\R^2</m>.  If you drag <m>b</m> off of the violet line, then the equation <m>Ax=b</m> becomes inconsistent; this means <m>T(x)=b</m> has no solution.</caption>
       <mathbox source="demos/Axequalsb.html?show=true&amp;closed=true" height="500px"/>
     </figure>
   </example>
@@ -771,7 +771,7 @@ the license is included in gfdl.xml.
       and define <m>T\colon\R^2\to\R^3</m> by <m>T(x) = Ax</m>.  This transformation is one-to-one but not onto, as we saw in this <xref ref="matrix-trans-11-notonto1"/> and this <xref ref="matrix-trans-11-notonto2"/>.
     </p>
     <figure>
-      <caption>A picture of the matrix transformation <m>T</m>.  The range of <m>T</m> is the red plane on the right; this is smaller than the codomain <m>\R^3</m>.  If you drag <m>b</m> off of the red plane, then the equation <m>Ax=b</m> becomes inconsistent; this means <m>T(x)=b</m> has no solution.  However, for <m>b</m> lying on the red plane, there is a unique vector <m>x</m> such that <m>T(x)=b</m>.</caption>
+      <caption>A picture of the matrix transformation <m>T</m>.  The range of <m>T</m> is the violet plane on the right; this is smaller than the codomain <m>\R^3</m>.  If you drag <m>b</m> off of the violet plane, then the equation <m>Ax=b</m> becomes inconsistent; this means <m>T(x)=b</m> has no solution.  However, for <m>b</m> lying on the violet plane, there is a unique vector <m>x</m> such that <m>T(x)=b</m>.</caption>
       <mathbox source="demos/Axequalsb.html?mat=1,0:0,1:1,0&amp;range2=5&amp;closed=true&amp;show=" height="500px"/>
     </figure>
   </example>
@@ -784,7 +784,7 @@ the license is included in gfdl.xml.
       and define <m>T\colon\R^3\to\R^2</m> by <m>T(x) = Ax</m>.  This transformation is onto but not one-to-one, as we saw in this <xref ref="one-to-one-not11-onto2"/> and this <xref ref="one-to-one-not11-onto2"/>.
     </p>
     <figure>
-      <caption>A picture of the matrix transformation <m>T</m>.  Every vector on the right side is the output of <m>T</m> for a suitable input.  If you drag <m>b</m>, the demo will find an input vector <m>x</m> with output <m>b</m>.  The red line is the null space of <m>A</m>, i.e., solution set of <m>T(x)=0</m>.  If you drag <m>x</m> along the red line, the output <m>T(x) = Ax</m> does not change.  This demonstrates that <m>T(x)=0</m> has more than one solution, so <m>T</m> is not one-to-one.</caption>
+      <caption>A picture of the matrix transformation <m>T</m>.  Every vector on the right side is the output of <m>T</m> for a suitable input.  If you drag <m>b</m>, the demo will find an input vector <m>x</m> with output <m>b</m>.  The violet line is the null space of <m>A</m>, i.e., solution set of <m>T(x)=0</m>.  If you drag <m>x</m> along the violet line, the output <m>T(x) = Ax</m> does not change.  This demonstrates that <m>T(x)=0</m> has more than one solution, so <m>T</m> is not one-to-one.</caption>
       <mathbox source="demos/Axequalsb.html?mat=1,1,0:0,1,1&amp;range2=5&amp;closed=true&amp;show=true&amp;x=1,2,.5" height="500px"/>
     </figure>
   </example>

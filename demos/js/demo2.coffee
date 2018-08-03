@@ -1,6 +1,137 @@
 "use strict"
 
 ################################################################################
+# * Color palette
+
+# Keep this in sync with jdr-tikz.sty
+palette =
+    red:    [0.8941, 0.1020, 0.1098]
+    blue:   [0.2157, 0.4941, 0.7216]
+    green:  [0.3020, 0.6863, 0.2902]
+    violet: [0.5961, 0.3059, 0.6392]
+    orange: [1.0000, 0.4980, 0.0000]
+    yellow: [0.7000, 0.7000, 0.0000]
+    brown:  [0.6510, 0.3373, 0.1569]
+    pink:   [0.9686, 0.5059, 0.7490]
+
+class Color
+    constructor: (args...) ->
+        @r = 1
+        @g = 1
+        @b = 1
+        if args.length > 0
+            @set.apply @, args
+
+    set: (args...) =>
+        # Copied from THREE.js
+        if args.length == 3 or args.length == 4
+            [@r, @g, @b] = args
+        else if args[0] instanceof Array
+            @set.apply @, args[0]
+        else if args[0] instanceof Color or args[0] instanceof THREE.Color
+            [@r, @g, @b] = [args[0].r, args[0].g, args[0].b]
+        else if typeof args[0] == 'number'
+            hex = Math.floor args[0]
+            @r = (hex >> 16 & 255) / 255
+            @g = (hex >> 8  & 255) / 255
+            @b = (hex       & 255) / 255
+        else if typeof args[0] == 'string'
+            style = args[0]
+            # rgb(255,0,0)
+            if /^rgb\((\d+), ?(\d+), ?(\d+)\)$/i.test style
+                color = /^rgb\((\d+), ?(\d+), ?(\d+)\)$/i.exec style
+                @r = Math.min(255, parseInt(color[1], 10)) / 255
+                @g = Math.min(255, parseInt(color[2], 10)) / 255
+                @b = Math.min(255, parseInt(color[3], 10)) / 255
+            # rgb(100%,0%,0%)
+            else if  /^rgb\((\d+)\%, ?(\d+)\%, ?(\d+)\%\)$/i.test style
+                color = /^rgb\((\d+)\%, ?(\d+)\%, ?(\d+)\%\)$/i.exec style
+                @r = Math.min(100, parseInt(color[1], 10)) / 100
+                @g = Math.min(100, parseInt(color[2], 10)) / 100
+                @b = Math.min(100, parseInt(color[3], 10)) / 100
+            # #ff0000
+            else if /^\#([0-9a-f]{6})$/i.test style
+                color = /^\#([0-9a-f]{6})$/i.exec style
+                @set parseInt(color[1], 16)
+            # #f00
+            else if /^\#([0-9a-f])([0-9a-f])([0-9a-f])$/i.test style
+                color = /^\#([0-9a-f])([0-9a-f])([0-9a-f])$/i.exec style
+                @set parseInt(color[1]+color[1]+color[2]+color[2]+color[3]+color[3], 16)
+            # red
+            else if /^(\w+)$/i.test style
+                @set palette[style]
+
+        @r = Math.min(1.0, Math.max(0.0, @r))
+        @g = Math.min(1.0, Math.max(0.0, @g))
+        @b = Math.min(1.0, Math.max(0.0, @b))
+
+        @
+
+    hex: () => (@r * 255) << 16 ^ (@g * 255) << 8 ^ (@b * 255) << 0
+
+    str: () => '#' + ('000000' + @hex().toString(16)).slice(-6)
+
+    arr: (args...) =>
+        if args.length == 0
+            return [@r, @g, @b]
+        [@r, @g, @b, args[0]]
+
+    three: () => new THREE.Color @r, @g, @b
+
+    hsl: () =>
+        max = Math.max @r, @g, @b
+        min = Math.min @r, @g, @b
+        l = (max + min) / 2
+        h = s = 0
+        if max != min
+            d = max - min
+            s = if l > 0.5 then d / (2 - max - min) else d / (max + min)
+            switch max
+                when @r
+                    h = (@g - @b) / d + (if @g < @b then 6 else 0)
+                when @g
+                    h = (@b - @r) / d + 2
+                when @b
+                    h = (@r - @g) / d + 4
+            h /= 6
+        [h, s, l]
+
+    fromHSL: (h, s, l) =>
+        h = Math.min(1.0, Math.max(0.0, h))
+        s = Math.min(1.0, Math.max(0.0, s))
+        l = Math.min(1.0, Math.max(0.0, l))
+        if s == 0
+            @r = @g = @b = l
+        else
+            hue2rgb = (p, q, t) ->
+                if t < 0
+                     t += 1
+                if t > 1
+                    t -= 1
+                if t < 1/6
+                    return p + (q - p) * 6 * t
+                if t < 1/2
+                    return q
+                if t < 2/3
+                    return p + (q - p) * (2/3 - t) * 6
+                return p
+
+            q = if l < 0.5 then l * (1 + s) else l + s - l * s
+            p = 2 * l - q
+
+            @r = hue2rgb p, q, h + 1/3
+            @g = hue2rgb p, q, h
+            @b = hue2rgb p, q, h - 1/3
+
+        @
+
+    brighten: (pct) =>
+        [h, s, l] = @hsl()
+        new Color().fromHSL(h, s, l + pct)
+    darken: (pct) => @brighten -pct
+
+
+################################################################################
 # * Utility functions
 
 # Test via a getter in the options object to see if the passive property is accessed
@@ -956,10 +1087,13 @@ class Subspace
 
     # Set up the mathbox elements to draw the subspace if dim < 3
     draw: (view) =>
-        name    = @opts.name   ? 'subspace'
-        @range  = @opts.range  ? 10.0
-        color   = @opts.color  ? 0x880000
-        live    = @opts.live   ? true
+        name   = @opts.name   ? 'subspace'
+        @range = @opts.range  ? 10.0
+        color  = @opts.color  ? new Color("violet")
+        live   = @opts.live   ? true
+
+        if color instanceof Color
+            color = color.arr()
 
         @range *= 2
 
@@ -984,7 +1118,7 @@ class Subspace
             id:      "#{name}-plane"
             classes: [name]
             color:   color
-            opacity: 0.5
+            opacity: 0.25
             lineX:   false
             lineY:   false
             fill:    true
@@ -1058,6 +1192,7 @@ class Subspace
 # Options:
 #     vectors: input vectors
 #     colors: colors of the lines
+#     pointColor: color of the target point
 #     labels: vector labels
 #     coeffs: .x, .y, .z are the coefficients, or:
 #     coeffVars: names of the coefficients
@@ -1070,11 +1205,15 @@ class Subspace
 class LinearCombo
     constructor: (view, opts) ->
         name = opts.name ? 'lincombo'
-        vectors   = opts.vectors
-        colors    = opts.colors
-        labels    = opts.labels
-        coeffs    = opts.coeffs
-        coeffVars = opts.coeffVars ? ['x', 'y', 'z']
+        vectors    = opts.vectors
+        colors     = opts.colors
+        pointColor = opts.pointColor ? new Color("red")
+        labels     = opts.labels
+        coeffs     = opts.coeffs
+        coeffVars  = opts.coeffVars ? ['x', 'y', 'z']
+
+        if pointColor instanceof Color
+            pointColor = pointColor.arr()
 
         c = (i) -> coeffs[coeffVars[i]]
 
@@ -1090,15 +1229,15 @@ class LinearCombo
         pointOpts =
             classes: [name]
             points:  "##{name}-combo"
-            color:   0x00ffff
+            color:   pointColor
             zIndex:  2
             size:    15
         extend pointOpts, opts.pointOpts ? {}
         labelOpts =
             classes:    [name]
-            outline:    2
-            background: "black"
-            color:      0x00ffff
+            outline:    0
+            background: [0,0,0,0]
+            color:      pointColor
             offset:     [0, 25]
             zIndex:     3
             size:       15
@@ -1110,6 +1249,9 @@ class LinearCombo
         vector1 = vectors[0]
         vector2 = vectors[1]
         vector3 = vectors[2]
+        for col, i in colors
+            if col instanceof Color
+                colors[i] = col.arr(1)
         color1 = colors[0]
         color2 = colors[1]
         color3 = colors[2]
@@ -1314,15 +1456,19 @@ class Grid
             normal:  false
             color:   0xcc0000
         extend ticksOpts, opts.ticksOpts ? {}
+        if ticksOpts["color"] instanceof Color
+            ticksOpts["color"] = ticksOpts["color"].arr()
 
         lineOpts =
             id:      name
-            opacity: .75
+            opacity: .5
             stroke:  'solid'
-            width:   3
+            width:   2
             color:   0x880000
             zBias:   2
         extend lineOpts, opts.lineOpts ? {}
+        if lineOpts["color"] instanceof Color
+            lineOpts["color"] = lineOpts["color"].arr()
 
         numVecs = vectors.length
         # Extend to 3D
@@ -1449,8 +1595,8 @@ class View
             end:     true
             width:   3
             depth:   1
-            color:   "white"
-            opacity: 0.75
+            color:   "black"
+            opacity: 0.5
             zBias:   -1
             size:    5
         extend axisOpts, @opts.axisOpts ? {}
@@ -1461,8 +1607,8 @@ class View
             axes:    [1, 2]
             width:   2
             depth:   1
-            color:   "white"
-            opacity: 0.5
+            color:   "black"
+            opacity: 0.25
             zBias:   0
         extend gridOpts, @opts.gridOpts ? {}
 
@@ -1470,10 +1616,10 @@ class View
         labelOpts =
             classes:    ["#{@name}-axes"]
             size:       20
-            color:      "white"
-            opacity:    1
-            outline:    2
-            background: "black"
+            color:      "black"
+            opacity:    0.5
+            outline:    0
+            background: [0,0,0,0]
             offset:     [0, 0]
         extend labelOpts, @opts.labelOpts ? {}
 
@@ -1789,12 +1935,14 @@ class ClipCube
 
         if draw
             material = @opts.material ? new THREE.MeshBasicMaterial()
-            color    = @opts.color    ? new THREE.Color 1, 1, 1
+            if @opts.color?
+                @opts.color = new Color @opts.color
+            color    = @opts.color    ? new Color .7, .7, .7
             @mesh = do () =>
                 geo  = new THREE.BoxGeometry 2, 2, 2
                 mesh = new THREE.Mesh geo, material
                 cube = new THREE.BoxHelper mesh
-                cube.material.color = color
+                cube.material.color = color.three()
                 @three.scene.add cube
                 mesh
 
@@ -1876,8 +2024,8 @@ class LabeledVectors
             classes:    [name]
             colors:     "##{name}-colors"
             color:      "white"
-            outline:    2
-            background: "black"
+            outline:    0
+            background: [0,0,0,0]
             size:       15
             offset:     [0, 25]
         extend labelOpts, @opts.labelOpts ? {}
@@ -1891,6 +2039,10 @@ class LabeledVectors
             size:    20
         extend zeroOpts, @opts.zeroOpts ? {}
         zeroThreshold = @opts.zeroThreshold ? 0.0
+
+        for col, i in colors
+            if col instanceof Color
+                colors[i] = col.arr(1)
 
         @hidden = false
 
@@ -2022,11 +2174,15 @@ class LabeledPoints
             points:     "##{name}-points"
             colors:     "##{name}-colors"
             color:      "white"
-            outline:    2
-            background: "black"
+            outline:    0
+            background: [0,0,0,0]
             size:       15
             offset:     [0, 25]
         extend labelOpts, @opts.labelOpts ? {}
+
+        for col, i in colors
+            if col instanceof Color
+                colors[i] = col.arr(1)
 
         @hidden = false
 
@@ -2106,7 +2262,7 @@ class Demo
                 fancy:   true
                 color:   "blue"
         extend mathboxOpts, @opts.mathbox ? {}
-        clearColor   = @opts.clearColor   ? 0x000000
+        clearColor   = @opts.clearColor   ? 0xffffff
         clearOpacity = @opts.clearOpacity ? 1.0
         cameraOpts   =
             proxy:    true
@@ -2121,13 +2277,15 @@ class Demo
         doFullScreen = @opts.fullscreen ? true
         @dims        = @opts.dims       ? 3
 
+        clearColor = new Color clearColor
+
         @animations = []
 
         onPreloaded = () =>
             # Setup mathbox
             @mathbox = mathBox(mathboxOpts)
             @three = @mathbox.three
-            @three.renderer.setClearColor new THREE.Color(clearColor), clearOpacity
+            @three.renderer.setClearColor clearColor.three(), clearOpacity
             @controls = @three.controls
             @camera = @mathbox.camera(cameraOpts)[0].controller.camera
             @controls?.updateCamera?()
@@ -2169,6 +2327,8 @@ class Demo
                 vec[i] = coord.toFixed precision
         ret = ''
         if opts.color?
+            if opts.color instanceof Color
+                opts.color = opts.color.str()
             ret += "\\color{#{opts.color}}{"
         ret += "\\begin{bmatrix}"
         ret += vec.join "\\\\"
@@ -2180,6 +2340,10 @@ class Demo
     texSet: (vecs, opts) =>
         opts ?= {}
         colors = opts.colors
+        if colors?
+            for col, i in colors
+                if col instanceof Color
+                    colors[i] = col.str()
         precision = opts.precision ? 2
         str = "\\left\\{"
         for vec, i in vecs
@@ -2193,9 +2357,16 @@ class Demo
     texCombo: (vecs, coeffs, opts) =>
         opts ?= {}
         colors = opts.colors
+        if colors?
+            for col, i in colors
+                if col instanceof Color
+                    colors[i] = col.str()
         coeffColors = opts.coeffColors
         unless coeffColors instanceof Array
             coeffColors = (coeffColors for [0...vecs.length])
+        for col, i in coeffColors
+            if col instanceof Color
+                coeffColors[i] = col.str()
         precision = opts.precision ? 2
         str = ''
         for vec, i in vecs
@@ -2218,6 +2389,10 @@ class Demo
     texMatrix: (cols, opts) ->
         opts ?= {}
         colors = opts.colors
+        if colors?
+            for col, i in colors
+                if col instanceof Color
+                    colors[i] = col.str()
         precision = opts.precision ? 2
         m = opts.rows ? @dims
         n = opts.cols ? cols.length
@@ -2316,6 +2491,10 @@ class Demo2D extends Demo
 
 ################################################################################
 # * Globals
+
+window.Color = Color
+for name, color of palette
+    document.body.style.setProperty("--palette-#{name}", new Color(color).str())
 
 window.rowReduce     = rowReduce
 window.eigenvalues   = eigenvalues

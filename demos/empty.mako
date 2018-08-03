@@ -15,7 +15,7 @@ new Demo2D {}, () ->
         hilite: false
 
     vectors = [[1,1], [-1, 1]]
-    colors  = [[1,0,0,1], [0,1,0,1]]
+    colors  = [new Color "red", new Color "green"]
     labels  = ['v', 'w']
 
     subspace = @subspace

@@ -7,16 +7,16 @@
 <%block name="inline_style">
 ${parent.inline_style()}
 .espace-0 {
-    color: #ff0000;
+    color: var(--palette-green);
 }
 .espace-1 {
-    color: #00ff00;
+    color: var(--palette-violet);
 }
 .espace-2 {
-    color: #000000;
+    color: var(--palette-brown);
 }
 .vector {
-    color: #ffff00
+    color: var(--palette-red)
 }
 .overlay-popup h3 {
     font-size: 120%;
@@ -37,11 +37,11 @@ switch size
     when 2 then matrixT = ([matrix[0][i], matrix[1][i]] for i in [0...size])
     when 3 then matrixT = ([matrix[0][i], matrix[1][i], matrix[2][i]] for i in [0...size])
 
-color1 = [.5, 0,  0]
-color2 = [0, .5,  0]
-color3 = [0,  0, .5]
+color1 = new Color("green")
+color2 = new Color("violet")
+color3 = new Color("brown")
 colors = [color1, color2, color3]
-hexColors = ['#ff0000', '#00ff00', '#0000ff']
+vecColor = new Color("red")
 
 window.demo = new (if size == 2 then Demo2D else Demo) {
     mathbox:
@@ -60,7 +60,6 @@ window.demo = new (if size == 2 then Demo2D else Demo) {
         draw:   size == 3
         hilite: size == 3
         material: new THREE.MeshBasicMaterial
-            color:       new THREE.Color 0.5, 0, 0
             opacity:     0.5
             transparent: true
             visible:     true
@@ -73,9 +72,9 @@ window.demo = new (if size == 2 then Demo2D else Demo) {
             channels: 3
             width:    1
             live:     false
-            data:     [[0,0,0]]
+            data:     [0,0,0]
         .point
-            color:    "white"
+            color:    "black"
             size:     15
             zIndex:   3
 
@@ -113,7 +112,7 @@ window.demo = new (if size == 2 then Demo2D else Demo) {
     vectorOut = [0, 0, 0].slice 0, size
     @labeledVectors view,
         vectors:       [vectorIn, vectorOut]
-        colors:        [[1, 1, 0, 1], [.7, .7, 0, .7]]
+        colors:        [vecColor, vecColor.darken(.1).arr(.7)]
         labels:        ['x', 'Ax']
         live:          true
         zeroPoints:    true
@@ -189,8 +188,8 @@ window.demo = new (if size == 2 then Demo2D else Demo) {
                    "and geometric multiplicity #{eigenspaces[j].dim}" +
                    "</p>"
         evalStrings.push katex.renderToString \
-            "A\\color{#ffff00}{x} = \\color{#{hexColors[j]}}{#{eigenval}}" + \
-            "\\color{#ffff00}{x}"
+            "A\\color{#{vecColor.str()}}{x} = \\color{#{colors[j].str()}}{#{eigenval}}" + \
+            "\\color{#{vecColor.darken(.1).str()}}{x}"
     @caption str
     eqnElt = document.getElementById 'eqn-here'
 
@@ -198,13 +197,13 @@ window.demo = new (if size == 2 then Demo2D else Demo) {
 
     updateCaption = () =>
         str = @texMatrix matrixT
-        str += @texVector vectorIn, color: '#ffff00'
+        str += @texVector vectorIn, color: vecColor.str()
         str += '='
-        str += @texVector vectorOut, color: '#888800'
+        str += @texVector vectorOut, color: vecColor.darken(.1).str()
         if onSubspace != -1
             eigenval = eigenvals[onSubspace][0].toFixed(2)
-            str += "= \\color{#{hexColors[onSubspace]}}{#{eigenval}}"
-            str += @texVector vectorIn, color: '#ffff00'
+            str += "= \\color{#{colors[onSubspace].str()}}{#{eigenval}}"
+            str += @texVector vectorIn, color: vecColor.str()
             popup.show "<h3><span class=\"vector\">x</span> is an eigenvector" + \
                        " with eigenvalue <span class=\"espace-#{onSubspace}\">" + \
                        "#{eigenval}</span></h3>" + \

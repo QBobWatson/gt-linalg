@@ -350,11 +350,11 @@ the license is included in gfdl.xml.
       </p>
       <figure>
         <caption>Illustration of the composition <m>T\circ U</m>.</caption>
-        <mathbox source="demos/compose2d.html?mat1=1,0,1,1&amp;mat2=1,1,0,1&amp;closed&amp;vec=1,0" height="500px"/>
+        <mathbox source="demos/compose2d.html?mat1=1,0,1,1&amp;mat2=1,1,0,1&amp;closed&amp;vec=1,0&amp;show1=on" height="500px"/>
       </figure>
       <figure>
         <caption>Illustration of the composition <m>U\circ T</m>.</caption>
-        <mathbox source="demos/compose2d.html?mat2=1,0,1,1&amp;mat1=1,1,0,1&amp;closed&amp;vec=1,0&amp;names=U,T" height="500px"/>
+        <mathbox source="demos/compose2d.html?mat2=1,0,1,1&amp;mat1=1,1,0,1&amp;closed&amp;vec=1,0&amp;names=U,T&amp;show1=on" height="500px"/>
       </figure>
     </example>
 

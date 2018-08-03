@@ -744,7 +744,7 @@ the license is included in gfdl.xml.
           The number <m>0</m> is an eigenvalue of <m>A</m> if and only if <m>\Nul(A-0I_3) = \Nul(A)</m> is nonzero.  This is the same as asking whether <m>A</m> is noninvertible, by the <xref ref="imt-1"/>.  The determinant of <m>A</m> is <m>\det(A) = 2\neq 0</m>, so <m>A</m> is invertible by the <xref ref="det-defn-invert-prop">invertibility property</xref>.  It follows that <m>0</m> is not an eigenvalue of <m>A</m>.
         </p>
         <figure>
-          <caption>The <m>2</m>-eigenspace is the green plane.  This means that <m>A</m> scales every vector in that plane by a factor of <m>2</m>.  The <m>\frac 12</m>-eigenspace is the red line.  Click and drag the vector <m>x</m> around to see how <m>A</m> acts on that vector.</caption>
+          <caption>The <m>2</m>-eigenspace is the violet plane.  This means that <m>A</m> scales every vector in that plane by a factor of <m>2</m>.  The <m>\frac 12</m>-eigenspace is the green line.  Click and drag the vector <m>x</m> around to see how <m>A</m> acts on that vector.</caption>
           <mathbox source="demos/eigenspace.html?mat=7/2,0,3:-3/2,2,-3:-3/2,0,-1&amp;nomult" height="500px"/>
         </figure>
       </solution>
@@ -782,7 +782,7 @@ the license is included in gfdl.xml.
           The parametric form of the solution set is <m>x = y</m>, or equivalently, <m>y = x</m>, which is exactly the equation for <m>L^\perp</m>.
         </p>
         <figure>
-          <caption>The green line <m>L</m> is the <m>1</m>-eigenspace, and the red line <m>L^\perp</m> is the <m>-1</m>-eigenspace.</caption>
+          <caption>The violet line <m>L</m> is the <m>1</m>-eigenspace, and the green line <m>L^\perp</m> is the <m>-1</m>-eigenspace.</caption>
           <mathbox source="demos/eigenspace.html?mat=0,-1:-1,0&amp;nomult" height="500px"/>
         </figure>
       </solution>
