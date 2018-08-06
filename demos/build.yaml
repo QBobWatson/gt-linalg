@@ -16,6 +16,11 @@
     - lib/screenfull.min.js
     - lib/roots.js
     - lib/expreval.js
+- js/dynamics.js:
+    source: js/dynamics.coffee
+    copy: false
+- js/dynamics.js:
+    - js/dynamics.js
 - js/dat.gui.min.js:
     - lib/dat.gui.min.js
 - css/fonts
@@ -27,6 +32,7 @@
 - bestfit-implicit.html: bestfit-implicit.mako
 - compose2d.html:    compose2d.mako
 - compose3d.html:    compose3d.mako
+- dynamics.html:     dynamics.mako
 - eigenspace.html:   eigenspace.mako
 - leastsquares.html: leastsquares.mako
 - parametric1.html:  parametric1.mako
@@ -52,7 +58,15 @@
     copy: false
 - cover.js:
     - mathbox/mathbox-bundle.js
+    - js/dynamics.js
+    - lib/domready.js
     - cover.js
+- css/cover.css:
+    - mathbox/mathbox.css
+    - css/cover.css
+- cover.html:
+    source: cover.html
+    copy: true
 - rrmat/animstate.js:
     source: rrmat/animstate.coffee
     copy: false

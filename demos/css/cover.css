@@ -1,0 +1,46 @@
+#mathbox-container {
+    width:       100%;
+    height:      0;
+    padding-top: 100%;
+    overflow:    hidden;
+    position:    relative;
+}
+#mathbox {
+    position: absolute;
+    top:      0;
+    left:     0;
+    width:    100%;
+    height:   100%;
+}
+#cover-controls {
+    width:      100%;
+    text-align: center;
+    position:   absolute;
+    left:       0;
+    bottom:     5px;
+    z-index:    1;
+    opacity:    .7;
+}
+
+#cover-controls select,
+#cover-controls button {
+    height: 22px;
+    width: 25%;
+    font-size: 10px;
+    color: #aaa;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    -webkit-transition: color .75s, background-color .75s, border-color .75s;
+    transition: color .75s, background-color .75s, border-color .75s;
+}
+
+#cover-controls select:hover,
+#cover-controls button:hover {
+    color: #000;
+    background-color: #eee;
+    border-color: #000;
+}
+
+#cover-controls button {
+    margin-left: 10px;
+}

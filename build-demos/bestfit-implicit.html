@@ -87,7 +87,7 @@ html, body {
 
 
     
-        <script src="js/demo.js?vers=6cd514"></script>
+        <script src="js/demo.js?vers=39ead6"></script>
     
 
     <script type="text/javascript">
@@ -507,7 +507,7 @@ window.demo2 = new Demo2D({
       quantity = 0;
       for (q = 0, len3 = targets.length; q < len3; q++) {
         target = targets[q];
-        diff = target[2] - bestfit(target[0], target[1]);
+        diff = Math.abs(target[2] - bestfit(target[0], target[1]));
         minimized.push((diff.toFixed(2)) + "^2");
         quantity += diff * diff;
       }
