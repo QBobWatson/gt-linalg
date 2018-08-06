@@ -16,7 +16,9 @@ the license is included in gfdl.xml.
     <ol>
       <li>Learn two main criteria for a matrix to be diagonalizable.</li>
       <li>Develop a library of examples of matrices that are and are not diagonalizable.</li>
+      <restrict-version versions="1554 default">
       <li>Understand what diagonalizability and multiplicity have to say about similarity.</li>
+      </restrict-version>
       <li><em>Recipes:</em> diagonalize a matrix, quickly compute powers of a matrix by diagonalization.</li>
       <li><em>Pictures:</em> the geometry of diagonal matrices, why a shear is not diagonalizable.</li>
       <li><em>Theorem:</em> the diagonalization theorem (two variants).</li>
@@ -26,16 +28,100 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      Diagonal matrices are the easiest kind of matrices to understand: they just scale the coordinate directions by their diagonal entries.  In <xref ref="similarity"/>, we saw that similar matrices behave in the same way, with respect to different coordinate systems.  Therefore, if a matrix is similar to a diagonal matrix, it is also relatively easy to understand.  This section is devoted to the question: <q>When is a matrix similar to a diagonal matrix?</q>
+      Diagonal matrices are the easiest kind of matrices to understand: they just scale the coordinate directions by their diagonal entries.
+      <restrict-version versions="1554 default">
+        In <xref ref="similarity"/>, we saw that similar matrices behave in the same way, with respect to different coordinate systems.  Therefore, if a matrix is similar to a diagonal matrix, it is also relatively easy to understand.  This section is devoted to the question: <q>When is a matrix similar to a diagonal matrix?</q>
+      </restrict-version>
+      <restrict-version versions="1553">
+        This section is devoted to the question: <q>When is a matrix <em>similar</em> to a diagonal matrix?</q>  We will see that the algebra and geometry of such a matrix is relatively easy to understand.
+      </restrict-version>
     </p>
   </introduction>
 
   <subsection>
     <title>Diagonalizability</title>
 
-    <p>
-      Before answering the above question, first we give it a name.
-    </p>
+    <restrict-version versions="1553">
+      <p>
+        First we make precise what we mean when we say two matrices are <q>similar</q>.
+      </p>
+
+      <definition>
+        <idx><h>Similarity</h><h>definition of</h></idx>
+        <idx><h>Matrix</h><h>similar</h><see>Similarity</see></idx>
+        <statement>
+          <p>
+            Two <m>n\times n</m> matrices <m>A</m> and <m>B</m> are <term>similar</term> if there exists an invertible <m>n\times n</m> matrix <m>C</m> such that <m>A = CBC\inv</m>.
+          </p>
+        </statement>
+      </definition>
+
+      <example xml:id="similarity-eg1">
+        <p>
+          The matrices
+          <me>
+            \mat{-12 15; -10 13} \sptxt{and} \mat{3 0; 0 -2}
+          </me>
+          are similar because
+          <me>
+            \mat{-12 15; -10 13} = \mat{-2 3; 1 -1} \mat{3 0; 0 -2} \mat{-2 3; 1 -1}\inv,
+          </me>
+          as the reader can verify.
+        </p>
+      </example>
+
+      <example>
+        <p>
+          The matrices
+          <me>
+            \mat{3 0 ; 0 -2} \sptxt{and} \mat{1 0; 0 1}
+          </me>
+          are not similar.  Indeed, the second matrix is the identity matrix <m>I_2</m>, so if <m>C</m> is any invertible <m>2\times 2</m> matrix, then
+          <me>
+            CI_2C\inv = CC\inv = I_2 \neq \mat{3 0; 0 -2}.
+          </me>
+        </p>
+      </example>
+
+      <p>
+        If two matrices are similar, then their powers are similar as well.
+      </p>
+
+      <fact xml:id="similarity-powers">
+        <idx><h>Similarity</h><h>and powers</h></idx>
+        <idx><h>Matrix multiplication</h><h>powers</h><h>and similarity</h></idx>
+        <statement>
+          <p>
+            Let <m>A = CBC\inv</m>.  Then for any <m>n\geq 1</m>, we have
+            <me>A^n = CB^n C\inv.</me>
+          </p>
+        </statement>
+        <proof visible="true">
+          <p>
+            First note that
+            <me>
+              A^2 = AA = (CBC\inv)(CBC\inv) = CB(C\inv C)BC\inv = CBI_nBC\inv = CB^2C\inv.
+            </me>
+            Next we have
+            <me>
+              A^3 = A^2A = (CB^2C\inv)(CBC\inv) = CB^2(C\inv C)BC\inv = CB^3C\inv.
+            </me>
+            The pattern is clear.
+          </p>
+        </proof>
+      </fact>
+
+      <p>
+        In this chapter, we will determine when a matrix is similar to a diagonal matrix.  This property is important enough to deserve its own name.
+      </p>
+
+    </restrict-version>
+
+    <restrict-version versions="1554 default">
+      <p>
+        Before answering the above question, first we give it a name.
+      </p>
+    </restrict-version>
 
     <definition>
       <idx><h>Diagonalizability</h><h>definition of</h></idx>
@@ -51,7 +137,14 @@ the license is included in gfdl.xml.
     <specialcase>
       <idx><h>Diagonalizability</h><h>diagonal matrices</h></idx>
       <p>
-        Any diagonal matrix is <m>D</m> is diagonalizable because it is <xref ref="similarity-eq-reln" text="title">similar to itself</xref>.  For instance,
+        Any diagonal matrix is <m>D</m> is diagonalizable because it is
+        <restrict-version versions="1554 default">
+          <xref ref="similarity-eq-reln" text="title">similar to itself</xref>.
+        </restrict-version>
+        <restrict-version versions="1553">
+          similar to itself.
+        </restrict-version>
+        For instance,
         <me>
           \mat{1 0 0; 0 2 0; 0 0 3} = I_3\mat{1 0 0; 0 2 0; 0 0 3}I_3\inv.
         </me>
@@ -60,7 +153,12 @@ the license is included in gfdl.xml.
 
     <example>
       <p>
-        Most of the examples in <xref ref="similarity"/> involve diagonalizable matrices:
+        <restrict-version versions="1554 default">
+          Most of the examples in <xref ref="similarity"/> involve diagonalizable matrices:
+        </restrict-version>
+        <restrict-version versions="1553">
+          The following are examples of diagonalizable matrices:
+        </restrict-version>
         <me>
         \def\idb{\quad\parbox{\widthof{because it equals}}{is diagonalizable\\because it equals}\quad}
         \begin{split}
@@ -77,6 +175,23 @@ the license is included in gfdl.xml.
       </p>
     </example>
 
+    <specialcase xml:id="diag-of-similar">
+      <idx><h>Diagonalizability</h><h>similar matrices</h></idx>
+      <p>
+        If a matrix <m>A</m> is diagonalizable, and if <m>B</m> is similar to <m>A</m>, then <m>B</m> is diagonalizable
+        <restrict-version versions="1554 default">
+          as well by <xref ref="similarity-eq-reln"/>.
+        </restrict-version>
+        <restrict-version versions="1553">
+          as well.  Indeed, if <m>A = CDC\inv</m> for <m>D</m> diagonal, and <m>B = EAE\inv</m>, then
+          <me>
+            B = EAE\inv = E(CDC\inv)E\inv = (EC)D(EC)\inv,
+          </me>
+          so <m>B</m> is similar to <m>D</m>.
+        </restrict-version>
+      </p>
+    </specialcase>
+
     <paragraphs>
       <title>Powers of diagonalizable matrices</title>
     <p>
@@ -89,7 +204,13 @@ the license is included in gfdl.xml.
       <me>
         \mat{x 0 0; 0 y 0; 0 0 z}^n = \mat{x^n 0 0; 0 y^n 0; 0 0 z^n}.
       </me>
-      By this <xref ref="similarity-powers"/>, if <m>A = CDC\inv</m> then <m>A^n = CD^nC\inv</m>, so it is also easy to take powers of <em>diagonalizable</em> matrices.  This will be very important in applications to difference equations in <xref ref="stochastic-matrices"/>.
+      By this <xref ref="similarity-powers"/>, if <m>A = CDC\inv</m> then <m>A^n = CD^nC\inv</m>, so it is also easy to take powers of <em>diagonalizable</em> matrices.
+<restrict-version versions="1554 default">
+This will be very important in applications to difference equations in <xref ref="stochastic-matrices"/>.
+</restrict-version>
+<restrict-version versions="1553">
+This is often very important in applications.
+</restrict-version>
     </p>
 
     <bluebox xml:id="diag-powers">
@@ -489,7 +610,11 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
           <mathbox source="demos/eigenspace.html?mat=0,-1:1,0&amp;nospace" height="500px"/>
         </figure>
       <p>
-        The characteristic polynomial of <m>A</m> is <m>f(\lambda) = \lambda^2+1</m>, which of course does not have any real roots.  If we allow <em>complex</em> numbers, however, then <m>f</m> has <em>two</em> roots, namely, <m>\pm i</m>, where <m>i = \sqrt{-1}</m>.  Hence the matrix is diagonalizable if we allow ourselves to use complex numbers.  We will treat this topic in detail in <xref ref="complex-eigenvalues"/>.
+        The characteristic polynomial of <m>A</m> is <m>f(\lambda) = \lambda^2+1</m>, which of course does not have any real roots.  If we allow <em>complex</em> numbers, however, then <m>f</m> has <em>two</em> roots, namely, <m>\pm i</m>, where <m>i = \sqrt{-1}</m>.  Hence the matrix is diagonalizable if we allow ourselves to use complex numbers.  We will treat this topic
+<restrict-version versions="1554 default">
+        in detail
+</restrict-version>
+        in <xref ref="complex-eigenvalues"/>.
       </p>
     </example>
 
@@ -528,7 +653,13 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
           = \mat{\lambda/b 1; 0 \lambda}\mat{b 0; 0 1}
           = \mat{\lambda, 1; 0 \lambda} = A_\lambda.
         </me>
-        We have shown that <m>B</m> is similar to <m>A</m>, which is similar to <m>A_\lambda</m>, so <m>B</m> is similar to <m>A_\lambda</m> by the <xref ref="similarity-eq-reln" text="title">transitivity property</xref> of similar matrices
+        We have shown that <m>B</m> is similar to <m>A</m>, which is similar to <m>A_\lambda</m>, so <m>B</m> is similar to <m>A_\lambda</m> by
+<restrict-version versions="1554 default">
+        the <xref ref="similarity-eq-reln" text="title">transitivity property</xref> of similar matrices.
+</restrict-version>
+<restrict-version versions="1553">
+        this <xref ref="diag-of-similar"/>.
+</restrict-version>
       </p>
     </remark>
 
@@ -768,6 +899,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
       </p>
     </example>
 
+<restrict-version versions="1554 default">
     <paragraphs>
       <title>Similarity and multiplicity</title>
     <p>
@@ -912,6 +1044,8 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
     </example>
 
   </paragraphs>
+</restrict-version>
+
 
   </subsection>
 
@@ -928,7 +1062,12 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
       <me>
         \mat{1 0 0; 0 2 0; 0 0 3}\vec{0 0 1} = 3\cdot\vec{0 0 1}.
       </me>
+<restrict-version versions="1554 default">
       Therefore, we know from <xref ref="similarity"/> that a diagonalizable matrix simply scales the <q>axes</q> with respect to a different coordinate system.  Indeed, if <m>v_1,v_2,\ldots,v_n</m> are linearly independent eigenvectors of an <m>n\times n</m> matrix <m>A</m>, then <m>A</m> scales the <m>v_i</m>-direction by the eigenvalue <m>\lambda_i</m>.
+</restrict-version>
+<restrict-version versions="1553">
+      A daigonalizable matrix is not much harder to understand geometrically.  Indeed, if <m>v_1,v_2,\ldots,v_n</m> are linearly independent eigenvectors of an <m>n\times n</m> matrix <m>A</m>, then <m>A</m> scales the <m>v_i</m>-direction by the eigenvalue <m>\lambda_i</m>: in other words, <m>Av_i = \lambda_i v_i</m>.  Since the vectors <m>v_1,v_2,\ldots,v_n</m> form a basis of <m>\R^n</m>, this determines the action of <m>A</m> on any vector in <m>\R^v</m>.
+</restrict-version>
     </p>
 
     <p>

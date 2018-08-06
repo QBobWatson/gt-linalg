@@ -744,7 +744,7 @@ the license is included in gfdl.xml.
         <p>
           We have <m>\det(A) = 4 - 2 = 2</m>, so
           <me>\det(A^{100}) = \det(A)^{100} = 2^{100}.</me>
-          Nowhere did we have to compute the <m>100</m>th power of <m>A</m>!  (We will learn to do that in <xref ref="diagonalization"/>.)
+          Nowhere did we have to compute the <m>100</m>th power of <m>A</m>!  (We will learn an efficient way to do that in <xref ref="diagonalization"/>.)
         </p>
       </solution>
     </example>

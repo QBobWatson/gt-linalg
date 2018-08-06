@@ -87,7 +87,11 @@ Free Documentation License"
         </p>
 
         <p>
-          We will develop a large amount of vocabulary that we will use to describe the above objects: vectors (<xref ref="vectors"/>), spans (<xref ref="spans"/>), linear independence (<xref ref="linear-independence"/>), subspaces (<xref ref="subspaces"/>), dimension (<xref ref="dimension"/>), coordinate systems (<xref ref="bases-as-coord-systems"/>), etc.  We will use these concepts to give a precise geometric description of the solution set of any system of equations (<xref ref="solution-sets"/>).  We will also learn how to express systems of equations more simply using matrix equations (<xref ref="matrix-equations"/>).
+          We will develop a large amount of vocabulary that we will use to describe the above objects: vectors (<xref ref="vectors"/>), spans (<xref ref="spans"/>), linear independence (<xref ref="linear-independence"/>), subspaces (<xref ref="subspaces"/>), dimension (<xref ref="dimension"/>),
+<restrict-version versions="1554 default">
+  coordinate systems (<xref ref="bases-as-coord-systems"/>),
+</restrict-version>
+          etc.  We will use these concepts to give a precise geometric description of the solution set of any system of equations (<xref ref="solution-sets"/>).  We will also learn how to express systems of equations more simply using matrix equations (<xref ref="matrix-equations"/>).
         </p>
       </introduction>
 
@@ -300,7 +304,13 @@ Free Documentation License"
         </specialcase>
 
         <p>
-          In <xref ref="eigenvectors"/>, we will define eigenvalues and eigenvectors, and show how to compute the latter; in <xref ref="characteristic-polynomial"/> we will learn to compute the former.  In <xref ref="similarity"/> we introduce the notion of <em>similar</em> matrices, and demonstrate that similar matrices do indeed behave similarly.  In <xref ref="diagonalization"/> we study matrices that are similar to diagonal matrices and in <xref ref="complex-eigenvalues"/> we study matrices that are similar to rotation-scaling matrices, thus gaining a solid geometric understanding of large classes of matrices.  Finally, we spend <xref ref="stochastic-matrices"/> presenting a common kind of application of eigenvalues and eigenvectors to real-world problems, including searching the Internet using Google<rsq/>s PageRank algorithm.
+          In <xref ref="eigenvectors"/>, we will define eigenvalues and eigenvectors, and show how to compute the latter; in <xref ref="characteristic-polynomial"/> we will learn to compute the former.
+<restrict-version versions="1554 default">
+          In <xref ref="similarity"/> we introduce the notion of <em>similar</em> matrices, and demonstrate that similar matrices do indeed behave similarly.  In <xref ref="diagonalization"/> we study matrices that are similar to diagonal matrices and in <xref ref="complex-eigenvalues"/> we study matrices that are similar to rotation-scaling matrices, thus gaining a solid geometric understanding of large classes of matrices. Finally, we spend <xref ref="stochastic-matrices"/> presenting a common kind of application of eigenvalues and eigenvectors to real-world problems, including searching the Internet using Google<rsq/>s PageRank algorithm.
+</restrict-version>
+<restrict-version versions="1553">
+  In <xref ref="diagonalization"/> we will use eigenvalues and eigenvectors to determine when a matrix is <q>similar</q> to a diagonal matrix, and we will see that the algebra and geometry of such a matrix is much simpler to understand.
+</restrict-version>
         </p>
       </introduction>
 
@@ -358,7 +368,11 @@ Free Documentation License"
         </p>
 
         <p>
-          First we will define orthogonality and learn to find orthogonal complements of subspaces in <xref ref="dot-product"/> and <xref ref="orthogonal-complements"/>.  The core of this chapter is <xref ref="projections"/>, in which we discuss <em>the orthogonal projection</em> of a vector onto a subspace; this is a method of calculating the closest vector on a subspace to a given vector.  These calculations become easier in the presence of an orthogonal set, as we will see in <xref ref="orthogonal-sets"/>.  Finally in <xref ref="least-squares"/> we will present the least-squares method of approximately solving systems of equations, and we will give applications to data modeling.
+          First we will define orthogonality and learn to find orthogonal complements of subspaces in <xref ref="dot-product"/> and <xref ref="orthogonal-complements"/>.  The core of this chapter is <xref ref="projections"/>, in which we discuss <em>the orthogonal projection</em> of a vector onto a subspace; this is a method of calculating the closest vector on a subspace to a given vector.
+<restrict-version versions="1554 default">
+          These calculations become easier in the presence of an orthogonal set, as we will see in <xref ref="orthogonal-sets"/>.
+</restrict-version>
+          In <xref ref="least-squares"/> we will present the least-squares method of approximately solving systems of equations, and we will give applications to data modeling.
         </p>
 
         <specialcase>

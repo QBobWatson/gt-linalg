@@ -9,14 +9,21 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="least-squares">
+<section xml:id="least-squares" number="5">
   <title>The Method of Least Squares</title>
 
   <objectives>
     <ol>
       <li>Learn examples of best-fit problems.</li>
       <li>Learn to turn a best-fit problem into a least-squares problem.</li>
-      <li><em>Recipe:</em> find a least-squares solution (two ways).</li>
+      <li><em>Recipe:</em> find a least-squares
+      <restrict-version versions="1554 default">
+        solution (two ways).
+      </restrict-version>
+      <restrict-version versions="1553">
+        solution.
+      </restrict-version>
+      </li>
       <li><em>Picture:</em> geometry of a least-squares solution.</li>
       <li><em>Vocabulary words:</em> <term>least-squares solution</term>.</li>
     </ol>
@@ -110,7 +117,10 @@ the license is included in gfdl.xml.
         A\hat x = A\vec{\hat x_1 \hat x_2 \vdots, \hat x_n}
         = \hat x_1v_1 + \hat x_2v_2 + \cdots + \hat x_nv_n.
       </me>
-      Hence the entries of <m>\hat x</m> are the <q>coordinates</q> of <m>b_{\Col(A)}</m> with respect to the spanning set <m>\{v_1,v_2,\ldots,v_m\}</m> of <m>\Col(A)</m>.  (They are honest <m>\cB</m>-coordinates if the columns of <m>A</m> are linearly independent.)
+      Hence the entries of <m>\hat x</m> are the <q>coordinates</q> of <m>b_{\Col(A)}</m> with respect to the spanning set <m>\{v_1,v_2,\ldots,v_m\}</m> of <m>\Col(A)</m>.
+<restrict-version versions="1554 default">
+      (They are honest <m>\cB</m>-coordinates if the columns of <m>A</m> are linearly independent.)
+</restrict-version>
       <latex-code>
 \begin{tikzpicture}[scale=2, myxyz, thin border nodes]
   \coordinate (u) at (0,1,0);
@@ -171,7 +181,7 @@ the license is included in gfdl.xml.
     </p>
 
     <bluebox>
-      <title>Recipe 1: Compute a least-squares solution</title>
+      <title>Recipe<restrict-version versions="1554 default"> 1</restrict-version>: Compute a least-squares solution</title>
       <idx><h>Least-squares</h><h>computation of</h><h>row reduction</h></idx>
       <p>
         Let <m>A</m> be an <m>m\times n</m> matrix and let <m>b</m> be a vector in <m>\R^n</m>.  Here is a method for computing a least-squares solution of <m>Ax=b</m>:
@@ -260,7 +270,14 @@ the license is included in gfdl.xml.
           ]]></latex-code>
         </p>
         <figure>
-          <caption>The violet plane is <m>\Col(A)</m>.  The closest that <m>Ax</m> can get to <m>b</m> is the closest vector on <m>\Col(A)</m> to <m>b</m>, which is the orthogonal projection <m>b_{\Col(A)}</m> (in blue).  The vectors <m>v_1,v_2</m> are the columns of <m>A</m>, and the coefficients of <m>\hat x</m> are the <m>\cB</m>-coordinates of <m>b_{\Col(A)}</m>, where <m>\cB = \{v_1,v_2\}</m>.</caption>
+          <caption>The violet plane is <m>\Col(A)</m>.  The closest that <m>Ax</m> can get to <m>b</m> is the closest vector on <m>\Col(A)</m> to <m>b</m>, which is the orthogonal projection <m>b_{\Col(A)}</m> (in blue).  The vectors <m>v_1,v_2</m> are the columns of <m>A</m>, and the coefficients of <m>\hat x</m> are the
+<restrict-version versions="1554 default">
+  <m>\cB</m>-coordinates of <m>b_{\Col(A)}</m>, where <m>\cB = \{v_1,v_2\}</m>.
+</restrict-version>
+<restrict-version versions="1553">
+  lengths of the green lines.
+</restrict-version>
+</caption>
           <mathbox source="demos/leastsquares.html?v1=0,1,2&amp;v2=1,1,1&amp;range=6.5&amp;vec=6,0,0&amp;camera=3,-1.5,-.1" height="500px"/>
         </figure>
       </solution>
@@ -290,7 +307,14 @@ the license is included in gfdl.xml.
           Therefore, the only least-squares solution is <m>\hat x = \frac 13{1\choose -1}.</m>
         </p>
         <figure>
-          <caption>The red plane is <m>\Col(A)</m>.  The closest that <m>Ax</m> can get to <m>b</m> is the closest vector on <m>\Col(A)</m> to <m>b</m>, which is the orthogonal projection <m>b_{\Col(A)}</m> (in blue).  The vectors <m>v_1,v_2</m> are the columns of <m>A</m>, and the coefficients of <m>\hat x</m> are the <m>\cB</m>-coordinates of <m>b_{\Col(A)}</m>, where <m>\cB = \{v_1,v_2\}</m>.</caption>
+          <caption>The red plane is <m>\Col(A)</m>.  The closest that <m>Ax</m> can get to <m>b</m> is the closest vector on <m>\Col(A)</m> to <m>b</m>, which is the orthogonal projection <m>b_{\Col(A)}</m> (in blue).  The vectors <m>v_1,v_2</m> are the columns of <m>A</m>, and the coefficients of <m>\hat x</m> are the
+<restrict-version versions="1554 default">
+  <m>\cB</m>-coordinates of <m>b_{\Col(A)}</m>, where <m>\cB = \{v_1,v_2\}</m>.
+</restrict-version>
+<restrict-version versions="1553">
+  lengths of the green lines.
+</restrict-version>
+          </caption>
           <mathbox source="demos/leastsquares.html?v1=2,-1,0&amp;v2=0,1,2&amp;vec=1,0,-1&amp;range=3" height="500px"/>
         </figure>
       </solution>
@@ -400,6 +424,7 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
+<restrict-version versions="1554 default">
     <p>
       As usual, calculations involving projections become easier in the presence of an orthogonal set.  Indeed, if <m>A</m> is an <m>m\times n</m> matrix with <em>orthogonal</em> columns <m>u_1,u_2,\ldots,u_m</m>, then we can use the <xref ref="projection-formula"/> to write
       <me>
@@ -456,6 +481,7 @@ the license is included in gfdl.xml.
         </p>
       </solution>
     </example>
+</restrict-version>
 
   </subsection>
 
@@ -741,6 +767,7 @@ the license is included in gfdl.xml.
             \qquad x = \vec{B C D}
             \qquad b = \vec{0 1 3 4}.
           </me>
+<restrict-version versions="1554 default">
           We observe that the columns <m>u_1,u_2,u_3</m> of <m>A</m> are <em>orthogonal</em>, so we can use <xref ref="leastsquares-recipe2">recipe 2</xref>:
           <me>
             \hat x = \left(\frac{b\cdot u_1}{u_1\cdot u_1},\;
@@ -750,6 +777,21 @@ the license is included in gfdl.xml.
             = \left(\frac{-3}{2},\;\frac{-3}{2},\;\frac{8}{4}\right)
             = \left(-\frac32,\;-\frac32,\;2\right).
           </me>
+</restrict-version>
+<restrict-version versions="1553">
+          We find a least-squares solution by multiplying both sides by the transpose:
+          <me>
+            A^TA = \mat{2 0 0; 0 2 0; 0 0 4} \qquad
+            A^Tb = \vec{-3 -3 8}.
+          </me>
+          The matrix <m>A^TA</m> is diagonal (do you see why that happened?), so it is easy to solve the equation <m>A^TAx = A^Tb</m>:
+          <me>
+            \amat{2 0 0 -3; 0 2 0 -3; 0 0 4 8} \rref
+            \amat{1 0 0 -3/2; 0 1 0 -3/2; 0 0 1 2}
+            \implies
+            \hat x = \vec[r]{-3/2 -3/2 2}.
+          </me>
+</restrict-version>
           Therefore, the best-fit linear equation is
           <me>
             f(x,y) = -\frac 32x - \frac32y + 2.

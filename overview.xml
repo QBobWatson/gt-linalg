@@ -311,7 +311,13 @@ the license is included in gfdl.xml.
   <specialcase>
     <title>Computer Science</title>
     <p>
-      Each web page has some measure of importance, which it shares via outgoing links to other pages.  This leads to zillions of equations in zillions of variables.  Larry Page and Sergei Brin realized that this is a linear algebra problem at its core, and used the insight to found Google.  We will discuss this example in detail in <xref ref="stochastic-matrices"/>.
+      Each web page has some measure of importance, which it shares via outgoing links to other pages.  This leads to zillions of equations in zillions of variables.  Larry Page and Sergei Brin realized that this is a linear algebra problem at its core, and used the insight to found Google.
+<restrict-version versions="1554 default">
+  We will discuss this example in detail in <xref ref="stochastic-matrices"/>.
+</restrict-version>
+<restrict-version versions="1553">
+  The result is the so-called <q>25 billion dollar eigenvector.</q>  See Section 6.6 in the full version of the book for a detailed discussion of this example.
+</restrict-version>
     </p>
   </specialcase>
 
