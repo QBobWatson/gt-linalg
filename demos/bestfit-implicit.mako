@@ -411,7 +411,7 @@ window.demo2 = new Demo2D {
         minimized = []
         quantity = 0
         for target in targets
-            diff = target[2] - bestfit(target[0], target[1])
+            diff = Math.abs(target[2] - bestfit(target[0], target[1]))
             minimized.push "#{diff.toFixed 2}^2"
             quantity += diff*diff
         str = '\\quad' + quantity.toFixed(2) + '=' + minimized.join('+')

@@ -98,7 +98,7 @@ html, body {
 
 
     
-        <script src="js/demo.js?vers=6f01f7"></script>
+        <script src="js/demo.js?vers=39ead6"></script>
     
 
     <script type="text/javascript">
@@ -375,10 +375,35 @@ window.demo1 = new (cols === 3 ? Demo : Demo2D)({
       vectorEqElt = document.getElementById('vector-eq-here');
       updateCaption = (function(_this) {
         return function() {
+          var identity, m, ref4;
           str = "\\color{" + (vecColor.str()) + "}{[x]_{\\mathcal B}} = ";
           str += _this.texVector(vector, {
             dim: cols,
             color: vecColor.str()
+          });
+          str += '=';
+          identity = (function() {
+            var m, ref4, results;
+            results = [];
+            for (m = 0, ref4 = cols; 0 <= ref4 ? m < ref4 : m > ref4; 0 <= ref4 ? m++ : m--) {
+              results.push((function() {
+                var n, ref5, results1;
+                results1 = [];
+                for (n = 0, ref5 = rows; 0 <= ref5 ? n < ref5 : n > ref5; 0 <= ref5 ? n++ : n--) {
+                  results1.push(0);
+                }
+                return results1;
+              })());
+            }
+            return results;
+          })();
+          for (i = m = 0, ref4 = Math.min(rows, cols); 0 <= ref4 ? m < ref4 : m > ref4; i = 0 <= ref4 ? ++m : --m) {
+            identity[i][i] = 1;
+          }
+          str += _this.texCombo(identity, vector.slice(0, cols), {
+            dim: cols,
+            colors: [color1, color2, color3].slice(0, cols),
+            coeffColors: vecColor.str()
           });
           katex.render(str, xBelt);
           str = "\\color{" + (outVecColor.str()) + "}{x} =";

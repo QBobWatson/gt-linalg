@@ -276,6 +276,13 @@ window.demo1 = new (if cols == 3 then Demo else Demo2D) {
             updateCaption = () =>
                 str  = "\\color{#{vecColor.str()}}{[x]_{\\mathcal B}} = "
                 str += @texVector vector, {dim: cols, color: vecColor.str()}
+                str += '='
+                identity = ((0 for [0...rows]) for [0...cols])
+                identity[i][i] = 1 for i in [0...Math.min(rows,cols)]
+                str += @texCombo identity, vector[0...cols],
+                    dim:         cols
+                    colors:      [color1, color2, color3][0...cols]
+                    coeffColors: vecColor.str()
                 katex.render str, xBelt
                 str  = "\\color{#{outVecColor.str()}}{x} ="
                 str += @texVector outVec, {dim: rows, color: outVecColor.str()}
