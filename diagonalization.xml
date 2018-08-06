@@ -1070,6 +1070,163 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 </restrict-version>
     </p>
 
+<restrict-version versions="1553">
+    <specialcase xml:id="diagonalizability-worked-eg">
+      <idx><h>Diagonalizability</h><h>worked example</h></idx>
+      <p>
+        Consider the matrices
+        <me>
+          A = \mat{1/2 3/2; 3/2 1/2} \qquad
+          D = \mat{2 0; 0 -1} \qquad
+          C = \mat{1 1; 1 -1}.
+        </me>
+        One can verify that <m>A = CDC\inv</m>: see this <xref ref="diagonal-eg-22"/>.  Let <m>v_1 = {1\choose 1}</m> and <m>v_2 = {1\choose -1}</m>, the columns of <m>C</m>.  These are eigenvectors of <m>A</m>, with corresponding eigenvalues <m>2</m> and <m>-1</m>.
+      </p>
+      <p>
+        The matrix <m>D</m> is diagonal: it scales the <m>x</m>-direction by a factor of <m>2</m> and the <m>y</m>-direction by a factor of <m>-1</m>.
+        <latex-code>
+\def\theo{\includegraphics[width=6cm]{theo11.jpg}}
+
+\begin{tikzpicture}[scale=.8, thin border nodes]
+
+  \node[transform shape] at (0, 0) {\theo};
+  \draw[seq-violet, opacity=1, vector] (0,0) -- (1,0) node[right] {$e_1$};
+  \draw[seq-green,  opacity=1, vector] (0,0) -- (0,1) node[above] {$e_2$};
+
+  \point at (0, 0);
+
+  \begin{scope}[xshift=10cm, xscale=2, yscale=-1]
+    \clip (-1.5, -3) rectangle (1.5, 3);
+
+    \node[transform shape] at (0, 0) {\theo};
+
+    \draw[seq-violet, opacity=1, vector] (0,0) -- (1, 0) node[right] {$De_1$};
+    \draw[seq-green,  opacity=1, vector] (0,0) -- (0, 1) node[below] {$De_2$};
+
+    \point at (0, 0);
+  \end{scope}
+
+  \draw (-3, -3) rectangle (3, 3);
+  \draw[xshift=10cm] (-3, -3) rectangle (3, 3);
+
+  \draw[->, shorten=2mm, thick] (3, 1) to[bend left, "$D$" above=.5mm] (7, 1);
+
+\end{tikzpicture}
+        </latex-code>
+        If we write a vector in terms of the basis <m>v_1,v_2</m>, say, <m>x = a_1v_1 + a_2v_2,</m> then it is easy to compute <m>Ax</m>:
+        <me>Ax = A(a_1v_1 + a_2v_2) = a_1Av_1 + a_2Av_2 = 2a_1v_1 -a_2v_2.</me>
+        Here we have used the fact that <m>v_1,v_2</m> are eigenvectors of <m>A</m>.  Since the resulting vector is still expressed in terms of the basis <m>v_1,v_2</m>, we can visualize what <m>A</m> does to the vector <m>x</m>: it scales the <q><m>v_1</m>-coordinate</q> by <m>2</m> and the <q><m>v_2</m>-coordinate</q> by <m>-1</m>.
+      </p>
+
+      <p>
+        For instance, let <m>\textcolor{seq-red}x = {0\choose -2}</m>.  We see from the grid on the right in the picture below that <m>x = -v_1 + v_2</m>, so
+        <me>
+          Ax = A(-v_1+v_2) = -Av_1 + Av_2 = -2v_1 - v_2
+          = -2\vec{1 1} - \vec{1 -1} = \vec{-3 -1}.
+        </me>
+        The picture illustrates the action of <m>D</m> on the plane in the usual basis, and the action of <m>A</m> on the plane in the <m>v_1,v_2</m>-basis.
+        <latex-code>
+\begin{tikzpicture}[scale=.85, thin border nodes]
+  \draw[help lines] (-3,-3) grid (3,3);
+  \node at (0, 3.5) {action of $D$};
+
+  \draw[seq-violet, vector, opacity=.5] (0,0) -- (1,0) node[right, opacity=1] {$e_1$};
+  \draw[seq-green,  vector, opacity=.5] (0,0) -- (0,1) node[above, opacity=1] {$e_2$};
+
+  \draw[seq-red, vector] (0, 0) to["{$y$}" {above left, pos=1}] (-1, 1);
+  \draw[seq-red, opacity=.7, vector] (0, 0) to["{$Dy$}"] (-2, -1);
+
+  \node[align=center] (A) at (6, -1)
+     {scale $e_1$ by $2$\\scale $e_2$ by $-1$};
+  \node[align=center] (B) at (6, 1)
+     {scale $v_1$ by $2$\\scale $v_2$ by $-1$};
+
+  \draw[->, shorten >=2mm, thick] (A) -- (3, -1);
+  \draw[->, shorten >=2mm, thick] (B) -- (9,  1);
+
+  \point at (0, 0);
+
+  \begin{scope}[xshift=12cm]
+    \node at (0, 3.5) {action of $A$};
+    \draw[help lines] (-3, -3) rectangle (3, 3);
+    \path[clip] (-3, -3) rectangle (3, 3);
+    \begin{scope}[cm={(1,1,1,-1,(0,0))}, scale=.7]
+      \draw[help lines] (-5,-5) grid (5,5);
+
+      \draw[seq-violet, vector, opacity=.5] (0,0) -- (1,0) node[right, opacity=1] {$v_1$};
+      \draw[seq-green,  vector, opacity=.5] (0,0) -- (0,1) node[right, opacity=1] {$v_2$};
+
+      \draw[seq-red, vector] (0, 0) to["$x$" left] (-1, 1);
+      \draw[seq-red, opacity=.7, vector] (0, 0) to["$Ax$" above left] (-2, -1);
+
+    \end{scope}
+
+    \point at (0, 0);
+
+  \end{scope}
+
+\end{tikzpicture}
+        </latex-code>
+      </p>
+
+      <p>
+        Now let <m>\textcolor{seq-red}x = \frac 12{5\choose -3}</m>.  We see from the grid on the right in the picture below that <m>x = \frac 12v_1 + 2v_2</m>, so
+        <me>
+          Ax = A\left(\frac 12v_1 + 2v_2\right) = \frac 12Av_1 + 2Av_2 = v_1 - 2v_2
+          = \vec{1 1} - 2\vec{1 -1} = \vec{-1 3}.
+        </me>
+        This is illustrated in the picture below.
+        <latex-code>
+\begin{tikzpicture}[scale=.85, thin border nodes]
+  \draw[help lines] (-3,-3) grid (3,3);
+  \node at (0, 3.5) {action of $D$};
+
+  \draw[seq-violet, vector, opacity=.5] (0,0) -- (1,0) node[right, opacity=1] {$e_1$};
+  \draw[seq-green,  vector, opacity=.5] (0,0) -- (0,1) node[above, opacity=1] {$e_2$};
+
+  \draw[seq-red, vector] (0, 0) to["{$y$}" {above, pos=1}] (1/2, 2);
+  \draw[seq-red, opacity=.7, vector] (0, 0) to["{$Dy$}"] (1, -2);
+
+  \node[align=center] (A) at (6, -1)
+     {scale $e_1$ by $2$\\scale $e_2$ by $-1$};
+  \node[align=center] (B) at (6, 1)
+     {scale $v_1$ by $2$\\scale $v_2$ by $-1$};
+
+  \draw[->, shorten >=2mm, thick] (A) -- (3, -1);
+  \draw[->, shorten >=2mm, thick] (B) -- (9,  1);
+
+  \point at (0, 0);
+
+  \begin{scope}[xshift=12cm]
+    \node at (0, 3.5) {action of $A$};
+    \draw[help lines] (-3, -3) rectangle (3, 3);
+    \path[clip] (-3, -3) rectangle (3, 3);
+    \begin{scope}[cm={(1,1,1,-1,(0,0))}, scale=.7]
+      \draw[help lines] (-5,-5) grid (5,5);
+
+      \draw[seq-violet, vector, opacity=.5] (0,0) -- (1,0) node[right, opacity=1] {$v_1$};
+      \draw[seq-green,  vector, opacity=.5] (0,0) -- (0,1) node[right, opacity=1, yshift=-2.5mm, xshift=-1.5mm] {$v_2$};
+
+      \draw[seq-red, vector] (0, 0) to["$x$" {right, pos=1}] (1/2, 2);
+      \draw[seq-red, opacity=.7, vector] (0, 0) to["$Ax$" left] (1, -2);
+
+    \end{scope}
+
+    \point at (0, 0);
+
+  \end{scope}
+
+\end{tikzpicture}
+        </latex-code>
+      </p>
+
+      <figure>
+        <caption>The matrix <m>A</m> scales the <m>v_1</m>-direction (violet) by a factor of <m>2</m> and the <m>v_2</m>-direction (green) by a factor of <m>-1</m>.  You should be able to visualize where <m>Ax</m> will be given the location of <m>x</m>.</caption>
+        <mathbox source="demos/eigenspace.html?mat=1/2,3/2:3/2,1/2&amp;nomult" height="500px"/>
+      </figure>
+    </specialcase>
+</restrict-version>
+
     <p>
       In the following examples, we visualize the action of a diagonalizable matrix <m>A</m> in terms of its <em>dynamics</em>.  In other words, we start with a collection of vectors (drawn as points), and we see where they move when we multiply them by <m>A</m> repeatedly.
     </p>
