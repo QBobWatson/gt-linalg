@@ -177,6 +177,10 @@ inv22 = (m) ->
     det = m[0]*m[3] - m[1]*m[2]
     [m[3]/det, -m[1]/det, -m[2]/det, m[0]/det]
 
+extend = (obj, src) ->
+    for key, val of src
+        obj[key] = val if src.hasOwnProperty key
+
 
 ######################################################################
 # Controller class
@@ -187,12 +191,28 @@ class Controller
         opts.numPointsRow ?= 50
         opts.numPointsCol ?= 100
         opts.duration     ?= 3.0
+        opts.continuous   ?= true
+        opts.axisColors   ?= []
+
+        @axisOpts =
+            end:     false
+            width:   3
+            zBias:   -1
+            depth:   1
+            color:   "black"
+            range:   [-10,10]
+        extend @axisOpts, (opts.axisOpts ? {})
+
+        @axisColors = opts.axisColors.slice()
+        @axisColors[0] ?= [0, 0, 0, 0.3]
+        @axisColors[1] ?= [0, 0, 0, 0.3]
 
         @mathbox = mathbox
 
         # Current demo
         @current = null
 
+        @continuous = opts.continuous
         @numPointsRow = opts.numPointsRow
         @numPointsCol = opts.numPointsCol
         @numPoints = @numPointsRow * @numPointsCol - 1
@@ -222,8 +242,8 @@ class Controller
         @linesElt     = null
         @linesDataElt = null
 
-    install: (type) =>
-        @current = new type @extents
+    install: (type, opts) =>
+        @current = new type @extents, opts
         canvas = @mathbox._context.canvas
 
         for i in [1..@numPoints]
@@ -296,20 +316,22 @@ class Controller
 
             @initialized = true
 
-    start: () =>
-        setInterval () =>
-            for point, i in @points
-                if i == 0  # Origin
-                    continue
-                end = point[2] + point[3]
-                if end < @curTime
-                    # Reset point
-                    [point[0], point[1]] = mult22 @current.stepMat, point
-                    [point[0], point[1]] = @current.updatePoint point
-                    # Reset timer
-                    point[2] = @curTime + @delay()
-            null
-        , 100
+    step: (invert) =>
+        for point, i in @points
+            if i == 0  # Origin
+                continue
+            end = point[2] + point[3]
+            if end < @curTime
+                # Reset point
+                [point[0], point[1]] = mult22 @current.stepMat, point
+                [point[0], point[1]] = @current.updatePoint point
+                # Reset timer
+                point[2] = @curTime + @delay()
+        null
+
+    unStep: () => @step true
+
+    start: () => setInterval @step, 100
 
     # Choose random (but not too wonky) coordinate system
     randomizeCoords: () =>
@@ -350,18 +372,14 @@ class Controller
         else
             @view = @view0.transform matrix: transformMat
             for i in [1, 2]
-                @view.axis
-                    axis:    i
-                    end:     false
-                    width:   3
-                    size:    5
-                    zBias:   -1
-                    depth:   1
-                    color:   "black"
-                    opacity: 0.3
-                    range:   [-10,10]
+                @axisOpts.axis    = i
+                @axisOpts.color   = @axisColors[i-1]
+                @axisOpts.opacity = @axisColors[i-1][3]
+                @view.axis @axisOpts
 
     delay: (first) =>
+        if not @continuous
+            return if first then -@duration else 0
         scale = @numPoints / 1000
         pos = Math.random() * scale
         if first
@@ -392,15 +410,16 @@ class Dynamics
 # Complex eigenvalues
 
 class Complex extends Dynamics
-    constructor: (extents) ->
+    constructor: (extents, opts) ->
         super extents
-        @deltaAngle = randSign() * linLerp(π/6, 5*π/6)(Math.random())
-        @scale = @getScale()
+        opts ?= {}
+        @θ     = opts.θ     ? randSign() * linLerp(π/6, 5*π/6)(Math.random())
+        @scale = opts.scale ? @randomScale()
 
-        @stepMat = [Math.cos(@deltaAngle) * @scale, -Math.sin(@deltaAngle) * @scale,
-                    Math.sin(@deltaAngle) * @scale,  Math.cos(@deltaAngle) * @scale]
+        @stepMat = [Math.cos(@θ) * @scale, -Math.sin(@θ) * @scale,
+                    Math.sin(@θ) * @scale,  Math.cos(@θ) * @scale]
 
-        @makeDistributions()
+        @makeDistributions opts
 
     newPoint: (oldPoint) =>
         distribution = if not oldPoint then @origDist else @newDist
@@ -411,14 +430,16 @@ class Complex extends Dynamics
     shaderParams: () =>
         code: rotateShader,
         uniforms:
-            deltaAngle: { type: 'f', value: @deltaAngle }
+            deltaAngle: { type: 'f', value: @θ }
             scale:      { type: 'f', value: @scale }
 
 
 class Circle extends Complex
-    getScale: () => 1
+    descr: () -> "Ovals"
 
-    makeDistributions: () =>
+    randomScale: () => 1
+
+    makeDistributions: (opts) =>
         @newDist = @origDist = polyLerp 0.01, @extents.rad, 1/2
 
     makeReference: () =>
@@ -443,14 +464,14 @@ class Spiral extends Complex
         s = if @scale > 1 then @scale else 1/@scale
         iters = (Math.log(@extents.rad) - Math.log(close))/Math.log(s)
         # How many full rotations in that many iterations?
-        rotations = Math.ceil(@deltaAngle * iters / 2*π)
+        rotations = Math.ceil(@θ * iters / 2*π)
         d = @direction
         # Have to put this in a matrix to avoid texture size limits
         for i in [0..rotations]
             row = []
             for t in [0..100]
                 u = (i + t/100) * 2*π
-                ss = close * Math.pow(s, u / @deltaAngle)
+                ss = close * Math.pow(s, u / @θ)
                 items = []
                 for j in [0...2*π] by π/4
                     items.push [ss * Math.cos(d*(u+j)), ss * Math.sin(d*(u+j))]
@@ -460,18 +481,22 @@ class Spiral extends Complex
 
 
 class SpiralIn extends Spiral
-    constructor: (extents) ->
-        super extents
+    descr: () -> "Spiral in"
+
+    constructor: (extents, opts) ->
+        super extents, opts
         @direction = -1
 
-    getScale: () -> linLerp(0.3, 0.8)(Math.random())
+    randomScale: () -> linLerp(0.3, 0.8)(Math.random())
 
-    makeDistributions: () =>
+    makeDistributions: (opts) =>
         @close  = 0.01
         @medium = @extents.rad
         @far    = @extents.rad / @scale
 
-        switch randElt ['cont', 'disc']
+        distType = opts.dist ? randElt ['cont', 'disc']
+
+        switch distType
             when 'cont'
                 @origDist = expLerp @close, @far
                 @newDist = expLerp @medium, @far
@@ -492,18 +517,22 @@ class SpiralIn extends Spiral
 
 
 class SpiralOut extends Spiral
-    constructor: (extents) ->
-        super extents
+    descr: () -> "Spiral out"
+
+    constructor: (extents, opts) ->
+        super extents, opts
         @direction = 1
 
-    getScale: () => linLerp(1/0.8, 1/0.3)(Math.random())
+    randomScale: () => linLerp(1/0.8, 1/0.3)(Math.random())
 
-    makeDistributions: () =>
+    makeDistributions: (opts) =>
         @veryClose = 0.01 / @scale
         @close     = 0.01
         @medium    = @extents.rad
 
-        switch randElt ['cont', 'disc']
+        distType = opts.dist ? randElt ['cont', 'disc']
+
+        switch distType
             when 'cont'
                 @origDist = expLerp @veryClose, @medium
                 @newDist = expLerp @veryClose, @close
@@ -527,25 +556,29 @@ class SpiralOut extends Spiral
 # Real eigenvalues, diagonalizable
 
 class Diagonalizable extends Dynamics
-    constructor: (extents) ->
-        super extents
-        @makeScales()
-        @stepMat = [@scaleX, 0, 0, @scaleY]
+    constructor: (extents, opts) ->
+        super extents, opts
+        opts ?= {}
+        @makeScales opts
+        @stepMat = [@λ1, 0, 0, @λ2]
 
     shaderParams: () =>
         code: diagShader,
         uniforms:
-            scaleX: { type: 'f', value: @scaleX }
-            scaleY: { type: 'f', value: @scaleY }
+            scaleX: { type: 'f', value: @λ1 }
+            scaleY: { type: 'f', value: @λ2 }
 
 
 class Hyperbolas extends Diagonalizable
-    makeScales: () =>
-        @scaleX = linLerp(0.3, 0.8)(Math.random())
-        @scaleY = linLerp(1/0.8, 1/0.3)(Math.random())
-        # Implicit equations for paths are x^{log(scaleY)}y^{-log(scaleX)} = r
-        @logScaleX = Math.log @scaleX
-        @logScaleY = Math.log @scaleY
+    descr: () -> "Hyperbolas"
+
+    makeScales: (opts) =>
+        @λ1 = opts.λ1 ? linLerp(0.3, 0.8)(Math.random())
+        @λ2 = opts.λ2 ? linLerp(1/0.8, 1/0.3)(Math.random())
+        [@λ2, @λ1] = [@λ1, @λ2] if @λ1 > @λ2
+        # Implicit equations for paths are x^{log(λ2)}y^{-log(λ1)} = r
+        @logScaleX = Math.log @λ1
+        @logScaleY = Math.log @λ2
         # @close means (@close, @close) is the closest point to the origin
         @close = 0.05
         @closeR = Math.pow(@close, @logScaleY - @logScaleX)
@@ -559,10 +592,10 @@ class Hyperbolas extends Diagonalizable
             # x value on that hyperbola at y = @extents.y
             closeX = Math.pow(r * Math.pow(@extents.y, @logScaleX), 1/@logScaleY)
             # Choose x value exponentially along that hyperbola
-            x = expLerp(closeX, @extents.x / @scaleX)(Math.random())
+            x = expLerp(closeX, @extents.x / @λ1)(Math.random())
         else
             # As above, but out of sight
-            x = expLerp(@extents.x, @extents.x / @scaleX)(Math.random())
+            x = expLerp(@extents.x, @extents.x / @λ1)(Math.random())
         # Corresponding y
         y = Math.pow(1/r * Math.pow(x, @logScaleY), 1/@logScaleX)
         [randSign() * x, randSign() * y, 0, oldPoint?[3]]
@@ -589,10 +622,10 @@ class Hyperbolas extends Diagonalizable
 
 
 class AttractRepel extends Diagonalizable
-    makeScales: () =>
-        # Implicit equations for paths are x^{log(scaleY)}y^{-log(scaleX)} = r
-        @logScaleX = Math.log @scaleX
-        @logScaleY = Math.log @scaleY
+    makeScales: (opts) =>
+        # Implicit equations for paths are x^{log(λ2)}y^{-log(λ1)} = r
+        @logScaleX = Math.log @λ1
+        @logScaleY = Math.log @λ2
         # Choose points on paths between the ones going through
         # (.95,.05) and (.05,.95)
         offset = 0.05
@@ -604,7 +637,7 @@ class AttractRepel extends Diagonalizable
         # Assume this is >1
         a = @logScaleY/@logScaleX
         # Points expand in/out in "wave fronts" of the form x^a + y = s
-        # Acting (x,y) by stepMat multiplies this equation by scaleY
+        # Acting (x,y) by stepMat multiplies this equation by λ2
         # Last wave front is through (@extents.x, @extents.y)
         @sMin = 0.01
         @sMax = Math.pow(@extents.x, a) + @extents.y
@@ -629,16 +662,19 @@ class AttractRepel extends Diagonalizable
 
 
 class Attract extends AttractRepel
-    makeScales: () =>
-        # scaleX >= scaleY implies logScaleY/logScaleX > 1
-        @scaleX = linLerp(0.3, 0.9)(Math.random())
-        @scaleY = linLerp(0.3, @scaleX)(Math.random())
-        super
+    descr: () -> "Attracting point"
+
+    makeScales: (opts) =>
+        @λ1 = opts.λ1 ? linLerp(0.3, 0.9)(Math.random())
+        @λ2 = opts.λ2 ? linLerp(0.3, @λ1)(Math.random())
+        [@λ2, @λ1] = [@λ1, @λ2] if @λ1 < @λ2
+        # λ1 >= λ2 implies logScaleY/logScaleX > 1
+        super opts
 
     newPoint: (oldPoint) =>
         # First choose r
         r = @lerpR Math.random()
-        farY = @yValAt r, @sMax / @scaleY
+        farY = @yValAt r, @sMax / @λ2
         if not oldPoint
             closeY = @yValAt r, @sMin
         else
@@ -655,16 +691,19 @@ class Attract extends AttractRepel
 
 
 class Repel extends AttractRepel
-    makeScales: () =>
-        # scaleX <= scaleY implies logScaleY/logScaleX > 1
-        @scaleY = linLerp(1/0.9, 1/0.3)(Math.random())
-        @scaleX = linLerp(1/0.9, @scaleY)(Math.random())
+    descr: () -> "Repelling point"
+
+    makeScales: (opts) =>
+        @λ1 = opts.λ1 ? linLerp(1/0.9, 1/0.3)(Math.random())
+        @λ2 = opts.λ2 ? linLerp(1/0.9, @λ2)(Math.random())
+        [@λ2, @λ1] = [@λ1, @λ2] if @λ1 > @λ2
+        # λ1 <= λ2 implies logScaleY/logScaleX > 1
         super
 
     newPoint: (oldPoint) =>
         # First choose r
         r = @lerpR Math.random()
-        closeY = @yValAt r, @sMin / @scaleY
+        closeY = @yValAt r, @sMin / @λ2
         if not oldPoint
             farY = @yValAt r, @sMax
         else
@@ -681,8 +720,8 @@ class Repel extends AttractRepel
 
 
 class AttractRepelLine extends Diagonalizable
-    makeScales: () =>
-        @scaleX = 1
+    makeScales: (opts) =>
+        @λ1 = 1
         @lerpX = linLerp -@extents.x, @extents.x
 
     newPoint: (oldPoint) =>
@@ -701,11 +740,13 @@ class AttractRepelLine extends Diagonalizable
 
 
 class AttractLine extends AttractRepelLine
-    makeScales: () =>
-        super
-        @scaleY = linLerp(0.3, 0.8)(Math.random())
-        @origLerpY = expLerp 0.01, @extents.y / @scaleY
-        @newLerpY = expLerp @extents.y, @extents.y / @scaleY
+    descr: () -> "Attracting line"
+
+    makeScales: (opts) =>
+        super opts
+        @λ2 = opts.λ2 ? linLerp(0.3, 0.8)(Math.random())
+        @origLerpY = expLerp 0.01, @extents.y / @λ2
+        @newLerpY = expLerp @extents.y, @extents.y / @λ2
 
     updatePoint: (point) =>
         if Math.abs(point[1]) < 0.01
@@ -715,11 +756,13 @@ class AttractLine extends AttractRepelLine
 
 
 class RepelLine extends AttractRepelLine
-    makeScales: () =>
-        super
-        @scaleY = linLerp(1/0.8, 1/0.3)(Math.random())
-        @origLerpY = expLerp 0.01 / @scaleY, @extents.y
-        @newLerpY = expLerp 0.01 / @scaleY, 0.01
+    descr: () -> "Repelling line"
+
+    makeScales: (opts) =>
+        super opts
+        @λ2 = opts.λ2 ? linLerp(1/0.8, 1/0.3)(Math.random())
+        @origLerpY = expLerp 0.01 / @λ2, @extents.y
+        @newLerpY = expLerp 0.01 / @λ2, 0.01
 
     updatePoint: (point) =>
         if Math.abs(point[1]) > @extents.y
@@ -732,9 +775,12 @@ class RepelLine extends AttractRepelLine
 # Real eigenvalues, not diagonalizable
 
 class Shear extends Dynamics
-    constructor: (extents) ->
-        super extents
-        @translate = randSign() * linLerp(0.2, 2.0)(Math.random())
+    descr: () -> "Shear"
+
+    constructor: (extents, opts) ->
+        super extents, opts
+        opts ?= {}
+        @translate = opts.translate ? randSign() * linLerp(0.2, 2.0)(Math.random())
         @stepMat = [1, @translate, 0, 1]
         @lerpY = linLerp 0.01, @extents.y
         # For reference
@@ -786,9 +832,10 @@ class Shear extends Dynamics
 
 
 class ScaleInOutShear extends Dynamics
-    constructor: (extents) ->
-        super extents
-        @translate = randSign() * linLerp(0.2, 2.0)(Math.random())
+    constructor: (extents, opts) ->
+        super extents, opts
+        opts ?= {}
+        @translate = opts.translate ? randSign() * linLerp(0.2, 2.0)(Math.random())
         λ = @scale
         a = @translate
         @stepMat = [λ, λ*a, 0, λ]
@@ -828,11 +875,14 @@ class ScaleInOutShear extends Dynamics
 
 
 class ScaleOutShear extends ScaleInOutShear
-    constructor: (@extents) ->
-        @scale = linLerp(1/0.7, 1/0.3)(Math.random())
+    descr: () -> "Scale-out shear"
+
+    constructor: (@extents, opts) ->
+        opts ?= {}
+        @scale = opts.scale ? linLerp(1/0.7, 1/0.3)(Math.random())
         @lerpY = expLerp 0.01/@scale, @extents.y
         @lerpYNew = expLerp 0.01/@scale, 0.01
-        super @extents
+        super @extents, opts
 
     updatePoint: (point) =>
         if Math.abs(point[1]) > @extents.y
@@ -842,11 +892,14 @@ class ScaleOutShear extends ScaleInOutShear
 
 
 class ScaleInShear extends ScaleInOutShear
-    constructor: (@extents) ->
-        @scale = linLerp(0.3, 0.7)(Math.random())
+    descr: () -> "Scale-in shear"
+
+    constructor: (@extents, opts) ->
+        opts ?= {}
+        @scale = opts.scale ? linLerp(0.3, 0.7)(Math.random())
         @lerpY = expLerp 0.01, @extents.y / @scale
         @lerpYNew = expLerp @extents.y, @extents.y / @scale
-        super @extents
+        super @extents, opts
 
     updatePoint: (point) =>
         if Math.abs(point[1]) < .01

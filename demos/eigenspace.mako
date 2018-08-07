@@ -37,9 +37,9 @@ switch size
     when 2 then matrixT = ([matrix[0][i], matrix[1][i]] for i in [0...size])
     when 3 then matrixT = ([matrix[0][i], matrix[1][i], matrix[2][i]] for i in [0...size])
 
-color1 = new Color("green")
-color2 = new Color("violet")
-color3 = new Color("brown")
+color1 = new Color "green"
+color2 = new Color "violet"
+color3 = new Color "brown"
 colors = [color1, color2, color3]
 vecColor = new Color("red")
 
