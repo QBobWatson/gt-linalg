@@ -50,7 +50,7 @@ html, body {
     
         <script src="js/demo.js?vers=39ead6"></script>
     
-    <script src="js/dynamics.js?vers=642670"></script>
+    <script src="js/dynamics.js?vers=b128f8"></script>
 
 
     <script type="text/javascript">
@@ -134,17 +134,21 @@ if (almostZero(discriminant)) {
     basis1 = [1, 0];
     basis2 = [0, 1];
     axisColors[1] = axisColors[0];
-    eigenStr = "<p>The whole plane is the <span class=\"espace-1\">" + ((λ.toFixed(2)) + "-eigenspace</span></p>");
+    eigenStr = "<p>The whole plane is the <span class=\"espace-1\">" + ((λ.toFixed(2)) + "-eigenspace.</span></p>");
     type = λ > 1 ? dynamics.Repel : dynamics.Attract;
     opts = {
       λ1: λ,
       λ2: λ
     };
   } else {
-    basis1 = normalize([b, λ - a]);
-    basis2 = normalize([a - λ, b]);
+    if (almostZero(b)) {
+      basis1 = normalize([b, λ - a]);
+    } else {
+      basis1 = normalize([λ - d, c]);
+    }
+    basis2 = [basis1[1], -basis1[0]];
     axisColors[1] = [0.5, 0.5, 0.5, 0.3];
-    eigenStr = "<p>This is the <span class=\"espace-1\">" + ((λ.toFixed(2)) + "-eigenspace</span></p>");
+    eigenStr = "<p>This is the <span class=\"espace-1\">" + ((λ.toFixed(2)) + "-eigenspace.</span></p>");
     v = [(a - λ) * basis2[0] + b * basis2[1], c * basis2[0] + (d - λ) * basis2[1]];
     if (almostZero(basis1[0])) {
       opts.translate = v[1] / (λ * basis1[1]);
@@ -187,8 +191,23 @@ if (almostZero(discriminant)) {
   δ = Math.sqrt(discriminant);
   λ1 = (trace - δ) / 2;
   λ2 = (trace + δ) / 2;
-  basis1 = normalize([b, λ1 - a]);
-  basis2 = normalize([b, λ2 - a]);
+  if (almostZero(b)) {
+    if (almostZero(c)) {
+      if (almostZero(a - λ1)) {
+        basis1 = [1, 0];
+        basis2 = [0, 1];
+      } else {
+        basis2 = [1, 0];
+        basis1 = [0, 1];
+      }
+    } else {
+      basis1 = normalize([λ1 - d, c]);
+      basis2 = normalize([λ2 - d, c]);
+    }
+  } else {
+    basis1 = normalize([b, λ1 - a]);
+    basis2 = normalize([b, λ2 - a]);
+  }
   if (λ1 < 0 || λ2 < 0) {
     throw "Can't handle negative real eigenvalues";
   }
@@ -214,7 +233,7 @@ if (almostZero(discriminant)) {
   } else if (λ1 > 1 && λ2 > 1) {
     type = dynamics.Repel;
   }
-  eigenStr = "<p>This is the <span class=\"espace-1\">" + ((opts.λ1.toFixed(2)) + "-eigenspace</span><br>") + "This is the <span class=\"espace-2\">" + ((opts.λ2.toFixed(2)) + "-eigenspace</span></p>");
+  eigenStr = "<p>This is the <span class=\"espace-1\">" + ((opts.λ1.toFixed(2)) + "-eigenspace.</span><br>") + "This is the <span class=\"espace-2\">" + ((opts.λ2.toFixed(2)) + "-eigenspace.</span></p>");
 }
 
 vecColor = new Color("red");
@@ -253,9 +272,26 @@ new Demo2D({
   katex.render(str, matElt);
   updateCaption = (function(_this) {
     return function() {
-      str = '\\qquad ' + matName + _this.texVector(vectorIn, {
+      var x;
+      str = '\\qquad ' + matName + _this.texVector((function() {
+        var j, len1, results;
+        results = [];
+        for (j = 0, len1 = vectorIn.length; j < len1; j++) {
+          x = vectorIn[j];
+          results.push(x * 10);
+        }
+        return results;
+      })(), {
         color: vecColor
-      }) + " = " + _this.texVector(vectorOut, {
+      }) + " = " + _this.texVector((function() {
+        var j, len1, results;
+        results = [];
+        for (j = 0, len1 = vectorOut.length; j < len1; j++) {
+          x = vectorOut[j];
+          results.push(x * 10);
+        }
+        return results;
+      })(), {
         color: vecColor.darken(.1)
       });
       return katex.render(str, multElt);

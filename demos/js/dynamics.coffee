@@ -16,17 +16,18 @@ rotateShader = easeCode + \
     uniform float deltaAngle;
     uniform float scale;
     uniform float time;
+    uniform float duration;
 
     vec4 getPointSample(vec4 xyzw);
 
     vec4 rotate(vec4 xyzw) {
         vec4 point = getPointSample(xyzw);
+
         float start = point.z;
-        float duration = point.w;
-        if(time < start) {
-            return vec4(point.xy, 0.0, 0.0);
-        }
-        float pos = min((time - start) / duration, 1.0);
+        float pos = (time - start) / abs(duration);
+        if(duration < 0.0) pos = 1.0 - pos;
+        if(pos < 0.0) return vec4(point.xy, 0.0, 0.0);
+        if(pos > 1.0) pos = 1.0;
         pos = easeInOutSine(pos);
         float c = cos(deltaAngle * pos);
         float s = sin(deltaAngle * pos);
@@ -41,17 +42,19 @@ diagShader = easeCode + \
     uniform float scaleX;
     uniform float scaleY;
     uniform float time;
+    uniform float duration;
 
     vec4 getPointSample(vec4 xyzw);
 
     vec4 rotate(vec4 xyzw) {
         vec4 point = getPointSample(xyzw);
+
         float start = point.z;
-        float duration = point.w;
-        if(time < start) {
-            return vec4(point.xy, 0.0, 0.0);
-        }
-        float pos = min((time - start) / duration, 1.0);
+        float pos = (time - start) / abs(duration);
+        if(duration < 0.0) pos = 1.0 - pos;
+        if(pos < 0.0) return vec4(point.xy, 0.0, 0.0);
+        if(pos > 1.0) pos = 1.0;
+
         pos = easeInOutSine(pos);
         point.x *= pow(scaleX, pos);
         point.y *= pow(scaleY, pos);
@@ -64,17 +67,19 @@ shearShader = easeCode + \
     uniform float scale;
     uniform float translate;
     uniform float time;
+    uniform float duration;
 
     vec4 getPointSample(vec4 xyzw);
 
     vec4 shear(vec4 xyzw) {
         vec4 point = getPointSample(xyzw);
+
         float start = point.z;
-        float duration = point.w;
-        if(time < start) {
-            return vec4(point.xy, 0.0, 0.0);
-        }
-        float pos = min((time - start) / duration, 1.0);
+        float pos = (time - start) / abs(duration);
+        if(duration < 0.0) pos = 1.0 - pos;
+        if(pos < 0.0) return vec4(point.xy, 0.0, 0.0);
+        if(pos > 1.0) pos = 1.0;
+
         pos = easeInOutSine(pos);
         float s = pow(scale, pos);
         point.x  = s * (point.x + translate * pos * point.y);
@@ -86,6 +91,7 @@ shearShader = easeCode + \
 colorShader = easeCode + \
     """
     uniform float time;
+    uniform float duration;
 
     vec4 getPointSample(vec4 xyzw);
     vec4 getColorSample(vec4 xyzw);
@@ -101,10 +107,14 @@ colorShader = easeCode + \
     vec4 getColor(vec4 xyzw) {
         vec4 color = getColorSample(xyzw);
         vec4 point = getPointSample(xyzw);
+
         float start = point.z;
-        float duration = point.w;
         float pos, ease;
-        pos = max(0.0, min(1.0, (time - start) / duration));
+        pos = (time - start) / abs(duration);
+        if(duration < 0.0) pos = 1.0 - pos;
+        if(pos < 0.0) pos = 0.0;
+        else if(pos > 1.0) pos = 1.0;
+
         if(pos < TRANSITION) {
             ease = easeInOutSine(pos / TRANSITION);
             color.w *= ease * 0.6 + 0.4;
@@ -123,6 +133,7 @@ sizeShader = easeCode + \
     """
     uniform float time;
     uniform float small;
+    uniform float duration;
 
     vec4 getPointSample(vec4 xyzw);
 
@@ -131,10 +142,14 @@ sizeShader = easeCode + \
 
     vec4 getSize(vec4 xyzw) {
         vec4 point = getPointSample(xyzw);
+
         float start = point.z;
-        float duration = point.w;
         float pos, ease, size = BIG;
-        pos = max(0.0, min(1.0, (time - start) / duration));
+        pos = (time - start) / abs(duration);
+        if(duration < 0.0) pos = 1.0 - pos;
+        if(pos < 0.0) pos = 0.0;
+        else if(pos > 1.0) pos = 1.0;
+
         if(pos < TRANSITION) {
             ease = easeInOutSine(pos / TRANSITION);
             size = small * (1.0-ease) + BIG * ease;
@@ -211,6 +226,8 @@ class Controller
 
         # Current demo
         @current = null
+        # Playing forward or backward
+        @direction = 1
 
         @continuous = opts.continuous
         @numPointsRow = opts.numPointsRow
@@ -218,6 +235,7 @@ class Controller
         @numPoints = @numPointsRow * @numPointsCol - 1
         @duration = opts.duration
         @curTime = 0
+        @startTime = -@duration  # when continuous is off
         @points = [[0, 0, -1, 1e15]]
 
         # Colors
@@ -249,7 +267,6 @@ class Controller
         for i in [1..@numPoints]
             @points[i] = @current.newPoint()
             @points[i][2] = @curTime + @delay(true)
-            @points[i][3] = @duration
 
         if @initialized
             @shaderElt.set @current.shaderParams()
@@ -265,7 +282,8 @@ class Controller
                     height:   @numPointsCol
                     data:     @points
             @shaderElt = @pointsElt.shader @current.shaderParams(),
-                time: (t) => @curTime = t
+                time: (t) => @curTime = t,
+                duration: () => @duration * @direction
             @shaderElt.resample id: "points"
 
             # Coloring pipeline
@@ -281,6 +299,7 @@ class Controller
                     sources: [@pointsElt]
                 ,
                     time: (t) -> t
+                    duration: () => @duration * @direction
                 .resample id: "colors"
 
             # Size pipeline
@@ -290,6 +309,7 @@ class Controller
                 ,
                     time:  (t) -> t
                     small: () -> 5 / 739 * canvas.clientWidth
+                    duration: () => @duration * @direction
                 .resample
                     source: @pointsElt
                     id:     "sizes"
@@ -316,12 +336,24 @@ class Controller
 
             @initialized = true
 
-    step: (invert) =>
+    goBackwards: () =>
+        for point in @points
+            [point[0], point[1]] = mult22 @current.stepMat, point
+
+    goForwards: () =>
+        for point in @points
+            [point[0], point[1]] = mult22 @current.inverse.stepMat, point
+
+    step: () =>
+        if not @continuous
+            return if @startTime + @duration > @curTime
+            @startTime = @curTime
+        @goForwards() if @direction == -1
+        @direction = 1
         for point, i in @points
             if i == 0  # Origin
                 continue
-            end = point[2] + point[3]
-            if end < @curTime
+            if point[2] + @duration <= @curTime
                 # Reset point
                 [point[0], point[1]] = mult22 @current.stepMat, point
                 [point[0], point[1]] = @current.updatePoint point
@@ -329,7 +361,23 @@ class Controller
                 point[2] = @curTime + @delay()
         null
 
-    unStep: () => @step true
+    unStep: () =>
+        if not @continuous
+            return if @startTime + @duration > @curTime
+            @startTime = @curTime
+        @goBackwards() if @direction == 1
+        @direction = -1
+        inv = @current.inverse
+        for point, i in @points
+            if i == 0  # Origin
+                continue
+            if point[2] + @duration <= @curTime
+                # Reset point
+                [point[0], point[1]] = inv.updatePoint point
+                [point[0], point[1]] = mult22 inv.stepMat, point
+                # Reset timer
+                point[2] = @curTime + @delay()
+        null
 
     start: () => setInterval @step, 100
 
@@ -411,7 +459,7 @@ class Dynamics
 
 class Complex extends Dynamics
     constructor: (extents, opts) ->
-        super extents
+        super extents, opts
         opts ?= {}
         @θ     = opts.θ     ? randSign() * linLerp(π/6, 5*π/6)(Math.random())
         @scale = opts.scale ? @randomScale()
@@ -425,7 +473,7 @@ class Complex extends Dynamics
         distribution = if not oldPoint then @origDist else @newDist
         r = distribution Math.random()
         θ = Math.random() * 2 * π
-        [Math.cos(θ) * r, Math.sin(θ) * r, 0, oldPoint?[3]]
+        [Math.cos(θ) * r, Math.sin(θ) * r, 0, 0]
 
     shaderParams: () =>
         code: rotateShader,
@@ -436,6 +484,13 @@ class Complex extends Dynamics
 
 class Circle extends Complex
     descr: () -> "Ovals"
+
+    constructor: (extents, opts) ->
+        super extents, opts
+        @inverse = opts?.inverse ? new Circle extents,
+            θ: -@θ
+            scale: 1/@scale
+            inverse: @
 
     randomScale: () => 1
 
@@ -486,6 +541,10 @@ class SpiralIn extends Spiral
     constructor: (extents, opts) ->
         super extents, opts
         @direction = -1
+        @inverse = opts?.inverse ? new SpiralOut extents,
+            θ: -@θ
+            scale: 1/@scale
+            inverse: @
 
     randomScale: () -> linLerp(0.3, 0.8)(Math.random())
 
@@ -522,6 +581,11 @@ class SpiralOut extends Spiral
     constructor: (extents, opts) ->
         super extents, opts
         @direction = 1
+        @inverse = opts?.inverse ? new SpiralIn extents,
+            θ: -@θ
+            scale: 1/@scale
+            inverse: @
+            dist: @distType
 
     randomScale: () => linLerp(1/0.8, 1/0.3)(Math.random())
 
@@ -530,9 +594,9 @@ class SpiralOut extends Spiral
         @close     = 0.01
         @medium    = @extents.rad
 
-        distType = opts.dist ? randElt ['cont', 'disc']
+        @distType = opts.dist ? randElt ['cont', 'disc']
 
-        switch distType
+        switch @distType
             when 'cont'
                 @origDist = expLerp @veryClose, @medium
                 @newDist = expLerp @veryClose, @close
@@ -559,23 +623,37 @@ class Diagonalizable extends Dynamics
     constructor: (extents, opts) ->
         super extents, opts
         opts ?= {}
+        @swapped = false
         @makeScales opts
-        @stepMat = [@λ1, 0, 0, @λ2]
+        @stepMat = if @swapped then [@λ2, 0, 0, @λ1] else [@λ1, 0, 0, @λ2]
+
+    swap: () =>
+        [@λ2, @λ1] = [@λ1, @λ2]
+        [@extents.y, @extents.x] = [@extents.x, @extents.y]
+        @swapped = true
 
     shaderParams: () =>
         code: diagShader,
         uniforms:
-            scaleX: { type: 'f', value: @λ1 }
-            scaleY: { type: 'f', value: @λ2 }
+            scaleX: { type: 'f', value: if @swapped then @λ2 else @λ1 }
+            scaleY: { type: 'f', value: if @swapped then @λ1 else @λ2 }
 
 
 class Hyperbolas extends Diagonalizable
     descr: () -> "Hyperbolas"
 
+    constructor: (extents, opts) ->
+        super extents, opts
+        [λ1, λ2] = if @swapped then [@λ2, @λ1] else [@λ1, @λ2]
+        @inverse = opts?.inverse ? new Hyperbolas extents,
+            λ1: 1/λ1
+            λ2: 1/λ2
+            inverse: @
+
     makeScales: (opts) =>
         @λ1 = opts.λ1 ? linLerp(0.3, 0.8)(Math.random())
         @λ2 = opts.λ2 ? linLerp(1/0.8, 1/0.3)(Math.random())
-        [@λ2, @λ1] = [@λ1, @λ2] if @λ1 > @λ2
+        @swap() if @λ1 > @λ2
         # Implicit equations for paths are x^{log(λ2)}y^{-log(λ1)} = r
         @logScaleX = Math.log @λ1
         @logScaleY = Math.log @λ2
@@ -598,7 +676,10 @@ class Hyperbolas extends Diagonalizable
             x = expLerp(@extents.x, @extents.x / @λ1)(Math.random())
         # Corresponding y
         y = Math.pow(1/r * Math.pow(x, @logScaleY), 1/@logScaleX)
-        [randSign() * x, randSign() * y, 0, oldPoint?[3]]
+        if @swapped
+            [randSign() * y, randSign() * x, 0, 0]
+        else
+            [randSign() * x, randSign() * y, 0, 0]
 
     makeReference: () =>
         ret = []
@@ -610,12 +691,15 @@ class Hyperbolas extends Diagonalizable
             for i in [0..100]
                 x = lerp i/100
                 y = Math.pow(1/r * Math.pow(x, @logScaleY), 1/@logScaleX)
-                row.push [[x,  y], [-x,  y], [ x, -y], [-x, -y]]
+                if @swapped
+                    row.push [[y,  x], [ y, -x], [-y,  x], [-y, -x]]
+                else
+                    row.push [[x,  y], [-x,  y], [ x, -y], [-x, -y]]
             ret.push row
         ret
 
     updatePoint: (point) =>
-        if Math.abs(point[1]) > @extents.y
+        if Math.abs(if @swapped then point[0] else point[1]) > @extents.y
             @newPoint point
         else
             point
@@ -664,10 +748,18 @@ class AttractRepel extends Diagonalizable
 class Attract extends AttractRepel
     descr: () -> "Attracting point"
 
+    constructor: (extents, opts) ->
+        super extents, opts
+        @inverse = opts?.inverse ? new Repel extents,
+            λ1: 1/@λ1
+            λ2: 1/@λ2
+            inverse: @
+
     makeScales: (opts) =>
         @λ1 = opts.λ1 ? linLerp(0.3, 0.9)(Math.random())
         @λ2 = opts.λ2 ? linLerp(0.3, @λ1)(Math.random())
-        [@λ2, @λ1] = [@λ1, @λ2] if @λ1 < @λ2
+        if @λ1 < @λ2
+            throw "Must pass smaller eigenvalue second"
         # λ1 >= λ2 implies logScaleY/logScaleX > 1
         super opts
 
@@ -681,7 +773,7 @@ class Attract extends AttractRepel
             closeY = @yValAt r, @sMax
         y = expLerp(closeY, farY)(Math.random())
         x = @xOfY y, r
-        [randSign() * x, randSign() * y, 0, oldPoint?[3]]
+        [randSign() * x, randSign() * y, 0, 0]
 
     updatePoint: (point) =>
         if Math.abs(point[1]) < .01
@@ -693,12 +785,20 @@ class Attract extends AttractRepel
 class Repel extends AttractRepel
     descr: () -> "Repelling point"
 
+    constructor: (extents, opts) ->
+        super extents, opts
+        @inverse = opts?.inverse ? new Attract extents,
+            λ1: 1/@λ1
+            λ2: 1/@λ2
+            inverse: @
+
     makeScales: (opts) =>
-        @λ1 = opts.λ1 ? linLerp(1/0.9, 1/0.3)(Math.random())
-        @λ2 = opts.λ2 ? linLerp(1/0.9, @λ2)(Math.random())
-        [@λ2, @λ1] = [@λ1, @λ2] if @λ1 > @λ2
+        @λ2 = opts.λ2 ? linLerp(1/0.9, 1/0.3)(Math.random())
+        @λ1 = opts.λ1 ? linLerp(1/0.9, @λ2)(Math.random())
+        if @λ1 > @λ2
+            throw "Must pass smaller eigenvalue first"
         # λ1 <= λ2 implies logScaleY/logScaleX > 1
-        super
+        super opts
 
     newPoint: (oldPoint) =>
         # First choose r
@@ -710,7 +810,7 @@ class Repel extends AttractRepel
             farY = @yValAt r, @sMin
         y = expLerp(closeY, farY)(Math.random())
         x = @xOfY y, r
-        [randSign() * x, randSign() * y, 0, oldPoint?[3]]
+        [randSign() * x, randSign() * y, 0, 0]
 
     updatePoint: (point) =>
         if Math.abs(point[0]) > @extents.x or Math.abs(point[1]) > @extents.y
@@ -727,7 +827,7 @@ class AttractRepelLine extends Diagonalizable
     newPoint: (oldPoint) =>
         x = @lerpX Math.random()
         y = (if not oldPoint then @origLerpY else @newLerpY)(Math.random())
-        [x, randSign() * y, 0, oldPoint?[3]]
+        [x, randSign() * y, 0, 0]
 
     makeReference: () =>
         item1 = []
@@ -741,6 +841,13 @@ class AttractRepelLine extends Diagonalizable
 
 class AttractLine extends AttractRepelLine
     descr: () -> "Attracting line"
+
+    constructor: (extents, opts) ->
+        super extents, opts
+        @inverse = opts?.inverse ? new RepelLine extents,
+            λ1: 1/@λ1
+            λ2: 1/@λ2
+            inverse: @
 
     makeScales: (opts) =>
         super opts
@@ -757,6 +864,13 @@ class AttractLine extends AttractRepelLine
 
 class RepelLine extends AttractRepelLine
     descr: () -> "Repelling line"
+
+    constructor: (extents, opts) ->
+        super extents, opts
+        @inverse = opts?.inverse ? new AttractLine extents,
+            λ1: 1/@λ1
+            λ2: 1/@λ2
+            inverse: @
 
     makeScales: (opts) =>
         super opts
@@ -786,6 +900,10 @@ class Shear extends Dynamics
         # For reference
         @lerpY2 = linLerp -@extents.y, @extents.y
 
+        @inverse = opts?.inverse ? new Shear extents,
+            translate: -@translate
+            inverse: @
+
     newPoint: (oldPoint) =>
         a = @translate
         if not oldPoint
@@ -807,7 +925,7 @@ class Shear extends Dynamics
             else
                 x = linLerp(-@extents.x - a*y, -@extents.x)(Math.random())
         s = randSign()
-        [s*x, s*y, 0, oldPoint?[3]]
+        [s*x, s*y, 0, 0]
 
     shaderParams: () =>
         code: shearShader,
@@ -852,7 +970,7 @@ class ScaleInOutShear extends Dynamics
         y = (if not oldPoint then @lerpY else @lerpYNew)(Math.random())
         x = @xOfY r, y
         s = randSign()
-        [s*x, s*y, 0, oldPoint?[3]]
+        [s*x, s*y, 0, 0]
 
     shaderParams: () =>
         code: shearShader,
@@ -884,6 +1002,11 @@ class ScaleOutShear extends ScaleInOutShear
         @lerpYNew = expLerp 0.01/@scale, 0.01
         super @extents, opts
 
+        @inverse = opts?.inverse ? new ScaleInShear @extents,
+            translate: -@translate
+            scale: 1/@scale
+            inverse: @
+
     updatePoint: (point) =>
         if Math.abs(point[1]) > @extents.y
             @newPoint point
@@ -900,6 +1023,11 @@ class ScaleInShear extends ScaleInOutShear
         @lerpY = expLerp 0.01, @extents.y / @scale
         @lerpYNew = expLerp @extents.y, @extents.y / @scale
         super @extents, opts
+
+        @inverse = opts?.inverse ? new ScaleOutShear @extents,
+            translate: -@translate
+            scale: 1/@scale
+            inverse: @
 
     updatePoint: (point) =>
         if Math.abs(point[1]) < .01

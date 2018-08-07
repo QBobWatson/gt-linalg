@@ -7,15 +7,15 @@
 
   easeCode = "#define M_PI 3.1415926535897932384626433832795\n\nfloat easeInOutSine(float pos) {\n    return 0.5 * (1.0 - cos(M_PI * pos));\n}";
 
-  rotateShader = easeCode + "uniform float deltaAngle;\nuniform float scale;\nuniform float time;\n\nvec4 getPointSample(vec4 xyzw);\n\nvec4 rotate(vec4 xyzw) {\n    vec4 point = getPointSample(xyzw);\n    float start = point.z;\n    float duration = point.w;\n    if(time < start) {\n        return vec4(point.xy, 0.0, 0.0);\n    }\n    float pos = min((time - start) / duration, 1.0);\n    pos = easeInOutSine(pos);\n    float c = cos(deltaAngle * pos);\n    float s = sin(deltaAngle * pos);\n    point.xy = vec2(point.x * c - point.y * s, point.x * s + point.y * c)\n        * pow(scale, pos);\n    return vec4(point.xy, 0.0, 0.0);\n}";
+  rotateShader = easeCode + "uniform float deltaAngle;\nuniform float scale;\nuniform float time;\nuniform float duration;\n\nvec4 getPointSample(vec4 xyzw);\n\nvec4 rotate(vec4 xyzw) {\n    vec4 point = getPointSample(xyzw);\n\n    float start = point.z;\n    float pos = (time - start) / abs(duration);\n    if(duration < 0.0) pos = 1.0 - pos;\n    if(pos < 0.0) return vec4(point.xy, 0.0, 0.0);\n    if(pos > 1.0) pos = 1.0;\n    pos = easeInOutSine(pos);\n    float c = cos(deltaAngle * pos);\n    float s = sin(deltaAngle * pos);\n    point.xy = vec2(point.x * c - point.y * s, point.x * s + point.y * c)\n        * pow(scale, pos);\n    return vec4(point.xy, 0.0, 0.0);\n}";
 
-  diagShader = easeCode + "uniform float scaleX;\nuniform float scaleY;\nuniform float time;\n\nvec4 getPointSample(vec4 xyzw);\n\nvec4 rotate(vec4 xyzw) {\n    vec4 point = getPointSample(xyzw);\n    float start = point.z;\n    float duration = point.w;\n    if(time < start) {\n        return vec4(point.xy, 0.0, 0.0);\n    }\n    float pos = min((time - start) / duration, 1.0);\n    pos = easeInOutSine(pos);\n    point.x *= pow(scaleX, pos);\n    point.y *= pow(scaleY, pos);\n    return vec4(point.xy, 0.0, 0.0);\n}";
+  diagShader = easeCode + "uniform float scaleX;\nuniform float scaleY;\nuniform float time;\nuniform float duration;\n\nvec4 getPointSample(vec4 xyzw);\n\nvec4 rotate(vec4 xyzw) {\n    vec4 point = getPointSample(xyzw);\n\n    float start = point.z;\n    float pos = (time - start) / abs(duration);\n    if(duration < 0.0) pos = 1.0 - pos;\n    if(pos < 0.0) return vec4(point.xy, 0.0, 0.0);\n    if(pos > 1.0) pos = 1.0;\n\n    pos = easeInOutSine(pos);\n    point.x *= pow(scaleX, pos);\n    point.y *= pow(scaleY, pos);\n    return vec4(point.xy, 0.0, 0.0);\n}";
 
-  shearShader = easeCode + "uniform float scale;\nuniform float translate;\nuniform float time;\n\nvec4 getPointSample(vec4 xyzw);\n\nvec4 shear(vec4 xyzw) {\n    vec4 point = getPointSample(xyzw);\n    float start = point.z;\n    float duration = point.w;\n    if(time < start) {\n        return vec4(point.xy, 0.0, 0.0);\n    }\n    float pos = min((time - start) / duration, 1.0);\n    pos = easeInOutSine(pos);\n    float s = pow(scale, pos);\n    point.x  = s * (point.x + translate * pos * point.y);\n    point.y *= s;\n    return vec4(point.xy, 0.0, 0.0);\n}";
+  shearShader = easeCode + "uniform float scale;\nuniform float translate;\nuniform float time;\nuniform float duration;\n\nvec4 getPointSample(vec4 xyzw);\n\nvec4 shear(vec4 xyzw) {\n    vec4 point = getPointSample(xyzw);\n\n    float start = point.z;\n    float pos = (time - start) / abs(duration);\n    if(duration < 0.0) pos = 1.0 - pos;\n    if(pos < 0.0) return vec4(point.xy, 0.0, 0.0);\n    if(pos > 1.0) pos = 1.0;\n\n    pos = easeInOutSine(pos);\n    float s = pow(scale, pos);\n    point.x  = s * (point.x + translate * pos * point.y);\n    point.y *= s;\n    return vec4(point.xy, 0.0, 0.0);\n}";
 
-  colorShader = easeCode + "uniform float time;\n\nvec4 getPointSample(vec4 xyzw);\nvec4 getColorSample(vec4 xyzw);\n\nvec3 hsv2rgb(vec3 c) {\n  vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);\n  vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);\n  return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);\n}\n\n#define TRANSITION 0.2\n\nvec4 getColor(vec4 xyzw) {\n    vec4 color = getColorSample(xyzw);\n    vec4 point = getPointSample(xyzw);\n    float start = point.z;\n    float duration = point.w;\n    float pos, ease;\n    pos = max(0.0, min(1.0, (time - start) / duration));\n    if(pos < TRANSITION) {\n        ease = easeInOutSine(pos / TRANSITION);\n        color.w *= ease * 0.6 + 0.4;\n        color.y *= ease * 0.6 + 0.4;\n    }\n    else if(pos > 1.0 - TRANSITION) {\n        ease = easeInOutSine((1.0 - pos) / TRANSITION);\n        color.w *= ease * 0.6 + 0.4;\n        color.y *= ease * 0.6 + 0.4;\n    }\n    return vec4(hsv2rgb(color.xyz), color.w);\n}";
+  colorShader = easeCode + "uniform float time;\nuniform float duration;\n\nvec4 getPointSample(vec4 xyzw);\nvec4 getColorSample(vec4 xyzw);\n\nvec3 hsv2rgb(vec3 c) {\n  vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);\n  vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);\n  return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);\n}\n\n#define TRANSITION 0.2\n\nvec4 getColor(vec4 xyzw) {\n    vec4 color = getColorSample(xyzw);\n    vec4 point = getPointSample(xyzw);\n\n    float start = point.z;\n    float pos, ease;\n    pos = (time - start) / abs(duration);\n    if(duration < 0.0) pos = 1.0 - pos;\n    if(pos < 0.0) pos = 0.0;\n    else if(pos > 1.0) pos = 1.0;\n\n    if(pos < TRANSITION) {\n        ease = easeInOutSine(pos / TRANSITION);\n        color.w *= ease * 0.6 + 0.4;\n        color.y *= ease * 0.6 + 0.4;\n    }\n    else if(pos > 1.0 - TRANSITION) {\n        ease = easeInOutSine((1.0 - pos) / TRANSITION);\n        color.w *= ease * 0.6 + 0.4;\n        color.y *= ease * 0.6 + 0.4;\n    }\n    return vec4(hsv2rgb(color.xyz), color.w);\n}";
 
-  sizeShader = easeCode + "uniform float time;\nuniform float small;\n\nvec4 getPointSample(vec4 xyzw);\n\n#define TRANSITION 0.2\n#define BIG (small * 7.0 / 5.0)\n\nvec4 getSize(vec4 xyzw) {\n    vec4 point = getPointSample(xyzw);\n    float start = point.z;\n    float duration = point.w;\n    float pos, ease, size = BIG;\n    pos = max(0.0, min(1.0, (time - start) / duration));\n    if(pos < TRANSITION) {\n        ease = easeInOutSine(pos / TRANSITION);\n        size = small * (1.0-ease) + BIG * ease;\n    }\n    else if(pos > 1.0 - TRANSITION) {\n        ease = easeInOutSine((1.0 - pos) / TRANSITION);\n        size = small * (1.0-ease) + BIG * ease;\n    }\n    return vec4(size, 0.0, 0.0, 0.0);\n}";
+  sizeShader = easeCode + "uniform float time;\nuniform float small;\nuniform float duration;\n\nvec4 getPointSample(vec4 xyzw);\n\n#define TRANSITION 0.2\n#define BIG (small * 7.0 / 5.0)\n\nvec4 getSize(vec4 xyzw) {\n    vec4 point = getPointSample(xyzw);\n\n    float start = point.z;\n    float pos, ease, size = BIG;\n    pos = (time - start) / abs(duration);\n    if(duration < 0.0) pos = 1.0 - pos;\n    if(pos < 0.0) pos = 0.0;\n    else if(pos > 1.0) pos = 1.0;\n\n    if(pos < TRANSITION) {\n        ease = easeInOutSine(pos / TRANSITION);\n        size = small * (1.0-ease) + BIG * ease;\n    }\n    else if(pos > 1.0 - TRANSITION) {\n        ease = easeInOutSine((1.0 - pos) / TRANSITION);\n        size = small * (1.0-ease) + BIG * ease;\n    }\n    return vec4(size, 0.0, 0.0, 0.0);\n}";
 
   HSVtoRGB = function(h, s, v) {
     var f, i, p, q, t;
@@ -104,6 +104,8 @@
       this.start = bind(this.start, this);
       this.unStep = bind(this.unStep, this);
       this.step = bind(this.step, this);
+      this.goForwards = bind(this.goForwards, this);
+      this.goBackwards = bind(this.goBackwards, this);
       this.install = bind(this.install, this);
       var base, base1, ref;
       if (opts == null) {
@@ -142,12 +144,14 @@
       }
       this.mathbox = mathbox;
       this.current = null;
+      this.direction = 1;
       this.continuous = opts.continuous;
       this.numPointsRow = opts.numPointsRow;
       this.numPointsCol = opts.numPointsCol;
       this.numPoints = this.numPointsRow * this.numPointsCol - 1;
       this.duration = opts.duration;
       this.curTime = 0;
+      this.startTime = -this.duration;
       this.points = [[0, 0, -1, 1e15]];
       this.colors = [[0, 0, 0, 1]].concat((function() {
         var k, ref1, results;
@@ -180,7 +184,6 @@
       for (i = k = 1, ref = this.numPoints; 1 <= ref ? k <= ref : k >= ref; i = 1 <= ref ? ++k : --k) {
         this.points[i] = this.current.newPoint();
         this.points[i][2] = this.curTime + this.delay(true);
-        this.points[i][3] = this.duration;
       }
       if (this.initialized) {
         this.shaderElt.set(this.current.shaderParams());
@@ -199,6 +202,11 @@
             return function(t) {
               return _this.curTime = t;
             };
+          })(this),
+          duration: (function(_this) {
+            return function() {
+              return _this.duration * _this.direction;
+            };
           })(this)
         });
         this.shaderElt.resample({
@@ -216,7 +224,12 @@
         }, {
           time: function(t) {
             return t;
-          }
+          },
+          duration: (function(_this) {
+            return function() {
+              return _this.duration * _this.direction;
+            };
+          })(this)
         }).resample({
           id: "colors"
         });
@@ -228,7 +241,12 @@
           },
           small: function() {
             return 5 / 739 * canvas.clientWidth;
-          }
+          },
+          duration: (function(_this) {
+            return function() {
+              return _this.duration * _this.direction;
+            };
+          })(this)
         }).resample({
           source: this.pointsElt,
           id: "sizes"
@@ -255,16 +273,47 @@
       }
     };
 
-    Controller.prototype.step = function(invert) {
-      var end, i, k, len1, point, ref, ref1, ref2;
+    Controller.prototype.goBackwards = function() {
+      var k, len1, point, ref, ref1, results;
+      ref = this.points;
+      results = [];
+      for (k = 0, len1 = ref.length; k < len1; k++) {
+        point = ref[k];
+        results.push((ref1 = mult22(this.current.stepMat, point), point[0] = ref1[0], point[1] = ref1[1], ref1));
+      }
+      return results;
+    };
+
+    Controller.prototype.goForwards = function() {
+      var k, len1, point, ref, ref1, results;
+      ref = this.points;
+      results = [];
+      for (k = 0, len1 = ref.length; k < len1; k++) {
+        point = ref[k];
+        results.push((ref1 = mult22(this.current.inverse.stepMat, point), point[0] = ref1[0], point[1] = ref1[1], ref1));
+      }
+      return results;
+    };
+
+    Controller.prototype.step = function() {
+      var i, k, len1, point, ref, ref1, ref2;
+      if (!this.continuous) {
+        if (this.startTime + this.duration > this.curTime) {
+          return;
+        }
+        this.startTime = this.curTime;
+      }
+      if (this.direction === -1) {
+        this.goForwards();
+      }
+      this.direction = 1;
       ref = this.points;
       for (i = k = 0, len1 = ref.length; k < len1; i = ++k) {
         point = ref[i];
         if (i === 0) {
           continue;
         }
-        end = point[2] + point[3];
-        if (end < this.curTime) {
+        if (point[2] + this.duration <= this.curTime) {
           ref1 = mult22(this.current.stepMat, point), point[0] = ref1[0], point[1] = ref1[1];
           ref2 = this.current.updatePoint(point), point[0] = ref2[0], point[1] = ref2[1];
           point[2] = this.curTime + this.delay();
@@ -274,7 +323,31 @@
     };
 
     Controller.prototype.unStep = function() {
-      return this.step(true);
+      var i, inv, k, len1, point, ref, ref1, ref2;
+      if (!this.continuous) {
+        if (this.startTime + this.duration > this.curTime) {
+          return;
+        }
+        this.startTime = this.curTime;
+      }
+      if (this.direction === 1) {
+        this.goBackwards();
+      }
+      this.direction = -1;
+      inv = this.current.inverse;
+      ref = this.points;
+      for (i = k = 0, len1 = ref.length; k < len1; i = ++k) {
+        point = ref[i];
+        if (i === 0) {
+          continue;
+        }
+        if (point[2] + this.duration <= this.curTime) {
+          ref1 = inv.updatePoint(point), point[0] = ref1[0], point[1] = ref1[1];
+          ref2 = mult22(inv.stepMat, point), point[0] = ref2[0], point[1] = ref2[1];
+          point[2] = this.curTime + this.delay();
+        }
+      }
+      return null;
     };
 
     Controller.prototype.start = function() {
@@ -391,7 +464,7 @@
       this.shaderParams = bind(this.shaderParams, this);
       this.newPoint = bind(this.newPoint, this);
       var ref, ref1;
-      Complex.__super__.constructor.call(this, extents);
+      Complex.__super__.constructor.call(this, extents, opts);
       if (opts == null) {
         opts = {};
       }
@@ -406,7 +479,7 @@
       distribution = !oldPoint ? this.origDist : this.newDist;
       r = distribution(Math.random());
       θ = Math.random() * 2 * π;
-      return [Math.cos(θ) * r, Math.sin(θ) * r, 0, oldPoint != null ? oldPoint[3] : void 0];
+      return [Math.cos(θ) * r, Math.sin(θ) * r, 0, 0];
     };
 
     Complex.prototype.shaderParams = function() {
@@ -432,17 +505,23 @@
   Circle = (function(superClass) {
     extend1(Circle, superClass);
 
-    function Circle() {
+    Circle.prototype.descr = function() {
+      return "Ovals";
+    };
+
+    function Circle(extents, opts) {
       this.refClosed = bind(this.refClosed, this);
       this.makeReference = bind(this.makeReference, this);
       this.makeDistributions = bind(this.makeDistributions, this);
       this.randomScale = bind(this.randomScale, this);
-      return Circle.__super__.constructor.apply(this, arguments);
+      var ref;
+      Circle.__super__.constructor.call(this, extents, opts);
+      this.inverse = (ref = opts != null ? opts.inverse : void 0) != null ? ref : new Circle(extents, {
+        θ: -this.θ,
+        scale: 1 / this.scale,
+        inverse: this
+      });
     }
-
-    Circle.prototype.descr = function() {
-      return "Ovals";
-    };
 
     Circle.prototype.randomScale = function() {
       return 1;
@@ -523,8 +602,14 @@
     function SpiralIn(extents, opts) {
       this.updatePoint = bind(this.updatePoint, this);
       this.makeDistributions = bind(this.makeDistributions, this);
+      var ref;
       SpiralIn.__super__.constructor.call(this, extents, opts);
       this.direction = -1;
+      this.inverse = (ref = opts != null ? opts.inverse : void 0) != null ? ref : new SpiralOut(extents, {
+        θ: -this.θ,
+        scale: 1 / this.scale,
+        inverse: this
+      });
     }
 
     SpiralIn.prototype.randomScale = function() {
@@ -582,8 +667,15 @@
       this.updatePoint = bind(this.updatePoint, this);
       this.makeDistributions = bind(this.makeDistributions, this);
       this.randomScale = bind(this.randomScale, this);
+      var ref;
       SpiralOut.__super__.constructor.call(this, extents, opts);
       this.direction = 1;
+      this.inverse = (ref = opts != null ? opts.inverse : void 0) != null ? ref : new SpiralIn(extents, {
+        θ: -this.θ,
+        scale: 1 / this.scale,
+        inverse: this,
+        dist: this.distType
+      });
     }
 
     SpiralOut.prototype.randomScale = function() {
@@ -591,12 +683,12 @@
     };
 
     SpiralOut.prototype.makeDistributions = function(opts) {
-      var distType, distance, distances, ref;
+      var distance, distances, ref;
       this.veryClose = 0.01 / this.scale;
       this.close = 0.01;
       this.medium = this.extents.rad;
-      distType = (ref = opts.dist) != null ? ref : randElt(['cont', 'disc']);
-      switch (distType) {
+      this.distType = (ref = opts.dist) != null ? ref : randElt(['cont', 'disc']);
+      switch (this.distType) {
         case 'cont':
           this.origDist = expLerp(this.veryClose, this.medium);
           return this.newDist = expLerp(this.veryClose, this.close);
@@ -635,13 +727,22 @@
 
     function Diagonalizable(extents, opts) {
       this.shaderParams = bind(this.shaderParams, this);
+      this.swap = bind(this.swap, this);
       Diagonalizable.__super__.constructor.call(this, extents, opts);
       if (opts == null) {
         opts = {};
       }
+      this.swapped = false;
       this.makeScales(opts);
-      this.stepMat = [this.λ1, 0, 0, this.λ2];
+      this.stepMat = this.swapped ? [this.λ2, 0, 0, this.λ1] : [this.λ1, 0, 0, this.λ2];
     }
+
+    Diagonalizable.prototype.swap = function() {
+      var ref, ref1;
+      ref = [this.λ1, this.λ2], this.λ2 = ref[0], this.λ1 = ref[1];
+      ref1 = [this.extents.x, this.extents.y], this.extents.y = ref1[0], this.extents.x = ref1[1];
+      return this.swapped = true;
+    };
 
     Diagonalizable.prototype.shaderParams = function() {
       return {
@@ -649,11 +750,11 @@
         uniforms: {
           scaleX: {
             type: 'f',
-            value: this.λ1
+            value: this.swapped ? this.λ2 : this.λ1
           },
           scaleY: {
             type: 'f',
-            value: this.λ2
+            value: this.swapped ? this.λ1 : this.λ2
           }
         }
       };
@@ -666,24 +767,31 @@
   Hyperbolas = (function(superClass) {
     extend1(Hyperbolas, superClass);
 
-    function Hyperbolas() {
-      this.updatePoint = bind(this.updatePoint, this);
-      this.makeReference = bind(this.makeReference, this);
-      this.newPoint = bind(this.newPoint, this);
-      this.makeScales = bind(this.makeScales, this);
-      return Hyperbolas.__super__.constructor.apply(this, arguments);
-    }
-
     Hyperbolas.prototype.descr = function() {
       return "Hyperbolas";
     };
 
+    function Hyperbolas(extents, opts) {
+      this.updatePoint = bind(this.updatePoint, this);
+      this.makeReference = bind(this.makeReference, this);
+      this.newPoint = bind(this.newPoint, this);
+      this.makeScales = bind(this.makeScales, this);
+      var ref, ref1, λ1, λ2;
+      Hyperbolas.__super__.constructor.call(this, extents, opts);
+      ref = this.swapped ? [this.λ2, this.λ1] : [this.λ1, this.λ2], λ1 = ref[0], λ2 = ref[1];
+      this.inverse = (ref1 = opts != null ? opts.inverse : void 0) != null ? ref1 : new Hyperbolas(extents, {
+        λ1: 1 / λ1,
+        λ2: 1 / λ2,
+        inverse: this
+      });
+    }
+
     Hyperbolas.prototype.makeScales = function(opts) {
-      var ref, ref1, ref2;
+      var ref, ref1;
       this.λ1 = (ref = opts.λ1) != null ? ref : linLerp(0.3, 0.8)(Math.random());
       this.λ2 = (ref1 = opts.λ2) != null ? ref1 : linLerp(1 / 0.8, 1 / 0.3)(Math.random());
       if (this.λ1 > this.λ2) {
-        ref2 = [this.λ1, this.λ2], this.λ2 = ref2[0], this.λ1 = ref2[1];
+        this.swap();
       }
       this.logScaleX = Math.log(this.λ1);
       this.logScaleY = Math.log(this.λ2);
@@ -703,7 +811,11 @@
         x = expLerp(this.extents.x, this.extents.x / this.λ1)(Math.random());
       }
       y = Math.pow(1 / r * Math.pow(x, this.logScaleY), 1 / this.logScaleX);
-      return [randSign() * x, randSign() * y, 0, oldPoint != null ? oldPoint[3] : void 0];
+      if (this.swapped) {
+        return [randSign() * y, randSign() * x, 0, 0];
+      } else {
+        return [randSign() * x, randSign() * y, 0, 0];
+      }
     };
 
     Hyperbolas.prototype.makeReference = function() {
@@ -717,7 +829,11 @@
         for (i = o = 0; o <= 100; i = ++o) {
           x = lerp(i / 100);
           y = Math.pow(1 / r * Math.pow(x, this.logScaleY), 1 / this.logScaleX);
-          row.push([[x, y], [-x, y], [x, -y], [-x, -y]]);
+          if (this.swapped) {
+            row.push([[y, x], [y, -x], [-y, x], [-y, -x]]);
+          } else {
+            row.push([[x, y], [-x, y], [x, -y], [-x, -y]]);
+          }
         }
         ret.push(row);
       }
@@ -725,7 +841,7 @@
     };
 
     Hyperbolas.prototype.updatePoint = function(point) {
-      if (Math.abs(point[1]) > this.extents.y) {
+      if (Math.abs(this.swapped ? point[0] : point[1]) > this.extents.y) {
         return this.newPoint(point);
       } else {
         return point;
@@ -789,23 +905,29 @@
   Attract = (function(superClass) {
     extend1(Attract, superClass);
 
-    function Attract() {
-      this.updatePoint = bind(this.updatePoint, this);
-      this.newPoint = bind(this.newPoint, this);
-      this.makeScales = bind(this.makeScales, this);
-      return Attract.__super__.constructor.apply(this, arguments);
-    }
-
     Attract.prototype.descr = function() {
       return "Attracting point";
     };
 
+    function Attract(extents, opts) {
+      this.updatePoint = bind(this.updatePoint, this);
+      this.newPoint = bind(this.newPoint, this);
+      this.makeScales = bind(this.makeScales, this);
+      var ref;
+      Attract.__super__.constructor.call(this, extents, opts);
+      this.inverse = (ref = opts != null ? opts.inverse : void 0) != null ? ref : new Repel(extents, {
+        λ1: 1 / this.λ1,
+        λ2: 1 / this.λ2,
+        inverse: this
+      });
+    }
+
     Attract.prototype.makeScales = function(opts) {
-      var ref, ref1, ref2;
+      var ref, ref1;
       this.λ1 = (ref = opts.λ1) != null ? ref : linLerp(0.3, 0.9)(Math.random());
       this.λ2 = (ref1 = opts.λ2) != null ? ref1 : linLerp(0.3, this.λ1)(Math.random());
       if (this.λ1 < this.λ2) {
-        ref2 = [this.λ1, this.λ2], this.λ2 = ref2[0], this.λ1 = ref2[1];
+        throw "Must pass smaller eigenvalue second";
       }
       return Attract.__super__.makeScales.call(this, opts);
     };
@@ -821,7 +943,7 @@
       }
       y = expLerp(closeY, farY)(Math.random());
       x = this.xOfY(y, r);
-      return [randSign() * x, randSign() * y, 0, oldPoint != null ? oldPoint[3] : void 0];
+      return [randSign() * x, randSign() * y, 0, 0];
     };
 
     Attract.prototype.updatePoint = function(point) {
@@ -839,25 +961,31 @@
   Repel = (function(superClass) {
     extend1(Repel, superClass);
 
-    function Repel() {
-      this.updatePoint = bind(this.updatePoint, this);
-      this.newPoint = bind(this.newPoint, this);
-      this.makeScales = bind(this.makeScales, this);
-      return Repel.__super__.constructor.apply(this, arguments);
-    }
-
     Repel.prototype.descr = function() {
       return "Repelling point";
     };
 
+    function Repel(extents, opts) {
+      this.updatePoint = bind(this.updatePoint, this);
+      this.newPoint = bind(this.newPoint, this);
+      this.makeScales = bind(this.makeScales, this);
+      var ref;
+      Repel.__super__.constructor.call(this, extents, opts);
+      this.inverse = (ref = opts != null ? opts.inverse : void 0) != null ? ref : new Attract(extents, {
+        λ1: 1 / this.λ1,
+        λ2: 1 / this.λ2,
+        inverse: this
+      });
+    }
+
     Repel.prototype.makeScales = function(opts) {
-      var ref, ref1, ref2;
-      this.λ1 = (ref = opts.λ1) != null ? ref : linLerp(1 / 0.9, 1 / 0.3)(Math.random());
-      this.λ2 = (ref1 = opts.λ2) != null ? ref1 : linLerp(1 / 0.9, this.λ2)(Math.random());
+      var ref, ref1;
+      this.λ2 = (ref = opts.λ2) != null ? ref : linLerp(1 / 0.9, 1 / 0.3)(Math.random());
+      this.λ1 = (ref1 = opts.λ1) != null ? ref1 : linLerp(1 / 0.9, this.λ2)(Math.random());
       if (this.λ1 > this.λ2) {
-        ref2 = [this.λ1, this.λ2], this.λ2 = ref2[0], this.λ1 = ref2[1];
+        throw "Must pass smaller eigenvalue first";
       }
-      return Repel.__super__.makeScales.apply(this, arguments);
+      return Repel.__super__.makeScales.call(this, opts);
     };
 
     Repel.prototype.newPoint = function(oldPoint) {
@@ -871,7 +999,7 @@
       }
       y = expLerp(closeY, farY)(Math.random());
       x = this.xOfY(y, r);
-      return [randSign() * x, randSign() * y, 0, oldPoint != null ? oldPoint[3] : void 0];
+      return [randSign() * x, randSign() * y, 0, 0];
     };
 
     Repel.prototype.updatePoint = function(point) {
@@ -905,7 +1033,7 @@
       var x, y;
       x = this.lerpX(Math.random());
       y = (!oldPoint ? this.origLerpY : this.newLerpY)(Math.random());
-      return [x, randSign() * y, 0, oldPoint != null ? oldPoint[3] : void 0];
+      return [x, randSign() * y, 0, 0];
     };
 
     AttractRepelLine.prototype.makeReference = function() {
@@ -927,15 +1055,21 @@
   AttractLine = (function(superClass) {
     extend1(AttractLine, superClass);
 
-    function AttractLine() {
-      this.updatePoint = bind(this.updatePoint, this);
-      this.makeScales = bind(this.makeScales, this);
-      return AttractLine.__super__.constructor.apply(this, arguments);
-    }
-
     AttractLine.prototype.descr = function() {
       return "Attracting line";
     };
+
+    function AttractLine(extents, opts) {
+      this.updatePoint = bind(this.updatePoint, this);
+      this.makeScales = bind(this.makeScales, this);
+      var ref;
+      AttractLine.__super__.constructor.call(this, extents, opts);
+      this.inverse = (ref = opts != null ? opts.inverse : void 0) != null ? ref : new RepelLine(extents, {
+        λ1: 1 / this.λ1,
+        λ2: 1 / this.λ2,
+        inverse: this
+      });
+    }
 
     AttractLine.prototype.makeScales = function(opts) {
       var ref;
@@ -960,15 +1094,21 @@
   RepelLine = (function(superClass) {
     extend1(RepelLine, superClass);
 
-    function RepelLine() {
-      this.updatePoint = bind(this.updatePoint, this);
-      this.makeScales = bind(this.makeScales, this);
-      return RepelLine.__super__.constructor.apply(this, arguments);
-    }
-
     RepelLine.prototype.descr = function() {
       return "Repelling line";
     };
+
+    function RepelLine(extents, opts) {
+      this.updatePoint = bind(this.updatePoint, this);
+      this.makeScales = bind(this.makeScales, this);
+      var ref;
+      RepelLine.__super__.constructor.call(this, extents, opts);
+      this.inverse = (ref = opts != null ? opts.inverse : void 0) != null ? ref : new AttractLine(extents, {
+        λ1: 1 / this.λ1,
+        λ2: 1 / this.λ2,
+        inverse: this
+      });
+    }
 
     RepelLine.prototype.makeScales = function(opts) {
       var ref;
@@ -1002,7 +1142,7 @@
       this.makeReference = bind(this.makeReference, this);
       this.shaderParams = bind(this.shaderParams, this);
       this.newPoint = bind(this.newPoint, this);
-      var ref;
+      var ref, ref1;
       Shear.__super__.constructor.call(this, extents, opts);
       if (opts == null) {
         opts = {};
@@ -1011,6 +1151,10 @@
       this.stepMat = [1, this.translate, 0, 1];
       this.lerpY = linLerp(0.01, this.extents.y);
       this.lerpY2 = linLerp(-this.extents.y, this.extents.y);
+      this.inverse = (ref1 = opts != null ? opts.inverse : void 0) != null ? ref1 : new Shear(extents, {
+        translate: -this.translate,
+        inverse: this
+      });
     }
 
     Shear.prototype.newPoint = function(oldPoint) {
@@ -1037,7 +1181,7 @@
         }
       }
       s = randSign();
-      return [s * x, s * y, 0, oldPoint != null ? oldPoint[3] : void 0];
+      return [s * x, s * y, 0, 0];
     };
 
     Shear.prototype.shaderParams = function() {
@@ -1113,7 +1257,7 @@
       y = (!oldPoint ? this.lerpY : this.lerpYNew)(Math.random());
       x = this.xOfY(r, y);
       s = randSign();
-      return [s * x, s * y, 0, oldPoint != null ? oldPoint[3] : void 0];
+      return [s * x, s * y, 0, 0];
     };
 
     ScaleInOutShear.prototype.shaderParams = function() {
@@ -1161,7 +1305,7 @@
     };
 
     function ScaleOutShear(extents1, opts) {
-      var ref;
+      var ref, ref1;
       this.extents = extents1;
       this.updatePoint = bind(this.updatePoint, this);
       if (opts == null) {
@@ -1171,6 +1315,11 @@
       this.lerpY = expLerp(0.01 / this.scale, this.extents.y);
       this.lerpYNew = expLerp(0.01 / this.scale, 0.01);
       ScaleOutShear.__super__.constructor.call(this, this.extents, opts);
+      this.inverse = (ref1 = opts != null ? opts.inverse : void 0) != null ? ref1 : new ScaleInShear(this.extents, {
+        translate: -this.translate,
+        scale: 1 / this.scale,
+        inverse: this
+      });
     }
 
     ScaleOutShear.prototype.updatePoint = function(point) {
@@ -1193,7 +1342,7 @@
     };
 
     function ScaleInShear(extents1, opts) {
-      var ref;
+      var ref, ref1;
       this.extents = extents1;
       this.updatePoint = bind(this.updatePoint, this);
       if (opts == null) {
@@ -1203,6 +1352,11 @@
       this.lerpY = expLerp(0.01, this.extents.y / this.scale);
       this.lerpYNew = expLerp(this.extents.y, this.extents.y / this.scale);
       ScaleInShear.__super__.constructor.call(this, this.extents, opts);
+      this.inverse = (ref1 = opts != null ? opts.inverse : void 0) != null ? ref1 : new ScaleOutShear(this.extents, {
+        translate: -this.translate,
+        scale: 1 / this.scale,
+        inverse: this
+      });
     }
 
     ScaleInShear.prototype.updatePoint = function(point) {

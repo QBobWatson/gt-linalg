@@ -44,8 +44,8 @@ html, body {
 ##
 
 # TODO:
-#  * Multiply by inverse
-#  * 3D version?
+#  * Similarity diptych
+#  * 3D version
 
 matrix = urlParams.get 'mat', 'matrix', [[ 1/2, 1/2],
                                          [-1/2, 1/2]]
@@ -111,18 +111,21 @@ if almostZero discriminant
         basis2 = [0, 1]
         axisColors[1] = axisColors[0]
         eigenStr = "<p>The whole plane is the <span class=\"espace-1\">" +
-                   "#{λ.toFixed 2}-eigenspace</span></p>"
+                   "#{λ.toFixed 2}-eigenspace.</span></p>"
         type = if λ > 1 then dynamics.Repel else dynamics.Attract
         opts =
             λ1: λ
             λ2: λ
     # Shear: put it in the form [λ, λ*a, 0, λ]
     else
-        basis1 = normalize [b, λ-a]
-        basis2 = normalize [a-λ, b]  # Anything linearly independent
+        if almostZero b
+            basis1 = normalize [b, λ-a]
+        else
+            basis1 = normalize [λ-d, c]
+        basis2 = [basis1[1], -basis1[0]]  # Anything linearly independent
         axisColors[1] = [0.5, 0.5, 0.5, 0.3]
         eigenStr = "<p>This is the <span class=\"espace-1\">" +
-                   "#{λ.toFixed 2}-eigenspace</span></p>"
+                   "#{λ.toFixed 2}-eigenspace.</span></p>"
         # (matrix - λ) * basis2 = (λ * translate) basis1
         v = [(a-λ)*basis2[0] + b*basis2[1], c*basis2[0] + (d-λ)*basis2[1]]
         if almostZero basis1[0]
@@ -165,8 +168,21 @@ else if discriminant > 0
     # λ1 < λ2
     λ1 = (trace - δ) / 2
     λ2 = (trace + δ) / 2
-    basis1 = normalize [b, λ1-a]
-    basis2 = normalize [b, λ2-a]
+    if almostZero b
+        if almostZero c
+            # Already diagonal
+            if almostZero (a-λ1)
+                basis1 = [1, 0]
+                basis2 = [0, 1]
+            else
+                basis2 = [1, 0]
+                basis1 = [0, 1]
+        else
+            basis1 = normalize [λ1-d, c]
+            basis2 = normalize [λ2-d, c]
+    else
+        basis1 = normalize [b, λ1-a]
+        basis2 = normalize [b, λ2-a]
     if λ1 < 0 or λ2 < 0
         throw "Can't handle negative real eigenvalues"
     opts =
@@ -188,9 +204,9 @@ else if discriminant > 0
     else if λ1 > 1 and λ2 > 1
         type = dynamics.Repel
     eigenStr = "<p>This is the <span class=\"espace-1\">" +
-               "#{opts.λ1.toFixed 2}-eigenspace</span><br>" +
+               "#{opts.λ1.toFixed 2}-eigenspace.</span><br>" +
                "This is the <span class=\"espace-2\">" +
-               "#{opts.λ2.toFixed 2}-eigenspace</span></p>"
+               "#{opts.λ2.toFixed 2}-eigenspace.</span></p>"
 
 
 vecColor = new Color("red")
@@ -232,9 +248,9 @@ new Demo2D {
 
     updateCaption = () =>
         str = '\\qquad ' + matName +
-              @texVector(vectorIn, color: vecColor) +
+              @texVector((x*10 for x in vectorIn), color: vecColor) +
               " = " +
-              @texVector(vectorOut, color: vecColor.darken(.1))
+              @texVector((x*10 for x in vectorOut), color: vecColor.darken(.1))
         katex.render str, multElt
 
     ##################################################
