@@ -1,5 +1,5 @@
-
-######################################################################
+#
+#####################################################################
 # Shaders
 
 easeCode = \
@@ -7,7 +7,11 @@ easeCode = \
     #define M_PI 3.1415926535897932384626433832795
 
     float easeInOutSine(float pos) {
+    #ifdef FLOW
+        return pos;
+    #else
         return 0.5 * (1.0 - cos(M_PI * pos));
+    #endif
     }
     """
 
@@ -17,23 +21,25 @@ rotateShader = easeCode + \
     uniform float scale;
     uniform float time;
     uniform float duration;
+    uniform float scaleZ;
 
     vec4 getPointSample(vec4 xyzw);
 
     vec4 rotate(vec4 xyzw) {
         vec4 point = getPointSample(xyzw);
 
-        float start = point.z;
+        float start = point.w;
         float pos = (time - start) / abs(duration);
         if(duration < 0.0) pos = 1.0 - pos;
-        if(pos < 0.0) return vec4(point.xy, 0.0, 0.0);
+        if(pos < 0.0) return vec4(point.xyz, 0.0);
         if(pos > 1.0) pos = 1.0;
         pos = easeInOutSine(pos);
         float c = cos(deltaAngle * pos);
         float s = sin(deltaAngle * pos);
         point.xy = vec2(point.x * c - point.y * s, point.x * s + point.y * c)
             * pow(scale, pos);
-        return vec4(point.xy, 0.0, 0.0);
+        if(scaleZ != 0.0) point.z *= pow(scaleZ, pos);
+        return vec4(point.xyz, 0.0);
     }
     """
 
@@ -41,6 +47,7 @@ diagShader = easeCode + \
     """
     uniform float scaleX;
     uniform float scaleY;
+    uniform float scaleZ;
     uniform float time;
     uniform float duration;
 
@@ -49,16 +56,17 @@ diagShader = easeCode + \
     vec4 rotate(vec4 xyzw) {
         vec4 point = getPointSample(xyzw);
 
-        float start = point.z;
+        float start = point.w;
         float pos = (time - start) / abs(duration);
         if(duration < 0.0) pos = 1.0 - pos;
-        if(pos < 0.0) return vec4(point.xy, 0.0, 0.0);
+        if(pos < 0.0) return vec4(point.xyz, 0.0);
         if(pos > 1.0) pos = 1.0;
 
         pos = easeInOutSine(pos);
         point.x *= pow(scaleX, pos);
         point.y *= pow(scaleY, pos);
-        return vec4(point.xy, 0.0, 0.0);
+        if(scaleZ != 0.0) point.z *= pow(scaleZ, pos);
+        return vec4(point.xyz, 0.0);
     }
     """
 
@@ -68,23 +76,25 @@ shearShader = easeCode + \
     uniform float translate;
     uniform float time;
     uniform float duration;
+    uniform float scaleZ;
 
     vec4 getPointSample(vec4 xyzw);
 
     vec4 shear(vec4 xyzw) {
         vec4 point = getPointSample(xyzw);
 
-        float start = point.z;
+        float start = point.w;
         float pos = (time - start) / abs(duration);
         if(duration < 0.0) pos = 1.0 - pos;
-        if(pos < 0.0) return vec4(point.xy, 0.0, 0.0);
+        if(pos < 0.0) return vec4(point.xyz, 0.0);
         if(pos > 1.0) pos = 1.0;
 
         pos = easeInOutSine(pos);
         float s = pow(scale, pos);
         point.x  = s * (point.x + translate * pos * point.y);
         point.y *= s;
-        return vec4(point.xy, 0.0, 0.0);
+        if(scaleZ != 0.0) point.z *= pow(scaleZ, pos);
+        return vec4(point.xyz, 0.0);
     }
     """
 
@@ -102,13 +112,17 @@ colorShader = easeCode + \
       return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
     }
 
+    #ifdef FLOW
+    #define TRANSITION 0.0
+    #else
     #define TRANSITION 0.2
+    #endif
 
     vec4 getColor(vec4 xyzw) {
         vec4 color = getColorSample(xyzw);
         vec4 point = getPointSample(xyzw);
 
-        float start = point.z;
+        float start = point.w;
         float pos, ease;
         pos = (time - start) / abs(duration);
         if(duration < 0.0) pos = 1.0 - pos;
@@ -137,13 +151,17 @@ sizeShader = easeCode + \
 
     vec4 getPointSample(vec4 xyzw);
 
+    #ifdef FLOW
+    #define TRANSITION 0.0
+    #else
     #define TRANSITION 0.2
+    #endif
     #define BIG (small * 7.0 / 5.0)
 
     vec4 getSize(vec4 xyzw) {
         vec4 point = getPointSample(xyzw);
 
-        float start = point.z;
+        float start = point.w;
         float pos, ease, size = BIG;
         pos = (time - start) / abs(duration);
         if(duration < 0.0) pos = 1.0 - pos;
@@ -187,11 +205,6 @@ discLerp = (a, b, n) -> (t) -> Math.floor(Math.random() * (n+1)) * (b-a)/n + a
 randElt = (l) -> l[Math.floor(Math.random() * l.length)]
 randSign = () -> randElt [-1, 1]
 
-mult22 = (m, v) -> [m[0]*v[0]+m[1]*v[1], m[2]*v[0]+m[3]*v[1]]
-inv22 = (m) ->
-    det = m[0]*m[3] - m[1]*m[2]
-    [m[3]/det, -m[1]/det, -m[2]/det, m[0]/det]
-
 extend = (obj, src) ->
     for key, val of src
         obj[key] = val if src.hasOwnProperty key
@@ -205,9 +218,14 @@ class Controller
         opts ?= {}
         opts.numPointsRow ?= 50
         opts.numPointsCol ?= 100
+        opts.numPointsDep ?= 10
         opts.duration     ?= 3.0
         opts.continuous   ?= true
         opts.axisColors   ?= []
+        opts.is3D         ?= false
+        opts.flow         ?= false  # For testing distributions
+        opts.refColor     ?= "rgb(80, 120, 255)"
+        opts.clipCube     ?= (x) -> clipped: x
 
         @axisOpts =
             end:     false
@@ -221,38 +239,42 @@ class Controller
         @axisColors = opts.axisColors.slice()
         @axisColors[0] ?= [0, 0, 0, 0.3]
         @axisColors[1] ?= [0, 0, 0, 0.3]
+        @axisColors[2] ?= [0, 0, 0, 0.3]
 
         @mathbox = mathbox
+        @clipCube = opts.clipCube
 
         # Current demo
         @current = null
         # Playing forward or backward
         @direction = 1
 
+        @flow = opts.flow
+        @is3D = opts.is3D
         @continuous = opts.continuous
         @numPointsRow = opts.numPointsRow
         @numPointsCol = opts.numPointsCol
-        @numPoints = @numPointsRow * @numPointsCol - 1
+        @numPointsDep = if @is3D then opts.numPointsDep else 1
+        @numPoints = @numPointsRow * @numPointsCol * @numPointsDep - 1
         @duration = opts.duration
         @curTime = 0
         @startTime = -@duration  # when continuous is off
-        @points = [[0, 0, -1, 1e15]]
+        @points = [[0, 0, 0, 1e15]]
 
         # Colors
         @colors = [[0, 0, 0, 1]].concat([Math.random(), 1, 0.7, 1] for [0...@numPoints])
-
-        # Un-transformed view
-        @view0 = mathbox.cartesian
-            range: [[-1, 1], [-1, 1]]
-            scale: [1, 1]
+        @refColor = opts.refColor
 
         # The variables below are set when the first type is installed
+        # Un-transformed view
+        @view0 = null
         # Transformed view
         @view = null
         # View extents
         @extents =
             x:   0
             y:   0
+            z:   1
             rad: 0
 
         @initialized  = false
@@ -261,51 +283,73 @@ class Controller
         @linesDataElt = null
 
     install: (type, opts) =>
+        opts ?= {}
+        opts.onPlane ?= 1.0/@numPointsDep
         @current = new type @extents, opts
+        @matrixOrigCoords = new THREE.Matrix4()
+            .multiply(@coordMat)
+            .multiply(@current.stepMat)
+            .multiply(@coordMatInv)
+
         canvas = @mathbox._context.canvas
 
         for i in [1..@numPoints]
             @points[i] = @current.newPoint()
-            @points[i][2] = @curTime + @delay(true)
+            @points[i][3] = @curTime + @delay(true)
 
         if @initialized
-            @shaderElt.set @current.shaderParams()
+            params = @current.shaderParams()
+            if @flow
+                params.code = "#define FLOW\n" + params.code
+            @shaderElt.set params
             @linesDataElt.set @current.linesParams()
-            @linesElt.set "closed", @current.refClosed()
 
         else
-            @pointsElt = @view
-                .matrix
-                    id:       "points-orig"
-                    channels: 4
-                    width:    @numPointsRow
-                    height:   @numPointsCol
-                    data:     @points
-            @shaderElt = @pointsElt.shader @current.shaderParams(),
+            pointsOpts =
+                id:       "points-orig"
+                channels: 4
+                width:    @numPointsRow
+                height:   @numPointsCol
+                data:     @points
+            if @is3D
+                pointsOpts.depth = @numPointsDep
+                pointsType = @view.voxel
+            else
+                pointsType = @view.matrix
+            @pointsElt = pointsType pointsOpts
+            params = @current.shaderParams()
+            if @flow
+                params.code = "#define FLOW\n" + params.code
+            @shaderElt = @pointsElt.shader params,
                 time: (t) => @curTime = t,
                 duration: () => @duration * @direction
             @shaderElt.resample id: "points"
 
             # Coloring pipeline
-            @view0
-                .matrix
-                    channels: 4
-                    width:    @numPointsRow
-                    height:   @numPointsCol
-                    data:     @colors
-                    live:     false
-                .shader
-                    code:    colorShader
-                    sources: [@pointsElt]
-                ,
-                    time: (t) -> t
-                    duration: () => @duration * @direction
-                .resample id: "colors"
+            pointsOpts =
+                channels: 4
+                width:    @numPointsRow
+                height:   @numPointsCol
+                data:     @colors
+                live:     false
+            if @is3D
+                pointsOpts.depth = @numPointsDep
+                pointsType = @view.voxel
+            else
+                pointsType = @view.matrix
+            pointsType pointsOpts
+            .shader
+                code:    (if @flow then "#define FLOW\n" else "") + colorShader
+                sources: [@pointsElt]
+            ,
+                time: (t) -> t
+                duration: () => @duration * @direction
+            .resample id: "colors"
 
             # Size pipeline
             @view0
                 .shader
-                    code:   sizeShader
+                    code:  (if @flow then "#define FLOW\n" else "") + sizeShader
                 ,
                     time:  (t) -> t
                     small: () -> 5 / 739 * canvas.clientWidth
@@ -323,63 +367,63 @@ class Controller
                     sizes:  "#sizes"
                     zBias:  1
                     zIndex: 2
+                    #visible: false # DEL
 
             # Reference lines
             @linesDataElt = @view.matrix @current.linesParams()
             @linesElt = @view.line
-                color:    "rgb(80, 120, 255)"
-                width:    2
-                opacity:  0.4
+                color:    @refColor
+                width:    if @is3D then 5 else 2
+                opacity:  if @is3D then 0.8 else 0.4
                 zBias:    0
                 zIndex:   1
-                closed:   @current.refClosed()
 
             @initialized = true
 
     goBackwards: () =>
         for point in @points
-            [point[0], point[1]] = mult22 @current.stepMat, point
+            @current.stepMat.applyToVector3Array point, 0, 3
+        @direction = -1
 
     goForwards: () =>
         for point in @points
-            [point[0], point[1]] = mult22 @current.inverse.stepMat, point
+            @current.inverse.stepMat.applyToVector3Array point, 0, 3
+        @direction = 1
 
     step: () =>
-        if not @continuous
+        if not @continuous and not @flow
             return if @startTime + @duration > @curTime
             @startTime = @curTime
         @goForwards() if @direction == -1
-        @direction = 1
         for point, i in @points
             if i == 0  # Origin
                 continue
-            if point[2] + @duration <= @curTime
+            if point[3] + @duration <= @curTime
                 # Reset point
-                [point[0], point[1]] = mult22 @current.stepMat, point
-                [point[0], point[1]] = @current.updatePoint point
+                @current.stepMat.applyToVector3Array point, 0, 3
+                @current.updatePoint point
                 # Reset timer
-                point[2] = @curTime + @delay()
+                point[3] = @curTime + @delay()
         null
 
     unStep: () =>
-        if not @continuous
+        if not @continuous and not @flow
             return if @startTime + @duration > @curTime
             @startTime = @curTime
         @goBackwards() if @direction == 1
-        @direction = -1
         inv = @current.inverse
         for point, i in @points
             if i == 0  # Origin
                 continue
-            if point[2] + @duration <= @curTime
+            if point[3] + @duration <= @curTime
                 # Reset point
-                [point[0], point[1]] = inv.updatePoint point
-                [point[0], point[1]] = mult22 inv.stepMat, point
+                inv.updatePoint point
+                inv.stepMat.applyToVector3Array point, 0, 3
                 # Reset timer
-                point[2] = @curTime + @delay()
+                point[3] = @curTime + @delay()
         null
 
-    start: () => setInterval @step, 100
+    start: (interval=100) => setInterval @step, interval
 
     # Choose random (but not too wonky) coordinate system
     randomizeCoords: () =>
@@ -398,28 +442,43 @@ class Controller
         v2[0] = Math.cos(θ + θoff) * len
         v2[1] = Math.sin(θ + θoff) * len
 
-        @installCoords [v1[0], v2[0], v1[1], v2[1]]
+        @installCoords v1, v2
 
-    installCoords: (coordMat) =>
-        # coordMat = [1,0,0,1]
+    installCoords: (v1, v2, v3) =>
+        @is3D = v3?
+        v1[2] ?= 0
+        v2[2] ?= 0
+        v3 ?= [0,0,1]
         # Find the farthest corner in the un-transformed coord system
-        coordMatInv = inv22 coordMat
-        corners = [[1, 1], [-1, 1]].map (c) -> mult22 coordMatInv, c
-        rad = Math.max.apply null, corners.map (c) -> c[0]*c[0] + c[1]*c[1]
+        @coordMat = new THREE.Matrix4().set \
+            v1[0], v2[0], v3[0], 0,
+            v1[1], v2[1], v3[1], 0,
+            v1[2], v2[2], v3[2], 0,
+                0,     0,     0, 1
+        cmi = @coordMatInv = new THREE.Matrix4().getInverse @coordMat
+        corners = [
+            new THREE.Vector3( 1, 1, 1),
+            new THREE.Vector3(-1, 1, 1),
+            new THREE.Vector3( 1,-1, 1),
+            new THREE.Vector3( 1, 1,-1)
+        ].map (c) -> c.applyMatrix4 cmi
+        rad = Math.max.apply null, corners.map (c) -> c.length()
         @extents =
-            rad: Math.sqrt rad
-            x:   Math.max.apply null, corners.map (c) -> Math.abs c[0]
-            y:   Math.max.apply null, corners.map (c) -> Math.abs c[1]
+            rad:  rad
+            x:    Math.max.apply null, corners.map (c) -> Math.abs c.x
+            y:    Math.max.apply null, corners.map (c) -> Math.abs c.y
+            z:    Math.max.apply null, corners.map (c) -> Math.abs c.z
 
-        transformMat = [coordMat[0], coordMat[1], 0, 0,
-                        coordMat[2], coordMat[3], 0, 0,
-                        0, 0, 1, 0,
-                        0, 0, 0, 1]
         if @view
-            @view.set 'matrix', transformMat
+            @view.set 'matrix', @coordMat
         else
-            @view = @view0.transform matrix: transformMat
-            for i in [1, 2]
+            @viewBase = @mathbox.cartesian
+                range: [[-1, 1], [-1, 1], [-1, 1]]
+                scale: [1, 1, 1]
+            clipCube = @clipCube @viewBase
+            @view0 = clipCube.clipped
+            @view = @view0.transform matrix: @coordMat
+            for i in (if @is3D then [1,2,3] else [1,2])
                 @axisOpts.axis    = i
                 @axisOpts.color   = @axisColors[i-1]
                 @axisOpts.opacity = @axisColors[i-1][3]
@@ -440,18 +499,90 @@ class Controller
 # Dynamics base class
 
 class Dynamics
-    constructor: (@extents) ->
+    constructor: (@extents, opts) ->
+        # Handle z-axis stuff if necessary
+        @scaleZ = opts.scaleZ ? 0.0
+        @onPlane = opts.onPlane ? 1/20
+        if Math.abs(@scaleZ) < 1e-5
+            @is3D = false
+            @zAtTime = (start, t) -> 0
+            @timeToLeaveZ = (start) -> Infinity
+            @needsResetZ = (z) => false
+        else if Math.abs(@scaleZ - 1) < 1e-5
+            @is3D = true
+            @scaleZ = 1.0
+            @origLerpZ = linLerp 0.01, @extents.z
+            @zAtTime = (start, t) -> start
+            @timeToLeaveZ = (start) -> Infinity
+            @needsResetZ = (z) => false
+            # no @newLerpZ
+        else if @scaleZ < 1.0
+            @is3D = true
+            @origLerpZ = expLerp 0.01,       @extents.z / @scaleZ
+            @newLerpZ  = expLerp @extents.z, @extents.z / @scaleZ
+            @zAtTime = (start, t) => start * Math.pow(@scaleZ, t)
+            @timeToLeaveZ = (start) =>
+                Math.log(0.01/Math.abs start) / Math.log(@scaleZ)
+            @needsResetZ = (z) => Math.abs(z) < 0.01
+        else if @scaleZ > 1.0
+            @is3D = true
+            @origLerpZ = expLerp 0.01 / @scaleZ, @extents.z
+            @newLerpZ  = expLerp 0.01 / @scaleZ, 0.01
+            @zAtTime = (start, t) => start * Math.pow(@scaleZ, t)
+            @timeToLeaveZ = (start) =>
+                Math.log(@extents.z/Math.abs start) / Math.log(@scaleZ)
+            @needsResetZ = (z) => Math.abs(z) > @extents.z
+        @invScaleZ = if @is3D then 1/@scaleZ else 0.0
+
+    makeStepMat: (a, b, c, d) ->
+        z = @scaleZ
+        @stepMat = new THREE.Matrix4().set \
+            a, b, 0, 0,
+            c, d, 0, 0,
+            0, 0, z, 0,
+            0, 0, 0, 1
+
+    timeToLeave: (point) =>
+        x = @timeToLeaveZ(point[2])
+        return x if isFinite(x) and x >= 0 and x <= 25
+        x = @timeToLeaveXY(point[0], point[1])
+        if x >= 0 and x <= 25 then x else Infinity
+
+    newPoint: () =>
+        if @is3D
+            # A certain percentage of points go on the z=0 plane
+            if Math.random() < @onPlane
+                z = 0.0
+            else
+                z = randSign() * @origLerpZ Math.random()
+        else
+            z = 0
+        xy = @origDistr()
+        [xy[0], xy[1], z, 0]
+
+    updatePoint: (point) =>
+        if @needsResetXY point[0], point[1]
+            # Point went out of bounds for xy-reasons.
+            [point[0], point[1]] = @newDistr point
+        return point unless @is3D and @scaleZ != 1.0
+        return point if point[2] == 0.0 # Preserve z=0 plane
+        # Point went out of bounds for z-reasons.  Don't change xy.
+        point[2] = randSign() * @newLerpZ Math.random() if @needsResetZ point[2]
+        point
 
     linesParams: () =>
-        @reference = @makeReference()
+        reference = @makeReference()
         channels: 2
-        height:   @reference.length
-        width:    @reference[0].length
-        items:    @reference[0][0].length
-        data:     @reference
+        height:   reference.length
+        width:    reference[0].length
+        items:    reference[0][0].length
         live:     false
+        data:     reference
 
-    refClosed: () => false
+    shaderParams: (params) ->
+        params.uniforms ?= {}
+        params.uniforms.scaleZ = { type: 'f', value: @scaleZ }
+        params
 
 
 ######################################################################
@@ -463,23 +594,27 @@ class Complex extends Dynamics
         opts ?= {}
         @θ     = opts.θ     ? randSign() * linLerp(π/6, 5*π/6)(Math.random())
         @scale = opts.scale ? @randomScale()
+        @logScale = Math.log @scale
 
-        @stepMat = [Math.cos(@θ) * @scale, -Math.sin(@θ) * @scale,
-                    Math.sin(@θ) * @scale,  Math.cos(@θ) * @scale]
+        @makeStepMat Math.cos(@θ) * @scale, -Math.sin(@θ) * @scale,
+                     Math.sin(@θ) * @scale,  Math.cos(@θ) * @scale
 
         @makeDistributions opts
 
-    newPoint: (oldPoint) =>
-        distribution = if not oldPoint then @origDist else @newDist
+    origDistr: () => @distr @origDist
+    newDistr:  () => @distr @newDist
+
+    distr: (distribution) =>
         r = distribution Math.random()
         θ = Math.random() * 2 * π
-        [Math.cos(θ) * r, Math.sin(θ) * r, 0, 0]
+        [Math.cos(θ) * r, Math.sin(θ) * r]
 
     shaderParams: () =>
-        code: rotateShader,
-        uniforms:
-            deltaAngle: { type: 'f', value: @θ }
-            scale:      { type: 'f', value: @scale }
+        super
+            code: rotateShader,
+            uniforms:
+                deltaAngle: { type: 'f', value: @θ }
+                scale:      { type: 'f', value: @scale }
 
 
 class Circle extends Complex
@@ -491,6 +626,7 @@ class Circle extends Complex
             θ: -@θ
             scale: 1/@scale
             inverse: @
+            scaleZ: @invScaleZ
 
     randomScale: () => 1
 
@@ -504,11 +640,24 @@ class Circle extends Complex
             for s in [@extents.rad/10...@extents.rad] by @extents.rad/10
                 row.push [s * Math.cos(t), s * Math.sin(t)]
             ret.push row
+        ret.push ret[0] # Close the circle
         [ret]
 
-    updatePoint: (point) -> point
+    makePath: (start, path) =>
+        ttl = @timeToLeave start
+        if not isFinite ttl
+            ttl = 2*π*(path.length+1) / (path.length * Math.abs @θ)
+        totalAngle = ttl * @θ
+        for i in [0...path.length]
+            α = totalAngle * i/path.length
+            c = Math.cos α
+            s = Math.sin α
+            path[i] = [c*start[0] - s*start[1], s*start[0] + c*start[1],
+                       @zAtTime(start[2], ttl*i/path.length)]
+        path
 
-    refClosed: () => true
+    needsResetXY: (x, y) -> false
+    timeToLeaveXY: (x, y) -> Infinity
 
 
 class Spiral extends Complex
@@ -534,6 +683,21 @@ class Spiral extends Complex
             ret.push row
         ret
 
+    makePath: (start, path) =>
+        ttl = @timeToLeave start
+        if not isFinite ttl
+            ttl = 2*π*(path.length+1) / (path.length * Math.abs @θ)
+        totalAngle = ttl * @θ
+        for i in [0...path.length]
+            α = totalAngle * i/path.length
+            c = Math.cos α
+            s = Math.sin α
+            t = ttl*i/path.length
+            ss = Math.pow @scale, t
+            path[i] = [ss*c*start[0] - ss*s*start[1],
+                       ss*s*start[0] + ss*c*start[1],
+                       @zAtTime(start[2], t)]
+        path
 
 class SpiralIn extends Spiral
     descr: () -> "Spiral in"
@@ -545,6 +709,7 @@ class SpiralIn extends Spiral
             θ: -@θ
             scale: 1/@scale
             inverse: @
+            scaleZ: @invScaleZ
 
     randomScale: () -> linLerp(0.3, 0.8)(Math.random())
 
@@ -568,11 +733,10 @@ class SpiralIn extends Spiral
                 @origDist = (t) -> distances[Math.floor(t * distances.length)]
                 @newDist = (t) => @far
 
-    updatePoint: (point) =>
-        if point[0]*point[0] + point[1]*point[1] < @close*@close
-            @newPoint point
-        else
-            point
+    needsResetXY: (x,y) => x*x+y*y < @close*@close
+
+    timeToLeaveXY: (x, y) =>
+        (Math.log(0.01) - .5*Math.log(x*x+y*y)) / @logScale
 
 
 class SpiralOut extends Spiral
@@ -586,6 +750,7 @@ class SpiralOut extends Spiral
             scale: 1/@scale
             inverse: @
             dist: @distType
+            scaleZ: @invScaleZ
 
     randomScale: () => linLerp(1/0.8, 1/0.3)(Math.random())
 
@@ -609,11 +774,10 @@ class SpiralOut extends Spiral
                 @origDist = (t) -> distances[Math.floor(t * distances.length)]
                 @newDist = (t) => @veryClose
 
-    updatePoint: (point) =>
-        if point[0]*point[0] + point[1]*point[1] > @medium * @medium
-            @newPoint point
-        else
-            point
+    needsResetXY: (x, y) => x*x+y*y > @medium * @medium
+
+    timeToLeaveXY: (x, y) =>
+        (Math.log(@extents.rad) - .5*Math.log(x*x+y*y)) / @logScale
 
 
 ######################################################################
@@ -625,18 +789,43 @@ class Diagonalizable extends Dynamics
         opts ?= {}
         @swapped = false
         @makeScales opts
-        @stepMat = if @swapped then [@λ2, 0, 0, @λ1] else [@λ1, 0, 0, @λ2]
+        if @swapped
+            @makeStepMat @λ2, 0, 0, @λ1
+        else
+            @makeStepMat @λ1, 0, 0, @λ2
 
     swap: () =>
         [@λ2, @λ1] = [@λ1, @λ2]
-        [@extents.y, @extents.x] = [@extents.x, @extents.y]
+        @extents =
+            rad: @extents.rad
+            x:   @extents.y
+            y:   @extents.x
+            z:   @extents.z
         @swapped = true
 
     shaderParams: () =>
-        code: diagShader,
-        uniforms:
-            scaleX: { type: 'f', value: if @swapped then @λ2 else @λ1 }
-            scaleY: { type: 'f', value: if @swapped then @λ1 else @λ2 }
+        super
+            code: diagShader,
+            uniforms:
+                scaleX: { type: 'f', value: if @swapped then @λ2 else @λ1 }
+                scaleY: { type: 'f', value: if @swapped then @λ1 else @λ2 }
+
+    makePath: (start, path) =>
+        ttl = @timeToLeave start
+        if not isFinite ttl
+            ttl = 25 # Arbitrary
+        if @swapped
+            sx = @λ2
+            sy = @λ1
+        else
+            sx = @λ1
+            sy = @λ2
+        for i in [0...path.length]
+            t = ttl*i/path.length
+            path[i] = [start[0] * Math.pow(sx, t),
+                       start[1] * Math.pow(sy, t),
+                       @zAtTime(start[2], t)]
+        path
 
 
 class Hyperbolas extends Diagonalizable
@@ -649,6 +838,7 @@ class Hyperbolas extends Diagonalizable
             λ1: 1/λ1
             λ2: 1/λ2
             inverse: @
+            scaleZ: @invScaleZ
 
     makeScales: (opts) =>
         @λ1 = opts.λ1 ? linLerp(0.3, 0.8)(Math.random())
@@ -663,10 +853,13 @@ class Hyperbolas extends Diagonalizable
         @farR = Math.pow(@extents.x, @logScaleY) * Math.pow(@extents.y, -@logScaleX)
         @lerpR = linLerp(@closeR, @farR)
 
-    newPoint: (oldPoint) =>
+    origDistr: () => @distr true
+    newDistr: () => @distr false
+
+    distr: (orig) =>
         # First choose r uniformly between @closeR and @farR
         r = @lerpR Math.random()
-        if not oldPoint
+        if orig
             # x value on that hyperbola at y = @extents.y
             closeX = Math.pow(r * Math.pow(@extents.y, @logScaleX), 1/@logScaleY)
             # Choose x value exponentially along that hyperbola
@@ -677,9 +870,9 @@ class Hyperbolas extends Diagonalizable
         # Corresponding y
         y = Math.pow(1/r * Math.pow(x, @logScaleY), 1/@logScaleX)
         if @swapped
-            [randSign() * y, randSign() * x, 0, 0]
+            [randSign() * y, randSign() * x]
         else
-            [randSign() * x, randSign() * y, 0, 0]
+            [randSign() * x, randSign() * y]
 
     makeReference: () =>
         ret = []
@@ -698,11 +891,11 @@ class Hyperbolas extends Diagonalizable
             ret.push row
         ret
 
-    updatePoint: (point) =>
-        if Math.abs(if @swapped then point[0] else point[1]) > @extents.y
-            @newPoint point
-        else
-            point
+    needsResetXY: (x, y) => Math.abs(if @swapped then x else y) > @extents.y
+
+    timeToLeaveXY: (x, y) =>
+        y = x if @swapped
+        (Math.log(@extents.y) - Math.log(Math.abs y)) / @logScaleY
 
 
 class AttractRepel extends Diagonalizable
@@ -754,6 +947,7 @@ class Attract extends AttractRepel
             λ1: 1/@λ1
             λ2: 1/@λ2
             inverse: @
+            scaleZ: @invScaleZ
 
     makeScales: (opts) =>
         @λ1 = opts.λ1 ? linLerp(0.3, 0.9)(Math.random())
@@ -763,23 +957,25 @@ class Attract extends AttractRepel
         # λ1 >= λ2 implies logScaleY/logScaleX > 1
         super opts
 
-    newPoint: (oldPoint) =>
+    origDistr: () => @distr true
+    newDistr: () => @distr false
+
+    distr: (orig) =>
         # First choose r
         r = @lerpR Math.random()
         farY = @yValAt r, @sMax / @λ2
-        if not oldPoint
+        if orig
             closeY = @yValAt r, @sMin
         else
             closeY = @yValAt r, @sMax
         y = expLerp(closeY, farY)(Math.random())
         x = @xOfY y, r
-        [randSign() * x, randSign() * y, 0, 0]
+        [randSign() * x, randSign() * y]
 
-    updatePoint: (point) =>
-        if Math.abs(point[1]) < .01
-            @newPoint point
-        else
-            point
+    needsResetXY: (x, y) => Math.abs(y) < .01
+
+    timeToLeaveXY: (x, y) =>
+        (Math.log(0.01) - Math.log(Math.abs y)) / @logScaleY
 
 
 class Repel extends AttractRepel
@@ -791,6 +987,7 @@ class Repel extends AttractRepel
             λ1: 1/@λ1
             λ2: 1/@λ2
             inverse: @
+            scaleZ: @invScaleZ
 
     makeScales: (opts) =>
         @λ2 = opts.λ2 ? linLerp(1/0.9, 1/0.3)(Math.random())
@@ -800,23 +997,26 @@ class Repel extends AttractRepel
         # λ1 <= λ2 implies logScaleY/logScaleX > 1
         super opts
 
-    newPoint: (oldPoint) =>
+    origDistr: () => @distr true
+    newDistr: () => @distr false
+
+    distr: (orig) =>
         # First choose r
         r = @lerpR Math.random()
         closeY = @yValAt r, @sMin / @λ2
-        if not oldPoint
+        if orig
             farY = @yValAt r, @sMax
         else
             farY = @yValAt r, @sMin
         y = expLerp(closeY, farY)(Math.random())
         x = @xOfY y, r
-        [randSign() * x, randSign() * y, 0, 0]
+        [randSign() * x, randSign() * y]
 
-    updatePoint: (point) =>
-        if Math.abs(point[0]) > @extents.x or Math.abs(point[1]) > @extents.y
-            @newPoint point
-        else
-            point
+    needsResetXY: (x, y) => Math.abs(x) > @extents.x or Math.abs(y) > @extents.y
+
+    timeToLeaveXY: (x, y) =>
+        Math.min((Math.log(@extents.x) - Math.log(Math.abs x)) / @logScaleX,
+                 (Math.log(@extents.y) - Math.log(Math.abs y)) / @logScaleY)
 
 
 class AttractRepelLine extends Diagonalizable
@@ -824,10 +1024,13 @@ class AttractRepelLine extends Diagonalizable
         @λ1 = 1
         @lerpX = linLerp -@extents.x, @extents.x
 
-    newPoint: (oldPoint) =>
+    origDistr: () => @distr @origLerpY
+    newDistr: () => @distr @newLerpY
+
+    distr: (distribution) =>
         x = @lerpX Math.random()
-        y = (if not oldPoint then @origLerpY else @newLerpY)(Math.random())
-        [x, randSign() * y, 0, 0]
+        y = distribution Math.random()
+        [x, randSign() * y]
 
     makeReference: () =>
         item1 = []
@@ -848,6 +1051,7 @@ class AttractLine extends AttractRepelLine
             λ1: 1/@λ1
             λ2: 1/@λ2
             inverse: @
+            scaleZ: @invScaleZ
 
     makeScales: (opts) =>
         super opts
@@ -855,11 +1059,10 @@ class AttractLine extends AttractRepelLine
         @origLerpY = expLerp 0.01, @extents.y / @λ2
         @newLerpY = expLerp @extents.y, @extents.y / @λ2
 
-    updatePoint: (point) =>
-        if Math.abs(point[1]) < 0.01
-            @newPoint point
-        else
-            point
+    needsResetXY: (x, y) => Math.abs(y) < 0.01
+
+    timeToLeaveXY: (x, y) =>
+        (Math.log(0.01) - Math.log(Math.abs y)) / @logScaleY
 
 
 class RepelLine extends AttractRepelLine
@@ -871,6 +1074,7 @@ class RepelLine extends AttractRepelLine
             λ1: 1/@λ1
             λ2: 1/@λ2
             inverse: @
+            scaleZ: @invScaleZ
 
     makeScales: (opts) =>
         super opts
@@ -878,11 +1082,10 @@ class RepelLine extends AttractRepelLine
         @origLerpY = expLerp 0.01 / @λ2, @extents.y
         @newLerpY = expLerp 0.01 / @λ2, 0.01
 
-    updatePoint: (point) =>
-        if Math.abs(point[1]) > @extents.y
-            @newPoint point
-        else
-            point
+    needsResetXY: (x, y) => Math.abs(y) > @extents.y
+
+    timeToLeaveXY: (x, y) =>
+        (Math.log(@extents.y) - Math.log(Math.abs y)) / @logScaleY
 
 
 ######################################################################
@@ -895,7 +1098,7 @@ class Shear extends Dynamics
         super extents, opts
         opts ?= {}
         @translate = opts.translate ? randSign() * linLerp(0.2, 2.0)(Math.random())
-        @stepMat = [1, @translate, 0, 1]
+        @makeStepMat 1, @translate, 0, 1
         @lerpY = linLerp 0.01, @extents.y
         # For reference
         @lerpY2 = linLerp -@extents.y, @extents.y
@@ -903,35 +1106,40 @@ class Shear extends Dynamics
         @inverse = opts?.inverse ? new Shear extents,
             translate: -@translate
             inverse: @
+            scaleZ: @invScaleZ
 
-    newPoint: (oldPoint) =>
+    origDistr: () =>
         a = @translate
-        if not oldPoint
-            y = @lerpY Math.random()
-            # Put a few points on the x-axis
-            if Math.random() < 0.005
-                y = 0
-                x = linLerp(-@extents.x, @extents.x)(Math.random())
-            else
-                if a < 0
-                    x = linLerp(-@extents.x, @extents.x - a*y)(Math.random())
-                else
-                    x = linLerp(-@extents.x - a*y, @extents.x)(Math.random())
+        y = @lerpY Math.random()
+        # Put a few points on the x-axis
+        if Math.random() < 0.005
+            y = 0
+            x = linLerp(-@extents.x, @extents.x)(Math.random())
         else
-            # Don't change path
-            y = Math.abs oldPoint[1]
             if a < 0
-                x = linLerp(@extents.x, @extents.x - a*y)(Math.random())
+                x = linLerp(-@extents.x, @extents.x - a*y)(Math.random())
             else
-                x = linLerp(-@extents.x - a*y, -@extents.x)(Math.random())
+                x = linLerp(-@extents.x - a*y, @extents.x)(Math.random())
         s = randSign()
-        [s*x, s*y, 0, 0]
+        [s*x, s*y]
+
+    newDistr: (oldPoint) =>
+        a = @translate
+        # Don't change path
+        y = Math.abs oldPoint[1]
+        if a < 0
+            x = linLerp(@extents.x, @extents.x - a*y)(Math.random())
+        else
+            x = linLerp(-@extents.x - a*y, -@extents.x)(Math.random())
+        s = randSign()
+        [s*x, s*y]
 
     shaderParams: () =>
-        code: shearShader,
-        uniforms:
-            scale:     { type: 'f', value: 1.0 }
-            translate: { type: 'f', value: @translate }
+        super
+            code: shearShader,
+            uniforms:
+                scale:     { type: 'f', value: 1.0 }
+                translate: { type: 'f', value: @translate }
 
     makeReference: () =>
         item1 = []
@@ -942,11 +1150,22 @@ class Shear extends Dynamics
             item2.push [@extents.x, y]
         [[item1, item2]]
 
-    updatePoint: (point) =>
-        if Math.abs(point[0]) > @extents.x
-            @newPoint point
-        else
-            point
+    needsResetXY: (x, y) => Math.abs(x) > @extents.x
+
+    timeToLeaveXY: (x, y) =>
+        e = if y > 0 then @extents.x else -@extents.x
+        (e - x) / (@translate * y)
+
+    makePath: (start, path) =>
+        ttl = @timeToLeave start
+        if not isFinite ttl
+            ttl = 100 # Arbitrary but large
+        for i in [0...path.length]
+            t = ttl*i/path.length
+            path[i] = [start[0] + t * @translate * start[1],
+                       start[1],
+                       @zAtTime(start[2], t)]
+        path
 
 
 class ScaleInOutShear extends Dynamics
@@ -956,27 +1175,32 @@ class ScaleInOutShear extends Dynamics
         @translate = opts.translate ? randSign() * linLerp(0.2, 2.0)(Math.random())
         λ = @scale
         a = @translate
-        @stepMat = [λ, λ*a, 0, λ]
+        @makeStepMat λ, λ*a, 0, λ
         # Paths have the form λ^t(r+ta, 1)
-        @xOfY = (r, y) -> y * (r + a*Math.log(y)/Math.log(λ))
+        @logScale = Math.log λ
+        @xOfY = (r, y) -> y * (r + a*Math.log(y)/@logScale)
         # tan gives a nice looking plot
         @lerpR = (t) -> Math.tan((t - 0.5) * π)
         # for points
         @lerpR2 = (t) -> Math.tan((t/0.99 + 0.005 - 0.5) * π)
 
-    newPoint: (oldPoint) =>
+    origDistr: () => @distr @lerpY
+    newDistr: () => @distr @lerpYNew
+
+    distr: (distribution) =>
         # Choose a path
         r = @lerpR2 Math.random()
-        y = (if not oldPoint then @lerpY else @lerpYNew)(Math.random())
+        y = distribution Math.random()
         x = @xOfY r, y
         s = randSign()
-        [s*x, s*y, 0, 0]
+        [s*x, s*y]
 
     shaderParams: () =>
-        code: shearShader,
-        uniforms:
-            scale:     { type: 'f', value: @scale }
-            translate: { type: 'f', value: @translate }
+        super
+            code: shearShader,
+            uniforms:
+                scale:     { type: 'f', value: @scale }
+                translate: { type: 'f', value: @translate }
 
     makeReference: () =>
         ret = []
@@ -990,6 +1214,20 @@ class ScaleInOutShear extends Dynamics
                 row.push [[x, y], [-x, -y]]
             ret.push row
         return ret
+
+    makePath: (start, path) =>
+        ttl = @timeToLeave start
+        if not isFinite ttl
+            ttl = 25 # Arbitrary
+        λ = @scale
+        a = @translate
+        for i in [0...path.length]
+            t = ttl*i/path.length
+            ss = Math.pow(λ, t)
+            path[i] = [ss * start[0] + ss * a * t * start[1],
+                       ss * start[1],
+                       @zAtTime(start[2], t)]
+        path
 
 
 class ScaleOutShear extends ScaleInOutShear
@@ -1006,12 +1244,12 @@ class ScaleOutShear extends ScaleInOutShear
             translate: -@translate
             scale: 1/@scale
             inverse: @
+            scaleZ: @invScaleZ
 
-    updatePoint: (point) =>
-        if Math.abs(point[1]) > @extents.y
-            @newPoint point
-        else
-            point
+    needsResetXY: (x, y) => Math.abs(y) > @extents.y
+
+    timeToLeaveXY: (x, y) =>
+        (Math.log(@extents.y) - Math.log(Math.abs y)) / @logScale
 
 
 class ScaleInShear extends ScaleInOutShear
@@ -1028,12 +1266,12 @@ class ScaleInShear extends ScaleInOutShear
             translate: -@translate
             scale: 1/@scale
             inverse: @
+            scaleZ: @invScaleZ
 
-    updatePoint: (point) =>
-        if Math.abs(point[1]) < .01
-            @newPoint point
-        else
-            point
+    needsResetXY: (x, y) => Math.abs(y) < .01
+
+    timeToLeaveXY: (x, y) =>
+        (Math.log(0.01) - Math.log(Math.abs y)) / @logScale
 
 
 ######################################################################
