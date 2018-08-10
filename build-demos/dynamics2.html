@@ -695,7 +695,7 @@ window.demo2 = demo2 = dynamicsDemo(controller, {
 });
 
 (function() {
-  var A, D, check, displayMat, elt, mC, te, x, y;
+  var A, D, check, displayMat, elt, mC, te, vc, x, y;
   te = C.elements;
   if (size === 2) {
     displayMat = [[te[0], te[1]], [te[4], te[5]]];
@@ -713,7 +713,8 @@ window.demo2 = demo2 = dynamicsDemo(controller, {
   y = vecNames[1];
   katex.render((mC + " = ") + demo1.texMatrix(displayMat), elt);
   elt = document.getElementById("sim-here");
-  return katex.render(A + " = " + mC + D + mC + "^{-1} \\quad " + x + " = " + mC + y, elt);
+  vc = new Color("red").str();
+  return katex.render((A + " = " + mC + D + mC + "^{-1} \\quad ") + ("\\color{" + vc + "}{" + x + "} = " + mC + "\\color{" + vc + "}{" + y + "}"), elt);
 })();
 
 if (size === 3) {

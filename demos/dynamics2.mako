@@ -64,13 +64,6 @@ ${parent.body_html()}
 
 ##
 
-# TODO:
-#  * print similarity
-#  * Fix cover
-#
-#  * Use in book
-#  * Remove dynamics from similarity demo
-
 <%include file="dyncommon.coffee"/>
 
 ######################################################################
@@ -250,7 +243,9 @@ do () ->
     y = vecNames[1]
     katex.render("#{mC} = " + demo1.texMatrix(displayMat), elt)
     elt = document.getElementById "sim-here"
-    katex.render("#{A} = #{mC}#{D}#{mC}^{-1} \\quad #{x} = #{mC}#{y}", elt)
+    vc = new Color("red").str()
+    katex.render("#{A} = #{mC}#{D}#{mC}^{-1} \\quad " +
+                 "\\color{#{vc}}{#{x}} = #{mC}\\color{#{vc}}{#{y}}", elt)
 
 
 ######################################################################
