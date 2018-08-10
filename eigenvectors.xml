@@ -288,7 +288,7 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
-    <example>
+    <example xml:id="evec-eg-projection">
       <title>Projection</title>
       <idx><h>Orthogonal projection</h><h>eigenvectors of</h></idx>
       <statement>

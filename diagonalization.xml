@@ -440,6 +440,60 @@ This is often very important in applications.
       </solution>
     </example>
 
+    <example xml:id="diagonal-eg-22-zero">
+      <title>A diagonalizable <m>2\times 2</m> matrix with a zero eigenvector</title>
+      <statement>
+        <p>
+          Diagonalize the matrix
+          <me>
+            A = \mat[r]{2/3 -4/3; -2/3 4/3}.
+          </me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We need to find the eigenvalues and eigenvectors of <m>A</m>.  First we compute the characteristic polynomial:
+          <me>
+            f(\lambda) = \lambda^2-\Tr(A)\lambda + \det(A) = \lambda^2 -2\lambda
+            = \lambda(\lambda-2).
+          </me>
+          Therefore, the eigenvalues are <m>0</m> and <m>2</m>.  We need to compute eigenvectors for each eigenvalue.  We start with <m>\lambda_1 = 0</m>:
+          <me>
+(A - 0I_2)v = 0 \iff
+  \mat[r]{2/3 -4/3; -2/3 4/3}v = 0
+  \;\xrightarrow{\text{RREF}}\;
+  \mat{1 -2; 0 0}v = 0.
+          </me>
+          The parametric form is <m>x = 2y</m>, so <m>v_1 = {2\choose 1}</m> is an eigenvector with eigenvalue <m>\lambda_1</m>.  Now we find an eigenvector with eigenvalue <m>\lambda_2 = 2</m>:
+          <me>
+            (A-2I_2)v = 0 \iff
+  \mat{-4/3 -4/3; -2/3 -2/3}v = 0
+  \;\xrightarrow{\text{RREF}}\;
+  \mat{1 1; 0 0}v = 0.
+          </me>
+          The parametric form is <m>x = -y</m>, so <m>v_2 = {1\choose-1}</m> is an eigenvector with eigenvalue <m>2</m>.
+        </p>
+        <p>
+          The eigenvectors <m>v_1,v_2</m> are linearly independent, so the <xref ref="diagonalization-thm"/> says that
+          <me>
+            A = CDC\inv \sptxt{for} C = \mat{2 1; 1 -1} \qquad D = \mat{0 0; 0 2}.
+          </me>
+          Alternatively, if we choose <m>2</m> as our first eigenvalue, then
+          <me>
+            A = C'D'(C')\inv \sptxt{for} C' = \mat{1 2; -1 1} \qquad D' = \mat{2 0; 0 0}.
+          </me>
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      In the above example, the (non-invertible) matrix
+      <m>A = \frac 13\smallmat{2}{-4}{-2}{4}</m>
+      is similar to the diagonal matrix
+      <m>D = \smallmat0002.</m>
+      Since <m>A</m> is not invertible, zero is an eigenvalue by the <xref ref="imt-2" text="title">invertible matrix theorem</xref>, so one of the diagonal entries of <m>D</m> is necessarily zero.  Also see this <xref ref="diag-eg-proj"/> below.
+    </p>
+
     <example xml:id="diagonal-eg-33">
       <title>A diagonalizable <m>3\times 3</m> matrix</title>
       <statement>
@@ -562,6 +616,35 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
           <caption>All eigenvectors of a shear lie on the <m>x</m>-axis.</caption>
           <mathbox source="demos/eigenspace.html?mat=1,1:0,1&amp;nomult" height="500px"/>
         </figure>
+    </example>
+
+    <example xml:id="diag-eg-proj">
+      <title>A projection is diagonalizable</title>
+      <idx><h>Diagonalizability</h><h>projection</h></idx>
+      <idx><h>Projection</h><h>diagonalizability of</h></idx>
+      <p>
+        Let <m>L</m> be a line through the origin in <m>\R^2</m>, and define <m>T\colon\R^2\to\R^2</m> to be the transformation that sends a vector <m>x</m> to the closest point on <m>L</m> to <m>x</m>, as in the picture below.
+        <latex-code>
+\begin{tikzpicture}[thin border nodes, rotate=-15]
+  \draw[seq-violet] (-3,-2) -- node[below right, very near start] {$L$} (3,2);
+  \point[seq-red] (x) at (-3,2);
+  \point (o) at (0,0);
+  \draw[vector,seq-red] (o) -- node[auto,swap] {$x$} (x);
+  \point[seq-blue, "$T(x)$" {below right,seq-blue}]
+    (p) at (${-2.5/(1.5*1.5+1)}*(1.5,1)$);
+  \draw[very thin, black!50] (p) -- (x);
+  \pic[draw] {right angle=(x)--(p)--(o)};
+\end{tikzpicture}
+        </latex-code>
+        This is an example of an <em>orthogonal projection</em>.  We will see in <xref ref="projections"/> that <m>T</m> is a linear transformation; let <m>A</m> be the matrix for <m>T</m>.  Any vector on <m>L</m> is not moved by <m>T</m> because it is the closest point on <m>L</m> to itself: hence it is an eigenvector of <m>A</m> with eigenvalue <m>1</m>.  Let <m>L^\perp</m> be the line perpendicular to <m>L</m> and passing through the origin.  Any vector <m>x</m> on <m>L^\perp</m> is closest to the zero vector on <m>L</m>, so a (nonzero) such vector is an eigenvector of <m>A</m> with eigenvalue <m>0</m>. (See this <xref ref="evec-eg-projection"/> for a special case.)  Since <m>A</m> has two distinct eigenvalues, it is diagonalizable; in fact, we know from the <xref ref="diagonalization-thm"/> that <m>A</m> is similar to the matrix <m>\smallmat 1000</m>.
+      </p>
+      <p>
+        Note that we never had to do any algebra!  We know that <m>A</m> is diagonalizable for <em>geometric</em> reasons.
+      </p>
+      <figure>
+        <caption>The line <m>L</m> (violet) is the <m>1</m>-eigenspace of <m>A</m>, and <m>L^\perp</m> (green) is the <m>0</m>-eigenspace.  Since there are linearly independent eigenvectors, we know that <m>A</m> is diagonalizable.</caption>
+        <mathbox source="demos/eigenspace.html?mat=25/26,5/26:5/26,1/26&amp;nomult" height="500px"/>
+      </figure>
     </example>
 
     <example xml:id="diag-eg-33-nondiag">
@@ -784,7 +867,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
     </bluebox>
 
     <p>
-      We can use the <xref ref="diag-amgm"/> to give another criterion for diagonalizability.
+      We can use the <xref ref="diag-amgm"/> to give another criterion for diagonalizability (in addition to the <xref ref="diagonalization-thm"/>).
     </p>
 
     <theorem xml:id="diag-thm-variant" hide-type="true">
