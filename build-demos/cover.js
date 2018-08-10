@@ -78260,7 +78260,8 @@ module.exports = through;
           channels: 4,
           width: numPointsRow,
           height: numPointsCol,
-          data: this.controller.points
+          data: this.controller.points,
+          live: false
         };
         if (this.is3D) {
           pointsOpts.depth = numPointsDep;
@@ -78509,7 +78510,7 @@ module.exports = through;
     };
 
     Controller.prototype.step = function() {
-      var i, k, len1, point, ref;
+      var i, k, len1, len2, m, point, ref, ref1, view;
       if (!this.continuous && !this.flow) {
         if (this.startTime + this.duration > this.curTime) {
           return;
@@ -78531,11 +78532,17 @@ module.exports = through;
           point[3] = this.curTime + this.delay();
         }
       }
+      ref1 = this.views;
+      for (m = 0, len2 = ref1.length; m < len2; m++) {
+        view = ref1[m];
+        view.pointsElt.set('data', []);
+        view.pointsElt.set('data', this.points);
+      }
       return null;
     };
 
     Controller.prototype.unStep = function() {
-      var i, inv, k, len1, point, ref;
+      var i, inv, k, len1, len2, m, point, ref, ref1, view;
       if (!this.continuous && !this.flow) {
         if (this.startTime + this.duration > this.curTime) {
           return;
@@ -78557,6 +78564,12 @@ module.exports = through;
           inv.stepMat.applyToVector3Array(point, 0, 3);
           point[3] = this.curTime + this.delay();
         }
+      }
+      ref1 = this.views;
+      for (m = 0, len2 = ref1.length; m < len2; m++) {
+        view = ref1[m];
+        view.pointsElt.set('data', []);
+        view.pointsElt.set('data', this.points);
       }
       return null;
     };

@@ -309,6 +309,7 @@ class DynamicsView
                 width:    numPointsRow
                 height:   numPointsCol
                 data:     @controller.points
+                live:     false
             if @is3D
                 pointsOpts.depth = numPointsDep
                 pointsType = @view.voxel
@@ -498,6 +499,9 @@ class Controller
                 @current.updatePoint point
                 # Reset timer
                 point[3] = @curTime + @delay()
+        for view in @views
+            view.pointsElt.set 'data', []
+            view.pointsElt.set 'data', @points
         null
 
     unStep: () =>
@@ -515,6 +519,9 @@ class Controller
                 inv.stepMat.applyToVector3Array point, 0, 3
                 # Reset timer
                 point[3] = @curTime + @delay()
+        for view in @views
+            view.pointsElt.set 'data', []
+            view.pointsElt.set 'data', @points
         null
 
     start: (interval=100) => setInterval @step, interval
