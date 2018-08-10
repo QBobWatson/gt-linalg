@@ -415,9 +415,9 @@ the license is included in gfdl.xml.
         The matrix <m>A</m> does the same thing as <m>D</m>, but with respect to the <m>\cB</m>-coordinates, where <m>\cB = \{u_1,u_2\}</m> is the basis of columns of <m>C</m>.  This means that <m>A</m> <q>sucks all vectors into the <m>1</m>-eigenspace</q>, without changing the sum of the entries of the vectors.
       </p>
       <figure>
-        <caption>Dynamics of the stochastic matrix <m>A</m>.  Click <q>iterate</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.  Note that on both sides, all vectors are <q>sucked into the <m>1</m>-eigenspace</q> (the red line).</caption>
+        <caption>Dynamics of the stochastic matrix <m>A</m>.  Click <q>multiply</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.  Note that on both sides, all vectors are <q>sucked into the <m>1</m>-eigenspace</q> (the red line).</caption>
         <idx><h>Stochastic matrix</h><h>picture of</h></idx>
-        <mathbox source="demos/similarity.html?C=1,1:1,-1&amp;B=1,0:0,1/2&amp;BName=D&amp;dynamics=on&amp;snap=off" height="600px"/>
+        <mathbox source="demos/dynamics2.html?mat=1,0:0,1/2&amp;v1=1,1&amp;v2=1,-1&amp;vec=false&amp;path=false" height="600px"/>
       </figure>
     </example>
 
@@ -490,9 +490,9 @@ the license is included in gfdl.xml.
         The matrix <m>A</m> does the same thing as <m>D</m>, but with respect to the <m>\cB</m>-coordinates, where <m>\cB = \{u_1,u_2,u_3\}</m> is the basis of columns of <m>C</m>.  This means that <m>A</m> <q>sucks all vectors into the <m>1</m>-eigenspace</q>, without changing the sum of the entries of the vectors.
       </p>
       <figure>
-        <caption>Dynamics of the stochastic matrix <m>A</m>.  Click <q>iterate</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.  Note that on both sides, all vectors are <q>sucked into the <m>1</m>-eigenspace</q> (the red line).</caption>
+        <caption>Dynamics of the stochastic matrix <m>A</m>.  Click <q>multiply</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.  Note that on both sides, all vectors are <q>sucked into the <m>1</m>-eigenspace</q> (the green line).  (We have scaled <m>C</m> by <m>1/4</m> so that vectors have roughly the same size on the right and the left.  The <q>jump</q> that happens when you press <q>multiply</q> is a negation of the <m>-.2</m>-eigenspace, which is not animated.)</caption>
         <idx><h>Stochastic matrix</h><h>picture of</h></idx>
-        <mathbox source="demos/similarity.html?C=7,-1,1:6,0,-3:5,1,2&amp;B=1,0,0:0,-.2,0:0,0,.1&amp;BName=D&amp;dynamics=on&amp;reference=none&amp;snap=off" height="600px"/>
+        <mathbox source="demos/dynamics2.html?mat=1,0:0,-1/5&amp;eigenz=1/10&amp;v1=7/4,6/4,5/4&amp;v2=-1/4,0,1/4&amp;v3=1/4,-3/4,2/4&amp;vec=false&amp;path=false" height="600px"/>
       </figure>
     </specialcase>
 

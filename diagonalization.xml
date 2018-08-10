@@ -1277,8 +1277,8 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
           The matrix <m>A</m> does the same thing, in the <m>v_1,v_2</m>-coordinate system: multiplying a vector by <m>A</m> scales the <m>v_1</m>-coordinate by <m>2</m> and the <m>v_2</m>-coordinate by <m>1/2</m>.  Therefore, <m>A</m> moves vectors closer to the <m>2</m>-eigenspace and farther from the <m>1/2</m>-eigenspace.
         </p>
         <figure>
-          <caption>Dynamics of the matrices <m>A</m> and <m>D</m>.  Click <q>iterate</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.</caption>
-          <mathbox source="demos/similarity.html?C=2/3,-1:1,1&amp;B=2,0:0,1/2&amp;BName=D&amp;dynamics=on" height="600px"/>
+          <caption>Dynamics of the matrices <m>A</m> and <m>D</m>.  Click <q>multiply</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.</caption>
+          <mathbox source="demos/dynamics2.html?mat=2,0:0,1/2&amp;v1=2/3,1&amp;v2=-1,1&amp;y=1,5" height="600px"/>
         </figure>
       </solution>
     </example>
@@ -1329,8 +1329,8 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
           The matrix <m>A</m> does the same thing, in the <m>v_1,v_2</m>-coordinate system: multiplying a vector by <m>A</m> scales the <m>v_1</m>-coordinate by <m>2</m> and the <m>v_2</m>-coordinate by <m>3</m>.  Therefore, <m>A</m> moves vectors farther from the <m>2</m>-eigenspace and the <m>3</m>-eigenspace, but faster in the <m>v_2</m>-direction than the <m>v_1</m>-direction.
         </p>
         <figure>
-          <caption>Dynamics of the matrices <m>A</m> and <m>D</m>.  Click <q>iterate</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.</caption>
-          <mathbox source="demos/similarity.html?C=2/3,-1:1,1&amp;B=2,0:0,3&amp;BName=D&amp;dynamics=on" height="600px"/>
+          <caption>Dynamics of the matrices <m>A</m> and <m>D</m>.  Click <q>multiply</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.</caption>
+          <mathbox source="demos/dynamics2.html?mat=2,0:0,3&amp;v1=2/3,1&amp;v2=-1,1&amp;y=2,1" height="600px"/>
         </figure>
       </solution>
     </example>
@@ -1360,8 +1360,8 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
           The diagonal matrix <m>D\inv</m> does the opposite of what <m>D</m> does: it scales the <m>x</m>-coordinate by <m>1/2</m> and the <m>y</m>-coordinate by <m>1/3</m>.  Therefore, it moves vectors closer to both coordinate axes, but faster in the <m>y</m>-direction.  The matrix <m>A'</m> does the same thing, but with respect to the <m>v_1,v_2</m>-coordinate system.
         </p>
         <figure>
-          <caption>Dynamics of the matrices <m>A'</m> and <m>D\inv</m>.  Click <q>iterate</q> to multiply the colored points by <m>D\inv</m> on the left and <m>A'</m> on the right.</caption>
-          <mathbox source="demos/similarity.html?C=2/3,-1:1,1&amp;B=1/2,0:0,1/3&amp;BName=D&amp;dynamics=on" height="600px"/>
+          <caption>Dynamics of the matrices <m>A'</m> and <m>D\inv</m>.  Click <q>multiply</q> to multiply the colored points by <m>D\inv</m> on the left and <m>A'</m> on the right.</caption>
+          <mathbox source="demos/dynamics2.html?mat=1/2,0:0,1/3&amp;v1=2/3,1&amp;v2=-1,1&amp;y=9,3" height="600px"/>
         </figure>
       </solution>
     </example>
@@ -1409,8 +1409,8 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
           The diagonal matrix <m>D</m> scales the <m>y</m>-coordinate by <m>1/2</m> and does not move the <m>x</m>-coordinate.  Therefore, it simply moves vectors closer to the <m>x</m>-axis along vertical lines.  The matrix <m>A</m> does the same thing, in the <m>v_1,v_2</m>-coordinate system: multiplying a vector by <m>A</m> scales the <m>v_2</m>-coordinate by <m>1/2</m> and does not change the <m>v_1</m>-coordinate.  Therefore, <m>A</m> <q>sucks vectors into the <m>1</m>-eigenspace</q> along lines parallel to <m>v_2</m>.
         </p>
         <figure>
-          <caption>Dynamics of the matrices <m>A</m> and <m>D</m>.  Click <q>iterate</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.</caption>
-          <mathbox source="demos/similarity.html?C=-1,1/2:1,1&amp;B=1,0:0,1/2&amp;BName=D&amp;dynamics=on" height="600px"/>
+          <caption>Dynamics of the matrices <m>A</m> and <m>D</m>.  Click <q>multiply</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.</caption>
+          <mathbox source="demos/dynamics2.html?mat=1,0:0,1/2&amp;v1=-1,1&amp;v2=1/2,1&amp;y=2,7" height="600px"/>
         </figure>
       </solution>
     </example>
@@ -1428,8 +1428,8 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
         If <m>A = CDC\inv</m> for some invertible matrix <m>C</m>, then <m>A</m> does the same thing as <m>D</m>, but with respect to the coordinate system defined by the columns of <m>C</m>.
       </p>
         <figure>
-          <caption>Dynamics of the matrices <m>A</m> and <m>D</m>.  Click <q>iterate</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.</caption>
-          <mathbox source="demos/similarity.html?C=-.25062,-.71864,.64864:.93934,-.34258,-.01661:.23415,.60514,.76091&amp;B=1/2,0,0:0,2,0:0,0,3/2&amp;BName=D&amp;dynamics=on" height="600px"/>
+          <caption>Dynamics of the matrices <m>A</m> and <m>D</m>.  Click <q>multiply</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.</caption>
+          <mathbox source="demos/dynamics2.html?mat=1/2,0:0,2&amp;eigenz=3/2&amp;v1=-7/6,2/6,5/6&amp;v2=-1/6,-9/6,0&amp;v3=2/6,-1/6,3/6&amp;y=8,1,1" height="600px"/>
         </figure>
     </example>
 

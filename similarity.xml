@@ -43,8 +43,8 @@ the license is included in gfdl.xml.
     </p>
 
     <figure>
-      <caption>The matrices <m>A</m> and <m>D</m> behave similarly.  Click <q>iterate</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.  (We will see in <xref ref="diagonalization"/> why the points follow hyperbolic paths.)</caption>
-      <mathbox source="demos/similarity.html?C=2/3,-1:1,1&amp;B=2,0:0,1/2&amp;BName=D&amp;dynamics=on" height="600px"/>
+      <caption>The matrices <m>A</m> and <m>D</m> behave similarly.  Click <q>multiply</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.  (We will see in <xref ref="diagonalization"/> why the points follow hyperbolic paths.)</caption>
+      <mathbox source="demos/dynamics2.html?mat=2,0:0,1/2&amp;v1=2/3,1&amp;v2=-1,1&amp;y=1,5" height="600px"/>
     </figure>
 
     <p>
@@ -889,7 +889,7 @@ the license is included in gfdl.xml.
         </latex-code>
       </p>
       <figure>
-        <caption>The geometric relationship between the similar matrices <m>A</m> and <m>B</m> acting on <m>\R^2</m>.  Click and drag the heads of <m>x</m> and <m>[x]_\cB</m>.  Try enabling <q>dynamics</q> to watch an animation of the actions of <m>A</m> and <m>B</m>.</caption>
+        <caption>The geometric relationship between the similar matrices <m>A</m> and <m>B</m> acting on <m>\R^2</m>.  Click and drag the heads of <m>x</m> and <m>[x]_\cB</m>.</caption>
         <mathbox source="demos/similarity.html?B=0,-1:1,0&amp;C=2,-1/2:1,1/2&amp;snap=off" height="600px"/>
       </figure>
     </example>

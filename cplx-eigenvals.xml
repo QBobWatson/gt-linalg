@@ -898,8 +898,8 @@ A-\frac{4+3i}5I_3 =
           The reader might want to refer back to this <xref ref="similarity-eg-rotation"/>.
         </p>
         <figure>
-          <caption>The geometric action of <m>A</m> and <m>B</m> on the plane.  Click <q>iterate</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
-          <mathbox source="demos/similarity.html?B=1,-1:1,1&amp;C=1,0:1,1&amp;snap=off&amp;dynamics=on&amp;motion=rotateScale&amp;reference=circle" height="600px"/>
+          <caption>The geometric action of <m>A</m> and <m>B</m> on the plane.  Click <q>multiply</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
+          <mathbox source="demos/dynamics2.html?mat=1,-1:1,1&amp;v1=1,1&amp;v2=0,1&amp;y=0,1&amp;matnames=A,B,C" height="600px"/>
         </figure>
         <p>
           If instead we had chosen <m>\bar\lambda = 1+i</m> as our eigenvalue, then we would have found the eigenvector <m>\bar v = {1\choose 1-i}</m>.  In this case we would have <m>A=C'B'(C')\inv</m>, where
@@ -1045,8 +1045,8 @@ A-\frac{4+3i}5I_3 =
           The reader might want to refer back to this <xref ref="similarity-eg-rotation"/>.
         </p>
         <figure>
-          <caption>The geometric action of <m>A</m> and <m>B</m> on the plane.  Click <q>iterate</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
-          <mathbox source="demos/similarity.html?B=-sqrt(3),-1:1,-sqrt(3)&amp;C=2,0:1,1&amp;snap=off&amp;dynamics=on&amp;motion=rotateScale&amp;reference=circle&amp;dur=2" height="600px"/>
+          <caption>The geometric action of <m>A</m> and <m>B</m> on the plane.  Click <q>multiply</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
+          <mathbox source="demos/dynamics2.html?mat=-sqrt(3),-1:1,-sqrt(3)&amp;v1=2,1&amp;v2=0,1&amp;y=0,1&amp;matnames=A,B,C" height="600px"/>
         </figure>
         <p>
           If instead we had chosen <m>\bar\lambda = -\sqrt3-i</m> as our eigenvalue, then we would have found the eigenvector <m>\bar v = {2\choose 1-i}</m>.  In this case we would have <m>A=C'B'(C')\inv</m>, where
@@ -1246,8 +1246,8 @@ A-\frac{4+3i}5I_3 =
         </me>
       </p>
       <figure>
-        <caption>The geometric action of <m>A</m> and <m>B</m> on the plane.  Click <q>iterate</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
-        <mathbox source="demos/similarity.html?B=sqrt(3/2),-1/sqrt(2):1/sqrt(2),sqrt(3/2)&amp;C=2,0:1,1&amp;snap=off&amp;dynamics=on&amp;range2=8&amp;dur=1.5" height="600px"/>
+        <caption>The geometric action of <m>A</m> and <m>B</m> on the plane.  Click <q>multiply</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
+        <mathbox source="demos/dynamics2.html?mat=sqrt(3/2),-1/sqrt(2):1/sqrt(2),sqrt(3/2)&amp;v1=2,1&amp;v2=0,1&amp;y=0,1&amp;matnames=A,B,C" height="600px"/>
       </figure>
     </example>
 
@@ -1267,8 +1267,8 @@ A-\frac{4+3i}5I_3 =
         </me>
       </p>
       <figure>
-        <caption>The geometric action of <m>A</m> and <m>B</m> on the plane.  Click <q>iterate</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
-        <mathbox source="demos/similarity.html?B=sqrt(3)/2,-1/2:1/2,sqrt(3)/2&amp;C=2,0:1,1&amp;snap=off&amp;dynamics=on&amp;range2=8&amp;dur=1.5" height="600px"/>
+        <caption>The geometric action of <m>A</m> and <m>B</m> on the plane.  Click <q>multiply</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
+        <mathbox source="demos/dynamics2.html?mat=sqrt(3)/2,-1/2:1/2,sqrt(3)/2&amp;v1=2,1&amp;v2=0,1&amp;y=0,5&amp;matnames=A,B,C" height="600px"/>
       </figure>
     </example>
 
@@ -1288,8 +1288,8 @@ A-\frac{4+3i}5I_3 =
         </me>
       </p>
       <figure>
-        <caption>The geometric action of <m>A</m> and <m>B</m> on the plane.  Click <q>iterate</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
-        <mathbox source="demos/similarity.html?B=sqrt(3/8),-1/sqrt(8):1/sqrt(8),sqrt(3/8)&amp;C=2,0:1,1&amp;snap=off&amp;dynamics=on&amp;range2=8&amp;dur=1.5" height="600px"/>
+        <caption>The geometric action of <m>A</m> and <m>B</m> on the plane.  Click <q>multiply</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
+        <mathbox source="demos/dynamics2.html?mat=sqrt(3/8),-1/sqrt(8):1/sqrt(8),sqrt(3/8)&amp;v1=2,1&amp;v2=0,1&amp;y=0,9&amp;matnames=A,B,C" height="600px"/>
       </figure>
     </example>
 
@@ -1451,7 +1451,7 @@ B =
             C \amp= \mat{| | |; \Re(v_1) \Im(v_1) v_2; | | |}
             = \mat{-7 -1 2; 2 -9 -1; 5 0 3} \\
             B \amp= \mat{\Re(\lambda_1) \Im(\lambda_1) 0;
-            0 -\Im(\lambda_1) \Re(\lambda_1) 0; 0 0 2}
+            -\Im(\lambda_1) \Re(\lambda_1) 0; 0 0 2}
             = \mat{1 -1 0; 1 1 0; 0 0 2}.
             \end{split}
           </me>
@@ -1463,8 +1463,8 @@ B =
           The matrix <m>A</m> does the same thing as <m>B</m>, but with respect to the <m>\{\Re(v_1),\Im(v_1),v_2\}</m>-coordinate system.  That is, <m>A</m> acts on the <m>\Re(v_1),\Im(v_1)</m>-plane by spiraling out, and <m>A</m> acts on the <m>v_2</m>-coordinate by scaling by a factor of <m>2</m>.  See the demo below.
         </p>
         <figure>
-          <caption>The geometric action of <m>A</m> and <m>B</m> on <m>\R^3</m>.  Click <q>iterate</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right.</caption>
-          <mathbox source="demos/similarity.html?C=-1/4,-3/4,1/2:1,-1/4,-1/4:1/4,1/2,3/4&amp;B=1,-1,0:1,1,0:0,0,2&amp;dynamics=on&amp;reference=spiral&amp;range2=10&amp;range1=10" height="600px"/>
+          <caption>The geometric action of <m>A</m> and <m>B</m> on <m>\R^3</m>.  Click <q>multiply</q> to multiply the colored points by <m>B</m> on the left and <m>A</m> on the right. (We have scaled <m>C</m> by <m>1/6</m> so that the vectors <m>x</m> and <m>y</m> have roughly the same size.)</caption>
+          <mathbox source="demos/dynamics2.html?mat=1,-1:1,1&amp;eigenz=2&amp;v1=-7/6,2/6,5/6&amp;v2=-1/6,-9/6,0&amp;v3=2/6,-1/6,3/6&amp;y=1,0,.5&amp;matnames=A,B,C" height="600px"/>
         </figure>
       </solution>
     </example>
