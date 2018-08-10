@@ -16,6 +16,7 @@ types = [
 typesList = (t[1] for t in types.slice(1))
 select = null
 controller = null
+dynView = null
 
 ortho = 1e5
 
@@ -57,11 +58,6 @@ pickType = () ->
         #type = Shear
     type
 
-reset = () ->
-    controller.randomizeCoords()
-    type = pickType()
-    controller.install type
-
 makeControls = (elt) ->
     div = document.createElement "div"
     div.id = "cover-controls"
@@ -94,16 +90,28 @@ installDOM = (elt) ->
     # Add controls
     makeControls elt
 
+reset = () ->
+    dynView.randomizeCoords()
+    controller.loadDynamics pickType()
+    dynView.updateView()
+
 doCover = () ->
     element = document.getElementById "cover"
     if element
         installDOM element
 
     mathbox = setupMathbox()
-    controller = new dynamics.Controller mathbox
-    controller.randomizeCoords()
-    type = pickType()
-    controller.install type
+    view = mathbox.cartesian
+        range: [[-1,1],[-1,1],[-1,1]]
+        scale: [1,1,1]
+
+    controller = new dynamics.Controller()
+    dynView = new dynamics.DynamicsView
+        refColor: [0.2157, 0.4941, 0.7216]
+    dynView.randomizeCoords()
+    controller.addView dynView
+    controller.loadDynamics pickType()
+    dynView.updateView mathbox, view
     controller.start()
 
 DomReady.ready doCover

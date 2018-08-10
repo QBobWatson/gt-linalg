@@ -211,23 +211,18 @@ extend = (obj, src) ->
 
 
 ######################################################################
-# Controller class
+# View class
 
-class Controller
-    constructor: (mathbox, opts) ->
+# This displays the points from a Controller class into a view
+
+class DynamicsView
+    constructor: (opts) ->
         opts ?= {}
-        opts.numPointsRow ?= 50
-        opts.numPointsCol ?= 100
-        opts.numPointsDep ?= 10
-        opts.duration     ?= 3.0
-        opts.continuous   ?= true
-        opts.axisColors   ?= []
-        opts.is3D         ?= false
-        opts.flow         ?= false  # For testing distributions
-        opts.refColor     ?= "rgb(80, 120, 255)"
-        opts.clipCube     ?= (x) -> clipped: x
-
-        @axisOpts =
+        @is3D       = opts.is3D ? false
+        @axisColors = opts.axisColors?.slice() ? []
+        @refColor   = opts.refColor ? "rgb(80, 120, 255)"
+        @timer      = opts.timer ? true
+        @axisOpts   =
             end:     false
             width:   3
             zBias:   -1
@@ -236,70 +231,73 @@ class Controller
             range:   [-10,10]
         extend @axisOpts, (opts.axisOpts ? {})
 
-        @axisColors = opts.axisColors.slice()
         @axisColors[0] ?= [0, 0, 0, 0.3]
         @axisColors[1] ?= [0, 0, 0, 0.3]
         @axisColors[2] ?= [0, 0, 0, 0.3]
 
-        @mathbox = mathbox
-        @clipCube = opts.clipCube
-
-        # Current demo
-        @current = null
-        # Playing forward or backward
-        @direction = 1
-
-        @flow = opts.flow
-        @is3D = opts.is3D
-        @continuous = opts.continuous
-        @numPointsRow = opts.numPointsRow
-        @numPointsCol = opts.numPointsCol
-        @numPointsDep = if @is3D then opts.numPointsDep else 1
-        @numPoints = @numPointsRow * @numPointsCol * @numPointsDep - 1
-        @duration = opts.duration
-        @curTime = 0
-        @startTime = -@duration  # when continuous is off
-        @points = [[0, 0, 0, 1e15]]
-
-        # Colors
-        @colors = [[0, 0, 0, 1]].concat([Math.random(), 1, 0.7, 1] for [0...@numPoints])
-        @refColor = opts.refColor
-
-        # The variables below are set when the first type is installed
+        @mathbox = null
         # Un-transformed view
         @view0 = null
         # Transformed view
         @view = null
-        # View extents
-        @extents =
-            x:   0
-            y:   0
-            z:   1
-            rad: 0
+        @initialized = false
 
-        @initialized  = false
         @shaderElt    = null
         @linesElt     = null
         @linesDataElt = null
 
-    install: (type, opts) =>
-        opts ?= {}
-        opts.onPlane ?= 1.0/@numPointsDep
-        @current = new type @extents, opts
-        @matrixOrigCoords = new THREE.Matrix4()
-            .multiply(@coordMat)
-            .multiply(@current.stepMat)
-            .multiply(@coordMatInv)
+    setCoords: (v1, v2, v3) =>
+        v1[2] ?= 0
+        v2[2] ?= 0
+        v3 ?= [0,0,1]
+        @v1 = v1
+        @v2 = v2
+        @v3 = v3
+        # Compute extents
+        @coordMat = new THREE.Matrix4().set \
+            v1[0], v2[0], v3[0], 0,
+            v1[1], v2[1], v3[1], 0,
+            v1[2], v2[2], v3[2], 0,
+                0,     0,     0, 1
+        cmi = @coordMatInv = new THREE.Matrix4().getInverse @coordMat
+        corners = [
+            new THREE.Vector3( 1, 1, 1),
+            new THREE.Vector3(-1, 1, 1),
+            new THREE.Vector3( 1,-1, 1),
+            new THREE.Vector3( 1, 1,-1)
+        ].map (c) -> c.applyMatrix4 cmi
+        rad = Math.max.apply null, corners.map (c) -> c.length()
+        @extents =
+            rad:  rad
+            x:    Math.max.apply null, corners.map (c) -> Math.abs c.x
+            y:    Math.max.apply null, corners.map (c) -> Math.abs c.y
+            z:    Math.max.apply null, corners.map (c) -> Math.abs c.z
+        @controller?.recomputeExtents()
 
+    # Must be called after @setcoords() and @loadDynamics()
+    updateView: (mathbox, view) =>
+        @mathbox ?= mathbox
+        @view0 ?= view
+
+        if @view
+            @view.set 'matrix', @coordMat
+        else
+            @view = @view0.transform matrix: @coordMat
+            for i in (if @is3D then [1,2,3] else [1,2])
+                @axisOpts.axis    = i
+                @axisOpts.color   = @axisColors[i-1]
+                @axisOpts.opacity = @axisColors[i-1][3]
+                @view.axis @axisOpts
         canvas = @mathbox._context.canvas
 
-        for i in [1..@numPoints]
-            @points[i] = @current.newPoint()
-            @points[i][3] = @curTime + @delay(true)
+        flow = @controller.flow
+        numPointsRow = @controller.numPointsRow
+        numPointsCol = @controller.numPointsCol
+        numPointsDep = @controller.numPointsDep
 
         if @initialized
             params = @current.shaderParams()
-            if @flow
+            if flow
                 params.code = "#define FLOW\n" + params.code
             @shaderElt.set params
             @linesDataElt.set @current.linesParams()
@@ -308,52 +306,57 @@ class Controller
             pointsOpts =
                 id:       "points-orig"
                 channels: 4
-                width:    @numPointsRow
-                height:   @numPointsCol
-                data:     @points
+                width:    numPointsRow
+                height:   numPointsCol
+                data:     @controller.points
             if @is3D
-                pointsOpts.depth = @numPointsDep
+                pointsOpts.depth = numPointsDep
                 pointsType = @view.voxel
             else
                 pointsType = @view.matrix
             @pointsElt = pointsType pointsOpts
             params = @current.shaderParams()
-            if @flow
+            if flow
                 params.code = "#define FLOW\n" + params.code
+            controller = @controller
+            if @timer
+                timer = (t) -> controller.curTime = t
+            else
+                timer = (t) -> controller.curTime
             @shaderElt = @pointsElt.shader params,
-                time: (t) => @curTime = t,
-                duration: () => @duration * @direction
+                time: timer
+                duration: () => @controller.duration * @controller.direction
             @shaderElt.resample id: "points"
 
             # Coloring pipeline
             pointsOpts =
                 channels: 4
-                width:    @numPointsRow
-                height:   @numPointsCol
-                data:     @colors
+                width:    numPointsRow
+                height:   numPointsCol
+                data:     @controller.colors
                 live:     false
             if @is3D
-                pointsOpts.depth = @numPointsDep
+                pointsOpts.depth = numPointsDep
                 pointsType = @view.voxel
             else
                 pointsType = @view.matrix
             pointsType pointsOpts
             .shader
-                code:    (if @flow then "#define FLOW\n" else "") + colorShader
+                code:    (if flow then "#define FLOW\n" else "") + colorShader
                 sources: [@pointsElt]
             ,
-                time: (t) -> t
-                duration: () => @duration * @direction
+                time: () -> controller.curTime
+                duration: () => @controller.duration * @controller.direction
             .resample id: "colors"
 
             # Size pipeline
             @view0
                 .shader
-                    code:  (if @flow then "#define FLOW\n" else "") + sizeShader
+                    code:  (if flow then "#define FLOW\n" else "") + sizeShader
                 ,
-                    time:  (t) -> t
+                    time:  () -> controller.curTime
                     small: () -> 5 / 739 * canvas.clientWidth
-                    duration: () => @duration * @direction
+                    duration: () => @controller.duration * @controller.direction
                 .resample
                     source: @pointsElt
                     id:     "sizes"
@@ -367,7 +370,6 @@ class Controller
                     sizes:  "#sizes"
                     zBias:  1
                     zIndex: 2
-                    #visible: false # DEL
 
             # Reference lines
             @linesDataElt = @view.matrix @current.linesParams()
@@ -379,6 +381,98 @@ class Controller
                 zIndex:   1
 
             @initialized = true
+
+    # Must be called after @setcoords()
+    loadDynamics: (dynamics) =>
+        @current = dynamics
+
+        @matrixOrigCoords = new THREE.Matrix4()
+            .multiply(@coordMat)
+            .multiply(@current.stepMat)
+            .multiply(@coordMatInv)
+
+    # Choose random (but not too wonky) coordinate system
+    randomizeCoords: () =>
+        v1 = [0, 0]
+        v2 = [0, 0]
+        # Vector length between 1/2 and 2
+        distribution = linLerp 0.5, 2
+        len = distribution Math.random()
+        θ = Math.random() * 2 * π
+        v1[0] = Math.cos(θ) * len
+        v1[1] = Math.sin(θ) * len
+        # Angle between vectors between 45 and 135 degrees
+        θoff = randSign() * linLerp(π/4, 3*π/4)(Math.random())
+        len = distribution Math.random()
+        v2[0] = Math.cos(θ + θoff) * len
+        v2[1] = Math.sin(θ + θoff) * len
+        @setCoords v1, v2
+
+
+######################################################################
+# Controller class
+
+# This one just moves points around in a standard coordinate system
+
+class Controller
+    constructor: (opts) ->
+        opts ?= {}
+        @numPointsRow = opts.numPointsRow ? 50
+        @numPointsCol = opts.numPointsCol ? 100
+        @numPointsDep = opts.numPointsDep ? 10
+        @duration     = opts.duration     ? 3.0
+        @continuous   = opts.continuous   ? true
+        @is3D         = opts.is3D         ? false
+        @flow         = opts.flow         ? false  # For testing distributions
+
+        # Active views: set these before loading a demo
+        @views = []
+        @extents =
+            rad: 0
+            x:   0
+            y:   0
+            z:   0
+
+        # Current demo
+        @current = null
+        # Playing forward or backward
+        @direction = 1
+
+        @numPointsDep = 1 unless @is3D
+        @numPoints = @numPointsRow * @numPointsCol * @numPointsDep - 1
+
+        @curTime = 0
+        @startTime = -@duration  # when continuous is off
+        @points = [[0, 0, 0, 1e15]]
+
+        # Colors
+        @colors = [[0, 0, 0, 1]].concat([Math.random(), 1, 0.7, 1] for [0...@numPoints])
+
+    addView: (view) =>
+        view.controller = @
+        @views.push view
+        @recomputeExtents()
+
+    recomputeExtents: () =>
+        @extents =
+            rad: 0
+            x:   0
+            y:   0
+            z:   0
+        for view in @views
+            for prop in ["rad", "x", "y", "z"]
+                @extents[prop] = Math.max @extents[prop], view.extents[prop]
+
+    loadDynamics: (type, opts) =>
+        opts ?= {}
+        opts.onPlane ?= 1.0/@numPointsDep
+        @current = new type @extents, opts
+
+        for i in [1..@numPoints]
+            @points[i] = @current.newPoint()
+            @points[i][3] = @curTime + @delay(true)
+
+        view.loadDynamics @current for view in @views
 
     goBackwards: () =>
         for point in @points
@@ -424,65 +518,6 @@ class Controller
         null
 
     start: (interval=100) => setInterval @step, interval
-
-    # Choose random (but not too wonky) coordinate system
-    randomizeCoords: () =>
-        v1 = [0, 0]
-        v2 = [0, 0]
-
-        # Vector length between 1/2 and 2
-        distribution = linLerp 0.5, 2
-        len = distribution Math.random()
-        θ = Math.random() * 2 * π
-        v1[0] = Math.cos(θ) * len
-        v1[1] = Math.sin(θ) * len
-        # Angle between vectors between 45 and 135 degrees
-        θoff = randSign() * linLerp(π/4, 3*π/4)(Math.random())
-        len = distribution Math.random()
-        v2[0] = Math.cos(θ + θoff) * len
-        v2[1] = Math.sin(θ + θoff) * len
-
-        @installCoords v1, v2
-
-    installCoords: (v1, v2, v3) =>
-        @is3D = v3?
-        v1[2] ?= 0
-        v2[2] ?= 0
-        v3 ?= [0,0,1]
-        # Find the farthest corner in the un-transformed coord system
-        @coordMat = new THREE.Matrix4().set \
-            v1[0], v2[0], v3[0], 0,
-            v1[1], v2[1], v3[1], 0,
-            v1[2], v2[2], v3[2], 0,
-                0,     0,     0, 1
-        cmi = @coordMatInv = new THREE.Matrix4().getInverse @coordMat
-        corners = [
-            new THREE.Vector3( 1, 1, 1),
-            new THREE.Vector3(-1, 1, 1),
-            new THREE.Vector3( 1,-1, 1),
-            new THREE.Vector3( 1, 1,-1)
-        ].map (c) -> c.applyMatrix4 cmi
-        rad = Math.max.apply null, corners.map (c) -> c.length()
-        @extents =
-            rad:  rad
-            x:    Math.max.apply null, corners.map (c) -> Math.abs c.x
-            y:    Math.max.apply null, corners.map (c) -> Math.abs c.y
-            z:    Math.max.apply null, corners.map (c) -> Math.abs c.z
-
-        if @view
-            @view.set 'matrix', @coordMat
-        else
-            @viewBase = @mathbox.cartesian
-                range: [[-1, 1], [-1, 1], [-1, 1]]
-                scale: [1, 1, 1]
-            clipCube = @clipCube @viewBase
-            @view0 = clipCube.clipped
-            @view = @view0.transform matrix: @coordMat
-            for i in (if @is3D then [1,2,3] else [1,2])
-                @axisOpts.axis    = i
-                @axisOpts.color   = @axisColors[i-1]
-                @axisOpts.opacity = @axisColors[i-1][3]
-                @view.axis @axisOpts
 
     delay: (first) =>
         if not @continuous
@@ -536,6 +571,7 @@ class Dynamics
 
     makeStepMat: (a, b, c, d) ->
         z = @scaleZ
+        @stepMat22 = [[a, b], [c, d]]
         @stepMat = new THREE.Matrix4().set \
             a, b, 0, 0,
             c, d, 0, 0,
@@ -709,6 +745,7 @@ class SpiralIn extends Spiral
             θ: -@θ
             scale: 1/@scale
             inverse: @
+            dist: @distType
             scaleZ: @invScaleZ
 
     randomScale: () -> linLerp(0.3, 0.8)(Math.random())
@@ -718,9 +755,9 @@ class SpiralIn extends Spiral
         @medium = @extents.rad
         @far    = @extents.rad / @scale
 
-        distType = opts.dist ? randElt ['cont', 'disc']
+        @distType = opts.dist ? randElt ['cont', 'disc']
 
-        switch distType
+        switch @distType
             when 'cont'
                 @origDist = expLerp @close, @far
                 @newDist = expLerp @medium, @far
@@ -789,10 +826,14 @@ class Diagonalizable extends Dynamics
         opts ?= {}
         @swapped = false
         @makeScales opts
+        λ1 = @λ1
+        λ1 *= -1 if opts.negate1
+        λ2 = @λ2
+        λ2 *= -1 if opts.negate2
         if @swapped
-            @makeStepMat @λ2, 0, 0, @λ1
+            @makeStepMat λ2, 0, 0, λ1
         else
-            @makeStepMat @λ1, 0, 0, @λ2
+            @makeStepMat λ1, 0, 0, λ2
 
     swap: () =>
         [@λ2, @λ1] = [@λ1, @λ2]
@@ -1279,6 +1320,7 @@ class ScaleInShear extends ScaleInOutShear
 
 window.dynamics = {}
 
+window.dynamics.DynamicsView  = DynamicsView
 window.dynamics.Controller    = Controller
 
 window.dynamics.Circle        = Circle

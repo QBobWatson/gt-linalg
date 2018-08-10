@@ -33,6 +33,7 @@
 - compose2d.html:    compose2d.mako
 - compose3d.html:    compose3d.mako
 - dynamics.html:     dynamics.mako
+- dynamics2.html:    dynamics2.mako
 - eigenspace.html:   eigenspace.mako
 - leastsquares.html: leastsquares.mako
 - parametric1.html:  parametric1.mako
