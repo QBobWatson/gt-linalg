@@ -381,7 +381,7 @@ the license is included in gfdl.xml.
   \draw[thin, densely dotted] ($(Y) + (P)$) -- (-1, 0, 0);
   \draw[vector, seq3, opacity=.5] (0,0,0) -- node[below right, thin border] {$p$} \pp;
 
-  \node[seq4, anchor=south east] at (-2,-2.5,.5) {$Ax=0$};
+  \node[seq4, anchor=south east] at (-2,-2.5,.5) {$Ax=b$};
 
   \point at \pp;
   \point at (0,0,0);
