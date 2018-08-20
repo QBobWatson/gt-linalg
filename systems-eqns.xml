@@ -221,7 +221,7 @@ the license is included in gfdl.xml.
     </example>
 
     <example>
-      <p>In <xref ref="overview" />, we could have used <m>\R^4</m> to label the amount of traffic <m>(x,y,z,w)</m> passing through four streets.
+      <p>In <xref ref="overview" />, we could have used <m>\R^4</m> to label the amount of traffic <m>(x,y,z,w)</m> passing through four streets.  In other words, if there are <m>10,5,3,11</m> cars per hour passing through roads <m>x,y,z,w</m>, respectively, then this state can be recorded by the point <m>(10,5,3,11)</m> in <m>\R^4</m>.  Starting in <xref ref="spans"/>, we will almost exclusively record solutions of systems of linear equations in this way.
       <latex-code>
       <![CDATA[
 \tikzset{
@@ -269,6 +269,18 @@ the license is included in gfdl.xml.
             ]]>
       </latex-code>
       </p>
+    </example>
+
+    <example>
+      <title>QR codes</title>
+      <idx><h>QR codes</h></idx>
+      <p>
+        A <url href="https://en.wikipedia.org/wiki/QR_code">QR code</url> is a method of storing data in a grid of <m>29\times 29</m> black or white squares in a way that computers can easily read.  When an imaging device sees a QR code, it constructs an array of <m>29\times 29</m> points of varying degrees of grey.  The brightness of each point is just a real number, so a QR code can be viewed as an element of <m>\R^{29\cdot 29} = \R^{841}.</m>
+      </p>
+      <figure>
+        <caption>The QR code for this textbook is a <m>29\times29</m> array of black/white squares.</caption>
+        <image source="static/images/qrcode.png"/>
+      </figure>
     </example>
 
     <p>So what is <m>\R^4</m>?  or <m>\R^5</m>?  or <m>\R^n</m>?
