@@ -564,11 +564,11 @@ the license is included in gfdl.xml.
           <li>
             <p>There is a unique matrix having reduced row echelon form.
               <me>
-                \begin{pmatrix}
-              1 &amp; 0 &amp; 0 \\
-              0 &amp; 1 &amp; 2 \\
-              0 &amp; 0 &amp; 0
-              \end{pmatrix}
+              	\mat{
+              	1 0 0;
+              	0 1 2;
+              	0 0 0
+              	}
               </me>
             </p>
           </li>
@@ -609,28 +609,28 @@ the license is included in gfdl.xml.
           <ol>
             <li><p>Adding <m>{-\frac{1}{2}}</m> times the first equation to the second equation reduces us to the set of equations.
                 <me>
-                  \begin{aligned}
-                  2x + 3y &amp;= 13 \\
-                  -\frac{5}{2}y &amp;= -\frac{15}{2}
-                  \end{aligned}
+                  \syseq{
+                  2x + 3y = 13;
+                  \.  \+ -\frac{5}{2}y = -\frac{15}{2}
+                  }
                 </me>
                 giving the solution <m>y=3</m> and <m>x=2</m>.
               </p></li>
             <li><p>Here, we apply Gaussian elimination adding <m>-3</m> times the first equation to the second equation, and adding the first equation to the second equation to give
                 <me>
-                  \begin{aligned}
-                  x - z &amp;= 0 \\
-                  y + 3z &amp;= 1 \\
-                  y &amp;= 4
-                  \end{aligned}
+                \syseq{
+                x \+ \. - z = 0;
+                \. \+ y + 3z = 1;
+                \. \+ y \+ \. = 4
+                }
                 </me>         
                 We then subtract the second equation from the third:
                 <me>
-                  \begin{aligned}
-                  x - z &amp;= 0 \\
-                  y + 3z &amp;= 1 \\ 
-                  -3z &amp;= 3
-                  \end{aligned}
+                \syseq{
+                x \+ \. - z = 0;
+                \. \+ y + 3z = 1;
+                \. \+ \. - 3z = 3
+                }
                 </me>
                 giving <m>x=-1</m>, <m>y=4</m>, and <m>z=-1</m>.
               </p></li>
