@@ -279,7 +279,7 @@ the license is included in gfdl.xml.
       </p>
       <figure>
         <caption>The QR code for this textbook is a <m>29\times29</m> array of black/white squares.</caption>
-        <image source="static/images/qrcode.png"/>
+        <image source="static/images/qrcode.png" width="50%"/>
       </figure>
     </example>
 

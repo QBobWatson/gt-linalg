@@ -167,6 +167,8 @@ if [ -n "$LATEX_TOO" ]; then
     mkdir -p "$latex_dir"
     cp -r "$compile_dir/style" "$latex_dir/style"
     cp -r "$compile_dir/figure-images" "$latex_dir/figure-images"
+    mkdir -p "$latex_dir/static"
+    cp -r "$compile_dir/images" "$latex_dir/static/images"
     echo "Generating master LaTeX file"
     xsltproc -o "$latex_dir/" --xinclude \
              "$compile_dir/xsl/mathbook-latex.xsl" "$XML_FILE" \
