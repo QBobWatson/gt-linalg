@@ -26,8 +26,8 @@ cat_css = cat
 
 # Har har
 def coffee_filter(text):
-    proc = Popen(['coffee', '-scb'], stdin=PIPE, stdout=PIPE,
-                 universal_newlines=True)
+    proc = Popen(['coffee', '--no-header', '-scb'],
+                 stdin=PIPE, stdout=PIPE, universal_newlines=True)
     out, _ = proc.communicate(text)
     if proc.returncode > 0:
         raise Exception("Can't compile coffeescript")
@@ -127,7 +127,7 @@ def build(rule):
             cat_css(outfile, todo['source'])
     elif todo['action'] == 'compile':
         if todo['type'] == 'js':
-            check_call(['coffee', '-c', todo['source'][0]])
+            check_call(['coffee', '--no-header', '-c', todo['source'][0]])
             generated = todo['source'][0].replace('.coffee', '.js')
             if generated != outfile:
                 move(generated, outfile)
