@@ -220,8 +220,9 @@ the license is included in gfdl.xml.
       Again, we can use the elements of <m>\R^3</m> to <em>label</em> the colors, but <m>\R^3</m> is not defined to be the set of all visible colors!</p>
     </example>
 
-    <example>
-      <p>In <xref ref="overview" />, we could have used <m>\R^4</m> to label the amount of traffic <m>(x,y,z,w)</m> passing through four streets.  In other words, if there are <m>10,5,3,11</m> cars per hour passing through roads <m>x,y,z,w</m>, respectively, then this state can be recorded by the point <m>(10,5,3,11)</m> in <m>\R^4</m>.  Starting in <xref ref="spans"/>, we will almost exclusively record solutions of systems of linear equations in this way.
+    <example xml:id="systems-eqns-R4">
+      <title>Traffic Flow</title>
+      <p>In <xref ref="overview" />, we could have used <m>\R^4</m> to label the amount of traffic <m>(x,y,z,w)</m> passing through four streets.  In other words, if there are <m>10,5,3,11</m> cars per hour passing through roads <m>x,y,z,w</m>, respectively, then this can be recorded by the point <m>(10,5,3,11)</m> in <m>\R^4</m>.  This is useful from a psychological standpoint: instead of having four numbers, we are now dealing with just <em>one</em> piece of data.  Starting in <xref ref="spans"/>, we will almost exclusively record solutions of systems of linear equations in this way.
       <latex-code>
       <![CDATA[
 \tikzset{
@@ -272,11 +273,12 @@ the license is included in gfdl.xml.
     </example>
 
     <example>
-      <title>QR codes</title>
+      <title>QR Codes</title>
       <idx><h>QR codes</h></idx>
       <p>
-        A <url href="https://en.wikipedia.org/wiki/QR_code">QR code</url> is a method of storing data in a grid of <m>29\times 29</m> black or white squares in a way that computers can easily read.  When an imaging device sees a QR code, it constructs an array of <m>29\times 29</m> points of varying degrees of grey.  The brightness of each point is just a real number, so a QR code can be viewed as an element of <m>\R^{29\cdot 29} = \R^{841}.</m>
+        A <url href="https://en.wikipedia.org/wiki/QR_code">QR code</url> is a method of storing data in a grid of <m>29\times 29</m> black and white squares in a way that computers can easily read.  When an imaging device sees a QR code, it constructs an array of <m>29\times 29</m> points.  Of course, a camera actually sees varying degrees of grey; the brightness of each point is just a real number, so the image can be viewed as an element of <m>\R^{29\cdot 29} = \R^{841}.</m>  The QR reader then must find the closest point in <m>\R^{841}</m> with coordinates all equal to zero (black) or one (white); this is the actual QR code.
       </p>
+      <p>As in the previous <xref ref="systems-eqns-R4"/>, it is very useful from a psychological perspective to view a QR code as a <em>single</em> piece of data in this way.</p>
       <figure>
         <caption>The QR code for this textbook is a <m>29\times29</m> array of black/white squares.</caption>
         <image source="static/images/qrcode.png" width="50%"/>
