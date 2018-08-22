@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<exercises xml:id="row-reduction-exercises">
+	
+	<title>Exercises</title>
+	    <exercise number="1">
+	      <statement>
+	        <p>State whether the following are true or false. If false, give a counterexample/reason, and if true, explain why it is true.</p>
+	        <ol>
+	          <li>A system of 5 linear equations can have exactly 5 solutions.</li>
+	          <li>Any line in <m>{\mathbb R^3}</m> can be the solution set of a matrix equation of the form <m>Ax=0</m> for some <m>3\times3</m> matrix.</li>
+	          <li>The solution set of the system of linear equations corresponding to the augmented matrix
+	              <me>
+	                \amat{
+	                1 0 5 -4;
+	                0 1 7 3;
+	                0 0 0 0
+	                }
+	              </me>
+	              is a line.
+	            </li>
+	          <li>
+	            There is a unique matrix having reduced row echelon form.
+	              <me>
+	              	\mat{
+	              	1 0 0;
+	              	0 1 2;
+	              	0 0 0
+	              	}
+	              </me>
+	            
+	          </li>
+	          <li>If the reduced row echelon form of a matrix <m>A</m> has a pivot in every column, then the equation <m>Ax=b</m> has at most one solution for each (appropriately sized) vector <m>b</m>.</li>
+	        </ol>   
+	      </statement>
+	      <answer>
+	        <p><ol>
+	            <li>False. The solution set to any system of linear equations is either empty (inconsistent equations), has a unique solution (consistent equations, no free variables), or infinite (if there is a free variable, since this free variable can then take on the value of any of the infinitely many real numbers).</li>
+	            <li>False. The vector <m>x=0</m> automatically solves this equation, so any solution set of such an equation must contain the origin.</li>
+	            <li>True. There is one free variable.</li>
+	            <li>False. Although any matrix has a unique reduced row echelon form, a given matrix in reduced form could be the reduction of many possible matrices.
+	              </li>
+	            <li>True. After forming the corresponding augmented matrix and row reducing, the values of each of the variables will be completely determined by the initial variables. The equation may then have either no solutions or one solution, depending on the values of the transformed vector <m>b</m> corresponding to the rows of <m>0</m>'s in the RREF of <m>A</m>.</li>
+	        </ol></p>
+	      </answer>
+	    </exercise>
+	    <exercise number="2">
+	      <statement>
+	        <p>Use Row Reduction Algorithm to find the unique solution for each system.</p>
+	        <ol>
+	          <li>
+	              <me>
+	                \syseq{2x + 3y = 13; x - y = -1}
+	              </me>
+	            </li>
+	          <li>
+	            
+	              <me>
+	                \syseq{x - z = 0; 3x + y = 1}
+	              </me>
+	            
+	          </li>
+	        </ol>
+	      </statement>
+	      <answer>
+	        <p>
+	          <ol>
+	            <li>Adding <m>{-\frac{1}{2}}</m> times the first equation to the second equation reduces us to the set of equations.
+	                <me>
+	                  \syseq{
+	                  2x + 3y = 13;
+	                  \.  \+ -\frac{5}{2}y = -\frac{15}{2}
+	                  }
+	                </me>
+	                giving the solution <m>y=3</m> and <m>x=2</m>.
+	              </li>
+	            <li>Here, we apply Row Reduction Algorithm adding <m>-3</m> times the first equation to the second equation, and adding the first equation to the second equation to give
+	                <me>
+	                \syseq{
+	                x \+ \. - z = 0;
+	                \. \+ y + 3z = 1;
+	                \. \+ y \+ \. = 4
+	                }
+	                </me>         
+	                We then subtract the second equation from the third:
+	                <me>
+	                \syseq{
+	                x \+ \. - z = 0;
+	                \. \+ y + 3z = 1;
+	                \. \+ \. - 3z = 3
+	                }
+	                </me>
+	                giving <m>x=-1</m>, <m>y=4</m>, and <m>z=-1</m>.
+	              </li>
+	        </ol> 
+	        </p>
+	         
+	      </answer>      
+	    </exercise>
+	    <exercise number="3">
+	    	<statement>
+	    		<p>Each system of linear equations is in echelon form (that is, the corresponding matrix is in echelon form). For each, say whether the system has a unique solution, no solution, or infinitely many solutions.</p>
+	    		<p>
+	    			<ol>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						-3x + 2y =0;
+	    						\. - 2y = 0
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						x + y \+ \. = 4;
+	    						\. \+ y - z = 0
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						x + y \+ \. = 4;
+	    						\. \+ y - z = 0;
+	    						\. \+ \. \+ 0 = 0
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						x + y = 4;
+	    						\. \+ 0 = 4
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						3x + 6y + z = -0.5;
+	    						\. \+ \. - z = 2.5;
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						x - 3y = 2;
+	    						\. \+ 0 = 0
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						2x + 2y = 4;
+	    						\. \+ y = 1;
+	    						\. \+ 0 = 4
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						2x + y = 0;
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						x - y = -1;
+                						\.  \+ 0  = 0 ;        
+                 						\. \+ 0   = 4
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						x + y - 3z  = -1; 
+                						\. \+  y  - z  = 2;  
+                						\.  \+  \.  \+ z  =  0 ; 
+               						\.  \+  \.  \+ 0   = 0  
+	    						}
+	    					</me>
+	    				</li>
+	    			</ol>
+	    		</p>
+	    	</statement>
+	    	<answer>
+	    		<p>If a system has a contradictory equation then it has no solution. Otherwise, if there are any variables that are not leading a row, then it has infinitely many solutions. In the final case, where there is no contradictory equation and every variable leads some row, it has a unique solution.</p>
+			<p>
+				<ol>
+					<li>Unique solution</li>
+					<li>Infinitely many solutions</li>
+					<li>Infinitely many solutions</li>
+					<li>No solution</li>
+					<li>Infinitely many solutions</li>
+					<li>Infinitely many solutions</li>
+        					<li>No solution</li>
+					<li>Infinitely many solutions</li>
+       					<li>No solution</li>
+        					<li>Unique solution</li>
+				</ol>
+			</p>	    	
+	    	</answer>
+	    </exercise>
+	<exercise number="4">
+		<statement>
+			<p>Use Row Reduction to solve each system or conclude `infinitely many solutions' or `no solutions'.</p>
+			<p>
+				<ol>
+					<li>
+						<me>
+							\syseq{
+							2x  +  2y  =  5; 
+	                   					x  -  4y  =  0 
+	                   					}
+						</me>
+					</li>
+					<li>
+						<me>
+							\syseq{
+							 -x  +  y  = 1 ;
+                   						x  +  y   =  2  
+							}
+						</me>
+					</li>
+					<li>
+						<me>
+							\syseq{
+							x  -  3y  +  z  =  1 ;
+                   						x  +  y   +  2z =  14 
+							}
+						</me>
+					</li>
+					<li>
+						<me>
+							\syseq{
+							-x  -  y  =  1 ;
+                						 -3x  -  3y  =  2  
+							}
+						</me>
+					</li>
+					<li>
+						<me>
+							\syseq{
+							   \. \+  4y  +  z  =  20;
+                  						2x  -  2y  +  z  = 0;
+                   						x  \+  \.    +  z  =  5;
+                  						 x  +  y   -  z  =  10 
+							}
+						</me>
+					</li>
+					<li>
+						<me>
+							\syseq{
+							  2x   \+ \. +  z  +  w  =  5 ;
+                   						  \.  \+  y  \+ \.   -  w  =  -1; 
+                 						3x  \+  \.   -  z  -  w  =  0;  
+                 						4x  +  y  +  2z +  w =  9  
+							}
+						</me>
+					</li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>
+				<ol>
+					<li>We add <m>-\frac{1}{2}</m> times the first equation to the second to find
+						<me>
+							\syseq{
+							     2x  +  2y  = 5;  
+	              					     \. - 5y =  -\frac{5}{2}
+							}
+						</me>
+					which shows that <m>y = \frac{1}{2}</m>  and <m>x = 2</m> is the unique solution.
+					</li>
+					<li>Row reduction algorithm says that we should add the first and second equations:
+						<me>
+							\syseq{
+							-x  +  y   =  1;  
+	                 					\.   \+ 2y  =  3
+							}
+						</me>
+       					 giving <m>y = \frac{3}{2}</m> and <m>x=\frac{1}{2}</m> as the only solution.
+					</li>
+					<li>Row reduction (specifically, subtracting the first equation from the second)
+						<me>
+							\syseq{
+							  x  -  3y  +  z  =  1;  
+	                  					 \.  \+ 4y  +  z  =  13 
+							}
+						</me>
+        					shows, because the variable <m>z</m> does not have a pivot in the corresponding column, and hence is a free variable, that there are infinitely many solutions.
+					</li>
+					<li>Row reduction (subtracting <m>3</m> times the first equation from the second)
+						<me>
+							\syseq{
+							 -x  -  y   =  1;  
+                 						  \. \+ 0   =  -1 
+							}
+						</me>
+					shows that there is no solution.
+					</li>
+					<li>Interchanging the first and fourth equations gives
+						<me>
+							\syseq{
+							x  +  y   -  z  =  10; 
+               						2x  -  2y  +  z  =  0;  
+                						x  \+ \.  +  z  =  5;  
+                   						\. \+  4y  +  z  =  20
+							}
+						</me>
+					Now subtracting the first equation from the third and adding <m>-2</m> times the first equation to the second equation yields
+						<me>
+							\syseq{
+							 x  +  y  -  z  =  10; 
+                  						 \.  - 4y + 3z =  -20;
+                  						 \.   - y  +  2z =  -5; 
+                   						\. \+   4y  +  z  =  20 
+							}
+						</me>
+					Finally, we add the second and fourth equations and subtract <m>\frac{1}{4}</m> times the second row from the third row to obtain
+						<me>
+							\syseq{
+							  x  +  y   -  z  =  10; 
+                  						 \.   - 4y + 3z    =  -20;
+                  						 \.  \+ \.   \+ \frac{5}{4}z =  0; 
+                  						 \. \+ \. \+  4z     =  0
+							}
+						</me>
+					which  gives the unique solution <m>(x,y,z)=(5,5,0) </m> .
+					</li>
+					<li>We begin by subtracting twice the first equation from the fourth equation and adding <m>-\frac{3}{2}</m> times the first equation to the third equation to obtain the system
+						<me>
+							\syseq{
+							 2x  \+ \.  +  z  + w   =  5; 
+                   						\. \+  y  \+ \.   - w  =  -1; 
+                  						 \. \+ \.   -  \frac{5}{2}z  -  \frac{5}{2}w  = -\frac{15}{2};  
+                  						 \.  \+   y  \+   \.    -  w   =  -1
+							}
+						</me>
+					Subtracting the second equation from the fourth gives us the system
+						<me>
+							\syseq{
+							 2x \+ \. + z + w =  5; 
+                   						 \. \+ y \+ \. -  w =  -1; 
+                  						 \. \+ \. - \frac{5}{2}z  -  \frac{5}{2}w  =  -\frac{15}{2} ;
+                   						\. \+ \. \+ \. \+ 0   =  0
+							}
+						</me>
+         					which shows that there are infinitely many solutions.
+					</li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
+</exercises>
+
+
+
