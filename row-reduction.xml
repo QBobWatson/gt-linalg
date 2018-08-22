@@ -9,7 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="row-reduction">
+<section xml:id="row-reduction" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Row Reduction</title>
 
   <objectives>
@@ -543,102 +543,6 @@ the license is included in gfdl.xml.
     </p>
 
   </subsection>
-  <exercises>
-    <title>Exercises</title>
-    <exercise number="1">
-      <statement>
-        <p>State whether the following are true or false. If false, give a counterexample/reason, and if true, explain why it is true.</p>
-        <ol>
-          <li><p>A system of 5 linear equations can have exactly 5 solutions.</p></li>
-          <li><p>Any line in <m>{\mathbb R^3}</m> can be the solution set of a matrix equation of the form <m>Ax=0</m> for some <m>3\times3</m> matrix.</p></li>
-          <li><p>The solution set of the system of linear equations corresponding to the augmented matrix
-              <me>
-                \amat{
-                1 0 5 -4;
-                0 1 7 3;
-                0 0 0 0
-                }
-              </me>
-              is a line.
-            </p></li>
-          <li>
-            <p>There is a unique matrix having reduced row echelon form.
-              <me>
-              	\mat{
-              	1 0 0;
-              	0 1 2;
-              	0 0 0
-              	}
-              </me>
-            </p>
-          </li>
-          <li><p>If the reduced row echelon form of a matrix <m>A</m> has a pivot in every column, then the equation <m>Ax=b</m> has at most one solution for each (appropriately sized) vector <m>b</m>.</p></li>
-        </ol>   
-      </statement>
-      <answer>
-        <p><ol>
-            <li><p>False. The solution set to any system of linear equations is either empty (inconsistent equations), has a unique solution (consistent equations, no free variables), or infinite (if there is a free variable, since this free variable can then take on the value of any of the infinitely many real numbers).</p></li>
-            <li><p>False. The vector <m>x=0</m> automatically solves this equation, so any solution set of such an equation must contain the origin.</p></li>
-            <li><p>True. There is one free variable.</p></li>
-            <li><p>False. Although any matrix has a unique reduced row echelon form, a given matrix in reduced form could be the reduction of many possible matrices.
-              </p></li>
-            <li><p>True. After forming the corresponding augmented matrix and row reducing, the values of each of the variables will be completely determined by the initial variables. The equation may then have either no solutions or one solution, depending on the values of the transformed vector <m>b</m> corresponding to the rows of <m>0</m>'s in the RREF of <m>A</m>.</p></li>
-        </ol></p>
-      </answer>
-    </exercise>
-    <exercise number="2">
-      <statement>
-        <p>Use Gaussian elimination to find the unique solution for each system.</p>
-        <ol>
-          <li><p>
-              <me>
-                \syseq{2x + 3y = 13; x - y = -1}
-              </me>
-            </p></li>
-          <li>
-            <p>
-              <me>
-                \syseq{x - z = 0; 3x + y = 1}
-              </me>
-            </p>
-          </li>
-        </ol>
-      </statement>
-      <answer>
-        <p>
-          <ol>
-            <li><p>Adding <m>{-\frac{1}{2}}</m> times the first equation to the second equation reduces us to the set of equations.
-                <me>
-                  \syseq{
-                  2x + 3y = 13;
-                  \.  \+ -\frac{5}{2}y = -\frac{15}{2}
-                  }
-                </me>
-                giving the solution <m>y=3</m> and <m>x=2</m>.
-              </p></li>
-            <li><p>Here, we apply Gaussian elimination adding <m>-3</m> times the first equation to the second equation, and adding the first equation to the second equation to give
-                <me>
-                \syseq{
-                x \+ \. - z = 0;
-                \. \+ y + 3z = 1;
-                \. \+ y \+ \. = 4
-                }
-                </me>         
-                We then subtract the second equation from the third:
-                <me>
-                \syseq{
-                x \+ \. - z = 0;
-                \. \+ y + 3z = 1;
-                \. \+ \. - 3z = 3
-                }
-                </me>
-                giving <m>x=-1</m>, <m>y=4</m>, and <m>z=-1</m>.
-              </p></li>
-        </ol> 
-        </p>
-         
-      </answer>      
-    </exercise>
-  </exercises>
+  <xi:include href="./row-reduction-exercises.xml"/>
 
 </section>
