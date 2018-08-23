@@ -108,23 +108,11 @@ the license is included in gfdl.xml.
       <idx><h>Plane</h><h>geometric definition of</h></idx>
       <statement>
         <p>A <term>plane</term> is a flat sheet that is infinite in all directions.
-        <latex-code><![CDATA[
-  \begin{tikzpicture}[scale=.75, myxyz]
-    \clip[resetxy] (-5, -3) rectangle (5, 4);
-    \draw[densely dotted] (0,0,0) -- (1,0,0);
-    \draw[densely dotted] (0,0,0) -- (0,1,0);
-    \draw[densely dotted] (0,0,0) -- (0,0,1);
-    \begin{scope}[x={(-1,0,.3)}, y={(0,-1,.3)}, transformxy=1]
-      \fill[help lines, seq1!50, fill opacity=.7] (-3, -3) rectangle (2.5, 2.5);
-      \draw[help lines, seq1!50] (-3, -3) grid (2.5, 2.5);
-    \end{scope}
-    \draw[->] (1,0,0) -- (3,0,0) node[below left] {$x$};
-    \draw[->] (0,1,0) -- (0,3,0) node[right] {$y$};
-    \draw[->] (0,0,1) -- (0,0,3) node[above] {$z$};
-  \end{tikzpicture}
-            ]]>
-        </latex-code>
         </p>
+        <figure>
+          <caption>The plane in <m>\R^3</m> defined by the equation <m>x+y+z=1.</m></caption>
+          <mathbox source="demos/plane.html?plainplane=1" height="400px"/>
+        </figure>
       </statement>
     </definition>
 

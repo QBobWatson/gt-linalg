@@ -26,11 +26,13 @@
         "use strict";
         DomReady.ready(function() {
 
-        var pointColor, surfaceColor;
+        var plainPlane, pointColor, surfaceColor;
 
 pointColor = new Color("red");
 
 surfaceColor = new Color("violet");
+
+plainPlane = this.urlParams.plainplane != null;
 
 new Demo({}, function() {
   var cf, clipCube, coeffs, gui, params, subspace, trans, updateCaption, vectors, view;
@@ -39,18 +41,24 @@ new Demo({}, function() {
   cf = function(i) {
     return params[coeffs[i]];
   };
-  updateCaption = (function(_this) {
-    return function() {
-      return katex.render("(x,\\,y,\\,z)\n= (1-" + coeffs[0] + "-" + coeffs[1] + ",\\," + coeffs[0] + ",\\," + coeffs[1] + ")\n= \\color{" + (pointColor.str()) + "}{({" + ((1 - cf(0) - cf(1)).toFixed(2)) + "},\\,\n   {" + (cf(0).toFixed(2)) + "},\\,\n   {" + (cf(1).toFixed(2)) + "})}", _this.vecElt);
-    };
-  })(this);
+  if (plainPlane) {
+    updateCaption = function() {};
+  } else {
+    updateCaption = (function(_this) {
+      return function() {
+        return katex.render("(x,\\,y,\\,z)\n= (1-" + coeffs[0] + "-" + coeffs[1] + ",\\," + coeffs[0] + ",\\," + coeffs[1] + ")\n= \\color{" + (pointColor.str()) + "}{({" + ((1 - cf(0) - cf(1)).toFixed(2)) + "},\\,\n   {" + (cf(0).toFixed(2)) + "},\\,\n   {" + (cf(1).toFixed(2)) + "})}", _this.vecElt);
+      };
+    })(this);
+  }
   vectors = [[-1, 1, 0], [-1, 0, 1]];
-  params = {};
-  params[coeffs[0]] = 0.0;
-  params[coeffs[1]] = 0.0;
-  gui = new dat.GUI();
-  gui.add(params, coeffs[0], -10, 10).step(0.1).onChange(updateCaption);
-  gui.add(params, coeffs[1], -10, 10).step(0.1).onChange(updateCaption);
+  if (!plainPlane) {
+    params = {};
+    params[coeffs[0]] = 0.0;
+    params[coeffs[1]] = 0.0;
+    gui = new dat.GUI();
+    gui.add(params, coeffs[0], -10, 10).step(0.1).onChange(updateCaption);
+    gui.add(params, coeffs[1], -10, 10).step(0.1).onChange(updateCaption);
+  }
   view = this.view();
   clipCube = this.clipCube(view, {
     draw: true,
@@ -71,32 +79,38 @@ new Demo({}, function() {
       color: surfaceColor
     }
   });
-  view.array({
-    channels: 3,
-    width: 1,
-    expr: function(emit) {
-      return emit(1 - cf(0) - cf(1), cf(0), cf(1));
-    }
-  }).point({
-    color: pointColor.arr(),
-    size: 15,
-    zTest: false,
-    zWrite: false
-  }).format({
-    expr: function(x, y, z) {
-      return "(" + x.toPrecision(2) + ", " + y.toPrecision(2) + ", " + z.toPrecision(2) + ")";
-    }
-  }).label({
-    color: pointColor.arr(),
-    offset: [0, 20],
-    size: 13,
-    outline: 0,
-    zTest: false,
-    zWrite: false
-  });
-  this.caption('<p><span id="eqn-here"></span></p>\n<p><span id="vec-here"></span></p>');
+  if (!plainPlane) {
+    view.array({
+      channels: 3,
+      width: 1,
+      expr: function(emit) {
+        return emit(1 - cf(0) - cf(1), cf(0), cf(1));
+      }
+    }).point({
+      color: pointColor.arr(),
+      size: 15,
+      zTest: false,
+      zWrite: false
+    }).format({
+      expr: function(x, y, z) {
+        return "(" + x.toPrecision(2) + ", " + y.toPrecision(2) + ", " + z.toPrecision(2) + ")";
+      }
+    }).label({
+      color: pointColor.arr(),
+      offset: [0, 20],
+      size: 13,
+      outline: 0,
+      zTest: false,
+      zWrite: false
+    });
+  }
+  if (plainPlane) {
+    this.caption('<p><span id="eqn-here"></span></p>');
+  } else {
+    this.caption('<p><span id="eqn-here"></span></p>\n<p><span id="vec-here"></span></p>');
+    this.vecElt = document.getElementById('vec-here');
+  }
   katex.render("\\color{" + (surfaceColor.str()) + "}{x+y+z=1}", document.getElementById('eqn-here'));
-  this.vecElt = document.getElementById('vec-here');
   return updateCaption();
 });
 
