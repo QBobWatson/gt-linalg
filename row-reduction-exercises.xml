@@ -66,7 +66,7 @@ the license is included in gfdl.xml.
 	          <li>
 
 	              <me>
-	                \syseq{x - z = 0; 3x + y = 1}
+	                \syseq{x - z = 0; 3x + y = 1;-x + y +  z = 4}
 	              </me>
 
 	          </li>
@@ -76,29 +76,29 @@ the license is included in gfdl.xml.
 	        <p>
 	          <ol>
                     <!-- JDR: please use augmented matrices. -->
-	            <li>Adding <m>{-\frac{1}{2}}</m> times the first equation to the second equation reduces us to the set of equations.
+	            <li>Adding <m>{-\frac{1}{2}}</m> times the first row to the second row reduces us to the below augmented matrix.
 	                <me>
-	                  \syseq{
-	                  2x + 3y = 13;
-	                  \.  \+ -\frac{5}{2}y = -\frac{15}{2}
+	                  \amat{
+	                  2  3  13;
+	                  0 -\frac{5}{2} -\frac{15}{2}
 	                  }
 	                </me>
 	                giving the solution <m>y=3</m> and <m>x=2</m>.
 	              </li>
-	            <li>Here, we apply Row Reduction Algorithm adding <m>-3</m> times the first equation to the second equation, and adding the first equation to the second equation to give
+	            <li>Here, we apply Row Reduction Algorithm adding <m>-3</m> times the first row to the second row, and adding the first row to the third row to give
 	                <me>
-	                \syseq{
-	                x \+ \. - z = 0;
-	                \. \+ y + 3z = 1;
-	                \. \+ y \+ \. = 4
+	                \amat{
+	                1  0 -1  0;
+	                0 1 3 1;
+	                0 1 0 4
 	                }
 	                </me>
-	                We then subtract the second equation from the third:
+	                We then subtract the second row from the third:
 	                <me>
-	                \syseq{
-	                x \+ \. - z = 0;
-	                \. \+ y + 3z = 1;
-	                \. \+ \. - 3z = 3
+	                \amat{
+	                1  0 -1  0;
+	                0 1 3 1;
+	                0 0 -3 3
 	                }
 	                </me>
 	                giving <m>x=-1</m>, <m>y=4</m>, and <m>z=-1</m>.
@@ -108,122 +108,9 @@ the license is included in gfdl.xml.
 
 	      </answer>
 	    </exercise>
-            <!-- JDR: move this to section 2.3 -->
-	    <exercise>
-	    	<statement>
-	    		<p>Each system of linear equations is in echelon form (that is, the corresponding matrix is in echelon form). For each, say whether the system has a unique solution, no solution, or infinitely many solutions.</p>
-	    		<p>
-	    			<ol>
-	    				<li>
-	    					<me>
-	    						\syseq{
-	    						-3x + 2y =0;
-	    						\. - 2y = 0
-	    						}
-	    					</me>
-	    				</li>
-	    				<li>
-	    					<me>
-	    						\syseq{
-	    						x + y \+ \. = 4;
-	    						\. \+ y - z = 0
-	    						}
-	    					</me>
-	    				</li>
-	    				<li>
-	    					<me>
-	    						\syseq{
-	    						x + y \+ \. = 4;
-	    						\. \+ y - z = 0;
-	    						\. \+ \. \+ 0 = 0
-	    						}
-	    					</me>
-	    				</li>
-	    				<li>
-	    					<me>
-	    						\syseq{
-	    						x + y = 4;
-	    						\. \+ 0 = 4
-	    						}
-	    					</me>
-	    				</li>
-	    				<li>
-	    					<me>
-	    						\syseq{
-	    						3x + 6y + z = -0.5;
-	    						\. \+ \. - z = 2.5;
-	    						}
-	    					</me>
-	    				</li>
-	    				<li>
-	    					<me>
-	    						\syseq{
-	    						x - 3y = 2;
-	    						\. \+ 0 = 0
-	    						}
-	    					</me>
-	    				</li>
-	    				<li>
-	    					<me>
-	    						\syseq{
-	    						2x + 2y = 4;
-	    						\. \+ y = 1;
-	    						\. \+ 0 = 4
-	    						}
-	    					</me>
-	    				</li>
-	    				<li>
-	    					<me>
-	    						\syseq{
-	    						2x + y = 0;
-	    						}
-	    					</me>
-	    				</li>
-	    				<li>
-	    					<me>
-	    						\syseq{
-	    						x - y = -1;
-                						\.  \+ 0  = 0 ;
-                 						\. \+ 0   = 4
-	    						}
-	    					</me>
-	    				</li>
-	    				<li>
-	    					<me>
-	    						\syseq{
-	    						x + y - 3z  = -1;
-                						\. \+  y  - z  = 2;
-                						\.  \+  \.  \+ z  =  0 ;
-               						\.  \+  \.  \+ 0   = 0
-	    						}
-	    					</me>
-	    				</li>
-	    			</ol>
-	    		</p>
-	    	</statement>
-	    	<answer>
-	    		<p>If a system has a contradictory equation then it has no solution. Otherwise, if there are any variables that are not leading a row, then it has infinitely many solutions. In the final case, where there is no contradictory equation and every variable leads some row, it has a unique solution.</p>
-			<p>
-				<ol>
-					<li>Unique solution</li>
-					<li>Infinitely many solutions</li>
-					<li>Infinitely many solutions</li>
-					<li>No solution</li>
-					<li>Infinitely many solutions</li>
-					<li>Infinitely many solutions</li>
-        					<li>No solution</li>
-					<li>Infinitely many solutions</li>
-       					<li>No solution</li>
-        					<li>Unique solution</li>
-				</ol>
-			</p>
-	    	</answer>
-	    </exercise>
-            <!-- JDR: Make these into augmented matrices, in the questions and answers.  Move the ones with infinitely many solutions to the next section. -->
 	<exercise>
 		<statement>
-                  <!-- JDR: quotes are either <q>blah</q> or <lsq/>blah<rsq/>.  Never use ", `, or '. -->
-			<p>Use Row Reduction to solve each system or conclude <q>infinitely many solutions</q> or <q>no solutions</q>.</p>
+			<p>Use Row Reduction to solve each system.</p>
 			<p>
 				<ol>
 					<li>
@@ -245,22 +132,6 @@ the license is included in gfdl.xml.
 					<li>
 						<me>
 							\syseq{
-							x  -  3y  +  z  =  1 ;
-                   						x  +  y   +  2z =  14
-							}
-						</me>
-					</li>
-					<li>
-						<me>
-							\syseq{
-							-x  -  y  =  1 ;
-                						 -3x  -  3y  =  2
-							}
-						</me>
-					</li>
-					<li>
-						<me>
-							\syseq{
 							   \. \+  4y  +  z  =  20;
                   						2x  -  2y  +  z  = 0;
                    						x  \+  \.    +  z  =  5;
@@ -268,107 +139,58 @@ the license is included in gfdl.xml.
 							}
 						</me>
 					</li>
-					<li>
-						<me>
-							\syseq{
-							  2x   \+ \. +  z  +  w  =  5 ;
-                   						  \.  \+  y  \+ \.   -  w  =  -1;
-                 						3x  \+  \.   -  z  -  w  =  0;
-                 						4x  +  y  +  2z +  w =  9
-							}
-						</me>
-					</li>
 				</ol>
 			</p>
 		</statement>
 		<answer>
-                  <!-- JDR: please use augmented matrices -->
 			<p>
 				<ol>
-					<li>We add <m>-\frac{1}{2}</m> times the first equation to the second to find
+					<li>We add <m>-\frac{1}{2}</m> times the first row to the second to find
 						<me>
-							\syseq{
-							     2x  +  2y  = 5;
-	              					     \. - 5y =  -\frac{5}{2}
+							\amat{
+							     2   2  5;
+	              					     0 -5  -\frac{5}{2}
 							}
 						</me>
-					which shows that <m>y = \frac{1}{2}</m>  and <m>x = 2</m> is the unique solution.
+					which shows that <m>y = \frac{1}{2}</m>  and <m>x = 2</m> is the solution.
 					</li>
-					<li>Row reduction algorithm says that we should add the first and second equations:
+					<li>Row reduction algorithm says that we should add the first and second rows to get:
 						<me>
-							\syseq{
-							-x  +  y   =  1;
-	                 					\.   \+ 2y  =  3
+							\amat{
+							-1   1   1;
+	                 					0   2   3
 							}
 						</me>
-       					 giving <m>y = \frac{3}{2}</m> and <m>x=\frac{1}{2}</m> as the only solution.
+       					 giving <m>y = \frac{3}{2}</m> and <m>x=\frac{1}{2}</m> as the solution.
 					</li>
-					<li>Row reduction (specifically, subtracting the first equation from the second)
+					<li>Interchanging the first and fourth rows gives
 						<me>
-							\syseq{
-							  x  -  3y  +  z  =  1;
-	                  					 \.  \+ 4y  +  z  =  13
+							\amat{
+							1 1  -1 10;
+               						2  -2  1  0;
+                						1   0  1  5;
+                   						0   4  1 20
 							}
 						</me>
-        					shows, because the variable <m>z</m> does not have a pivot in the corresponding column, and hence is a free variable, that there are infinitely many solutions.
-					</li>
-					<li>Row reduction (subtracting <m>3</m> times the first equation from the second)
+					Now subtracting the first row from the third and adding <m>-2</m> times the first row to the second row yields
 						<me>
-							\syseq{
-							 -x  -  y   =  1;
-                 						  \. \+ 0   =  -1
+							\amat{
+							 1  1  -1 10;
+                  						 0  -4 3 -20;
+                  						 0  -1  2  -5;
+                   						 0   4  1  20
 							}
 						</me>
-					shows that there is no solution.
-					</li>
-					<li>Interchanging the first and fourth equations gives
+					Finally, we add the second and fourth rows and subtract <m>\frac{1}{4}</m> times the second row from the third row to obtain
 						<me>
-							\syseq{
-							x  +  y   -  z  =  10;
-               						2x  -  2y  +  z  =  0;
-                						x  \+ \.  +  z  =  5;
-                   						\. \+  4y  +  z  =  20
+							\amat{
+							  1  1 -1  10;
+                  						 0   -4  3  -20;
+                  						 0   0    \frac{5}{4}  0;
+                  						 0  0   4  0
 							}
 						</me>
-					Now subtracting the first equation from the third and adding <m>-2</m> times the first equation to the second equation yields
-						<me>
-							\syseq{
-							 x  +  y  -  z  =  10;
-                  						 \.  - 4y + 3z =  -20;
-                  						 \.   - y  +  2z =  -5;
-                   						\. \+   4y  +  z  =  20
-							}
-						</me>
-					Finally, we add the second and fourth equations and subtract <m>\frac{1}{4}</m> times the second row from the third row to obtain
-						<me>
-							\syseq{
-							  x  +  y   -  z  =  10;
-                  						 \.   - 4y + 3z    =  -20;
-                  						 \.  \+ \.   \+ \frac{5}{4}z =  0;
-                  						 \. \+ \. \+  4z     =  0
-							}
-						</me>
-					which  gives the unique solution <m>(x,y,z)=(5,5,0) </m> .
-					</li>
-					<li>We begin by subtracting twice the first equation from the fourth equation and adding <m>-\frac{3}{2}</m> times the first equation to the third equation to obtain the system
-						<me>
-							\syseq{
-							 2x  \+ \.  +  z  + w   =  5;
-                   						\. \+  y  \+ \.   - w  =  -1;
-                  						 \. \+ \.   -  \frac{5}{2}z  -  \frac{5}{2}w  = -\frac{15}{2};
-                  						 \.  \+   y  \+   \.    -  w   =  -1
-							}
-						</me>
-					Subtracting the second equation from the fourth gives us the system
-						<me>
-							\syseq{
-							 2x \+ \. + z + w =  5;
-                   						 \. \+ y \+ \. -  w =  -1;
-                  						 \. \+ \. - \frac{5}{2}z  -  \frac{5}{2}w  =  -\frac{15}{2} ;
-                   						\. \+ \. \+ \. \+ 0   =  0
-							}
-						</me>
-         					which shows that there are infinitely many solutions.
+					which gives the solution <m>(x,y,z)=(5,5,0) </m> .
 					</li>
 				</ol>
 			</p>

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<exercises xml:id="parametric-form-exercises">
+	<exercise>
+	    	<statement>
+	    		<p>Each system of linear equations is in echelon form (that is, the corresponding matrix is in echelon form). For each, say whether the system has a unique solution, no solution, or infinitely many solutions.</p>
+	    		<p>
+	    			<ol>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						-3x + 2y =0;
+	    						\. - 2y = 0
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						x + y \+ \. = 4;
+	    						\. \+ y - z = 0
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						x + y \+ \. = 4;
+	    						\. \+ y - z = 0;
+	    						\. \+ \. \+ 0 = 0
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						x + y = 4;
+	    						\. \+ 0 = 4
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						3x + 6y + z = -0.5;
+	    						\. \+ \. - z = 2.5;
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						x - 3y = 2;
+	    						\. \+ 0 = 0
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						2x + 2y = 4;
+	    						\. \+ y = 1;
+	    						\. \+ 0 = 4
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						2x + y = 0;
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						x - y = -1;
+                						\.  \+ 0  = 0 ;
+                 						\. \+ 0   = 4
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						x + y - 3z  = -1;
+                						\. \+  y  - z  = 2;
+                						\.  \+  \.  \+ z  =  0 ;
+               						\.  \+  \.  \+ 0   = 0
+	    						}
+	    					</me>
+	    				</li>
+	    			</ol>
+	    		</p>
+	    	</statement>
+	    	<answer>
+	    		<p>If a system has a contradictory equation then it has no solution. Otherwise, if there are any variables that are not leading a row, then it has infinitely many solutions. In the final case, where there is no contradictory equation and every variable leads some row, it has a unique solution.</p>
+			<p>
+				<ol>
+					<li>Unique solution</li>
+					<li>Infinitely many solutions</li>
+					<li>Infinitely many solutions</li>
+					<li>No solution</li>
+					<li>Infinitely many solutions</li>
+					<li>Infinitely many solutions</li>
+        					<li>No solution</li>
+					<li>Infinitely many solutions</li>
+       					<li>No solution</li>
+        					<li>Unique solution</li>
+				</ol>
+			</p>
+	    	</answer>
+	    </exercise>
+	    <exercise>
+	    	<statement>
+	    		<p>For each system of linear equations, use row reduction algorithm to determine whether the system has <q>unique solution</q>,<q> infinitely many solutions</q> or<q>no solution</q>.</p>
+	    		<p>
+	    			<ol>
+	    				<li>
+						<me>
+							\syseq{
+							x  -  3y  +  z  =  1 ;
+                   						x  +  y   +  2z =  14
+							}
+						</me>
+					</li>
+					<li>
+						<me>
+							\syseq{
+							-x  -  y  =  1 ;
+                						 -3x  -  3y  =  2
+							}
+						</me>
+					</li>
+					<li>
+						<me>
+							\syseq{
+							  2x   \+ \. +  z  +  w  =  5 ;
+                   						  \.  \+  y  \+ \.   -  w  =  -1;
+                 						3x  \+  \.   -  z  -  w  =  0;
+                 						4x  +  y  +  2z +  w =  9
+							}
+						</me>
+					</li>
+	    			</ol>
+	    		</p>
+	    	</statement>
+	    	<answer>
+	    		<p>
+	    			<ol>
+	    				<li>Row reduction (specifically, subtracting the first row from the second) gives
+						<me>
+							\amat{
+							  1  -3  1  1;
+	                  					 0  4  1  13
+							}
+						</me>
+        					shows, because the variable <m>z</m> does not have a pivot in the corresponding column, and hence is a free variable, that there are infinitely many solutions.
+					</li>
+					<li>Row reduction (subtracting <m>3</m> times the first row from the second) gives
+						<me>
+							\amat{
+							 -1 -1 1;
+                 						  0   0  -1
+							}
+						</me>
+					shows that there is no solution.
+					</li>
+					<li>We begin by subtracting twice the first row from the fourth row and adding <m>-\frac{3}{2}</m> times the first row to the third row to obtain the matrix
+						<me>
+							\amat{
+							 2  0  1  1  5;
+                   						0   1   0   -1  -1;
+                  						 0  0   -\frac{5}{2}  -\frac{5}{2}   -\frac{15}{2};
+                  						 0  1   0   -1  -1
+							}
+						</me>
+					Subtracting the second row from the fourth gives us the matrix
+						<me>
+							\amat{
+							 2  0  1 1 5;
+                   						 0  1  0 -1  -1;
+                  						 0  0 -\frac{5}{2}  -\frac{5}{2}   -\frac{15}{2} ;
+                   						 0   0  0   0  0
+							}
+						</me>
+         					which shows that there are infinitely many solutions.
+					</li>
+	    			</ol>
+	    		</p>
+	    	</answer>
+	    </exercise>
+	    <exercise>
+	    	<statement>
+	    		<p>Solve each system or conclude <q>infinitely many solutions</q> or <q>no solutions</q>. Use Row Reduction.</p>
+	    		<p>
+	    			<ol>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						 x  +  y   +  z   =  5 ;
+                   						x  -  y  \+ \. =  0;
+                      						\. \+ y  +  2z  =  7  
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						  3x  \+ \. +  z   =  7; 
+                    						  x  -  y  +  3z   =  4;  
+                    						  x  +  2y  -  5z  =  -1  
+	    						}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    						\syseq{
+	    						  x  + 3y  +  z   =  0 ; 
+                   						-x  -  y  \+ \. =  2;  
+                   						-x  + y  +  2z  =  8  
+	    						}
+	    					</me>
+	    				</li>
+	    			</ol>
+	    		</p>
+	    	</statement>
+	    	<answer>
+	    		<p>
+	    			<ol>
+	    				<li>We first subtract the first row from the second and then add <m>\frac{3}{2}</m> times second row to the third row:
+	    					<md>
+	    						<mrow>
+	    						\amat{
+	    						 1  1  1 5; 
+             						1 -1 0 0; 
+                						0 1 2 7  
+	    						}
+	    						\quad\xrightarrow{R_2 = R_2 - R_1}\quad
+	    						&amp;\amat{
+	    						1 1 1  5;  
+            						0  -2  -1 -5;
+                						0   1 2 7  
+	    						}
+	    						</mrow>
+	    						<mrow>
+	    						{}\quad\xrightarrow{R_3 = R_3 + \frac{3}{2} \times R_2}\quad
+	    						&amp;\amat{
+	    						 1 1 1 5; 
+             						0 -2 -1 -5; 
+                						0 0 \frac{3}{2} 7/2
+	    						}
+	    						</mrow>
+	    					</md>
+	    				
+	    				</li>
+	    			</ol>
+	    		</p>
+	    	</answer>
+	    </exercise>
+</exercises>
