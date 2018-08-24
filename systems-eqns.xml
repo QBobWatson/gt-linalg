@@ -111,7 +111,7 @@ the license is included in gfdl.xml.
         </p>
         <figure>
           <caption>The plane in <m>\R^3</m> defined by the equation <m>x+y+z=1.</m></caption>
-          <mathbox source="demos/plane.html?plainplane=1" height="400px"/>
+          <mathbox source="demos/plane.html?plainplane=1&amp;range=5" height="400px"/>
         </figure>
       </statement>
     </definition>
