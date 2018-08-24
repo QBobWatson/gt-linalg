@@ -496,6 +496,7 @@
       <xsl:attribute name="target">_blank</xsl:attribute>
       <xsl:attribute name="rel">noopener</xsl:attribute>
       <xsl:text>Comments, corrections or suggestions?</xsl:text>
+      <span class="feedback-link">(Free GitHub account required)</span>
     </xsl:element>
   </div>
 </xsl:template>
