@@ -237,7 +237,7 @@ the license is included in gfdl.xml.
 	    	<answer>
 	    		<p>
 	    			<ol>
-	    				<li>We first subtract the first row from the second and then add <m>\frac{3}{2}</m> times second row to the third row:
+	    				<li>We first subtract the first row from the second and then add <m>\frac{1}{2}</m> times second row to the third row:
 	    					<md>
 	    						<mrow>
 	    						\amat{
@@ -257,14 +257,134 @@ the license is included in gfdl.xml.
 	    						&amp;\amat{
 	    						 1 1 1 5; 
              						0 -2 -1 -5; 
-                						0 0 \frac{3}{2} 7/2
+                						0 0 \frac{3}{2} \frac{9}{2}
 	    						}
 	    						</mrow>
 	    					</md>
-	    				
+	    				This, followed by back-substitution gives <m>x=1</m>, <m>y=1</m>, and <m>z=3</m>.
+	    				</li>
+	    				<li>Here we subtract <m>\frac{1}{3}</m> times the first row from the third and also subtract <m>\frac{1}{3}</m> of the first row from the second to obtain
+	    					<md>
+	    						<mrow>
+	    						\amat{
+	    						 3 0 1 7;  
+                						1 -1 3 4;  
+                						1 2 -5 -1;  
+	    						}
+	    						\quad\xrightarrow{R_3 = R_3-\frac{1}{3} \times R_1}\quad
+	    						&amp; \amat{
+	    						3 0 1 7;
+	    						1 -1 3 4;
+	    						0 2 -\frac{16}{3} -\frac{10}{3}
+	    						}
+	    						</mrow>
+	    						<mrow>
+	    						{}\quad\xrightarrow{R_2 = R_2 - \frac{1}{3} \times R_1}\quad
+	    						&amp; \amat{
+	    						3 0 1 7;
+	    						0 -1 \frac{8}{3} \frac{5}{3};
+	    						0 2 -\frac{16}{3} -\frac{10}{3}
+	    						}
+	    						</mrow>
+	    					</md>
+	    				Then, adding twice the second row to the third yields
+	    					<me>
+	    						\amat{
+	    						3 0  1 7; 
+                   						0 -1 \frac{8}{3} \frac{5}{3};
+                   						 0 0 0 0
+	    						}
+	    					</me>
+	    				and so one finds that the variable <m>z</m> is free (as there is not a pivot in the third column of the associated row-reduced matrix). Hence, there are infinitely many solutions.
+	    				</li>
+	    				<li>Adding the first row to the second and third rows gives
+	    					<md>
+	    						<mrow>
+	    						\amat{
+	    						1 3 1 0; 
+	    						-1 -1 0 2;
+             						-1 1 2 8  
+	    						}
+	    						\quad\xrightarrow{R_2= R_2 + R_1}\quad
+	    						&amp; \amat{
+	    						1 3 1 0;
+	    						0 2 1 2;
+	    						-1 1 2 8
+	    						}
+	    						</mrow>
+	    						<mrow>
+	    						\quad\xrightarrow{R_3= R_3 + R_1}\quad
+	    						&amp; \amat{
+	    						1 3 1 0;
+	    						0 2 1 2;
+	    						0 4 3 8
+	    						}
+	    						</mrow>
+	    					</md>
+	    					and subtracting twice the second row from the third gives
+	    					<me>
+	    						\amat{
+	    						1 3 1 0;
+	    						0 2 1 2;
+	    						0 0 1 4
+	    						}
+	    					</me>
+	    					This yields the unique solution <m>(x,y,z)=(-1,-1,4)</m>.
 	    				</li>
 	    			</ol>
 	    		</p>
 	    	</answer>
+	    </exercise>
+	    <exercise>
+	    	<statement>
+	    		<p>For which values of <m>k</m> are there no solutions, infinitely many solutions, or a unique solution to this system?</p>
+	    		<p>
+	    			<me>
+	    				\syseq{
+	    				 x  -  y  =  1;  
+         					3x  -  3y =  k  
+	    				}
+	    			</me>
+	    		</p>
+	    	</statement>
+	    	<answer>
+	    		<p>Subtract three times the first row from the second:
+	    			<me>
+	    			\amat{
+	    			 1 -1 1;
+             			0 0 -3+k  
+	    			}
+	    			</me>
+	    			to conclude that this system has no solutions if <m>k \neq 3</m>and if <m>k = 3</m> then it has infinitely many solutions. It never has a unique solution.  
+	    		</p>
+	    	</answer>
+	    </exercise>
+	    <exercise>
+	    	<statement>
+	    		<p>What conditions must the constants, the <m>b</m>'s, satisfy so that each of these systems has a solution? <em>Hint: </em>Apply row reduction and see what happens to the right side.</p>
+	    		<p>
+	    			<ol>
+	    				<li>
+	    					<me>
+	    					\syseq{
+	    					 x  -  3y  =  b_1;
+          						3x  +  y   =  b_2;
+           						x  +  7y  =  b_3;
+          						2x  +  4y  =  b_4 
+	    					}
+	    					</me>
+	    				</li>
+	    				<li>
+	    					<me>
+	    					\syseq{
+	    					x_1  +  2x_2  +  3x_3  =  b_1; 
+          						2x_1  +  5x_2  +  3x_3  =  b_2;
+           						x_1  \+  \. + 8x_3  =  b_3  
+	    					}
+	    					</me>
+	    				</li>
+	    			</ol>
+	    		</p>
+	    	</statement>
 	    </exercise>
 </exercises>

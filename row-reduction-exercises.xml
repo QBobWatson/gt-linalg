@@ -196,6 +196,40 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>This system is not linear in that it says <m>\sin\alpha</m> instead of <m>\alpha</m>
+				<me>
+					\syseq{
+					2\sin\alpha -  \cos\beta  +  3\tan\gamma  =  3;  
+         					4\sin\alpha  +  2\cos\beta -  2\tan\gamma  =  10;  
+         					6\sin\alpha  -  3\cos\beta +  \tan\gamma   =  9  
+					}
+				</me>
+				 and yet we can apply Row Reduction, as it is linear in the parameters <m>\sin\alpha</m>, <m>\cos\beta</m>, <m>\tan\gamma</m>. Do so. Does the system have a solution?
+			</p>
+		</statement>
+		<answer>
+			<p>Let <m>x=\sin\alpha</m>, <m>y=\cos\beta</m>, and <m>z=\tan\gamma</m>:
+				<md>
+					<mrow>
+					\amat{
+					2 -1 3 3; 
+           					4 2 -2 10; 
+           					6 -3 1 9  
+					}
+					\quad\xrightarrow{R_2 = R_2 - 2 \times R_1; R_3 = R_3 - 3 \times R_1}\quad
+					&amp; \amat{
+					2 -1 3 3; 
+              				0 4 -8 4;
+               				0 0 -8 0  
+					}
+					</mrow>
+				</md>
+				gives <m>z=0</m>, <m>y=1</m>, and <m>x=2</m>. Note that no <m>\alpha</m> satisfies that requirement. 
+			</p>
+		</answer>
+	</exercise>
 </exercises>
 
 
