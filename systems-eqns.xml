@@ -14,7 +14,7 @@ the license is included in gfdl.xml.
 
   <objectives>
     <ol>
-      <li>Understand the definition of <m>\R^n</m>, and how to use <m>\R^n</m> to label points.</li>
+      <li>Understand the definition of <m>\R^n</m>, and what it means to use <m>\R^n</m> to label points on a geometric object.</li>
       <li>Learn to replace a system of linear equations by an augmented matrix.</li>
       <li>Learn how the elimination method corresponds to performing row operations on an augmented matrix.</li>
       <li><em>Vocabulary words:</em> <term>consistent</term>, <term>inconsistent</term>, <term>solution set</term>, <term>row operation</term>, <term>row equivalence</term>, <term>matrix</term>, <term>augmented matrix</term>.</li>
@@ -35,13 +35,16 @@ the license is included in gfdl.xml.
 
     <definition>
       <idx><h>Real <m>n</m>-space</h></idx>
+      <idx><h>Real <m>n</m>-space</h><h>element of</h></idx>
       <notation>
         <usage>\R^n</usage>
         <description>Real <m>n</m>-space</description>
       </notation>
       <statement>
         <p>Let <m>n</m> be a positive whole number.  We define
-        <me>\R^n = \text{all ordered $n$-tuples of real numbers }(x_1,x_2,x_3,\ldots,x_n).</me></p>
+        <me>\R^n = \text{all ordered $n$-tuples of real numbers }(x_1,x_2,x_3,\ldots,x_n).</me>
+        An <m>n</m>-tuple of real numbers is called an <term>element</term> of <m>\R^n</m>.
+        </p>
       </statement>
     </definition>
 
@@ -81,8 +84,6 @@ the license is included in gfdl.xml.
       </statement>
     </definition>
 
-    <p>The number line <m>\R=\R^1</m> is an example of a line, but <em>a line is not the same as <m>\R^1</m></em>.  We will see later how to use the elements of <m>\R^1</m> to label the points on a line.</p>
-
     <specialcase>
       <title>The plane</title>
       <idx><h>Plane</h><h><m>xy</m>-plane</h></idx>
@@ -100,7 +101,6 @@ the license is included in gfdl.xml.
             ]]>
       </latex-code>
       </p>
-      <p>Note that we use the elements of <m>\R^2</m> to <em>label</em> the points of the plane, but <m>\R^2</m> is not defined to be the plane.</p>
     </specialcase>
 
     <definition>
@@ -115,8 +115,6 @@ the license is included in gfdl.xml.
         </figure>
       </statement>
     </definition>
-
-    <p>The <m>xy</m>-plane <m>\R^2</m> is an example of a plane, but <em>a plane is not the same as <m>\R^2</m></em>.  We will see later how to use the elements of <m>\R^2</m> to label the points on a plane.</p>
 
     <specialcase>
       <title>3-Space</title>
@@ -140,15 +138,23 @@ the license is included in gfdl.xml.
     \end{tikzpicture}
             ]]>
       </latex-code>
-      Again, we can use the elements of <m>\R^3</m> to <em>label</em> points in
-      space, but <m>\R^3</m> is not defined to be space!</p>
+      </p>
     </specialcase>
+
+    <p>So what is <m>\R^4</m>?  or <m>\R^5</m>?  or <m>\R^n</m>?
+    These are harder to visualize, so you have to go back to the definition: <m>\R^n</m> is the set of all ordered <m>n</m>-tuples of real numbers <m>(x_1,x_2,x_3,\ldots,x_n)</m>.</p>
+
+    <p>They are still <q>geometric</q> spaces, in the sense that our intuition for <m>\R^2</m> and <m>\R^3</m> often extends to <m>\R^n</m>.</p>
+
+    <p>We will make definitions and state theorems that apply to any <m>\R^n</m>, but we will only draw pictures for <m>\R^2</m> and <m>\R^3</m>.</p>
+
+    <p>The power of using these spaces is the ability to <em>label</em> various objects of interest, such as geometric objects and solutions of systems of equations, by the elements of <m>\R^n</m>.</p>
 
     <example>
       <title>Color Space</title>
       <idx><h>Space</h><h>color space</h></idx>
       <idx><h>Color space</h></idx>
-      <p>All colors you can see can be described by three quantities: the amount of green, red, and blue light in that color.  (Humans are <url href="https://en.wikipedia.org/wiki/Trichromacy">trichromatic</url>.)  So we can also think of <m>\R^3</m> as the space of all <em>colors</em>.
+      <p>All colors you can see can be described by three quantities: the amount of red, green, and blue light in that color.  (Humans are <url href="https://en.wikipedia.org/wiki/Trichromacy">trichromatic</url>.)  Therefore, we can use the elements of <m>\R^3</m> to <em>label</em> all colors: for instance, the point <m>(.2, .4, .9)</m> labels the color with <m>20\%</m> red, <m>40\%</m> green, and <m>90\%</m> blue intensity.
       <latex-code><![CDATA[
 \begin{tikzpicture}[x={(1cm,0cm)}, y={(-.5cm,-.3cm)}, z={(0cm,1cm)}, scale=1,
     every node/.append style={transform shape}]
@@ -205,12 +211,12 @@ the license is included in gfdl.xml.
 \end{tikzpicture}
 ]]>
       </latex-code>
-      Again, we can use the elements of <m>\R^3</m> to <em>label</em> the colors, but <m>\R^3</m> is not defined to be the set of all visible colors!</p>
+      </p>
     </example>
 
     <example xml:id="systems-eqns-R4">
       <title>Traffic Flow</title>
-      <p>In <xref ref="overview" />, we could have used <m>\R^4</m> to label the amount of traffic <m>(x,y,z,w)</m> passing through four streets.  In other words, if there are <m>10,5,3,11</m> cars per hour passing through roads <m>x,y,z,w</m>, respectively, then this can be recorded by the point <m>(10,5,3,11)</m> in <m>\R^4</m>.  This is useful from a psychological standpoint: instead of having four numbers, we are now dealing with just <em>one</em> piece of data.  Starting in <xref ref="spans"/>, we will almost exclusively record solutions of systems of linear equations in this way.
+      <p>In <xref ref="overview" />, we could have used <m>\R^4</m> to <em>label</em> the amount of traffic <m>(x,y,z,w)</m> passing through four streets.  In other words, if there are <m>10,5,3,11</m> cars per hour passing through roads <m>x,y,z,w</m>, respectively, then this can be recorded by the point <m>(10,5,3,11)</m> in <m>\R^4</m>.  This is useful from a psychological standpoint: instead of having four numbers, we are now dealing with just <em>one</em> piece of data.
       <latex-code>
       <![CDATA[
 \tikzset{
@@ -273,12 +279,7 @@ the license is included in gfdl.xml.
       </figure>
     </example>
 
-    <p>So what is <m>\R^4</m>?  or <m>\R^5</m>?  or <m>\R^n</m>?
-    These are harder to visualize, so you have to go back to the definition: <m>\R^n</m> is the set of all ordered <m>n</m>-tuples of real numbers <m>(x_1,x_2,x_3,\ldots,x_n)</m>.</p>
-
-    <p>They are still <q>geometric</q> spaces, in the sense that our intuition for <m>\R^2</m> and <m>\R^3</m> often extends to <m>\R^n</m>.</p>
-
-    <p>We will make definitions and state theorems that apply to any <m>\R^n</m>, but we will only draw pictures for <m>\R^2</m> and <m>\R^3</m>.</p>
+    <p>In the above examples, it was useful from a psychological perspective to replace a list of four numbers (representing traffic flow) or of 841 numbers (representing a QR code) by a single piece of data in some <m>\R^n.</m>  This is a powerful concept;   starting in <xref ref="spans"/>, we will almost exclusively record solutions of systems of linear equations in this way.</p>
 
   </subsection>
 
