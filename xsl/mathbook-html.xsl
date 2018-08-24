@@ -485,7 +485,7 @@
   <div class="feedback-link">
     <xsl:element name="a">
       <xsl:attribute name="href">
-        <xsl:text>https://github.gatech.edu/math-online-textbooks/gt-linalg/issues/new?title=Feedback%20on%20</xsl:text>
+        <xsl:text>https://github.com/QBobWatson/gt-linalg/issues/new?title=Feedback%20on%20</xsl:text>
         <xsl:apply-templates select="." mode="internal-id" />
         <xsl:text>&amp;body=In%20reference%20to%20version%20</xsl:text>
         <xsl:call-template name="git-hash" />
@@ -497,7 +497,6 @@
       <xsl:attribute name="rel">noopener</xsl:attribute>
       <xsl:text>Comments, corrections or suggestions?</xsl:text>
     </xsl:element>
-    <span class="feedback-link">(GT login required)</span>
   </div>
 </xsl:template>
 
