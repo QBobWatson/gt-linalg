@@ -355,7 +355,7 @@ the license is included in gfdl.xml.
              			0 0 -3+k  
 	    			}
 	    			</me>
-	    			to conclude that this system has no solutions if <m>k \neq 3</m>and if <m>k = 3</m> then it has infinitely many solutions. It never has a unique solution.  
+	    			to conclude that this system has no solutions if <m>k \neq 3</m> and if <m>k = 3</m> then it has infinitely many solutions. It never has a unique solution.  
 	    		</p>
 	    	</answer>
 	    </exercise>
@@ -386,5 +386,82 @@ the license is included in gfdl.xml.
 	    			</ol>
 	    		</p>
 	    	</statement>
+	    	<answer>
+	    		<p>
+	    			<ol>
+	    				<li>Via Row reduction, we obtain
+	    					<md>
+	    						<mrow>
+	    						\amat{
+	    						 1 -3 b_1;
+          							3 1 b_2;
+           							1 7 b_3;
+          							2 4 b_4 
+	    						}
+	    						\quad\xrightarrow{R_2 = R_2 -3 \times R_1 ; R_3 = R_3 -1 \times R_1 ; R_4=R_4 -2 \times R_1}\quad
+	    						&amp;\amat{
+	    						  1 -3 b_1;
+                 						0 10 -3b_1+b_2; 
+                 						0  10 -b_1+b_3;
+                 						0 10 -2b_1+b_4;  
+	    						}
+	    						</mrow>
+	    						<mrow>
+	    						\quad\xrightarrow{R_3 = R_3 - R_2; R_4 = R_4 - R_2}\quad
+	    						&amp;\amat{
+	    						1 -3 b_1;
+                 						0 10 -3b_1+b_2; 
+                 						0 0 2b_1-b_2+b_3; 
+                 						0 0 b_1-b_2+b_4;  
+	    						}
+	    						</mrow>
+	    					</md>
+	    					which shows that this system is consistent if and only if both <m>b_3=-2b_1+b_2</m> and <m>b_4=-b_1+b_2</m>.
+	    				</li>
+	    				<li>Row reduction gives
+	    					<md>
+	    						<mrow>
+	    						\amat{
+	    						1 2 3  b_1; 
+          							2 5 3 b_2;
+           							1 0 8 b_3  
+	    						}
+	    						\quad\xrightarrow{R_2 = R_2 - 2 \times R_1 ; R_3 = R_3  - R_1}\quad
+	    						&amp;\amat{
+	    						1 2 3 b_1;
+                   						0 1 -3 -2b_1+b_2;
+                   						 0 -2 5 -b_1+b_3;  
+	    						}
+	    						</mrow>
+	    						<mrow>
+	    						\quad\xrightarrow{R_3 = R_3 + 2 \times R_2}\quad
+	    						&amp;\amat{
+	    						1 2 3 b_1; 
+                   						0 1 -3 -2b_1+b_2;
+                   						0 0 -1 -5b_1+2b_2+b_3;   
+	    						}
+	    						</mrow>
+	    					</md>
+	    					This shows that each of <m>b_1</m>, <m>b_2</m>,and <m>b_3</m> can be any real number. This system always has a unique solution.
+	    				</li>
+	    			</ol>
+	    		</p>
+	    	</answer>
+	    </exercise>
+	    <exercise>
+	    	<statement>
+	    		<p>True or false: a system with more unknowns than equations has at least one solution. (To say <q>true</q> you must explain why it is always true without exception, while to say <q>false</q> you must produce a counterexample.)</p>
+	    	</statement>
+	    	<answer>
+	    		<p>This system with more unknowns than equations
+	    			<me>
+	    				\syseq{
+	    				x  +  y  +  z  =  0;
+	    				x  +  y  +  z  =  1 
+	    				}
+	    			</me>
+	    		 	has no solution.  Thus, the answer is <em>False</em>.
+	    		</p>
+	    	</answer>
 	    </exercise>
 </exercises>

@@ -230,6 +230,96 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>Note that multiplying an equation by <m>0</m> is not allowed in Row reduction because that could change a solution set. Give an example of a system with solution set <m>S_0</m> where after multiplying a row by <m>0</m> the new system has a solution set <m>S_1</m> and <m>S_0</m> is a proper subset of <m>S_1</m>, that is, <m>S_0 \neq S_1</m>. Give an example where <m>S_0=S_1</m>. </p>
+		</statement>
+		<answer>
+			<p>Here <m>S_0=</m><lbrace/>(1,1)<rbrace/>
+				<md>
+					<mrow>
+					\amat{
+					0 1 2;
+            				1 -1 0
+					}
+					\quad\xrightarrow{}\quad
+					&amp;\amat{
+					 11 2;
+               				0 0 0
+					}
+					</mrow>
+				</md>
+				while <m>S_1</m> is a proper superset because it contains at least two points: <m>(1, 1)</m> and <m>(2, 0)</m>.
+			</p>
+			<p>In the next example, the solution set does not change:
+				<md>
+					<mrow>
+					\amat{
+					  1 1 2; 
+           					2 2 4
+					}
+					\quad\xrightarrow{}\quad
+					&amp;\amat{
+					1 1 2; 
+              				0 0 0
+					}
+					</mrow>
+				</md>
+			</p>
+		</answer>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>Row reduction works by combining the equations in a system to make new equations.</p>
+			<p>
+				<ol>
+					<li>Can we derive the equation <m>3x-2y=5</m> by a sequence of row reduction steps from the equations in this system?
+						<me>
+							\syseq{
+							x  +  y  =  1 ; 
+            						4x  -  y  =  6
+							}
+						</me>
+					</li>
+					<li>Can we derive the equation <m>5x-3y=2</m> with a sequence of row reduction steps from the equations in this system?
+						<me>
+							\syseq{
+							2x  +  2y =  5; 
+            						3x  +  y  =  4
+							}
+						</me>
+					</li>
+					<li>Can we derive <m>6x-9y+5z=-2</m> by a sequence of row reduction steps from the equations in the system?
+						<me>
+							\syseq{
+							2x  +  y  -  z  =  4;  
+            						6x  -  3y +  z  =  5
+							}
+						</me>
+					</li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>
+				<ol>
+					<li>Yes, by inspection the given equation results from subtracting the first equation  from the second.</li>
+					<li>No. The pair <m>(1,1)</m> satisfies the given equation (which can of course be checked directly, but to find this, the student is recommended to draw a picture). However, that pair does not satisfy the first equation in the system.</li>
+					<li>Yes. To see if the given equation results from taking <m>c_1</m> times the first equation and adding it to <m>c_2</m> times the second, we  solve the system of equations relating the coefficients of <m>x</m>, <m>y</m>, <m>z</m>, and these constants:
+						<me>
+							\syseq{
+							2c_1  +  6c_2  =  6; 
+                						c_1  -  3c_2  =  -9 ;
+               						-c_1  +  c_2   =  5;  
+               						4c_1  +  5c_2  =  -2,
+							}
+						</me>
+						 and get <m>c_1=-3</m> and <m>c_2=2</m>, so the given equation is obtained as the <em>linear combination</em> of <m>-3</m> times the first equation plus twice the second equation.
+					</li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
 </exercises>
 
 
