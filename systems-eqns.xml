@@ -169,6 +169,14 @@ the license is included in gfdl.xml.
       </p>
     </specialcase>
 
+    <example hide-type="true">
+      <title>Interactive: Points in 3-Space</title>
+      <figure>
+        <caption>A point in 3-space, and its coordinates.  Click and drag the point, or move the sliders.</caption>
+        <mathbox source="demos/point.html" height="400px"/>
+      </figure>
+    </example>
+
     <p>So what is <m>\R^4</m>?  or <m>\R^5</m>?  or <m>\R^n</m>?
     These are harder to visualize, so you have to go back to the definition: <m>\R^n</m> is the set of all ordered <m>n</m>-tuples of real numbers <m>(x_1,x_2,x_3,\ldots,x_n)</m>.</p>
 

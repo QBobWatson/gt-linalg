@@ -39,6 +39,7 @@
 - parametric1.html:  parametric1.mako
 - plane.html:        plane.mako
 - planes.html:       planes.mako
+- point.html:        point.mako
 - projection.html:   projection.mako
 - similarity.html:   similarity.mako
 - spans.html:        spans.mako
