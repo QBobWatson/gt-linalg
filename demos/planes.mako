@@ -8,7 +8,7 @@
 
 plane1Color = new Color "violet"
 plane2Color = new Color "green"
-lineColor   = new Color "yellow"
+lineColor   = new Color "red"
 
 new Demo camera: position: [-1.3,3,1.5], () ->
     window.mathbox = @mathbox

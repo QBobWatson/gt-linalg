@@ -21,8 +21,67 @@ the license is included in gfdl.xml.
     </ol>
   </objectives>
 
+  <introduction>
+    <p>During the first half of this textbook, we will be primarily concerned with understanding the solutions of systems of linear equations.</p>
+
+    <definition>
+      <idx><h>Linear equation</h><h>definition of</h></idx>
+      <statement>
+        <p>An equation in the unknowns <m>x,y,z,\ldots</m> is called <term>linear</term> if both sides of the equation are a sum of (constant) multiples of <m>x,y,z,\ldots</m>, plus an optional constant.</p>
+      </statement>
+    </definition>
+
+    <p>For instance,
+    <me>
+      \begin{split}
+      3x + 4y &amp;= 2z \\
+      -x - z &amp;= 100
+      \end{split}
+    </me>
+    are linear equations, but
+    <me>
+      \begin{split}
+      3x + yz &amp;= 3 \\
+      \sin(x) - \cos(y) &amp;= 2
+      \end{split}
+    </me>
+    are not.</p>
+
+    <p>We will usually move the unknowns to the left side of the equation, and move the constants to the right.
+    </p>
+
+    <p>A <term>system</term> of linear equations is a collection of several linear equations, like
+      <men xml:id="systems-eqns-example">
+        \syseq{x + 2y + 3z = 6;
+        2x - 3y + 2z = 14;
+        3x + y - z = -2\rlap.
+      }</men>
+      <idx><h>Linear equation</h><h>system of</h><see>System of linear equations</see></idx>
+      <idx><h>System of linear equations</h><h>definition of</h></idx>
+    </p>
+
+    <definition>
+      <title>Solution sets</title>
+      <statement>
+        <p>
+          <ul>
+            <li>A <term>solution</term> of a system of equations is a list of numbers <m>x, y, z, \ldots</m> that make all of the equations true simultaneously.</li>
+            <li>The <term>solution set</term> of a system of equations is the collection of all solutions.</li>
+            <li><term>Solving</term> the system means finding all solutions with formulas involving some number of parameters.</li>
+          </ul>
+          <idx><h>System of linear equations</h><h>solution of</h></idx>
+          <idx><h>Solution</h><see>System of linear equations</see></idx>
+          <idx><h>Solution set</h><h>definition of</h></idx>
+        </p>
+      </statement>
+    </definition>
+
+    <p>A solution of a system of equations in <m>n</m> variables is a list of <m>n</m> numbers.  For example, <m>(x,y,z) = (1,-2,3)</m> is a solution of <xref ref="systems-eqns-example"/>.  As we will be studying solutions of systems of equations throughout this text, now is a good time to fix our notions regarding lists of numbers.</p>
+
+  </introduction>
+
   <subsection xml:id="subsection-Rn">
-    <title>Preliminaries: Line, Plane, Space, Etc.</title>
+    <title>Line, Plane, Space, Etc.</title>
 
     <p>
       <notation><usage>0</usage><description>The number zero</description></notation>
@@ -48,7 +107,7 @@ the license is included in gfdl.xml.
       </statement>
     </definition>
 
-    <p>In other words, <m>\R^n</m> is just the set of all (ordered) lists of <m>n</m> real numbers.  We will draw pictures of <m>\R^n</m> in a moment, but keep in mind that <em>this is the definition</em>.  For example, <m>(0, \frac 32, -\pi)</m> is an element of <m>\R^3</m>.</p>
+    <p>In other words, <m>\R^n</m> is just the set of all (ordered) lists of <m>n</m> real numbers.  We will draw pictures of <m>\R^n</m> in a moment, but keep in mind that <em>this is the definition</em>.  For example, <m>(0, \frac 32, -\pi)</m> and <m>(1,-2,3)</m> are elements of <m>\R^3</m>.</p>
 
     <specialcase>
       <title>The number line</title>
@@ -66,26 +125,8 @@ the license is included in gfdl.xml.
 
     </specialcase>
 
-    <definition xml:id="defn-lines">
-      <title>Lines</title>
-      <idx><h>Line</h><h>geometric definition of</h></idx>
-      <statement>
-        <p>For our purposes, a <term>line</term> is a ray that is <em>straight</em> and <em>infinite</em> in both directions.
-        <latex-code><![CDATA[
-  \begin{tikzpicture}[scale=1]
-    \draw[grid lines] (-2,-2) grid (2,2);
-    \draw[->] (-2,0) -- (2,0);
-    \draw[->] (0,-2) -- (0,2);
-    \draw[{Stealth}-{Stealth}, seq1, thick] (-1,2) -- (2,-1);
-  \end{tikzpicture}
-            ]]>
-        </latex-code>
-        </p>
-      </statement>
-    </definition>
-
     <specialcase>
-      <title>The plane</title>
+      <title>The Euclidean plane</title>
       <idx><h>Plane</h><h><m>xy</m>-plane</h></idx>
       <p>When <m>n=2</m>, we can think of <m>\R^2</m> as the <m>xy</m>-plane.  We can do so because every point on the plane can be represented by an ordered pair of real numbers, namely, its <m>x</m>- and <m>y</m>-coordinates.
       <latex-code>
@@ -102,19 +143,6 @@ the license is included in gfdl.xml.
       </latex-code>
       </p>
     </specialcase>
-
-    <definition>
-      <title>Planes</title>
-      <idx><h>Plane</h><h>geometric definition of</h></idx>
-      <statement>
-        <p>A <term>plane</term> is a flat sheet that is infinite in all directions.
-        </p>
-        <figure>
-          <caption>The plane in <m>\R^3</m> defined by the equation <m>x+y+z=1.</m></caption>
-          <mathbox source="demos/plane.html?plainplane=1&amp;range=5" height="400px"/>
-        </figure>
-      </statement>
-    </definition>
 
     <specialcase>
       <title>3-Space</title>
@@ -280,72 +308,207 @@ the license is included in gfdl.xml.
     </example>
 
     <p>In the above examples, it was useful from a psychological perspective to replace a list of four numbers (representing traffic flow) or of 841 numbers (representing a QR code) by a single piece of data in some <m>\R^n.</m>  This is a powerful concept;   starting in <xref ref="spans"/>, we will almost exclusively record solutions of systems of linear equations in this way.</p>
+  </subsection>
+
+
+  <subsection>
+    <title>Pictures of Solution Sets</title>
+    <idx><h>Solution set</h><h>picture of</h></idx>
+
+    <p>Before discussing how to solve a system of linear equations below, it is helpful to see some pictures of what these solution sets look like geometrically.</p>
+
+    <specialcase hide-type="true">
+      <title>One Equation in Two Variables</title>
+      <idx><h>Implicit equation</h></idx>
+      <idx><h>Parametric form</h></idx>
+
+      <p>
+        Consider the linear equation <m>x+y=1</m>.  We can rewrite this as <m>y = 1-x</m>, which defines a line in the plane: the slope is <m>-1</m>, and the <m>x</m>-intercept is <m>1</m>.
+        <latex-code>
+          <![CDATA[
+  \begin{tikzpicture}
+    \draw[grid lines] (-2,-2) grid (2,2);
+    \draw[->] (-2,0) -- (2,0);
+    \draw[->] (0,-2) -- (0,2);
+    \draw[{Stealth}-{Stealth}, seq-violet, thick] (-1,2) -- (2,-1);
+  \end{tikzpicture}
+          ]]>
+        </latex-code>
+        The equation <m>x+y=1</m> is called an <term>implicit equation</term> of the line.  We can write the same line in <term>parametric form</term> as follows:
+        <me>(x, y) = (t,\, 1-t) \sptxt{for any} t \in \R.</me>
+        This means that every point on the line has the form <m>(t,\, 1-t)</m> for some real number <m>t</m>.  In this case, we call <m>t</m> a <term>parameter</term>, as it <em>parameterizes</em> the points on the line.
+        <latex-code>
+          <![CDATA[
+  \begin{tikzpicture}[every label/.style={font=\small, thin border}]
+    \draw[grid lines] (-3,-3) grid (3,3);
+    \draw[->] (-3,0) -- (3,0);
+    \draw[->] (0,-3) -- (0,3);
+    \draw[{Stealth}-{Stealth}, seq-violet, thick] (-2,3) -- (3,-2);
+    \point["$t=0$" above right] at (0,1);
+    \point["$t=1$" above right] at (1,0);
+    \point["$t=-1$" below left] at (-1,2);
+  \end{tikzpicture}
+          ]]>
+        </latex-code>
+      </p>
+      <p>
+        Note that the parameter <m>t</m> allows us to use <m>\R</m> to <em>label</em> the points on the line.  However, this line is <em>not</em> the same as the number line <m>\R</m>: indeed, every point on this line has two coordinates, like the point <m>(0,1)</m>.
+      </p>
+    </specialcase>
+
+    <definition xml:id="defn-lines">
+      <title>Lines</title>
+      <idx><h>Line</h><h>geometric definition of</h></idx>
+      <statement>
+        <p>For our purposes, a <term>line</term> is a ray that is <em>straight</em> and <em>infinite</em> in both directions.</p>
+      </statement>
+    </definition>
+
+    <specialcase hide-type="true">
+      <title>One Equation in Three Variables</title>
+      <idx><h>Implicit equation</h></idx>
+      <idx><h>Parametric form</h></idx>
+
+      <p>
+        Consider the linear equation <m>x+y+z=1</m>.  This is the <term>implicit equation</term> for a plane in space.
+        <latex-code>
+          <![CDATA[
+  \begin{tikzpicture}[myxyz, scale=0.75]
+    \draw[densely dotted] (0,0,0) -- (1,0,0);
+    \draw[densely dotted] (0,0,0) -- (0,1,0);
+    \draw[densely dotted] (0,0,0) -- (0,0,1);
+    \begin{scope}[x={(-1,0,1)}, y={(0,-1,1)}, transformxy=1]
+      \fill[help lines, seq-violet!50, fill opacity=.7] (-2.5, -2.5) rectangle (2, 2);
+      \draw[help lines, seq-violet!50] (-2.5, -2.5) grid (2, 2);
+    \end{scope}
+    \draw[->] (1,0,0) -- (3,0,0) node[below left] {$x$};
+    \draw[->] (0,1,0) -- (0,3,0) node[right] {$y$};
+    \draw[->] (0,0,1) -- (0,0,3) node[above] {$z$};
+  \end{tikzpicture}
+          ]]>
+        </latex-code>
+        This plane also has a <term>parametric form</term>: we can write every point on the plane as
+        <me>(x,\, y,\, z) = (1-t-w,\, t,\, w) \sptxt{for any} t,w\in\R.</me>
+        In this case, we need two <term>parameters</term> <m>t</m> and <m>w</m> to describe all points on the plane.
+      </p>
+      <figure>
+        <caption>The plane in <m>\R^3</m> defined by the equation <m>x+y+z=1</m>.  This plane is parameterized by two numbers <m>t,w</m>; move the sliders to change the parameterized point.</caption>
+        <mathbox source="demos/plane.html?coeffs=t,w&amp;range=5" height="400px"/>
+      </figure>
+      <p>
+        Note that the parameters <m>t,w</m> allow us to use <m>\R^2</m> to <em>label</em> the points on the plane.  However, this plane is <em>not</em> the same as the plane <m>\R^2</m>: indeed, every point on this plane has three coordinates, like the point <m>(0,0,1)</m>.
+      </p>
+    </specialcase>
+
+    <definition>
+      <title>Planes</title>
+      <idx><h>Plane</h><h>geometric definition of</h></idx>
+      <statement>
+        <p>A <term>plane</term> is a flat sheet that is infinite in all directions.
+        </p>
+      </statement>
+    </definition>
+
+    <remark>
+      <p>
+        The equation <m>x+y+z+w=1</m> defines a <q><m>3</m>-plane</q> in <m>4</m>-space, and more generally, a single linear equation in <m>n</m> variables defines an <q><m>(n-1)</m>-plane</q> in <m>n</m>-space.  We will make these statements precise in <xref ref="dimension"/>.
+      </p>
+    </remark>
+
+    <specialcase hide-type="true">
+      <title>Two Equations in Two Variables</title>
+
+      <p>
+        Now consider the system of two linear equations
+        <me>\def\r{\color{seq-violet}}\def\b{\color{seq-green}}
+        \syseq{\r x \r- \r3y \r= \r-3; \b2x \b+ \b y \b= \b8\rlap.}</me>
+        Each equation individually defines a line in the plane, pictured below.
+        <latex-code>
+          <![CDATA[
+  \begin{tikzpicture}[scale=.2]
+    \draw[grid lines] (-20,-20) rectangle (20,20);
+    \clip (-20,-20) rectangle (20,20);
+    \draw[->] (-20,0) -- (20,0);
+    \draw[->] (0,-20) -- (0,20);
+    \draw[seq-violet, thick] (-20,-20/3+1) -- (20,20/3+1);
+    \draw[seq-green, thick] (-20,40+8) -- (20,-40+8);
+    \point at (3,2);
+  \end{tikzpicture}
+          ]]>
+        </latex-code>
+        A solution to the <em>system</em> of both equations is a pair of numbers <m>(x,y)</m> that makes both equations true at once.  In other words, it as a point that lies on both lines simultaneously.  We can see in the picture above that there is only one point where the lines intersect: therefore, this system has exactly one solution.  (This solution is <m>(3,2)</m>, as the reader can verify.)
+      </p>
+
+      <p>
+        Usually, two lines in the plane will intersect in one point, but of course this is not always the case.  Consider now the system of equations
+        <me>\def\r{\color{seq-violet}}\def\b{\color{seq-green}}
+        \syseq{\r x \r- \r3y \r= \r-3; \b x \b- \b3y \b= \b3\rlap.}</me>
+        These define <em>parallel</em> lines in the plane.
+        <latex-code>
+          <![CDATA[
+  \begin{tikzpicture}[scale=.2]
+    \draw[grid lines] (-20,-20) rectangle (20,20);
+    \clip (-20,-20) rectangle (20,20);
+    \draw[->] (-20,0) -- (20,0);
+    \draw[->] (0,-20) -- (0,20);
+    \draw[seq-violet, thick] (-20,-20/3+1) -- (20,20/3+1);
+    \draw[seq-green, thick] (-20,-20/3-1) -- (20,20/3-1);
+  \end{tikzpicture}
+          ]]>
+        </latex-code>
+        The fact that that the lines do not intersect means that the system of equations has no solution.  Of course, this is easy to see algebraically: if <m>x-3y=-3</m>, then it is cannot also be the case that <m>x-3y=3</m>.
+      </p>
+
+      <p>
+        There is one more possibility.  Consider the system of equations
+        <me>\def\r{\color{seq-violet}}\def\b{\color{seq-green}}
+        \syseq{\r x \r- \r3y \r= \r-3; \b2x \b- \b6y \b= \b-6\rlap.}</me>
+        The second equation is a multiple of the first, so these equations define the <em>same</em> line in the plane.
+        <latex-code>
+          <![CDATA[
+  \begin{tikzpicture}[scale=.2]
+    \draw[grid lines] (-20,-20) rectangle (20,20);
+    \clip (-20,-20) rectangle (20,20);
+    \draw[->] (-20,0) -- (20,0);
+    \draw[->] (0,-20) -- (0,20);
+    \draw[seq-green, double=seq-violet!50, double distance=1pt, thick] (-20,-20/3+1) -- (20,20/3+1);
+  \end{tikzpicture}
+          ]]>
+        </latex-code>
+        In this case, there are infinitely many solutions of the system of equations.
+      </p>
+    </specialcase>
+
+    <specialcase hide-type="true">
+      <title>Two Equations in Three Variables</title>
+
+      <p>
+        Consider the system of two linear equations
+        <me>\def\r{\color{seq-violet}}\def\b{\color{seq-green}}
+        \syseq{\r x \r+ \r y \r+ \r z \r= \r1; \b x \+ \. \b- \b z \b= \b0\rlap.}</me>
+        Each equation individually defines a plane in space.  The solutions of the system of both equations are the points that lie on both planes.  We can see in the picture below that the planes intersect in a line.  In particular, this system has infinitely many solutions.
+      </p>
+
+      <figure>
+        <caption>The planes defined by the equations <m>\color{seq-violet}x+y+z=1</m> and <m>\color{seq-green}x-z=0</m> intersect in the red line, which is the solution set of the system of both equations.</caption>
+        <mathbox source="demos/planes.html" height="400px"/>
+      </figure>
+    </specialcase>
+
+    <remark>
+      <p>
+        In general, the solutions of a system of equations in <m>n</m> variables is the intersection of <q><m>(n-1)</m>-planes</q> in <m>n</m>-space.  This is always some kind of linear space, as we will discuss in <xref ref="solution-sets"/>.
+      </p>
+    </remark>
 
   </subsection>
 
 
   <subsection>
-    <title>Solving Systems of Equations</title>
-
-    <p>During the first half of this textbook, we will be primarily concerned with understanding the solutions to linear equations.</p>
-
-    <definition>
-      <idx><h>Linear equation</h><h>definition of</h></idx>
-      <statement>
-        <p>An equation in the unknowns <m>x,y,z,\ldots</m> is called <term>linear</term> if both sides of the equation are a sum of (constant) multiples of <m>x,y,z,\ldots</m>, plus an optional constant.</p>
-      </statement>
-    </definition>
-
-    <p>For instance,
-    <me>
-      \begin{split}
-      3x + 4y &amp;= 2z \\
-      -x - z &amp;= 100
-      \end{split}
-    </me>
-    are linear equations, but
-    <me>
-      \begin{split}
-      3x + yz &amp;= 3 \\
-      \sin(x) - \cos(y) &amp;= 2
-      \end{split}
-    </me>
-    are not.</p>
-
-    <p>We will usually move the unknowns to the left side of the equation, and move the constants to the right.
-    </p>
-
-    <p>A <term>system</term> of linear equations is a collection of several linear equations, like
-      <men xml:id="systems-eqns-example">
-        \syseq{x + 2y + 3z = 6;
-        2x - 3y + 2z = 14;
-        3x + y - z = -2\rlap.
-      }</men>
-      <idx><h>Linear equation</h><h>system of</h><see>System of linear equations</see></idx>
-      <idx><h>System of linear equations</h><h>definition of</h></idx>
-    </p>
-
-    <definition>
-      <title>Solution sets</title>
-      <statement>
-        <p>
-          <ul>
-            <li>A <term>solution</term> of a system of equations is a list of numbers <m>x, y, z, \ldots</m> that make all of the equations true simultaneously.</li>
-            <li>The <term>solution set</term> of a system of equations is the collection of all solutions.</li>
-            <li><term>Solving</term> the system means describing the solution set parametrically.</li>
-          </ul>
-          <idx><h>System of linear equations</h><h>solution of</h></idx>
-          <idx><h>Solution</h><see>System of linear equations</see></idx>
-          <idx><h>Solution set</h><h>definition of</h></idx>
-        </p>
-      </statement>
-    </definition>
-
-    <p>A solution of a system of equations in <m>n</m> variables is a list of <m>n</m> numbers: it is an element of <m>\R^n</m>.  For example, <m>(x,y,z) = (1,-2,3)</m> is a solution of <xref ref="systems-eqns-example"/>; this is an element of <m>\R^3</m>.</p>
-
-    <paragraphs><title>The elimination method</title>
+    <title>The Elimination Method</title>
     <idx><h>Elimination method</h></idx>
-    <p>We will solve systems of linear equations using the <term>elimination</term> method.  In other words, we will combine the equations in various ways to try to eliminate as many variables as possible from each equation.  There are three valid operations we can perform on our system of equations:
+
+    <p>We will solve systems of linear equations algebraically using the <term>elimination</term> method.  In other words, we will combine the equations in various ways to try to eliminate as many variables as possible from each equation.  There are three valid operations we can perform on our system of equations:
     <ul>
       <li><alert>Scaling:</alert> we can multiply both sides of an equation by a nonzero number.
       <me>
@@ -443,7 +606,6 @@ the license is included in gfdl.xml.
       </p>
       </solution>
     </example>
-    </paragraphs>
 
     <paragraphs><title>Augmented Matrices and Row Operations</title>
     <p>Solving equations by elimination requires writing the variables <m>x,y,z</m> and the equals sign <m>=</m> over and over again, merely as placeholders: all that is changing in the equations is the coefficient <em>numbers</em>.  We can make our life easier by extracting only the numbers, and putting them in a box:
