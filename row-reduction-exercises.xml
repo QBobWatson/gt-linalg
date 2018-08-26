@@ -320,6 +320,74 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>(The Contest Problem Book, 1955 number 38 ) Four positive integers are given. Select any three of the integers, find their arithmetic average, and add this result to the fourth integer. Thus the numbers 29, 23, 21, and 17 are obtained. One of the original integers is:
+				<ol>
+					<li>19</li>
+					<li>23</li>
+					<li>21</li>
+					<li>29</li>
+					<li>17</li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>Solving the system
+				<me>
+					\syseq{
+					 \frac{1}{3}(a+b+c)  +  d  =  29;
+					 \frac{1}{3}(b+c+d)  +  a  =  23;
+        					\frac{1}{3}(c+d+a)  +  b  =  21; 
+        					\frac{1}{3}(d+a+b)  +  c  =  17
+					}
+				</me>
+				we obtain <m>a=12</m>, <m>b=9</m>, <m>c=3</m>, <m>d=21</m>. Thus the second item, 21, is the correct answer.
+			</p>
+		</answer>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>(W. R. Ransom (proposer), Hansraj Gupta (solver), Elementary problem 105, American Mathematical Monthly, vol. 42 no. 1 (Jan. 1935), p. 47.) Laugh at this:   <m>AHAHA + TEHE = TEHAW</m>. It resulted from substituting a code letter for each digit of a simple example in addition, and it is required to identify the letters and prove the solution unique.</p>
+		</statement>
+		<answer>
+			<p>A comparison of the units and hundreds columns of this addition shows that there must be a carry from the tens column. The tens column then tells us that <m>A</m><less/><m>H</m>, so there can be no carry from the units or hundreds columns. The five columns then give the following five equations.
+				<me>
+					\syseq{ 
+					A+E  =  W ; 
+          					2H  =  A+10; 
+          					H   =  W+1;
+          					H+T  =  E+10;
+          					A+1  =  T
+					}
+				</me>
+				The five linear equations in five unknowns, if solved simultaneously produce the unique solution: <m>A=4</m>, <m>T=5</m>, <m>H=7</m>, <m>W=8</m> and <m>E=2</m> so that the original example in addition was <m> 47474+5272=52746</m>.
+			</p>
+		</answer>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>(The Wohascum County Problem Book problem number 2.) The Wohascum County Board of Commissioners, which has 20 members, recently had to elect a President. There were three candidates (<m>A</m>, <m>B</m>, and <m>C</m>); on each ballot the three candidates were to be listed in order of preference, with no abstentions. It was found that 11 members, a majority, preferred <m>A</m> over <m>B</m> (thus the other 9 preferred <m>B</m> over <m>A</m>). Similarly, it was found that 12 members preferred <m>C</m> over <m>A</m>. Given these results, it was suggested that <m>B</m> should withdraw, to enable a runoff election between <m>A</m> and <m>C</m>. However, <m>B</m> protested, and it was then found that 14 members preferred <m>B</m> over <m>C</m>! The Board has not yet recovered from the resulting confusion. Given that every possible order of <m>A</m>, <m>B</m>, <m>C</m> appeared on at least one ballot, how many members voted for <m>B</m> as their first choice?</p>
+		</statement>
+		<answer>
+			<p>Eight commissioners voted for <m>B</m>. To see this, we will use the given information to study how many voters chose each order of <m>A</m>, <m>B</m>, <m>C</m>.</p>
+			<p>The six orders of preference are <m>ABC</m>, <m>ACB</m>, <m>BAC</m>, <m>BCA</m>, <m>CAB</m>, <m>CBA</m>; assume they receive <m>a</m>, <m>b</m>, <m>c</m>, <m>d</m>, <m>e</m>, <m>f</m> votes respectively.</p>
+			<p>We know that
+				<me>
+					\syseq{
+					 a  +  b  +  e  =  11;  
+           					d  +  e  +  f  =  12;
+           					a  +  c  +  d  =  14
+					}
+				</me>
+				rom the number preferring <m>A</m> over <m>B</m>, the number preferring <m>C</m> over <m>A</m>, and the number preferring <m>B</m> over <m>C</m>.
+			</p>
+			<p>Because 20 votes were cast, <m>a+b+\cdots+f=20</m>. Subtracting the sum of the three above equations from twice the prior equation gives <m>b+c+f=3</m>. We've specified that each preference order got at  least one vote, so that means <m>b=c=f=1</m>. </p>
+			<p>From the above three equations the complete solution is then <m>a=6</m>, <m>b=1</m>, <m>c=1</m>, <m>d=7</m>, <m>e=4</m>, and <m>f=1</m>, as we can find with Row reduction. The number of commissioners voting for <m>B</m> as their first choice is therefore <m>c+d=1+7=8</m>.</p>
+			<p><em>Comments:</em> The answer to this question would have been the same had we known only
+       that <em>at least</em>14 commissioners preferred <m>B</m> over <m>C</m>. The seemingly paradoxical nature of the commissioner's preferences (<m>A</m> is preferred to <m>B</m>, and <m>B</m> is preferred to <m>C</m>, and <m>C</m> is preferred to <m>A</m>), an example of <q>non-transitive dominance</q>, is common when individual choices are pooled.</p>
+		</answer>
+	</exercise>
 </exercises>
 
 

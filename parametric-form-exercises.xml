@@ -464,4 +464,51 @@ the license is included in gfdl.xml.
 	    		</p>
 	    	</answer>
 	    </exercise>
+	    <exercise>
+	    	<statement>
+	    		<p> In the system
+	    			<me>
+	    				\syseq{
+	    				ax  +  by  =  c ;
+         					dx  +  ey  =  f  
+	    				}
+	    			</me>
+	    			 each of the equations describes a line in the <m>xy</m>-plane. By geometrical reasoning, show that there are three possibilities: there is a unique solution, there is no solution, and there are infinitely many solutions.
+	    		</p>
+	    	</statement>
+	    	<answer>
+	    		<p> Recall that if a pair of lines share two distinct points then they are the same line. That's because two points determine a line, so these two points determine each of the two lines, and so they are the same line.</p>
+	    		<p>Thus the lines can share one point (giving a unique solution), share no points (giving no solutions), or share at least two points (which makes them the same line).  </p>
+	    	</answer>
+	    </exercise>
+	    <exercise>
+	    	<statement>
+	    		<p>A box holding pennies, nickels and dimes contains thirteen coins with a total value of <m>83</m> cents. How many coins of each type are in the box? (These are US coins; a penny is <m>1</m> cent, a nickel is <m>5</m> cents, and a dime is <m>10</m> cents.)</p>
+	    	</statement>
+	    	<answer>
+	    		<p>Let <m>p</m>, <m>n</m>, and<m>d</m> be the number of pennies, nickels, and dimes. For variables that are real numbers, this system can be represented as
+	    			<me>
+	    				\syseq{
+	    				p  + n   +  d   =  13;
+	    				p  + 5n  +  10d =  83    
+	    				}
+	    			</me>
+	    			Row reduction shows
+	    			<md>
+	    				<mrow>
+	    				\amat{
+	    				1 1 1 13
+	    				1 5 10 83
+	    				}
+	    				\quad\xrightarrow{R_2 = R_2 - R_1}\quad
+	    				&amp;\amat{
+	    				1 1 1 13;
+                 				0 4 9 70  
+	    				}
+	    				</mrow>
+	    			</md>
+	    			has more than one solution; in fact, it has infinitely many of them. However, it has a limited number of solutions in which <m>p</m>, <m>n</m>, and <m>d</m> are non-negative integers. Running through <m>d=0</m>, \ldots, <m>d=8</m> shows that <m> (p,n,d)=(3,4,6)</m> is the only solution using natural numbers.  
+	    		</p>
+	    	</answer>
+	    </exercise>
 </exercises>
