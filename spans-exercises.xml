@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<exercises>
+	<exercise>
+		<statement>
+			<p>Solve each system using augmented matrix notation. Express the solution using vectors (that is, in a set-builder notation using vectors and real-variable parameters).
+				<ol>
+					<li>
+						<me>
+						\syseq{
+						3x  +  6y  =  18 ; 
+                   					x  +  2y  =  6  
+						}
+						</me>
+					</li>
+					<li>
+						<me>
+							\syseq{
+							x  +  y   =  1; 
+                   						x  -  y   =  -1  
+							}
+						</me>
+					</li>
+					<li>
+						<me>
+							\syseq{
+							x_1  \+ \. +  x_3   =  4; 
+                   						x_1  -  x_2  +  2x_3  =  5; 
+                  						4x_1  -  x_2  +  5x_3  =  17  
+							}
+						</me>
+					</li>
+					<li>
+						<me>
+							\syseq{
+							2a   +  b    -  c     =  2;
+							2a   \+ \. +  c   =  3;
+                    						a   -  b  \+ \. =  0   
+							}
+						</me>
+					</li>
+					<li>
+						<me>
+							\syseq{
+							  x  +  2y   -   z \+ \. =  3; 
+                    						2x  +  y \+ \.   w   =  4; 
+                     						x  -  y    +   z   +   w   =  1  
+							}
+						</me>
+					</li>
+					<li>
+						<me>
+							\syseq{
+							x  \+ \. +  z   +   w   =  4;
+                    						2x  +  y  \+ \. -   w   =  2;
+                    						3x  +  y    +   z   \+ \. =  7  
+							}
+						</me>
+					</li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>
+				<ol>
+					<li>This reduction
+						<md>
+							<mrow>
+								\amat{
+								3 6 18;
+								1 2 6
+								}
+								\quad\xrightarrow{}\quad
+								&amp;\amat{
+								3 6 18;
+								0 0 0
+								}
+							</mrow>
+						</md>
+						leaves <m>x</m> leading and <m>y</m> free. Making <m>y</m> the parameter, gives <m>x=6-2y</m> and this solution set:
+						<m>\bigl\{\vec{6 0} + \vec{-2 1}y \mid y \text{ in }\R\bigr\}</m>
+					</li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
+</exercises>
+
+

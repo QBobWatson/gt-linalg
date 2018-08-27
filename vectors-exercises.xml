@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<exercises>
+	<exercise>
+		<statement>
+			<p>Do the indicated vector operation, if it is defined.
+				<ol>
+					<li><m>\vec{2 1 1} + \vec{3 0 4}</m></li>
+					<li><m>5 \vec{4 -1}</m></li>
+					<li><m>\vec{1 5 1} - \vec{3 1 1}</m></li>
+					<li><m>7 \vec{2 1} + 9 \vec{3 5}</m></li>
+					<li><m>\vec{1 2} + \vec{1 2 3}</m></li>
+					<li><m>6 \vec{3 1 1}  - 4 \vec{2 0 3} + 2 \vec{1 1 5}</m></li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>
+				<ol>
+					<li><m>\vec{5 1 5}</m></li>
+					<li><m>\vec{20 -5}</m></li>
+					<li><m>\vec{-2 4 0}</m></li>
+					<li><m>\vec{41 52}</m></li>
+					<li>Not defined.</li>
+					<li><m>\vec{12 8 4}</m></li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
+</exercises>
