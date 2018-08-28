@@ -48,4 +48,4 @@ new Demo camera: position: [-1.3,3,1.5], () ->
 
     @caption '<p><span id="eqn1-here"></span><br><span id="eqn2-here"></span></p>'
     katex.render "\\color{#{plane1Color.str()}}{x+y+z=1}", document.getElementById 'eqn1-here'
-    katex.render "\\color{#{plane2Color.str()}}{x-z=0}", document.getElementById 'eqn2-here'
+    katex.render "\\color{#{plane2Color.str()}}{x \\phantom{+} \\phantom{y} - z = 0}", document.getElementById 'eqn2-here'

@@ -37,6 +37,7 @@
 - eigenspace.html:   eigenspace.mako
 - leastsquares.html: leastsquares.mako
 - parametric1.html:  parametric1.mako
+- parametric2.html:  parametric2.mako
 - plane.html:        plane.mako
 - planes.html:       planes.mako
 - point.html:        point.mako

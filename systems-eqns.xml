@@ -15,7 +15,7 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Understand the definition of <m>\R^n</m>, and what it means to use <m>\R^n</m> to label points on a geometric object.</li>
-      <li><em>Picture:</em> solutions of systems of linear equations.</li>
+      <li><em>Pictures:</em> solutions of systems of linear equations, parameterized solution sets.</li>
       <li><em>Vocabulary words:</em> <term>consistent</term>, <term>inconsistent</term>, <term>solution set</term>.</li>
     </ol>
   </objectives>
@@ -59,7 +59,7 @@ the license is included in gfdl.xml.
       <idx><h>System of linear equations</h><h>definition of</h></idx>
     </p>
 
-    <definition>
+    <definition xml:id="systems-eqns-soln-sets">
       <title>Solution sets</title>
       <statement>
         <p>
@@ -336,16 +336,14 @@ the license is included in gfdl.xml.
   </subsection>
 
 
-  <subsection>
+  <subsection xml:id="systems-eqns-pictures">
     <title>Pictures of Solution Sets</title>
     <idx><h>Solution set</h><h>picture of</h></idx>
 
     <p>Before discussing how to solve a system of linear equations below, it is helpful to see some pictures of what these solution sets look like geometrically.</p>
 
-    <specialcase hide-type="true">
+    <specialcase hide-type="true" xml:id="systems-eqns-picture-line">
       <title>One Equation in Two Variables</title>
-      <idx><h>Implicit equation</h></idx>
-      <idx><h>Parametric form</h></idx>
 
       <p>
         Consider the linear equation <m>x+y=1</m>.  We can rewrite this as <m>y = 1-x</m>, which defines a line in the plane: the slope is <m>-1</m>, and the <m>x</m>-intercept is <m>1</m>.
@@ -359,25 +357,6 @@ the license is included in gfdl.xml.
   \end{tikzpicture}
           ]]>
         </latex-code>
-        The equation <m>x+y=1</m> is called an <term>implicit equation</term> of the line.  We can write the same line in <term>parametric form</term> as follows:
-        <me>(x, y) = (t,\, 1-t) \sptxt{for any} t \in \R.</me>
-        This means that every point on the line has the form <m>(t,\, 1-t)</m> for some real number <m>t</m>.  In this case, we call <m>t</m> a <term>parameter</term>, as it <em>parameterizes</em> the points on the line.
-        <latex-code>
-          <![CDATA[
-  \begin{tikzpicture}[every label/.style={font=\small, thin border}]
-    \draw[grid lines] (-3,-3) grid (3,3);
-    \draw[->] (-3,0) -- (3,0);
-    \draw[->] (0,-3) -- (0,3);
-    \draw[{Stealth}-{Stealth}, seq-violet, thick] (-2,3) -- (3,-2);
-    \point["$t=0$" above right] at (0,1);
-    \point["$t=1$" above right] at (1,0);
-    \point["$t=-1$" below left] at (-1,2);
-  \end{tikzpicture}
-          ]]>
-        </latex-code>
-      </p>
-      <p>
-        Note that the parameter <m>t</m> allows us to use <m>\R</m> to <em>label</em> the points on the line.  However, this line is <em>not</em> the same as the number line <m>\R</m>: indeed, every point on this line has two coordinates, like the point <m>(0,1)</m>.
       </p>
     </specialcase>
 
@@ -389,10 +368,8 @@ the license is included in gfdl.xml.
       </statement>
     </definition>
 
-    <specialcase hide-type="true">
+    <specialcase hide-type="true" xml:id="systems-eqns-picture-plane">
       <title>One Equation in Three Variables</title>
-      <idx><h>Implicit equation</h></idx>
-      <idx><h>Parametric form</h></idx>
 
       <p>
         Consider the linear equation <m>x+y+z=1</m>.  This is the <term>implicit equation</term> for a plane in space.
@@ -412,16 +389,6 @@ the license is included in gfdl.xml.
   \end{tikzpicture}
           ]]>
         </latex-code>
-        This plane also has a <term>parametric form</term>: we can write every point on the plane as
-        <me>(x,\, y,\, z) = (1-t-w,\, t,\, w) \sptxt{for any} t,w\in\R.</me>
-        In this case, we need two <term>parameters</term> <m>t</m> and <m>w</m> to describe all points on the plane.
-      </p>
-      <figure>
-        <caption>The plane in <m>\R^3</m> defined by the equation <m>x+y+z=1</m>.  This plane is parameterized by two numbers <m>t,w</m>; move the sliders to change the parameterized point.</caption>
-        <mathbox source="demos/plane.html?coeffs=t,w&amp;range=5" height="400px"/>
-      </figure>
-      <p>
-        Note that the parameters <m>t,w</m> allow us to use <m>\R^2</m> to <em>label</em> the points on the plane.  However, this plane is <em>not</em> the same as the plane <m>\R^2</m>: indeed, every point on this plane has three coordinates, like the point <m>(0,0,1)</m>.
       </p>
     </specialcase>
 
@@ -440,7 +407,7 @@ the license is included in gfdl.xml.
       </p>
     </remark>
 
-    <specialcase hide-type="true">
+    <specialcase hide-type="true" xml:id="systems-eqns-picture-2lines">
       <title>Two Equations in Two Variables</title>
 
       <p>
@@ -504,7 +471,7 @@ the license is included in gfdl.xml.
       </p>
     </specialcase>
 
-    <specialcase hide-type="true">
+    <specialcase hide-type="true" xml:id="systems-eqns-two-planes">
       <title>Two Equations in Three Variables</title>
 
       <p>
@@ -528,5 +495,83 @@ the license is included in gfdl.xml.
 
   </subsection>
 
+
+  <subsection>
+    <title>Parametric Description of Solution Sets</title>
+    <idx><h>Implicit equation</h></idx>
+    <idx><h>Parametric form</h></idx>
+
+    <p>
+      According to this <xref ref="systems-eqns-soln-sets"/>, solving a system of equations means writing down all solutions in terms of some number of parameters.  We will give a systematic way of doing so in <xref ref="parametric-form"/>; for now we give parametric descriptions in the examples of the previous <xref ref="systems-eqns-pictures"/>.
+    </p>
+
+    <specialcase hide-type="true">
+      <title>Lines</title>
+      <idx><h>Line</h><h>parametric form of</h></idx>
+
+      <p>
+        Consider the linear equation <m>x+y=1</m> of this <xref ref="systems-eqns-picture-line"/>.  In this context, we call <m>x+y=1</m> an <term>implicit equation</term> of the line.  We can write the same line in <term>parametric form</term> as follows:
+        <me>(x, y) = (t,\, 1-t) \sptxt{for any} t \in \R.</me>
+        This means that every point on the line has the form <m>(t,\, 1-t)</m> for some real number <m>t</m>.  In this case, we call <m>t</m> a <term>parameter</term>, as it <em>parameterizes</em> the points on the line.
+        <latex-code>
+          <![CDATA[
+  \begin{tikzpicture}[every label/.style={font=\small, thin border}]
+    \draw[grid lines] (-3,-3) grid (3,3);
+    \draw[->] (-3,0) -- (3,0);
+    \draw[->] (0,-3) -- (0,3);
+    \draw[{Stealth}-{Stealth}, seq-violet, thick] (-2,3) -- (3,-2);
+    \point["$t=0$" above right] at (0,1);
+    \point["$t=1$" above right] at (1,0);
+    \point["$t=-1$" below left] at (-1,2);
+  \end{tikzpicture}
+          ]]>
+        </latex-code>
+      </p>
+
+      <p>
+        Now consider the system of two linear equations
+        <me>\def\r{\color{seq-violet}}\def\b{\color{seq-green}}
+        \syseq{\r x \r+ \r y \r+ \r z \r= \r1; \b x \+ \. \b- \b z \b= \b0}</me>
+        of this <xref ref="systems-eqns-two-planes"/>.  These collectively form the <term>implicit equations</term> for a line in <m>\R^3</m>.  (At least two equations are need to define a line in space.)  This line also has a <term>parametric form</term> with one <term>parameter</term> <m>t</m>:
+        <me>
+          (x,\, y,\, z) = (t,\, 1-2t,\, t).
+        </me>
+      </p>
+
+      <figure>
+        <caption>The planes defined by the equations <m>\color{seq-violet}x+y+z=1</m> and <m>\color{seq-green}x-z=0</m> intersect in the yellow line, which is parameterized by <m>(x,y,z) = (t,1-2t,t)</m>.  Move the slider to change the parameterized point.</caption>
+        <mathbox source="demos/parametric2.html" height="400px"/>
+      </figure>
+
+      <p>
+        Note that in each case, the parameter <m>t</m> allows us to use <m>\R</m> to <em>label</em> the points on the line.  However, neither line is the same as the number line <m>\R</m>: indeed, every point on the first line line has two coordinates, like the point <m>(0,1)</m>, and every point on the second line has three coordinates, like <m>(0,1,0)</m>.
+      </p>
+    </specialcase>
+
+    <specialcase hide-type="true">
+      <title>Planes</title>
+      <idx><h>Plane</h><h>parametric form of</h></idx>
+
+      <p>
+        Consider the linear equation <m>x+y+z=1</m> of this <xref ref="systems-eqns-picture-plane"/>.  This is an <term>implicit equation</term> of a plane in space.  This plane has an equation in <term>parametric form</term>: we can write every point on the plane as
+        <me>(x,\, y,\, z) = (1-t-w,\, t,\, w) \sptxt{for any} t,w\in\R.</me>
+        In this case, we need two <term>parameters</term> <m>t</m> and <m>w</m> to describe all points on the plane.
+      </p>
+
+      <figure>
+        <caption>The plane in <m>\R^3</m> defined by the equation <m>x+y+z=1</m>.  This plane is parameterized by two numbers <m>t,w</m>; move the sliders to change the parameterized point.</caption>
+        <mathbox source="demos/plane.html?coeffs=t,w&amp;range=5" height="400px"/>
+      </figure>
+
+      <p>
+        Note that the parameters <m>t,w</m> allow us to use <m>\R^2</m> to <em>label</em> the points on the plane.  However, this plane is <em>not</em> the same as the plane <m>\R^2</m>: indeed, every point on this plane has three coordinates, like the point <m>(0,0,1)</m>.
+      </p>
+    </specialcase>
+
+    <p>
+      When there is a unique solution, as in this <xref ref="systems-eqns-picture-2lines"/>, it is not necessary to use parameters to describe the solution set.
+    </p>
+
+  </subsection>
 
 </section>
