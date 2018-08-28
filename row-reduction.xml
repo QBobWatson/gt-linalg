@@ -66,7 +66,7 @@ the license is included in gfdl.xml.
       <statement>
         <p>A matrix is in <term>reduced row echelon form</term> if it is in row echelon form, and in addition:
         <ol start="4">
-          <li>The pivot in each nonzero row is equal to <m>1</m>.</li>
+          <li>Each pivot is equal to 1.</li>
           <li>Each pivot is the only nonzero entry in its column.</li>
         </ol>
         </p>
