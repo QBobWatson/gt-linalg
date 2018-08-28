@@ -867,7 +867,7 @@ the license is included in gfdl.xml.
 
 
   \node [blue!50, below=2cm of m9-4-2.south east, anchor=north, align=center, xshift=1mm]
-    (expl9) {\large Profit?};
+    (expl9) {};
 
 \end{tikzpicture}
           ]]>
