@@ -26,64 +26,58 @@ the license is included in gfdl.xml.
 
     <p>There is one possibility for the row reduced form of a matrix that we did not see in <xref ref="row-reduction"/>.</p>
 
-    <example xml:id="row-reduction-eg-free">
+    <specialcase xml:id="row-reduction-eg-free">
       <title>A System with a Free Variable</title>
-      <statement>
-        <p>Solve the linear system
-        <me>
-          \syseq{2x + y + 12z = 1; x + 2y + 9z = -1}
-        </me>
-        using row reduction.
-        </p>
-      </statement>
-      <solution>
-        <p>
-          <md>
-            <mrow>
-              \amat{2 1 12 1; 1 2 9 -1}
-              \quad\xrightarrow{R_1 \longleftrightarrow R_2}\quad
-              &amp;\amat{\color{red}1 2 9 -1; 2 1 12 1}
-              &amp;&amp;\color{blue}\text{(Optional)}
-            </mrow>
-            <mrow>
-              {}\quad\xrightarrow{R_2=R_2-2R_1}\quad
-              &amp;\amat{1 2 9 -1; \color{red}0 -3 -6 3}
-              &amp;&amp;\color{blue}\text{(Step 1c)}
-            </mrow>
-            <mrow>
-              {}\quad\xrightarrow{R_2=R_2\div -3}\quad
-              &amp;\amat{1 2 9 -1; 0 \color{red}1 2 -1}
-              &amp;&amp;\color{blue}\text{(Step 2b)}
-            </mrow>
-            <mrow>
-              {}\quad\xrightarrow{R_1=R_1-2R_2}\quad
-              &amp;\amat{1 \color{red}0 5 1; 0 1 2 -1}
-              &amp;&amp;\color{blue}\text{(Step 2c)}
-            </mrow>
-          </md>
-          This row reduced matrix corresponds to the linear system
-          <me>
-            \syseq{x + 5z = 1; y + 2z = -1\rlap.}
-          </me>
-          In what sense is the system solved?  We rewrite as
-          <me>
-            \syseq{x = 1 - 5z; y = -1 - 2z\rlap.}
-          </me>
-          For any value of <m>z</m>, there is exactly one value of <m>x</m> and <m>y</m> that make the equations true.  But we are free to choose <em>any</em> value of <m>z</m>.
-        </p>
+      <p>Consider the linear system
+      <me>
+        \syseq{2x + y + 12z = 1; x + 2y + 9z = -1\rlap.}
+      </me>
+      We solve it using row reduction:
+      <md>
+        <mrow>
+          \amat{2 1 12 1; 1 2 9 -1}
+          \quad\xrightarrow{R_1 \longleftrightarrow R_2}\quad
+          &amp;\amat{\color{red}1 2 9 -1; 2 1 12 1}
+          &amp;&amp;\color{blue}\text{(Optional)}
+        </mrow>
+        <mrow>
+          {}\quad\xrightarrow{R_2=R_2-2R_1}\quad
+          &amp;\amat{1 2 9 -1; \color{red}0 -3 -6 3}
+          &amp;&amp;\color{blue}\text{(Step 1c)}
+        </mrow>
+        <mrow>
+          {}\quad\xrightarrow{R_2=R_2\div -3}\quad
+          &amp;\amat{1 2 9 -1; 0 \color{red}1 2 -1}
+          &amp;&amp;\color{blue}\text{(Step 2b)}
+        </mrow>
+        <mrow>
+          {}\quad\xrightarrow{R_1=R_1-2R_2}\quad
+          &amp;\amat{1 \color{red}0 5 1; 0 1 2 -1}
+          &amp;&amp;\color{blue}\text{(Step 2c)}
+        </mrow>
+      </md>
+      This row reduced matrix corresponds to the linear system
+      <me>
+        \syseq{x + 5z = 1; y + 2z = -1\rlap.}
+      </me>
+      In what sense is the system solved?  We rewrite as
+      <me>
+        \syseq{x = 1 - 5z; y = -1 - 2z\rlap.}
+      </me>
+      For any value of <m>z</m>, there is exactly one value of <m>x</m> and <m>y</m> that make the equations true.  But we are free to choose <em>any</em> value of <m>z</m>.
+      </p>
 
-        <p>We have found all solutions: it is the set of all values <m>x,y,z</m>, where
-        <me>
-          \syseq{x = 1 - 5z; y = -1 - 2z} \qquad \text{$z$ any real number.}
-        </me>
-        For instance, setting <m>z=0</m> gives the solution <m>(x,y,z)=(1,-1,0)</m>, and setting <m>z=1</m> gives the solution <m>(x,y,z)=(-4,-3,1)</m>.
-        </p>
-        <figure>
-          <caption>A picture of the solution set (the yellow line) of the linear system in this <xref ref="row-reduction-eg-free"/>.  There is a unique solution for every value of <m>z</m>; move the slider to change <m>z</m>.</caption>
-          <mathbox source="demos/parametric1.html" height="400px"/>
-        </figure>
-      </solution>
-    </example>
+      <p>We have found all solutions: it is the set of all values <m>x,y,z</m>, where
+      <me>
+        \syseq{x = 1 - 5z; y = -1 - 2z} \qquad \text{$z$ any real number.}
+      </me>
+      For instance, setting <m>z=0</m> gives the solution <m>(x,y,z)=(1,-1,0)</m>, and setting <m>z=1</m> gives the solution <m>(x,y,z)=(-4,-3,1)</m>.
+      </p>
+      <figure>
+        <caption>A picture of the solution set (the yellow line) of the linear system in this <xref ref="row-reduction-eg-free"/>.  There is a unique solution for every value of <m>z</m>; move the slider to change <m>z</m>.</caption>
+        <mathbox source="demos/parametric1.html" height="400px"/>
+      </figure>
+    </specialcase>
 
     <definition>
       <idx><h>Free variable</h></idx>
