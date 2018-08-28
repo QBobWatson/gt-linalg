@@ -150,7 +150,7 @@ the license is included in gfdl.xml.
     </p>
 
     <p>
-      Note that the length of a vector is the length of the <em>arrow</em>; if we think of an element of <m>\R^n</m> as a point, then its length is its distance from the origin.
+      Note that the length of a vector is the length of the <em>arrow</em>; if we think in terms of points, then the length is its distance from the origin.
     </p>
 
     <fact>

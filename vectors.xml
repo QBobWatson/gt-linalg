@@ -24,7 +24,7 @@ the license is included in gfdl.xml.
   <subsection>
     <title>Vectors in <m>\R^n</m></title>
 
-    <p>We have been drawing elements of <m>\R^n</m> as points in the line, plane, space, etc.  We can also draw them as <em>arrows</em>.</p>
+    <p>We have been drawing points of <m>\R^n</m> as dots in the line, plane, space, etc.  We can also draw them as <em>arrows</em>.  Since we have two geometric interpretations in mind, in what follows we will call an ordered list of <m>n</m> real numbers an <term>element</term> of <m>\R^n</m>.</p>
 
     <definition hide-type="true">
       <title>Points and Vectors</title>

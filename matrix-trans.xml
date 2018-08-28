@@ -531,7 +531,7 @@ the license is included in gfdl.xml.
 \end{tikzpicture}
             ]]>
     </latex-code>
-    The elements of the domain <m>\R^n</m> are the <em>inputs</em> of <m>T</m>: this simply means that it makes sense to evaluate <m>T</m> on lists of <m>n</m> numbers.  Likewise, the elements of the codomain <m>\R^m</m> are the <em>outputs</em> of <m>T</m>: this means that the result of evaluating <m>T</m> is always a list of <m>m</m> numbers.
+    The points of the domain <m>\R^n</m> are the <em>inputs</em> of <m>T</m>: this simply means that it makes sense to evaluate <m>T</m> on lists of <m>n</m> numbers.  Likewise, the points of the codomain <m>\R^m</m> are the <em>outputs</em> of <m>T</m>: this means that the result of evaluating <m>T</m> is always a list of <m>m</m> numbers.
 </p>
 
 <p>

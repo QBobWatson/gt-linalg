@@ -94,7 +94,7 @@ the license is included in gfdl.xml.
 
     <definition>
       <idx><h>Real <m>n</m>-space</h></idx>
-      <idx><h>Real <m>n</m>-space</h><h>element of</h></idx>
+      <idx><h>Real <m>n</m>-space</h><h>point of</h></idx>
       <notation>
         <usage>\R^n</usage>
         <description>Real <m>n</m>-space</description>
@@ -102,12 +102,12 @@ the license is included in gfdl.xml.
       <statement>
         <p>Let <m>n</m> be a positive whole number.  We define
         <me>\R^n = \text{all ordered $n$-tuples of real numbers }(x_1,x_2,x_3,\ldots,x_n).</me>
-        An <m>n</m>-tuple of real numbers is called an <term>element</term> of <m>\R^n</m>.
+        An <m>n</m>-tuple of real numbers is called a <term>point</term> of <m>\R^n</m>.
         </p>
       </statement>
     </definition>
 
-    <p>In other words, <m>\R^n</m> is just the set of all (ordered) lists of <m>n</m> real numbers.  We will draw pictures of <m>\R^n</m> in a moment, but keep in mind that <em>this is the definition</em>.  For example, <m>(0, \frac 32, -\pi)</m> and <m>(1,-2,3)</m> are elements of <m>\R^3</m>.</p>
+    <p>In other words, <m>\R^n</m> is just the set of all (ordered) lists of <m>n</m> real numbers.  We will draw pictures of <m>\R^n</m> in a moment, but keep in mind that <em>this is the definition</em>.  For example, <m>(0, \frac 32, -\pi)</m> and <m>(1,-2,3)</m> are points of <m>\R^3</m>.</p>
 
     <specialcase>
       <title>The number line</title>
@@ -184,13 +184,13 @@ the license is included in gfdl.xml.
 
     <p>We will make definitions and state theorems that apply to any <m>\R^n</m>, but we will only draw pictures for <m>\R^2</m> and <m>\R^3</m>.</p>
 
-    <p>The power of using these spaces is the ability to <em>label</em> various objects of interest, such as geometric objects and solutions of systems of equations, by the elements of <m>\R^n</m>.</p>
+    <p>The power of using these spaces is the ability to <em>label</em> various objects of interest, such as geometric objects and solutions of systems of equations, by the points of <m>\R^n</m>.</p>
 
     <example>
       <title>Color Space</title>
       <idx><h>Space</h><h>color space</h></idx>
       <idx><h>Color space</h></idx>
-      <p>All colors you can see can be described by three quantities: the amount of red, green, and blue light in that color.  (Humans are <url href="https://en.wikipedia.org/wiki/Trichromacy">trichromatic</url>.)  Therefore, we can use the elements of <m>\R^3</m> to <em>label</em> all colors: for instance, the point <m>(.2, .4, .9)</m> labels the color with <m>20\%</m> red, <m>40\%</m> green, and <m>90\%</m> blue intensity.
+      <p>All colors you can see can be described by three quantities: the amount of red, green, and blue light in that color.  (Humans are <url href="https://en.wikipedia.org/wiki/Trichromacy">trichromatic</url>.)  Therefore, we can use the points of <m>\R^3</m> to <em>label</em> all colors: for instance, the point <m>(.2, .4, .9)</m> labels the color with <m>20\%</m> red, <m>40\%</m> green, and <m>90\%</m> blue intensity.
       <latex-code><![CDATA[
 \begin{tikzpicture}[x={(1cm,0cm)}, y={(-.5cm,-.3cm)}, z={(0cm,1cm)}, scale=1,
     every node/.append style={transform shape}]
@@ -306,7 +306,7 @@ the license is included in gfdl.xml.
       <title>QR Codes</title>
       <idx><h>QR codes</h></idx>
       <p>
-        A <url href="https://en.wikipedia.org/wiki/QR_code">QR code</url> is a method of storing data in a grid of <m>29\times 29</m> black and white squares in a way that computers can easily read.  When an imaging device sees a QR code, it constructs an array of <m>29\times 29</m> points.  Of course, a camera actually sees varying degrees of grey; the brightness of each point is just a real number, so the image can be viewed as an element of <m>\R^{29\cdot 29} = \R^{841}.</m>  The QR reader then must find the closest point in <m>\R^{841}</m> with coordinates all equal to zero (black) or one (white); this is the actual QR code.
+        A <url href="https://en.wikipedia.org/wiki/QR_code">QR code</url> is a method of storing data in a grid of <m>29\times 29</m> black and white squares in a way that computers can easily read.  When an imaging device sees a QR code, it constructs an array of <m>29\times 29</m> points.  Of course, a camera actually sees varying degrees of grey; the brightness of each point is just a real number, so the image can be viewed as a point of <m>\R^{29\cdot 29} = \R^{841}.</m>  The QR reader then must find the closest point in <m>\R^{841}</m> with coordinates all equal to zero (black) or one (white); this is the actual QR code.
       </p>
       <p>As in the previous <xref ref="systems-eqns-R4"/>, it is very useful from a psychological perspective to view a QR code as a <em>single</em> piece of data in this way.</p>
       <figure>

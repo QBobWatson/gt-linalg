@@ -55,7 +55,7 @@ the license is included in gfdl.xml.
     <definition>
       <idx><h>Subset</h><h>definition of</h></idx>
       <statement>
-        <p>A <term>subset</term> of <m>\R^n</m> is any collection of elements of <m>\R^n</m>.</p>
+        <p>A <term>subset</term> of <m>\R^n</m> is any collection of points of <m>\R^n</m>.</p>
       </statement>
     </definition>
 

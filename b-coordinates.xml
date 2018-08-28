@@ -91,7 +91,7 @@ the license is included in gfdl.xml.
   <bluebox>
     <idx><h><m>\cB</m>-coordinates</h><h>labeling points</h></idx>
     <p>
-      The above <xref ref="dimension-defn-Bcoords"/> gives a way of using <m>\R^m</m> to <em>label</em> the points of a subspace of dimension <m>m</m>: a point is simply labeled by its <m>\cB</m>-coordinate vector.  For instance, if we choose a basis for a plane, we can label the points of that plane with the elements of <m>\R^2</m>.
+      The above <xref ref="dimension-defn-Bcoords"/> gives a way of using <m>\R^m</m> to <em>label</em> the points of a subspace of dimension <m>m</m>: a point is simply labeled by its <m>\cB</m>-coordinate vector.  For instance, if we choose a basis for a plane, we can label the points of that plane with the points of <m>\R^2</m>.
     </p>
   </bluebox>
 
