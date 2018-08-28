@@ -15,9 +15,8 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Understand the definition of <m>\R^n</m>, and what it means to use <m>\R^n</m> to label points on a geometric object.</li>
-      <li>Learn to replace a system of linear equations by an augmented matrix.</li>
-      <li>Learn how the elimination method corresponds to performing row operations on an augmented matrix.</li>
-      <li><em>Vocabulary words:</em> <term>consistent</term>, <term>inconsistent</term>, <term>solution set</term>, <term>row operation</term>, <term>row equivalence</term>, <term>matrix</term>, <term>augmented matrix</term>.</li>
+      <li><em>Picture:</em> solutions of systems of linear equations.</li>
+      <li><em>Vocabulary words:</em> <term>consistent</term>, <term>inconsistent</term>, <term>solution set</term>.</li>
     </ol>
   </objectives>
 
@@ -73,6 +72,24 @@ the license is included in gfdl.xml.
           <idx><h>Solution</h><see>System of linear equations</see></idx>
           <idx><h>Solution set</h><h>definition of</h></idx>
         </p>
+      </statement>
+    </definition>
+
+    <p>
+      A system of linear equations need not have a solution.  For example, there do not exist numbers <m>x</m> and <m>y</m> making the following two equations true simultaneously:
+      <me>
+        \syseq{x + 2y = 3 ; x + 2y = -3\rlap.}
+      </me>
+      In this case, the solution set is <em>empty</em>.  As this is a rather important property of a system of equations, it has its own name.
+    </p>
+
+    <definition>
+      <idx><h>System of linear equations</h><h>inconsistent</h></idx>
+      <idx><h>System of linear equations</h><h>consistent</h></idx>
+      <idx><h>Consistent</h><see>System of linear equations</see></idx>
+      <idx><h>Inconsistent</h><see>System of linear equations</see></idx>
+      <statement>
+        <p>A system of equations is called <term>inconsistent</term> if it has no solutions.  It is called <term>consistent</term> otherwise.</p>
       </statement>
     </definition>
 
@@ -511,350 +528,5 @@ the license is included in gfdl.xml.
 
   </subsection>
 
-
-  <subsection>
-    <title>The Elimination Method</title>
-    <idx><h>Elimination method</h></idx>
-
-    <p>We will solve systems of linear equations algebraically using the <term>elimination</term> method.  In other words, we will combine the equations in various ways to try to eliminate as many variables as possible from each equation.  There are three valid operations we can perform on our system of equations:
-    <ul>
-      <li><alert>Scaling:</alert> we can multiply both sides of an equation by a nonzero number.
-      <me>
-        \syseq{x + 2y + 3z = 6;
-        2x - 3y + 2z = 14;
-        3x + y - z = -2
-        } \quad\xrightarrow{\text{multiply 1st by $-3$}}\quad
-        \syseq{-3x - 6y - 9z = -18;
-        2x - 3y + 2z = 14;
-        3x + y - z = -2
-        }
-      </me>
-      </li>
-      <li><alert>Replacement:</alert> we can add a multiple of one equation to another, replacing the second equation with the result.
-      <me>
-        \syseq{x + 2y + 3z = 6;
-        2x - 3y + 2z = 14;
-        3x + y - z = -2
-        } \quad\xrightarrow{\text{2nd ${}={}$ 2nd$-2\times$1st}}\quad
-        \syseq{x + 2y + 3z = 6;
-        \. \+ -7y - 4z = 2;
-        3x + y - z = -2
-        }
-      </me>
-      </li>
-      <li><alert>Swap:</alert> we can swap two equations.
-      <me>
-        \syseq{x + 2y + 3z = 6;
-        2x - 3y + 2z = 14;
-        3x + y - z = -2
-        } \quad\xrightarrow{\text{3rd $\longleftrightarrow$ 1st}}\quad
-        \syseq{3x + y - z = -2;
-        2x - 3y + 2z = 14;
-        x + 2y + 3z = 6
-        }
-      </me>
-      </li>
-    </ul>
-    </p>
-
-    <example xml:id="systems-eqns-example1">
-      <statement>
-        <p>Solve <xref ref="systems-eqns-example"/> using the elimination method.</p>
-      </statement>
-      <solution>
-        <p><me>
-          \begin{split}
-          \syseq{x + 2y + 3z = 6;
-          2x - 3y + 2z = 14;
-          3x + y - z = -2
-          }
-          \quad\xrightarrow{\text{2nd ${}={}$ 2nd$-2\times$1st}}\quad&amp;
-          \syseq{x + 2y + 3z = 6;
-          \. \+ -7y - 4z = 2;
-          3x + y - z = -2
-          } \\
-          {}\quad\xrightarrow{\text{3rd ${}={}$ 3rd$-3\times$1st}}\quad&amp;
-          \syseq{x + 2y + 3z = 6;
-          \. \+ -7y - 4z = 2;
-          \. \+ -5y - 10z = -20
-          } \\
-          {}\quad\xrightarrow{\text{2nd $\longleftrightarrow$ 3rd}}\quad&amp;
-          \syseq{x + 2y + 3z = 6;
-          \. \+ -5y - 10z = -20;
-          \. \+ -7y - 4z = 2
-          } \\
-          {}\quad\xrightarrow{\text{divide 2nd by $-5$}}\quad&amp;
-          \syseq{x + 2y + 3z = 6;
-          \. \+  y + 2z = 4;
-          \. \+ -7y - 4z = 2
-          } \\
-          {}\quad\xrightarrow{\text{3rd ${}={}$ 3rd$+7\times$2nd}}\quad&amp;
-          \syseq{x + 2y + 3z = 6;
-          \. \+  y + 2z = 4;
-          \. \+ \. \+ 10z = 30
-          }
-          \end{split}
-        </me>
-      At this point we<rsq/>ve eliminated both <m>x</m> and <m>y</m> from the third equation, and we can solve <m>10z=30</m> to get <m>z=3</m>.  Substituting for <m>z</m> in the second equation gives <m>y+2\cdot3=4</m>, or <m>y=-2</m>.  Substituting for <m>y</m> and <m>z</m> in the first equation gives <m>x + 2\cdot(-2) + 3\cdot3 = 6</m>, or <m>x=3</m>.  Thus the only solution is <m>(x,y,z)=(1,-2,3)</m>.
-      </p>
-
-      <p>We can check that our solution is correct by substituting <m>(x,y,z)=(1,-2,3)</m> into the original equation:
-      <me>
-        \syseq{x + 2y + 3z = 6;
-        2x - 3y + 2z = 14;
-        3x + y - z = -2
-        }
-        \quad\xrightarrow{\text{substitute}}\quad
-        \syseq{
-        1 + 2\cdot(-2) + 3\cdot 3 = 6;
-        2\cdot 1 - 3\cdot(-2) + 2\cdot 3 = 14;
-        3\cdot 1 + (-2) - 3 = -2\rlap.
-        }
-      </me>
-      </p>
-      </solution>
-    </example>
-
-    <paragraphs><title>Augmented Matrices and Row Operations</title>
-    <p>Solving equations by elimination requires writing the variables <m>x,y,z</m> and the equals sign <m>=</m> over and over again, merely as placeholders: all that is changing in the equations is the coefficient <em>numbers</em>.  We can make our life easier by extracting only the numbers, and putting them in a box:
-    <idx><h>Augmented matrix</h><see>Matrix</see></idx>
-    <me>
-      \syseq{x + 2y + 3z = 6;
-      2x - 3y + 2z = 14;
-      3x + y - z = -2
-      }
-      \quad\xrightarrow{\text{becomes}}\quad
-      \amat{
-      1  2  3  6 ;
-      2  -3  2  14;
-      3  1  -1  -2
-      }.
-    </me>
-    <idx><h>Matrix</h><h>definition of</h></idx>
-    <idx><h>Matrix</h><h>augmented</h></idx>
-    This is called an <term>augmented matrix</term>.  The word <q>augmented</q> refers to the vertical line, which we draw to remind ourselves where the equals sign belongs; a <term>matrix</term> is a grid of numbers without the vertical line.  In this notation, our three valid ways of manipulating our equations become <term>row operations</term>:
-    <idx><h>Row operations</h></idx>
-    <ul>
-      <li><alert>Scaling:</alert> multiply all entries in a row by a nonzero number.
-      <idx><h>Row operations</h><h>scaling</h></idx>
-      <me>
-        \amat{
-        1  2  3  6 ;
-        2  -3  2  14;
-        3  1  -1  -2
-        }
-        \quad\xrightarrow{R_1 = R_1 \times -3}\quad
-        \amat{
-        -3  -6  -9  -18 ;
-        2  -3  2  14;
-        3  1  -1  -2
-        }
-      </me>
-      Here the notation <m>R_1</m> simply means <q>the first row</q>, and likewise for <m>R_2,R_3,</m> etc.
-      <notation><usage>R_i</usage><description>Row <m>i</m> of a matrix</description></notation>
-      </li>
-      <li><alert>Replacement:</alert> add a multiple of one row to another, replacing the second row with the result.
-      <idx><h>Row operations</h><h>replacement</h></idx>
-      <idx><h>Row replacement</h><see>Row operations, replacement</see></idx>
-      <me>
-        \amat{
-        1  2  3  6 ;
-        2  -3  2  14;
-        3  1  -1  -2
-        }
-        \quad\xrightarrow{R_2 = R_2 -2\times R_1}\quad
-        \amat{
-        1  2  3  6 ;
-        0 -7 -4 2;
-        3  1  -1  -2
-        }
-      </me>
-      </li>
-      <li><alert>Swap:</alert> interchange two rows.
-      <idx><h>Row operations</h><h>swap</h></idx>
-      <me>
-        \amat{
-        1  2  3  6 ;
-        2  -3  2  14;
-        3  1  -1  -2
-        }
-        \quad\xrightarrow{R_1 \longleftrightarrow R_3}\quad
-        \amat{
-        3  1  -1  -2;
-        2  -3  2  14;
-        1  2  3  6
-        }
-      </me>
-      </li>
-    </ul>
-    </p>
-
-    <example>
-      <statement>
-        <p>Solve <xref ref="systems-eqns-example"/> using row operations.</p>
-      </statement>
-      <solution>
-        <p>
-        We start by forming an augmented matrix:
-        <me>
-          \syseq{x + 2y + 3z = 6;
-          2x - 3y + 2z = 14;
-          3x + y - z = -2
-          }
-          \quad\xrightarrow{\text{becomes}}\quad
-          \amat{
-          1  2  3  6 ;
-          2  -3  2  14;
-          3  1  -1  -2
-          }.
-        </me>
-        Eliminating a variable from an equation means producing a zero to the left of the line in an augmented matrix.  First we produce zeros in the first column (i.e. we eliminate <m>x</m>) by subtracting multiples of the first row.
-        <me>\def\r{\color{red}}
-          \begin{split}
-          \amat{
-          1  2  3  6 ;
-          2  -3  2  14;
-          3  1  -1  -2
-          }
-          \quad\xrightarrow{R_2=R_2-2R_1}\quad&amp;
-          \amat{
-          1  2  3  6 ;
-          \r0 -7 -4 2 ;
-          3  1  -1  -2
-          } \\
-          {}\quad\xrightarrow{R_3=R_3-3R_1}\quad&amp;
-          \amat{
-          1  2  3  6 ;
-          0 -7 -4 2 ;
-          \r0 -5 -10 -20
-          }
-          \end{split}
-        </me>
-        This was made much easier by the fact that the top-left entry is equal to <m>1</m>, so we can simply multiply the first row by the number below and subtract.  In order to eliminate <m>y</m> in the same way, we would like to produce a <m>1</m> in the second column.  We could divide the second row by <m>-7</m>, but this would produce fractions; instead, let<rsq/>s divide the third by <m>-5</m>.
-        <me>\def\r{\color{red}}
-          \begin{split}
-          \amat{
-          1  2  3  6 ;
-          0 -7 -4 2 ;
-          0 -5 -10 -20
-          }
-          \quad\xrightarrow{R_3=R_3\div-5}\quad&amp;
-          \amat{
-          1  2  3  6 ;
-          0 -7 -4 2 ;
-          0 \r1 2 4
-          } \\
-          {}\quad\xrightarrow{R_2\longleftrightarrow R_3}\quad&amp;
-          \amat{
-          1  2  3  6 ;
-          0 1 2 4 ;
-          0 -7 -4 2
-          } \\
-          {}\quad\xrightarrow{R_2\longleftrightarrow R_3}\quad&amp;
-          \amat{
-          1  2  3  6 ;
-          0 1 2 4 ;
-          0 \r0 10 30
-          } \\
-          {}\quad\xrightarrow{R_3 = R_3\div 10}\quad&amp;
-          \amat{
-          1  2  3  6 ;
-          0 1 2 4 ;
-          0 0 \r1 3
-          }
-          \end{split}
-        </me>
-        We swapped the second and third row just to keep things orderly.  Now we translate this augmented matrix back into a system of equations:
-        <me>
-          \amat{
-          1  2  3  6 ;
-          0 1 2 4 ;
-          0 0 1 3
-          } \quad\xrightarrow{\text{becomes}}\quad
-          \syseq{
-          x + 2y + 3z = 6;
-          \. \+ y + 2z = 4;
-          \. \+ \. \+ z = 3}
-        </me>
-        Hence <m>z=3</m>; back-substituting as in this <xref ref="systems-eqns-example1"/> gives <m>(x,y,z)=(1,-2,3)</m>.
-        </p>
-      </solution>
-    </example>
-
-    <bluebox><p>The process of doing row operations to a matrix does not change the solution set of the corresponding linear equations!</p></bluebox>
-
-    <p>Indeed, the whole point of doing these operations is to solve the equations using the elimination method.</p>
-
-    <definition>
-      <idx><h>Row equivalence</h></idx>
-      <statement>
-        <p>Two matrices are called <term>row equivalent</term> if one can be obtained from the other by doing some number of row operations.</p>
-      </statement>
-    </definition>
-
-    <p>So the linear equations of row-equivalent matrices have the <em>same solution set</em>.</p>
-
-    <example>
-      <title>An Inconsistent System</title>
-      <statement>
-      <p>
-        Solve the following system of equations using row operations:
-        <me>
-          \syseq{x + y = 2;
-          3x + 4y = 5;
-          4x + 5y = 9
-          }
-        </me>
-      </p>
-      </statement>
-      <solution>
-        <p>
-          First we put our system of equations into an augmented matrix.
-          <me>
-            \syseq{x + y = 2;
-            3x + 4y = 5;
-            4x + 5y = 9
-            }
-            \quad\xrightarrow{\text{augmented matrix}}\quad
-            \amat{1 1 2; 3 4 5; 4 5 9}
-          </me>
-          We clear the entries below the top-left using row replacement.
-          <me>\def\r{\color{red}}
-            \begin{split}
-            \amat{1 1 2; 3 4 5; 4 5 9}
-            \quad\xrightarrow{R_2=R_2-3R_1}\quad&amp;
-            \amat{1 1 2; \r0 1 -1; 4 5 9} \\
-            {}\quad\xrightarrow{R_3=R_3-4R_1}\quad&amp;
-            \amat{1 1 2; 0 1 -1; \r0 1 1}
-            \end{split}
-          </me>
-          Now we clear the second entry from the last row.
-          <me>\def\r{\color{red}}
-            \amat{1 1 2; 0 1 -1; 0 1 1}
-            \quad\xrightarrow{R_3=R_3-R_2}\quad
-            \amat{1 1 2; 0 1 -1; 0 \r0 2}
-          </me>
-          This translates back into the system of equations
-          <me>
-            \syseq{x + y = 2; \. \+ y = -1; \. \+ 0 = 2\rlap.}
-          </me>
-          Our original system has the same solution set as this system.  But this system has no solutions: there are no values of <m>x,y</m> making the third equation true!  We conclude that our original equation has no solutions either.
-        </p>
-      </solution>
-    </example>
-
-    <definition>
-      <idx><h>System of linear equations</h><h>inconsistent</h></idx>
-      <idx><h>System of linear equations</h><h>consistent</h></idx>
-      <idx><h>Consistent</h><see>System of linear equations</see></idx>
-      <idx><h>Inconsistent</h><see>System of linear equations</see></idx>
-      <statement>
-        <p>A system of equations is called <term>inconsistent</term> if it has no solutions.  It is called <term>consistent</term> otherwise.</p>
-      </statement>
-    </definition>
-
-  </paragraphs>
-
-  </subsection>
 
 </section>
