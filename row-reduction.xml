@@ -89,13 +89,28 @@ the license is included in gfdl.xml.
     </p>
 
     <example>
-      <p>The following matrices are in reduced row echelon form:
-      <me>\mat{0 0 0; 0 0 0} \qquad \mat{0 1 0 0}\qquad\mat{0 1 8 0}\qquad
-      \amat{1 17 0; 0 0 1}.</me>
-      The following matrix is in row echelon form but not reduced row echelon form:
-      <me>\mat{2 0; 0 1}.</me>
-      The following matrix is not in echelon form:
-      <me>\vec{0 1 0 0}.</me>
+      <p>
+        The following matrices are in reduced row echelon form:
+        <me>
+          \mat{1 0 2; 0 1 -1}
+          \qquad \mat{0 1 8 0}
+          \qquad \amat{1 17 0; 0 0 1}
+          \qquad \mat{0 0 0; 0 0 0}.
+        </me>
+        The following matrices are in row echelon form but not reduced row echelon form:
+        <me>
+          \mat{2 1; 0 1}
+          \qquad \amat{2 7 1 4; 0 0 2 1; 0 0 0 3}
+          \qquad \amat{1 17 0; 0 1 1}
+          \qquad \mat{2 1 3; 0 0 0}.
+        </me>
+        The following matrices are not in echelon form:
+        <me>
+          \amat{2 7 1 4; 0 0 2 1; 0 0 1 3}
+          \qquad \amat{0 17 0; 0 2 1}
+          \qquad \mat{2 1; 2 1}
+          \qquad \vec{0 1 0 0}.
+        </me>
       </p>
     </example>
 
