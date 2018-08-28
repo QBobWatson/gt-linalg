@@ -207,7 +207,7 @@ the license is included in gfdl.xml.
     </ul>
     </p>
 
-    <example>
+    <example xml:id="systems-eqns-example1b">
       <statement>
         <p>Solve <xref ref="systems-eqns-example"/> using row operations.</p>
       </statement>
@@ -405,6 +405,22 @@ the license is included in gfdl.xml.
       </statement>
     </definition>
 
+    <p>
+      A matrix in row-echelon form is generally easy to solve using back-substitution.  For example,
+        <me>
+          \amat{
+          1  2  3  6 ;
+          0 1 2 4 ;
+          0 0 10 30
+          } \quad\xrightarrow{\text{becomes}}\quad
+          \syseq{
+          x + 2y + 3z = 6;
+          \. \+ y + 2z = 4;
+          \. \+ \. \+ 10z = 30\rlap.}
+        </me>
+        We immediately see that <m>z=3</m>, which implies <m>y = 4-2\cdot 3 = -2</m> and <m>x = 6 - 2(-2) - 3\cdot 3 = 1.</m>  See this <xref ref="systems-eqns-example1b"/>.
+    </p>
+
     <definition>
       <idx><h>Reduced row echelon form</h></idx>
       <statement>
@@ -430,6 +446,19 @@ the license is included in gfdl.xml.
   \color{red}1 &amp;= \text{pivot}
 \end{aligned}
     </me>
+    </p>
+
+    <p>
+      A matrix in reduced row echelon form is in some sense completely solved.  For example,
+        <me>
+          \amat{
+          1  0 0 1 ;
+          0 1 0 -2 ;
+          0 0 1 3
+          } \quad\xrightarrow{\text{becomes}}\quad
+          \syseq{
+          x = 1; y = -2; z = 3\rlap.}
+        </me>
     </p>
 
     <example>
