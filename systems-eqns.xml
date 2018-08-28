@@ -315,7 +315,7 @@ the license is included in gfdl.xml.
       </figure>
     </example>
 
-    <p>In the above examples, it was useful from a psychological perspective to replace a list of four numbers (representing traffic flow) or of 841 numbers (representing a QR code) by a single piece of data in some <m>\R^n.</m>  This is a powerful concept;   starting in <xref ref="spans"/>, we will almost exclusively record solutions of systems of linear equations in this way.</p>
+    <p>In the above examples, it was useful from a psychological perspective to replace a list of four numbers (representing traffic flow) or of 841 numbers (representing a QR code) by a single piece of data: a point in some <m>\R^n.</m>  This is a powerful concept;   starting in <xref ref="spans"/>, we will almost exclusively record solutions of systems of linear equations in this way.</p>
   </subsection>
 
 
