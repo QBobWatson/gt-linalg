@@ -32,9 +32,9 @@ the license is included in gfdl.xml.
         <p>A matrix is in <term>row echelon form</term> if:
         <ol>
           <li>All zero rows are at the bottom.</li>
-          <li>Each leading nonzero entry of a row is to the <em>right</em> of the
-          leading entry of the row above.</li>
-          <li>Below a leading entry of a row, all entries are zero.</li>
+          <li>The first nonzero entry of a row is to the <em>right</em> of the
+          first nonzero entry of the row above.</li>
+          <li>Below the first nonzero entry of a row, all entries are zero.</li>
         </ol>
         </p>
       </statement>
@@ -137,13 +137,13 @@ the license is included in gfdl.xml.
             Swap the 1st row with a lower one so a leftmost nonzero entry is
   in the 1st row (if necessary).</li>
             <li><alert>Step 1b:</alert>
-            Scale the 1st row so that its leading entry is equal to 1.</li>
+            Scale the 1st row so that its first nonzero entry is equal to 1.</li>
             <li><alert>Step 1c:</alert>
             Use row replacement so all entries below this 1 are 0.</li>
             <li><alert>Step 2a:</alert>
             Swap the 2nd row with a lower one so that the leftmost nonzero entry is in the 2nd row.</li>
             <li><alert>Step 2b:</alert>
-            Scale the 2nd row so that its leading entry is equal to 1.</li>
+            Scale the 2nd row so that its first nonzero entry is equal to 1.</li>
             <li><alert>Step 2c:</alert>
             Use row replacement so all entries below this 1 are 0.</li>
             <li><alert>Step 3a:</alert>
