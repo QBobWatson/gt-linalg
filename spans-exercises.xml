@@ -432,6 +432,144 @@ the license is included in gfdl.xml.
 						gives this solution set:
 						<me>\bigl\{ \vec{1 -1 0} + \vec{-\frac{3}{5} \frac{2}{5} 1}z \mid z \text{ in } \R \bigr\}</me>
 					</li>
+					<li> We reduce:
+						<md>
+							<mrow>
+							\amat{
+							1 1  -2 0;
+              						1 -1  0  3;
+              						3 -1  -2 -6;
+              						0 2  -2 3
+							}
+							\quad\xrightarrow{}\quad
+							&amp;\amat{
+							1 1  -2 0;
+              						0 -2  2  -3;
+              						0 -4  4  -6;
+              						0 2   -2 3
+							}
+							</mrow>
+							<mrow>
+							\quad\xrightarrow{}\quad
+							&amp;\amat{
+							 1 1  -2 0;
+              						0 -2  2  -3;
+              						0 0   0  0;
+              						0 0   0  0
+							}
+							</mrow>
+						</md>
+						 The solution set is
+						 <me>\bigl\{ \vec{-\frac{3}{2} \frac{3}{2} 0} + \vec{1 1 1}z \mid z \text{ in } \R \bigr\}</me>
+					</li>
+					<li>The row reduction
+						<md>
+							<mrow>
+							\amat{
+							 2 -1 -1 1 4;
+             						1 1  1  0 -1
+							}
+							\quad\xrightarrow{}\quad
+							&amp;\amat{
+							 2 -1   -1   1    4;
+             						0 \frac{3}{2}  \frac{3}{2}  -\frac{1}{2}  -3
+							}
+							</mrow>
+						</md>
+						gives the solution set
+						<me>\bigl\{ \vec{1 -2 0 0} + \vec{0 -1 1 0}z + \vec{-\frac{1}{3} \frac{1}{3} 0 1}w \mid z, w \text{ in } \R \bigr\}</me>
+					</li>
+					<li>Here is the reduction:
+						<md>
+							<mrow>
+							\amat{
+							1 1  -2 0;
+              						1 -1 0  -3;
+              						3 -1 -2 0
+							}
+							\quad\xrightarrow{}\quad
+							&amp;\amat{
+							1 1  -2 0;
+             						0 -2 2  -3;
+             						0 -4  4  0
+							}
+							</mrow>
+							<mrow>
+							\quad\xrightarrow{}\quad
+							&amp;\amat{
+							1 1 -2 0;
+            						0 -2 2  -3;
+            						0 0  0  6
+							}
+							</mrow>
+						</md>
+						The solution set is thus empty, as the final equation is inconsistent.
+					</li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>Each of the following vectors is in the corresponding set. What values of the parameters, if any, produce that vector, i.e., explicitly shows this to be true?
+				<ol>
+					<li>
+						<me>\vec{5 -5}, \bigl\{ \vec{1 -1}k \mid k \text{ in } \R\bigr\}</me>
+					</li>
+					<li>
+						<me>\vec{-1 2 1}, \bigl\{ \vec{-2 1 0}i + \vec{3 0 1}j \mid i, j \text{ in } \R \bigr\}</me>
+					</li>
+					<li>
+						<me>\vec{0 -4 2}, \bigl\{ \vec{1 1 0}m + \vec{2 0 1}n \mid m, n \text{ in } \R\bigr\}</me>
+					</li>
+					<li>
+						<me>\vec{-3 -6 -9}, \bigl\{ \vec{1 2 3}s + \vec{2 4 6}t \mid s, t \text{ in } \R \bigr\}</me>
+					</li>
+					<li>
+						<me>\vec{0 -1 2}, \bigl\{ \vec{1 2 3}s + \vec{2 4 6}t \mid s, t \text{ in } \R \bigr\}</me>
+					</li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>For each problem we get a system of linear equations by looking at the equations of components.
+				<ol>
+					<li><m>k=5</m></li>
+					<li>The second components show that <m>i=2</m>, the third components show that <m>j=1</m>.</li>
+					<li><m>m=-4</m>, <m>n=2</m></li>
+					<li>Any <m>s, t</m> satisfying <m>s+2t=-3</m> works. In particular, there are infinitely many choices.</li>
+					<li>The span of the two vectors listed is the set of all scalar multiples of <m>\vec{1 2 3}</m>, which doesn't include <m>\vec{1 2 3}</m>. Thus, there are no <m>s</m> and <m>t</m> in <m>\R</m> which produce this vector.</li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>In each part, decide if the vector is in the set.
+				<ol>
+					<li>
+						<me>\vec{3 -1}, \bigl\{\vec{-6  2}k\mid k\text{ in } \R\bigr\}</me>
+					</li>
+					<li>
+						<me>\vec{5 4}, \bigl\{\vec{5 -4}j \mid j \text{ in } \R \bigr\}</me>
+					</li>
+					<li>
+						<me>\vec{2 1 -1}, \bigl\{\vec{0 3 -1} + \vec{1 -1 3}r \mid r \text{ in }  \R \bigr\}</me>
+					</li>
+					<li>
+						<me>\vec{1 0 1}, \bigl\{\vec{2 0 1}j + \vec{-3 -1 1}k \mid j, k \text{ in } \R\bigr\}</me>
+					</li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>For each problem we get a system of linear equations by looking at the equations of components.
+				<ol>
+					<li>Yes; take <m>k = -\frac{1}{2}</m>.
+					</li>
+					<li>No; the system with equations <m>5=5\cdot j</m> and <m>4=-4\cdot j</m> has no solution.</li>
+					<li>Yes; take <m>r=2</m>.</li>
+					<li>No. The second components give <m>k=0</m>. Then the third components give <m>j=1</m>. But the first components don't check. </li>
 				</ol>
 			</p>
 		</answer>
