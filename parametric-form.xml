@@ -69,7 +69,7 @@ the license is included in gfdl.xml.
 
       <p>We have found all solutions: it is the set of all values <m>x,y,z</m>, where
       <me>
-        \syseq{x = 1 - 5z; y = -1 - 2z} \qquad \text{$z$ any real number.}
+        \syseq{x = 1 - 5z; y = -1 - 2z; z = \. \+ z} \qquad \text{$z$ any real number.}
       </me>
       For instance, setting <m>z=0</m> gives the solution <m>(x,y,z)=(1,-1,0)</m>, and setting <m>z=1</m> gives the solution <m>(x,y,z)=(-4,-3,1)</m>.
       </p>
