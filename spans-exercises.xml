@@ -574,6 +574,56 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>[Cleary] A farmer with 1200 acres is considering planting three different crops, corn, soybeans, and oats. The farmer wants to use all <m>1200</m> acres. Seed corn costs <dollar/><m>20</m> per acre, while soybean and oat seed cost <dollar/><m>50</m>  and <dollar/><m>12</m> per acre respectively. The farmer has <dollar/><m>40\,000</m> available to buy seed and intends to spend it all.
+				<ol>
+					<li>Use the information above to formulate two linear equations with three unknowns and solve it.</li>
+					<li>Solutions to the system are choices that the farmer can make. Write down two solutions.</li>
+					<li>Suppose that in the fall when the crops mature, the farmer can bring in revenue of  <dollar/><m>100</m> per acre for corn, <dollar/><m>300</m> per acre for soybeans and  <dollar/><m>180</m>per acre for oats. Which of your two solutions in the prior part would have resulted in a larger revenue? </li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>
+				<ol>
+					<li>Let <m>c</m> be the number of acres of corn, <m>s</m> be the number of acres of soy, and <m>a</m> be the number of acres of oats. We reduce
+						<md>
+							<mrow>
+							\amat{
+							1  1 1   1200; 
+            						20 50 12 40000  
+							}
+							\quad\xrightarrow{}\quad
+							&amp;\amat{
+							1 1 1 1200; 
+                  						0 30 -8 16000  
+							}
+							</mrow>
+						</md>
+						To describe the solution set we can parametrize using <m>a</m>
+							<me>\bigl\{\vec{c s a} = \vec{\frac{20000}{30} \frac{16000}{30} 0} + \vec{-\frac{38}{30} \frac{8}{30} 1}a \mid  a \text{ in } \R\bigr\}</me>
+					</li>
+					<li>There are many answers possible here. For instance we can take <m>a=0</m> to get <me>c=\frac{20000}{30}\approx 666.66</me> and <me>s=\frac{16000}{30}\approx 533.33</me>.
+          					Another example is to take <me>a=\frac{20000}{38}\approx 526.32</me>, giving <m>c=0</m> and <me>s=\frac{7360}{38}\approx 193.68</me>.
+					</li>
+					<li>Plug your answers from the prior part into  <m>100c+300s+80a</m>.</li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>Parametrize the solution set of this one-equation system.
+				<me> x_1+x_2+\cdots+x_n=0</me>
+			</p>
+		</statement>
+		<answer>
+			<p>This system has one equation. The leading variable is <m>x_1</m>, the other variables are free. We thus obtain the solution set
+				<me>\bigl\{\vec{-1 1 \vdots, -1 0}x_2 + \cdots + \vec{-1 0 \vdots, -1 1}x_n \mid x_2, \ldots, x_n \text{ in } \R \bigr\}</me>
+			</p>
+		</answer>
+	</exercise>
 </exercises>
 
 
