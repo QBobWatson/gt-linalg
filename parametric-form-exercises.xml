@@ -511,4 +511,73 @@ the license is included in gfdl.xml.
 	    		</p>
 	    	</answer>
 	    </exercise>
+	    <exercise>
+	    	<statement>
+	    		<p> In the following, <m>x</m> and <m>y</m> denote variables, and <m>a</m> is a fixed number. [USSROlympiad174]
+	    			<ol>
+	    				<li>Solve the system of equations.
+	    					<me>
+	    					\syseq{
+	    					ax  +  y  =  a^2;
+             					x +  ay =  1
+	    					}
+	    					</me>
+	    				For what values of <m>a</m> does the system fail to have solutions, and for what values of <m>a</m> are there infinitely many solutions?
+	    				</li>
+					<li>Answer the above question for the system.
+						<me>
+						\syseq{
+						ax  +  y  =  a^3;    
+             					x  +  ay =  1
+						}
+						</me>
+					</li>
+	    			</ol>
+	    		</p>
+	    	</statement>
+	    	<answer>
+	    		<p>
+	    			<ol>
+	    				<li> Formal solution of the system yields
+	    					<me> x=\frac{a^3-1}{a^2-1} \qquad y=\frac{-a^2+a}{a^2-1}.</me>
+	    					
+	    					If <m>a+1\neq 0</m> and <m>a-1\neq 0</m>, then the system has the single solution.
+	    					<me> x=\frac{a^2+a+1}{a+1}  \qquad y=\frac{-a}{a+1}.</me>
+	    					If <m>a=-1</m>, or if <m>a=1</m>, then the formulas are meaningless; in the first instance we arrive at the system
+	    					<me>
+	    					\syseq{
+	    					-x +  y  =  1;
+               					x -  y  =  1
+	    					}
+	    					</me>
+	    					 which is a contradictory system. In the second instance we have
+	    					 <me>
+	    					 \syseq{
+	    					 x + y  =  1;
+               					x +  y  =  1
+	    					 }
+	    					 </me>
+	    					 which has an infinite number of solutions (for example, for <m>x</m> arbitrary, <m>y=1-x</m>).
+	    				</li>
+	    				<li>Solution of the system yields
+	    					<me>x=\frac{a^4-1}{a^2-1} \qquad y=\frac{-a^3+a}{a^2-1}</me>
+	    					Here, is <m>a^2-1\neq 0</m>, the system has the single solution <m>x=a^2+1</m>, <m>y=-a</m>.
+					            For <m>a=-1</m> and <m>a=1</m>, we obtain the systems
+						<me>
+						\syseq{
+						 -x +  y  =  -1;
+               					x -  y  =  1
+						}
+						\qquad 
+						\syseq{
+						x +  y  =  1;
+               					x +  y  =  1
+						}
+						</me>
+						both of which have an infinite number of solutions.
+	    				</li>
+	    			</ol>
+	    		</p>
+	    	</answer>
+	    </exercise>
 </exercises>

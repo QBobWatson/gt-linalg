@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<exercises>
+	<exercise>
+		<statement>
+			<p>Make up a four equations/four unknowns system having
+				<ol>
+					<li>a one-parameter solution set</li>
+					<li>a two-parameter solution set</li>
+					<li>a three-parameter solution set</li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>
+				<ol>
+					<li>Here is one: the fourth equation is redundant but still OK.
+						<me>
+							\syseq{
+							 x  +  y  -  z  +  w  =  0;
+                						\. \+ y  -  z \+ \. =  0;
+                						\. \+ \. \+ 2z  + 2w = 0;
+               						\. \+ \. \+ z  +  w  =  0
+							}
+						</me>
+					</li>
+					<li>Here is one.
+						<me>
+							\syseq{
+							x  +  y  -  z  +  w  =  0;
+                						\. \+ \. \+ \.  \+ w  =  0;
+                						\. \+ \. \+ \. \+ w  =  0; 
+                						\. \+ \. \+ \. \+ w  =  0
+							}
+						</me>
+					</li>
+					<li>This is one.
+						<me>
+							\syseq{
+							x  +  y  -  z  +  w  =  0;
+             						x  +  y  -  z  +  w  =  0;
+             						x  +  y  -  z  +  w  =  0;
+             						x  +  y  -  z  +  w  =  0 
+							}
+						</me>
+					</li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>Solve this system. Then solve the associated homogeneous system.
+				<me>
+				\syseq{
+				 x  + y  - 2z = 0;
+        				x  - y  \+ \. = -3;
+        				3x - y  - 2z = -6;
+           				\. \+  2y - 2z = 3  
+				}
+				</me>
+			</p>
+		</statement>
+		<answer>
+			<p>This reduction solves the system.
+				<md>
+					<mrow>
+					\amat{
+					1 1  -2 0;
+         					1 -1 0  3;
+         					3 -1  -2 -6;
+         					0 2   -2 3
+					}
+					\quad\xrightarrow{}\quad
+					&amp;\amat{
+					1 1  -2 0;
+         					0 -2 2  -3;
+         					0 -4  4  -6;
+         					0 2   -2 3
+					}
+					</mrow>
+					<mrow>
+					\quad\xrightarrow{}\quad
+					&amp;\amat{
+					1 1  -2 0;
+         					0 -2  2  -3;
+         					0 0  0  0;
+         					0 0   0  0
+					}
+					</mrow>
+				</md>
+				The solution set is:
+				<me>\bigl\{\vec{-\frac{3}{2} \frac{3}{2} 0} + \vec{1 1 1}z \mid z \text{ in } \R \bigr\}</me>
+			Similarly we can reduce the associated homogeneous system
+				<md>
+					<mrow>
+					\amat{
+					1 1  -2 0;
+         					1 -1  0  0;
+         					3 -1  -2 0;
+         					0 2   -2 0
+					}
+					\quad\xrightarrow{}\quad
+					&amp;\amat{
+					 1 1   -2 0;
+         					0  -2  2  0; 
+         					0 -4  4  0;
+         					0 2  -2 0
+					}
+					</mrow>
+					<mrow>
+					\quad\xrightarrow{}\quad
+					&amp;\amat{
+					1 1  -2 0;
+        	 				0 -2  2  0;
+         					0 0  0  0;
+         					0 0   0  0
+					}
+					</mrow>
+				</md>
+				to get its solution set:
+				<me>\bigl\{\vec{1 1 1}z \mid z \text{ in } \R \bigr\}</me>
+			</p>
+		</answer>
+	</exercise>
+</exercises>
