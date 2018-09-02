@@ -624,6 +624,100 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>In each part, determine whether the given vector is in the span of the given set? That is, determine if it is a linear combination of the vectors in the set.
+				<ol>
+					<li><m>\vec{2 3}, \bigl\{\vec{1 4}, \vec{1 5}\bigr\}</m></li>
+					<li><m>\vec{-1 0  1}, \bigl\{\vec{2  1  0}, \vec{1  0  1}\bigr\}</m></li>
+					<li><m>\vec{1  3  0}, \bigl\{\vec{1  0  4}, \vec{2  1  5}, \vec{3 3  0}, \vec{4  2  1}\bigr\} </m></li>
+					<li><m>\vec{1 0  1  1}, \bigl\{\vec{2 1  0  1}, \vec{3 0  0  2}\bigr\} </m></li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>
+				<ol>
+					<li>Yes. Solve
+						<me>c_1\vec{1  4} + c_2\vec{1 5} = \vec{2  3}</me>
+						with
+						<md>
+							<mrow>
+							\amat{
+							 1  1  2;
+                						4  5  3
+							}
+							\quad\xrightarrow{}\quad
+							&amp;\amat{
+							1  1  2; 
+							0  1  -5
+							}
+							</mrow>
+						</md>
+						to conclude that there are <m>c_1</m> and <m>c_2</m> giving the combination.
+					</li>
+					<li>No. The reduction
+						<md>
+							<mrow>
+							\amat{
+							 2  1  -1;
+                						1  0  0;
+                						0  1  1
+							}
+							\quad\xrightarrow{}\quad
+							&amp;\amat{
+							2  1 -1;
+                						0  -\frac{1}{2}  \frac{1}{2};
+                						0  1  1
+							}
+							</mrow>
+							<mrow>
+							\quad\xrightarrow{}\quad
+							&amp;\amat{
+							 2  1 -1;
+                						0  -\frac{1}{2}  \frac{1}{2}
+                						0  0 2
+							}
+							</mrow>
+						</md>
+						shows that
+						<me>c_1\vec{2  1  0} + c_2\vec{1  0  1} = \vec{-1  0 1}</me>
+						has no solution.
+					</li>
+					<li>Yes. The reduction
+						<md>
+							<mrow>
+							\amat{
+							1  2  3  4  1 ;
+                						0  1  3  2  3;
+                						4  5  0  1 0
+							}
+							\quad\xrightarrow{}\quad
+							&amp;\amat{
+							1  2  3  4  1;
+                						0  1  3  2  3;
+                						0  -3 -12 -15 -4
+							}
+							</mrow>
+							<mrow>
+							\quad\xrightarrow{}\quad
+							&amp;\amat{
+							1  2  3  4  1;
+                						0  1  3  2  3;
+                						0  0  -3 -9 5
+							}
+							</mrow>
+						</md>
+						shows that there are infinitely many ways
+						<me> \bigl\{\vec{c_1  c_2  c_3  c_4} = \vec{-10  8  -\frac{5}{3}  0} + \vec{-9  7  -3  1}c_4 \mid c_4\text{ in }\R\bigr\}</me>
+						  to write a combination.
+						  <me> \vec{1  3  0} = c_1\vec{1 0  4} + c_2\vec{2  1  5} + c_3\vec{3  3  0} + c_4\vec{4  2  1}</me>
+					</li>
+					<li>No. Look at the third components.</li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
 </exercises>
 
 

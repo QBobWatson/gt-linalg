@@ -132,4 +132,101 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>Solve each system, giving the solution set in vector notation. Identify a particular solution and the solution of the homogeneous system.
+				<ol>
+					<li>
+						<me>
+						\syseq{
+						 2x  +  y  -  z  =  1;
+                  					4x  -  y  \+ \. =  3  
+						}
+						</me>
+					</li>
+					<li>
+						<me>
+						\syseq{
+						x  \+ \. -  z  \+ \. =  1;
+                     					\. \+ y  +  2z -  w  =  3;
+                   					x  +  2y +  3z -  w  =  7  
+						}
+						</me>
+					</li>
+					<li>
+						<me>
+						\syseq{
+						x  -  y  +  z  \+ \. =  0;
+                      					\. \+ y  \+ \. +  w  =  0; 
+                  					3x  -  2y +  3z +  w  =  0;
+                      					\. - y \+ \. -  w  =  0  
+						}
+						</me>
+					</li>
+					<li>
+						<me>
+						\syseq{
+						a  +  2b +  3c +  d  -  e  =  1;
+                  					3a  -  b  +  c  +  d  +  e  =  3  
+						}
+						</me>
+					</li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>The answers from the prior subsection show the row operations. Each answer here just lists the solution set, the particular solution, and the homogeneous solution.
+				<ol>
+					<li>The solution set is
+						<me>\bigl\{\vec{\frac{2}{3} -\frac{1}{3} 0} + \vec{\frac{1}{6}  \frac{2}{3}  1}z \mid z \text{ in  } \R\bigr\}</me>
+					A particular solution and the solution set for the associated homogeneous system are here.
+						<me>\vec{\frac{2}{3}  -\frac{1}{3} 0} \qquad \bigl\{\vec{\frac{1}{6} \frac{2}{3}  1}z \mid z \text{ in } \R\bigr\}</me>
+					</li>
+					<li>The solution set is infinite:
+						<me>\bigl\{\vec{1  3 0  0} + \vec{1 -2  1  0}z \mid z \text{ in }\R\bigr\}</me>
+						Here are a particular solution and the solution set for the associated homogeneous system.
+						<me>\vec{1  3  0  0} \qquad \bigl\{\vec{1  -2  1 0}z \mid z\text{ in  }\R\bigr\}</me>
+					</li>
+					<li>This is the solution set.
+						<me> \bigl\{\vec{0  0  0  0} + \vec{-1  0 1 0}z + \vec{-1  -1  0  1}w \mid z, w\text{ in }\R\bigr\}</me>
+						Here is a particular solution and the solution set for the associated homogeneous system.
+						<me> \vec{0  0  0  0} \qquad \bigl\{\vec{-1  0  1  0}z +\vec{-1  -1  0  1}w \mid z, w \text{ in }\R\bigr\}</me>
+					</li>
+					<li>The solution set is this.
+						<me>\bigl\{\vec{1  0  0  0  0} +\vec{-\frac{5}{7}  -\frac{8}{7}  1  0  0}c +\vec{-\frac{3}{7}  -\frac{2}{7}  0  1  0}d +\vec{-\frac{1}{7}  \frac{4}{7}  0  0  1}e \mid c, d, e\text{ in  }\R\bigr\}</me>
+						And, this is a particular solution and the solution set for the associated homogeneous system.
+						<me> \vec{1 0  0  0  0} \qquad \bigl\{\vec{1  0  0  0  0} +\vec{-\frac{5}{7}  -\frac{8}{7}  1  0  0}c +\vec{-\frac{3}{7}  -\frac{2}{7}  0  1  0}d +\vec{-\frac{1}{7}  \frac{4}{7}  0  0  1}e \mid c, d, e\text{ in  }\R\bigr\}</me>
+          					</li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>For the system
+				<me>
+				\syseq{
+				2x  -  y  \+ \. -  w  =  3;
+           				\. \+ y  +  z  +  2w =  2;
+        				x  -  2y -  z \+ \. =  -1
+				}
+				</me>
+			   which of these can be used as the particular solution part of some general solution?
+			   	<ol>
+			   		<li><m>\vec{0  -3  5  0}</m></li>
+			   		<li><m>\vec{2  1 1  0}</m></li>
+			   		<li><m>\vec{-1 -4  8  -1}</m></li>
+			   	</ol>
+			</p>
+		</statement>
+		<answer>
+			<p> Just plug them in and see if they satisfy all three equations.
+				<ol>
+					<li>No</li>
+					<li>Yes</li>
+					<li>Yes</li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
 </exercises>
