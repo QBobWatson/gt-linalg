@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<exercises>
+	<exercise>
+		<statement>
+			<p>Decide whether each subset of  <m>\R^3</m> is linearly dependent or linearly independent. 
+				<ol>
+					<li>
+						<me>\left\{\vec{1  -3 5}, \vec{2  2  4}, \vec{4  -4  14} \right\}</me>
+					</li>
+					<li>
+						<me>\left\{\vec{1  7  7}, \vec{2  7  7}, \vec{3  7  7} \right\}</me>
+					</li>
+					<li>
+						<me>\left\{\vec{0  0  -1}, \vec{1  0  4} \right\}</me>
+					</li>
+					<li>
+						<me>\left\{\vec{9  9  0}, \vec{2  0  1}, \vec{3  5  -4}, \vec{12  12  -1} \right\}</me>
+					</li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>For each of these, when the subset is independent you must prove it, and when the subset is dependent you must give an example of a dependence.
+				<ol>
+					<li>It is dependent. Considering
+						<me>c_1\vec{1  -3  5} +c_2\vec{2  2  4} + c_3\vec{4  -4  14} =\vec{0  0 0}</me>
+						gives this linear system.
+						<me>
+							\syseq{
+							 c_1  +  2c_2  +  4c_3  =  0;
+              						-3c_1 +  2c_2  -  4c_3  =  0;
+              						5c_1 +  4c_2  +  14c_3 =  0  
+							}
+						</me>
+						Row reduction gives
+						<md>
+							<mrow>
+							\amat{
+							 1  2  4  0 ; 
+              						-3 2  -4 0 ; 
+              						5  4  14 0
+							}
+							\quad\xrightarrow{}\quad
+							&amp;\amat{
+							 1  2  4  0 ; 
+              						0  8  8  0 ; 
+              						0  0  0  0
+							}
+							</mrow>
+						</md>
+						yields a free variable, so there are infinitely many solutions. For an example of a particular dependence we can set <m>c_3</m> to be, say, <m>1</m>.  Then we get <m> c_2=-1</m> and <m>c_1=-2</m>.
+					</li>
+					<li>It is dependent. The linear system that arises here
+						<md>
+							<mrow>
+							\amat{
+							1  2  3  0 ; 
+              						7  7  7  0 ; 
+              						7  7  7  0
+							}
+							\quad\xrightarrow{}\quad
+							&amp;\amat{
+							1  2  3   0;  
+              						0  -7 -14 0 ; 
+              						0  0  0   0
+							}
+							</mrow>
+						</md>
+						has infinitely many solutions. We can get a particular solution by taking <m>c_3</m> to be, say, <m>1</m>, and back-substituting to get the resulting <m>c_2</m> and <m>c_1</m>.
+					</li>
+					<li>It is linearly independent. The system
+						<md>
+							<mrow>
+							\amat{
+							  0  1  0; 
+              						 0  0  0 ; 
+              						-1 4  0
+							}
+							\quad\xrightarrow{}\quad
+							&amp;\amat{
+							-1 4  0 ; 
+              						0  1  0 ; 
+              						0  0  0 
+							}
+							</mrow>
+						</md>
+						has only the solution <m>c_1=0</m> and <m>c_2=0</m>. (We could also have gotten the answer by inspection - the second vector is obviously not a multiple of the first, and vice versa.)
+					</li>
+					<li>It is linearly dependent. The linear system
+						<me>
+						\amat{
+						9  2  3  12  0 ; 
+              					9  0  5  12  0 ; 
+              					0  1  -4 -1  0
+						}
+						</me>
+						has more unknowns than equations, and so row reduction must end with at least one variable free (there can't be a contradictory equation because the system is homogeneous, and so has at least the solution of all zeroes).
+          						To exhibit a combination, we can reduce to 
+          						<me>
+          						\amat{
+          						 9  2  3  12  0 ; 
+              					0  -2 2  0   0 ; 
+              					0  0  -3 -1  0
+          						}
+          						</me>
+          						and take, say,  <m>c_4=1</m>. Then we have that  <m>c_3=-\frac{1}{3}</m>,<m>c_2=-\frac{1}{3}</m>, and <m>c_1=-\frac{31}{27}</m>.
+					</li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
+</exercises>

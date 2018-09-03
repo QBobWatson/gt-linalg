@@ -9,7 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="subspaces">
+<section xml:id="subspaces" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Subspaces</title>
 
   <objectives>
@@ -588,5 +588,5 @@ the license is included in gfdl.xml.
     </example>
 
   </subsection>
-
+   <xi:include href="./subspaces-exercises.xml"/>
 </section>

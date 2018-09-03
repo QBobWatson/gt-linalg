@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+<exercises>
+	<exercise>
+		<statement>
+			<p>
+				<ol>
+					<li>Give a set that is closed under scalar multiplication but not addition.</li>
+					<li>Give a set closed under addition but not scalar multiplication.</li>
+					<li>Give a set closed under neither.</li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>
+				<ol>
+					<li>The union of the <m>x</m>-axis and the <m>y</m>-axis in <m>\R^2</m> is one.</li>
+					<li>The set of integers, as a subset of <m>\R^1</m>, is one.</li>
+					<li>The subset <m>\left\{\vec{v}\right\}</m> of <m>\R^2</m> is one, where <m>\vec{v}</m> is any nonzero vector.</li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
+</exercises>

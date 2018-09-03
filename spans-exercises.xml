@@ -718,6 +718,35 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>Is the vector in the span of the set?
+				<me>\vec{1  0 3} \quad \bigl\{\vec{2  1  -1},\vec{1  -1  1}\bigr\}</me>
+			</p>
+		</statement>
+		<answer>
+			<p>The equation
+				<me>\vec{1  0  3} =  c_1\vec{2  1  -1} + c_2\vec{1  -1  1}</me>
+				gives rise to a linear system
+				<md>
+					<mrow>
+					\amat{
+					 2  1  1;
+          					1  -1 0;
+          					-1 1  3
+					}
+					\quad\xrightarrow{}\quad
+					&amp;\amat{
+					2  1   1 ;
+					0  -\frac{3}{2} -\frac{1}{2};
+          					0  0  3
+					}
+					</mrow>
+				</md>
+				 that has no solution, so the vector is not in the span. 
+			</p>
+		</answer>
+	</exercise>
 </exercises>
 
 
