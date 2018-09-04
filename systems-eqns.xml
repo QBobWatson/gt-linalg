@@ -323,16 +323,15 @@ the license is included in gfdl.xml.
       <title>QR Codes</title>
       <idx><h>QR codes</h></idx>
       <p>
-        A <url href="https://en.wikipedia.org/wiki/QR_code">QR code</url> is a method of storing data in a grid of <m>29\times 29</m> black and white squares in a way that computers can easily read.  When an imaging device sees a QR code, it constructs an array of <m>29\times 29</m> points.  Of course, a camera actually sees varying degrees of grey; the brightness of each point is just a real number, so the image can be viewed as a point of <m>\R^{29\cdot 29} = \R^{841}.</m>  The QR reader then must find the closest point in <m>\R^{841}</m> with coordinates all equal to zero (black) or one (white); this is the actual QR code.
-      </p>
-      <p>As in the previous <xref ref="systems-eqns-R4"/>, it is very useful from a psychological perspective to view a QR code as a <em>single</em> piece of data in this way.</p>
+        A <url href="https://en.wikipedia.org/wiki/QR_code">QR code</url> is a method of storing data in a grid of black and white squares in a way that computers can easily read.  A typical QR code is a <m>29 \times 29</m> grid.  Reading each line left-to-right and reading the lines top-to-bottom (like you read a book) we can think of such a QR code as a sequence of <m>29 \times 29 = 841</m> digits, each digit being 1 (for white) or 0 (for black).  In such a way, the entire QR code can be regarded as a point in <m>\R^{841}</m>.  As in the previous <xref ref="systems-eqns-R4"/>, it is very useful from a psychological perspective to view a QR code as a <em>single</em> piece of data in this way.
+</p>
       <figure>
         <caption>The QR code for this textbook is a <m>29\times29</m> array of black/white squares.</caption>
         <image source="static/images/qrcode.png" width="50%"/>
       </figure>
     </example>
 
-    <p>In the above examples, it was useful from a psychological perspective to replace a list of four numbers (representing traffic flow) or of 841 numbers (representing a QR code) by a single piece of data: a point in some <m>\R^n.</m>  This is a powerful concept;   starting in <xref ref="spans"/>, we will almost exclusively record solutions of systems of linear equations in this way.</p>
+    <p>In the above examples, it was useful from a psychological perspective to replace a list of four numbers (representing traffic flow) or of 841 numbers (representing a QR code) by a single piece of data: a point in some <m>\R^n</m>.  This is a powerful concept;   starting in <xref ref="spans"/>, we will almost exclusively record solutions of systems of linear equations in this way.</p>
   </subsection>
 
 
