@@ -10,7 +10,7 @@ the license is included in gfdl.xml.
 *********************************************************************-->
 
 <restrict-version versions="1554 default">
-<section xml:id="bases-as-coord-systems">
+<section xml:id="bases-as-coord-systems" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Bases as Coordinate Systems</title>
 
   <objectives>
@@ -316,6 +316,7 @@ the license is included in gfdl.xml.
       If <m>x</m> is <em>not</em> in <m>V</m>, then this equation has no solution, as <m>x</m> is not in <m>V = \Span\{v_1,v_2,\ldots,v_m\}</m>.  In other words, the above equation is <em>inconsistent</em> when <m>x</m> is not in <m>V</m>.
     </p>
   </remark>
-
+ <xi:include href="./b-coordinates-exercises.xml"/>
 </section>
+
 </restrict-version>

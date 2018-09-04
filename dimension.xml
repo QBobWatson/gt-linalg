@@ -9,7 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="dimension">
+<section xml:id="dimension" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Basis and Dimension</title>
 
   <objectives>
@@ -388,5 +388,6 @@ the license is included in gfdl.xml.
     </paragraphs>
 
   </subsection>
+  <xi:include href="./dimension-exercise.xml"/>
 
 </section>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+<exercises>
+	<exercise>
+		<statement>
+			<p>Represent the vector <m>\vec{1  2}</m>, with respect to the basis <m>B=\left\{\vec{1  1},\vec{-1  1}\right\}</m> of <m>\R^2</m>.</p>
+		</statement>
+		<answer>
+			<p> We solve
+				<me> c_1\vec{1  1} + c_2\vec{-1  1} = \vec{1  2}</me>
+				with
+				<md>
+					<mrow>
+					\amat{
+					 1  -1  1 ;
+               				1  1   2
+					}
+					\quad\xrightarrow{}\quad
+					&amp;\amat{
+					 1  -1  1;
+               				0  2   1
+					}
+					</mrow>
+				</md>
+				and conclude that <m>c_2=\frac{1}{2}</m> and so <m>c_1=\frac{3}{2}</m>.
+			</p>
+		</answer>
+	</exercise>
+	<exercise>
+		<statement>
+			<p> Represent the vector with respect to each of the two bases.
+				<me> v=\vec{3  -1} \quad B_1=\left\{\vec{1  -1}, \vec{1   1}\right\}, B_2=\left\{\vec{1  2}, \vec{1  3}\right\}</me>
+			</p>
+		</statement>
+		<answer>
+			<p>Solving
+				<me>\vec{3  -1}=\vec{1 -1}\cdot c_1 + \vec{1  1}\cdot c_2</me>
+				 gives <m>c_1=2</m> and <m>c_2=1</m>. Similarly, solving
+				 <me>\vec{3 -1}=\vec{1  2}\cdot c_1 + \vec{1  3}\cdot c_2</me>
+				  gives <m>c_1=10</m>, <m>c_2=-7</m>. 
+			</p>
+		</answer>
+	</exercise>
+</exercises>
