@@ -483,7 +483,7 @@ the license is included in gfdl.xml.
 	    </exercise>
 	    <exercise>
 	    	<statement>
-	    		<p>A box holding pennies, nickels and dimes contains thirteen coins with a total value of <m>83</m> cents. How many coins of each type are in the box? (These are US coins; a penny is <m>1</m> cent, a nickel is <m>5</m> cents, and a dime is <m>10</m> cents.)</p>
+	    		<p>(Howard Anton, Elementary Linear Algebra, John Wiley <ampersand/> Sons, 1987) A box holding pennies, nickels and dimes contains thirteen coins with a total value of <m>83</m> cents. How many coins of each type are in the box? (These are US coins; a penny is <m>1</m> cent, a nickel is <m>5</m> cents, and a dime is <m>10</m> cents.)</p>
 	    	</statement>
 	    	<answer>
 	    		<p>Let <m>p</m>, <m>n</m>, and<m>d</m> be the number of pennies, nickels, and dimes. For variables that are real numbers, this system can be represented as

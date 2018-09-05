@@ -103,4 +103,24 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>Find a basis for, and the dimension of, the solution set of this system.
+				<me>
+					\syseq{
+					 x_1  -  4x_2  +  3x_3  -  x_4  =  0 ;
+        					2x_1  -  8x_2  +  6x_3  -  2x_4 =  0 
+					}
+				</me>
+			</p>
+		</statement>
+		<answer>
+			<p>The solution set is
+				<me>\left\{\vec{4x_2-3x_3+x_4  x_2  x_3  x_4} \mid x_2, x_3, x_4\text{ in }\R\right\}</me>
+				so a natural basis is this
+				<me>\bigl\{\vec{4  1  0  0}, \vec{-3  0  1  0}, \vec{1  0 0  1} \bigr\}</me>
+				(checking linear independence is easy). Thus the dimension is three.
+			</p>
+		</answer>
+	</exercise>
 </exercises>

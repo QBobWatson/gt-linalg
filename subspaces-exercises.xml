@@ -29,4 +29,40 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>True or false.
+				<ol>
+					<li>The solution set to any consistent system of linear equations is a subspace.</li>
+					<li>The solution set to a consistent system of linear equations of the form <m>Ax=0</m> is a subspace.</li>
+					<li>The set of points where two subspaces meet (i.e., the collection of points that are in both subspaces) is a subspace. For example, consider the set of points that lie on the intersection of two planes, or on a plane and a line.</li>
+					<li>Given any two subspaces <m>V</m> and <m>W</m>, the collection of points that are in one or both of <m>V</m> or <m>W</m> is a subspace. For example, the collection of points on either or both of the lines <m>y=x</m> and <m>y=-x</m> is the cross-shaped <q>X</q>, and includes their intersection point at the origin.</li>
+					<li>If <m>A</m> is a square matrix and the equation <m>Ax=0</m> has only the trivial solution <m>x=0</m>, then the equation <m>Ax=b</m> has a solution for every appropriately-sized vector <m>b</m> . </li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>
+				<ol>
+					<li>False. For example, the solution set of the set of equations <m>x+y=3</m> in <m>\R^2</m> is a line, but doesn't pass through the origin.</li>
+					<li>True. Here, we can check the axioms in the definition of a subspace. Given the shape of the equation <m>Ax=0</m>, we clearly have that the zero vector solves this equation, and so the solution set contains the origin (which solves the problem encountered in the last example). Now, suppose that <m>x</m> and <m>y</m> are solutions. Then <m>A(x+y)=Ax+Ay=0+0=0</m>, and so <m>x+y</m> also solves the system, and  for a real number <m>\alpha</m>, <m>A(\alpha x)=\alpha Ax=\alpha0=0</m>, and
+					so <m>\alpha x</m> is a solution too. Thus, the solution set satisfies parts 2 and 3 of the definition of a subspace, and hence is a subspace. </li>
+					<li>True. Suppose that <m>V</m> and <m>W</m> are both subspaces of <m>\R^n</m>.
+					 Then we can check each part of the definition is satisfied by the set of points where <m>V</m> and <m>W</m> meet. 
+					 Firstly, since <m>0</m> is in both subspaces, its in this new set, so it is a nonempty set. 
+					 Furthermore, if <m>x</m> and <m>y</m> are in the set and <m>\alpha</m> is a real number, then <m>\alpha x+y</m> is in the set, 
+					 using the axioms in the definition of subspace applied twice, once using the fact that <m>x</m> and <m>y</m> are in particular both in <m>V</m>
+					 , and once using that they are both in <m>W</m>. Note that this implies both the second and third parts of the definition of subspace, as we can take <m>\alpha=1</m> for part 2 of the definition, and choose <m>y=0</m> for part 3 of the definition. </li>
+					 <li>False. Although this always contains the origin, it will usually not be a subspace. 
+					 For instance, consider the two lines <m>y=\pm x</m> in <m>\R^2</m>. The collection of points in one or both of these lines is not closed under addition. 
+					 To see this, we just need a counter example. For instance, choose <m>(1, -1)</m> on the line <m>y=-x</m> and the point <m>(2, 2)</m> on the line <m>y=x</m>. 
+					 In particular, both of these points are on the <q>X</q> figure. 
+					 However, the sum of these two points, <m>(1,-1)+(2,2)=(3,-1)</m>, is not on either of the two lines, as <m>3\neq\pm(-1)</m>. </li>
+					<li>True. By the Rank Theorem, the equation <m>Ax=0</m> (which is consistent, as it automatically has the solution <m>x=0</m> gives rise to an equation (dimension of column span) <m>+</m> (dimension of solution set)<m>=</m> number of variables, say <m>n</m>.
+					The question postulates that the dimension of the solution set is <m>0</m> (it is just the point at the origin), and so the dimension of the column span is <m>n</m>. Thus, every vector in <m>\R^n</m> is a linear combination of the columns of 
+					<m>A</m>, i.e., the equation <m>Ax=b</m> has a solution for every <m>n</m>-dimensional vector <m>b</m>. </li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
 </exercises>

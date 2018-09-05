@@ -229,4 +229,33 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>Prove that, where <m>a, b, c, d, e</m> are real numbers with <m>a\neq 0</m>, if this linear equation
+				<me>ax+by=c</me>
+				has the same solution set as this one 
+				<me>ax+dy=e</me>
+				then they are the same equation. What if <m>a=0</m>?
+			</p>
+		</statement>
+		<answer>
+			<p>If <m>a\neq 0</m> then the solution set of the first equation is this.
+				<me>\left\{(x,y)\text{ in }\R^2\mid  x=(c-by)/a=(c/a)-(b/a)\cdot y\right\}</me>
+				 Thus, given <m>y</m> we can compute the associated <m>x</m>. Taking <m>y=0</m> gives the solution <m>(c/a,0)</m>, and since the second equation <m>ax+dy=e</m> is supposed to have the same solution set, substituting into it gives that <me>a(c/a)+d\cdot 0=e</me>, so <m>c=e</m>.
+      				Taking <m>y=1</m> in (<m>*</m>) gives <me>a((c-b)/a)+d\cdot 1=e</me>, and so <m>b=d</m>. Hence they are the same equation.
+     				 When <m>a=0</m> the equations can be different and still have the same solution set: e.g. <m>0x+3y=6</m> and <m>0x+6y=12</m>.   
+			</p>
+		</answer>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>Is there a system of linear equations in two variables <m>x, y</m> for which solution set is all of <m>\R^2</m>,  i.e., for which <em>every</em> ordered pair of real numbers <m>(x, y)</m> satisfies the system?</p>
+		</statement>
+		<answer>
+			<p>Yes, this one-equation system:
+				<me>0x+0y=0</me>
+				is satisfied by every ordered pair <m>(x, y)</m> in <m>\R^2</m>.
+			</p>
+		</answer>
+	</exercise>
 </exercises>
