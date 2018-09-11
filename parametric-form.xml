@@ -131,9 +131,13 @@ the license is included in gfdl.xml.
       </p>
       <p>The parametric form
       <me>
-        (x,\,y,\,z) = (1-5z,\,-1-2z,\,z) \qquad \text{$z$ any real number}
+        \syseq{x = 1 - 5z; y = -1 - 2z\rlap.}
       </me>
-      is called a <term>parameterized equation</term> for the same line.  It is an expression that produces all points of the line in terms of one parameter, <m>z</m>.
+      can be written as follows:
+      <me>
+        (x,\,y,\,z) = (1-5z,\,-1-2z,\,z) \qquad \text{$z$ any real number.}
+      </me>
+      This called a <term>parameterized equation</term> for the same line.  It is an expression that produces all points of the line in terms of one parameter, <m>z</m>.
       </p>
       <p>One should think of a system of equations as being an implicit equation for its solution set, and of the parametric form as being the parameterized equation for the same set.  The parameteric form is much more explicit: it gives a concrete recipe for producing <em>all</em> solutions.
       </p>
