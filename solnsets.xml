@@ -316,7 +316,7 @@ the license is included in gfdl.xml.
 
     <p>In the above <xref ref="solnsets-eg-line2"/>, the solution set was all vectors of the form
     <me>x = \vec{x_1 x_2} = x_2\vec{3 1} + \vec{-3 0}</me>
-    where <m>x_2</m> is any scalar.  The vector <m>p = {-3\choose 0}</m> is also a solution of <m>Ax=0</m>: take <m>x_2=0</m>.  We call <m>p</m> a <term>particular solution</term>.
+    where <m>x_2</m> is any scalar.  The vector <m>p = {-3\choose 0}</m> is also a solution of <m>Ax=b</m>: take <m>x_2=0</m>.  We call <m>p</m> a <term>particular solution</term>.
     </p>
 
     <example xml:id="solnsets-eg-plane2">
