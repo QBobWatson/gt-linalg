@@ -219,7 +219,7 @@ the license is included in gfdl.xml.
       In this case, the system has <em>infinitely many</em> solutions, corresponding to the infinitely many possible values of the free variable(s).  For example, in the system corresponding to the matrix
       <me>
         \amat{1 \color{seq-red}-2 0  \color{seq-blue}3 1;
-        0 \color{seq-red}0, 0  \color{seq-blue}4 -1},
+        0 \color{seq-red}0, 1  \color{seq-blue}4 -1},
       </me>
       any values for <m>\color{seq-red}x_2</m> and <m>\color{seq-blue}x_4</m> yield a solution to the system of equations.
       </li>
