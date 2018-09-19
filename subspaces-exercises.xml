@@ -8,6 +8,7 @@ under the terms of the GNU Free Documentation License, Version 1.3 or
 any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
+<?xml-model href="../mathbook/schema/pretext.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <exercises>
 	<exercise>
 		<statement>
@@ -61,6 +62,114 @@ the license is included in gfdl.xml.
 					<li>True. By the Rank Theorem, the equation <m>Ax=0</m> (which is consistent, as it automatically has the solution <m>x=0</m> gives rise to an equation (dimension of column span) <m>+</m> (dimension of solution set)<m>=</m> number of variables, say <m>n</m>.
 					The question postulates that the dimension of the solution set is <m>0</m> (it is just the point at the origin), and so the dimension of the column span is <m>n</m>. Thus, every vector in <m>\R^n</m> is a linear combination of the columns of 
 					<m>A</m>, i.e., the equation <m>Ax=b</m> has a solution for every <m>n</m>-dimensional vector <m>b</m>. </li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>Suppose that <m>A</m> is the matrix
+				<me>
+					A = \mat{
+					2 1;
+					6 5;
+					2 4
+					}
+				</me>
+				<ol>
+					<li>Explain in words how knowing all solutions to <em><m>Ax=b</m></em> decides if a given vector <em><m>b</m></em> is in the column space of A.</li>
+					<li>Is the vector <m>b=\vec{8 28 14}</m> in the column space of A?</li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>
+				<ol>
+					<li>The column space of <m>A</m> contains all linear combinations of the columns of <m>A</m>, which are precisely the vectors of the form <m>Ax</m> for an arbitrary vector <m>x</m>. Thus <m>Ax=b</m> has a solution if and only if <m>b</m> is in the column space of <m>A</m>.</li>
+					<li>Yes. Reducing the matrix combining <m>A</m> and <m>b</m> gives
+						<me>
+							\amat{
+							2 1 8;
+							6 5 28;
+							2 4 14
+							}
+							\quad\xrightarrow{}\quad
+							\amat{
+							2 1 8;
+							0 2 4;
+							0 3 6
+							}
+							\quad\xrightarrow{}\quad
+							\amat{
+							2 1 8;
+							0 2 4;
+							0 0 0
+							}
+						</me>
+						Thus, <m>x=\vec{3 2}</m> is a solution to <m>Ax=b</m>, and b is in the column space of <m>A</m>.
+					</li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>Suppose <m>A</m> is the matrix
+				<me>
+					A=\mat{
+					0 1 2 2;
+					0 3 8 7;
+					0 0 4 2
+					}
+				</me>
+				<ol>
+					<li>Find all special solutions to <m>Ax=0</m> and describe in words the whole nullspace of <m>A</m>.</li>
+					<li>Describe the column space of <m>A</m>. <q>All combinations of four columns</q> is not a sufficient answer.</li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>
+				<ol>
+					<li>First, by row reduction
+						<md>
+							<mrow>
+								\mat{
+								0 1 2 2;
+								0 3 8 7;
+								0 0 4 2
+								}
+								\quad\xrightarrow{}\quad
+								\mat{
+								0 1 2 2;
+								0 0 2 1;
+								0 0 4 2
+								}
+								\quad\xrightarrow{}\quad
+								\mat{
+								0 1 0 1;
+								0 0 2 1;
+								0 0 0 0
+								}
+							</mrow>
+							<mrow>
+								\quad\xrightarrow{}\quad
+								\mat{
+								0 1 0 1;
+								0 0 1 \frac{1}{2};
+								0 0 0 0
+								}
+							</mrow>
+							
+						</md>
+						so the special solutions are <m>s_1=\vec{1 0 0 0}, s_2=\vec{0 -1 -\frac{1}{2} 1}</m>. Thus <m>\Nul(A)</m> is a plane in <m>\R^4</m> given by all linear combinations of the special solutions.
+					</li>
+					<li>
+						<m>\Col(A)</m> is a plane in <m>\R^3</m> given by all combinations of the pivot columns, namely
+						<me>
+							c_1 \cdot \vec{1 3 0} + c_2 \cdot \vec{2 8 4}
+						</me>
+					</li>
 				</ol>
 			</p>
 		</answer>
