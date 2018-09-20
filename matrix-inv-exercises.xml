@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+<?xml-model href="../mathbook/schema/pretext.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<exercises>
+    <exercise>
+        <statement>
+            <p>Forward elimination changes <m>Ax=b</m> to a row reduced <m>Rx=d</m>: the complete solution is
+                <me>
+                    x = \vec{4 0 0} + c_1\vec{2 1 0} + c_2\vec{5 0 1}
+                </me>
+                <ol>
+                    <li>What is the 3 by 3 reduced row echelon matrix <m>R</m> and what is <m>d</m>?</li>
+                    <li>If the process of elimination subtracted 3 times row 1 from row 2 and then 5 times row 1 from row 3, what matrix connects <m>R</m> and <m>d</m> to the original <m>A</m> and <m>b</m>? Use this matrix to find <m>A</m> and <m>b</m>.</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>
+                <ol>
+                    <li>
+                        Since <m>R</m> is in reduced row echelon form, we must have
+                        <me>
+                            d=\vec{4 0 0}
+                        </me>
+                        The other two vectors provide special solutions for <m>R</m>, showing that <m>R</m> has a rank of 1: again, since it is in reduced row echelon form, the bottom two rows must be all 0, and top row is (1 -2 -5), i.e., 
+                        <me>R=\mat{
+                            1 -2 -5;
+                            0 0 0;
+                            0 0 0
+                            }</me>
+                    </li>
+                    <li>
+                        The matrix connecting <m>R</m> and <m>d</m> to the original <m>A</m> and <m>b</m> is
+                        <me>E = E_{31}E_{21} = \mat{
+                             1 0 0;
+                             0 1 0;
+                            -5 0 1
+                            } \cdot \mat{
+                            1 0 0;
+                            -3 1 0;
+                            0 0 1
+                            } = \mat{
+                            1 0 0;
+                            -3 1 0;
+                            -5 1 0
+                            }</me>
+                        That is, <m>R=EA</m> and <m>Eb=d</m>.Thus <m>A=E\inv R</m> and <m>b=E\inv d</m>, giving 
+                        <me>A = \mat{
+                             1 0 0;
+                             3 1 0;
+                             5 0 1
+                            } \cdot \mat{
+                            1 -2 -5;
+                            0 0 0;
+                            0 0 0
+                            } = \mat{
+                            1 -2 -5;
+                            3 -6 -15;
+                            5 -10 -25
+                            }</me>
+                        <me>b=\mat{
+                            1 0 0;
+                            3 1 0;
+                            5 0 1
+                            } \cdot \mat{
+                            4;
+                            0;
+                            0
+                            }=\mat{
+                            4;
+                            12;
+                            20
+                            }</me>
+                    </li>
+                </ol>
+            </p>
+        </answer>
+    </exercise>
+</exercises>
+
+

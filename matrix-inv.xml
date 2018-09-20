@@ -9,7 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="matrix-inverses">
+<section xml:id="matrix-inverses" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Matrix Inverses</title>
 
   <objectives>
@@ -1015,5 +1015,6 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
 
 
  </subsection>
+  <xi:include href="./matrix-inv-exercises.xml"/>
 
 </section>
