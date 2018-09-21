@@ -580,4 +580,14 @@ the license is included in gfdl.xml.
 	    		</p>
 	    	</answer>
 	    </exercise>
+		<exercise>
+			<statement>
+				<p>What are the possible number of solutions of the linear system <m>Ax=b</m>? Describe an algorithm of how to determine the number of solutions of <m>Ax=b</m>.</p>
+			</statement>
+		</exercise>
+		<exercise>
+			<statement>
+				<p>If <m>Ax = b</m> has fewer equations than unknowns, why does <m>Ax = 0</m> have infinitely many solutions, and what can you say about the number of solutions of <m>Ax = b</m>?</p>
+			</statement>
+		</exercise>
 </exercises>

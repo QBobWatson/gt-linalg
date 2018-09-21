@@ -8,7 +8,7 @@ under the terms of the GNU Free Documentation License, Version 1.3 or
 any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
-<?xml-model href="../mathbook/schema/pretext.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+
 <exercises>
     <exercise>
         <statement>
@@ -83,6 +83,11 @@ the license is included in gfdl.xml.
                 </ol>
             </p>
         </answer>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Let <m>T</m> be an invertible linear transformation. Why is the inverse of <m>T</m> linear?</p>
+        </statement>
     </exercise>
 </exercises>
 

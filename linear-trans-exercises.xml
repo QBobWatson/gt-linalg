@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<exercises>
+    <exercise>
+        <statement>
+            <p>Suppose <m>T</m> is a linear map.
+                <ol>
+                    <li>
+                        If <m>v_1,\ldots,v_k</m> are dependent, why are <m>T(v_1),\ldots,T(v_k)</m> dependent?
+                    </li>
+                    <li>
+                        If <m>v_1,\ldots,v_k</m> are independent, need <m>T(v_1),\ldots,T(v_k)</m> be independent?
+                    </li>
+                    <li>
+                        If <m>T(v_1),\ldots,T(v_k)</m> are dependent, need <m>v_1,\ldots,v_k</m> be dependent?
+                    </li>
+                    <li>
+                        If <m>T(v_1),\ldots,T(v_k)</m> are independent, why are <m>v_1,\ldots,v_k</m> are independent?
+                    </li>
+                </ol>
+            </p>
+        </statement>
+    </exercise>
+</exercises>
+
