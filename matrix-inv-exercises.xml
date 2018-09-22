@@ -12,7 +12,7 @@ the license is included in gfdl.xml.
 <exercises>
     <exercise>
         <statement>
-            <p>Forward elimination changes <m>Ax=b</m> to a row reduced <m>Rx=d</m>: the complete solution is
+            <p>Forward elimination changes <m>Ax=b</m> to a row reduced <m>Rx=d</m>; the complete solution is
                 <me>
                     x = \vec{4 0 0} + c_1\vec{2 1 0} + c_2\vec{5 0 1}
                 </me>
@@ -87,6 +87,31 @@ the license is included in gfdl.xml.
     <exercise>
         <statement>
             <p>Let <m>T</m> be an invertible linear transformation. Why is the inverse of <m>T</m> linear?</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Suppose <m>T</m> is a linear map. Explain how to find a matrix <m>A</m> with <m>T(x) = Ax</m> for all <m>x</m>?</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Suppose <m>T(x) = Ax</m> for all <m>x</m> where <m>A</m> is a matrix. If <m>T</m> is onto, explain why <m>Ax = b</m> is consistent for every <m>b</m>, and also what can you say about pivotal rows of <m>A</m>?</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Suppose <m>T(x) = Ax</m> for all <m>x</m> such that <m>T</m> is one-to-one. What can you say about pivotal columns of <m>A</m>, where <m>A</m> is a matrix? How many solutions can <m>Ax = b</m> have?</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Describe the most efficient way of how to test if an n × n matrix is invertible, and how to compute <m>A\inv</m> via row operations. (Here n is large and <q>efficient</q> is measured in terms of the number of arithmetic operations).</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Suppose <m>A, B</m> are not square matrices, and <m>AB</m> is invertible (and thus <m>AB</m> is square). Why is the map <m>T</m> given by <m>T(x) = Bx</m> one-to-one? (Hint: multiply both sides of <m>Bx = 0</m> by <m>A</m> and use invertibility of <m>AB</m> to conclude that <m>x=0</m>). Why is the map <m>S</m> given by <m>S(x) = Ax</m> onto? (<m>Ax = b</m> is consistent: try <m>x = B(AB)\inv b</m> for a solution).</p>
         </statement>
     </exercise>
 </exercises>

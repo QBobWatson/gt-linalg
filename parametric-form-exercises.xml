@@ -590,4 +590,9 @@ the license is included in gfdl.xml.
 				<p>If <m>Ax = b</m> has fewer equations than unknowns, why does <m>Ax = 0</m> have infinitely many solutions, and what can you say about the number of solutions of <m>Ax = b</m>?</p>
 			</statement>
 		</exercise>
+		<exercise>
+			<statement>
+				<p>If <m>Ax = 0</m> has a unique solution, where <m>A</m> is an <m>m \times n</m> matrix, what can you say about <m>m, n</m>?</p>
+			</statement>
+		</exercise>
 </exercises>

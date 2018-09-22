@@ -13,4 +13,19 @@ the license is included in gfdl.xml.
             <p>Why is the composition <m>S\circ T</m> of linear transformations <m>S</m> , <m>T</m> is a linear transformation?</p>
         </statement>
     </exercise>
+    <exercise>
+        <statement>
+            <p>What is the formula for the <m>ij</m> spot of <m>AB</m>, the product of two matrices <m>A, B</m>? If <m>A, B</m> are matrices with complex entries, how does the formula implies <m>\bar{AB} = \bar{A} \bar{B}</m>? (Here “overbar” denotes complex conjugation”).</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Find all 2x2 matrices <m>A</m> such that <m>AB = BA</m> for every 2x2 matrix <m>B</m>.</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>For square matrices <m>A, B</m>, is it always true that <m>(A−B)(A+B) = A^2 − B^2</m>?</p>
+        </statement>
+    </exercise>
 </exercises>

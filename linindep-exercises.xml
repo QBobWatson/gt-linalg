@@ -124,4 +124,9 @@ the license is included in gfdl.xml.
 			<p>If <m>A</m> has independent columns, how many solutions does <m>Ax = 0</m> have, and how many solutions can <m>Ax = b</m> have?</p>
 		</statement>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>Let <m>m > n</m>. Can <m>n</m> vectors span <m>\R^m</m>? Can <m>m</m> vectors in <m>\R^n</m> be linearly independent? Explain.</p>
+		</statement>
+	</exercise>
 </exercises>
