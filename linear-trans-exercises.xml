@@ -29,5 +29,15 @@ the license is included in gfdl.xml.
             </p>
         </statement>
     </exercise>
+    <exercise>
+        <statement>
+            <p>If <m>T\colon\R^n\to\R^m</m> is a linear map,and <m>S</m> is a subspace of <m>\R^n</m>, why is <m>T(S)</m> a subspace of <m>\R^m</m>?</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>How is the area of a region <m>R</m> in <m>\R^2</m> related to the area of its image under the linear transformation <m>A</m>? Under <m>A^2</m>? Under <m>A^{-3}</m>?</p>
+        </statement>
+    </exercise>
 </exercises>
 

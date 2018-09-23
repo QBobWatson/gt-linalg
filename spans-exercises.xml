@@ -747,6 +747,11 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>Explain how to decide if a collection of vectors <m>v_1, \cdots, v_m</m> spans <m>\R^n</m>.</p>
+		</statement>
+	</exercise>
 </exercises>
 
 

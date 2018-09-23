@@ -114,5 +114,19 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
-	
+	<exercise>
+		<statement>
+			<p>Explain step by step how to find a basis in the kernel of <m>A</m>, also known as <m>\Nul(A)</m>.</p>
+		</statement>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>Explain how to find a basis in the range of <m>A</m>, also known as <m>\Col(A)</m></p>
+		</statement>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>What is the relationship between the rank of an <m>m \times n</m> matrix <m>A</m>, and the dimensions of <m>\Nul(A)</m>, <m>\Col(A)</m>, and the numbers <m>m</m>, <m>n</m>? Practice how to estimate one in terms of the others.</p>
+		</statement>
+	</exercise>
 </exercises>

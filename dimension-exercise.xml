@@ -123,4 +123,19 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>Explain how to find a basis in <m>\Span\{v_1, \cdots , v_m\}</m>.</p>
+		</statement>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>Let <m>v_1, \cdots , v_k</m> be linearly independent vectors in <m>\R^n</m> . Describe an algorithm that finds a basis of <m>\R^n</m> containing <m>v_1, \cdots , v_k</m>. (Hint: form the matrix <m>[v_1,\cdots,v_k,e_1,\cdots,e_n]</m> and find pivotal columns. Why are the first <m>k</m> columns pivotal?)</p>
+		</statement>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>If <m>S</m> is a subspace of <m>\R^n</m> what is the relationship between <m>n</m> and the dimension of <m>S</m>?</p>
+		</statement>
+	</exercise>
 </exercises>

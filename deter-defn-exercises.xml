@@ -15,4 +15,19 @@ the license is included in gfdl.xml.
             <p>If <m>A, B</m> are n×n matrices and <m>AB</m> is invertible, why is <m>A</m> and <m>B</m> both invertible? What is the formula for the inverse of <m>A^T B</m>?</p>
         </statement>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Explain how to compute the determinant of a triangular matrix? Will the method work for non-triangular matrix?</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>How does determinant change under row operations?</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Express <m>\det(A^T B\inv A)</m> in terms of <m>\det(A)</m>, <m>\det(B)</m>.</p>
+        </statement>
+    </exercise>
 </exercises>
