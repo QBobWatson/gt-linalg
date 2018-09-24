@@ -9,7 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="determinants-volumes">
+<section xml:id="determinants-volumes" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Determinants and Volumes</title>
 
   <objectives>
@@ -1011,5 +1011,5 @@ $\quad\xrightarrow{\phantom{MMMM}}\quad$
     </remark>
 
   </subsection>
-
+  <xi:include href="./determinant-volume-exercises.xml"/>
 </section>

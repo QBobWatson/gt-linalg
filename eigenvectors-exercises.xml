@@ -14,4 +14,24 @@ the license is included in gfdl.xml.
             <p>Do eigenvalues change under row operations?</p>
         </statement>
     </exercise>
+    <exercise>
+        <statement>
+            <p>If <m>Av = \lambda v</m> with <m>v \neq 0</m> and <m>A</m> is invertible, can you find an eigenvalue/eigenvector of <m>A\inv</m>? Can <m>A</m> has a zero eigenvalue?</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>If <m>Av = \lambda v</m> and <m>k</m> is a positive integer, explain why <m>v</m> is an eigenvector for <m>A^k</m>, and what is the corresponding eigenvalue?</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>If <m>\lambda_1, \lambda_2</m> are distinct eigenvalues of <m>A</m> explain why the corresponding eigenvectors <m>v_1, v_2</m> are linearly independent. Is <m>2v_1-3v_2</m> an eigenvector for <m>A</m>?</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Why do <m>BAB\inv</m> and <m>A^T</m> have the same eigenvalues?</p>
+        </statement>
+    </exercise>
 </exercises>

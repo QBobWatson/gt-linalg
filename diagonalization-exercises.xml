@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<exercises>
+    <exercise>
+        <statement>
+            <p>Why is a <m>4 \times 4</m> matrix with eigenvalues <m>3, 1, −2, 2</m> diagonalizable?</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>If <m>A</m> has a basis of eigenvectors <m>v_1,\cdots,v_n</m>, explain how to find a matrix <m>Q</m> such that the matrix <m>Q\inv AQ</m> is diagonal. Is such <m>Q</m> uniquely determined by <m>A</m>?</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Suppose you are given <m>n \times n</m> matrices <m>A</m> and <m>Q</m> such that <m>Q\inv AQ</m> is a diagonal matrix with diagonal entries <m>d_1,\cdots,d_n</m>. Explain how to find the eigenvalues and a basis of eigenvectors for <m>A</m> without any computation.</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Let <m>A</m> be an <m>6 \times 6</m> matrix that has eigenvalues <m>2, 3, 1</m> whose eigenspaces <m>E_2, E_3, E_1</m> have dimensions <m>2, 1, 3</m> respectively? Explain why <m>A</m> is diagonalizable and how to find a basis of eigenvectors of <m>A</m>.</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Give an example of a <m>2 \times 2</m> matrix that is not diagonalizable even though all of its eigenvalues are real.</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Give an example of a diagonalizable <m>2 \times 2</m> matrix that is not symmetric. (Hint: let <m>A = PDP\inv</m> where <m>P</m> is upper triangular but not diagonal, and <m>D</m> is diagonal. Then <m>A</m> would be also upper triangular, but probably not diagonal).</p>
+        </statement>
+    </exercise>
+</exercises>

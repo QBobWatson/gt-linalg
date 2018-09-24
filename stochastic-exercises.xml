@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+<exercises>
+    <exercise>
+        <statement>
+            <p>Let <m>P</m> be a stochastic <m>n \times n</m> matrix with positive entries. Give two methods of finding the steady state solution and discuss their computational efficiency. Give an example when <m>P</m> is stochastic, and does not have positive entries, but the steady state does not exist.</p>
+        </statement>
+    </exercise>
+</exercises>

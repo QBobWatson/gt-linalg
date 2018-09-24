@@ -10,7 +10,7 @@ the license is included in gfdl.xml.
 *********************************************************************-->
 
 <restrict-version versions="1554 default">
-<section xml:id="stochastic-matrices">
+  <section xml:id="stochastic-matrices" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Stochastic Matrices</title>
 
   <objectives>
@@ -824,6 +824,6 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
     </example>
 
   </subsection>
-
+    <xi:include href="./stochastic-exercises.xml"/>
 </section>
 </restrict-version>

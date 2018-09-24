@@ -9,7 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="characteristic-polynomial">
+<section xml:id="characteristic-polynomial" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>The Characteristic Polynomial</title>
 
   <objectives>
@@ -505,5 +505,5 @@ the license is included in gfdl.xml.
     </example>
 
   </paragraphs>
-
+  <xi:include href="./charpoly-exercises.xml"/>
 </section>

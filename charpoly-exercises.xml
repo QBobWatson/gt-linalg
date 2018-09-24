@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+<exercises>
+    <exercise>
+        <statement>
+            <p>Real eigenvalues of <m>A</m> are defined as the real numbers <m>\lambda</m> such that <m>(A-\lambda I_n)x = 0</m> has a nonzero real solution <m>x</m>. Explain why eigenvalues are precisely the real roots of <m>\det(A-\lambda I_n)</m>, the characteristic polynomial of <m>A</m>. What do nonreal roots of <m>\det(A-\lambda I_n)</m> correspond to?</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Why do eigenvalues of a triangular matrix <m>(a_{ij})</m> are its entries on the main diagonal, that is, <m>a_{11}, \cdots , a_{nn}</m>? Is this true for non-triangular matrix?</p>
+        </statement>
+    </exercise>
+</exercises>
