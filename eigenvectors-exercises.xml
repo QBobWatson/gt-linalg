@@ -34,4 +34,15 @@ the license is included in gfdl.xml.
             <p>Why do <m>BAB\inv</m> and <m>A^T</m> have the same eigenvalues?</p>
         </statement>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Compute the eigenvalues of 
+                <me>A=\mat{
+                    a -b;
+                    b a
+                    }</me>
+                If <m>b \neq 0</m> explain how to interpret <m>A</m> as a composition of a rotation and dilation.
+            </p>
+        </statement>
+    </exercise>
 </exercises>

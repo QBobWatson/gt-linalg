@@ -18,4 +18,14 @@ the license is included in gfdl.xml.
             <p>Why do eigenvalues of a triangular matrix <m>(a_{ij})</m> are its entries on the main diagonal, that is, <m>a_{11}, \cdots , a_{nn}</m>? Is this true for non-triangular matrix?</p>
         </statement>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Give an example of an upper triangular <m>4 \times 4</m> matrix <m>A</m> such that <m>0</m> is its only eigenvalue and its eigenspace <m>E_0</m> is 1-dimensional.</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Explain how to express <m>\det(A)</m> in terms of eigenvalues of <m>A</m>. Can a real <m>9 \times 9</m> matrix has a nonreal eigenvalue of multiplicity <m>5</m>?</p>
+        </statement>
+    </exercise>
 </exercises>

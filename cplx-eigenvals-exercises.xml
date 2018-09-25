@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+<exercises>
+    <exercise>
+        <statement>
+            <p>Can a <m>7 \times 7</m> matrix have <m>2</m> real eigenvalues and <m>5</m> nonreal ones?If <m>A</m> is an <m>n \times n</m> matrix and <m>n</m> is odd, why does <m>A</m> have a real eigenvalue?</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Let <m>A</m> be a <m>2 \times 2</m> matrix with a non-real eigenvalue <m>2+3i</m>. Explain how to find a <m>2 \times 2</m> matrix <m>P</m> such that 
+                <me>P\inv AP = \mat{
+                    a -b;
+                    b a
+                    }</me>
+                and explain how to find <m>a, b</m>.
+            </p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Find a <m>2 \times 2</m> real matrix <m>A</m> such that <m>Av = \lambda v</m> for <m>\lambda = 2-3i</m> and
+                <me>v = \mat{
+                        2 + 2i;
+                        1 - i
+                    }</me>
+            </p>
+        </statement>
+    </exercise>
+</exercises>

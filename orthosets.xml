@@ -10,7 +10,7 @@ the license is included in gfdl.xml.
 *********************************************************************-->
 
 <restrict-version versions="1554 default">
-<section xml:id="orthogonal-sets">
+  <section xml:id="orthogonal-sets" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Orthogonal Sets</title>
 
   <objectives>
@@ -804,6 +804,6 @@ the license is included in gfdl.xml.
       </ol>
     </p>
   </subsection>
-
+    <xi:include href="./orthosets-exercises.xml"/>
 </section>
 </restrict-version>
