@@ -9,7 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="projections">
+<section xml:id="projections" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Orthogonal Projection</title>
 
   <objectives>
@@ -890,5 +890,5 @@ the license is included in gfdl.xml.
     </remark>
 
   </subsection>
-
+  <xi:include href="./projections-exercises.xml"/>
 </section>
