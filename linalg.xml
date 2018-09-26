@@ -220,7 +220,7 @@ Free Documentation License"
             Define a transformation <m>f</m> as follows: <m>f(\theta,\phi,\psi)</m> is the <m>(x,y)</m> position of the hand when the joints are rotated by angles <m>\theta, \phi, \psi</m>, respectively.  The output of <m>f</m> tells you where the hand will be on the plane when the joints are set at the given input angles.
           </p>
           <p>
-            Unfortunately, this kind of function does not come from a matrix, so one cannot use linear algebra to answer these kinds of questions.  In fact, these functions are rather complicated; their study is the subject of <url href="https://en.wikipedia.org/wiki/Inverse_kinematics">inverse kinematics</url>.
+            Unfortunately, this kind of function does not come from a matrix, so one cannot use linear algebra to answer questions about this function.  In fact, these functions are rather complicated; their study is the subject of <url href="https://en.wikipedia.org/wiki/Inverse_kinematics">inverse kinematics</url>.
           </p>
         </specialcase>
 

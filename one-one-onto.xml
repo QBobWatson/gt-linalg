@@ -396,7 +396,7 @@ the license is included in gfdl.xml.
       <p>
         The reduced row echelon form of <m>A</m> is
         <me>\mat{1 0 -1; 0 1 1}.</me>
-        There is not a pivot in every row, so <m>T</m> is not one-to-one.  Therefore, we know from the <xref ref="matrix-trans-one-to-one"/> that <m>Ax=0</m> has nontrivial solutions.  If <m>v</m> is a nontrivial (i.e., nonzero) solution of <m>Av = 0</m>, then <m>T(v) = Av = 0 = A0 = T(0)</m>, so <m>0</m> and <m>v</m> are different vectors with the same output.  In order to find a nontrivial solution, we find the parametric form of the solutions of <m>Ax=0</m> using the reduced matrix above:
+        There is not a pivot in every column, so <m>T</m> is not one-to-one.  Therefore, we know from the <xref ref="matrix-trans-one-to-one"/> that <m>Ax=0</m> has nontrivial solutions.  If <m>v</m> is a nontrivial (i.e., nonzero) solution of <m>Av = 0</m>, then <m>T(v) = Av = 0 = A0 = T(0)</m>, so <m>0</m> and <m>v</m> are different vectors with the same output.  In order to find a nontrivial solution, we find the parametric form of the solutions of <m>Ax=0</m> using the reduced matrix above:
         <me>\syseq{x \+ \. - z = 0; \. \+ y + z = 0}
         \quad\implies\quad
         \syseq{x = z; y = -z}
