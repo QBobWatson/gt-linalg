@@ -433,9 +433,9 @@ the sun in 1801.
       <xi:include href="./projections.xml" />
       <xi:include href="./orthosets.xml" />
       <xi:include href="./leastsquares.xml" />
-
+      <xi:include href="./misc-exercises.xml" />
     </chapter>
-
+    
     <xi:include href="./backmatter.xml" />
   </book>
 
