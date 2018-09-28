@@ -11,17 +11,12 @@ the license is included in gfdl.xml.
 <exercises>
     <exercise>
         <statement>
-            <p>Let <m>U</m> be a matrix whose columns are orthonormal. Let <m>P = UU^T</m> . Show that <m>\Col(P) = \Col(U)</m>. Use the identity <m>P^2 = P</m> to show that the eigenvalues of <m>P</m> equal <m>0</m> or <m>1</m>.</p>
+            <p>If <m>A</m> is a matrix with independent columns, explain step by step how to find the QR factorization of <m>A</m>.</p>
         </statement>
     </exercise>
     <exercise>
         <statement>
-            <p>Let <m>U</m> be a matrix with <m>U^T U=I</m>. Explain why <m>Ux\cdot Uy = x\cdot y</m> for any vectors <m>x, y</m>. (Hint: use the identity <m>Au\cdot v=u\cdot A^Tv</m>)</p>
-        </statement>
-    </exercise>
-    <exercise>
-        <statement>
-            <p>Explain why <m>Av\cdot u=v\cdot A^Tu</m> foranyvectors <m>u, v</m> and any matrix <m>A</m> (for which <m>Av\cdot u</m> make sense).</p>
+            <p>If you know the QR factorization of a matrix <m>A</m>, how would you find the least square solutions of <m>Ax=b</m>? If <m>A</m> is <m>n \times n</m>, how many operations would it take?</p>
         </statement>
     </exercise>
 </exercises>

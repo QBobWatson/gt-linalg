@@ -10,7 +10,20 @@ the license is included in gfdl.xml.
 
 <section xml:id="misc" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Miscellaneous exercises</title>
-
+    <subsection>
+         <title>Exercises</title>
+        <exercises>
+            <exercise>
+                <statement>
+                    <p>Suppose <m>A</m> is an <m>n \times n</m> matrix. How many operations does solving <m>Ax=b</m> take (in the worst case scenario)?</p>
+                </statement>
+            </exercise>
+        </exercises>
+    </subsection>
     <xi:include href="./symmetric-exercises.xml" />
     <xi:include href="./sing-value-exercises.xml" />
+    <xi:include href="./spectral-decomp-exercises.xml" />
+    <xi:include href="./pseudo-inv-exercises.xml" />
+    <xi:include href="./qr-fact-exercises.xml"/>
+    <xi:include href="./lu-decomp-exercises.xml"/>
 </section>

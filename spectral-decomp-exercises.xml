@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<exercises>
+    <exercise>
+        <statement>
+            <p>Explain step by step how to find the spectral decomposition <m>\sum_{i=1}^r \sigma_i u_i {v_i}^T</m>for an <m>m \times n</m> matrix <m>A</m>.</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Let <m>A</m> be an <m>m \times n</m> matrix of rank <m>r</m>. If <m>r</m> is much smaller, than <m>m</m> and <m>n</m>, explain how the spectral decomposition is an efficient way to store <m>A</m>(this is called data compression).</p>
+        </statement>
+    </exercise>
+</exercises>

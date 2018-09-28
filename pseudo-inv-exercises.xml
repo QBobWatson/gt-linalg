@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--********************************************************************
 Copyright 2017 Georgia Institute of Technology
 
@@ -8,31 +7,25 @@ under the terms of the GNU Free Documentation License, Version 1.3 or
 any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
-
 <exercises>
     <exercise>
         <statement>
-            <p>If <m>A, B</m> are n×n matrices and <m>AB</m> is invertible, why is <m>A</m> and <m>B</m> both invertible? What is the formula for the inverse of <m>A^T B</m>?</p>
+            <p>Explain how to compute the pseudoinverse of a matrix <m>A</m>. What is the pseudoinverse of an <m>m \times 1</m> matrix (that is, a vector in <m>\R^m</m> )?</p>
         </statement>
     </exercise>
     <exercise>
         <statement>
-            <p>Explain how to compute the determinant of a triangular matrix? Will the method work for non-triangular matrix?</p>
+            <p>Let <m>A</m> be an <m>m \times n</m> matrix of rank <m>r</m>, and let <m>A\pinv</m> be the pseudoinverse of <m>A</m>. Explain why <m>AA\pinv</m> and <m>A\pinv A</m> are orthogonal projections onto <m>\Col(A)</m>, and <m>\Nul(A)^\perp</m>, respectively.</p>
         </statement>
     </exercise>
     <exercise>
         <statement>
-            <p>How does determinant change under row operations?</p>
+            <p>Let <m>A</m> be an <m>m \times n</m> matrix of rank <m>r</m>, and let <m>A\pinv</m> be the pseudoinverse of <m>A</m>. Explain why <m>A\pinv b</m> is a least square solution of <m>Ax=b</m>.</p>
         </statement>
     </exercise>
     <exercise>
         <statement>
-            <p>Express <m>\det(A^T B\inv A)</m> in terms of <m>\det(A)</m>, <m>\det(B)</m>.</p>
-        </statement>
-    </exercise>
-    <exercise>
-        <statement>
-            <p>How does one see from the value of <m>\det(A^TA^2018)</m> whether <m>A</m> is invertible? If columns of <m>A</m> are linearly dependent, compute <m>det(A)</m>.</p>
+            <p>Explain how to compute the condition number of an <m>m \times n</m> matrix.</p>
         </statement>
     </exercise>
 </exercises>
