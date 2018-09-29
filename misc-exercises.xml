@@ -18,6 +18,22 @@ the license is included in gfdl.xml.
                     <p>Suppose <m>A</m> is an <m>n \times n</m> matrix. How many operations does solving <m>Ax=b</m> take (in the worst case scenario)?</p>
                 </statement>
             </exercise>
+            <exercise>
+                <statement>
+                    <p>Let <m>A</m> be an <m>n \times n</m> matrix. Which of the following are equivalent to the statement that <m>A</m> is invertible?
+                        <ol>
+                            <li>The reduced row echelon form of <m>A</m> is the identity matrix.</li>
+                            <li><m>A</m> is similar to the identity matrix.</li>
+                            <li><m>A</m> is diagonalizable.</li>
+                            <li>There is a matrix <m>B</m> such that <m>AB</m> is the identity matrix.</li>
+                            <li><m>0</m> is not an eigenvalue of <m>A</m>.</li>
+                        </ol>
+                    </p>
+                </statement>
+                <answer>
+                    <p>1, 4, and 5. The only matrix that is similar to the identity matrix is the identity matrix iself, and the zero matrix is diagonal(izable).</p>
+                </answer>
+            </exercise>
         </exercises>
     </subsection>
     <xi:include href="./symmetric-exercises.xml" />

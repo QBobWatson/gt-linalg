@@ -39,4 +39,20 @@ the license is included in gfdl.xml.
             <p>Give an example of a diagonalizable <m>2 \times 2</m> matrix that is not symmetric. (Hint: let <m>A = PDP\inv</m> where <m>P</m> is upper triangular but not diagonal, and <m>D</m> is diagonal. Then <m>A</m> would be also upper triangular, but probably not diagonal).</p>
         </statement>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Let <m>A</m> be an <m>n \times n</m> matrix. Which of the following statements are equivalent to the statement that <m>A</m> is diagonalizable over the real numbers?
+                <ol>
+                    <li><m>A</m> is similar to a diagonal matrix.</li>
+                    <li><m>A</m> has at least one eigenvector for each eigenvalue.</li>
+                    <li>For each real eigenvalue <m>\lambda</m> of <m>A</m>,the dimension of the <m>\lambda</m>-eigenspace is equal to the algebraic multiplicity of <m>\lambda</m>.</li>
+                    <li><m>A</m> has <m>n</m> linearly independent eigenvectors.</li>
+                    <li><m>A</m> is invertible.</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>1 and 4. A matrix by definition has at least one eigenvector for each eigenvalue. In option 3, a matrix need not have any real eigenvalues. Invertibility is unrelated to diagonalizability.</p>
+        </answer>
+    </exercise>
 </exercises>

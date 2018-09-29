@@ -8,7 +8,6 @@ Copyright 2017 Georgia Institute of Technology
     <title>Back Matter</title> <!-- mostly for HTML sectioning -->
 
     <xi:include href="./cplx-nums.xml" />
-    
 
     <appendix>
         <title>Notation</title>

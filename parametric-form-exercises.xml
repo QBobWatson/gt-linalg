@@ -11,6 +11,21 @@ the license is included in gfdl.xml.
 
 <exercises xml:id="parametric-form-exercises">
 	<exercise>
+		<statement>
+			<p>The matrix <m>\mat{0 1 0; 0 0 1}</m> has:
+				<ol>
+					<li>zero free variables.</li>
+					<li>one free variable.</li>
+					<li>two free variables.</li>
+					<li>three free variables.</li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>2. The first column corresponds to a free variable.</p>
+		</answer>
+	</exercise>
+	<exercise>
 	    	<statement>
 	    		<p>Each system of linear equations is in echelon form (that is, the corresponding matrix is in echelon form). For each, say whether the system has a unique solution, no solution, or infinitely many solutions.</p>
 	    		<p>

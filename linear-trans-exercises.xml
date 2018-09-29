@@ -11,6 +11,21 @@ the license is included in gfdl.xml.
 <exercises>
     <exercise>
         <statement>
+            <p>Let <m>T: \R^n\to\R^m</m> be a linear transformation with matrix <m>A</m>. Which of the following are equivalent to the statement that <m>T</m> is onto? 
+                <ol>
+                    <li><m>A</m> has a pivot in each row.</li>
+                    <li>The columns of <m>A</m> are linearly independent.</li>
+                    <li>If <m>T(v)=T(w)</m> then <m>v=w</m>.</li>
+                    <li>For each input <m>v</m>, <m>T</m> there is exactly one output <m>T(v)</m>.</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>1 only. Options 2 and 3 are equivalent to <m>T</m> being one-to-one, and option 4 is true for any transformation.</p>
+        </answer>
+    </exercise>
+    <exercise>
+        <statement>
             <p>Suppose <m>T</m> is a linear map.
                 <ol>
                     <li>

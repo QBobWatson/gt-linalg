@@ -174,4 +174,20 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>Let <m>A</m> be a <m>2 \times 2</m> matrix such that <m>\Nul(A)</m> is the line <m>y=x</m>. Let <m>b</m> be a <em>nonzero</em> vector in <m>\R^2</m>. Which of the following are definitely not the solution set of <m>Ax = b</m>?
+				<ol>
+					<li>The line <m>y=x</m>.</li>
+					<li>The <m>y</m>-axis.</li>
+					<li>The line <m>y=x+1</m>.</li>
+					<li>The set <m>\left\{0\right\}</m>.</li>
+					<li>The empty set.</li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>1, 2, and 4. The solution set of <m>Ax = b</m> is either empty or a translate of <m>\Nul(A)</m> by a nonzero vector, namely, a specific solution to <m>Ax = b</m>.</p>
+		</answer>
+	</exercise>
 </exercises>
