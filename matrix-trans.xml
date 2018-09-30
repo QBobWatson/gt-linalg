@@ -9,7 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="matrix-transformations">
+<section xml:id="matrix-transformations" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Matrix Transformations</title>
 
   <objectives>
@@ -1042,5 +1042,5 @@ the license is included in gfdl.xml.
   </example>
 
 </subsection>
-
+  <xi:include href="./matrix-trans-exercises.xml" />
 </section>

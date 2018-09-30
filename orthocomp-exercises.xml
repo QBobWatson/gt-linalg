@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+<exercises>
+    <exercise>
+        <statement>
+            <p>Which of the following are subspaces of <m>\R^n</m>?
+                <ol>
+                    <li>The null space of an <m>m \times n</m> matrix.</li>
+                    <li>An eigenspace of an <m>n \times n</m> matrix (for a particular eigenvalue).</li>
+                    <li>The column space of an <m>m \times n</m> matrix.</li>
+                    <li>The span of <m>n-1</m> vectors in <m>\R^n</m>.</li>
+                    <li><m>W^\perp</m> where <m>W</m> is a subspace of <m>\R^n</m>.</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>1, 2, 4, and 5. The column space of an <m>m \times n</m> matrix is a subspace of <m>\R^m</m>, not <m>\R^n</m>. Any null space, eigenspace, perp space, or span is a subspace.</p>
+        </answer>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Let <m>W</m> be a line in <m>\R^4</m>. What is the dimension of <m>W^\perp</m>?
+                <ol>
+                    <li>one</li>
+                    <li>two</li>
+                    <li>three</li>
+                    <li>not enough information</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>3. For any subspace <m>W</m> of <m>\R^4</m>, we have <m>\dim W + \dim W^\perp = 4</m>.</p>
+        </answer>
+    </exercise>
+</exercises>

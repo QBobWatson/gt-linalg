@@ -55,4 +55,61 @@ the license is included in gfdl.xml.
             <p>1 and 4. A matrix by definition has at least one eigenvector for each eigenvalue. In option 3, a matrix need not have any real eigenvalues. Invertibility is unrelated to diagonalizability.</p>
         </answer>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Let <m>A</m> be a <m>3 \times 3</m> matrix. Suppose that <m>A</m> has eigenvalues <m>3</m> and <m>5</m>, and that the <m>5</m>-eigenspace is a line in <m>\R^3</m>. Is <m>A</m> diagonalizable?
+                <ol>
+                    <li>Yes.</li>
+                    <li>No.</li>
+                    <li>Maybe.</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>3. In this situation, <m>A</m> is diagonalizable if and only if the <m>3</m>-eigenspace is a plane. For example, the matrix
+                <md>
+                    <mrow>
+                        \mat{
+                        3 1 0;
+                        0 3 0;
+                        0 0 5
+                        }
+                        \text{is not diagonalizable, but}
+                        \mat{
+                        3 0 0;
+                        0 3 0;
+                        0 0 5
+                        }
+                        \text{is.}
+                    </mrow>
+                </md>
+            </p>
+        </answer>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Find a formula for <m>A^n</m>, where
+                <me>A=\mat{2 6; 0 -1} = \mat{1 -2; 0 1}\mat{2 0; 0 -1}\mat{1 -2; 0 1}\inv</me>
+                Your answer should be a single matrix whose entries depend on <m>n</m>.
+            </p>
+        </statement>
+        <answer>
+            <p>
+                <md>
+                    <mrow>
+                        A^n \quad=\quad&amp; \mat{1 -2; 0 1}\mat{2 0; 0 -1}^n\mat{1 -2; 0 1}\inv
+                    </mrow>
+                    <mrow>
+                        \quad=\quad&amp;\mat{1 -2; 0 1}\mat{2^n 0; 0 (-1)^n}\mat{1 2; 0 1}
+                    </mrow>
+                    <mrow>
+                        \quad=\quad&amp;\mat{2^n (-1)^{n+1}2; 0 (-1)^n}\mat{1 2; 0 1}
+                    </mrow>
+                    <mrow>
+                        \quad=\quad&amp;\mat{2^n 2^{n+1}+(-1)^{n+1}2; 0 (-1)^n}
+                    </mrow>
+                </md>
+            </p>
+        </answer>
+    </exercise>
 </exercises>

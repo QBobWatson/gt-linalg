@@ -9,7 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<section xml:id="orthogonal-complements">
+<section xml:id="orthogonal-complements" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Orthogonal Complements</title>
 
   <objectives>
@@ -503,5 +503,5 @@ the license is included in gfdl.xml.
       In other words, <em>the span of the rows of <m>A</m> has the same dimension as the span of the columns of <m>A</m>,</em> even though the first lives in <m>\R^n</m> and the second lives in <m>\R^m</m>.  This fact is often stated as <q>the row rank equals the column rank.</q>
     </p>
   </remark>
-
+  <xi:include href="./orthocomp-exercises.xml" />
 </section>

@@ -114,22 +114,7 @@ the license is included in gfdl.xml.
             <p>Suppose <m>A, B</m> are not square matrices, and <m>AB</m> is invertible (and thus <m>AB</m> is square). Why is the map <m>T</m> given by <m>T(x) = Bx</m> one-to-one? (Hint: multiply both sides of <m>Bx = 0</m> by <m>A</m> and use invertibility of <m>AB</m> to conclude that <m>x=0</m>). Why is the map <m>S</m> given by <m>S(x) = Ax</m> onto? (<m>Ax = b</m> is consistent: try <m>x = B(AB)\inv b</m> for a solution).</p>
         </statement>
     </exercise>
-    <exercise>
-        <statement>
-            <p>Let <m>A</m> be an <m>n \times n</m> matrix. Which of the following are equivalent to the statement that <m>A</m> is invertible?
-                <ol>
-                    <li>The reduced row echelon form of <m>A</m> is the identity matrix.</li>
-                    <li><m>A</m> is similar to the identity matrix.</li>
-                    <li><m>A</m> is diagonalizable.</li>
-                    <li>There is a matrix <m>B</m> such that <m>AB</m> is the identity matrix.</li>
-                    <li><m>0</m> is not an eigenvalue of <m>A</m>.</li>
-                </ol>
-            </p>
-        </statement>
-        <answer>
-            <p>1, 4, and 5. The only matrix that is similar to the identity matrix is the identity matrix iself, and the zero matrix is diagonal(izable).</p>
-        </answer>
-    </exercise>
+    
 </exercises>
 
 
