@@ -21,7 +21,19 @@ the license is included in gfdl.xml.
     </exercise>
     <exercise>
         <statement>
-            <p>Explain why <m>Av\cdot u=v\cdot A^Tu</m> foranyvectors <m>u, v</m> and any matrix <m>A</m> (for which <m>Av\cdot u</m> make sense).</p>
+            <p>Explain why <m>Av\cdot u=v\cdot A^Tu</m> for any vectors <m>u, v</m> and any matrix <m>A</m> (for which <m>Av\cdot u</m> make sense).</p>
+        </statement>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Let <m>L</m> be the line <m>x=y</m> in <m>\R^2</m>.
+                <ol>
+                    <li>Compute the matrices for <m>proj_L</m> and <m>proj_{L^\perp}</m>.</li>
+                    <li>Is <m>proj_L</m> or <m>proj_{L^\perp}</m> one-to-one?</li>
+                    <li>What is the range of <m>proj_L \circ proj_{L^\perp}</m>?</li>
+                    <li>What is <m>proj_L \vec{2 1}</m>?</li>
+                </ol>
+            </p>
         </statement>
     </exercise>
 </exercises>

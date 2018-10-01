@@ -610,4 +610,95 @@ the license is included in gfdl.xml.
 				<p>If <m>Ax = 0</m> has a unique solution, where <m>A</m> is an <m>m \times n</m> matrix, what can you say about <m>m, n</m>?</p>
 			</statement>
 		</exercise>
+		<exercise>
+			<statement>
+				<p>The following diagram describes the traffic around the town square in terms of the number of cars per minute on each street. All streets are one-way streets, indicated by the arrows. The dots indicate intersections.
+					<latex-code>
+						
+							\tikzset{
+								extend/.style args={#1 and #2}{
+									to path={
+									($(\tikztostart)!-#1!(\tikztotarget)$)
+									-- ($(\tikztotarget)!-#2!(\tikztostart)$)
+									\tikztonodes
+									}
+								},
+								mid arrow/.style={
+									postaction={
+										decoration={
+											markings,
+											mark=at position #1 with {\arrow{Stealth[scale=1.2]}},
+										},
+										decorate
+									}
+								},
+								mid arrow/.default={0.5},
+							}
+							
+							\begin{tikzpicture}[scale=1.5, very thick,
+								every node/.style={inner sep=3pt, label distance=1mm}]
+								\point[scale=2] (A) at (-1,1);
+								\point[scale=2] (B) at (1,1);
+								\point[scale=2] (C) at (1,-1);
+								\point[scale=2] (D) at (-1,-1);
+								\draw[mid arrow] (A.center) to["$x$"] (B.center);
+								\draw[mid arrow] (B.center) to["$y$"] (C.center);
+								\draw[mid arrow] (C.center) to["$z$"] (D.center);
+								\draw[mid arrow] (D.center) to["$w$"] (A.center);
+								\draw[mid arrow=.7] (-1,1) -- (-1.5, 1.5) node[above left] {$10$};
+								\draw[mid arrow=.7] (-1,-1) -- (-1.5, -1.5) node[below left] {$10$};
+								\draw[mid arrow=.7] (1.5,-1.5) node[below right] {$10$} -- (1, -1);
+								\draw[mid arrow=.7] (1.5,1.5) node[above right] {$10$} -- (1, 1);
+							\end{tikzpicture}
+					</latex-code>
+					<ol>
+						<li>Write a system of linear equations in <m>x, y, z, w</m> whose solution gives the number of cars per minute on each of the streets in the square.</li>
+						<li>Convert your system of linear equations into an augmented matrix and solve for <m>x, y, z, w</m>.</li>
+						<li>In previous question, you should have found infinitely many solutions. What feature of this traffic arrangement allows for such a phenomenon?</li>
+					</ol>
+				</p>
+			</statement>
+			<answer>
+				<p>
+					<ol>
+						<li>The number of cars coming into each intersection must equal the number of cars leaving. This gives rise to the system of equations
+							<me>
+								\syseq{
+								w = 10 + x;
+								10 + x = y;
+								10 + y = z;
+								z = 10 + w
+								}
+								\implies
+								\syseq{
+								-x \+ \. \+ \. \+ w = 10;
+								x - y \+ \. \+ \. = -10;
+								\. \+ y - z \+ \. = -10;
+								\. \+ \. \+ z - w = 10
+								}
+							</me>
+						</li>
+						<li>
+							<me>
+								\amat{
+								-1 0 0 1 10;
+								1 -1 0 0 -10;
+								0 1 -1 0 -10;
+								0 0 1 -1 10
+								}
+								\quad\rightarrow{}\quad
+								\amat{
+								1 0 0 -1 -10;
+								0 1 0 -1 0;
+								0 0 1 -1 10;
+								0 0 0 0 0
+								}
+							</me>
+							This means <m>x = w − 10</m>, <m>y = w</m>, <m>z = w + 10</m>, and <m>w</m> is free.
+						</li>
+						<li>There is a cycle around the town square. You could (in theory) have arbitrarily many cars just driving around in circles.</li>
+					</ol>
+				</p>
+			</answer>
+		</exercise>
 </exercises>
