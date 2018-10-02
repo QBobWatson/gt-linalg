@@ -35,5 +35,55 @@ the license is included in gfdl.xml.
                 </ol>
             </p>
         </statement>
+        <answer>
+            <p>
+                <ol>
+                    <li>The line <m>L</m> is spanned by the vector <m>v=\vec{1 1}</m>, and <m>L^\perp</m> is spanned by <m>w={-1 1}</m>. Therefore
+                        <md>
+                            <mrow>
+                                proj_L (y) = \frac{y \cdot v}{v \cdot v}v  \qquad proj_{L^\perp}(y) = \frac{y \cdot w}{w \cdot w}w
+                            </mrow>
+                        </md>
+                        We compute
+                        <md>
+                            <mrow>
+                                proj_L (e_1) = \frac{e_1 \cdot v}{v \cdot v}v = \frac{1}{2}\vec{1 1}
+                                \qquad
+                                proj_L (e_2) = \frac{e_2 \cdot v}{v \cdot v}v = \frac{1}{2}\vec{1 1}
+                            </mrow>
+                            <mrow>
+                                proj_{L^\perp}(e_1) = \frac{e_1 \cdot w}{w \cdot w}w = -\frac{1}{2}\vec{-1 1}
+                                \qquad
+                                proj_{L^\perp}(e_2) = \frac{e_2 \cdot w}{w \cdot w}w = \frac{1}{2}\vec{-1 1}
+                            </mrow>
+                        </md>
+                        Therefore, the matrices for <m>proj_L</m> and <m>proj_{L^\perp}</m> are, respectively,
+                        <md>
+                            <mrow>
+                                \frac{1}{2}\mat{1 1; 1 1} \quad \text{and} \quad \frac{1}{2}\mat{1 -1;-1 1} 
+                            </mrow>
+                        </md>
+                    </li>
+                    <li>Neither is one-to-one. Every vector in <m>L^\perp</m> maps to zero under <m>proj_L</m>, and every vector in <m>L</m> maps to zero under <m>proj_{L^\perp}</m>.</li>
+                    <li>Projecting onto <m>L^\perp</m> and then onto <m>L</m> sends everything to the zero vector, since anything in <m>L^\perp</m> projects onto the zero vector under <m>proj_L</m>. Therefore, the range of <m>proj_L \cdot proj_{L^\perp}</m> is <m>\left\{0\right\}</m>.</li>
+                    <li>
+                        <me>
+                            proj_L \vec{2 1} = \frac{\vec{2 1} \cdot v}{v \cdot v}v = \frac{3}{2}\vec{1 1}
+                        </me>
+                    </li>
+                </ol>
+            </p>
+        </answer>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Consider the matrix
+                <me>A=\mat{1 1 1; 1 1 1; 0 0 0}</me>
+                Is <m>A</m> the matrix for the orthogonal projection onto a subspace of <m>\R^3</m>? Why or why not?
+            </p>
+        </statement>
+        <answer>
+            <p>No, an orthogonal projection has eigenvalues <m>0</m> and <m>1</m>.</p>
+        </answer>
     </exercise>
 </exercises>

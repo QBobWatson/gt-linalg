@@ -112,4 +112,65 @@ the license is included in gfdl.xml.
             </p>
         </answer>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Consider the matrix
+                <me>A=\mat{1 1 1; 1 1 1; 0 0 0}</me>
+                <ol>
+                    <li>Find the eigenvalues of <m>A</m> along with their algebraic multiplicities.</li>
+                    <li>For each eigenvalue of <m>A</m>, find a basis for the corresponding eigenspace.</li>
+                    <li>Is <m>A</m> diagonalizable? If so, exhibit an invertible matrix <m>P</m> and a diagonal matrix <m>D</m> such that <m>A=PDP\inv</m>. If not, explain why.</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>
+                <ol>
+                    <li>Expanding along the third row, we compute the characteristic polynomial:
+                        <md>
+                            <mrow>
+                                f(\lambda) = \det(A - \lambda I) = \det\mat{1-\lambda 1 1; 1 1-\lambda 1;0 0 -\lambda}
+                            </mrow>
+                            <mrow>
+                                 = -\lambda [{1-\lambda}^2 - 1] = -\lambda(1 - 2\lambda + \lambda^2 - 1) = -\lambda^2(\lambda-2)  
+                            </mrow>
+                        </md>
+                        The eigenvalues are <m>0</m> and <m>2</m>, with respective multiplicities <m>2</m> and <m>1</m>.
+                    </li>
+                    <li>The <m>0</m>-eigenspace is the null space of <m>A</m>, which we compute:
+                        <md>
+                            <mrow>
+                                \mat{1 1 1; 1 1 1; 0 0 0} \longsquiggly[rref] \mat{1 1 1; 0 0 0; 0 0 0} \longsquiggly[] \syseq{x=-y-z;y=y;z=z}   
+                            </mrow>
+                            <mrow>
+                                \longsquiggly[] \vec{x y z} = y\vec{-1 1 0} + z\vec{-1 0 1}
+                            </mrow>
+                        </md>
+                        Thus a basis for the <m>0</m>-eigenspace is
+                        <me>\bigl\{\vec{-1 1 0}, \vec{-1 0 1}\bigr\}</me>
+                        Next we compute a basis for the <m>2</m>-eigenspace, which is <m>\Nul(A-2I)</m>:
+                        <md>
+                            <mrow>
+                                \mat{-1 1 1;1 -1 1; 0 0 -2} \longsquiggly[rref] \mat{1 -1 0;0 0 1; 0 0 0} \longsquiggly[] \syseq{x=y;y=y;z=0}
+                            </mrow>
+                            <mrow>
+                                \longsquiggly[] \vec{x y z} = y \vec{1 1 0}
+                            </mrow>
+                        </md>
+                        Thus a basis for the <m>2</m>-eigenspace is
+                        <me>\bigl\{\vec{1 1 0}\bigr\}</me>
+                    </li>
+                    <li>
+                        There are three linearly independent eigenvectors, so <m>A=PDP\inv</m> with
+                        <md>
+                            <mrow>
+                                P = \mat{-1 -1 1; 1 0 1;0 1 0} \quad \text{and} \quad D= \mat{0 0 0;0 0 0;0 0 2}
+                            </mrow>
+                        </md>
+                    </li>
+                
+                </ol>
+            </p>
+        </answer>
+    </exercise>
 </exercises>

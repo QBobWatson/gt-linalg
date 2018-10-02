@@ -50,4 +50,5 @@ the license is included in gfdl.xml.
             <p>Let <m>A</m> be an <m>m \times n</m> matrix. Explain why the matrix <m>A^T A</m> has nonnegative eigenvalues.</p>
         </statement>
     </exercise>
+    
 </exercises>
