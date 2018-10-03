@@ -34,4 +34,55 @@ the license is included in gfdl.xml.
             </p>
         </statement>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Consider the matrix
+                <me>A = \mat{-2 5;-2 4}</me>
+                <ol>
+                    <li>Find the (complex) eigenvalues of <m>A</m>.</li>
+                    <li>For each eigenvalue, find an eigenvector.</li>
+                    <li>Find a rotation-scaling matrix <m>C</m> that is similar to <m>A</m>.</li>
+                    <li>How much does <m>C</m> scale?</li>
+                    <li>How much does <m>C</m> rotate?</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>
+                <ol>
+                    <li>The characteristic polynomial is
+                        <me>f(\lambda) = \lambda^2 - \Tr(A)\lambda + \det(A) = \lambda^2 -2\lambda +2</me>
+                        Using quadratic formula, we find
+                        <me>\lambda = \frac{2 \pm \sqrt{4-8}}{2} = 1 \pm i</me>.
+                    </li>
+                    <li>First we compute an element of <m>\Nul(A−(1−i)I)</m>:
+                        <me>A-(1-i)I=\mat{-3+i 5; \star \star}</me>
+                        The second row is a multiple of the first, so an eigenvector is <m>v = \vec{5 3-i}</m>. Hence an eigenvector for <m>1+i</m> is <m>\bar v=\vec{5 3+i}</m>. 
+                    </li>
+                    <li>If <m>\lambda=1−i</m>,then we can take
+                        <me>C=\mat{\Re(\lambda) \Im(\lambda); -\Im(\lambda) \Re(\lambda)} = \mat{1 -1; 1 1}</me>
+                    </li>
+                    <li><m>C</m> scales by <m>|\lambda| = \sqrt{1^2 + (-1)^2} = \sqrt{2}</m>.</li>
+                    <li><m>C</m> rotates by the argument of <m>\bar λ=1+i</m>:
+                        <latex-code>
+                            \begin{tikzpicture}[every node/.style={font=\small, inner sep=1pt}]
+                                \draw[help lines, black!30] (-.5,-.5) grid (1.5,1.5);
+                                \point (o) at (0,0);
+                                \draw[->] (-.5,0) -- (1.5,0);
+                                \draw[->] (0,-.5) -- (0,1.5);
+                                \coordinate (l) at (1,1);
+                                \coordinate (x) at (1,0);
+                                \draw[vector] (0,0) -- node[above left] {$\bar\lambda$} (1,1);
+                                \pic[draw, "$\frac\pi4$", angle eccentricity=1.5]
+                                {angle = x--o--l};
+                                \node[font=\normalsize, right] at (3,.5)
+                                {Argument of $\bar\lambda$ is $\frac\pi4$.};
+                                
+                            \end{tikzpicture}
+                        </latex-code>
+                    </li>
+                </ol>
+            </p>
+        </answer>
+    </exercise>
 </exercises>

@@ -19,4 +19,54 @@ the license is included in gfdl.xml.
             <p>If you know the QR factorization of a matrix <m>A</m>, how would you find the least square solutions of <m>Ax=b</m>? If <m>A</m> is <m>n \times n</m>, how many operations would it take?</p>
         </statement>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Consider the matrix
+                <m>A=\mat{1 2 2;1 0 4; 0 1 2}</m>
+                <ol>
+                    <li>Find an orthogonal basis for <m>\Col(A)</m>.</li>
+                    <li>Find a QR factorization of <m>A</m>.</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>
+                <ol>
+                    <li>Let
+                        <md>
+                            <mrow>
+                                v_1 = \vec{1 1 0}
+                                \qquad
+                                v_2 = \vec{2 0 1}
+                                \qquad
+                                v_3 = \vec{2 4 2}
+                            </mrow>
+                        </md>
+                        be the columns of <m>A</m>. We will perform Gram–Schmidt on <m>\left\{v_1, v_2, v_3\right\}</m>. Let
+                        <md>
+                            <mrow>
+                                u_1 = v_1 = \vec{1 1 0}
+                            </mrow>
+                            <mrow>
+                                u_2 = v_2 - \frac{v_2 \cdot u_1}{u_1 \cdot u_1}u_1 = \vec{2 0 1} - \frac{2}{2}\vec{1 1 0} = \vec{1 -1 1}
+                            </mrow>
+                            <mrow>
+                                u_3 = v_3 - \frac{v_3 \cdot u_1}{u_1 \cdot u_1}u_1 - \frac{v_3 \cdot u_2}{u_2 \cdot u_2}u_2= \vec{2 4 2} - \frac{6}{2}\vec{1 1 0} - \frac{0}{3}\vec{1 -1 1} = \vec{-1 1 2}
+                            </mrow>
+                        </md>
+                        An orthogonal basis for <m>\Col(A)</m> is
+                        <me>
+                            \left\{u_1, u_2, u_3\right\} = \left\{ \vec{1 1 0}, \vec{1 -1 1}, \vec{-1 1 2}\right\}
+                        </me>.
+                        (Actually, <m>\Col(A)=\R^3</m>, so the standard basis <m>e_1, e_2, e_3</m> is also an orthogonal basis of <m>\Col(A)</m>. However, we still need to do Gram–Schmidt for part (b).)
+                    </li>
+                    <li>Solving for <m>v_1, v_2, v_3</m> in terms of <m>u_1, u_2, u_3</m> above, we get
+                        <me>\syseq{v_1 = u_1; v_2 = u_1 + u_2; v_3 = 3u_1 + u_3}</me>
+                        In matrix form,
+                        <me>\mat{| | |; v_1 v_2 v_3; | | |} = \mat{| | |; u_1 u_2 u_3; | | |}\mat{1 1 3; 0 1 0;0 0 1}</me>
+                    </li>
+                </ol>
+            </p>
+        </answer>
+    </exercise>
 </exercises>
