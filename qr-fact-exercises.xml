@@ -64,6 +64,30 @@ the license is included in gfdl.xml.
                         <me>\syseq{v_1 = u_1; v_2 = u_1 + u_2; v_3 = 3u_1 + u_3}</me>
                         In matrix form,
                         <me>\mat{| | |; v_1 v_2 v_3; | | |} = \mat{| | |; u_1 u_2 u_3; | | |}\mat{1 1 3; 0 1 0;0 0 1}</me>
+                        Hence <m>A=\hat Q \hat R</m>, where
+                        <md>
+                            <mrow>
+                                \hat Q = \mat{| | |; u_1 u_2 u_3; | | |} = \mat{1 1 -1; 1 -1 1; 0 1 2} \qquad \text{and} \qquad \hat R = \mat{1 1 3;0 1 0;0 0 1}
+                            </mrow>
+                        </md>
+                        We scale the columns of <m>\hat Q</m> to obtain a matrix <m>Q</m> with orthonormal columns, and we scale the rows of <m>\hat R</m> by the opposite factor, to obtain <m>A=QR</m> where
+                        <md>
+                            <mrow>
+                                Q = \mat{
+                                \frac{1}{\sqrt{2}} \frac{1}{\sqrt{3}} -\frac{1}{\sqrt{6}};
+                                \frac{1}{\sqrt{2}} -\frac{1}{\sqrt{3}} \frac{1}{\sqrt{6}};
+                                0 \frac{1}{\sqrt{3}} \frac{2}{\sqrt{6}}
+                                }
+                                \qquad
+                                \text{and}
+                                \qquad
+                                R = \mat{
+                                \sqrt{2} \sqrt{2} 3\sqrt{2};
+                                0 \sqrt{3} 0;
+                                0 0 \sqrt{6}
+                                }
+                            </mrow>
+                        </md>.
                     </li>
                 </ol>
             </p>

@@ -19,4 +19,20 @@ the license is included in gfdl.xml.
             <p>Let <m>A</m> be an <m>m \times n</m> matrix and <m>b</m> is a vector in <m>\R^n</m>. Explain how to use normal equations to find the least square solutions of <m>Ax=b</m>. For which <m>A</m> is the least square solution unique?</p>
         </statement>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Let <m>A</m> be a <m>3 \times 2</m> matrix with orthogonal columns <m>v_1, v_2</m>. Explain why the least-squares solution to <m>Ax = b</m> is
+                <me>\mat{\frac{b \cdot v_1}{v_1 \cdot v_1} ; \frac{b \cdot v_2}{v_2 \cdot v_2}} </me>.
+            </p>
+        </statement>
+        <answer>
+            <p>The closest output vector is <m>\hat b = proj_{\Col A}(b)</m>. Since <m>v_1 \perp v_2</m>, we can directly compute
+                <me>\hat b = \frac{b \cdot v_1}{v_1 \cdot v_1}v_1 + \frac{b \cdot v_2}{v_2 \cdot v_2}v_2 = A\vec{\frac{b \cdot v_1}{v_1 \cdot v_1} \frac{b \cdot v_2}{v_2 \cdot v_2}}</me>.
+                But <m>\hat b = A \hat x</m>, so we must have
+                <me>
+                    \hat x = \vec{\frac{b \cdot v_1}{v_1 \cdot v_1} \frac{b \cdot v_2}{v_2 \cdot v_2}}
+                </me>.
+            </p>
+        </answer>
+    </exercise>
 </exercises>
