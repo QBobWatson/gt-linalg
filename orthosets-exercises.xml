@@ -23,4 +23,32 @@ the license is included in gfdl.xml.
             <p>Explain step by step how to find an orthonormal basis in a subspace spanned by vectors <m>X_1,\ldots,X_n</m>. (Here <m>X_1,\ldots,X_m</m> need not be linearly independent.)</p>
         </statement>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Every subspace of <m>\R^n</m> admits an orthogonal basis:
+                <ol>
+                    <li>True</li>
+                    <li>False</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>1 (true). Take any basis, and apply Gram–Schmidt.</p>
+        </answer>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Let <m>x</m> and <m>y</m> be nonzero orthogonal vectors in <m>\R^n</m>. Which of the following are true?
+                <ol>
+                    <li><m>x \cdot y =0</m></li>
+                    <li><m>\| x-y \|^2 = \|x\|^2 + \|y\|^2</m></li>
+                    <li><m>proj_{\Span(x)}(y)=0</m></li>
+                    <li><m>proj_{\Span(y)}(x)=0</m></li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>1,2,3,4.</p>
+        </answer>
+    </exercise>
 </exercises>

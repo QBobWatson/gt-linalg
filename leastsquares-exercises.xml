@@ -35,4 +35,59 @@ the license is included in gfdl.xml.
             </p>
         </answer>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Suppose that your roomate Jamie is currently taking Math 1551. Jamie scored <m>72</m><percent/> on the first exam, <m>81</m><percent/> on the second exam, and <m>84</m><percent/> on the third exam. Not having taken linear algebra yet, Jamie does not know what kind of score to expect on the final exam. Luckily, you can help out.
+                <ol>
+                    <li>he general equation of a line in <m>\R^2</m> is <m>y = C + Dx</m>. Write down the system of linear equations in <m>C</m> and <m>D</m> that would be satisfied by a line passing through the points <m>(1,72), (2,81)</m>, and <m>(3,84)</m>, and then write down the corresponding matrix equation.</li>
+                    <li>Solve the corresponding least squares problem for <m>C</m> and <m>D</m>, and use this to write down and draw the the best fit line.</li>
+                    <li>What score does this line predict for the fourth (final) exam?</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>
+                <ol>
+                    <li>
+                        If <m>y = C + Dx</m> were satisfied by all three points, then we would have
+                        <md>
+                            <mrow>
+                                \syseq{
+                                72 = C + D(1);
+                                81 = C + D(2);
+                                84 = C + D(3)
+                                }
+                                \qquad\longsquiggly{}\qquad
+                                \mat{
+                                1 1;
+                                1 2;
+                                1 3
+                                }
+                                \mat{
+                                C; D
+                                }
+                                = \mat{
+                                72; 81; 84
+                                }
+                            </mrow>
+                        </md>
+                    </li>
+                    <li>The least squares problem is
+                        <md>
+                            <mrow>
+                                \mat{1 1 1; 1 2 3}\mat{1 1; 1 2; 1 3}\mat{C; D} = \mat{1 1 1; 1 2 3}\mat{72;81;84}
+                                \longsquiggly{}
+                                \mat{3 6; 6 14} = \mat{237; 486}
+                            </mrow>
+                            <mrow>
+                                \amat{3 6 237; 6 14 486} \longsquiggly[rref] \amat{1 0 67; 0 1 6}
+                            </mrow>
+                        </md>
+                        Hence <m>C=67</m> and <m>D=6</m>.
+                    </li>
+                    <li><m>67 + 6(4) = 91</m><percent/></li>
+                </ol>
+            </p>
+        </answer>
+    </exercise>
 </exercises>

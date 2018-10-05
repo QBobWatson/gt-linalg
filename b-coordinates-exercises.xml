@@ -49,4 +49,39 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>Consider the vector
+				<md>
+					<mrow>
+						v_1 = \vec{1 1 1 1} 
+						\qquad
+						v_2 = \vec{1 -1 1 -1}
+						\qquad
+						v_3 = \vec{2 0 -2 0}
+						\qquad
+						v_4 = \vec{4 0 0 0}
+					</mrow>
+				</md>	
+				and the subspace <m>W = \Span{v_1, v_2, v_3, v_4}</m>.
+				<ol>
+					<li>Find a linear dependence relation among <m>v1, v2, v3, v4</m>.</li>
+					<li>What is the dimension of W ?</li>
+					<li>Which subsets of <m>{v1, v2, v3, v4}</m> form a basis for <m>W</m>?</li>
+					<li>Choose a basis <m>\cB</m> for <m>W</m> from (c), and find the <m>\c B</m>-coordinates of the vector <m>w=\vec{0 0 4 0}</m>.</li>
+				</ol>
+				[<em>Hint</em>: it is helpful, but not necessary, to use the fact that <m>{v_1, v_2, v_3}</m> is orthogonal.]
+			</p>
+		</statement>
+		<answer>
+			<p>We know that <m>{v_1, v_2, v_3}</m> is linearly independent, because it is an orthogonal set. Hence <m>v_4</m> must be a linear combination of <m>v_1, v_2, v_3</m>, i.e., <m>v_4</m> is in \Span{v_1, v_2, v_3}. We can compute the coordinates using dot products:
+				<md>
+					<mrow>
+						v_4 = \frac{v_4 \cdot v_1}{v_1 \cdot v_1}v_1 + \frac{v_4 \cdot v_2}{v_2 \cdot v_2}v_2 + \frac{v_4 \cdot v_3}{v_3 \cdot v_3}v_3 = v_1 + v_2 + v_3
+					</mrow>
+				</md>.
+				Hence <m>v_1 + v_2 + v_3 - v_4 =0</m> is a linear dependence relation.
+			</p>
+		</answer>
+	</exercise>
 </exercises>

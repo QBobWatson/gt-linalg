@@ -39,4 +39,12 @@ the license is included in gfdl.xml.
             <p>3. For any subspace <m>W</m> of <m>\R^4</m>, we have <m>\dim W + \dim W^\perp = 4</m>.</p>
         </answer>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Let <m>W</m> be the span of <m>\mat{1 1 1 1}</m> in <m>\R^4</m>. Find a matrix whose null space is <m>W^\perp</m>.</p>
+        </statement>
+        <answer>
+            <p><m>\mat{1 1 1 1}</m></p>
+        </answer>
+    </exercise>
 </exercises>
