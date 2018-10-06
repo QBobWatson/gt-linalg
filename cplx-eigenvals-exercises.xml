@@ -56,7 +56,7 @@ the license is included in gfdl.xml.
                         <me>\lambda = \frac{2 \pm \sqrt{4-8}}{2} = 1 \pm i</me>.
                     </li>
                     <li>First we compute an element of <m>\Nul(A−(1−i)I)</m>:
-                        <me>A-(1-i)I=\mat{-3+i 5; \star \star}</me>
+                        <me>A-(1-i)I=\mat{-3+i 5; \star, \star}</me>
                         The second row is a multiple of the first, so an eigenvector is <m>v = \vec{5 3-i}</m>. Hence an eigenvector for <m>1+i</m> is <m>\bar v=\vec{5 3+i}</m>. 
                     </li>
                     <li>If <m>\lambda=1−i</m>,then we can take
@@ -84,5 +84,20 @@ the license is included in gfdl.xml.
                 </ol>
             </p>
         </answer>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>
+                Consider the matrix
+                <me>A=\mat{3 2; -10 7}</me>
+                <ol>
+                    <li>Compute the characteristic polynomial of <m>A</m>.</li>
+                    <li>The complex number <m>\lambda = 5-4i</m> is an eigenvalue of <m>A</m>. What is the other eigenvalue? Produce eigenvectors for both eigenvalues.</li>
+                    <li>Find an invertible matrix <m>P</m> and a rotation-scaling matrix <m>C</m> such that <m>A=PCP\inv</m>.
+                    </li>
+                    <li>By what factor does <m>C</m> scale?</li>
+                </ol>
+            </p>
+        </statement>
     </exercise>
 </exercises>

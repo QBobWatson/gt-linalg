@@ -47,4 +47,36 @@ the license is included in gfdl.xml.
             <p><m>\mat{1 1 1 1}</m></p>
         </answer>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Let
+                <me>A=\mat{1 3 1 1; -1 -3 -4 2; 5 15 1 9}</me>
+                <ol>
+                    <li>What are <m>\dim(\Nul A)</m> and <m>\dim((\Nul A)_{\perp})</m>?</li>
+                    <li>Find a basis for <m>(\Nul A)_{\perp}</m>.</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>
+                <ol>
+                    <li>
+                        Row reducing <m>A</m> yields:
+                        <me>\mat{1 3 0 2; 0 0 1 -1;0 0 0 0}</me>
+                        The variable <m>x_2</m> and <m>x_4</m> are free. The parametric form of the solution is:
+                        <me>
+                            \vec{x_1 x_2 x_3 x_4} = x_2\vec{-3 1 0 0} + x_4\vec{-2 0 1 1}
+                        </me>
+                        We can read off the null space from the parametric vector form; a basis is
+                        <me>\bigl\{\vec{-3 1 0 0}, \vec{-2 0 1 1}\bigr\}</me>.
+                        We can see that <m>\dim(\Nul A) = 2</m>. Since <m>\Nul A</m> is a subspace of <m>\R^4</m>, we have
+                        <me>\dim((\Nul A)_{\perp})=4-\dim(\Nul A)=2.</me>
+                    </li>
+                    <li>Recall that <m>(\Nul A)_{\perp} = \Row A</m>. The first two rows of <m>A</m> are not multiples of each other, so they are linearly independent. We know already that <m>\dim((\Nul A)_{\perp}) = 2</m>, so the first two rows of <m>A</m> form a basis:
+                        <me>\bigl\{\vec{1 3 1 1}, \vec{-1 -3 -4 2}\bigr\}</me>.
+                    </li>
+                </ol>
+            </p>
+        </answer>
+    </exercise>
 </exercises>
