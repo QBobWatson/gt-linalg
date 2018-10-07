@@ -96,8 +96,56 @@ the license is included in gfdl.xml.
                     <li>Find an invertible matrix <m>P</m> and a rotation-scaling matrix <m>C</m> such that <m>A=PCP\inv</m>.
                     </li>
                     <li>By what factor does <m>C</m> scale?</li>
+                    <li>What ray does <m>C</m> rotate the positive <m>x</m>-axis onto?
+                        <latex-code>
+                            \begin{tikzpicture}[scale=.5]
+                            \draw[help lines, black!30] (-5,-5) grid (5,5);
+                            \draw[->, ultra thick] (0,0) -- (5,0);
+                            \draw (0,0) -- (-5,0);
+                            \draw (0,-5) -- (0,5);
+                            \draw[very thin, ->, overlay, shorten >=2pt] (6,.5)
+                            node[below right, font=\small, inner sep=1pt] 
+                            {rotate this} to[bend right=60] (4.2,0);
+                            \end{tikzpicture}
+                        </latex-code>
+                    </li>
                 </ol>
             </p>
         </statement>
+        <answer>
+            <p>
+                <ol>
+                    <li><m>f(\lambda)= \lambda^2-\Tr(A)\lambda + \det(A)=\lambda^2-10\lambda+41</m>.</li>
+                    <li>The other eigenvalue is <m>\bar \lambda = 5+4i</m>.
+                        <me>A-\lambda I = \mat{-2+4i 2; \star, \star} \longsquiggly[eigenvector] v=\vec{2 2-4i}</me>.
+                        Hence an eigenvector for <m>\bar \lambda</m> is <m>\bar v = \vec{2 2+4i}</m>. 
+                    </li>
+                    <li>We can take
+                        <md>
+                            <mrow>
+                                P=\mat{\Re(v) \Im(v)} = \mat{2 0; 2 -4}
+                                \text{ and }
+                                C = \mat{\Re(\lambda) \Im(\lambda); -\Im(\lambda) \Re(\lambda)} = \mat{5 -4; 4 5}
+                            </mrow>
+                        </md>.
+                    </li>
+                    <li><m>C</m> scales by <m>| \lambda | = \sqrt{5^2 + 4^2} = \sqrt{41}</m>.</li>
+                    <li>
+                        <latex-code>
+                            \begin{tikzpicture}[scale=.5]
+                            
+                            \draw[help lines, black!30] (-5,-5) grid (5,5);
+                            \draw (5,0) -- (-5,0);
+                            \draw (0,-5) -- (0,5);  
+
+                            \draw[ultra thick, ->] (0,0) -- (5,4);
+                       
+                            \end{tikzpicture}
+                            
+                        </latex-code>
+                    </li>
+                </ol>
+            </p>
+        </answer>
     </exercise>
 </exercises>

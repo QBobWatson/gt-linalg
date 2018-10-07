@@ -54,5 +54,29 @@ the license is included in gfdl.xml.
             <p>How is the area of a region <m>R</m> in <m>\R^2</m> related to the area of its image under the linear transformation <m>A</m>? Under <m>A^2</m>? Under <m>A^{-3}</m>?</p>
         </statement>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Let <m>L</m> be a line through the origin in <m>\R^2</m>. The reflection over <m>L</m> is the linear transformation <m>ref_L: \R^2 \to \R^2</m> defined by
+                <me>ref_L(x) = x-2x_{L^\perp} = 2proj_L(x) - x</me>.
+                <ol>
+                    <li>Find the points corresponding to <m>ref_L(u), ref_L(v),</m> and <m>ref_L(w)</m> in the picture below. [<em>Hint</em>: Think geometrically]
+                        <latex-code>
+                            \begin{tikzpicture}
+                             \draw[help lines, black!30] (-2,-2) grid (2,2);
+                             \useasboundingbox (-2,-2) rectangle (2,2);
+                             \draw[->] (-2,0) -- (2,0);
+                             \draw[->] (0,-2) -- (0,2);
+                             \draw[thick] (-2,2) -- node[pos=.4,above] {$L$} (2,-2);
+                             \point["$u$"] (u) at (-.5,1.5);
+                             \point["$v$"] (v) at (-1,-1);
+                             \point["$w$" anchor=200] (w) at (1,-1);
+                            \end{tikzpicture}
+                            
+                        </latex-code>
+                    </li>
+                </ol>
+            </p>
+        </statement>
+    </exercise>
 </exercises>
 
