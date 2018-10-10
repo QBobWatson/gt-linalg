@@ -173,4 +173,22 @@ the license is included in gfdl.xml.
             </p>
         </answer>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Refer back to question <xref ref="linear-trans-qn-5"></xref>.
+                <ol>
+                    <li>What are the eigenvalues and eigenspaces of <m>A</m>?</li>
+                    <li>Is <m>A</m> diagonalizable? If so, what diagonal matrix is it similar to?</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>
+                <ol>
+                    <li>Anything in <m>L</m> is fixed by <m>ref_L</m>, so <m>1</m> is an eigenvalue, and <m>L</m> is the <m>1</m>-eigenspace. If <m>x</m> is in <m>L^\perp</m> then <m>ref_L(x)=-x</m>, so <m>-1</m> is an eigenvalue, and <m>L^\perp</m> is the <m>(-1)</m>-eigenspace. There cannot be any more eigenvalues or eigenvectors.</li>
+                    <li>Yes. It is similar to the matrix <m>\mat{1 0; 0 -1}</m>.</li>
+                </ol>
+            </p>
+        </answer>
+    </exercise>
 </exercises>

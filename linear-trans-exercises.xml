@@ -54,7 +54,7 @@ the license is included in gfdl.xml.
             <p>How is the area of a region <m>R</m> in <m>\R^2</m> related to the area of its image under the linear transformation <m>A</m>? Under <m>A^2</m>? Under <m>A^{-3}</m>?</p>
         </statement>
     </exercise>
-    <exercise>
+    <exercise xml:id="linear-trans-qn-5">
         <statement>
             <p>Let <m>L</m> be a line through the origin in <m>\R^2</m>. The reflection over <m>L</m> is the linear transformation <m>ref_L: \R^2 \to \R^2</m> defined by
                 <me>ref_L(x) = x-2x_{L^\perp} = 2proj_L(x) - x</me>.
@@ -74,9 +74,54 @@ the license is included in gfdl.xml.
                             
                         </latex-code>
                     </li>
+                    <li>If <m>A</m> is the matrix for <m>ref_L</m>, what is <m>A^2</m>? [L does not necessarily refer to the line above.]</li>
                 </ol>
             </p>
         </statement>
+        <answer>
+            <p>
+                <ol>
+                    <li>
+                        <latex-code>
+                            \begin{tikzpicture}
+                            \draw[help lines, black!30] (-2,-2) grid (2,2);
+                            \useasboundingbox (-2,-2) rectangle (2,2);
+                            \draw[->] (-2,0) -- (2,0);
+                            \draw[->] (0,-2) -- (0,2);
+                            \draw[thick] (-2,2) -- node[pos=.4,above] {$L$} (2,-2);
+                            \point["$u$"] (u) at (-.5,1.5);
+                            \point["$v$"] (v) at (-1,-1);
+                            \point["$w$" anchor=200] (w) at (1,-1);
+                            \point["$\refl_L(u)$" left] at (-1.5,.5);
+                            \point["$\refl_L(v)$"] at (1,1);
+                            \point["$\refl_L(w)$" anchor=30] at (1,-1);
+                            \end{tikzpicture}
+                        </latex-code>
+                    </li>
+                    <li>Reflecting over <m>L</m> twice brings you back to where you started. Hence <m>ref_L \circ ref_L</m> is the identity transformation, so <m>A^2=I</m>.
+                        Alternatively, since <m>ref_L(x) = 2 proj_L(x) - x</m>, the matrix for <m>ref_L</m> is <m>2B-I</m>, where <m>B</m> is the matrix for <m>proj_L</m>. Hence
+                        <me>A^2 = (2B-I)^2 = 4B^2 - 4B + I = 4B - 4B + I = I</me>.
+                    </li>
+                </ol>
+            </p>
+        </answer>
+    </exercise>
+    <exercise xml:id="linear-trans-qn-6">
+        <statement>
+            <p>Let <m>T: \R^2 \to \R^2</m> be the transformation that rotates counterclockwise by <m>\dfrac{\pi}{6}</m> radians, and let <m>U: \R^2 \to \R^2</m> be the transformation that reflects about the line <m>y=x</m>.
+                Find the standard matrix <m>A</m> for <m>T</m> and the standard matrix <m>B</m> for <m>U</m>.
+            </p>
+        </statement>
+        <answer>
+            <p>
+                <md>
+                    <mrow>A=\mat{\cos(\pi/6) -\sin(\pi/6); \sin(\pi/6) \cos(\pi/6)} = \mat{\frac{\sqrt{3}}{2} -\frac{1}{2}; \frac{1}{2} \frac{\sqrt{3}}{2}}
+                        \quad
+                        B = \mat{0 1; 1 0}
+                    </mrow>
+                </md>.
+            </p>
+        </answer>
     </exercise>
 </exercises>
 

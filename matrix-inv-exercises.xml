@@ -114,7 +114,51 @@ the license is included in gfdl.xml.
             <p>Suppose <m>A, B</m> are not square matrices, and <m>AB</m> is invertible (and thus <m>AB</m> is square). Why is the map <m>T</m> given by <m>T(x) = Bx</m> one-to-one? (Hint: multiply both sides of <m>Bx = 0</m> by <m>A</m> and use invertibility of <m>AB</m> to conclude that <m>x=0</m>). Why is the map <m>S</m> given by <m>S(x) = Ax</m> onto? (<m>Ax = b</m> is consistent: try <m>x = B(AB)\inv b</m> for a solution).</p>
         </statement>
     </exercise>
-    
+    <exercise>
+        <statement>
+            <p>Refer back to question <xref ref="linear-trans-qn-6"></xref>
+                <ol>
+                    <li>Find the matrix for <m>T\inv</m> and the matrix for <m>U\inv</m>.</li>
+                    <li>Compute the matrix <m>M</m> for the linear transformation from <m>\R^2</m> to <m>\R^2</m> that first rotates clockwise by <m>\frac{\pi}{6}</m> radians, then reflects about the line <m>y=x</m>, then rotates counterclockwise by <m>\frac{\pi}{6}</m> radians.</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>
+                <ol>
+                    <li>
+                        Recall the formula 
+                        <me>\mat{a b; c d}\inv = \dfrac{1}{ad-bc}\mat{d -b; -c a}</me>.
+                        <md>
+                            <mrow>
+                                \text{For }
+                                T\inv : A\inv = \mat{\frac{\sqrt{3}}{2} \frac{1}{2}; -\frac{1}{2} \frac{\sqrt{3}}{2}}
+                                \text{.}
+                                \quad
+                                \text{For }
+                                U\inv: B\inv = \dfrac{1}{-1}\mat{0 -1; -1 0} = \mat{0 1; 1 0}
+                                \text{.}
+                            </mrow>
+                        </md>
+                        (alternatively, <m>A\inv</m> is just <em>clockwise</em> rotation by <m>\pi/3</m> radians)
+                    </li>
+                    <li>
+                        This is the transformation that first does <m>T\inv</m>, then does <m>U</m>, then does <m>T</m>. In other words, we want the transformation for <m>(T \circ U \circ T\inv)</m>.
+                        <md>
+                            <mrow>
+                                M = ABA\inv = \mat{\frac{\sqrt{3}}{2} -\frac{1}{2}; \frac{1}{2} \frac{\sqrt{3}}{2}} \mat{0 1; 1 0} \mat{\frac{\sqrt{3}}{2} \frac{1}{2}; -\frac{1}{2} \frac{\sqrt{3}}{2}}
+                            </mrow>
+                            <mrow>
+                               \quad = \mat{\frac{\sqrt{3}}{2} -\frac{1}{2}; \frac{1}{2} \frac{\sqrt{3}}{2}} \mat{-\frac{1}{2} \frac{\sqrt{3}}{2}; \frac{\sqrt{3}}{2} \frac{1}{2}} = \mat{-\frac{\sqrt{3}}{2} \frac{1}{2}; \frac{1}{2} \frac{\sqrt{3}}{2}}
+                            </mrow>
+                        </md>.
+                    </li>
+                </ol>
+                    
+            </p>
+        </answer>
+            
+    </exercise>    
 </exercises>
 
 
