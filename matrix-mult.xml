@@ -880,7 +880,7 @@ $\xrightarrow{\text{reflect $xy$}}$
         <md>
           <mrow>
             C(A+B) \amp= C A+C B \amp
-            (A + B) C \amp= A C + A C \amp
+            (A + B) C \amp= A C + B C \amp
           </mrow>
           <mrow>
             c(A B) \amp= (cA) B \amp
@@ -891,7 +891,7 @@ $\xrightarrow{\text{reflect $xy$}}$
             I_m A \amp= A
           </mrow>
           <mrow>
-            (A B)C \amp= (A B)C \amp
+            (A B)C \amp= A (BC) \amp
           </mrow>
         </md>
       </p>
