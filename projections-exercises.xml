@@ -86,4 +86,41 @@ the license is included in gfdl.xml.
             <p>No, an orthogonal projection has eigenvalues <m>0</m> and <m>1</m>.</p>
         </answer>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Let <m>W=\Span\{v_1, v_2\}</m>, where <m>v_1 = \vec{-1 2 1}</m> and <m>v_2 = \vec{2 0 2}</m>.
+                <ol>
+                    <li>Find the closest point <m>w</m> in <m>W</m> to <m>x=\vec{0 14 -4}</m>.</li>
+                    <li>Find the distance from <m>w</m> to <m>\vec{0 14 -4}</m>.</li>
+                    <li>Find the standard matrix <m>A</m> for the orthogonal projection onto <m>\Span\{v_1\}</m>.</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>
+                <ol>
+                    <li>The closest point is 
+                        <md>
+                            <mrow>w = proj_w x = \frac{x \cdot v_1}{v_1 \cdot v_1}v_1 + \frac{x \cdot v_2}{v_2 \cdot v_2}v_2 = \frac{28-4}{6}\vec{-1 2 1} + \frac{-8}{8}\vec{1 0 3} </mrow>
+                            <mrow>\quad = 4\vec{-1 2 1} - \vec{2 0 2} = \vec{-4-2 8-0 4-2} = \vec{-6 8 2}</mrow>
+                        </md>.
+                    </li>
+                    <li>
+                        <me>\|x-w\| = \|\vec{0 14 -4} - \vec{-6 8 2}\| = \|\vec{6 6 -6}\| = \sqrt{36+36+36}=\sqrt{108}</me>.
+                    </li>
+                    <li>
+                        <me>proj_{\Span\{v_1\}}e_1 = \frac{e_1 \cdot v_1}{v_1 \cdot v_1}v_1 = \frac{-1}{6}\vec{-1 2 1}=\vec{1/6 -1/3 -1/6}</me>
+                        <me>proj_{\Span\{v_1\}}e_2 = \frac{e_2 \cdot v_1}{v_1 \cdot v_1}v_1 = \frac{2}{6}\vec{-1 2 1} = \vec{-1/3 2/3 1/3}</me>
+                        <me>proj_{\Span\{v_1\}}e_3 = \frac{e_3 \cdot v_1}{v_1 \cdot v_1}v_1 = \frac{1}{6}\vec{-1 2 1} = \vec{-1/6 1/3 1/6}</me>
+                        <md>
+                            <mrow>A = \mat{proj_{\Span\{v_1\}}e_1 proj_{\Span\{v_1\}}e_2 proj_{\Span\{v_1\}}e_3} = \mat{
+                                \dfrac{1}{6} -\dfrac{1}{3} -\dfrac{1}{6};
+                                -\dfrac{1}{3} \dfrac{2}{3} \dfrac{1}{3};
+                                -\dfrac{1}{6} \dfrac{1}{3} \dfrac{1}{6}}</mrow>
+                        </md>.
+                    </li>
+                </ol>
+            </p>
+        </answer>
+    </exercise>
 </exercises>

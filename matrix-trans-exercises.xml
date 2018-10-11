@@ -24,4 +24,31 @@ the license is included in gfdl.xml.
             <p>4. The codomain of <m>T</m> is <m>\R^5</m>, because <m>A</m> has five rows. By the Rank-Nullity Theorem, the rank of <m>A</m> is <m>3-1=2</m>, the number of columns minus the dimension of <m>\Nul(A)</m>. Therefore, the rank of <m>A</m> is <m>2</m>, so the column space of <m>A</m> is a plane in <m>\R^5</m>. The range of <m>T</m> is the column space of <m>A</m>.</p>
         </answer>
     </exercise>
+    <exercise xml:id="mat-trans-qn-2">
+        <statement>
+            <p>Consider the matrix
+                <me>A=\mat{1 -2; 0 2; 0 0}</me>.
+                Let <m>T</m> be the associated linear transformation: <m>T(x) = Ax</m>.
+                <ol>
+                    <li>
+                        What are the domain and codomain of <m>T</m>?
+                    </li>
+                    <li>Find one non zero vector <m>b</m> in the range of <m>T</m>.</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>
+                <ol>
+                    <li>You can multiply <m>A</m> by vectors in <m>\R^2</m>, and the result is a vector in <m>\R^3</m>. Therefore
+                        <me>T: \R^2 \to \R^3</me>.
+                    </li>
+                    <li>
+                        There are lots of nonzero vectors in the range. Here is one of them:
+                        <me>T\vec{1 0} = A\vec{1 0} = \vec{1 0 0} = b</me>.
+                    </li>
+                </ol>
+            </p>
+        </answer>
+    </exercise>
 </exercises>

@@ -22,7 +22,7 @@ the license is included in gfdl.xml.
     <exercise>
         <statement>
             <p>Let <m>A</m> be a <m>3 \times 2</m> matrix with orthogonal columns <m>v_1, v_2</m>. Explain why the least-squares solution to <m>Ax = b</m> is
-                <me>\mat{\frac{b \cdot v_1}{v_1 \cdot v_1} ; \frac{b \cdot v_2}{v_2 \cdot v_2}} </me>.
+                <me>\mat{\dfrac{b \cdot v_1}{v_1 \cdot v_1} ; \dfrac{b \cdot v_2}{v_2 \cdot v_2}} </me>.
             </p>
         </statement>
         <answer>
