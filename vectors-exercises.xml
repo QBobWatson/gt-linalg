@@ -36,4 +36,35 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>Consider the following picture of two vectors <m>v, w</m>:
+				<latex-code>
+					\begin{tikzpicture}[scale=1,
+					every label/.style={fill=none,inner sep=1pt,font=\small},
+					whitebg/.style={fill=white}]
+					\path[clip] (-3.2,-3.2) rectangle (3.2, 3.2);
+					\draw[very thin, gray, dotted] (-3.2, 0) -- (3.2, 0)
+					(0, -3.2) -- (0, 3.2);
+					\begin{scope}
+					\pgftransformcm {.8}{-1.1}{1.1}{1.9}{\pgfpoint{0cm}{0cm}}
+					\draw[step=.5cm, very thin] (-6,-3) grid (6,3);
+					\draw[thick vector] (0,0) --
+					node [midway, above left, whitebg] {$v$} (0,1);
+					\draw[thick vector] (0,0) --
+					node [midway, below left, whitebg] {$w$} (1,0);
+					\point["$a$" left] at (2,1);
+					\point["$b$" left] at (-1.5,0);
+					\point["$c$" left] at (0,-1);
+					\point["$d$" left] at (-1.5,.5);
+					\point["$e$" left] at (.75,.75);
+					\end{scope}
+					\point["$0$" left] at (0,0);
+					\end{tikzpicture}
+				</latex-code>
+				
+				For each of the labeled points, estimate the coefficients <m>x, y</m> such that the linear combination <m>xv + yw</m> is the vector ending at that point.
+			</p>
+		</statement>
+	</exercise>
 </exercises>

@@ -258,4 +258,43 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>Consider the matrix equation <m>Ax = b</m>, where
+				<me>A=\mat{1 3 8 0;0 1 2 1; 0 1 2 4} \text{ and } b=\vec{1 1 1}</me>.
+				<ol>
+					<li>Write the solution set to <m>Ax = b</m> as a translate of a span.</li>
+					<li><p>What best describes the geometric relationship between the solutions to <m>Ax = 0</m> and the solutions to <m>Ax = b</m>? (Same <m>A</m> and <m>b</m> as above.)
+						<ol>
+							<li>They are both lines through the origin.</li>
+							<li>They are parallel lines.</li>
+							<li>They are both planes through the origin.</li>
+							<li>They are parallel planes.</li>
+						</ol>
+						</p>
+					</li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>
+				<ol>
+					<li>Row reduction gives
+						<md>
+							<mrow>
+								\amat{1 3 8 0 1; 0 1 2 1 1; 0 1 2 4 1} \longsquiggly[] \amat{1 0 2 0 -2;0 1 2 0 1; 0 0 0 1 0}
+							</mrow>
+						</md>
+						The parametric form of the solution set is
+						<me>
+							\vec{x_1 x_2 x_3 x_4} = x_3\vec{-2 -2 1 0} + \vec{-2 1 0 0}
+						</me>
+						Solution set as a translate of the span is
+						<me>\vec{-2 1 0 0} + \Span\{\vec{-2 -2 1 0}\}</me>.
+					</li>
+					<li>The solution set to <m>Ax = b</m> is a line which does not go through the origin: it is a vector plus the span of a nonzero vector. Hence the solution set to <m>Ax = 0</m> is the parallel line through the origin, since the solution set to <m>Ax = b</m> is obtained from the solution set to <m>Ax = 0</m> by translating.</li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
 </exercises>
