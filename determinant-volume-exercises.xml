@@ -14,4 +14,29 @@ the license is included in gfdl.xml.
             <p>Let <m>U</m> be a <m>3 \times 3</m> matrix with <m>U^T U=I</m> and <m>R</m> be a region in <m>\R^3</m> of volume 1. What is the volume of <m>U(R)</m>, the image of <m>R</m> under the transformation <m>U</m>?</p>
         </statement>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Let 
+                <me>A=\mat{0 0 -1;0 1 0;-1 0 -1}</me>
+                <ol>
+                    <li>
+                        Find the determinant of <m>A</m>.
+                    </li>
+                    <li>Find the volume of the parallelepiped defined by the columns of <m>A</m>.</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>
+                <ol>
+                    <li>After the first row swap above, the matrix becomes upper-triangular:
+                        <me>\mat{-1 0 -1;0 1 0;0 0 -1}</me>
+                        Hence the determinant of <m>A</m> is <m>-(-1) \cdot 1 \cdot (-1) = -1</m>.
+                        
+                    </li>
+                    <li>The volume of the parallelepiped is the absolute value of the determinant, which in this case is 1.</li>
+                </ol>
+            </p>
+        </answer>
+    </exercise>
 </exercises>

@@ -190,4 +190,9 @@ the license is included in gfdl.xml.
 			<p>1, 2, and 4. The solution set of <m>Ax = b</m> is either empty or a translate of <m>\Nul(A)</m> by a nonzero vector, namely, a specific solution to <m>Ax = b</m>.</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>If <m>A</m> is a <m>3 \times 3</m> matrix, is it possible that <m>\Col(A) = \Nul(A)</m>?</p>
+		</statement>
+	</exercise>
 </exercises>

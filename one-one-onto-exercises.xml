@@ -26,4 +26,16 @@ the license is included in gfdl.xml.
             </p>
         </answer>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Let <m>A</m> be a square matrix and let <m>T(x)=Ax</m>. Which of the following guarantee that <m>T</m> is onto? (There could be multiple answers.)
+                <ol>
+                    <li><m>T</m> is one-to-one</li>
+                    <li><m>Ax=0</m> is consistent</li>
+                    <li><m>\Col A = \R^n</m></li>
+                    <li>There is a transformation <m>U</m> such that <m>T \cdot U(x) = x</m> for all <m>x</m></li>
+                </ol>
+            </p>
+        </statement>
+    </exercise>
 </exercises>
