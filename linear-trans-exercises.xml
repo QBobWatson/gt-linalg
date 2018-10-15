@@ -123,5 +123,10 @@ the license is included in gfdl.xml.
             </p>
         </answer>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Find the matrix for the linear transformation <m>T: \R^3 \to \R^3</m> that first dilates by a factor of <m>5</m>, then reflects about the <m>yz</m>-plane, then rotates counterclockwise about the <m>y</m>-axis by an angle of <m>60</m> degree, then lastly projects onto the <m>xz</m>-plane.</p>
+        </statement>
+    </exercise>
 </exercises>
 

@@ -21,4 +21,43 @@ the license is included in gfdl.xml.
             <p><m>9w = \vec{3 6}</m>.</p>
         </answer>
     </exercise>
+    <exercise>
+        <statement>
+            <p>A stochastic matrix admits a unique steady state.
+                <ol>
+                    <li>True</li>
+                    <li>False</li>
+                    <li>Maybe</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>Maybe. A positive stochastic matrix admits a unique steady state by the Perron-Frobenius theorem, but if the matrix has zero entries, then it may admit more than one steady state.</p>
+        </answer>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Give an example of a <m>2 \times 2</m> real-valued matrix <m>A</m> which is positive stochastic.</p>
+        </statement>
+        <answer>
+            <p>
+                <me>A=\mat{\dfrac{1}{3} \dfrac{1}{4}; \dfrac{2}{3} \dfrac{3}{4}}</me>
+            </p>
+        </answer>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>In any given year, <m>10</m><percent/> of city dwellers will move to the country, while <m>90</m><percent/> will stay in the city. Likewise, <m>30</m><percent/> of country dwellers will move to the city, while <m>70</m><percent/> will stay in the country.
+                <ol>
+                    <li>Let <m>x_n</m> be the number of people in the city in year <m>n</m>, and let <m>y_n</m> be the number of people in the country in year <m>n</m>. Find a matrix <m>A</m> such that
+                        <me>A\vec{x_n y_n} = \vec{x_{n+1} y_{n+1}}</me>.
+                    </li>
+                    <li>
+                        Compute the steady state of <m>A</m>.
+                    </li>
+                    <li>If the region (city plus country) starts off with <m>1,000</m> residents, about how many people will live in the city <m>100</m> years later (assuming the total population stays constant)?</li>
+                </ol>
+            </p>
+        </statement>
+    </exercise>
 </exercises>

@@ -101,4 +101,9 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>Let <m>\cB_1 = \{\vec{2 3}, \vec{1 -1}\}</m> and <m>\cB_2=\{\vec{2 1}, \vec{5 3}\}</m> be two bases of <m>\R^2</m>. Find the change of basis matrix <m>\underset{\cB_2 \leftarrow \cB_1}{P}</m>. (Recall that for each <m>x \text{ in } \R^2</m>, <m>\underset{\cB_2 \leftarrow \cB_1}{P}</m> maps <m>[x]_{\cB_1}</m> to <m>[x]_{\cB_2}</m>).</p>
+		</statement>
+	</exercise>
 </exercises>
