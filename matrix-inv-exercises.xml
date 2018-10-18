@@ -175,6 +175,14 @@ the license is included in gfdl.xml.
             </p>
         </answer>
     </exercise>
+    <exercise>
+        <statement>
+            <p>State true or false: If <m>A</m> and <m>B</m> are invertible <m>n \times n</m> matrices,then <m>A+B</m> is invertible and <m>(A+B)\inv = A\inv + B\inv</m>.</p>
+        </statement>
+        <answer>
+            <p>False. <m>A + B</m> might not be invertible in the first place. For example, if <m>A = I_2</m> and <m>B = −I_2</m> then <m>A + B = 0</m> which is not invertible. Even in the case when <m>A + B</m> is invertible, it still might not be true that <m>(A + B)\inv = A\inv + B\inv</m>. For example, <m>(I_2 + I_2)\inv = (2I_2)\inv = \frac{1}{2}I_2</m>, whereas <m>(I_2)\inv + (I_2)\inv = I_2 + I_2 = 2I_2</m>.</p>
+        </answer>
+    </exercise>
 </exercises>
 
 

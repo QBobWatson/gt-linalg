@@ -34,6 +34,16 @@ the license is included in gfdl.xml.
                     <p>1, 4, and 5. The only matrix that is similar to the identity matrix is the identity matrix iself, and the zero matrix is diagonal(izable).</p>
                 </answer>
             </exercise>
+            <exercise>
+                <statement>
+                    <p>[MIT OCW]
+                        <ol>
+                            <li><m>p=A\hat x</m> is the vector in <m>C(A)</m> nearest to a given vector <m>b</m>. If <m>A</m> has independent columns, what equation determines <m>\hat x</m>? What are all the vectors perpendicular to the error <m>e=b-A\hat x</m>? What goes wrong if the columns of <m>A</m> are dependent?</li>
+                            <li>Suppose <m>A=QR</m> where <m>Q</m> has orthonormal columns and <m>R</m> is upper triangular invertible. Find <m>\hat x</m> and <m>p</m>.</li>
+                        </ol>
+                    </p>
+                </statement>
+            </exercise>
         </exercises>
     </subsection>
     <xi:include href="./symmetric-exercises.xml" />

@@ -15,4 +15,45 @@ the license is included in gfdl.xml.
             <p>Explain how to compute <m>\det(A)</m> by cofactor expansion and by row operations. Which method is computationally better if <m>A</m> is <m>n \times n</m> and <m>n</m> is large? (Mention how many arithmetic operations it takes in the worst case).</p>
         </statement>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Compute the determinant of
+                <me>A=\mat{4 0 0 5;1 7 2 -5;3 0 0 0;8 3 1 7}</me>
+                using cofactor expansions. Expand along the rows or columns that require the least amount of work.
+            </p>
+        </statement>
+        <answer>
+            <p>The expand along the third row because it only has one nonzero entry.
+                <md>
+                    <mrow>\det(A)=3(-1)^{3+1}.\det \mat{0 0 5;7 2 -5; 3 1 7}</mrow>
+                    <mrow>\quad =3 \cdot 5(-1)^{1+3}\det \mat{7 2;3 1}</mrow>
+                    <mrow>\quad = 3(5)(1)(7-6) = 15</mrow>
+                </md>.
+                (In the second step, we used the cofactor expansion along the first row since it had only one nonzero entry.)
+            </p>
+        </answer>
+    </exercise>
+    <exercise>
+        <statement>
+            <p>Let <m>A</m> be an <m>n \times n</m> matrix.
+                <ol>
+                    <li>Using cofactor expansion, explain why <m>\det(A) = 0</m> if <m>A</m> has a row or a column of zeros.</li>
+                    <li>Using cofactor expansion, explain why <m>\det(A) = 0</m> if <m>A</m> has adjacent identical columns.</li>
+                </ol>
+            </p>
+        </statement>
+        <answer>
+            <p>
+                <ol>
+                    <li>If <m>A</m> has zeros for all entries in row <m>i</m> (so <m>a_{i1} = a_{i2} =···= a_{in} =0</m>),then the cofactor expansion along row <m>i</m> is
+                        <me>\det(A) = a_{i1}C_{i1} +a_{i2}C_{i2} +···+a_{in}C_{in} = 0 \cdot C_{i1} +0 \cdot C_{i2} +···+0 \cdot C_{in} =0.</me>
+                        Similarly, if <m>A</m> has zeros for all entries in column <m>j</m>, then the cofactor expansion along column <m>j</m> is the sum of a bunch of zeros and is thus <m>0</m>.
+                    </li>
+                    <li>If <m>A</m> has identical adjacent columns, then the cofactor expansions will be identical, except the signs of the cofactors will be opposite (due to the <m>(−1)^{power}</m> factors).
+                        Therefore, <m>\det(A) = -\det(A)</m>, so <m>\det(A) = 0</m>.
+                    </li>
+                </ol>
+            </p>
+        </answer>
+    </exercise>
 </exercises>

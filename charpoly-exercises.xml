@@ -28,4 +28,9 @@ the license is included in gfdl.xml.
             <p>Explain how to express <m>\det(A)</m> in terms of eigenvalues of <m>A</m>. Can a real <m>9 \times 9</m> matrix has a nonreal eigenvalue of multiplicity <m>5</m>?</p>
         </statement>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Using facts about determinants, justify the following fact: if <m>A</m> is an <m>n \times n</m> matrix, then <m>A</m> and <m>A^T</m> have the same characteristic polynomial.</p>
+        </statement>
+    </exercise>
 </exercises>
