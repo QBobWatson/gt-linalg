@@ -28,4 +28,54 @@ the license is included in gfdl.xml.
             <p>For square matrices <m>A, B</m>, is it always true that <m>(A−B)(A+B) = A^2 − B^2</m>?</p>
         </statement>
     </exercise>
+    <exercise>
+        <statement>
+            <p>Consider the following linear transformations:
+                <md>
+                    <mrow>
+                        T: \R^3 \to \R^2 \text{ } T \text{ projects onto the } xy \text{-plane, forgetting the } z \text{-coordinate}
+                    </mrow>
+                    <mrow>
+                        T: \R^2 \to \R^2 \text{ } U \text{ rotates clockwise by } 90^\circ
+                    </mrow>
+                    <mrow>
+                        V: \R^2 \to \R^2 \text{ } V \text{ scales the } x \text{-direction by the factor of } 2
+                    </mrow>
+                </md>
+                Let <m>A, B, C</m> be the matrices for <m>T, U, V</m>, respectively.
+                <ol>
+                    <li> Compute <m>A, B,</m> and <m>C</m>.</li>
+                    <li>Compute the matrix for <m>V \circ U \circ T</m>.</li>
+                    <li>Compute the matrix for <m>U \circ V \circ T</m>.</li>
+          
+                </ol>
+                
+            </p>
+        </statement>
+        <answer>
+            <p>
+                <ol>
+                    <li>We plug in the unit coordinate vectors:
+                        <md>
+                            <mrow>
+                                T(e_1)=\vec{1 0} T(e_2)= \vec{0 1} T(e_3)=\vec{0 0} \implies &amp;\quad A=\mat{1 0 0;0 1 0}
+                            </mrow>
+                            <mrow>
+                                \quad U(e_1)=\vec{0 -1} U(e_2)=\vec{1 0} \implies &amp;\quad B=\mat{0 1; -1 0}
+                            </mrow>
+                            <mrow>
+                                \quad V(e_1)=\vec{2 0} V(e_2)=\vec{0 1} \implies &amp;\quad C=\mat{2 0;0 1} 
+                            </mrow>
+                        </md>
+                    </li>
+                    <li>
+                        <m>CBA=\mat{0 2 0;-1 0 0}</m>
+                    </li>
+                    <li>
+                        <m>BCA=\mat{0 1 0;-2 0 0}</m>
+                    </li>
+                </ol>
+            </p>
+        </answer>
+    </exercise>
 </exercises>

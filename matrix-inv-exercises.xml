@@ -158,7 +158,23 @@ the license is included in gfdl.xml.
             </p>
         </answer>
             
-    </exercise>    
+    </exercise>   
+    <exercise>
+        <statement>
+            <p>Solve <m>AB = BC</m> for <m>A</m>, assuming <m>A, B, C</m> are <m>n \times n</m> matrices and <m>B</m> is invertible. Be careful!</p>
+        </statement>
+        <answer>
+            <p>
+               <md>
+                   <mrow>
+                       AB = BC \quad AB(B\inv)=BC(B\inv) \quad AI_n=BCB\inv \quad \boxed{A=BCB\inv}
+                   </mrow>
+                       
+               </md> 
+                It is very important that we multiplied by <m>B\inv</m> on the same side in each equation, since matrix multiplication generally is not commutative. Had we multiplied by <m>B\inv</m> on the left for each side, we would have found <m>B\inv AB = C</m>.
+            </p>
+        </answer>
+    </exercise>
 </exercises>
 
 
