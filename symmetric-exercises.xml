@@ -68,4 +68,16 @@ the license is included in gfdl.xml.
             <p>If <m>A</m> and <m>B</m> are symmetric matrices whose eigenvalues are positive, explain why the eigenvalues of <m>A+B</m> are positive.</p>
         </statement>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>Suppose <m>u</m> is a unit vector in <m>\R^n</m>, so <m>u^T u=1</m>. This problem is about <m>n \times n</m> symmetric matrix <m>H = I - 2uu^T</m>.
+    			<ol>
+    				<li>Show directly that <m>H^2 = I</m>. Since <m>H=H^T</m>, we now know that <m>H</m> is not only symmetric but also <fillin/>.</li>
+    				<li>One eigenvector for <m>H</m> is <m>u</m> itself. Find the corresponding eigenvalue.</li>
+    				<li>If <m>v</m> is any vector perpendicular to <m>u</m>, show that <m>v</m> is an eigenvector of <m>H</m> and find the eigenvalue. With all these eigenvectors <m>v</m>, that eigenvalue must be repeated how many times? Is <m>H</m> diagonalizable? Why or Why not?</li>
+    				<li>Find the diagonal entries <m>H_{11}</m> and <m>H_{ii}</m> in terms of <m>u_1 \ldots u_n</m>. Add up <m>H_{11} + \ldots + H_{nn}</m> and separately add up the eigenvalues of <m>H</m>.</li>
+    			</ol>
+    		</p>
+    	</statement>
+    </exercise>
 </exercises>

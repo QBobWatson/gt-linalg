@@ -56,4 +56,18 @@ the license is included in gfdl.xml.
             </p>
         </answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] For any invertible matrix <m>A</m>, the <m>(1, 1)</m> entry of <m>A\inv</m> is the ratio of <fillin/>. So the <m>(1, 1)</m> entry of <m>A_4\inv</m> is <fillin/>.</p>
+    	</statement>
+    	<answer>
+    		<p>Cramer's rule gives <m>A\inv = \dfrac{1}{|A|}C^T</m> where <m>C</m> is the cofactor matrix, whose <m>(i, j)</m> entry is 
+    		<m>(-1)^{i+j}|M_{ij}|</m> where <m>M_{ij}</m> is the submatrix obtained by deleting row <m>i</m> and column <m>j</m> of the (arbitrary) invertible matrix <m>A</m>.
+    		 Thus the entry with <m>i=j=1</m> is <m>|M_{11}|/|A|</m>.
+    		 </p>
+    		 <p>In the case where <m>A=A_n</m>, the submatrix <m>M_{11}</m> is <m>A_{n-1}</m>; so the desired formula is <m>|A_{n-1}|/|A_n|</m>.
+    		 Now, <m>|A_n|=1-n</m> by part(a). So <m>|A_4|=-3</m> and <m>|A_3|=-2</m>. Thus the <m>(1, 1)</m> entry of <m>A_4\inv</m> is <m>2/3</m>.  
+    		 </p>
+    	</answer>
+    </exercise>
 </exercises>

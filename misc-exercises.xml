@@ -40,9 +40,33 @@ the license is included in gfdl.xml.
                         <ol>
                             <li><m>p=A\hat x</m> is the vector in <m>C(A)</m> nearest to a given vector <m>b</m>. If <m>A</m> has independent columns, what equation determines <m>\hat x</m>? What are all the vectors perpendicular to the error <m>e=b-A\hat x</m>? What goes wrong if the columns of <m>A</m> are dependent?</li>
                             <li>Suppose <m>A=QR</m> where <m>Q</m> has orthonormal columns and <m>R</m> is upper triangular invertible. Find <m>\hat x</m> and <m>p</m>.</li>
+                            <li>If <m>q_1</m> and <m>q_2</m> are orthonormal vectors in <m>\R^5</m> give a formula for the project <m>p</m> of any vector <m>b</m> onto the plane spanned by <m>q_1</m> and <m>q_2</m> (write <m>p</m> as a combination of <m>q_1</m> and <m>q_2</m>).</li>
                         </ol>
                     </p>
                 </statement>
+                <answer>
+                	<p>
+                		<ol>
+                			<li><m>\hat x</m> is determined by the equation <m>\hat x = (A^T A)\inv A^T b</m> (since <m>A</m> has independent columns, <m>A^T A</m> is invertible whether or not <m>A</m> is square). The vectors perpendicular to an arbitrary error vector are the elements of the column space of <m>A</m>. If the columns
+                			of <m>A</m> are dependent, <m>A^T A</m> is no longer invertible, and there is no unique nearest vector (i.e. there are multiple solutions).</li>
+                			<li>Since <m>Q^T Q=I</m> and <m>R</m> is invertible, we obtain
+                				<md>
+                					<mrow>
+                						\hat x = A^T A)\inv A^T b = ((QR)^T (QR))\inv (QR)^T b
+                					</mrow>
+                					<mrow>
+                						\quad = (R^T Q^T QR)\inv R^T Q^T b = R\inv Q^T b
+                					</mrow>
+                					<mrow>
+                						p = (QR)\hat x = QQ^T b
+                					</mrow>
+                				</md>
+                				Note that <m>QQ^T</m> is not the identity matrix in general
+                			</li>
+                			<li><m>p = (q_1^T b)q_1 + (q_2^T b)q_2</m>.</li>
+                		</ol>
+                	</p>
+                </answer>
             </exercise>
         </exercises>
     </subsection>
