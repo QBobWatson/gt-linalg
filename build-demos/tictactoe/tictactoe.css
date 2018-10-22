@@ -1,0 +1,31 @@
+body {max-width: 800px;}
+.empty { background-color: #D3DB58}
+/* .empty:hover {background-color: #AEB621} */
+.one {background-color: #596AFF; color:white}
+.one_hover {background-color: #A1ACFF; color:white}
+.zero {background-color: #F50A0A; color:white}
+.zero_hover {background-color: #FF8C8C; color:white}
+td div {text-align: center;}
+.size2 {width: 20vmin; height: 20vmin; line-height: 20vmin; font-size: 10vmin;}
+.size3 {width: 15vmin; height: 15vmin; line-height: 15vmin; font-size: 8vmin;}
+.size4 {width: 10vmin; height: 10vmin; line-height: 10vmin; font-size: 6vmin;}
+.size5 {width: 8vmin; height: 8vmin; line-height: 8vmin; font-size: 5vmin;}
+table {background-color: #140A05; padding:2vmin;margin:2vmin 0 0 0;}
+
+#instructions {margin: 5vmin auto 0 auto; color:white;
+    max-width: 50vmin;}
+#instructions div {padding: 2vmin;}
+h1, #instructions {text-align: center}
+h1 {padding-bottom: 30px;}
+
+/* #start-btn {background-color: #1FD31F} */
+#board-wrapper {text-align:center; position:relative;background-color: #E6E1E1; padding-bottom: 5vw}
+#board {display: inline-block}
+
+.box-wrapper {font-size: 1.7vmin; width:10vmin;display: inline-block
+}
+#determinant-wrapper {margin-right: 10vmin}
+.box {height: 10vmin; width: 10vmin; font-size:6vmin; border:solid;border-color: black}
+.neutral {background-color: wheat;  }
+
+

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Matrix Tic Tac Toe</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link rel="stylesheet" href="tictactoe.css">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+  </style>
+</head>
+
+<body>
+  <!-- <h1>Matrix Tic Tac Toe</h1> -->
+  <div style="background-color: #E6E1E1">
+  <nav class="navbar navbar-light bg-dark text-white">
+      <ul class="nav">
+          <li class="nav-item">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">Rules</a>
+              
+              <div class="dropdown-menu p-4 ml-3 bg-danger text-white">
+                  <!-- <a class="dropdown-item">Action</a>
+                  <a class="dropdown-item">Another action</a>
+                  <a class="dropdown-item">Something else here</a> -->
+                  <ol>
+                      <li>Player 0 places zeros in the matrix, Player 1 places ones.</li>
+                      <li>Player 0 wins if the determinant of the final matrix is 0, Player 1 wins if it is nonzero.</li>
+                    </ol>
+                </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active dropdown-toggle" data-toggle="dropdown" >Questions</a>
+            <div class="dropdown-menu p-5 ml-3 bg-danger text-white">
+                Easy questions:                
+            <ol>
+              <li>How can Player 0 know that she is a winner before the whole board is filled? (Think of at least two ways.)</li>
+              <li>Which player has the winning strategy on a 2x2 board if Player 0 starts?</li>
+              <li>Which player has the winning strategy on a 2x2 board if Player 1 starts?</li>
+              <li>Which numbers can we get as determinants on a 2x2 board?</li>
+            </ol>
+            Challenging questions:
+            <ol>
+              <li>Which numbers can we get as determinants on a 3x3 board?</li>
+              <li>Which player has the winning strategy on a 3x3 board if Player 0 starts?</li>
+              <li>Which player has the winning strategy on a 3x3 board if Player 1 starts?</li>
+            </ol>
+            Hard questions:
+            <ol>
+            <li>Which player has the winning strategy on a 4x4 or 5x5 board if Player 0 starts?</li>
+            <li>Which player has the winning strategy on a 4x4 or 5x5 board if Player 1 starts?</li>
+            </ol>            
+          </ol>
+          </div>
+          </li>
+          <li class="nav-item">
+
+          </li>
+        </ul>
+        <a class="navbar-brand">Matrix Tic Tac Toe</a>
+        
+          <button class="btn btn-success" data-toggle="modal" data-target="#myModal" id="start-btn">Start new game</button>
+    </nav>
+
+  <div id="board-wrapper">
+    <table id="board">
+    </table>
+    <div id="signs">        
+    <div id="determinant-wrapper" class="box-wrapper">
+        Determinant
+        <div id="determinant" class="box neutral"></div>
+    </div>
+    <div id="winner-wrapper" class="box-wrapper">
+      Winner
+      <div id="winner" class="box neutral"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal" id="myModal" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <form class="form-horizontal">
+          
+          <label class="mr-2">Size:</label>
+          <select name="size-selector" id="size-selector"
+          class="form-control mr-3">
+            <option value="2">2x2</option>
+            <option value="3">3x3</option>
+            <option value="4">4x4</option>
+            <option value="5">5x5</option>
+          </select>
+          <label>Starting player:</label>
+          <select name="player-selector" id="player-selector"
+            class="form-control mr-3">
+            <option value="0">Player 0</option>
+            <option value="1">Player 1</option>
+          </select>
+        </form>
+      </div>
+      <div class="modal-footer">
+          <button type="submit" id="go-btn" class="btn btn-success" data-dismiss="modal">Go!</button>          
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
+<script src="tictactoe.js"></script>    
+<script>
+  $(document).ready(function() {
+    var game = start_game();
+    
+    
+    $('#go-btn').click(function() {
+      game = start_game();
+    }
+    );
+    
+    
+  })
+</script>
+</body>
+
+
+</html>

@@ -114,3 +114,6 @@
     - rabbits/plotly-latest.min.js
 - rabbits/book_demo.html
 - rabbits/bootstrap.min.css
+- tictactoe/tictactoe.css
+- tictactoe/tictactoe.html
+- tictactoe/tictactoe.js
