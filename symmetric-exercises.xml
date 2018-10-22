@@ -70,7 +70,7 @@ the license is included in gfdl.xml.
     </exercise>
     <exercise>
     	<statement>
-    		<p>Suppose <m>u</m> is a unit vector in <m>\R^n</m>, so <m>u^T u=1</m>. This problem is about <m>n \times n</m> symmetric matrix <m>H = I - 2uu^T</m>.
+    		<p>[MIT OCW] Suppose <m>u</m> is a unit vector in <m>\R^n</m>, so <m>u^T u=1</m>. This problem is about <m>n \times n</m> symmetric matrix <m>H = I - 2uu^T</m>.
     			<ol>
     				<li>Show directly that <m>H^2 = I</m>. Since <m>H=H^T</m>, we now know that <m>H</m> is not only symmetric but also <fillin/>.</li>
     				<li>One eigenvector for <m>H</m> is <m>u</m> itself. Find the corresponding eigenvalue.</li>
@@ -79,5 +79,39 @@ the license is included in gfdl.xml.
     			</ol>
     		</p>
     	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>Explicitly, we find <m>H^2=(I-2uu^T)^2=I^2-4uu^T +4uu^T uu^T</m> since <m>uu^T = 1, H^2=I</m>. Since <m>H=H^T</m>, we also have <m>H^T H=1</m>, implying that <m>H</m> is also an orthogonal matrix.</li>
+    				<li>Since <m>Hu=(I-2uu^T)u = u-2uu^T u= u-2u = -u</m>, <m>\lambda=1</m>.</li>
+    				<li>For any vector <m>v</m> orthogonal to <m>u</m>, we have <m>Hv=(I-2uu^T)v=v-2uu^T v=v</m>, so the associated <m>\lambda=1</m>. The orthogonal complement to the space spanned by <m>u</m> has dimension <m>n-1</m>, so there is a basis of <m>(n-1)</m> orthonormal eigenvectors with this eigenvalue. Adding in the eigenvector <m>u</m>, we find that <m>H</m> is diagonalizable.</li>
+    				<li>Since the <m>i</m>th diagonal entry of <m>uu^T </m> is <m>u_i^2</m>, the <m>i</m> diagonal entry of <m>H</m> is <m>H_{ii}=1-2u_i^2</m>. Summing these together gives <m>\sum_{i=1}^n H_{ii}=n-2\sum_{i=1}^n u_i^2=n-2</m>. Adding up the eigenvalues of <m>H</m>
+    				also gives <m>\sum \lambda_i=(1)-1+(n-1)(1)=n-2</m>.</li>
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] Suppose <m>A</m> is a positive definite symmetric <m>n \times n</m> matrix.
+    			<ol>
+    				<li>How do you know that <m>A\inv</m> is also positive definite?</li>
+    				<li>Suppose <m>Q</m> is any orthogonal <m>n \times n</m> matrix. How do you know that <m>QAQ^T = QAQ\inv</m> is positive definite? Which test would you use?</li>
+    				<li>Show that the block matrix 
+    					<me>B = \mat{A A; A A}</me>
+    					is positive semidefinite. How do you know that <m>B</m> is not positive definite?
+    				</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>Since a matrix is positive-definite if and only if all its eigenvalues are positive, and since the eigenvalues of <m>A\inv</m> are simply the inverses of the eigenvalues of <m>A</m>, <m>A\inv</m> is also positive definite (inverse of a positive number is positive).</li>
+    				<li>Using the energy test (x^T Ax > 0 for nonzero x), we find that <m>x^T QAQ^T x = (Q^T x)^T A(Q^T x) > 0</m> for all nonzero <m>x</m> as well (since <m>Q</m> is invertible). Using the positive
+    				eigenvalue test, since <m>A</m> is similar to <m>QAQ\inv</m> and similar matrices have the same eigenvalues, <m>QAQ\inv</m> also has all positive eigenvalues.</li>
+    			</ol>
+    		</p>
+    	</answer>
     </exercise>
 </exercises>
