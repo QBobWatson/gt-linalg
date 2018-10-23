@@ -13,4 +13,17 @@ the license is included in gfdl.xml.
             <p>What is the LU decomposition good for? Your reasoning should involve computational efficiency of LU factorization versus solving <m>Ax=b</m> directly.</p>
         </statement>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>The question is about the matrix
+    			<me>A=\mat{1 2 0 1; 2 4 1 4;3 6 3 9}</me>
+    			Find a lower triangular <m>L</m> and an upper triangular <m>U</m> so that <m>A=LU</m>.
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<me>A=\mat{1 0 0; 2 1 0; 3 3 1}\mat{1 2 0 1;0 0 1 2; 0 0 0 0}</me>
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>

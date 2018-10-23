@@ -18,4 +18,32 @@ the license is included in gfdl.xml.
             <p>Give an example of a matrix <m>2 \times 2</m> whose eigenvalues are nonnegative but different from its singular values.</p>
         </statement>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] The question is about the matrix 
+    			<me>A=\mat{0 -1;4 0}</me>
+    			<ol>
+    				<li>Find its eigenvalues and eigenvectors.</li>
+    				<li>Solve the equation <m>\dfrac{du}{dt} = Au</m> starting witht the same vector <m>u(0)</m> at time <m>t=0</m>. In other words, solution <m>u(t)</m> is what combination of the eigenvectors of <m>A</m>?</li>
+    				<li>Find the 3 matrices in the Singular Value Decomposition <m>A=U\Sigma V^T</m> in two steps. First, compute <m>V</m> and <m>\Sigma</m> using the matrix <m>A^T A</m>. Second, find the (orthonormal) columns of <m>U</m>.</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>Since <m>\det(A= \lambda I)=\lambda^2 + 4</m>, the eigenvalues are <m>2i</m>, <m>-2i</m>. Two associated eigenvectors are <m>\vec{1 -2i}, \vec{1 2i}</m>, though there are many other choices.
+    				<m>u(0)</m> is just the sum of these vectors.</li>
+    				<li>One simply adds in the factors of <m>e^{\lambda t}</m> to each term, giving
+    					<me>u(t)=e^{2it}\vec{1 -2i} + e^{-2it}\vec{1 2i}</me>
+    				</li>
+    				<li>Note that <m>A^T A= V \Sigma^T U^T U \Sigma V^T = V \Sigma^2 V^T</m>, so the diagonal entries of <m>\Sigma</m> are simply the positive roots of the eigenvalues of
+    					<me>A^T A=\mat{0 4; -1 0}\mat{0 -1; 4 0}=\mat{16 0; 0 1}</me>
+    					i.e. <m>\sigma_1 =4, \sigma_2=1</m>. Since <m>A^T A</m> is already diagonal, <m>V</m> is the identity matrix. The columns of <m>U</m> should satisfy <m>Au_1=\sigma_1 v_1</m>, <m>Au_2 = \sigma_2 v_2 </m>: by inspection one obtains
+    					<me>u_1 = \vec{0 1}, u_2=\vec{-1 0}, U = \mat{0 -1;1 0}</me>
+    				</li>
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>

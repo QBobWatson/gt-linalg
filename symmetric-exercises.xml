@@ -114,4 +114,13 @@ the license is included in gfdl.xml.
     		</p>
     	</answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>If <m>A</m> is any <m>m \times n</m> matrix with <m>m \gt n</m>, tell me why <m>AA^T</m> cannot be positive definite. Is <m>A^T A</m> always positive definite? (If not, what is the test on <m>A</m>?)</p>
+    	</statement>
+    	<answer>
+    		<p><m>AA^T</m> is an <m>m \times m</m> matrix but its rank is not greater than <m>n</m> (all columns of <m>AA^T</m> are combinations of columns of <m>A</m>). Since <m>n \lt m</m>, <m>AA^T</m> is singular. 
+    		<m>A^T A</m> is positive definite if <m>A</m> has full column rank <m>n</m> (Not always true, <m>A</m> can even be a zero matrix).</p>
+    	</answer>
+    </exercise>
 </exercises>
