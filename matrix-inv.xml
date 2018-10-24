@@ -387,7 +387,7 @@ $\hmat{1 0 4 1 0 0; 0 1 2 0 1 0; 0 \r0 \r0 0 3 1}$.}
 x
   = \mat[r]{1 3; -1 2}\inv\kern-1pt\vec{1 1}
   = \frac 15\mat[r]{2 -3; 1 1}\vec{1 1}
-  = \frac 15\vec{1 2}.
+  = \frac 15\vec{-1 2}.
          </me>
          Here we used
          <me>
