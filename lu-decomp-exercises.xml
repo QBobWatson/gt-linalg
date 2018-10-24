@@ -26,4 +26,62 @@ the license is included in gfdl.xml.
     		</p>
     	</answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>A matrix <m>A=LU</m> has the LU factors
+    			<me>L=\mat{1; -2 1; 0 -2 1; -1 -1 -2 1}, U=\mat{1 -1 -2 0;1 0 -2;1 0; 1}</me>
+    			<ol>
+    				<li>If <m>b=\vec{-1 2 2 -4}</m>, what is <m>x=A\inv b</m>?</li>
+    				<li>Assuming you solved the previous part efficiently, roughly how much more arithmetic operations would be required for the same approach if the matrices were <m>8 \times 8</m> instead of <m>4 \times 4</m>? It should be about <fillin/> times more.</li>
+    				<li>If you form a new <m>4 \times 5</m> matrix <m>B=\vec{A b}</m> by appending the vector <m>b</m> (from above) as the extra column after <m>A</m>, and perform same elimination steps 
+    				as were used to get the LU factors above, what upper-triangular matrix would you obtain?</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>If <m>x=A\inv b</m>, then <m>b=Ax=LUx</m>. So, to solve for <m>x</m> we can solve the equation <m>b=Ly</m> for <m>y</m> and then <m>y=Ux</m> for <m>x</m>, and these can be solved by forward/back substitution. The forward substituion 
+    			procedure for solving for <m>y</m> gives:
+    					<md>
+    						<mrow>
+    							y_1 = -1
+    						</mrow>
+    						<mrow>
+    							-2y_1 + y+2 = 2 \implies y_2 = 2 + 2y_1 = 2 + 2 \star (-1)=0
+    						</mrow>
+    						<mrow>
+    							0y_1 - 2y_2 + y_3 =2 \implies y_3 = 2 + 2y_2 = 2 + 2 \star 0 = 2
+    						</mrow>
+    						<mrow>
+    							-y_1 - y_2 - 2y_2 +y_4 = -4 \implies y_4 = -4+y_1+y_2+2y_3 
+    						</mrow>
+    						<mrow>
+    							\qquad = -4+(-1)+0+2\star 2 = -1
+    						</mrow>
+    					</md>
+    					Then we can solve for <m>x</m> using back substitution:
+    					<md>
+    						<mrow>	
+    							x_4 = -1
+    						</mrow>
+    						<mrow>
+    							x_3 = 2
+    						</mrow>
+    						<mrow>
+    							x_2 - 2x_4 = 0 \implies x_2 = 2x_4 = -2
+    						</mrow>
+    						<mrow>
+    							x_1 - x_2 - 2x_3 = -1 \implies x_1 = -1 + x_2 + 2x_3 = -1 + (-2) + 2*2 = 1
+    						</mrow>
+    					</md>
+    					So the solution is <m>x=(1, -2, 2, -1)</m>
+    				</li>
+    				<li>Back or forward substitution for <m>m \times m</m> systems require <m>m^2</m> operations. So, the ratio of the time required for <m>m=8</m> and <m>m=4</m> is about <m>8^2/4^2 = 2^2 = 4</m>.</li>
+    				<li>Recall that row operations are given by multiplication on the left by an invertible matrix. The Gaussian elimination giving <m>U</m> from <m>A</m> is given by multiplication by an elimination matrix <m>E</m>, i.e. <m>EA=U</m>, and therefore <m>E=L\inv</m>. So, performing the same elimination steps to <m>B=\vec{A b}</m> gives <m>L\inv B = (L\inv AL\inv b)=(U, L\inv b)</m>. In part(1) we solved <m>Ly=b</m> for <m>y</m>, so that <m>L\inv b = y = (-1, 0, 2, -1)</m>. So we obtain the matrix <m>\mat{U y}</m> with <m>U</m> as in the 
+    				problem statement and <m>y</m> as computed in the solution to part (1).</li>
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>
