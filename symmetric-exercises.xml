@@ -116,11 +116,41 @@ the license is included in gfdl.xml.
     </exercise>
     <exercise>
     	<statement>
-    		<p>If <m>A</m> is any <m>m \times n</m> matrix with <m>m \gt n</m>, tell me why <m>AA^T</m> cannot be positive definite. Is <m>A^T A</m> always positive definite? (If not, what is the test on <m>A</m>?)</p>
+    		<p>[MIT OCW] If <m>A</m> is any <m>m \times n</m> matrix with <m>m \gt n</m>, tell me why <m>AA^T</m> cannot be positive definite. Is <m>A^T A</m> always positive definite? (If not, what is the test on <m>A</m>?)</p>
     	</statement>
     	<answer>
     		<p><m>AA^T</m> is an <m>m \times m</m> matrix but its rank is not greater than <m>n</m> (all columns of <m>AA^T</m> are combinations of columns of <m>A</m>). Since <m>n \lt m</m>, <m>AA^T</m> is singular. 
     		<m>A^T A</m> is positive definite if <m>A</m> has full column rank <m>n</m> (Not always true, <m>A</m> can even be a zero matrix).</p>
+    	</answer>
+    </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] You are given the recurrence relation
+    			<me>(2I +B^T B)x_{n+1} = (2I-B^TB)x_n</me>
+    			where B is a real <m>5 \times 3</m> matrix. We start with a vector <m>x_0</m> and compute <m>x_1, x_2, \ldots</m>.
+    			<ol>
+    				<li><m>x_n=A^n x_0</m> for some matrix <m>A</m> (independent of <m>x_0</m>). What is <m>A</m>?</li>
+    				<li>If <m>\lambda</m> is an eigenvalue of <m>B^T B</m>, give an eigenvalue of <m>A</m>.</li>
+    				<li>Circle all possible behaviors of <m>x_n</m> for large <m>n</m>, given the information above: decaying to zero, oscillating but not growing or decaying 
+    				in length, going to a nonzero constant vector, or growing longer and longer. Explain your answers by giving some property (or properties) that must be true of the eigenvalues of A.</li>
+    				<li>If <m>x_1 = 0</m> for a nonzero <m>x_0</m>, give one of the singular values (<m>\sigma</m>) of <m>B</m>.</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>The matrix <m>B^T B</m> is symmetric positive semidefinite by construction, so all of its eignevalues are real and nonnegative. So the eigenvalues of <m>2I + B^T B</m> are all real and at least <m>2</m>, so in particular it has no eigenvalue equal to zero and hence is invertible. Therefore we can rearrange the recurrence relation to:
+    					<m>x_{n+1} = (2I + B^T B)\inv (2I - B^T B)x_n</m>
+    					and therefore <m>x_{n+1}=Ax_n</m> for all <m>n</m> where <m>A</m> is the matrix <m>A=(2I+B^T B)\inv (2I - B^T B)</m>. To see that this really gives the right matrix, notice that we have <m>x_1=Ax_0</m>, but also <m>x_2= Ax_1=AAx_0=A^2 x_0</m>, <m>x_3=Ax_2=AA^2 x_0=A^3 x_0</m>, etc. 
+    				</li>
+    				<li>Suppose <m>v</m> is an eigenvector for <m>B^T B</m> with eigenvalue <m>\lambda</m>. Then <m>v</m> is also an eigenvector of <m>2I+B^T B</m> and <m>2I-B^T B</m>, with eigenvalue <m>2+\lambda</m> and <m>2-\lambda</m>, respectively, and so <m>v</m> is also an eigenvectore of <m>(2I + B^T B)\inv</m> with eigenvalue <m>1/(2+\lambda)</m>. It follows that <m>v</m> is also an eigenvector for <m>A=(2I + B^T B)\inv (2I-B^T B)</m> with eigenvalue <m>\dfrac{2-\lambda}{2+\lambda}</m>.</li>
+    				<li>As <m>B^T B</m> is a symmetric positive semidefinite all of its eigenvalues are real and nonnegative. If <m>\lambda \ge 0</m> is a nonnegative number, then <m>-1 \lt (2-\lambda)/(2+\lambda) \le 1</m>. Note, in particular, that <m>\lambda = 0</m> would give an eigenvalue of <m>1</m> for <m>A</m>, so this is a possibility. Furthermore, the argument in (2) actually implies that any basis of eigenvectors for <m>B^T B</m> (which is diagonalizable because it is real symmetric) is also a basis of eigenvectors for <m>A</m> (with the eigenvalues transformed according to <m>\lambda \to (2-\lambda)/(2+\lambda)</m>). 
+    					All of the eigenvalues are real numbers in the half-open interval <m>(-1, 1]</m>, so the sequence <m>\{x_n\}_n</m> cannot grow large or oscillate. It can decay, if all of the eigenvectors appearing in the decomposition of <m>x_0</m> into a linear combination of eigenvectors have eigenvalue with magnitude less than <m>1</m>, and it can go to a constant if there is an eigenvector with eigenvalue <m>1</m> appearing with nonzero constant in the decomposition of <m>x_0</m>. So decaying and going to a nonzero constant is the right answer.
+    				</li>
+    				<li>For <m>x_1=Ax_0</m> to be zero with <m>x_0</m> nonzero means that <m>x_0 \in \Nul(A)</m>, so <m>x_0</m> is an eigenvector for <m>A</m> with eigenvalue <m>0</m>. This can only happen if <m>(2-\lambda)/(2+\lambda) = 0</m> for some eigenvalue <m>\lambda</m> of <m>B^T B</m>, so <m>B^T B</m> must have an eigenvalue equal to <m>2</m>. The singular values of <m>B</m> are the positive square roots of the positive eigenvalues of <m>B^T B</m>, so <m>\sqrt{2}</m> is a singular value of <m>B</m>.</li>
+    			</ol>
+    		</p>
     	</answer>
     </exercise>
 </exercises>

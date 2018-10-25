@@ -15,7 +15,7 @@ the license is included in gfdl.xml.
     </exercise>
     <exercise>
     	<statement>
-    		<p>The question is about the matrix
+    		<p>[MIT OCW] The question is about the matrix
     			<me>A=\mat{1 2 0 1; 2 4 1 4;3 6 3 9}</me>
     			Find a lower triangular <m>L</m> and an upper triangular <m>U</m> so that <m>A=LU</m>.
     		</p>
@@ -28,7 +28,7 @@ the license is included in gfdl.xml.
     </exercise>
     <exercise>
     	<statement>
-    		<p>A matrix <m>A=LU</m> has the LU factors
+    		<p>[MIT OCW] A matrix <m>A=LU</m> has the LU factors
     			<me>L=\mat{1; -2 1; 0 -2 1; -1 -1 -2 1}, U=\mat{1 -1 -2 0;1 0 -2;1 0; 1}</me>
     			<ol>
     				<li>If <m>b=\vec{-1 2 2 -4}</m>, what is <m>x=A\inv b</m>?</li>
