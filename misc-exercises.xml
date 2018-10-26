@@ -76,4 +76,5 @@ the license is included in gfdl.xml.
     <xi:include href="./pseudo-inv-exercises.xml" />
     <xi:include href="./qr-fact-exercises.xml"/>
     <xi:include href="./lu-decomp-exercises.xml"/>
+    <xi:include href="./matrix-differentiation.xml"/>
 </section>
