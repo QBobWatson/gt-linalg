@@ -19,10 +19,33 @@ the license is included in gfdl.xml.
 				<ol>
 					<li>Show (by any test you want, e.g. pivot test) that the matrix <me>A+A^H=\mat{-2 2 2;2 -6 -2;2 -2 -6}</me> is negative definite.</li>
 					<li>If <m>Av=\lambda v</m> is an eigensolution of <m>A</m> (<m>v</m> and <m>\lambda</m> may be complex), look at <m>v^H(A + A^H)v</m> and use the fact that <m>A+A^H</m> is negative definite to show that the real part of <m>\lambda</m> must be negative.</li>
-					<li>What can you conclude from the previous parts about the solutions <m>x(t)</m> as <m>t \to \inf</m>?</li>
-					<li>If <m>A+A^H</m> is negative definite (so that <m>A</m>'s eigenvalues have negative real parts), but <m>A</m> is defective, does your answer to the previous part about <m>x(\inf)</m> change? Why or why not?</li>
+					<li>What can you conclude from the previous parts about the solutions <m>x(t)</m> as <m>t \to \infty</m>?</li>
+					<li>If <m>A+A^H</m> is negative definite (so that <m>A</m>'s eigenvalues have negative real parts), but <m>A</m> is defective, does your answer to the previous part about <m>x(\infty)</m> change? Why or why not?</li>
 				</ol>
 			</p>
 		</statement>
+		<answer>
+			<p>
+				<ol>
+					<li>Use pivot test. Do elimination and check that the pivots are negative. Gaussian elimination on <m>A</m> yields 
+						<me>\mat{-2 2 2; 2 -6 -2;2 -2 -6} \to \mat{-2 2 2;0 -4 0;0 0 -4}</me>
+						which has pivots <m>-2</m>, <m>-4</m>, <m>-4</m> that are all negative, so <m>A</m> is indeed negative definite. 
+					</li>
+					<li>As suggested, we compute
+						<md>
+							<mrow>
+								v^H(A+A^H)v = v^H(Av)+(V^H A^H)v = v^H (\lambda v) + (Av)^H v 
+							</mrow>
+							<mrow>
+								\qquad = \lambda \|v\|^2 + \bar\lambda\|v\|^2 = (\lambda + \bar\lambda)\|v\|^2 \le 0
+							</mrow>
+						</md>.
+						As <m>A+A^H</m> is negative definite, that number needs to be a negative real number. But <m>\|v\|^2</m> is a positive real number, so this means that <m>\lambda + \bar\lambda = 2 \Re \lambda</m> must be a negative real number, so <m>\Re \lambda</m> is a negative real number itself, as needed.
+					</li>
+					<li>They always decay to zero, since <m>e^{\lambda t} \to 0</m> when <m>\Re\lambda \le 0</m>.</li>
+					<li>The answer does not change. Even if <m>A</m> is defective, the coordinates of <m>x(t)=e^{At}x(0)</m> are sums of multiples of functions of the form <m>t^ne^{\lambda t}</m> where <m>\lambda</m> is an eigenvalue of <m>A</m> and <m>n</m> is a nonnegative integer (smaller than the size of the largest Jordan block of <m>A</m> with eigenvalue <m>\lambda</m>). But no matter what such <m>n</m>, <m>lim_{t \to \infty}t^n e^{\lambda t}=0</m> as long as <m>\Re \lambda \le 0</m>.</li>
+				</ol>
+			</p>
+		</answer>
 	</exercise>
 </exercises>

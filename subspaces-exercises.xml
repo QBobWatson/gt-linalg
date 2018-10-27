@@ -195,4 +195,13 @@ the license is included in gfdl.xml.
 			<p>If <m>A</m> is a <m>3 \times 3</m> matrix, is it possible that <m>\Col(A) = \Nul(A)</m>?</p>
 		</statement>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>[MIT OCW] If <m>\Col(B)</m> is a subspace of <m>\Nul(A)</m>, then either (choose one) <m>AB</m> or <m>BA</m> must be simply <fillin/>.
+			</p>
+		</statement>
+		<answer>
+			<p><m>AB=0</m>. The reason is that for any vector <m>x</m>, <m>Bx \in \Col(B) \subseteq \Nul(A)</m>, so <m>ABx=0</m>. But the only way <m>ABx=0</m> for all <m>x</m> can be true is if <m>AB=0</m>.</p>
+		</answer>
+	</exercise>
 </exercises>

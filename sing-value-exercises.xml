@@ -46,4 +46,14 @@ the license is included in gfdl.xml.
     		</p>
     	</answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] If <m>A</m> is a <m>3 \times 3</m> non-singular real matrix with singular values <m>\sigma_1</m>, <m>\sigma_2</m>, <m>\sigma_3</m>, then give the formulas in terms of <m>\sigma_1</m>, <m>\sigma_2</m>, <m>\sigma_3</m> for <m>\det(A^T A)=</m><fillin/> and <m>|\det(A)|=</m><fillin/>.</p>
+    	</statement>
+    	<answer>
+    		<p>The eigenvalues of <m>A^T A</m> are the squares of the singular values of <m>A</m>, and the determinant is the product of the eigenvalues, so <m>\det(A^T A)=\sigma_1^2 \sigma_2^2 \sigma_3^2</m>. The singular value 
+    		decomposition of <m>A</m> is <m>A=U\Sigma V^T</m> where <m>U</m>, <m>V</m> are orthogonal matrices and <m>\Sigma</m> is the diagonal matrix with diagonal entries <m>\sigma_1</m>, <m>\sigma_2</m>, <m>\sigma_3</m>. So <m>\det(A) = \det(U)\det(\Sigma)\det(V^T)</m>. As <m>\Sigma</m> is diagonal we have <m>\det(\Sigma)=\sigma_1\sigma_2\sigma_3</m>. 
+    		The determinant of an orthogonal matrix is <m>\pm 1</m>, so we see that <m>|\det(A)|=\sigma_1\sigma_2\sigma_3</m>.</p>
+    	</answer>
+    </exercise>
 </exercises>
