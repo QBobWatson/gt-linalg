@@ -84,4 +84,24 @@ the license is included in gfdl.xml.
     		</p>
     	</answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] Suppose you are given the <m>PA=LU</m> factorization of an invertible <m>n \times n</m> matrix <m>A</m>. Now, suppose we want to solve
+    			<me>\mat{A B; 0 A}x = b</me>
+    			for some <m>n \times n</m> matrix <m>B</m>, where <q>0</q> denotes an <m>n \times n</m> block of zeros in the lower-left corner.
+    			Suppose we express <m>x=\vec{x_1 x_2}</m>, where <m>x_1</m> and <m>x_2</m> are <m>n</m>-component vectors. Similarily we express <m>b=\vec{b_1 b_2}</m> in terms of <m>n</m>-component vectors <m>b_1</m> and <m>b_2</m>. 
+    				Write the solution <m>x_1</m> and <m>x_2</m> in terms of <m>P</m>, <m>L</m>, <m>U</m>, <m>B</m>, <m>b_1</m>, <m>b_2</m> (or the inverses of those matrices). <em>Hint</em>: write out two <m>n \times n</m> equations involving <m>x_1</m> and <m>x_2</m> first.
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>If we write
+    			<me>x=\vec{x_1 x_2}, b=\vec{b_1 b_2}</me>,
+    			where <m>x_1</m>, <m>x_2</m>, <m>b_1</m>, <m>b_2</m> are <m>n</m>-dimensional vectors, the system becomes
+    			<me>\syseq{Ax_1 + Bx_2 = b_1; Ax_2=b_2}</me>
+    			From the second line, we immediately see that
+    			<me>x_2 = U\inv (L\inv(Pb_2)</me>.
+    			<me>x_1=U\inv(L\inv(P(b_1-Bx_2))) = U\inv(L\inv(P(b_1-B(U\inv(L\inv(Pb_2))))))</me>.
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>
