@@ -128,4 +128,23 @@ the license is included in gfdl.xml.
     		</p>
     	</answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] If <m>P</m> is a permutation matrix, what is its <m>QR</m> factorization?</p>
+    	</statement>
+    	<answer>
+    		<p>A permutation matrix already has orthonormal columns (they are just a permutation of the columns of <m>I</m>), and hence <m>QR</m> factorization does nothing. You simply get <m>Q=P</m>, <m>R=I</m>.</p>
+    	</answer>
+    </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] If <m>A</m> and <m>B</m> are two matrices such that <m>A^T B=0</m> (the zero matrix), with <m>QR</m> factorizations <m>A=Q_AR_A</m> and <m>B=Q_BR_B</m>, write down the <m>QR</m> factorization of the matrix <m>C = \mat{ A B }</m> (that is, <m>C</m> is the columns of <m>A</m> followed by the columns of <m>B</m>) in terms of <m>Q_A</m>, <m>Q_B</m>, <m>R_A</m>, <m>R_B</m>.</p>
+    	</statement>
+    	<answer>
+    		<p><m>A^T B</m> computes the dot products of all columns of <m>A</m> with all columns of <m>B</m>. <m>A^T B=0</m> means that these are <em>all orthogonal</em>, i.e. <m>\Col(A) \perp \Col(B)</m>. Since <m>Q_A</m> and <m>Q_B</m> span the same space, <m>Q_A^T Q_B = 0</m> as well. When we 
+    		perform Gram-Schmidt on <m>C=\mat{A B}</m>, we first orthonormaliza the columns of <m>A</m>, getting <m>Q_A</m> again. Then we orthonormaliza the columns of <m>B</m>, projecting out <m>Q_A</m> via <m>I-Q_A Q_A^T</m>. But since <m>(I-Q_A Q_A^T)B = B</m> (the columns of <m>B</m> are already orthogonal to the <m>A</m> columns), the projection with <m>Q_A</m> does nothing. We will end up just doing ordinary Gram-Schmidt on <m>B</m>, obtaining <m>Q_B</m> as before, to finally obtain the <m>QR</m> factorization
+    			<me>C=\mat{Q_A Q_B}\mat{R_A \star; \star, R_B} = \mat{Q_AR_A Q_BR_B} = \mat{A B}.</me>
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>

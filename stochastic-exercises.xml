@@ -60,4 +60,34 @@ the license is included in gfdl.xml.
             </p>
         </statement>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] The following matrix <m>M</m> is a Markov matrix (its columns sum to <m>1</m>):
+    			<me>M=\mat{0.3 0.4 0.5; 0.3 0.4 0.3; 0.4 0.2 0.2}</me>
+    			and its steady-state eigenvector (<m>\lambda = 1</m>) is
+    			<me>s=\vec{7/18 1/3 5/18}</me>.
+    			Multiplying a vector <m>x</m> by <m>M</m> does not change the sum of the components. That is, the sum <m>= o^T x</m>, where <m>o=\vec{1 1 1}</m>, is conserved:
+    			<me>o^T Mx = o^T x = x_1 + x_2 + x_3</me>
+    			for any <m>x=\vec{x_1 x_2 x_3}</m>. (The steady-state vector <m>s</m> above was normalized so that <m>o^T s =1</m>.)
+    			<ol>
+    				<li>If we let <m>x=\vec{2 0 0}</m>, what vector does <m>M^n x</m> approach as <m>n \to \infty</m>.</li>
+    				<li>For the same <m>x</m>, in what direction does <m>(M^T)^n x</m> point as <m>n \to \infty</m>.</li>
+    				<li>Multiplying <m>M^T x</m> does not conserve the sum of the components of <m>x</m>, unlike <m>Mx</m>. However, it does conserve some linear combination of the components: there is some vector <m>v \ne 0</m> such that
+    					<me>v^T M^T x = v^T x</me>
+    					for all <m>x</m>. What is <m>v</m>?
+    				</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>Since this is a positive Markov matrix, all other eigenvalues have magnitude <m>\lt 1</m>, and the solution must approach a multiple of <m>s</m>. Which multiple? Well, the sum of the entries is conserved, so the sum must equal <m>o^T x = 2</m>. Hence <m>M^nx \to 2s</m>.</li>
+    				<li>Similar to the previous part, except that the steady state eigenvector is <m>o</m>, since <m>M^T o = o</m> (this is just the statement that the columns of <m>M</m> sum to 1, written in matrix form). Hence 
+    				<m>(M^T)^n x \to \alpha o</m> for some scalar coefficient <m>\alpha</m>.</li>
+    				<li>The reason why <m>o^T Mx = o^T x</m> was simply that <m>o</m> is an eigenvector of <m>M^T</m> with eigenvalue <m>\lambda = 1</m>. Here, we need a similar eigenvector of <m>M</m>, and we have one: <m>v=s</m> (or any multiple of <m>s</m>), since <m>s^T M^T x = (Ms)^T x = s^T x</m>.</li>
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>
