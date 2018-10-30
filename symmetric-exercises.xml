@@ -153,4 +153,15 @@ the license is included in gfdl.xml.
     		</p>
     	</answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] Any positive markov matrix <m>M</m> (that is, positive entries) must also be positive definite. True or False?</p>
+    	</statement>
+    	<answer>
+    		<p>False. There are many ways to construct a counterexample without doing a lot of calculations. Every positive-definite matrix by definition must be
+Hermitian, so it is sufficient to give a non-symmetric Markov matrix. Even if the Markov matrix is real-symmetric,
+it can still have negative eigenvalues with magnitude <m>\lt 1</m>. For example, start with the Markov matrix <m>\mat{0 1; 1 0}</m>, which has eigenvalues <m>\pm 1</m>, then add <m>0.5I</m> to it to make a positive matrix <m>\mat{0.5 1;1 0.5}</m> with eigenvalues <m>-0.5</m> and <m>1.5</m>, then divide by <m>1.5</m> (the sum of the columns) to make it a positive Markov matrix <m>\mat{\frac{1}{3} \frac{2}{3}; \frac{2}{3} \frac{1}{3}}</m> with eigenvalues <m>-\frac{1}{3}</m> and <m>1</m>.
+</p>
+    	</answer>
+    </exercise>
 </exercises>

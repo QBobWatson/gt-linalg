@@ -147,4 +147,15 @@ the license is included in gfdl.xml.
     		</p>
     	</answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] If <m>A=QR</m> is the <m>QR</m> factorization of a real (square) matrix <m>A</m>, then the matrix <m>RQ</m> has the same eigenvalues as <m>A</m>.</p>
+    	</statement>
+    	<answer>
+    		<p>True.
+    			<me>A=QR \implies R=Q\inv A=Q^T A \implies RQ=Q\inv AQ</me>
+    			which is similar to <m>A</m>.
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>

@@ -56,4 +56,12 @@ the license is included in gfdl.xml.
     		The determinant of an orthogonal matrix is <m>\pm 1</m>, so we see that <m>|\det(A)|=\sigma_1\sigma_2\sigma_3</m>.</p>
     	</answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] True or False: A singular matrix <m>A</m> cannot be similar to a non-singular matrix B.</p>
+    	</statement>
+    	<answer>
+    		<p>True. Similar matrices have the same eigenvalues, but <m>B</m> must have a zero eigenvalue and <m>A</m> must have nonzero eigenvalues.</p>
+    	</answer>
+    </exercise>
 </exercises>
