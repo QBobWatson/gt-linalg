@@ -51,4 +51,21 @@ the license is included in gfdl.xml.
             <p>1,2,3,4.</p>
         </answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] What is the projection of the vector <m>\vec{1 1 1} \in \R^3</m> onto the plane <m>3x-4y+z=0</m>?</p>
+    	</statement>
+    	<answer>
+    		<p>The vector <m>\vec{1 1 1}</m> lies on the plane <m>3x-4y+z=0</m>, so its projection onto that plane is simply <m>\vec{1 1 1}</m> again.</p>
+    	</answer>
+    </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] Suppose <m>\{v_1, \ldots, v_k\}</m> is an orthonormal set of vectors in <m>\R^n</m>. What happens when you apply Gram-Schmidt process to this set? Why?</p>
+    	</statement>
+    	<answer>
+    		<p>The Gram-Schmidt procedure does not modify orthormal sets of vectors <m>\{v_1, ldots, v_k\}</m> in <m>\R^n</m>. Let us prove this statement by induction on <m>k</m>. If <m>k=1</m>, it is obvious. Consider an orthonormal set <m>\{v_1, \ldots, v_{k+1}\}</m> of <m>k+1</m> vectors in <m>\R^n</m>. We first apply GS to the set <m>\{v_1, \ldots, v_k\}</m>. By the induction 
+    		hypothesis, this set stays unchanged. Then we compute to the orthogonal projection of <m>v_{k+1}</m> onto the space spanned by <m>v_1, ldots, v_k</m>. Since <m>v_{k+1}</m> is orthogonal to <m>v_i</m> for <m>i=1 \ldots k</m>, this projection is <m>0</m>. Therefore, GS procedure does not change the set <m>\{v_1, \ldots, v_{k+1}\}</m>.</p>
+    	</answer>
+    </exercise>
 </exercises>
