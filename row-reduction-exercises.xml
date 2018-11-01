@@ -388,6 +388,21 @@ the license is included in gfdl.xml.
        that <em>at least</em>14 commissioners preferred <m>B</m> over <m>C</m>. The seemingly paradoxical nature of the commissioner's preferences (<m>A</m> is preferred to <m>B</m>, and <m>B</m> is preferred to <m>C</m>, and <m>C</m> is preferred to <m>A</m>), an example of <q>non-transitive dominance</q>, is common when individual choices are pooled.</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>[MIT OCW] Let <m>rref(A)</m> denote the row reduced echleon form of <m>A</m>. For <m>n \times n</m> square matrices <m>A</m> and <m>B</m> is it true that 
+				<me>rref(AB) = rref(A)rref(B)</me>?
+				If true, then give an argument. If false, give a counterexample.
+			</p>
+		</statement>
+		<answer>
+			<p>False. Consider <m>A=\mat{0 0; 1 0}</m> and <m>B=\mat{0 0; 0 1}</m>. Then
+				<me>AB=\mat{0 0; 0 0}, rref(A)=\mat{1 0; 0 0}, rref(B)=\mat{0 1;0 0}</me>
+				So, 
+				<me>rref(AB)=\mat{0 0; 0 0} \ne rref(A)rref(B)=\mat{0 1; 0 0}</me>
+			</p>
+		</answer>
+	</exercise>
 </exercises>
 
 

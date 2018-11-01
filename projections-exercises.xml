@@ -123,4 +123,28 @@ the license is included in gfdl.xml.
             </p>
         </answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW]
+    			<ol>
+    				<li>Find the projection of the vector <m>v=\vec{6 3 3}</m> onto the plane <m>x-y-2z=0</m>.</li>
+    				<li>Find the projection matrix <m>P</m> onto the plane <m>x-y-2z=0</m>, and verify that <m>P^2=P</m>.</li>
+    				<li>If <m>I</m> is the identity matrix, then <m>I-P</m> is also a projection matrix. Give the space that <m>I-P</m> projects onto.</li>
+    				<li>Explain why <m>Pw=w</m> where <m>w=\vec{1 -5 3}</m> and <m>P</m> is the projection matrix in (b).</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>Let <m>P</m> be the projection. The plane <m>x-y-2z=0</m> is the column space of <m>A=\mat{1 0; 1 2; 0 -1}</m>. Therefore, 
+    					<me>P=A(A^T A)\inv A^T v = \vec{13/2 5/2 2}</me>
+    				</li>
+    				<li><me>P=A(A^T A)\inv A^T=\mat{5/6 1/6 1/3; 1/6 5/6 -1/3;1/3 -1/3 1/3}</me>. Check whether <m>P^2=P</m>.</li>
+    				<li><m>I-P</m> projects onto the left null space of <m>A</m>, which spans <m>\vec{-1 1 2}</m>.</li>
+    				<li><m>w=\vec{1 -5 3}</m> lies in the plane so <m>Pw=w</m>.</li>
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>
