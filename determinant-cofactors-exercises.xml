@@ -70,4 +70,41 @@ the license is included in gfdl.xml.
     		 </p>
     	</answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[IMIT OCW]
+    			<ol>
+    				<li>Let <m>A=\mat{1 2 1;0 1 2;1 0 3}</m>. Using Cramer's rule, find the solution to <m>Ax = \vec{0 0 1}</m>.</li>
+    				<li>Let <m>B</m> be a matrix <m>4 \times 4</m> matrix such that if <m>B_i</m> is the <m>i</m>th column of <m>B</m>, then <m>B_2 + 3B_3 - 2B_4 = b</m>. Using Cramer's rule, show that if <m>\det(B) \ne 0</m>, then the first component of the solution to <m>Bx=b</m> is <m>0</m>.</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li><m>\det(A)=6</m> and Cramer's rule gives 
+    					<md>
+    						<mrow>
+    							x_1 = \frac{\det(A_1)}{\det(A)} = \frac{\det\mat{0 2 1; 0 1 2; 1 0 3}}{\det(A)} = \frac{3}{6} = \frac{1}{2}
+    						</mrow>
+    						<mrow>
+    							x_2 = \frac{\det(A_2)}{\det(A)} = \frac{\det\mat{1 0 1; 0 0 2; 1 1 3}}{6} = -\frac{2}{6} = -\frac{1}{3}
+    						</mrow>
+    						<mrow>
+    							x_3 = \frac{\det(A_3)}{\det(A)} = \frac{1}{6}
+    						</mrow>
+    					</md>
+    				</li>
+    				<li>Without Cramer's rule we know that <m>\vec{0 1 3 -2}</m> is a solution.
+    					<md>
+    						<mrow>
+    							x_1 = \frac{\det(B_1)}{\det(B)} = \frac{\det\mat{b | B_2 | B_3 | B_4}}{\det(B)}
+    						</mrow>
+    					</md>
+    					Since columns of <m>\mat{b | B_2 | B_3 | B_4}</m> are linearly dependent, we have <m>\det\mat{b | B_2 | B_3 | B_4} = 0</m>. Hence, <m>x_1 = 0</m>.
+    				</li>
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>

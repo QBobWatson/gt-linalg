@@ -68,4 +68,53 @@ the license is included in gfdl.xml.
     		hypothesis, this set stays unchanged. Then we compute to the orthogonal projection of <m>v_{k+1}</m> onto the space spanned by <m>v_1, ldots, v_k</m>. Since <m>v_{k+1}</m> is orthogonal to <m>v_i</m> for <m>i=1 \ldots k</m>, this projection is <m>0</m>. Therefore, GS procedure does not change the set <m>\{v_1, \ldots, v_{k+1}\}</m>.</p>
     	</answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW]
+    			<ol>
+    				<li>Apply Gram-Schmidt to the following vectors in <m>\R^3</m>:
+    					<me>\vec{1,2,0}, \vec{8 1 -6}, \vec{0 0 1}</me>
+    				</li>
+    				<li>Explain why the Gram–Schmidt process always fails (tries to divide by <m>0</m>) on an <m>m \times n</m> matrix <m>A</m> if <m>\dim(\Col(A)) \lt n</m>.</li>
+    				<li>Does the Gram–Schmidt process always succeed (never divides by <m>0</m>) if <m>\dim(\Col(A)) = n</m>?</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>Let
+    					<me>x_1=\vec{1 2 0}, x_2=\vec{8 1 -6}, x_3=\vec{0 0 1}</me>
+    					Then, 
+    					<md>
+    						<mrow>
+    							v_1 = x_1 = \vec{1 2 0}
+    						</mrow>
+    						<mrow>
+    							v_2 = x_2 - \dfrac{x_2^T v_1}{v_1^T v_1}v_1 = \vec{8 1 -6} - \frac{10}{5}\vec{1 2 0}=\vec{6 -3 -6}
+    						</mrow>
+    						<mrow>
+    							v_3 = x_3 - \dfrac{x_3^T v_1}{v_1^T v_1}v_1 - \dfrac{x_3^T v_2}{v_2^T v_2}v_2= \vec{0 0 1} - 0\vec{1 2 0} - \dfrac{-6}{81}\vec{6 -3 -6} = \dfrac{1}{9}\vec{4 -2 5}
+    						</mrow>
+    					
+    					</md>
+    					Now normalize the vectors
+    					<md>
+    						<mrow>
+    							v_1 = \dfrac{v_1}{\|v_1\|} = \dfrac{1}{\sqrt{5}}\vec{1 2 0}
+    						</mrow>
+    						<mrow>
+    							v_2 = \dfrac{v_2}{\|v_2\|} = \dfrac{1}{\sqrt{81}}\vec{6 -3 -6} = \dfrac{1}{3}\vec{2 -1 -2}
+    						</mrow>
+    						<mrow>
+    							v_3 = \dfrac{v_3}{\|v_3\|} = \dfrac{1}{3\sqrt{5}}\vec{4 -2 5}
+    						</mrow>
+    					</md>
+    				</li>
+    				<li>If <m>A</m> is <m>m \times n</m> and <m>\dim(\Col(A)) \lt n</m>, then the columns of <m>A</m> are linearly dependent. When we project off previous columns, we are going to end up with a zero vector which is impossible to normalize (without dividing by <m>0</m>).</li>
+    				<li>Yes, the columns are linearly independent. As we project off the previous columns (and do linear combinations), we can never end up with zero column.</li>
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>
