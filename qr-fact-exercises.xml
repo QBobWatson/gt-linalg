@@ -158,4 +158,63 @@ the license is included in gfdl.xml.
     		</p>
     	</answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] In this we will investigate how many Q's and R's are there so that <m>A=QR</m>. Let <m>A</m> be an <m>n \times n</m> square and invertible matrix and suppose that <m>A=Q_1R_1 = Q_2R_2</m>, where <m>Q_1</m> and <m>Q_2</m> are orthogonal matrices and <m>R_1</m> and <m>R_2</m> are upper-triangular matrices.
+    			<ol>
+    				<li>Show that <m>Q_2^T Q_1</m> is an orthogonal matrix.</li>
+    				<li>Show that <m>Q_2^T Q_1 = R_2R_1\inv</m>.</li>
+    				<li>If <m>D</m> is an upper-triangular matrix and an orthogonal matrix, show that <m>D</m> must be a diagonal
+matrix where each diagonal entry is <m>+1</m> or <m>-1</m>.</li>
+					<li>By setting <m>B=Q_2^T Q_1=R_2R_1\inv</m>, what form does <m>B</m> take? (You may use the fact that <m>R_2R_1\inv</m> is an upper-triangular matrix without justification.)</li>
+					
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>
+    					<me>(Q_2^T Q_1)^T (Q_2^T Q_1) = Q_1^T (Q_2Q_2^T)Q_1 = Q_1^T Q_1 = I</me>
+    					So, <m>Q_2^T Q_1</m> is orthogonal.
+    				</li>
+    				<li>
+    					<me>Q_1R_1 = Q_2R_2 \implies Q_2^T Q_1 = R_2R_1\inv</me> (because <m>Q_2\inv = Q_1^T</m>)
+    				</li>
+    				<li>Let <m>D</m> be upper-triangular and orthogonal. Let <m>D</m> be <m>[d_1 | \ldots | d_n]</m>
+    					<md>
+    						<mrow>
+    							d_1 = \vec{\star, 0 \vdots, 0} \text{ and } \|d_1\|=1,  \text{ so } d_1 = \vec{{\pm 1} 0 \vdots, 0}
+    						</mrow>
+    						<mrow>
+    							d_2 = \vec{\star_1, \star_2, 0 \vdots, 0} \quad d_1^T d_2 = \pm \star_1, \text{ so } \star_1 = 0 
+    						</mrow>
+    						<mrow>
+    							\qquad \implies d_2 = \vec{0, \star_2, 0 \vdots, 0} \text{ and } \|d_2\|=1, \text{ so } d_1 = \vec{0 {\pm 1} 0 \vdots, 0}
+    						</mrow>
+    						<mrow>
+    							d_3 = \vec{\star_1, \star_2, \star_3, 0 \vdots, 0}
+    						</mrow>
+   							<mrow>
+   								\qquad d_1^T d_3 =0 \implies \star_1=0, d_2^T d_3 = 0 \implies \star_2=0, d_3^T d_3 = 0 \implies \star_3 = \pm 1
+   							</mrow>
+    					</md>
+    					Keep going and we find that <m>D</m> is a diagonal matrix with all diagonal entries equal to <m>\pm 1</m>.
+    				</li>
+    				<li>
+    				
+    						<me>
+    							B = Q_2^T Q_1 = \text{ orthogonal}
+    						</me>
+    						<me>
+    							B = R_2\inv R_1 = \text{ upper-triangular}
+    						</me>
+    				
+    					By part (c), B becomes a diagonal matrix with all diagonal entries equal to <m>\pm 1</m>.
+    				</li>
+    				
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>
