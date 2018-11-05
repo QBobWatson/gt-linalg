@@ -15,4 +15,41 @@ the license is included in gfdl.xml.
             <p>If <m>A</m> is similar to <m>B</m>, and <m>B</m> is similar to <m>C</m>, are <m>A</m> and <m>C</m> also similar? If <m>A</m> and <m>B</m> are similar, are <m>A^k</m> and <m>B^k</m> also similar?</p>
         </statement>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] Let <m>B</m> be an invertible matrix, such that <m>C=B\inv AB</m>. <m>A</m> and <m>C</m> are similar matrices. Show that the converse is false, i.e., if <m>A</m> and <m>C</m> have same eigen values  then there may not
+be a matrix <m>B</m> such that <m>C=B\inv AB</m>.
+    		</p>
+    	</statement>
+    </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] We say that <m>A</m> and <m>B</m> are similar matrices if <m>A=SBS\inv</m> for some invertible matrix <m>S</m>. Are the following TRUE or FALSE? Give a reason:
+    			<ol>
+    				<li>If <m>A</m> and <m>B</m> are similar, then <m>A-5I</m> and <m>B-5I</m> are similar.</li>
+    				<li>If <m>A</m> and <m>B</m> are similar, then <m>A^T</m> and <m>B^T</m> are similar.</li>
+    				<li>If <m>A</m> and <m>B</m> are similar, then <m>AB</m> and <m>BA</m> are similar.</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>True.
+    					<me>A-5I = SBS\inv - 5I = S(B-5I)S\inv</me>
+    				</li>
+    				<li>
+    					True.
+    					<me>A = SBS\inv</me>
+    					So, <me>A^T = (S\inv)^T B^T S^T = (S^T)\inv B^T S^T</me>
+    				</li>
+    				<li>
+    					True.
+    					<me>A=SBS\inv \implies AS = SB</me>
+    					<me>S(BA)S\inv = (SB)AS\inv = ASAS\inv = AB</me>	
+    				</li>
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>

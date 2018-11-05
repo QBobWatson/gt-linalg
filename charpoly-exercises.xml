@@ -33,4 +33,25 @@ the license is included in gfdl.xml.
             <p>Using facts about determinants, justify the following fact: if <m>A</m> is an <m>n \times n</m> matrix, then <m>A</m> and <m>A^T</m> have the same characteristic polynomial.</p>
         </statement>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] Are the following statements true or false?
+    			<ol>
+    				<li>If <m>A</m> is invertible and <m>\lambda</m> is an eigenvalue of <m>A</m>, then <m>\dfrac{1}{\lambda}</m> is an eigenvalue of <m>A\inv</m>.</li>
+    				<li>Let <m>A</m> be a real skew-symmetric <m>n \times n</m> matrix, i.e., <m>A^T = -A</m>. If <m>\lambda</m> is an eigenvalue of <m>A</m>, then so is <m>-\lambda</m>.</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>True. If <m>Ax=\lambda x</m>, then <m>x = \lambda A\inv x</m> and <m>A\inv x = \dfrac{1}{\lambda}x</m>.</li>
+    				<li>True. 
+    					<me>\det(A-\lambda I) = \det((A=\lambda I)^T) = \det(A^T - \lambda I) </me>
+    					<me>\quad = \det(-A-\lambda I) = (-1)^n \det(A+\lambda I)</me>
+    				</li>
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>
