@@ -128,5 +128,43 @@ the license is included in gfdl.xml.
             <p>Find the matrix for the linear transformation <m>T: \R^3 \to \R^3</m> that first dilates by a factor of <m>5</m>, then reflects about the <m>yz</m>-plane, then rotates counterclockwise about the <m>y</m>-axis by an angle of <m>60</m> degree, then lastly projects onto the <m>xz</m>-plane.</p>
         </statement>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] Let us consider operations on the space of polynomials <m>p(x)</m> of degree at most <m>n</m>. Are the following linear transformations?
+    			<ol>
+    				<li><m>T(p) = 3p(x) + 5</m></li>
+    				<li><m>T(p) = xp(x) + p'(x)</m></li>
+    				<li><m>T(p) = p'(x)p(x)^2</m></li>
+    				<li>Is the transform <m>T(A)=A^T</m> a linear transform on real matrices?</li>
+    				<li>Is the transform <m>T(A)=A\inv</m> a linear transform on invertible matrices?</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li><m>T(ap) = 3ap(x) + 5 \ne aT(p)</m>. Not linear.</li>
+    				<li>
+    					<me>T(ap) = axp(x) + 7ap'(x) = aT(p)</me>
+    					<me>T(p+q) = xp + xq + 7(p'(x)+q'(x)) = T(p)+T(q)</me>
+    					Linear.
+    				</li>
+    				<li>
+    					<me>T(ap) = a^3 p'(x)p(x)^2 \ne aT(p)</me>
+    					Not linear.
+    				</li>
+    				<li>
+    					<me>T(aA) = (aA)^T = aA^T = aT(A)</me>
+    					<me>T(A+B) = (A+B)^T = A^T + B^T = T(A)+T(B)</me>
+    					Linear.
+    				</li>
+    				<li>
+    					<me>T(aA) = (aA)\inv = \dfrac{1}{a}A\inv \ne aT(A)</me>
+    					Not linear.
+    				</li>
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>
 

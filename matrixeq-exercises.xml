@@ -12,7 +12,7 @@ the license is included in gfdl.xml.
 <exercises>
 	<exercise>
 		<statement>
-			<p>[MIT OCW] A system of linear equations <m>Ax=b</m> cannot have exactly two solutions. An easy way to see why: if two vectors <m>x</m> and <m>y \ne x</m> are two solutions (i.e. <m>Ax=b</m>and <m>Ay=b</m>), what is another solution? (Hint: <m>x+y</m> is almost right.)
+			<p>[MIT OCW] A system of linear equations <m>Ax=b</m> cannot have exactly two solutions. An easy way to see why: if two vectors <m>x</m> and <m>y \ne x</m> are two solutions (i.e. <m>Ax=b</m> and <m>Ay=b</m>), what is another solution? (Hint: <m>x+y</m> is almost right.)
 			</p>
 		</statement>
 		<answer>

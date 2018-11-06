@@ -297,4 +297,24 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>[MIT OCW]
+				<ol>
+					<li><q>The solutions to <m>Ax=b</m> always have the form <m>x=x_p + any x_n</m></q> where the particular solution has <m>Ax_p=b</m> and the null solutions have <m>Ax_n=0</m>.
+						This is correct but what does it say?
+					</li>
+					<li>Let <m>A</m> be the matrix <m>A=\mat{1 1;1 1}</m> and <m>b=\vec{3 3 }</m>. The null solutions <m>x_n</m> are all vectors of the form <m>x_n=\vec{c -c}</m>. Choose an <m>x_p</m> to make the statement true.</li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p><ol>
+				<li>The  key  point  is  that  there  are  many  choices  for  the  particular  solution. Any solution can be the particular solution. Since the solutions to
+ <m>Ax_n=0</m> form a geomtric object such as a point, line, plane or hyperplane, all passing through the origin, the set of all solutions to <m>Ax=b</m> is a geometric object such as a point, line, plane or hyperplane, too, but provided 
+ <m>b \ne 0</m>, it will NOT pass through the origin; instead it passes through a particular solution. It also says that any two solutions differ by a null solution.</li>
+				<li><m>x_p = \vec{3 0}</m></li>
+			</ol></p>
+		</answer>
+	</exercise>
 </exercises>
