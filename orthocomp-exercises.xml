@@ -79,4 +79,29 @@ the license is included in gfdl.xml.
             </p>
         </answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] Why is each of these statements false?
+    			<ol>
+    				<li><m>\vec{1 1 1}</m> is perpendicular to <m>\vec{1 1 -2}</m> so the planes
+ <m>x+y+z=0</m> and <m>x+y+2z=0</m> are the orthogonal subspaces.</li>
+ 					<li>The subspace spanned by <m>\vec{1 1 0 0 0}</m> and <m>\vec{0 0 0 1 1}</m> is the orthogonal complement of the subspace spanned by 
+ 					<m>\vec{1 -1 0 0 0}</m> and <m>\vec{2 -2 3 4 -4}</m>.</li>
+ 					<li>Two subspaces that meet only at the zero vector are orthogonal.</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>Two  planes  in  3D  can  not  be  orthogonal  to  each  other  as  the  sum  of  their
+dimensions is greater than <m>3</m>.</li>
+					<li>The first subspace is a <m>2</m>-dimensional subspace in a <m>5</m>-dimensional space. Its
+orthogonal complement must be <m>3</m>-dimensional, so it can not be spanned by two vectors.</li>
+					<li>For example, consider two lines <m>x=0</m> and <m>x+y=0</m> on the plane. These are
+two lines that intersect at the zero vector, but they are not perpendicular to each other, so they are not orthogonal subspaces.</li>
+    			</ol>
+    		</p>	
+    	</answer>
+    </exercise>
 </exercises>
