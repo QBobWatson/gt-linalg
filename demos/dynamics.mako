@@ -80,6 +80,10 @@ v1 = urlParams.get 'v1', 'float[]', [1,0,0]
 v2 = urlParams.get 'v2', 'float[]', [0,1,0]
 v3 = urlParams.get 'v3', 'float[]', [0,0,1]
 
+v1[2] ?= 0
+v2[2] ?= 0
+v3[2] ?= 0
+
 if urlParams.testmat?
     matrix = testMatrices[urlParams.testmat]
 
