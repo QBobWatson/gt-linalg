@@ -9,8 +9,7 @@ any later version published by the Free Software Foundation.  A copy of
 the license is included in gfdl.xml.
 *********************************************************************-->
 
-<restrict-version versions="1554 default">
-<section xml:id="stochastic-matrices">
+<section xml:id="stochastic-matrices" number="6">
   <title>Stochastic Matrices</title>
 
   <objectives>
@@ -412,7 +411,7 @@ the license is included in gfdl.xml.
         The matrix <m>D</m> leaves the <m>x</m>-coordinate unchanged and scales the <m>y</m>-coordinate by <m>1/2</m>.  Repeated multiplication by <m>D</m> makes the <m>y</m>-coordinate very small, so it <q>sucks all vectors into the <m>x</m>-axis.</q>
       </p>
       <p>
-        The matrix <m>A</m> does the same thing as <m>D</m>, but with respect to the <m>\cB</m>-coordinates, where <m>\cB = \{u_1,u_2\}</m> is the basis of columns of <m>C</m>.  This means that <m>A</m> <q>sucks all vectors into the <m>1</m>-eigenspace</q>, without changing the sum of the entries of the vectors.
+        The matrix <m>A</m> does the same thing as <m>D</m>, but with respect to the coordinate system defined by the columns <m>u_1,u_2</m> of <m>C</m>.  This means that <m>A</m> <q>sucks all vectors into the <m>1</m>-eigenspace</q>, without changing the sum of the entries of the vectors.
       </p>
       <figure>
         <caption>Dynamics of the stochastic matrix <m>A</m>.  Click <q>multiply</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.  Note that on both sides, all vectors are <q>sucked into the <m>1</m>-eigenspace</q> (the red line).</caption>
@@ -487,7 +486,7 @@ the license is included in gfdl.xml.
         The matrix <m>D</m> leaves the <m>x</m>-coordinate unchanged, scales the <m>y</m>-coordinate by <m>-1/5</m>, and scales the <m>z</m>-coordinate by <m>1/10</m>.  Repeated multiplication by <m>D</m> makes the <m>y</m>- and <m>z</m>-coordinates very small, so it <q>sucks all vectors into the <m>x</m>-axis.</q>
       </p>
       <p>
-        The matrix <m>A</m> does the same thing as <m>D</m>, but with respect to the <m>\cB</m>-coordinates, where <m>\cB = \{u_1,u_2,u_3\}</m> is the basis of columns of <m>C</m>.  This means that <m>A</m> <q>sucks all vectors into the <m>1</m>-eigenspace</q>, without changing the sum of the entries of the vectors.
+        The matrix <m>A</m> does the same thing as <m>D</m>, but with respect to the coordinate system defined by the columns <m>u_1,u_2,u_3</m> of <m>C</m>.  This means that <m>A</m> <q>sucks all vectors into the <m>1</m>-eigenspace</q>, without changing the sum of the entries of the vectors.
       </p>
       <figure>
         <caption>Dynamics of the stochastic matrix <m>A</m>.  Click <q>multiply</q> to multiply the colored points by <m>D</m> on the left and <m>A</m> on the right.  Note that on both sides, all vectors are <q>sucked into the <m>1</m>-eigenspace</q> (the green line).  (We have scaled <m>C</m> by <m>1/4</m> so that vectors have roughly the same size on the right and the left.  The <q>jump</q> that happens when you press <q>multiply</q> is a negation of the <m>-.2</m>-eigenspace, which is not animated.)</caption>
@@ -826,4 +825,3 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
   </subsection>
 
 </section>
-</restrict-version>

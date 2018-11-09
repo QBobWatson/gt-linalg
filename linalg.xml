@@ -310,6 +310,7 @@ Free Documentation License"
 </restrict-version>
 <restrict-version versions="1553">
   In <xref ref="diagonalization"/> we will use eigenvalues and eigenvectors to determine when a matrix is <q>similar</q> to a diagonal matrix, and we will see that the algebra and geometry of such a matrix is much simpler to understand.
+Finally, we spend <xref ref="stochastic-matrices"/> presenting a common kind of application of eigenvalues and eigenvectors to real-world problems, including searching the Internet using Google<rsq/>s PageRank algorithm.
 </restrict-version>
         </p>
       </introduction>

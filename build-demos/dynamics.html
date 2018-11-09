@@ -469,6 +469,18 @@ v2 = urlParams.get('v2', 'float[]', [0, 1, 0]);
 
 v3 = urlParams.get('v3', 'float[]', [0, 0, 1]);
 
+if (v1[2] == null) {
+  v1[2] = 0;
+}
+
+if (v2[2] == null) {
+  v2[2] = 0;
+}
+
+if (v3[2] == null) {
+  v3[2] = 0;
+}
+
 if (urlParams.testmat != null) {
   matrix = testMatrices[urlParams.testmat];
 }
