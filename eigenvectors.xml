@@ -85,7 +85,7 @@ the license is included in gfdl.xml.
         <p>
           Consider the matrix
           <me>
-            A = \mat{2 2; -4 8} \sptxt{and vectors} v = \vec{1 1}  \qquad w = \vec{1 2}.
+            A = \mat{2 2; -4 8} \sptxt{and vectors} v = \vec{1 1}  \qquad w = \vec{2 1}.
           </me>
           Which are eigenvectors?  What are their eigenvalues?
         </p>
