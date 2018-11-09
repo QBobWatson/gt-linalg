@@ -117,4 +117,44 @@ the license is included in gfdl.xml.
     		</p>
     	</answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] Suppose that vectors <m>q_1, q_2, \ldots, q_n</m> in <m>\R^m</m> are orthonormal.
+    			<ol>
+    				<li>Let <m>c_1, c_2, \ldots, c_n</m> be real numbers. What is <m>\|c_1q_1 + c_2q_2 + \cdots + c_nq_n\|^2</m>?</li>
+    				<li>Show that <m>q_1, q_2, \ldots, q_n</m> are linearly independent.</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>Since <m>q_1, q_2, \ldots, q_n</m> are orthonormal, we have <m>q_i \cdot q_i = 1</m> for all <m>i</m> and <m>q_i \cdot q_j = 0</m> for all <m>i \ne j</m>. Thus, we have 
+    					<md>
+    						<mrow>
+    							\|c_1q_1 + c_2q_2 + \cdots + c_nq_n\|^2 = (c_1q_1 + c_2q_2 + \cdots + c_nq_n) \cdot (c_1q_1 + c_2q_2 + \cdots + c_nq_n)
+    						</mrow>
+    						<mrow>
+    							\quad = \sum_{i=1}^n c_i^2 (q_i \cdot q_i) + \sum_{i lt j} 2c_ic_j(q_i \cdot q_j) = \sum_{i=1}^n c_i^2.
+    						</mrow>
+    					</md>
+    				</li>
+    				<li>Suppose that there are some real numbers <m>c_1, c_2, \ldots, c_n</m> such that <m>c_1q_1 + c_2q_2 + \cdots + c_nq_n = 0</m>. We have <m>0=\|c_1q_1 + c_2q_2 + \cdots + c_nq_n\|^2=\sum_{i=1}^n c_i^2</m>, which 
+    				forces all <m>c_i</m> to be zeroes. Hence, <m>c_1q_1 + c_2q_2 + \cdots + c_nq_n = 0</m> imples <m>c_1=c_2=\cdots=c_n =0</m>, so that <m>q_1, q_2, \ldots, q_n</m> are independent by definition.</li>
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] Suppose <m>q_1=(c,d,e)</m> and <m>q_2=(f,g,h)</m> are orthonormal column vectors in <m>\R^3</m>. They span a subspace <m>S</m>.
+    			<ol>
+    				<li>Find the <m>(1,1)</m> entry in the projection matrix <m>P</m> that projects each vector in <m>\R^3</m> onto that subspace <m>S</m>.</li>
+    				<li>For this projection matrix <m>P</m>, describe 3 independent eigenvectors (vectors for which <m>Px</m> is a number of <m>\lambda</m> times <m>x</m>). What are the 3 eigenvalues of <m>P</m>? What is its determinant?</li>
+    				<li>For some vectors <m>v</m> and <m>w</m> in <m>\R^3</m> the Gram-Schmidt orthonormalization process (applied to <m>v</m> and <m>w</m>)w ill produce those particular vectors
+						<m>q_1</m> and <m>q_2</m>. Describe the vectors <m>v</m> and <m>w</m> that lead to this <m>q_1</m> and <m>q_2</m>.</li>
+    			</ol>
+    		</p>
+    	</statement>
+    </exercise>
 </exercises>
