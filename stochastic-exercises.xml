@@ -90,4 +90,40 @@ the license is included in gfdl.xml.
     		</p>
     	</answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] Consider the Markov matrix <m>A=\mat{0 1/3 1/3 0; 1/2 0 1/3 1/2; 1/2 1/3 0 1/2; 0 1/3 1/3 0}</m>
+    			<ol>
+    				<li>Three of the eigenvalues of <m>A</m> are 1, 0, <m>1/3</m>. Find the fourth eigenvalue of <m>A</m>.</li>
+    				<li>Find the determinant <m>\det(A)</m>.</li>
+    				<li>Find the eigenvector of the transposed matrix <m>A^T</m> with the eigenvalue <m>\lambda_1 = 1</m>.</li>
+    				<li>Find the eigenvector of the matrix <m>A</m> with the eigenvalue <m>\lambda_1 = 1</m>.</li>
+    				<li>Find the limit of <m>A^k \vec{1 0 0 0} </m> as <m>k \to +\infty</m>.</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>Since <m>\Tr(A)=0</m> he sum of the eigenvalues are 0. Thus, the fourth eigenvalue must be <m>-2/3</m>.</li>
+    				<li>The determinant is the product of the eigenvalues, which is 0.</li>
+    				<li><m>\mat{1 1 1 1}A = \mat{1 1 1 1}</m> and so the eigenvector of <m>A^T</m> with eigenvalue <m>\lambda_1=1</m> is <m>\mat{1 0 0 0}^T</m>.</li>
+    				<li>The Markov matrix <m>A</m> corresponds to a random walk on the graph with four nodes <m>1,2,3,4</m> connected by the edges <m>(1,2), (1,3), (2,3), (2,4), (3,4)</m>. 
+    				The degree of the nodes are 2, 3, 3, 2. Thus the vector <m>\vec{2 3 3 2}</m> is an eigenvector with eigenvalue <m>\lambda_1 = 1</m>.</li>
+    				<li>Let <m>v_1=\vec{2 3 3 2}</m> and let <m>v_2, v_3, v_4</m> be eigenvectors for 0, -1/3, -2/3, respectively. Then there exist <m>c_1, \cdots, c_4 \in \R</m> with
+    					<me>\vec{1 0 0 0} = c_1v_1 + c_2v_2 + c_3v_3 +c_4v_4</me>
+    					Thus,
+    					<me>A^k \vec{1 0 0 0} = c_1v_1 + \dfrac{(-1)^k c_3}{3^k}v_3 + \dfrac{(-2)^k c_4}{3^k}v_4 \to c_1v_1 \text{ as } k \to +\infty</me> 
+    					To find <m>c_1</m> we recall that <m>\mat{1 1 1 1}A = \mat{1 1 1 1}</m>. By induction we obtain
+    					<me>\mat{1 1 1 1}A^k = \mat{1 1 1 1}</me>
+    					and so, <me>\mat{1 1 1 1}A^k \vec{1 0 0 0} = \mat{1 1 1 1}\vec{1 0 0 0} = 1</me>.
+    					Letting <m>k \to +\infty</m> we obtain
+    					<me>\mat{1 1 1 1} c_1v_1 = 1</me>
+    					so that <m>c_1=\dfrac{1}{(\mat{1 1 1 1}v_1)} = 1/10</m>. 
+    					The answer is <m>\vec{2 3 3 2}/10</m>.
+    				</li>
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>

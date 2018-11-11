@@ -246,4 +246,29 @@ an example where <m>A</m> and <m>B</m> have different nullspaces - or reason why
 			<p>False. Consider <m>B=\mat{0 1; 0 0}</m>. Then the column space of <m>B</m> is <m>\vec{1 0}</m> and the column space of <m>B^T</m> is <m>\vec{0 1}</m>.</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>[MIT OCW]
+				<ol>
+					<li>Suppose you are given nonzero column vectors <m>r,n,c,l \in \R^2</m>. Explain how to determine if these vectors can form bases for the 4 fundamental subspaces,
+row space, nullspace, column space and left nullspace respectively, and output a matrix with those 4 fundamental subspaces if possible. <em>Hint</em>: Think about orthogonality of the four subspaces. Express matrix in terms of the vectors above.</li>
+					<li>Suppose you are given 4 matrices whose columns are all vectors in <m>\R^{10}</m>. <m>R=\mat{r_1 r_2 \ldots, r_i}, N = \mat{n_1 n_2 \ldots, n_j}, C=\mat{c_1 c_2 \ldots, c_i}</m>, <m> L=\mat{l_1 l_2 \ldots, l_n}</m>.
+						The columns of <m>R</m> form a basis for the row space, the columns of <m>N</m> form a basis for the nullspace, the columns of <m>C</m> form a basis for the column space, and the columns of
+						<m>L</m> form a basis for the left nullspace. Explain how to determine if these vectors form the basis for the four fundamental subspaces, ad output a
+matrix that has those four subspaces.
+					</li>
+				</ol>
+			</p>
+		</statement>
+		<answer>
+			<p>
+				<ol>
+					<li>By the orthogonality of the fundamental subspaces, we must have <m>r \cdot n = r^T \cdot n =0</m>, <m>c \cdot l = c^T \cdot l = 0</m>. If the 4 column vectors satisfies the above condition,
+					 <m>A=cr^T</m> is a matrix satisfies the condition.</li>
+					<li>Use the same idea above. By the orthogonality of the fundamental subspaces, we must have <m>R^T N=0, C^T L=0</m>. e also need the dimension to match, i.e.
+					 <m>i+j = i+n = 10</m>. Under the condition above, <m>A=CR^T</m> is a matrix satisfies the condition.</li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
 </exercises>

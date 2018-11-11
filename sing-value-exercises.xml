@@ -64,4 +64,22 @@ the license is included in gfdl.xml.
     		<p>True. Similar matrices have the same eigenvalues, but <m>B</m> must have a zero eigenvalue and <m>A</m> must have nonzero eigenvalues.</p>
     	</answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW]
+    			<ol>
+    				<li>Suppose every row of <m>A</m> adds up to zero. Why is <m>A</m> singular?</li>
+    				<li>Suppose every column of <m>A</m> adds up to zero. Why is <m>A</m> singular?</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>In this case the sum of all the columns of <m>A</m> must be the zero column-vector, so <m>A</m> must be singular.</li>
+    				<li>In this case the sum of all the rows of <m>A</m> must be the zero row-vector, so <m>A</m> must be singular.</li>
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>
