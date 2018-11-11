@@ -156,5 +156,51 @@ the license is included in gfdl.xml.
     			</ol>
     		</p>
     	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>Denote by <m>Q</m> the matrix with columns <m>q_1</m> and <m>q_2</m>: <m>Q=\mat{c f;d g;e h}</m>. The 
+    				projection matrix <m>P = Q(Q^T Q)\inv Q^T</m>. As the column vectors are orthonormal, we know that <m>Q^T Q</m> is the 2-by-2 identity matrix.
+    				Thus, <m>P=QQ^T</m> and the first entry is <m>c^2 + f^2</m>.</li>
+    				<li>The projection matrix <m>P</m> projects onto a 2d plane. That means its eigenvalues are <m>(1,1,0)</m> and the determinant is <m>0</m>.
+    				 The eigenvector corresponding to the eigenvalue <m>0</m> is orthogonal to the projection plane, that is orthogonal to both vectors
+    				  <m>q_1</m> and <m>q_2</m>.  The independent vectors corresponding to value 1 are any two independent vectors in the projection plane.  We can choose
+    				   <m>q_1</m> and <m>q_2</m> as such vectors.</li>
+    				<li>Vector <m>v</m> is on the same line as <m>q_1</m> and in the same direction. Therefore, <m>v=aq_1</m>, where <m>a</m> is a positive number. The second vector
+    				 <m>w</m> has to be in the same plane as <m>q_1</m> and <m>q_2</m>, on the same side of the line drawn through <m>q_1</m> as <m>q_2</m> and has to be independent of <m>v</m>.</li>
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW]
+    			<ol>
+    				<li>If <m>q_1, q_2, q_3</m> are orthonormal vectors in <m>\R^3</m>, what are the possible determinants of this matrix <m>A</m> with columns <m>2q_1, 3q_2, 5q_3</m>? Why?
+    					<me>A=\mat{2q_1 3q_2 5q_3}</me>
+    				</li>
+    				<li>For a matrix <m>A</m>, suppose the cofactor <m>C_{11}</m> of the first entry <m>a_{11}</m> is zero. What information does that give about
+ <m>A\inv</m>? Can this inverse exist?</li>
+ 					<li>Find the 3 eigenvalues of this matrix <m>A</m> and find all of its eigenvectors. Why is the diagonalization <m>S\inv AS=B</m> not possible?
+ 						<me>A=\mat{2 1 0;0 2 0;0 0 2}</me>
+ 					</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>The determinant of the matrix <m>Q=\mat{q_1 q_2 q_3}</m> has to be <m>\pm 1</m>. This is because <m>Q^T Q=I</m> which means that <m>\det(Q^T) \cdot \det(Q)=1</m>, that is, <m>\det(Q^2) = 1</m>.
+    				When we multiply a column by a number, the determinant is multiplied by the same number. Thus, the determinant of <m>A</m> is <m>\pm 30</m>.</li>
+    				<li>The cofactor <m>C_{11}</m> being zero does not give us enough information to decide whether the inverse exists or not.  For example,  in the matrix
+    				 <m>\mat{1 0;0 0}</m> this cofactor is zero and the inverse does not exist, and in the matrix <m>\mat{1 1;1 0}</m> this cofactor is zero and the inverse exists.  If this inverse exists, then we know that the entry <m>(1,1)</m>
+    				  in this inverse is zero.</li>
+    				<li>The eigenvalues of this matrix are <m>(2,2,2)</m>. But the rank of <m>A-2I</m> is 1. That  means,  you  can  only  find  two  independent  eigenvectors.   When  the
+number of independent eigenvectors is smaller than the size of the matrix, then
+the diagonalization is not possible because you cannot build the square matrix of
+eigenvectors <m>S</m>.</li>
+    			</ol>
+    		</p>
+    	</answer>
     </exercise>
 </exercises>

@@ -52,4 +52,25 @@ the license is included in gfdl.xml.
             <p>How does one see from the value of <m>\det(A^TA^{2018})</m> whether <m>A</m> is invertible? If columns of <m>A</m> are linearly dependent, compute <m>det(A)</m>.</p>
         </statement>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW] It is not true in general that <m>\det(A+B)=\det(A)+\det(B)</m>.
+    			<ol>
+    				<li>Find an example of matrices <m>A</m> and <m>B</m> such that <m>\det(A+B) \ne \det(A)+\det(B)</m>.</li>
+    				<li>Find an example of <m>2 \times 2</m> matrices <m>A</m> and <m>B</m> such that <m>\det(A+B)=\det(A)+\det(B)</m> and all 3 determinants are nonzero.</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>Work with <m>(n \times n)</m>-matrices where <m>n \gt 1</m>. Take <m>A</m> to be the matrix with <m>-1</m> in the <m>(1,1)</m> entry and zeroes everywhere else and <m>B</m> to be the identity matrix. 
+    				Then <m>\det(A+B)=0</m>. However, <m>\det(A)+\det(B)=1</m>.</li>
+    				<li>We can construct a whole family of such matrices. Let <m>a,b \in \R</m>, then
+    					<me>\det(a\mat{1 0;0 1}+b\mat{0 -1;1 0})=a^2 + b^2 = \det(a\mat{1 0; 0 1}) + \det(b\mat{0 -1;1 0})</me>.
+    				</li>
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>
