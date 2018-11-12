@@ -82,4 +82,23 @@ the license is included in gfdl.xml.
     		</p>
     	</answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW]
+    			<ol>
+    				<li>Show that none of the singular values of <m>A</m> are larger than 3.
+    					<me>A=\mat{1 1 1;0 1 1;0 0 1}</me>
+    				</li>
+    				<li>Why does <m>B=AQ</m> have the same singular values as <m>A</m>? (<m>Q</m> is an orthogonal matrix.)</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li></li>
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>

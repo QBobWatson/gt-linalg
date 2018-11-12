@@ -226,4 +226,28 @@ the license is included in gfdl.xml.
             </p>
         </answer>
     </exercise>
+    <exercise>
+    	<statement>
+    		<p>[MIT OCW]
+    			<ol>
+    				<li>Suppose <m>\hat x </m> is the best least squares solution to <m>Ax=b</m> and <m>\hat y</m> is the best least squares solution to <m>Ay=c</m>.
+					Does this tell you the best least squares solution <m>\hat z</m> to <m>Az=b+c</m>? If so, what is the best <m>\hat z</m> and why?</li>
+					<li>If <m>Q</m> is an <m>m \times n</m> matrix, with orthonormal columns, find the best least squares solution <m>\hat x</m> to <m>Qx=b</m>.</li>
+					<li>If <m>A=QR</m>, where <m>R</m> is square invertible and <m>Q</m> is the same as in (b) find the least squares solution to <m>Ax=b</m>.</li>
+    			</ol>
+    		</p>
+    	</statement>
+    	<answer>
+    		<p>
+    			<ol>
+    				<li>Denote by <m>P</m> the projection onto the column space of <m>A</m>. We have <m>A\hat x = Pb</m> and <m>A\hat y = Pc</m>. That means, <m>A\hat x + A\hat y = Pb+Pc=P(b+c)</m>. 
+    				It follows that <m>\hat x + \hat y</m> is the least squares solution for <m>A\hat z = b+c</m>.</li>
+    				<li>The least squares solution can be written as <m>\hat x = (Q^T Q)\inv Q^T b</m>. As <m>Q</m> is orthonormal, <m>Q^T Q=I</m>. Therefore, <m>\hat x = Q^T b</m>. Alternatively, solving
+least squares means finding a solution to <m>Q^T Q \hat x = Q^T b</m>. As <m>Q^T Q=I</m>, we see that <m>\hat x = Q^T b</m>.</li>
+					<li>The least squares solution can be written as <m>\hat x = (A^T A)\inv A^T b = (R^T Q^T QR)\inv R^T Q^T b</m>. As <m>Q</m> is orthonormal, <m>Q^T Q=I</m>. Therefore, <m>\hat x = (R^T R)\inv R^T Q^T b</m>. As 
+					<m>R</m> is invertible, we get <m>\hat x = (R^T R)\inv R^T Q^T b = R\inv (R^T)\inv R^T Q^T b = R\inv Q^T b</m>.</li>
+    			</ol>
+    		</p>
+    	</answer>
+    </exercise>
 </exercises>
