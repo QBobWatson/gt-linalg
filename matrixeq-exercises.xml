@@ -19,4 +19,20 @@ the license is included in gfdl.xml.
 			<p><m>Ax=b</m> and <m>Ay=b</m>, so <m>A(x+y)=Ax+Ay=2b</m>. [The key property that <m>A(x+y)=Ax+Ay</m> is called linearity, and is what makes matrix multiplication a part of linear algebra.] But we want <m>b</m> on the right-hand side, so we can just divide both sides by <m>2</m>: <m>A((x+y)/2)=b</m>, so <m>(x+y)/2</m> is a solution. (Since <m>x \ne y</m>, this is a new solution, halfway between <m>x</m> and <m>y</m>.)</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>Let <m>u=\vec{0 4 4}</m> and <m>A=\mat{3 -5;-2 6;1 1}</m>. Is <m>u</m> in the plane in <m>\R^3</m> spanned by the columns of <m>A</m>? Why or why not?</p>
+		</statement>
+		<answer>
+			<p>First of all, the plane in <m>\R^3</m> is just the set <m>\Span{\vec{3 -2 1}, \vec{-5 6 1}}</m> so the question
+is asking whether or not <m>u</m> lies in that set.
+				As in previous exercises, this leads to a linear system whose augmented matrix is
+reduced to echelon form as
+				<me>
+					\mat{3 -5 0;-2 6 4;1 1 4} \to \mat{3 -5 0;0 \dfrac{8}{3} 4; 0 \dfrac{8}{3} 4} \to \mat{3 -5 0;0 \dfrac{8}{3} 4;0 0 0}
+				</me>
+				The system is consistent (since the last column is not a pivot column), so <m>u</m> does lie in the given plane.
+			</p>
+		</answer>
+	</exercise>
 </exercises>

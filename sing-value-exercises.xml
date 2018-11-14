@@ -96,7 +96,13 @@ the license is included in gfdl.xml.
     	<answer>
     		<p>
     			<ol>
-    				<li></li>
+    				<li>
+    					<me>A^T A=\mat{1 1 1;1 2 2;1 2 3}</me>
+    					Hence <m>\Tr(A^T A)=6</m>. However, <m>A^T A</m> is positive semidefinite, therefore all the eigenvalues are nonnegative. This implies that <m>0 \le \lambda_i \le 6</m> and hence that <m>\sigma_i \le \sqrt{6} \le 3</m>
+    				</li>
+    				<li>
+    					Since <m>B^T B= Q^T A^T AQ</m> the matrixes <m>B^T B</m> and <m>A^T A</m> are similar. This implies that they have the same eingenvalues and therefore that <m>B</m> and <m>A</m> have the singular values <m>\sigma_i = \sqrt{\lambda_i}</m>.
+    				</li>
     			</ol>
     		</p>
     	</answer>
