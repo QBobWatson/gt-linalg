@@ -382,7 +382,7 @@ This is often very important in applications.
           \mat{\lambda_1 0 0; 0 \lambda_2 0; 0 0 \lambda_3}
           \mat{| | |; v_1 v_2 v_3; | | |}\inv \\
           \amp= \mat{| | |; cv_1 v_2 v_3; | | |}
-          \mat{\lambda_3 0 0; 0 \lambda_2 0; 0 0 \lambda_1}
+          \mat{\lambda_1 0 0; 0 \lambda_2 0; 0 0 \lambda_3}
           \mat{| | |; cv_1 v_2 v_3; | | |}\inv,
           \end{split}
         </me>
