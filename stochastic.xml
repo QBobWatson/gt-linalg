@@ -501,7 +501,7 @@ the license is included in gfdl.xml.
 
   </subsection>
 
-  <subsection hidden="true">
+  <subsection>
     <title>Google<rsq/>s PageRank Algorithm</title>
 
     <p>
@@ -615,7 +615,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
 \frac 13a + \frac 12b}
 = \vec{a b c d}.
         </me>
-        The matrix on the left is the Importance Matrix, and the final equality expresses the Importance Rule.
+        The matrix on the left is the <term>Importance Matrix</term>, and the final equality expresses the Importance Rule.
       </p>
     </specialcase>
 
@@ -714,7 +714,17 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
     </example>
 
     <p>
-      Here is Page and Brin<rsq/>s solution.  Choose a number <m>p</m> in <m>(0,1)</m>, called the <term>damping factor</term>.  (A typical value is <m>p=0.15</m>.)
+      Here is Page and Brin<rsq/>s solution.  First we fix the importance matrix by replacing each zero column with a column of <m>1/n</m>s, where <m>n</m> is the number of pages:
+      <me>
+        A = \mat{0 0 0; 0 0 0; 1 1 0}
+        \sptxt{becomes}
+        A' = \mat{0 0 1/3; 0 0 1/3; 1 1 1/3}.
+      </me>
+      The <term>modified Importance Matrix</term> <m>A'</m> is always stochastic.
+    </p>
+
+    <p>
+      Now we choose a number <m>p</m> in <m>(0,1)</m>, called the <term>damping factor</term>.  (A typical value is <m>p=0.15</m>.)
     </p>
 
     <definition hide-type="true">
@@ -722,9 +732,9 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
       <idx><h>Google PageRank</h><h>Google Matrix</h></idx>
       <statement>
         <p>
-          Let <m>A</m> be the Importance Matrix for an Internet with <m>n</m> pages.  The <term>Google Matrix</term> is the matrix
+          Let <m>A</m> be the Importance Matrix for an Internet with <m>n</m> pages, and let <m>A'</m> be the modified Importance Matrix.  The <term>Google Matrix</term> is the matrix
           <me>
-            M = (1-p)\cdot A + p\cdot B
+            M = (1-p)\cdot A' + p\cdot B
             \sptxt{where}
             B = \frac 1n\mat{1 1 \cdots, 1; 1 1 \cdots, 1;
             \vdots, \vdots, \ddots, \vdots; 1 1 \cdots, 1}.
@@ -734,7 +744,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
     </definition>
 
     <p>
-      In the random surfer interpretation, this matrix <m>M</m> says: with probability <m>p</m>, our surfer will surf to a completely random page; otherwise, he'll click a random link on the current page.
+      In the random surfer interpretation, this matrix <m>M</m> says: with probability <m>p</m>, our surfer will surf to a completely random page; otherwise, he'll click a random link on the current page, unless the current page has no links, in which case he'll surf to a completely random page in either case.
     </p>
 
     <p>
@@ -766,7 +776,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
     <example>
       <statement>
         <p>
-          What is the PageRank vector for the following Internet?
+          What is the PageRank vector for the following Internet?  (Use the damping factor <m>p = 0.15</m>.)
         <latex-code><![CDATA[
 \begin{tikzpicture}
   \matrix[matrix of nodes,
@@ -781,11 +791,10 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
       every node/.style={midway, auto, thin border},
       every to/.style={bend left=10}]
     \draw[seq1] (A) to node {${\frac 13}$} (B);
-    \draw[seq1] (A) to node {${\frac 13}$} (C);
+    \draw[seq1] (A) to[bend right=10] node {${\frac 13}$} (C);
     \draw[seq1] (A) to node[near start] {${\frac 13}$} (D);
     \draw[seq2] (B) to node[near end] {${\frac 12}$} (C);
     \draw[seq2] (B) to node {${\frac 12}$} (D);
-    \draw[seq3] (C) to node {${1}$} (A);
     \draw[seq4] (D) to node[near end] {${\frac 12}$} (A);
     \draw[seq4] (D) to node {${\frac 12}$} (C);
   \end{scope}
@@ -796,28 +805,66 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
       </statement>
       <solution>
         <p>
-          Choosing the damping factor <m>p=0.15</m>, the Importance Matrix is
+          First we compute the modified Importance Matrix:
           <me>
 \def\r{\color{seq1}}\def\b{\color{seq2}}\def\g{\color{seq3}}\def\p{\color{seq4}}
-            \begin{split}
- \amp0.85\cdot\mat{
-  \r0 \b0 \g1 \p\frac 12;
+ A = \mat{
+  \r0 \b0 \g0 \p\frac 12;
   \r\frac 13 \b0 \g0 \p0;
   \r\frac 13 \b\frac 12 \g0 \p\frac 12;
   \r\frac 13 \b\frac 12 \g0 \p0}
+\quad\xrightarrow{\text{modify}}\quad
+ A' = \mat{
+  \r0 \b0 \g\frac14 \p\frac 12;
+  \r\frac 13 \b0 \g\frac14 \p0;
+  \r\frac 13 \b\frac 12 \g\frac14 \p\frac 12;
+  \r\frac 13 \b\frac 12 \g\frac14 \p0}
+          </me>
+          Choosing the damping factor <m>p=0.15</m>, the Google Matrix is
+          <me>
+\def\r{\color{seq1}}\def\b{\color{seq2}}\def\g{\color{seq3}}\def\p{\color{seq4}}
+\begin{split}
+ M = \amp0.85\cdot\mat{
+  \r0 \b0 \g\frac14 \p\frac 12;
+  \r\frac 13 \b0 \g\frac14 \p0;
+  \r\frac 13 \b\frac 12 \g\frac14 \p\frac 12;
+  \r\frac 13 \b\frac 12 \g\frac14 \p0}
   + 0.15\cdot\mat{1/4 1/4 1/4 1/4; 1/4 1/4 1/4 1/4; 1/4 1/4 1/4 1/4; 1/4 1/4 1/4 1/4} \\
-  \amp\qquad\approx \mat{
-  0.0375    0.0375    0.8875    0.4625;
-  0.3208    0.0375    0.0375    0.0375;
-  0.3208    0.4625    0.0375    0.4625;
-  0.3208    0.4625    0.0375    0.0375}.
-  \end{split}
+  \amp\qquad\approx \mat{0.0375 0.0375 0.2500 0.4625;
+    0.3208 0.0375 0.2500 0.0375;
+    0.3208 0.4625 0.2500 0.4625;
+    0.3208 0.4625 0.2500 0.0375}.
+\end{split}
           </me>
           The PageRank vector is the steady state:
           <me>
-            w \approx \vec{0.3682    0.1418    0.2880    0.2021}.
+            w \approx \vec{0.2192, 0.1752 0.3558 0.2498}
           </me>
-          Page <m>A</m> is the most important, with a rank of <m>0.3682</m>, and page <m>B</m> is the least important, with a rank of <m>0.1418.</m>
+          This is the PageRank:
+          <latex-code><![CDATA[
+\begin{tikzpicture}
+  \matrix[matrix of nodes,
+      nodes={draw, circle, thick, anchor=center, font=\large},
+      row sep={3cm,between origins}, column sep={5cm,between origins}]
+    (pages)
+  {
+    |[seq1] (A)| .22 \& |[seq2] (B)| .18 \\
+    |[seq3] (C)| .35 \& |[seq4] (D)| .25 \\
+  };
+  \begin{scope}[->, shorten=2pt,
+      every node/.style={midway, auto, thin border},
+      every to/.style={bend left=10}]
+    \draw[seq1] (A) to node {${\frac 13}$} (B);
+    \draw[seq1] (A) to[bend right=10] node {${\frac 13}$} (C);
+    \draw[seq1] (A) to node[near start] {${\frac 13}$} (D);
+    \draw[seq2] (B) to node[near end] {${\frac 12}$} (C);
+    \draw[seq2] (B) to node {${\frac 12}$} (D);
+    \draw[seq4] (D) to node[near end] {${\frac 12}$} (A);
+    \draw[seq4] (D) to node {${\frac 12}$} (C);
+  \end{scope}
+\end{tikzpicture}
+          ]]></latex-code>
+          Page <m>C</m> is the most important, with a rank of <m>0.558</m>, and page <m>B</m> is the least important, with a rank of <m>0.1752.</m>
         </p>
       </solution>
     </example>
