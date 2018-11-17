@@ -183,4 +183,39 @@ the license is included in gfdl.xml.
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>Suppose <m>x_3\vec{-8 0 1 0 0 0} + x_5\vec{4 0 0 -3 1 0}</m>, where <m>x_3</m> and <m>x_5</m> are free, is the solution <m>v_h</m> of the homogeneous matrix equation <m>Bx=0</m> for some matrix <m>B</m>.
+			 Also, let <m>v_1, v_2, \ldots,</m> be the column vectors of <m>B</m>.
+			 	<ol>
+			 		<li>You cannot tell from above info how many rows <m>B</m> has. But how many columns must <m>B</m> have and why?</li>
+			 		<li>Is the set <m>\{v_1, v_2, \ldots, \}</m> of column vectors of <m>B</m> linearly independent?</li>
+			 		<li>Use the equation <m>x_1v_1 + x_2v_2 + \cdots = 0</m> to express <m>v_1</m> as a specific linear combination of the other column vectors or explain why this is impossible.</li>
+			 		<li>Express <m>v_2</m> as a linear combination of the other column vectors, or explain why this is impossible.</li>
+			 	</ol>
+			 </p>
+		</statement>
+		<answer>
+			<p>
+				<ol>
+					<li>The six rows in the vectors above tell us that the variables are <m>x_1, x_2, \ldots, x_6</m>, one for each column of B. Hence B has 6 columns.</li>
+					<li>No. In order to be a linearly independent set, the only solution to <m>x_1v_1 + \ldots + x_6v_6 = 0</m> must be the trivial solution, that is, <m>x_1 = \cdots = x_6 = 0</m>. But since <m>x_3</m> and <m>x_5</m>, this equation has non trivial solutions.</li>
+					<li><m>v_h</m> can be written as follows:
+						<me>
+							x = \vec{x_1 x_2 x_3 x_4 x_5 x_6} = \mat{-8x_3 + 4x_5;0x_2 + 0x_5; x_2; -3x_5; x_5; 0x_3 + 0x_5} = \vec{-8x_3 + 4x_5 0 x_3 -3x_5 x_5 0}
+						</me>
+						We need special values of <m>x_1, \ldots, x_6</m> which satisfy this equation and where <m>x_1 \ne 0</m>. There are infinitely many ways to do this. For example, let <m>x_3=x_5=1</m>
+						 Then we have 
+						 <me>x_1 = -8\cdot 1 + 4\cdot 1= -4</me>
+						 <me>x_2 = 0</me>
+						 <me>x_4 = -3\cdot 1</me>
+						 <me>x_6 = 0</me>.
+						 Thus, <m>-4v_1 + v_3 -3v_4+v_5+v_6=0</m> and we can solve for <m>v_1</m> to get <m>v_1 = 1/4v_3 - 3/4v_4 + 1/4 v_5</m>.
+					</li>
+					<li>Impossible. If <m>v_2 = \alpha_1 v_1 + \alpha_3 v_3 + \alpha_4 v_4 + \alpha_5 v_5 + \alpha_6 v_6</m> then <m>0=\alpha_1 v_1+(-1)v_2 + \alpha_3 v_3 + \cdots + \alpha_6 v_6</m>, a solution of <m>Bx=0</m> in which <m>x_2 \ne 0</m>.
+					 But <m>v_h</m> represents all solutions of <m>Bx=0</m>, and <m>v_h</m> has a zero in the second row. i.e., <m>x_2</m> is always 0.</li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
 </exercises>
