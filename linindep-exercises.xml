@@ -12,7 +12,7 @@ the license is included in gfdl.xml.
 <exercises>
 	<exercise>
 		<statement>
-			<p>Decide whether each subset of  <m>\R^3</m> is linearly dependent or linearly independent. 
+			<p>Decide whether each subset of  <m>\R^3</m> is linearly dependent or linearly independent.
 				<ol>
 					<li>
 						<me>\left\{\vec{1  -3 5}, \vec{2  2  4}, \vec{4  -4  14} \right\}</me>
@@ -39,21 +39,21 @@ the license is included in gfdl.xml.
 							\syseq{
 							 c_1  +  2c_2  +  4c_3  =  0;
               						-3c_1 +  2c_2  -  4c_3  =  0;
-              						5c_1 +  4c_2  +  14c_3 =  0  
+              						5c_1 +  4c_2  +  14c_3 =  0
 							}
 						</me>
 						Row reduction gives
 						<md>
 							<mrow>
 							\amat{
-							 1  2  4  0 ; 
-              						-3 2  -4 0 ; 
+							 1  2  4  0 ;
+              						-3 2  -4 0 ;
               						5  4  14 0
 							}
 							\quad\xrightarrow{}\quad
 							&amp;\amat{
-							 1  2  4  0 ; 
-              						0  8  8  0 ; 
+							 1  2  4  0 ;
+              						0  8  8  0 ;
               						0  0  0  0
 							}
 							</mrow>
@@ -64,14 +64,14 @@ the license is included in gfdl.xml.
 						<md>
 							<mrow>
 							\amat{
-							1  2  3  0 ; 
-              						7  7  7  0 ; 
+							1  2  3  0 ;
+              						7  7  7  0 ;
               						7  7  7  0
 							}
 							\quad\xrightarrow{}\quad
 							&amp;\amat{
-							1  2  3   0;  
-              						0  -7 -14 0 ; 
+							1  2  3   0;
+              						0  -7 -14 0 ;
               						0  0  0   0
 							}
 							</mrow>
@@ -82,15 +82,15 @@ the license is included in gfdl.xml.
 						<md>
 							<mrow>
 							\amat{
-							  0  1  0; 
-              						 0  0  0 ; 
+							  0  1  0;
+              						 0  0  0 ;
               						-1 4  0
 							}
 							\quad\xrightarrow{}\quad
 							&amp;\amat{
-							-1 4  0 ; 
-              						0  1  0 ; 
-              						0  0  0 
+							-1 4  0 ;
+              						0  1  0 ;
+              						0  0  0
 							}
 							</mrow>
 						</md>
@@ -99,17 +99,17 @@ the license is included in gfdl.xml.
 					<li>It is linearly dependent. The linear system
 						<me>
 						\amat{
-						9  2  3  12  0 ; 
-              					9  0  5  12  0 ; 
+						9  2  3  12  0 ;
+              					9  0  5  12  0 ;
               					0  1  -4 -1  0
 						}
 						</me>
 						has more unknowns than equations, and so row reduction must end with at least one variable free (there can't be a contradictory equation because the system is homogeneous, and so has at least the solution of all zeroes).
-          						To exhibit a combination, we can reduce to 
+          						To exhibit a combination, we can reduce to
           						<me>
           						\amat{
-          						 9  2  3  12  0 ; 
-              					0  -2 2  0   0 ; 
+          						 9  2  3  12  0 ;
+              					0  -2 2  0   0 ;
               					0  0  -3 -1  0
           						}
           						</me>
@@ -131,7 +131,7 @@ the license is included in gfdl.xml.
 	</exercise>
 	<exercise>
 		<statement>
-			<p>Let 
+			<p>Let
 				<me>A=\mat{1 -3;3 5; -1 7}</me>
 				<ol>
 					<li>Solve the homogeneous equation <m>Ax=0</m>.</li>
@@ -205,7 +205,7 @@ the license is included in gfdl.xml.
 							x = \vec{x_1 x_2 x_3 x_4 x_5 x_6} = \mat{-8x_3 + 4x_5;0x_2 + 0x_5; x_2; -3x_5; x_5; 0x_3 + 0x_5} = \vec{-8x_3 + 4x_5 0 x_3 -3x_5 x_5 0}
 						</me>
 						We need special values of <m>x_1, \ldots, x_6</m> which satisfy this equation and where <m>x_1 \ne 0</m>. There are infinitely many ways to do this. For example, let <m>x_3=x_5=1</m>
-						 Then we have 
+						 Then we have
 						 <me>x_1 = -8\cdot 1 + 4\cdot 1= -4</me>
 						 <me>x_2 = 0</me>
 						 <me>x_4 = -3\cdot 1</me>
@@ -215,6 +215,33 @@ the license is included in gfdl.xml.
 					<li>Impossible. If <m>v_2 = \alpha_1 v_1 + \alpha_3 v_3 + \alpha_4 v_4 + \alpha_5 v_5 + \alpha_6 v_6</m> then <m>0=\alpha_1 v_1+(-1)v_2 + \alpha_3 v_3 + \cdots + \alpha_6 v_6</m>, a solution of <m>Bx=0</m> in which <m>x_2 \ne 0</m>.
 					 But <m>v_h</m> represents all solutions of <m>Bx=0</m>, and <m>v_h</m> has a zero in the second row. i.e., <m>x_2</m> is always 0.</li>
 				</ol>
+			</p>
+		</answer>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>We already know that the linear independence among the columns of a matrix is preserved by column operations. Is the linear independence among the columns preserved by row operations?
+			</p>
+		</statement>
+		<answer>
+			<p>Suppose a matrix <m>A</m> is changed to a matrix <m>B</m> by row operations. Then the same operations change <m>\mat{A 0}</m> to <m>\mat{B 0}</m>. Therefore the solutions of the homogeneous systems <m>Ax = 0</m> and <m>Bx = 0</m> are the same. In particular,
+			we have <m>Ax = 0</m> has only the trivial solution <m>\Leftrightarrow Bx = 0</m> has only the trivial solution. In other words, the uniqueness with coefficient matrix <m>A</m> is equivalent to the uniqueness with coefficient matrix <m>B</m>. Since the uniqueness is equivalent to the linear independence of the columns, we conclude that
+			column of <m>A</m> linearly independent <m>\Leftrightarrow</m> column of <m>B</m> linearly independent.
+			</p>
+		</answer>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>Prove that for a subspace <m>H</m> spanned by any given vectors, <m>H</m> is also spanned by the maximal linearly independent vectors.</p>
+		</statement>
+		<answer>
+			<p>Let <m>u, v, w</m> be maximal linearly independent among <m>u, v, w, x, y</m>. Then the maximality means that by adding <m>x</m> to the collection, the four vectors <m>u, v, w, x</m> are linearly dependent. Thus we have <m>a, b, c, d,</m> not all zero, such that
+				<me>au + bv + cw + dx = 0</me>.
+				If <m>d = 0</m>, then <m>au + bv + cw = 0</m> and <m>a, b, c</m> are not all zero. This contradicts with the assumption that <m>u, v, w </m> are linearly independent. Therefore we have <m>d \ne 0</m>, and
+				<me>x = (-a/d)u + (-b/d)v + (-c/d)w \in \Span\{u, v, w\}</me>.
+				Similarly, we have <m>y \in \Span\{u, v, w\}</m>. Then, we have
+				<me>\Span\{u, v, w, x, y\} = \Span\{u, v, w\}</me>.
+				This finishes the proof in case 3 out of 5 vectors are maximal linearly independent. The general case is similar.
 			</p>
 		</answer>
 	</exercise>
