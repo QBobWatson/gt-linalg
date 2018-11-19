@@ -37,7 +37,7 @@ the license is included in gfdl.xml.
 							&amp;\amat{
 							1  3  0  x;
               						0  -4 0  -2x+y;
-              						0  0  1  x-2y+z 
+              						0  0  1  x-2y+z
 							}
 							</mrow>
 						</md>
@@ -49,13 +49,13 @@ the license is included in gfdl.xml.
 						<md>
 							<mrow>
 							\amat{
-							1  3  x; 
+							1  3  x;
               						2  2  y;
               						3  1  z
 							}
 							\quad\xrightarrow{}\quad
 							&amp;\amat{
-							1  3  x; 
+							1  3  x;
               						0  -4 -2x+y;
               						0  0  x-2y+z
 							}
@@ -69,7 +69,7 @@ the license is included in gfdl.xml.
 							\amat{
 							 0  1  2  x ;
               						2  1  5  y ;
-             						-1  1  0  z 
+             						-1  1  0  z
 							}
 							\quad\xrightarrow{}\quad
 							&amp;\amat{
@@ -81,13 +81,13 @@ the license is included in gfdl.xml.
 						</md>
 						 which has a unique solution for each triple of components <m>x</m>, <m>y</m>, and <m>z</m>.
 					</li>
-					<li> No, this is not a basis. The reduction 
+					<li> No, this is not a basis. The reduction
 						<md>
 							<mrow>
 							\amat{
 							0  1  1  x  ;
               						2  1  3  y  ;
-             						-1  1  0  z  
+             						-1  1  0  z
 							}
 							\quad\xrightarrow{}\quad
 							&amp;\amat{
@@ -109,7 +109,7 @@ the license is included in gfdl.xml.
 				<me>
 					\syseq{
 					 x_1  -  4x_2  +  3x_3  -  x_4  =  0 ;
-        					2x_1  -  8x_2  +  6x_3  -  2x_4 =  0 
+        					2x_1  -  8x_2  +  6x_3  -  2x_4 =  0
 					}
 				</me>
 			</p>
@@ -137,5 +137,48 @@ the license is included in gfdl.xml.
 		<statement>
 			<p>If <m>S</m> is a subspace of <m>\R^n</m> what is the relationship between <m>n</m> and the dimension of <m>S</m>?</p>
 		</statement>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>Determine the dimension of the subspace <m>W</m> of <m>\R^3</m> defined by <m>W=\{\vec{x y 0} | x \in \R \text{ and } y \in \R \}</m>. Give its geometric description.</p>
+		</statement>
+		<answer>
+			<p>We notice that even though we are in <m>\R^3</m> not all three coordinates of the typical
+element of this subspace are independent. There is a pattern. We can write
+				<me>\vec{x y 0}=\vec{x 0 0}+\vec{0 y 0}=x\vec{1 0 0} + y\vec{0 1 0}</me>
+				Thus, we see that <m>B=\{\vec{1 0 0}, \vec{0 1 0}\}</m> spans <m>W</m>. It is also linearly independent. Hence it is a basis for <m>W</m>. It follows that <m>\dim(W)=2</m>.
+				 <m>W</m> is the set of vectors in <m>\R^3</m> whose third coordinate
+is zero. These vectors only have an <m>x</m> and <m>y</m> coordinate. Therefore, they live in the <m>x-y</m> plane in <m>\R^3</m>.
+			</p>
+		</answer>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>Prove that <m>S=\{1, x, x^2\}</m> is a basis for <m>P_2</m>, the set of polynomials
+of degree less than or equal to 2.</p>
+		</statement>
+		<answer>
+			<p>We need to prove that <m>S</m> spans <m>P_2</m> and is linearly independent.
+				<ol>
+					<li><m>S</m> spans <m>P_2</m>. A typical polynomial of degree less than or equal to 2 is <m>ax^2+bx+c</m>.</li>
+					<li><m>S</m> is linearly independent. Here, we need to show that the only solution to <m>a(1)+bx+cx^2=0</m> is <m>a=b=c=0</m>.
+					From algebra, we remember that two polynomials are equal if and only if
+their corresponding coe¢ cients are equal. The zero polynomial has all its coefficients equal to zero. So, <m>a(1)+bx+cx^2=0</m> if and only if <m>a=b=c=0</m>. Hence <m>S</m> is linearly independent.</li>
+				</ol>
+			</p>
+		</answer>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>What are the coordinates of <m>\vec{1 2 3}</m> with respect to the basis <m>\{\vec{1 1 0}, \vec{0 1 1}, \vec{1 1 1}\}</m>?</p>
+		</statement>
+		<answer>
+			<p>Finding the coordinates of <m>\vec{1 2 3}</m> with respect to the basis amounts to finding the numbers <m>a,b,c</m> such that <m>a\vec{1 1 0}+ b\vec{0 1 1}+c\vec{1 1 1}=\vec{1 2 3}</m>.
+		 This amounts to solving the system
+		 	<me>\mat{1 0 1;1 1 1;0 1 1}\vec{a b c}=\vec{1 2 3}</me>
+			The solution is
+			<me>\vec{a b c} = \mat{1 0 1;1 1 1;0 1 1}\inv \vec{1 2 3} = \vec{-1 1 2}</me>
+		</p>
+		</answer>
 	</exercise>
 </exercises>
