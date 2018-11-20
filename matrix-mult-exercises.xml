@@ -47,9 +47,9 @@ the license is included in gfdl.xml.
                     <li> Compute <m>A, B,</m> and <m>C</m>.</li>
                     <li>Compute the matrix for <m>V \circ U \circ T</m>.</li>
                     <li>Compute the matrix for <m>U \circ V \circ T</m>.</li>
-          
+
                 </ol>
-                
+
             </p>
         </statement>
         <answer>
@@ -64,7 +64,7 @@ the license is included in gfdl.xml.
                                 \quad U(e_1)=\vec{0 -1} U(e_2)=\vec{1 0} \implies &amp;\quad B=\mat{0 1; -1 0}
                             </mrow>
                             <mrow>
-                                \quad V(e_1)=\vec{2 0} V(e_2)=\vec{0 1} \implies &amp;\quad C=\mat{2 0;0 1} 
+                                \quad V(e_1)=\vec{2 0} V(e_2)=\vec{0 1} \implies &amp;\quad C=\mat{2 0;0 1}
                             </mrow>
                         </md>
                     </li>
@@ -77,5 +77,21 @@ the license is included in gfdl.xml.
                 </ol>
             </p>
         </answer>
+    </exercise>
+    <exercise>
+      <statement>
+        <p>What is the general principle here? Say we have a composition of linear transformations
+          <me>\R^n \xrightarrow{T_A} \R^m \xrightarrow{T_B} \R^p</me>
+          given by matrix multiplication by matrices <m>A</m> and <m>B</m> respectively.  State and prove a precise theorem  about  the  matrix  of  the  composition.
+Be very careful about the order of multiplication!
+        </p>
+      </statement>
+      <answer>
+        <p>Theorem: If <m>\R^n \xrightarrow{T_A} \R^m \xrightarrow{T_B} \R^p</m> are linear transformations given by  matrix  multiplication  by  matrices <m>A</m> and <m>B</m> respectively, then the composition
+          <m>T_B \circ T_A</m> has the matrix <m>BA</m>.
+          Proof: For any <m>x \in \R^n</m>, we have
+          <me>T_B \circ T_A(x) = T_B(T_A(x)) = T_B(Ax) = BAx = (BA)x</me>.
+        </p>
+      </answer>
     </exercise>
 </exercises>

@@ -45,7 +45,7 @@ the license is included in gfdl.xml.
 				<me>\vec{3  -1}=\vec{1 -1}\cdot c_1 + \vec{1  1}\cdot c_2</me>
 				 gives <m>c_1=2</m> and <m>c_2=1</m>. Similarly, solving
 				 <me>\vec{3 -1}=\vec{1  2}\cdot c_1 + \vec{1  3}\cdot c_2</me>
-				  gives <m>c_1=10</m>, <m>c_2=-7</m>. 
+				  gives <m>c_1=10</m>, <m>c_2=-7</m>.
 			</p>
 		</answer>
 	</exercise>
@@ -54,7 +54,7 @@ the license is included in gfdl.xml.
 			<p>Consider the vector
 				<md>
 					<mrow>
-						v_1 = \vec{1 1 1 1} 
+						v_1 = \vec{1 1 1 1}
 						\qquad
 						v_2 = \vec{1 -1 1 -1}
 						\qquad
@@ -62,7 +62,7 @@ the license is included in gfdl.xml.
 						\qquad
 						v_4 = \vec{4 0 0 0}
 					</mrow>
-				</md>	
+				</md>
 				and the subspace <m>W = \Span{v_1, v_2, v_3, v_4}</m>.
 				<ol>
 					<li>Find a linear dependence relation among <m>v1, v2, v3, v4</m>.</li>
@@ -93,7 +93,7 @@ the license is included in gfdl.xml.
 					<li>
 						We choose the basis <m>\cB = {v_1, v_2, v_3}</m>. Then
 						<me>
-							[w]_{\cB} = \left(\frac{w \cdot v_2}{v_1 \cdot v_1}, \frac{w \cdot v_2}{v_2 \cdot v_2}, \frac{w \cdot v_3}{v_3 \cdot v_3}\right) = \left(1, 1, -1\right) 
+							[w]_{\cB} = \left(\frac{w \cdot v_2}{v_1 \cdot v_1}, \frac{w \cdot v_2}{v_2 \cdot v_2}, \frac{w \cdot v_3}{v_3 \cdot v_3}\right) = \left(1, 1, -1\right)
 						</me>.
 					</li>
 				</ol>
@@ -105,5 +105,18 @@ the license is included in gfdl.xml.
 		<statement>
 			<p>Let <m>\cB_1 = \{\vec{2 3}, \vec{1 -1}\}</m> and <m>\cB_2=\{\vec{2 1}, \vec{5 3}\}</m> be two bases of <m>\R^2</m>. Find the change of basis matrix <m>\underset{\cB_2 \leftarrow \cB_1}{P}</m>. (Recall that for each <m>x \text{ in } \R^2</m>, <m>\underset{\cB_2 \leftarrow \cB_1}{P}</m> maps <m>[x]_{\cB_1}</m> to <m>[x]_{\cB_2}</m>).</p>
 		</statement>
+	</exercise>
+	<exercise>
+		<statement>
+			<p>What are the coordinates of <m>\vec{1 2 3}</m> with respect to the basis <m>\{\vec{1 1 0}, \vec{0 1 1}, \vec{1 1 1}\}</m>?</p>
+		</statement>
+		<answer>
+			<p>Finding the coordinates of <m>\vec{1 2 3}</m> with respect to the basis amounts to finding the numbers <m>a,b,c</m> such that <m>a\vec{1 1 0}+ b\vec{0 1 1}+c\vec{1 1 1}=\vec{1 2 3}</m>.
+		 This amounts to solving the system
+			<me>\mat{1 0 1;1 1 1;0 1 1}\vec{a b c}=\vec{1 2 3}</me>
+			The solution is
+			<me>\vec{a b c} = \mat{1 0 1;1 1 1;0 1 1}\inv \vec{1 2 3} = \vec{-1 1 2}</me>
+		</p>
+		</answer>
 	</exercise>
 </exercises>

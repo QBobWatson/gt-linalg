@@ -168,17 +168,4 @@ their corresponding coe¢ cients are equal. The zero polynomial has all its coef
 			</p>
 		</answer>
 	</exercise>
-	<exercise>
-		<statement>
-			<p>What are the coordinates of <m>\vec{1 2 3}</m> with respect to the basis <m>\{\vec{1 1 0}, \vec{0 1 1}, \vec{1 1 1}\}</m>?</p>
-		</statement>
-		<answer>
-			<p>Finding the coordinates of <m>\vec{1 2 3}</m> with respect to the basis amounts to finding the numbers <m>a,b,c</m> such that <m>a\vec{1 1 0}+ b\vec{0 1 1}+c\vec{1 1 1}=\vec{1 2 3}</m>.
-		 This amounts to solving the system
-		 	<me>\mat{1 0 1;1 1 1;0 1 1}\vec{a b c}=\vec{1 2 3}</me>
-			The solution is
-			<me>\vec{a b c} = \mat{1 0 1;1 1 1;0 1 1}\inv \vec{1 2 3} = \vec{-1 1 2}</me>
-		</p>
-		</answer>
-	</exercise>
 </exercises>
