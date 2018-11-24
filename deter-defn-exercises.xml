@@ -12,7 +12,7 @@ the license is included in gfdl.xml.
 <exercises>
     <exercise>
         <statement>
-            <p>Let 
+            <p>Let
                 <me>A=\mat{7 1 4 1; -1 0 0 6;9 0 2 3;0 0 0 -1}
                     \text{ and }
                     B=\mat{0 1 5 4;1 -1 -3 0;-1 0 5 4;3 -3 -2 5}
@@ -23,7 +23,7 @@ the license is included in gfdl.xml.
                         <li>Compute <m>\det(AB)</m>.</li>
                         <li>Compute <m>\det(A^2B\inv AB^2)</m>.</li>
                     </ol>
-               
+
             </p>
         </statement>
     </exercise>
@@ -41,6 +41,33 @@ the license is included in gfdl.xml.
         <statement>
             <p>How does determinant change under row operations?</p>
         </statement>
+    </exercise>
+    <exercise>
+      <statement>
+        <p>
+          If the <m>n \times n</m> matrix <m>B</m> is obtained from <m>A</m> by the following elementary column operations, what is the relationship between <m>\det(A)</m> and <m>\det(B)</m>?
+          <ol>
+            <li>
+              <m>C_2 = -3C_2</m>
+            </li>
+            <li>
+              <m>C_2 = -C_2 + 2C_1</m>
+            </li>
+          </ol>
+        </p>
+      </statement>
+      <answer>
+        <p>
+          <ol>
+            <li>
+              <m>\det(B) = 3 \det(A)</m>
+            </li>
+            <li>
+              <m>\det(B)=\det(A)</m>
+            </li>
+          </ol>
+        </p>
+      </answer>
     </exercise>
     <exercise>
         <statement>
@@ -64,7 +91,7 @@ the license is included in gfdl.xml.
     	<answer>
     		<p>
     			<ol>
-    				<li>Work with <m>(n \times n)</m>-matrices where <m>n \gt 1</m>. Take <m>A</m> to be the matrix with <m>-1</m> in the <m>(1,1)</m> entry and zeroes everywhere else and <m>B</m> to be the identity matrix. 
+    				<li>Work with <m>(n \times n)</m>-matrices where <m>n \gt 1</m>. Take <m>A</m> to be the matrix with <m>-1</m> in the <m>(1,1)</m> entry and zeroes everywhere else and <m>B</m> to be the identity matrix.
     				Then <m>\det(A+B)=0</m>. However, <m>\det(A)+\det(B)=1</m>.</li>
     				<li>We can construct a whole family of such matrices. Let <m>a,b \in \R</m>, then
     					<me>\det(a\mat{1 0;0 1}+b\mat{0 -1;1 0})=a^2 + b^2 = \det(a\mat{1 0; 0 1}) + \det(b\mat{0 -1;1 0})</me>.
