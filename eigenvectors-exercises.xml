@@ -10,6 +10,16 @@ the license is included in gfdl.xml.
 
 <exercises>
     <exercise>
+      <statement>
+        <p>Find the eigenvalues of the matrix and find one eigenvector for each eigenvalue
+          <me>\mat{2 2;1 3}</me>
+        </p>
+      </statement>
+      <answer>
+        <p><m>\lambda=1; \vec{-2 1}</m> and <m>\lambda=4; \vec{1 1}</m></p>
+      </answer>
+    </exercise>
+    <exercise>
         <statement>
             <p>Do eigenvalues change under row operations?</p>
         </statement>
@@ -36,7 +46,7 @@ the license is included in gfdl.xml.
     </exercise>
     <exercise>
         <statement>
-            <p>Compute the eigenvalues of 
+            <p>Compute the eigenvalues of
                 <me>A=\mat{
                     a -b;
                     b a
@@ -50,5 +60,15 @@ the license is included in gfdl.xml.
             <p>Let <m>A</m> be an <m>m \times n</m> matrix. Explain why the matrix <m>A^T A</m> has nonnegative eigenvalues.</p>
         </statement>
     </exercise>
-    
+    <exercise>
+      <statement>
+        <p>Find the eigenvalues and eigenvectors of the transpose transformation <m>T(X)=X^T: M(n, n) \to M(n.n)</m>.</p>
+      </statement>
+      <answer>
+        <p>By the definition, we are looking for a number <m>\lambda</m> and a nonzero matrix <m>X</m> such that <m>X^T=\lambda X</m>. Given such an equality, we have
+          <me>X=(X^T)^T=(\lambda X)^T=\lambda^2 X</me>.
+          Since <m>X</m> is nonzero, we must have <m>\lambda^2 = 1</m>. Thus the eigenvalues of <m>T</m> must be either -1 or 1.
+        </p>
+      </answer>
+    </exercise>
 </exercises>
