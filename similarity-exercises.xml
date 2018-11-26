@@ -11,6 +11,33 @@ the license is included in gfdl.xml.
 
 <exercises>
     <exercise>
+      <statement>
+        <p>Find a matrix that is similar to the matrix
+          <me>A=\mat{1 2;3 4}</me>
+        </p>
+      </statement>
+      <answer>
+        <p>If we take any invertible <m>2 \times 2</m> matrix <m>P</m> and define <m>B=P\inv AP</m>, then <m>B</m> will be similar to <m>A</m>.
+          For example, let's take
+          <me>P=\mat{-8 3;5 -2}</me>
+          and then let
+          <md>
+            <mrow>
+              B=P\inv AP
+            </mrow>
+            <mrow>
+              \quad=\mat{-2 -3;-5 -8}\mat{1 2; 3 4}\mat{-8 3;5 -2}
+            </mrow>
+            <mrow>
+              \quad=\mat{8 -1;22 -3}
+            </mrow>
+          </md>
+          It is quite obvious that there are infinitely many matrices that are similar to <m>A</m> because we could perform this procedure using any
+invertible matrix <m>P</m>.
+        </p>
+      </answer>
+    </exercise>
+    <exercise>
         <statement>
             <p>If <m>A</m> is similar to <m>B</m>, and <m>B</m> is similar to <m>C</m>, are <m>A</m> and <m>C</m> also similar? If <m>A</m> and <m>B</m> are similar, are <m>A^k</m> and <m>B^k</m> also similar?</p>
         </statement>
@@ -46,7 +73,7 @@ be a matrix <m>B</m> such that <m>C=B\inv AB</m>.
     				<li>
     					True.
     					<me>A=SBS\inv \implies AS = SB</me>
-    					<me>S(BA)S\inv = (SB)AS\inv = ASAS\inv = AB</me>	
+    					<me>S(BA)S\inv = (SB)AS\inv = ASAS\inv = AB</me>
     				</li>
     			</ol>
     		</p>

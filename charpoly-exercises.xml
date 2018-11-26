@@ -9,6 +9,18 @@ the license is included in gfdl.xml.
 *********************************************************************-->
 <exercises>
     <exercise>
+      <statement>
+        <p>Find the characteristic polynomial of the following matrix
+          <me>\mat{-1 0 1;-3 4 1;0 0 2}</me>
+        </p>
+      </statement>
+      <answer>
+        <p>Let <m>A</m> be the matrix in the problem. Then characteristic polynomial is
+          <me>|A-\lambda I| = (4-\lambda)(-1-\lambda)(2-\lambda)</me>
+        </p>
+      </answer>
+    </exercise>
+    <exercise>
         <statement>
             <p>Real eigenvalues of <m>A</m> are defined as the real numbers <m>\lambda</m> such that <m>(A-\lambda I_n)x = 0</m> has a nonzero real solution <m>x</m>. Explain why eigenvalues are precisely the real roots of <m>\det(A-\lambda I_n)</m>, the characteristic polynomial of <m>A</m>. What do nonreal roots of <m>\det(A-\lambda I_n)</m> correspond to?</p>
         </statement>
@@ -46,7 +58,7 @@ the license is included in gfdl.xml.
     		<p>
     			<ol>
     				<li>True. If <m>Ax=\lambda x</m>, then <m>x = \lambda A\inv x</m> and <m>A\inv x = \dfrac{1}{\lambda}x</m>.</li>
-    				<li>True. 
+    				<li>True.
     					<me>\det(A-\lambda I) = \det((A=\lambda I)^T) = \det(A^T - \lambda I) </me>
     					<me>\quad = \det(-A-\lambda I) = (-1)^n \det(A+\lambda I)</me>
     				</li>
