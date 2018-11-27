@@ -38,6 +38,43 @@ invertible matrix <m>P</m>.
       </answer>
     </exercise>
     <exercise>
+      <statement>
+        <p>[MIT OCW] Why are these statements all true?
+          <ol>
+            <li>If <m>A</m> is similar to <m>B</m> then <m>A^2</m> is similar to <m>B^2</m>.</li>
+            <li><m>A^2</m> and <m>B^2</m> can be similar when <m>A</m> and <m>B</m> are not similar (try <m>\lambda = 0,0</m>).</li>
+            <li><m>\mat{3 0;0 4}</m> is similar to <m>\mat{3 1;0 4}</m>.</li>
+            <li><m>\mat{3 0; 0 3}</m> is not similar to <m>\mat{3 1;0 3}</m>.</li>
+            <li>Given a matrix <m>A</m>, let <m>B</m> be the matrix obtained by exchanging rows 1 and 2 of <m>A</m> and then exchanging columns 1 and 2 of <m>A</m>. <m>A</m> is similar to <m>B</m>.</li>
+          </ol>
+        </p>
+      </statement>
+      <answer>
+        <p>
+          <ol>
+            <li>If <m>A</m> is similar to <m>B</m>, then:
+              <me>A=M\inv BM \implies A^2=M\inv BM(M\inv BM) = M\inv B^2 M</me>.
+              Since <m>A^2=M\inv BM</m>, by definition <m>A^2</m> is similar to <m>B^2</m>.
+            </li>
+            <li>Let:
+              <me>A=\mat{0 0; 0 0} \text{ and } B=\mat{0 1; 0 0}</me>
+              Then <m>A^2</m> is similar to <m>B^2</m>, but <m>A</m> is not similar to <m>B</m> because nothing but the zero matrix is similar to the zero matrix.
+            </li>
+            <li>
+              There  are  multiple ways to verify that the given matrices are  similar. One way is to explicitly find the matrix <m>M</m> that satisfies the similarity condition:
+              <me>\mat{3 0;0 4}=\mat{1 -1; 0 1}\mat{3 1; 0 4}\mat{1 1; 0 1}</me>.
+            </li>
+            <li>The given matrices are  not similar because for the first matrix every vector in the plane is an eigenvector for <m>\lambda=3</m>, whereas the second matrix only has a line (<m>y=0</m>) of eigenvectors
+            corresponding to <m>\lambda=3</m>. We know that similar matrices have the same number of independent eigenvectors, so the given matrices cannot be similar. </li>
+            <li>To exchange the first two rows of <m>A</m>, we multiply <m>A</m> on the left by:
+              <me>M=\mat{0 1 0 0;1 0 0 0;0 0 1 0;0 0 0 1}</me>
+              In order to exchange the first two columns of <m>A</m>, we multiply it on the right by the same matrix <m>M</m>. We thus have <m>B=MAM</m>. Since <m>M\inv = M</m>, <m>B</m> is similar to <m>A</m>.
+            </li>
+          </ol>
+        </p>
+      </answer>
+    </exercise>
+    <exercise>
         <statement>
             <p>If <m>A</m> is similar to <m>B</m>, and <m>B</m> is similar to <m>C</m>, are <m>A</m> and <m>C</m> also similar? If <m>A</m> and <m>B</m> are similar, are <m>A^k</m> and <m>B^k</m> also similar?</p>
         </statement>
