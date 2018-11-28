@@ -9,6 +9,44 @@ the license is included in gfdl.xml.
 *********************************************************************-->
 <exercises>
     <exercise>
+      <statement>
+        <p>Find the dot product for the following vectors:
+          <ol>
+            <li>
+              <m>\vec{1 1 1} \cdot \vec{2 -3 4}</m>
+            </li>
+            <li><m>\vec{1 2 0} \cdot \vec{0 0 57}</m></li>
+            <li><m>\vec{3 2 1} \cdot \vec{0 1 0}</m></li>
+          </ol>
+        </p>
+      </statement>
+      <answer>
+        <p>
+          <ol>
+            <li>3</li>
+            <li>0</li>
+            <li>2</li>
+          </ol>
+        </p>
+      </answer>
+    </exercise>
+    <exercise>
+      <statement>
+        <p>Use the dot product to find a non-zero vector <m>w</m> perpendicular to both <m>u=\vec{1 2 -3}</m> and <m>v=\vec{2 0 1}</m>.</p>
+      </statement>
+      <answer>
+        <p>Any vector of the form <m>\vec{a -7a/2 -2a}</m></p>
+      </answer>
+    </exercise>
+    <exercise>
+      <statement>
+        <p>Do the three points <m>\vec{1 2 0}</m>, <m>\vec{-2 1 1}</m>, and <m>\vec{0 3 -1}</m> form a right triangle?</p>
+      </statement>
+      <answer>
+        <p>No.</p>
+      </answer>
+    </exercise>
+    <exercise>
         <statement>
             <p>If you know the lengths of vectors <m>x, y, x-y</m> in <m>\R^n</m>, explain how to compute the angle formed by <m>x, y</m>? (In this problem we don’t know the vectors <m>x, y</m>; we only know the lengths of <m>x, y, x-y</m>).</p>
         </statement>
