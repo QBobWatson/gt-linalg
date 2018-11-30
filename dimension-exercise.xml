@@ -168,4 +168,29 @@ their corresponding coe¢ cients are equal. The zero polynomial has all its coef
 			</p>
 		</answer>
 	</exercise>
+	<exercise>
+		<statement>
+			<p>ind a basis for the space <m>V</m> of <m>3 \times 3</m> matrices that have zero row sums:
+				<me>A_{11}+A_{12}+A_{13}=0, A_{21}+A_{22}+A_{23}=0,A_{31}+A_{32}+A_{33}=0</me>
+				Then show that <m>(1,1,1)</m> is in <m>\Nul(A)</m> for any matrix <m>A</m> in <m>V</m>. Describe also a basis
+for the subspace <m>W</m> of <m>3 \times 3</m> matrices with zero column sums.
+			</p>
+		</statement>
+		<answer>
+			<p>When choosing an <m>A</m> which has zero row sums, we can choose <m>A_{11}, A_{12}, A_{13}, A_{21}, A_{22}, A_{23}, A_{31}, A_{32}, A_{33}</m> and the other
+elements of <m>A</m> will be uniquely determined by our choices.  Thus, one basis for the subspace of matrices
+with zero row sums is:
+				<me>\mat{1 0 -1;0 0 0;0 0 0}, \mat{0 1 -1; 0 0 0; 0 0 0}, \mat{0 0 0;1 0 -1;0 0 0}, \mat{0 0 0;0 1 -1;0 0 0},</me>
+				<me> \mat{0 0 0;0 0 0;1 0 -1}, \mat{0 0 0;0 0 0;0 1 -1}</me>
+				For any matrix <m>A</m>,
+				<me>A\vec{1 1 1}=\mat{A_{11}+A_{12}+A_{13}; A_{21}+A_{22}+A_{23}; A_{31}+A_{32}+A_{33}}</me>
+				which is 0 for any <m>A</m> in <m>V</m>. Thus <m>(1,1,1)</m> is in <m>\Nul(A)</m> for any matrix <m>A</m> in <m>V</m>.
+				When choosing an <m>A</m> which has zero column sums, we can choose <m>A_{11}, A_{12}, A_{13}, A_{21}, A_{22}, A_{23}</m> and the other
+	elements of <m>A</m> will be uniquely determined by our choices.  Thus, one basis for the subspace of matrices
+	with zero column sums is:
+				<me>\mat{1 0 0;0 0 0;-1 0 0}, \mat{0 0 0;1 0 0;-1 0 0}, \mat{0 1 0;0 0 0;0 -1 0},\mat{0 0 0;0 1 0;0 -1 0},</me>
+				<me>\mat{0 0 1;0 0 0;0 0 -1}, \mat{0 0 0;0 0 1;0 0 -1}</me>
+			</p>
+		</answer>
+	</exercise>
 </exercises>
