@@ -155,7 +155,7 @@ the license is included in gfdl.xml.
                                 9 3 1;
                                 16 4 1
                                 }
-                                = 
+                                =
                                 \mat{
                                 338 92 26;
                                 92 26 8;
@@ -179,18 +179,18 @@ the license is included in gfdl.xml.
                         Hence the least squares solution is <m>A=\dfrac{2}{3}, B=\dfrac{4}{3},</m> and <m>C=2</m>, so the best fit quadratic is <m>y=\dfrac{2}{3}x^2 + \dfrac{4}{3}x + 2</m>.
                     </li>
                     <li>The best fit cubic would be the cubic <m>y=\dfrac{5}{3}x^3-\dfrac{28}{3}x^2+\dfrac{47}{3}x</m>, which actually passes through all four points.</li>
-                    
+
                 </ol>
                 <latex-code>
                     \begin{tikzpicture}
-                    
+
                     \datavisualization[
                     scientific axes={clean,width=13cm,height=18cm},
                     y axis={grid, min value=-5, max value=25}, x axis=grid,
                     visualize as smooth line/.list={linear,quadratic,cubic},
                     visualize as scatter=points,
                     legend={below,rows=3},
-                    linear={label in legend={text={$y=4x+1$}}, 
+                    linear={label in legend={text={$y=4x+1$}},
                     style={visualizer color=seq-green}},
                     quadratic={label in legend={text={$y=\frac23x^2+\frac43x+2$}},
                     style={visualizer color=seq-blue}},
@@ -198,7 +198,7 @@ the license is included in gfdl.xml.
                     style={visualizer color=seq-violet}},
                     points={style={mark=*, visualizer color=black}},
                     ]
-                    
+
                     data [set=linear, format=function] {
                     var x : interval [-1:5];
                     func y = 4*\value x + 1;
@@ -219,9 +219,9 @@ the license is included in gfdl.xml.
                     3, 8
                     4, 20
                     };
-                    
+
                     \end{tikzpicture}
-                    
+
                 </latex-code>
             </p>
         </answer>
@@ -240,14 +240,70 @@ the license is included in gfdl.xml.
     	<answer>
     		<p>
     			<ol>
-    				<li>Denote by <m>P</m> the projection onto the column space of <m>A</m>. We have <m>A\hat x = Pb</m> and <m>A\hat y = Pc</m>. That means, <m>A\hat x + A\hat y = Pb+Pc=P(b+c)</m>. 
+    				<li>Denote by <m>P</m> the projection onto the column space of <m>A</m>. We have <m>A\hat x = Pb</m> and <m>A\hat y = Pc</m>. That means, <m>A\hat x + A\hat y = Pb+Pc=P(b+c)</m>.
     				It follows that <m>\hat x + \hat y</m> is the least squares solution for <m>A\hat z = b+c</m>.</li>
     				<li>The least squares solution can be written as <m>\hat x = (Q^T Q)\inv Q^T b</m>. As <m>Q</m> is orthonormal, <m>Q^T Q=I</m>. Therefore, <m>\hat x = Q^T b</m>. Alternatively, solving
 least squares means finding a solution to <m>Q^T Q \hat x = Q^T b</m>. As <m>Q^T Q=I</m>, we see that <m>\hat x = Q^T b</m>.</li>
-					<li>The least squares solution can be written as <m>\hat x = (A^T A)\inv A^T b = (R^T Q^T QR)\inv R^T Q^T b</m>. As <m>Q</m> is orthonormal, <m>Q^T Q=I</m>. Therefore, <m>\hat x = (R^T R)\inv R^T Q^T b</m>. As 
+					<li>The least squares solution can be written as <m>\hat x = (A^T A)\inv A^T b = (R^T Q^T QR)\inv R^T Q^T b</m>. As <m>Q</m> is orthonormal, <m>Q^T Q=I</m>. Therefore, <m>\hat x = (R^T R)\inv R^T Q^T b</m>. As
 					<m>R</m> is invertible, we get <m>\hat x = (R^T R)\inv R^T Q^T b = R\inv (R^T)\inv R^T Q^T b = R\inv Q^T b</m>.</li>
     			</ol>
     		</p>
     	</answer>
+    </exercise>
+    <exercise>
+      <statement>
+        <p>[MIT OCW] This <m>4 \times 4</m> Hadmard matrix is an orthogonal matrix. Its columns are orthogonal unit vectors.
+          <me>Q=\dfrac{1}{2}\mat{1 1 1 1;1 -1 1 -1;1 1 -1 -1;1 -1 -1 1} = \mat{q_1 q_2 q_3 q_4}</me>
+          <ol>
+            <li>What projection matrix <m>P_4</m> will project every <m>b</m> in <m>R^4</m> onto the line through <m>q_4</m>?</li>
+            <li>What projection matrix <m>P_{123}</m> will project every <m>b</m> in <m>R^4</m> onto the subspace spanned by <m>q_1, q_2,</m> and <m>q_3</m>? Remember that those columns are orthogonal.</li>
+            <li>Suppose <m>A</m> is the <m>4 \times 3</m> matrix whose columns are <m>q_1, q_2, q_3</m>. Find the least-squares solution <m>\hat x</m> to the four equations
+                <me>Ax=\dfrac{1}{2}\mat{1 1 1;1 -1 1;1 1 -1;1 -1 -1}\mat{x_1 x_2 x_3}=\vec{1 2 3 4}=b</me>.
+                What is the error vector <m>e</m>?
+            </li>
+          </ol>
+        </p>
+      </statement>
+      <answer>
+        <p>
+          <ol>
+            <li>Letting
+              <me>A=\vec{1 -1 -1 1}</me>
+              the projection matrix that projects every <m>b \in R^4</m> onto the column space of <m>A</m> (which is a line through <m>q_4</m>) is given by the formula
+              <md>
+                <mrow>
+                  A(A^T A)\inv A^T = \vec{1 -1 -1 1}(\mat{1 -1 -1 1}\vec{1 -1 -1 1})\inv \mat{1 -1 -1 1}
+                </mrow>
+                <mrow>
+                  \quad = \dfrac{1}{4}\vec{1 -1 -1 1}\mat{1 -1 -1 1}
+                </mrow>
+                <mrow>
+                  \quad = \dfrac{1}{4}\mat{1 -1 -1 1;-1 1 1 -1;-1 1 1 -1;1 -1 -1 1}
+                </mrow>
+              </md>
+            </li>
+            <li>
+              Letting
+              <me>A=\mat{1 1 1;1 -1 1;1 1 -1;1 -1 -1}</me>
+              the projection matrix that projects every <m>b \in \R^4</m> onto the column space of <m>A</m> (which is the subspace spanned by <m>q_1, q_2,</m> and <m>q_3</m>) is given by the formula
+              <md>
+                <mrow>
+                  A(A^T A)\inv A^T = \dfrac{1}{4}\mat{1 1 1;1 -1 1;1 1 -1;1 -1 -1}\mat{1 1 1 1;1 -1 1 -1;1 1 -1 -1}
+                </mrow>
+                <mrow>
+                  \quad = \dfrac{1}{4}\mat{3 1 1 -1;1 3 -1 1;1 -1 3 1;-1 1 1 3}
+                </mrow>
+              </md>
+            </li>
+            <li>
+              We must solve the new system
+              <me>A^T A \hat x = A^T b</me>.
+              Since, <m>A^T A=I</m>, we have
+              <me>\hat x = A^T b=\vec{5 -1 2}</me>.
+              Then <m>A \hat x =\vec{1 2 3 4}</m>, and <m>e=b-A\hat x=0</m>.
+            </li>
+          </ol>
+        </p>
+      </answer>
     </exercise>
 </exercises>
