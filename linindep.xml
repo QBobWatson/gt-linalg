@@ -211,7 +211,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
 
     <bluebox xml:id="linindep-wide-matrix">
       <idx><h>Linear Independence</h><h>wide matrices</h></idx>
-      <p>A wide matrix has linearly dependent columns.</p>
+      <p>A wide matrix (a matrix with more columns than rows) has linearly dependent columns.</p>
     </bluebox>
 
       <p>For example, four vectors in <m>\R^3</m> are automatically linearly dependent.  Note that a tall matrix may or may not have linearly independent columns.</p>
