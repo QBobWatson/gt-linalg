@@ -287,8 +287,12 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     </theorem>
 
     <bluebox type-name="Warning" hide-type="false" xml:id="linindep-not-any"><p>
-      In a linearly dependent set <m>\{v_1,v_2,\ldots,v_k\}</m>, it is not generally true that <em>any</em> vector <m>v_j</m> is in the span of the others, only that <em>at least one</em> of them is.  See this <xref ref="linindep-3d-4vecs"/> below.
+      In a linearly dependent set <m>\{v_1,v_2,\ldots,v_k\}</m>, it is not generally true that <em>any</em> vector <m>v_j</m> is in the span of the others, only that <em>at least one</em> of them is.
     </p></bluebox>
+
+    <p>
+      For example, the set <m>\bigl\{{1\choose 0},\,{2\choose 0},\,{0\choose 1}\bigr\}</m> is linearly dependent, but <m>{0\choose 1}</m> is not in the span of the other two vectors.  Also see this <xref ref="linindep-3d-4vecs"/> below.
+    </p>
 
     <theorem xml:id="linindep-criterion-redundant">
       <idx><h>Linear Independence</h><h>redundancy criterion</h></idx>
