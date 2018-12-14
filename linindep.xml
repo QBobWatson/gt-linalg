@@ -297,7 +297,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     <theorem xml:id="linindep-criterion-redundant">
       <idx><h>Linear Independence</h><h>redundancy criterion</h></idx>
       <statement>
-        <p>A set of vectors <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly dependent if and only if we can remove one of the vectors without shrinking the span.</p>
+        <p>A set of vectors <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly dependent if and only if we can remove one of the vectors without changing the span.</p>
       </statement>
       <proof>
         <p>
