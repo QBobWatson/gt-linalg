@@ -109,12 +109,20 @@ the license is included in gfdl.xml.
       </p>
     </bluebox>
 
-    <p>Now we have (at least) <em>two</em> equivalent ways of thinking about systems of equations:
-    <ol>
-      <li>Augmented matrices.</li>
-      <li>Linear combinations of vectors (vector equations).</li>
-    </ol>
-    The second is more geometric in nature: it lends itself to drawing pictures.
+    <p>Now we have <em>three</em> equivalent ways of thinking about a linear system:
+      <ol>
+        <li>As a system of equations:
+        <me>\syseq{2x_1 + 3x_2 - 2x_3 = 7; x_1 - x_2 - 3x_3 = 5}
+        </me>
+        </li>
+        <li>As an augmented matrix:
+        <me>\amat{2 3 -2 7; 1 -1 -3 5}</me>
+        </li>
+        <li>As a vector equation (<m>x_1v_1 + x_2v_2 + \cdots + x_nv_n = b</m>):
+        <me>x_1\vec{2 1} + x_2\vec{3 -1} + x_3\vec{-2 -3} = \vec{7 5}</me>
+        </li>
+      </ol>
+    The third is geometric in nature: it lends itself to drawing pictures.  
     </p>
 
   </subsection>
