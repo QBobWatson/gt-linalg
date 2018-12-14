@@ -184,7 +184,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       The above examples lead to the following recipe.
     </p>
 
-    <bluebox>
+    <bluebox xml:id="linindep-matrix-cols">
       <title>Recipe: Checking linear independence</title>
       <idx><h>Linear Independence</h><h>verifying</h></idx>
     <p>
@@ -196,22 +196,14 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       <me>A = \mat{| |, , |; v_1 v_2 \cdots, v_k; | |, , |}.</me>
       This is true if and only if <m>A</m> has a <xref ref="defn-pivot-pos" text="title">pivot position</xref> in every column.
     </p>
+    <p>
+      Solving the matrix equatiion <m>Ax=0</m> will either verify that the columns <m>v_1,v_2,\ldots,v_k</m> are linearly independent, or will produce a linear dependence relation by substituting any nonzero values for the free variables.
+    </p>
     </bluebox>
 
     <p>
-      The last sentence of the recipe holds because we already know that <m>Ax=0</m> has a nontrivial solution if and only if <m>A</m> has a column without a pivot: see this <xref ref="solnsets-nontrivial"/>.  To rephrase:
+      (Recall that <m>Ax=0</m> has a nontrivial solution if and only if <m>A</m> has a column without a pivot: see this <xref ref="solnsets-nontrivial"/>.)
     </p>
-
-    <theorem hide-type="true" xml:id="linindep-matrix-cols">
-      <title>Linear independence and matrix columns</title>
-      <idx><h>Linear Independence</h><h>and matrix columns</h></idx>
-      <p>
-        <ul>
-          <li>The vectors <m>\{v_1,v_2,\ldots,v_k\}</m> are linearly independent if and only if the matrix <m>A</m> with columns <m>v_1,v_2,\ldots,v_k</m> has a pivot in every column, if and only if <m>Ax=0</m> has only the trivial solution.</li>
-          <li>Solving the matrix equatiion <m>Ax=0</m> will either verify that the columns <m>v_1,v_2,\ldots,v_k</m> are linearly independent, or will produce a linear dependence relation by substituting any nonzero values for the free variables.</li>
-        </ul>
-      </p>
-    </theorem>
 
     <p>
       Suppose that <m>A</m> has more columns than rows.  Then <m>A</m> cannot have a pivot in every column (it has at most one pivot per row), so its columns are automatically linearly dependent.
