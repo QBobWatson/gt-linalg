@@ -74,7 +74,7 @@ the license is included in gfdl.xml.
       </li>
     </ul>
     </p>
-
+    
     <example xml:id="systems-eqns-example1">
       <statement>
         <p>Solve <xref ref="systems-eqns-example"/> using the elimination method.</p>
@@ -206,6 +206,13 @@ the license is included in gfdl.xml.
       </li>
     </ul>
     </p>
+    
+            <remark>
+      <p>When we wrote our row operations above we used expressions like <m>R_2 = R_2 - 2 \times R_1</m>.  Of course this does not mean that the second row is equal to the second row minus twice the first row.  Instead it means that we are <em>replacing</em> the second row with the second row minus twice the first row.  This kind of syntax is used frequently in computer programming when we want to change the value of a variable.</p>
+    </remark>
+
+
+
 
     <example xml:id="systems-eqns-example1b">
       <statement>
