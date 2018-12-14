@@ -275,15 +275,15 @@ the license is included in gfdl.xml.
       <idx><h>Linear combination</h><h>definition of</h></idx>
       <idx><h>Vector</h><h>linear combination of</h><see>Linear combination</see></idx>
       <statement>
-        <p>Let <m>c_1,c_2,\ldots,c_p</m> be scalars, and let <m>v_1,v_2,\ldots,v_p</m> be vectors in <m>\R^n</m>.  The vector in <m>\R^n</m>
-        <me>c_1v_1 + c_2v_2 + \cdots + c_pv_p
+        <p>Let <m>c_1,c_2,\ldots,c_k</m> be scalars, and let <m>v_1,v_2,\ldots,v_k</m> be vectors in <m>\R^n</m>.  The vector in <m>\R^n</m>
+        <me>c_1v_1 + c_2v_2 + \cdots + c_kv_k
         </me>
-        is called a <term>linear combination</term> of the vectors <m>v_1,v_2,\ldots,v_p</m>, with <term>weights</term> or <term>coefficients</term> <m>c_1,c_2,\ldots,c_p</m>.
+        is called a <term>linear combination</term> of the vectors <m>v_1,v_2,\ldots,v_k</m>, with <term>weights</term> or <term>coefficients</term> <m>c_1,c_2,\ldots,c_k</m>.
         </p>
       </statement>
     </definition>
 
-    <p>Geometrically, a linear combination is obtained by stretching / shrinking the vectors <m>v_1,v_2,\ldots,v_p</m> according to the coefficients, then adding them together using the parallelogram law.
+    <p>Geometrically, a linear combination is obtained by stretching / shrinking the vectors <m>v_1,v_2,\ldots,v_k</m> according to the coefficients, then adding them together using the parallelogram law.
     </p>
 
     <example xml:id="vectors-eg-lincombo-plane">
