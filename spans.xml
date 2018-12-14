@@ -45,6 +45,15 @@ the license is included in gfdl.xml.
         <p>A <term>vector equation</term> is an equation involving a linear combination of vectors with possibly unknown coefficients.</p>
       </statement>
     </definition>
+    
+        <bluebox>
+      <p>Asking whether or not a vector equation has a solution is the same as asking if a given vector is a linear combination of some other given vectors.  
+      </p>
+    </bluebox>
+    <p>For example the vector equation above is asking if the vector <m>(8,16,3)</m> is a linear combination of the vectors <m>(1,2,6)</m> and <m>(-1,2,-1)</m>.</p>
+
+    
+    
 
     <note hide-type="true">
       <title>A Picture of a Consistent System</title>
