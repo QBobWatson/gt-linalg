@@ -29,14 +29,14 @@ the license is included in gfdl.xml.
     <p>
       <idx><h>Vector equation</h><h>equivalence with system of equations</h></idx>
       An equation involving vectors with <m>n</m> coordinates is the same as <m>n</m> equations involving only numbers.  For example, the equation
-    <men xml:id="vectors-vec-eqn-consistent">x\vec{1 2 6} + y \vec{-1 -2 -1} = \vec{8 16 3}</men>
+    <me>x\vec{1 2 6} + y \vec{-1 -2 -1} = \vec{8 16 3}</me>
     simplifies to
     <me>\vec{ x 2x 6x} + \vec{-y -2y -y} = \vec{8 16 3}
 \sptxt{or}
 \spalignsysdelims()\syseq{ x - y; 2x - 2y; 6x - y} = \vec{8 16 3}.
     </me>
     For two vectors to be equal, all of their coordinates must be equal, so this is just the system of linear equations
-    <men xml:id="vectors-system-consistent">\spalignsysdelims\{.\syseq{x - y = 8; 2x - 2y = 16; 6x - y = 3\rlap.}</men>
+    <me>\spalignsysdelims\{.\syseq{x - y = 8; 2x - 2y = 16; 6x - y = 3\rlap.}</me>
     </p>
 
     <definition>
@@ -46,41 +46,25 @@ the license is included in gfdl.xml.
       </statement>
     </definition>
 
-    <example xml:id="vectors-example-consistent">
-      <statement>
-        <p>Is <m>\vec{ 8 16 3}</m> a linear combination of <m>\vec{1 2 6}</m> and <m>\vec{-1 -2 -1}</m>?
-        </p>
-      </statement>
-      <solution>
-      <p><alert>This means:</alert> can we solve the equation
-      <me>x\vec{1 2 6} + y \vec{-1 -2 -1} = \vec{8 16 3}</me>
-      in the unknowns <m>x,y</m>?  This vector equation translates into the system of linear equations
-      <me>\syseq{x - y = 8; 2x - 2y = 16; 6x - y = 3\rlap.}</me>
-      We form an augmented matrix and row reduce:
-      <me>\amat{1 -1 8; 2 -2 16; 6 -1 3}
-      \quad\xrightarrow{\text{RREF}}\quad
-      \amat{1 0 -1; 0 1 -9; 0 0 0}.
-      </me>
-      Thus the equation is consistent, and the solution is <m>x=-1</m> and <m>y=-9</m>.  We conclude that  <m>\vec{ 8 16 3}</m> is indeed a linear combination of <m>\vec{1 2 6}</m> and <m>\vec{-1 -2 -1}</m>, with coefficients <m>-1</m> and <m>-9</m>:
-      <me>-\vec{1 2 6} -9\vec{-1 -2 -1} = \vec{8 16 3}.
-      </me>
-      </p>
-      </solution>
-    </example>
-
-    <figure xml:id="vectors-figure-consistent">
-      <caption>A picture of the vector equation <xref ref="vectors-vec-eqn-consistent"/>.  Try to solve the equation geometrically by moving the sliders.</caption>
-      <mathbox source="demos/spans.html?v1=1,2,6&amp;v2=-1,-2,-1&amp;target=8,16,3&amp;range=20&amp;camera=3,.5,1.5" height="500px"/>
-    </figure>
-
     <note hide-type="true">
       <title>A Picture of a Consistent System</title>
       <idx><h>Vector equation</h><h>consistent</h><see>System of linear equations, consistent</see></idx>
       <idx><h>Vector equation</h><h>inconsistent</h><see>System of linear equations, inconsistent</see></idx>
       <idx><h>System of linear equations</h><h>consistent</h><h>picture of</h></idx>
-      <p>We saw in the above <xref ref="vectors-example-consistent"/> that the system of equations <xref ref="vectors-system-consistent"/> is consistent.  Equivalently, this means that the vector equation <xref ref="vectors-vec-eqn-consistent"/> has a solution.  Therefore, the <xref ref="vectors-figure-consistent"/> above is a <em>picture of a consistent system of equations</em>.  Compare this <xref ref="vectors-fig-inconsistent"/> below.
+      <p>Below we will show that the above system of equations  is consistent.  Equivalently, this means that the above vector equation  has a solution.  In other words, there is a linear combination of <m>(1,2,6)</m> and <m>(-1,2,-1)</m> that equals <m>(8,16,3)</m>.  We can visualize the last statement geometrically.  Therefore, the following <xref ref="vectors-figure-consistent"/> gives a <em>picture of a consistent system of equations</em>.  Compare with <xref ref="vectors-fig-inconsistent"/> below, which shows a picture of an inconsistent system.
       </p>
-    </note>
+           </note>
+
+    
+        <figure xml:id="vectors-figure-consistent">
+      <caption>A picture of the above vector equation.  Try to solve the equation geometrically by moving the sliders.</caption>
+      <mathbox source="demos/spans.html?v1=1,2,6&amp;v2=-1,-2,-1&amp;target=8,16,3&amp;range=20&amp;camera=3,.5,1.5" height="500px"/>
+    </figure>
+
+
+
+ 
+
 
     <p>In order to actually solve the vector equation
     <me>x\textcolor{seq-red}{\vec{1 2 6}}
@@ -91,8 +75,28 @@ the license is included in gfdl.xml.
     This means forming the augmented matrix
     <me>\def\r{\color{seq-red}}\def\g{\color{seq-green}}\def\b{\color{seq-blue}}
     \amat{\r1 \g-1 \b8; \r2 \g-2 \b16; \r6 \g-1 \b3}</me>
-    and row reducing.  Note that <em>the columns of the augmented matrix are the vectors from the original vector equation</em>, so it is not actually necessary to write the system of equations: one can go directly from the vector equation to the augmented matrix by <q>smooshing the vectors together</q>.
+    and row reducing.  Note that <em>the columns of the augmented matrix are the vectors from the original vector equation</em>, so it is not actually necessary to write the system of equations: one can go directly from the vector equation to the augmented matrix by <q>smooshing the vectors together</q>.  In the following <xref ref="vectors-example-consistent"/> we carry out the row reduction and find the solution.
     </p>
+    
+        <example xml:id="vectors-example-consistent">
+      <statement>
+        <p>Is <m>\vec{ 8 16 3}</m> a linear combination of <m>\vec{1 2 6}</m> and <m>\vec{-1 -2 -1}</m>?
+        </p>
+      </statement>
+      <solution>
+      <p>As discussed above, this question boils down to a row reduction:
+      <me>\amat{1 -1 8; 2 -2 16; 6 -1 3}
+      \quad\xrightarrow{\text{RREF}}\quad
+      \amat{1 0 -1; 0 1 -9; 0 0 0}.
+      </me>
+      From this we see that the equation is consistent, and the solution is <m>x=-1</m> and <m>y=-9</m>.  We conclude that  <m>\vec{ 8 16 3}</m> is indeed a linear combination of <m>\vec{1 2 6}</m> and <m>\vec{-1 -2 -1}</m>, with coefficients <m>-1</m> and <m>-9</m>:
+      <me>-\vec{1 2 6} -9\vec{-1 -2 -1} = \vec{8 16 3}.
+      </me>
+      </p>
+      </solution>
+    </example>
+
+
 
     <bluebox>
       <title>Recipe: Solving a vector equation</title>
