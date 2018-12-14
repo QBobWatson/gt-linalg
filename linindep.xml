@@ -59,7 +59,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
   \begin{scope}[x=(X), y=(Y), transformxy]
     \path[clip] (-1.5, 5) -- (1.5, -5) -- (1.5, -7) -- (-1.5, -7) -- cycle;
     \fill[seq4!10, nearly opaque] (-1.5,-1) rectangle (1.5,2);
-    \draw[step=.5cm, seq4, very thin] (-1.5,-1) grid (1.5,2);
+    \draw[step=.5cm, seq4, very thin, opacity=.3] (-1.5,-1) grid (1.5,2);
   \end{scope}
 
   \begin{scope}[transformxy]
@@ -70,20 +70,20 @@ number of vectors, as in the picture below.  This means that (at least) one of t
   \begin{scope}[x=(X), y=(Y), transformxy]
     \path[clip] (-1.5, 5) -- (1.5, -5) -- (1.5, 7) -- (-1.5, 7) -- cycle;
     \fill[seq4!10, nearly opaque] (-1.5,-1) rectangle (1.5,2);
-    \draw[step=.5cm, seq4, very thin] (-1.5,-1) grid (1.5,2);
+    \draw[step=.5cm, seq4, very thin, opacity=.3] (-1.5,-1) grid (1.5,2);
   \end{scope}
 
   \node[seq4] at (-1cm, 2cm) {$\Span\{u,v,w\}$};
 
   \draw[vector, seq1] (0,0,0) --
     node [midway, above] {$v$} \v;
-  \draw[thin, densely dotted] \v -- \projxy\v;
+  %\draw[thin, densely dotted] \v -- \projxy\v;
   \draw[vector, seq2] (0,0,0) --
     node [midway, below] {\strut$w$} \w;
-  \draw[thin, densely dotted] \w -- \projxy\w;
+  %\draw[thin, densely dotted] \w -- \projxy\w;
   \draw[vector, seq3] (0,0,0) --
     \u node [right] {$u$};
-  \draw[thin, densely dotted] \u -- \projxy\u;
+  %\draw[thin, densely dotted] \u -- \projxy\u;
 
   \draw[thin, densely dotted] \v -- \w;
 
