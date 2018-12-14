@@ -74,7 +74,7 @@ the license is included in gfdl.xml.
       </li>
     </ul>
     </p>
-
+    
     <example xml:id="systems-eqns-example1">
       <statement>
         <p>Solve <xref ref="systems-eqns-example"/> using the elimination method.</p>
@@ -206,6 +206,13 @@ the license is included in gfdl.xml.
       </li>
     </ul>
     </p>
+    
+            <remark>
+      <p>When we wrote our row operations above we used expressions like <m>R_2 = R_2 - 2 \times R_1</m>.  Of course this does not mean that the second row is equal to the second row minus twice the first row.  Instead it means that we are <em>replacing</em> the second row with the second row minus twice the first row.  This kind of syntax is used frequently in computer programming when we want to change the value of a variable.</p>
+    </remark>
+
+
+
 
     <example xml:id="systems-eqns-example1b">
       <statement>
@@ -311,6 +318,8 @@ the license is included in gfdl.xml.
     </definition>
 
     <p>So the linear equations of row-equivalent matrices have the <em>same solution set</em>.</p>
+
+
 
     <example>
       <title>An Inconsistent System</title>
@@ -492,6 +501,36 @@ the license is included in gfdl.xml.
     </bluebox>
 
     <p>If an augmented matrix is in reduced row echelon form, the corresponding linear system is viewed as <em>solved</em>.  We will see below why this is the case, and we will show that any matrix can be put into reduced row echelon form using only row operations.</p>
+
+    <remark>
+	<title>Why the word <q>pivot</q>?</title>
+      <p>Consider the following system of equations:
+        <me>
+          \syseq{x - y = 0;
+          x + y = 2\rlap.
+          }
+        </me>
+	We can visualize this system as a pair of lines in <m>\R^2</m> that intersect at the point <m>(1,1)</m>.  The lines are red and blue, respectively.  If we subtract the first equation from the second, we obtain the equation <m>2y=2</m>, or <m>y=1</m>.  This results in the system of equations:
+        <me>
+          \syseq{x - y = 0;
+          \.  \+ y = 1\rlap.
+          }
+        </me>
+	In terms of row operations on matrices, we can write this as:
+          <me>\def\r{\color{red}}
+            \begin{split}
+            \amat{1 -1 0; 1 1 2}
+            \quad\xrightarrow{R_2=R_2-R_1}\quad&amp;
+            \amat{1 -1 0; 0 2 2} \\
+            \quad\xrightarrow{R_2=\frac{1}{2}R_2}\quad&amp;
+            \amat{1 -1 0; 0 1 1}
+            \end{split}
+          </me>
+	What has happened geometrically is that the original blue line has been replaced with the new blue line <m>y=1</m>.  We can think of the blue line as rotating, or pivoting, around the solution <m>(1,1)</m>.  We used the pivot position in the matrix in order to make the blue line pivot like this.  This is one possible explanation for the terminology <q>pivot</q>.
+</p>
+    </remark>
+
+
 
   </subsection>
 
