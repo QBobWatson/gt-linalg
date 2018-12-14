@@ -15,7 +15,7 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Understand the equivalence between a system of linear equations and a vector equation.</li>
-      <li>Learn the definition of <m>\Span\{x_1,x_2,\ldots,x_p\}</m>, and how to draw pictures of spans.</li>
+      <li>Learn the definition of <m>\Span\{x_1,x_2,\ldots,x_k\}</m>, and how to draw pictures of spans.</li>
       <li><em>Recipe:</em> solve a vector equation using augmented matrices / decide if a vector is in a span.</li>
       <li><em>Pictures:</em> an inconsistent system of equations, a consistent system of equations, spans in <m>\R^2</m> and <m>\R^3</m>.</li>
       <li><em>Vocabulary word:</em> <term>vector equation</term>.</li>
@@ -29,14 +29,14 @@ the license is included in gfdl.xml.
     <p>
       <idx><h>Vector equation</h><h>equivalence with system of equations</h></idx>
       An equation involving vectors with <m>n</m> coordinates is the same as <m>n</m> equations involving only numbers.  For example, the equation
-    <men xml:id="vectors-vec-eqn-consistent">x\vec{1 2 6} + y \vec{-1 -2 -1} = \vec{8 16 3}</men>
+    <me>x\vec{1 2 6} + y \vec{-1 -2 -1} = \vec{8 16 3}</me>
     simplifies to
     <me>\vec{ x 2x 6x} + \vec{-y -2y -y} = \vec{8 16 3}
 \sptxt{or}
 \spalignsysdelims()\syseq{ x - y; 2x - 2y; 6x - y} = \vec{8 16 3}.
     </me>
     For two vectors to be equal, all of their coordinates must be equal, so this is just the system of linear equations
-    <men xml:id="vectors-system-consistent">\spalignsysdelims\{.\syseq{x - y = 8; 2x - 2y = 16; 6x - y = 3\rlap.}</men>
+    <me>\spalignsysdelims\{.\syseq{x - y = 8; 2x - 2y = 16; 6x - y = 3\rlap.}</me>
     </p>
 
     <definition>
@@ -46,41 +46,25 @@ the license is included in gfdl.xml.
       </statement>
     </definition>
 
-    <example xml:id="vectors-example-consistent">
-      <statement>
-        <p>Is <m>\vec{ 8 16 3}</m> a linear combination of <m>\vec{1 2 6}</m> and <m>\vec{-1 -2 -1}</m>?
-        </p>
-      </statement>
-      <solution>
-      <p><alert>This means:</alert> can we solve the equation
-      <me>x\vec{1 2 6} + y \vec{-1 -2 -1} = \vec{8 16 3}</me>
-      in the unknowns <m>x,y</m>?  This vector equation translates into the system of linear equations
-      <me>\syseq{x - y = 8; 2x - 2y = 16; 6x - y = 3\rlap.}</me>
-      We form an augmented matrix and row reduce:
-      <me>\amat{1 -1 8; 2 -2 16; 6 -1 3}
-      \quad\xrightarrow{\text{RREF}}\quad
-      \amat{1 0 -1; 0 1 -9; 0 0 0}.
-      </me>
-      Thus the equation is consistent, and the solution is <m>x=-1</m> and <m>y=-9</m>.  We conclude that  <m>\vec{ 8 16 3}</m> is indeed a linear combination of <m>\vec{1 2 6}</m> and <m>\vec{-1 -2 -1}</m>, with coefficients <m>-1</m> and <m>-9</m>:
-      <me>-\vec{1 2 6} -9\vec{-1 -2 -1} = \vec{8 16 3}.
-      </me>
-      </p>
-      </solution>
-    </example>
-
-    <figure xml:id="vectors-figure-consistent">
-      <caption>A picture of the vector equation <xref ref="vectors-vec-eqn-consistent"/>.  Try to solve the equation geometrically by moving the sliders.</caption>
-      <mathbox source="demos/spans.html?v1=1,2,6&amp;v2=-1,-2,-1&amp;target=8,16,3&amp;range=20&amp;camera=3,.5,1.5" height="500px"/>
-    </figure>
-
     <note hide-type="true">
       <title>A Picture of a Consistent System</title>
       <idx><h>Vector equation</h><h>consistent</h><see>System of linear equations, consistent</see></idx>
       <idx><h>Vector equation</h><h>inconsistent</h><see>System of linear equations, inconsistent</see></idx>
       <idx><h>System of linear equations</h><h>consistent</h><h>picture of</h></idx>
-      <p>We saw in the above <xref ref="vectors-example-consistent"/> that the system of equations <xref ref="vectors-system-consistent"/> is consistent.  Equivalently, this means that the vector equation <xref ref="vectors-vec-eqn-consistent"/> has a solution.  Therefore, the <xref ref="vectors-figure-consistent"/> above is a <em>picture of a consistent system of equations</em>.  Compare this <xref ref="vectors-fig-inconsistent"/> below.
+      <p>Below we will show that the above system of equations  is consistent.  Equivalently, this means that the above vector equation  has a solution.  In other words, there is a linear combination of <m>(1,2,6)</m> and <m>(-1,2,-1)</m> that equals <m>(8,16,3)</m>.  We can visualize the last statement geometrically.  Therefore, the following <xref ref="vectors-figure-consistent"/> gives a <em>picture of a consistent system of equations</em>.  Compare with <xref ref="vectors-fig-inconsistent"/> below, which shows a picture of an inconsistent system.
       </p>
-    </note>
+           </note>
+
+    
+        <figure xml:id="vectors-figure-consistent">
+      <caption>A picture of the above vector equation.  Try to solve the equation geometrically by moving the sliders.</caption>
+      <mathbox source="demos/spans.html?v1=1,2,6&amp;v2=-1,-2,-1&amp;target=8,16,3&amp;range=20&amp;camera=3,.5,1.5" height="500px"/>
+    </figure>
+
+
+
+ 
+
 
     <p>In order to actually solve the vector equation
     <me>x\textcolor{seq-red}{\vec{1 2 6}}
@@ -91,26 +75,54 @@ the license is included in gfdl.xml.
     This means forming the augmented matrix
     <me>\def\r{\color{seq-red}}\def\g{\color{seq-green}}\def\b{\color{seq-blue}}
     \amat{\r1 \g-1 \b8; \r2 \g-2 \b16; \r6 \g-1 \b3}</me>
-    and row reducing.  Note that <em>the columns of the augmented matrix are the vectors from the original vector equation</em>, so it is not actually necessary to write the system of equations: one can go directly from the vector equation to the augmented matrix by <q>smooshing the vectors together</q>.
+    and row reducing.  Note that <em>the columns of the augmented matrix are the vectors from the original vector equation</em>, so it is not actually necessary to write the system of equations: one can go directly from the vector equation to the augmented matrix by <q>smooshing the vectors together</q>.  In the following <xref ref="vectors-example-consistent"/> we carry out the row reduction and find the solution.
     </p>
+    
+        <example xml:id="vectors-example-consistent">
+      <statement>
+        <p>Is <m>\vec{ 8 16 3}</m> a linear combination of <m>\vec{1 2 6}</m> and <m>\vec{-1 -2 -1}</m>?
+        </p>
+      </statement>
+      <solution>
+      <p>As discussed above, this question boils down to a row reduction:
+      <me>\amat{1 -1 8; 2 -2 16; 6 -1 3}
+      \quad\xrightarrow{\text{RREF}}\quad
+      \amat{1 0 -1; 0 1 -9; 0 0 0}.
+      </me>
+      From this we see that the equation is consistent, and the solution is <m>x=-1</m> and <m>y=-9</m>.  We conclude that  <m>\vec{ 8 16 3}</m> is indeed a linear combination of <m>\vec{1 2 6}</m> and <m>\vec{-1 -2 -1}</m>, with coefficients <m>-1</m> and <m>-9</m>:
+      <me>-\vec{1 2 6} -9\vec{-1 -2 -1} = \vec{8 16 3}.
+      </me>
+      </p>
+      </solution>
+    </example>
+
+
 
     <bluebox>
       <title>Recipe: Solving a vector equation</title>
       <idx><h>Vector equation</h><h>solving</h></idx>
       <p>In general, the vector equation
-      <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = b</me>
-      where <m>v_1,v_2,\ldots,v_p,\,b</m> are vectors in <m>\R^n</m> and <m>x_1,x_2,\ldots,x_p</m> are unknown scalars, has the same solution set as the linear system with augmented matrix
-      <me>\amat[c]{| | ,{} , | |; v_1 v_2 \cdots, v_p b; | | ,{} , | |}</me>
+      <me>x_1v_1 + x_2v_2 + \cdots + x_kv_k = b</me>
+      where <m>v_1,v_2,\ldots,v_k,\,b</m> are vectors in <m>\R^n</m> and <m>x_1,x_2,\ldots,x_k</m> are unknown scalars, has the same solution set as the linear system with augmented matrix
+      <me>\amat[c]{| | ,{} , | |; v_1 v_2 \cdots, v_k b; | | ,{} , | |}</me>
       whose columns are the <m>v_i</m><rsq/>s and the <m>b</m><rsq/>s.
       </p>
     </bluebox>
 
-    <p>Now we have (at least) <em>two</em> equivalent ways of thinking about systems of equations:
-    <ol>
-      <li>Augmented matrices.</li>
-      <li>Linear combinations of vectors (vector equations).</li>
-    </ol>
-    The second is more geometric in nature: it lends itself to drawing pictures.
+    <p>Now we have <em>three</em> equivalent ways of thinking about a linear system:
+      <ol>
+        <li>As a system of equations:
+        <me>\syseq{2x_1 + 3x_2 - 2x_3 = 7; x_1 - x_2 - 3x_3 = 5}
+        </me>
+        </li>
+        <li>As an augmented matrix:
+        <me>\amat{2 3 -2 7; 1 -1 -3 5}</me>
+        </li>
+        <li>As a vector equation (<m>x_1v_1 + x_2v_2 + \cdots + x_nv_n = b</m>):
+        <me>x_1\vec{2 1} + x_2\vec{3 -1} + x_3\vec{-2 -3} = \vec{7 5}</me>
+        </li>
+      </ol>
+    The third is geometric in nature: it lends itself to drawing pictures.  
     </p>
 
   </subsection>
@@ -118,19 +130,19 @@ the license is included in gfdl.xml.
   <subsection>
     <title>Spans</title>
 
-    <p>It will be important to know what are <em>all</em> linear combinations of a set of vectors <m>v_1,v_2,\ldots,v_p</m> in <m>\R^n</m>.  In other words, we would like to understand the set of all vectors <m>b</m> in <m>\R^n</m> such that the vector equation (in the unknowns <m>x_1,x_2,\ldots,x_p</m>)
-    <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = b</me>
+    <p>It will be important to know what are <em>all</em> linear combinations of a set of vectors <m>v_1,v_2,\ldots,v_k</m> in <m>\R^n</m>.  In other words, we would like to understand the set of all vectors <m>b</m> in <m>\R^n</m> such that the vector equation (in the unknowns <m>x_1,x_2,\ldots,x_k</m>)
+    <me>x_1v_1 + x_2v_2 + \cdots + x_kv_k = b</me>
     has a solution (i.e. is consistent).
     </p>
 
     <essential xml:id="vectors-defn-span">
       <idx><h>Span</h><h>definition of</h></idx>
       <statement>
-        <p>Let <m>v_1,v_2,\ldots,v_p</m> be vectors in <m>\R^n</m>.  The <term>span</term> of <m>v_1,v_2,\ldots,v_p</m> is the collection of all linear combinations of <m>v_1,v_2,\ldots,v_p</m>, and is denoted <m>\Span\{v_1,v_2,\ldots,v_p\}</m>.  In symbols:
-        <notation><usage>\Span\{v_1,v_2,\ldots,v_p\}</usage><description>Span of vectors</description></notation>
-        <me>\Span\{v_1,v_2,\ldots,v_p\} =
-        \bigl\{x_1v_1 + x_2v_2 + \cdots + x_pv_p \mid x_1,x_2,\ldots,x_p \text{ in }\R\bigr\}</me>
-        We also say that <m>\Span\{v_1,v_2,\ldots,v_p\}</m> is the subset <term>spanned by</term> or <term>generated by</term> the vectors <m>v_1,v_2,\ldots,v_p</m>.
+        <p>Let <m>v_1,v_2,\ldots,v_k</m> be vectors in <m>\R^n</m>.  The <term>span</term> of <m>v_1,v_2,\ldots,v_k</m> is the collection of all linear combinations of <m>v_1,v_2,\ldots,v_k</m>, and is denoted <m>\Span\{v_1,v_2,\ldots,v_k\}</m>.  In symbols:
+        <notation><usage>\Span\{v_1,v_2,\ldots,v_k\}</usage><description>Span of vectors</description></notation>
+        <me>\Span\{v_1,v_2,\ldots,v_k\} =
+        \bigl\{x_1v_1 + x_2v_2 + \cdots + x_kv_k \mid x_1,x_2,\ldots,x_k \text{ in }\R\bigr\}</me>
+        We also say that <m>\Span\{v_1,v_2,\ldots,v_k\}</m> is the subset <term>spanned by</term> or <term>generated by</term> the vectors <m>v_1,v_2,\ldots,v_k</m>.
         </p>
       </statement>
     </essential>
@@ -144,8 +156,8 @@ the license is included in gfdl.xml.
       <idx><h>Subset</h><h>set builder notation</h></idx>
       <p>The notation
       <notation><usage>\{x\mid\text{condition}\}</usage><description>Set builder notation</description></notation>
-      <me>\bigl\{x_1v_1 + x_2v_2 + \cdots + x_pv_p \mid x_1,x_2,\ldots,x_p \text{ in }\R\bigr\}</me>
-      reads as: <q>the set of all things of the form <m>x_1v_1 + x_2v_2 + \cdots + x_pv_p</m> such that <m>x_1,x_2,\ldots,x_p</m> are in <m>\R</m>.</q>  The vertical line is <q>such that</q>; everything to the left of it is <q>the set of all things of this form</q>, and everything to the right is the condition that those things must satisfy to be in the set.  Specifying a set in this way is called <term>set builder notation</term>.
+      <me>\bigl\{x_1v_1 + x_2v_2 + \cdots + x_kv_k \mid x_1,x_2,\ldots,x_k \text{ in }\R\bigr\}</me>
+      reads as: <q>the set of all things of the form <m>x_1v_1 + x_2v_2 + \cdots + x_kv_k</m> such that <m>x_1,x_2,\ldots,x_k</m> are in <m>\R</m>.</q>  The vertical line is <q>such that</q>; everything to the left of it is <q>the set of all things of this form</q>, and everything to the right is the condition that those things must satisfy to be in the set.  Specifying a set in this way is called <term>set builder notation</term>.
       </p>
 
       <p>All mathematical notation is only shorthand: any sequence of symbols must translate into a usual sentence.</p>
@@ -156,20 +168,20 @@ the license is included in gfdl.xml.
       <idx><h>System of linear equations</h><h>consistent</h><h>span criterion</h></idx>
       <p>Now we have three equivalent ways of making the same statement:
       <ol>
-        <li>A vector <m>b</m> is in the span of <m>v_1,v_2,\ldots,v_p</m>.</li>
+        <li>A vector <m>b</m> is in the span of <m>v_1,v_2,\ldots,v_k</m>.</li>
         <li>The vector equation
-        <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = b</me>
+        <me>x_1v_1 + x_2v_2 + \cdots + x_kv_k = b</me>
         has a solution.
         </li>
         <li>The linear system with augmented matrix
-        <me>\amat[c]{| | ,{} , | |; v_1 v_2 \cdots, v_p b; | | ,{} , | |}</me>
+        <me>\amat[c]{| | ,{} , | |; v_1 v_2 \cdots, v_k b; | | ,{} , | |}</me>
         is consistent.
         </li>
       </ol>
       </p>
     </note>
 
-    <p><term>Equivalent</term> means that, for any given list of vectors <m>v_1,v_2,\ldots,v_p,\,b</m>, either all three statements are true, or all three statements are false.</p>
+    <p><term>Equivalent</term> means that, for any given list of vectors <m>v_1,v_2,\ldots,v_k,\,b</m>, either all three statements are true, or all three statements are false.</p>
 
     <figure xml:id="vectors-fig-inconsistent">
       <caption>This is a picture of an <em>inconsistent</em> linear system: the vector <m>w</m> on the right-hand side of the equation <m>x_1v_1 + x_2v_2 = w</m> is not in the span of <m>v_1,v_2</m>.  Convince yourself of this by trying to solve the equation
@@ -183,7 +195,7 @@ the license is included in gfdl.xml.
       <title>Pictures of Spans</title>
       <idx><h>Span</h><h>pictures of</h></idx>
 
-      <p>Drawing a picture of <m>\Span\{v_1,v_2,\ldots,v_p\}</m> is the same as drawing a picture of all linear combinations of <m>v_1,v_2,\ldots,v_p</m>.</p>
+      <p>Drawing a picture of <m>\Span\{v_1,v_2,\ldots,v_k\}</m> is the same as drawing a picture of all linear combinations of <m>v_1,v_2,\ldots,v_k</m>.</p>
       <figure>
         <caption>Pictures of spans in <m>\R^2</m>.</caption>
         <image>
