@@ -27,7 +27,7 @@ the license is included in gfdl.xml.
   <introduction>
     <p>
       Sometimes the span of a set of vectors is <q>smaller</q> than you expect from the
-number of vectors, as in the picture below.  This means that (at least) one of the vectors is <em>redundant</em>: it can be removed without affecting the span.  In the present section, we formalize this idea in the notion of <em>linear (in)dependence</em>.
+number of vectors, as in the picture below.  This means that (at least) one of the vectors is <em>redundant</em>: it can be removed without affecting the span.  In the present section, we formalize this idea in the notion of <em>linear independence</em>.
     </p>
     <figure xml:id="linindep-intro-pic">
       <caption>Pictures of sets of vectors that are linearly dependent.  Note that in each case, one vector is in the span of the others<mdash/>so it doesn<rsq/>t make the span bigger.</caption>
@@ -123,7 +123,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
 
     <bluebox>
       <p>
-        Note that linear (in)dependence is a notion that applies to a <em>collection of vectors</em>, not to a single vector, or to one vector in the presence of some others.
+        Note that linear dependence and linear independence are notions that apply to a <em>collection of vectors</em>, not to a single vector, or to one vector in the presence of some others.
       </p>
     </bluebox>
 
@@ -185,7 +185,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     </p>
 
     <bluebox>
-      <title>Recipe: Checking linear (in)dependence</title>
+      <title>Recipe: Checking linear independence</title>
       <idx><h>Linear Independence</h><h>verifying</h></idx>
     <p>
       A set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly independent if and only if the vector equation
@@ -266,7 +266,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     <title>Criteria for Linear Independence</title>
 
     <p>
-      In this subsection we give several criteria for a set of vectors to be linearly (in)dependent.  Keep in mind, however, that the actual <xref ref="linindep-defn-linindep"/> is above.
+      In this subsection we give several criteria for a set of vectors to be linearly independent.  Keep in mind, however, that the actual <xref ref="linindep-defn-linindep"/> is above.
     </p>
 
     <theorem xml:id="linindep-criterion-inspan">
