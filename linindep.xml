@@ -27,7 +27,7 @@ the license is included in gfdl.xml.
   <introduction>
     <p>
       Sometimes the span of a set of vectors is <q>smaller</q> than you expect from the
-number of vectors, as in the picture below.  This means that (at least) one of the vectors is <em>redundant</em>: it can be removed without affecting the span.  In the present section, we formalize this idea in the notion of <em>linear independence</em>.
+number of vectors, as in the picture below.  This means that (at least) one of the vectors is redundant: it can be removed without affecting the span.  In the present section, we formalize this idea in the notion of <em>linear independence</em>.
     </p>
     <figure xml:id="linindep-intro-pic">
       <caption>Pictures of sets of vectors that are linearly dependent.  Note that in each case, one vector is in the span of the others<mdash/>so it doesn<rsq/>t make the span bigger.</caption>
@@ -327,7 +327,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     </theorem>
 
     <p>
-      The previous <xref ref="linindep-criterion-redundant"/> makes precise in what sense a set of linearly dependent vectors is <em>redundant</em>.
+      The previous <xref ref="linindep-criterion-redundant"/> makes precise in what sense a set of linearly dependent vectors is redundant.
     </p>
 
     <theorem xml:id="linindep-increasing-span" type-name="Increasing Span Criterion">
