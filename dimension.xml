@@ -273,6 +273,13 @@ the license is included in gfdl.xml.
         but <m>\Col(A)</m> contains vectors whose last coordinate is nonzero.
       </p>
     </bluebox>
+
+    <corollary xml:id="dimension-basis-colspace-dim">
+      <statement>
+        <p>The dimension of <m>\Col(A)</m> is the number of pivots of <m>A</m>.</p>
+      </statement>
+    </corollary>
+
     </paragraphs>
 
     <paragraphs>
