@@ -51,6 +51,8 @@ the license is included in gfdl.xml.
       </p>
     </bluebox>
     <p>For example the vector equation above is asking if the vector <m>(8,16,3)</m> is a linear combination of the vectors <m>(1,2,6)</m> and <m>(-1,2,-1)</m>.</p>
+    
+    <p>The thing we really care about is solving systems of linear equations, not solving vector equations.  The whole point of vector equations is that they give us a different, and more geometric, way of viewing systems of linear equations.</p>
 
     
     
