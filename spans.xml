@@ -235,14 +235,6 @@ the license is included in gfdl.xml.
         </image>
       </figure>
 
-      <example hide-type="true">
-        <title>Interactive: Span of two vectors in <m>\R^2</m></title>
-        <figure>
-          <caption>Interactive picture of a span of two vectors in <m>\R^2</m>.  Check <q>Show x.v + y.w</q> and move the sliders to see how every point in the violet region is in fact a linear combination of the two vectors.</caption>
-          <mathbox source="demos/spans.html?v1=1,2&amp;v2=1,0&amp;showPlane=true&amp;range=5&amp;labels=v,w" height="500px"/>
-        </figure>
-      </example>
-
       <figure>
         <caption>Pictures of spans in <m>\R^3</m>.  The span of two noncollinear vectors is the plane containing the origin and the heads of the vectors.  Note that three coplanar (but not collinear) vectors span a plane and not a 3-space, just as two collinear vectors span a line and not a plane.</caption>
         <image>
@@ -377,6 +369,16 @@ the license is included in gfdl.xml.
           </latex-image-code>
         </image>
       </figure>
+      
+            <example hide-type="true">
+        <title>Interactive: Span of two vectors in <m>\R^2</m></title>
+        <figure>
+          <caption>Interactive picture of a span of two vectors in <m>\R^2</m>.  Check <q>Show x.v + y.w</q> and move the sliders to see how every point in the violet region is in fact a linear combination of the two vectors.</caption>
+          <mathbox source="demos/spans.html?v1=1,2&amp;v2=1,0&amp;showPlane=true&amp;range=5&amp;labels=v,w" height="500px"/>
+        </figure>
+      </example>
+
+
 
       <example hide-type="true">
         <title>Interactive: Span of two vectors in <m>\R^3</m></title>
