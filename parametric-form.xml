@@ -83,7 +83,7 @@ the license is included in gfdl.xml.
       <idx><h>Free variable</h></idx>
       <statement>
         <p>Consider a <em>consistent</em> system of equations in the variables <m>x_1,x_2,\ldots,x_n</m>.  Let <m>A</m> be a row echelon form of the augmented matrix for this system.</p>
-        <p>We say that <m>x_i</m> is a <term>free variable</term> if its corresponding column in <m>A</m> does <em>not</em> contain a pivot.</p>
+        <p>We say that <m>x_i</m> is a <term>free variable</term> if its corresponding column in <m>A</m> is <em>not</em> a <xref text="title" ref="defn-pivot-pos">pivot column</xref>.</p>
       </statement>
     </definition>
 
@@ -116,7 +116,7 @@ the license is included in gfdl.xml.
       </p>
     </bluebox>
 
-    <p>Moving the free variables to the right hand side of the equations amounts to solving for the non-free variables (the ones that come from columns with pivots) in terms of the free variables.  One can think of the free variables as being <em>independent</em> variables, and the non-free variables being <em>dependent</em>.
+    <p>Moving the free variables to the right hand side of the equations amounts to solving for the non-free variables (the ones that come pivot columns) in terms of the free variables.  One can think of the free variables as being <em>independent</em> variables, and the non-free variables being <em>dependent</em>.
     </p>
 
     <note hide-type="true">

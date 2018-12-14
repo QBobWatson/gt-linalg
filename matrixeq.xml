@@ -439,7 +439,7 @@ the license is included in gfdl.xml.
           <ol>
             <li><m>Ax=b</m> has a solution for all <m>b</m> in <m>\R^m</m>.</li>
             <li>The span of the columns of <m>A</m> is all of <m>\R^m</m>.</li>
-            <li><m>A</m> has a pivot in every row.</li>
+            <li><m>A</m> has a <xref ref="defn-pivot-pos" text="title">pivot position</xref> in every row.</li>
           </ol>
           </p>
         </statement>
