@@ -31,8 +31,6 @@ Free Documentation License"
     <xi:include href="./frontmatter.xml" />
 
     <!-- Chapters -->
-    <xi:include href="./overview.xml" />
-
     <chapter xml:id="chap-algebra">
       <title>Systems of Linear Equations: Algebra</title>
 

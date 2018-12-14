@@ -141,4 +141,6 @@ Copyright 2017 Georgia Institute of Technology
 
   </preface>
 
+  <xi:include href="./overview.xml" />
+
 </frontmatter>

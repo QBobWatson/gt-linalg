@@ -140,8 +140,8 @@ the license is included in gfdl.xml.
       <p>
         The previous <xref ref="dimension-eg-Rn"/> implies that any basis for <m>\R^n</m> has <m>n</m> vectors in it.  Let <m>v_1,v_2,\ldots,v_n</m> be vectors in <m>\R^n</m>, and let <m>A</m> be the <m>n\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_n</m>.
           <ol>
-            <li>To say that <m>\{v_1,v_2,\ldots,v_n\}</m> spans <m>\R^n</m> means that <m>A</m> has a pivot in every <em>row</em>: see this <xref ref="matrixeq-thm-full-span"/>.</li>
-            <li>To say that <m>\{v_1,v_2,\ldots,v_n\}</m> is linearly independent means that <m>A</m> has a pivot in every <em>column</em>: see this <xref ref="linindep-matrix-cols"/>.
+            <li>To say that <m>\{v_1,v_2,\ldots,v_n\}</m> spans <m>\R^n</m> means that <m>A</m> has a <xref ref="defn-pivot-pos" text="title">pivot position</xref> in every <em>row</em>: see this <xref ref="matrixeq-thm-full-span"/>.</li>
+            <li>To say that <m>\{v_1,v_2,\ldots,v_n\}</m> is linearly independent means that <m>A</m> has a pivot position in every <em>column</em>: see this <xref ref="linindep-matrix-cols"/>.
             </li>
           </ol>
           Since <m>A</m> is a square matrix, it has a pivot in every row if and only if it has a pivot in every column.
@@ -273,6 +273,13 @@ the license is included in gfdl.xml.
         but <m>\Col(A)</m> contains vectors whose last coordinate is nonzero.
       </p>
     </bluebox>
+
+    <corollary xml:id="dimension-basis-colspace-dim">
+      <statement>
+        <p>The dimension of <m>\Col(A)</m> is the number of pivots of <m>A</m>.</p>
+      </statement>
+    </corollary>
+
     </paragraphs>
 
     <paragraphs>

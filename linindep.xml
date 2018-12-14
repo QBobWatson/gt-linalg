@@ -194,7 +194,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       <m>Ax=0</m>
       has only the trivial solution, where <m>A</m> is the matrix with columns <m>v_1,v_2,\ldots,v_p</m>:
       <me>A = \mat{| |, , |; v_1 v_2 \cdots, v_p; | |, , |}.</me>
-      This is true if and only if <m>A</m> has a pivot in every column.
+      This is true if and only if <m>A</m> has a <xref ref="defn-pivot-pos" text="title">pivot position</xref> in every column.
     </p>
     </bluebox>
 
@@ -807,7 +807,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     </theorem>
 
     <p>
-      Note that it is necessary to row reduce <m>A</m> to find which are its pivot columns.  However, the span of the columns of the row reduced matrix is generally <em>not</em> equal to the span of the columns of <m>A</m>.  See <xref ref="dimension-basis-colspace"/> for a restatement of the above theorem.
+      Note that it is necessary to row reduce <m>A</m> to find which are its <xref ref="defn-pivot-pos" text="title">pivot columns</xref>.  However, the span of the columns of the row reduced matrix is generally <em>not</em> equal to the span of the columns of <m>A</m>.  See <xref ref="dimension-basis-colspace"/> for a restatement of the above theorem.
     </p>
 
     <example>
