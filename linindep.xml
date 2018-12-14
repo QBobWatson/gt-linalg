@@ -199,7 +199,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     </bluebox>
 
     <p>
-      See this <xref ref="solnsets-nontrivial"/>.  To rephrase:
+      The last sentence of the recipe holds because we already know that <m>Ax=0</m> has a nontrivial solution if and only if <m>A</m> has a column without a pivot: see this <xref ref="solnsets-nontrivial"/>.  To rephrase:
     </p>
 
     <theorem hide-type="true" xml:id="linindep-matrix-cols">
