@@ -55,7 +55,7 @@ the license is included in gfdl.xml.
 
     <observation xml:id="solnsets-nontrivial">
       <idx><h>System of linear equations</h><h>nontrivial solution</h><h>and free variables</h></idx>
-      <p>The equation <m>Ax=0</m> has a nontrivial solution <m>\iff</m> there is a free variable, <m>\iff</m> <m>A</m> has a column without a <xref ref="defn-pivot-pos" text="title">pivot position</xref>.</p>
+      <p>The equation <m>Ax=0</m> has a nontrivial solution <m>\iff</m> there is a free variable <m>\iff</m> <m>A</m> has a column without a <xref ref="defn-pivot-pos" text="title">pivot position</xref>.</p>
     </observation>
 
     <example xml:id="solnsets-eg-no-nontrivial">
