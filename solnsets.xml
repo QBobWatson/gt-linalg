@@ -55,7 +55,7 @@ the license is included in gfdl.xml.
 
     <observation xml:id="solnsets-nontrivial">
       <idx><h>System of linear equations</h><h>nontrivial solution</h><h>and free variables</h></idx>
-      <p>The equation <m>Ax=0</m> has a nontrivial solution <m>\iff</m> there is a free variable, <m>\iff</m> <m>A</m> has a column without a <xref ref="defn-pivot-pos" text="title">pivot position</xref>.</p>
+      <p>The equation <m>Ax=0</m> has a nontrivial solution <m>\iff</m> there is a free variable <m>\iff</m> <m>A</m> has a column without a <xref ref="defn-pivot-pos" text="title">pivot position</xref>.</p>
     </observation>
 
     <example xml:id="solnsets-eg-no-nontrivial">
@@ -76,9 +76,9 @@ the license is included in gfdl.xml.
     </example>
 
     <observation xml:id="solnsets-no-augment">
-      <p>In the above <xref ref="solnsets-eg-no-nontrivial"/>, the last column of the augmented matrix
+      <p>When we row reduce the augmented matrix for a homogeneous system of linear equations, the last column will be zero throughout the row reduction process.  We saw this in the last <xref ref="solnsets-eg-no-nontrivial"/>:
       <me>\amat{1 3 4 0; 2 -1 2 0; 1 0 1 0}</me>
-      will be zero throughout the row reduction process.  So it is not really necessary to write augmented matrices when solving homogeneous systems.</p>
+      So it is not really necessary to write augmented matrices when solving homogeneous systems.</p>
     </observation>
 
     <example xml:id="solnsets-eg-line">

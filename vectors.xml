@@ -14,7 +14,7 @@ the license is included in gfdl.xml.
 
   <objectives>
     <ol>
-      <li>Learn how to add and scalar-multiply vectors in <m>\R^n</m>, both algebraically and geometrically.</li>
+      <li>Learn how to add and scale vectors in <m>\R^n</m>, both algebraically and geometrically.</li>
       <li>Understand linear combinations geometrically.</li>
       <li><em>Pictures:</em> vector addition, vector subtraction, linear combinations.</li>
       <li><em>Vocabulary words:</em> <term>vector</term>, <term>linear combination</term>.</li>
@@ -269,7 +269,7 @@ the license is included in gfdl.xml.
   <subsection>
     <title>Linear Combinations</title>
 
-    <p>We can add and scalar-multiply vectors in the same equation.</p>
+    <p>We can add and scale vectors in the same equation.</p>
 
     <definition>
       <idx><h>Linear combination</h><h>definition of</h></idx>

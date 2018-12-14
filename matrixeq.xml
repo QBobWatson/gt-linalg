@@ -73,7 +73,6 @@ the license is included in gfdl.xml.
       </p>
     </bluebox>
 
-    <p>The following properties are easy to verify.</p>
 
     <proposition hide-type="true" xml:id="matrix-linearity">
       <title>Properties of the Matrix-Vector Product</title>
