@@ -74,7 +74,7 @@ the license is included in gfdl.xml.
       </li>
     </ul>
     </p>
-    
+
     <example xml:id="systems-eqns-example1">
       <statement>
         <p>Solve <xref ref="systems-eqns-example"/> using the elimination method.</p>
@@ -206,7 +206,7 @@ the license is included in gfdl.xml.
       </li>
     </ul>
     </p>
-    
+
             <remark>
       <p>When we wrote our row operations above we used expressions like <m>R_2 = R_2 - 2 \times R_1</m>.  Of course this does not mean that the second row is equal to the second row minus twice the first row.  Instead it means that we are <em>replacing</em> the second row with the second row minus twice the first row.  This kind of syntax is used frequently in computer programming when we want to change the value of a variable.</p>
     </remark>
@@ -510,7 +510,7 @@ the license is included in gfdl.xml.
           x + y = 2\rlap.
           }
         </me>
-	We can visualize this system as a pair of lines in <m>\R^2</m> that intersect at the point <m>(1,1)</m>.  The lines are red and blue, respectively.  If we subtract the first equation from the second, we obtain the equation <m>2y=2</m>, or <m>y=1</m>.  This results in the system of equations:
+	We can visualize this system as a pair of lines in <m>\R^2</m> (red and blue, respectively, in the picture below) that intersect at the point <m>(1,1)</m>.  If we subtract the first equation from the second, we obtain the equation <m>2y=2</m>, or <m>y=1</m>.  This results in the system of equations:
         <me>
           \syseq{x - y = 0;
           \.  \+ y = 1\rlap.
@@ -526,6 +526,21 @@ the license is included in gfdl.xml.
             \amat{1 -1 0; 0 1 1}
             \end{split}
           </me>
+          <latex-code><![CDATA[
+\begin{tikzpicture}[scale=1.5]
+  \draw[help lines, opacity=.3] (-3, -3) grid (3, 3);
+  \draw[thick, opacity=.2] (-3, 0) -- (3, 0);
+  \draw[thick, opacity=.2] (0, -3) -- (0, 3);
+
+  \draw[seq-red, thick] (-3, -3) to["$x-y=0$" {inner sep=2pt, sloped}] (3, 3);
+  \draw[seq-blue, thick] (-1, 3) to["$x+y=2$" {inner sep=2pt, sloped, pos=1.0, swap}] (3, -1);
+  \draw[seq-blue!70, thick] (-3, 1) to["$y=1$" {inner sep=2pt, pos=.2, swap}] (3, 1);
+  \point at (1, 1);
+
+  \draw[<-, opacity=.5, thick] (-1, 1) arc[start angle=180, end angle=135, radius=2] node[pos=.5, left] {``pivot''};
+
+\end{tikzpicture}
+          ]]></latex-code>
 	What has happened geometrically is that the original blue line has been replaced with the new blue line <m>y=1</m>.  We can think of the blue line as rotating, or pivoting, around the solution <m>(1,1)</m>.  We used the pivot position in the matrix in order to make the blue line pivot like this.  This is one possible explanation for the terminology <q>pivot</q>.
 </p>
     </remark>
@@ -912,6 +927,47 @@ the license is included in gfdl.xml.
           ]]>
         </latex-code></p>
 
+        <p>
+          It will be very important to know where are the pivots of a matrix after row reducing; this is the reason for the following piece of terminology.
+        </p>
+
+        <definition xml:id="defn-pivot-pos">
+          <idx><h>Pivot position</h></idx>
+          <statement>
+            <p>
+              A <term>pivot position</term> of a matrix is an entry that is a pivot of a row echelon form of that matrix.
+            </p>
+            <p>
+              A <term>pivot column</term> of a matrix is a column that contains a pivot position.
+            </p>
+          </statement>
+        </definition>
+
+        <example xml:id="pivot-pos-eg">
+          <title>Pivot Positions</title>
+      <statement>
+      <p>Find the pivot positions and pivot columns of this matrix
+      <me>A = \amat{
+      0   -7   -4   2 ;
+      2   4   6   12 ;
+      3   1   -1   -2
+      }.</me>
+      </p>
+      </statement>
+      <solution>
+        <p>We saw in this <xref ref="row-reduction-eg1"/> that a row echelon form of the matrix is
+        <me>\amat{1 2 3 6; 0 1 2 4; 0 0 10 30}.</me>
+        The pivot positions of <m>A</m> are the entries that become pivots in a row echelon form; they are marked in red below:
+        <me>\def\r{\color{red}}\amat{
+        \r0   -7   -4   2 ;
+        2   \r4   6   12 ;
+        3   1   \r-1   -2
+        }.</me>
+        The first, second, and third columns are pivot columns.
+      </p>
+    </solution>
+    </example>
+
         <example xml:id="row-reduction-eg-inconsistent">
           <title>An Inconsistent System</title>
           <statement>
@@ -956,7 +1012,7 @@ the license is included in gfdl.xml.
         </example>
 
     <p>
-      In the above example, we saw how to recognize the reduced row echelon form of a consistent system.
+      In the above example, we saw how to recognize the reduced row echelon form of an inconsistent system.
     </p>
 
     <theorem hide-type="true">

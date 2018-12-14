@@ -55,7 +55,7 @@ the license is included in gfdl.xml.
 
     <observation xml:id="solnsets-nontrivial">
       <idx><h>System of linear equations</h><h>nontrivial solution</h><h>and free variables</h></idx>
-      <p>The equation <m>Ax=0</m> has a nontrivial solution <m>\iff</m> there is a free variable, <m>\iff</m> <m>A</m> has a column without a pivot.</p>
+      <p>The equation <m>Ax=0</m> has a nontrivial solution <m>\iff</m> there is a free variable, <m>\iff</m> <m>A</m> has a column without a <xref ref="defn-pivot-pos" text="title">pivot position</xref>.</p>
     </observation>
 
     <example xml:id="solnsets-eg-no-nontrivial">
@@ -527,12 +527,21 @@ the license is included in gfdl.xml.
       <figure>
         <caption>Left: the solution set of <m>Ax=b</m> is in violet.  Right: the span of the columns of <m>A</m> is in violet.  As you move <m>x</m>, you change <m>b</m>, so the solution set changes<mdash/>but all solution sets are parallel planes.  If you move <m>b</m> within the span of the columns, the solution set also changes, and the demo solves the equation to find a particular solution <m>x</m>.  If you move <m>b</m> outside of the span of the columns, the system becomes inconsistent, and the solution set disappears.
         </caption>
-        <mathbox source="demos/Axequalsb.html" height="600px"/>
+        <mathbox source="demos/Axequalsb.html?mat=1,3:2,6&amp;x=1,1" height="600px"/>
       </figure>
     </example>
 
     <example hide-type="true">
       <title>Interactive: Solution set and span of the columns (2)</title>
+      <figure>
+        <caption>Left: the solution set of <m>Ax=b</m> is in violet.  Right: the span of the columns of <m>A</m> is in violet.  As you move <m>x</m>, you change <m>b</m>, so the solution set changes<mdash/>but all solution sets are parallel planes.  If you move <m>b</m> within the span of the columns, the solution set also changes, and the demo solves the equation to find a particular solution <m>x</m>.  If you move <m>b</m> outside of the span of the columns, the system becomes inconsistent, and the solution set disappears.
+        </caption>
+        <mathbox source="demos/Axequalsb.html" height="600px"/>
+      </figure>
+    </example>
+
+    <example hide-type="true">
+      <title>Interactive: Solution set and span of the columns (3)</title>
       <figure>
         <caption>Left: the solution set of <m>Ax=b</m> is in violet.  Right: the span of the columns of <m>A</m> is in violet.  As you move <m>x</m>, you change <m>b</m>, so the solution set changes<mdash/>but all solution sets are parallel planes.  If you move <m>b</m> within the span of the columns, the solution set also changes, and the demo solves the equation to find a particular solution <m>x</m>.  If you move <m>b</m> outside of the span of the columns, the system becomes inconsistent, and the solution set disappears.
         </caption>

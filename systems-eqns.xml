@@ -269,7 +269,7 @@ the license is included in gfdl.xml.
 
     <example xml:id="systems-eqns-R4">
       <title>Traffic Flow</title>
-      <p>In <xref ref="overview" />, we could have used <m>\R^4</m> to <em>label</em> the amount of traffic <m>(x,y,z,w)</m> passing through four streets.  In other words, if there are <m>10,5,3,11</m> cars per hour passing through roads <m>x,y,z,w</m>, respectively, then this can be recorded by the point <m>(10,5,3,11)</m> in <m>\R^4</m>.  This is useful from a psychological standpoint: instead of having four numbers, we are now dealing with just <em>one</em> piece of data.
+      <p>In the <xref ref="overview" text="title">Overview</xref>, we could have used <m>\R^4</m> to <em>label</em> the amount of traffic <m>(x,y,z,w)</m> passing through four streets.  In other words, if there are <m>10,5,3,11</m> cars per hour passing through roads <m>x,y,z,w</m>, respectively, then this can be recorded by the point <m>(10,5,3,11)</m> in <m>\R^4</m>.  This is useful from a psychological standpoint: instead of having four numbers, we are now dealing with just <em>one</em> piece of data.
       <latex-code>
       <![CDATA[
 \tikzset{

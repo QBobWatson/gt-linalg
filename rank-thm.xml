@@ -55,7 +55,7 @@ the license is included in gfdl.xml.
   </definition>
 
     <p>
-      According to this <xref ref="dimension-basis-colspace"/>, the rank of <m>A</m> is equal to the number of columns with pivots.  On the other hand, this <xref ref="dimension-basis-nulspace"/> implies that <m>\nullity(A)</m> equals the number of free variables, which is the number of columns without pivots.  To summarize:
+      According to this <xref ref="dimension-basis-colspace"/>, the rank of <m>A</m> is equal to the number of <xref ref="defn-pivot-pos" text="title">pivot columns</xref>.  On the other hand, this <xref ref="dimension-basis-nulspace"/> implies that <m>\nullity(A)</m> equals the number of free variables, which is the number of columns without pivots.  To summarize:
       <md>
         <mrow>\rank(A) = \dim\Col(A) &amp;= \text{the number of columns with pivots}</mrow>
         <mrow>\nullity(A) = \dim\Nul(A) &amp;= \text{the number of free variables}</mrow>

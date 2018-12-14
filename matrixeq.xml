@@ -439,7 +439,7 @@ the license is included in gfdl.xml.
           <ol>
             <li><m>Ax=b</m> has a solution for all <m>b</m> in <m>\R^m</m>.</li>
             <li>The span of the columns of <m>A</m> is all of <m>\R^m</m>.</li>
-            <li><m>A</m> has a pivot in every row.</li>
+            <li><m>A</m> has a <xref ref="defn-pivot-pos" text="title">pivot position</xref> in every row.</li>
           </ol>
           </p>
         </statement>
@@ -500,6 +500,12 @@ the license is included in gfdl.xml.
           <mathbox source="demos/Axequalsb.html?show=false&amp;closed=true" height="600px"/>
         </figure>
       </example>
+
+      <remark>
+        <p>
+          We will see in this <xref ref="dimension-basis-colspace-dim"/> that the dimension of the span of the columns is equal to the number of pivots of <m>A</m>.  That is, the columns of <m>A</m> span a line if <m>A</m> has one pivot, they span a plane if <m>A</m> has two pivots, etc.  The whole space <m>\R^m</m> has dimension <m>m</m>, so this generalizes the fact that the columns of <m>A</m> span <m>\R^m</m> when <m>A</m> has <m>m</m> pivots.
+        </p>
+      </remark>
 
     </paragraphs>
 
