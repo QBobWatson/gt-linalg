@@ -104,9 +104,9 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       <idx><h>Linear dependence</h><see>Linear independence</see></idx>
       <statement>
         <p>
-          A set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is <term>linearly independent</term> if the vector equation
-          <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = 0</me>
-          has only the trivial solution <m>x_1=x_2=\cdots=x_p=0</m>.  The set <m>\{v_1,v_2,\ldots,v_p\}</m> is <term>linearly dependent</term> otherwise.
+          A set of vectors <m>\{v_1,v_2,\ldots,v_k\}</m> is <term>linearly independent</term> if the vector equation
+          <me>x_1v_1 + x_2v_2 + \cdots + x_kv_k = 0</me>
+          has only the trivial solution <m>x_1=x_2=\cdots=x_k=0</m>.  The set <m>\{v_1,v_2,\ldots,v_k\}</m> is <term>linearly dependent</term> otherwise.
         </p>
       </statement>
     </essential>
@@ -116,14 +116,14 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       <idx><h>Linear Independence</h><h>equation of linear dependence</h></idx>
       <idx><h>Equation of linear dependence</h><see>Linear independence</see></idx>
       <idx><h>Linear dependence relation</h><see>Linear independence</see></idx>
-      In other words, <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent if there exist numbers <m>x_1,x_2,\ldots,x_p</m>, not all equal to zero, such that
-      <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = 0.</me>
+      In other words, <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly dependent if there exist numbers <m>x_1,x_2,\ldots,x_k</m>, not all equal to zero, such that
+      <me>x_1v_1 + x_2v_2 + \cdots + x_kv_k = 0.</me>
       This is called a <term>linear dependence relation</term> or <term>equation of linear dependence</term>.
     </p>
 
     <bluebox>
       <p>
-        Note that linear dependence and linear independence are notions that apply to a <em>collection of vectors</em>, not to a single vector, or to one vector in the presence of some others.
+        Note that linear dependence and linear independence are notions that apply to a <em>collection of vectors</em>.  It does not make sense to say things like <q>this vector is linearly dependent on these other vectors,</q> or <q>this matrix is linearly independent.</q>
       </p>
     </bluebox>
 
@@ -188,12 +188,12 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       <title>Recipe: Checking linear independence</title>
       <idx><h>Linear Independence</h><h>verifying</h></idx>
     <p>
-      A set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly independent if and only if the vector equation
-      <me>x_1v_1 + x_2v_2 + \cdots + x_pv_p = 0</me>
+      A set of vectors <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly independent if and only if the vector equation
+      <me>x_1v_1 + x_2v_2 + \cdots + x_kv_k = 0</me>
       has only the trivial solution, if and only if the matrix equation
       <m>Ax=0</m>
-      has only the trivial solution, where <m>A</m> is the matrix with columns <m>v_1,v_2,\ldots,v_p</m>:
-      <me>A = \mat{| |, , |; v_1 v_2 \cdots, v_p; | |, , |}.</me>
+      has only the trivial solution, where <m>A</m> is the matrix with columns <m>v_1,v_2,\ldots,v_k</m>:
+      <me>A = \mat{| |, , |; v_1 v_2 \cdots, v_k; | |, , |}.</me>
       This is true if and only if <m>A</m> has a <xref ref="defn-pivot-pos" text="title">pivot position</xref> in every column.
     </p>
     </bluebox>
@@ -207,8 +207,8 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       <idx><h>Linear Independence</h><h>and matrix columns</h></idx>
       <p>
         <ul>
-          <li>The vectors <m>\{v_1,v_2,\ldots,v_p\}</m> are linearly independent if and only if the matrix <m>A</m> with columns <m>v_1,v_2,\ldots,v_p</m> has a pivot in every column, if and only if <m>Ax=0</m> has only the trivial solution.</li>
-          <li>Solving the matrix equatiion <m>Ax=0</m> will either verify that the columns <m>v_1,v_2,\ldots,v_p</m> are linearly independent, or will produce a linear dependence relation by substituting any nonzero values for the free variables.</li>
+          <li>The vectors <m>\{v_1,v_2,\ldots,v_k\}</m> are linearly independent if and only if the matrix <m>A</m> with columns <m>v_1,v_2,\ldots,v_k</m> has a pivot in every column, if and only if <m>Ax=0</m> has only the trivial solution.</li>
+          <li>Solving the matrix equatiion <m>Ax=0</m> will either verify that the columns <m>v_1,v_2,\ldots,v_k</m> are linearly independent, or will produce a linear dependence relation by substituting any nonzero values for the free variables.</li>
         </ul>
       </p>
     </theorem>
@@ -232,7 +232,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
           <ol>
             <li>Two vectors are linearly dependent if and only if they are collinear, i.e., one is a scalar multiple of the other.</li>
             <li>Any set containing the zero vector is linearly dependent.</li>
-            <li>If a subset of <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent, then <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent as well.</li>
+            <li>If a subset of <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly dependent, then <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly dependent as well.</li>
           </ol>
         </p>
       </statement>
@@ -244,12 +244,12 @@ number of vectors, as in the picture below.  This means that (at least) one of t
             </li>
             <li>
               It is easy to produce a linear dependence relation if one vector is the zero vector: for instance, if <m>v_1=0</m> then
-              <me>1\cdot v_1 + 0\cdot v_2 + \cdots + 0\cdot v_p = 0.</me>
+              <me>1\cdot v_1 + 0\cdot v_2 + \cdots + 0\cdot v_k = 0.</me>
             </li>
             <li>
               After reordering, we may suppose that <m>\{v_1,v_2,\ldots,v_r\}</m> is linearly dependent, with <m>r &lt; p</m>.  This means that there is an equation of linear dependence
               <me>x_1v_1 + x_2v_2 + \cdots + x_rv_r = 0</me>,
-              with at least one of <m>x_1,x_2,\ldots,x_r</m> nonzero.  This is also an equation of linear dependence among <m>\{v_1,v_2,\ldots,v_p\}</m>, since we can take the coefficients of <m>v_{r+1},\ldots,v_p</m> to all be zero.
+              with at least one of <m>x_1,x_2,\ldots,x_r</m> nonzero.  This is also an equation of linear dependence among <m>\{v_1,v_2,\ldots,v_k\}</m>, since we can take the coefficients of <m>v_{r+1},\ldots,v_k</m> to all be zero.
             </li>
           </ol>
         </p>
@@ -271,7 +271,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
 
     <theorem xml:id="linindep-criterion-inspan">
       <statement>
-        <p>A set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent if and only if one of the vectors is in the span of the other ones.</p>
+        <p>A set of vectors <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly dependent if and only if one of the vectors is in the span of the other ones.</p>
       </statement>
       <proof>
         <p>
@@ -295,17 +295,17 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     </theorem>
 
     <bluebox type-name="Warning" hide-type="false" xml:id="linindep-not-any"><p>
-      In a linearly dependent set <m>\{v_1,v_2,\ldots,v_p\}</m>, it is not generally true that <em>any</em> vector <m>v_j</m> is in the span of the others, only that <em>at least one</em> of them is.  See this <xref ref="linindep-3d-4vecs"/> below.
+      In a linearly dependent set <m>\{v_1,v_2,\ldots,v_k\}</m>, it is not generally true that <em>any</em> vector <m>v_j</m> is in the span of the others, only that <em>at least one</em> of them is.  See this <xref ref="linindep-3d-4vecs"/> below.
     </p></bluebox>
 
     <theorem xml:id="linindep-criterion-redundant">
       <idx><h>Linear Independence</h><h>redundancy criterion</h></idx>
       <statement>
-        <p>A set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent if and only if we can remove one of the vectors without shrinking the span.</p>
+        <p>A set of vectors <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly dependent if and only if we can remove one of the vectors without shrinking the span.</p>
       </statement>
       <proof>
         <p>
-          If <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent, then we know from the above <xref ref="linindep-criterion-inspan"/> that one vector is in the span of the others; for instance,
+          If <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly dependent, then we know from the above <xref ref="linindep-criterion-inspan"/> that one vector is in the span of the others; for instance,
           <me>v_3 = 2v_1 - \frac 12v_2 + 6v_4.</me>
           In this case, any linear combination of <m>v_1,v_2,v_3,v_4</m> is already a linear combination of <m>v_1,v_2,v_4</m>:
           <md>
@@ -338,19 +338,19 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       <idx><h>Linear Independence</h><h>increasing span criterion</h></idx>
       <idx><h>Increasing span criterion</h><see>Linear independence</see></idx>
       <statement>
-        <p>A set of vectors <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly independent if and only if, for every <m>j</m>, the vector <m>v_j</m> is not in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m>.</p>
+        <p>A set of vectors <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly independent if and only if, for every <m>j</m>, the vector <m>v_j</m> is not in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m>.</p>
       </statement>
       <proof>
         <p>
-          It is equivalent to show that <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent if and only if <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m> for some <m>j</m>.  The <q>if</q> implication is an immediate consequence of the previous <xref ref="linindep-criterion-redundant"/>.  Suppose then that <m>\{v_1,v_2,\ldots,v_p\}</m> is linearly dependent.  This means that some <m>v_j</m> is in the span of the others.  Choose the largest such <m>j</m>.  We claim that this <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m>.  If not, then
-          <me>v_j = x_1v_1 + x_2v_2 + \cdots + x_{j-1}v_{j-1} + x_{j+1}v_{j+1} + \cdots + x_pv_p</me>
-          with not all of <m>x_{j+1},\ldots,x_p</m> equal to zero.  Suppose for simplicity that <m>x_p\neq 0</m>.  Then we can rearrange:
+          It is equivalent to show that <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly dependent if and only if <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m> for some <m>j</m>.  The <q>if</q> implication is an immediate consequence of the previous <xref ref="linindep-criterion-redundant"/>.  Suppose then that <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly dependent.  This means that some <m>v_j</m> is in the span of the others.  Choose the largest such <m>j</m>.  We claim that this <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m>.  If not, then
+          <me>v_j = x_1v_1 + x_2v_2 + \cdots + x_{j-1}v_{j-1} + x_{j+1}v_{j+1} + \cdots + x_kv_k</me>
+          with not all of <m>x_{j+1},\ldots,x_k</m> equal to zero.  Suppose for simplicity that <m>x_k\neq 0</m>.  Then we can rearrange:
           <me>
-            v_p = -\frac 1{x_p}\bigl( x_1v_1 + x_2v_2 + \cdots + x_{j-1}v_{j-1}
+            v_k = -\frac 1{x_k}\bigl( x_1v_1 + x_2v_2 + \cdots + x_{j-1}v_{j-1}
             - v_j + x_{j+1}v_{j+1} + \cdots + x_{p-1}v_{p-1}
             \bigr).
           </me>
-          This says that <m>v_p</m> is in the span of <m>\{v_1,v_2,\ldots,v_{p-1}\}</m>, which contradicts our assumption that <m>v_j</m> is the last vector in the span of the others.
+          This says that <m>v_k</m> is in the span of <m>\{v_1,v_2,\ldots,v_{p-1}\}</m>, which contradicts our assumption that <m>v_j</m> is the last vector in the span of the others.
         </p>
       </proof>
     </theorem>
@@ -762,9 +762,9 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     <theorem xml:id="linindep-pivot-cols">
       <statement>
         <p>
-          Let <m>v_1,v_2,\ldots,v_p</m> be vectors in <m>\R^n</m>, and consider the matrix
-          <me>A = \mat{| |, , |; v_1 v_2 \cdots, v_p; | |, , |}.</me>
-          Then we can delete the columns of <m>A</m> <em>without</em> pivots (the columns corresponding to the free variables), without changing <m>\Span\{v_1,v_2,\ldots,v_p\}</m>.
+          Let <m>v_1,v_2,\ldots,v_k</m> be vectors in <m>\R^n</m>, and consider the matrix
+          <me>A = \mat{| |, , |; v_1 v_2 \cdots, v_k; | |, , |}.</me>
+          Then we can delete the columns of <m>A</m> <em>without</em> pivots (the columns corresponding to the free variables), without changing <m>\Span\{v_1,v_2,\ldots,v_k\}</m>.
         </p>
 
         <p>The pivot columns are linearly independent, so we cannot delete any more columns.</p>
@@ -829,11 +829,11 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       <title>Pivot Columns and Dimension</title>
       <p>
         Let <m>d</m> be the number of pivot columns in the matrix
-        <me>A = \mat{| |, , |; v_1 v_2 \cdots, v_p; | |, , |}.</me>
+        <me>A = \mat{| |, , |; v_1 v_2 \cdots, v_k; | |, , |}.</me>
         <ul>
-          <li>If <m>d=1</m> then <m>\Span\{v_1,v_2,\ldots,v_p\}</m> is a line.</li>
-          <li>If <m>d=2</m> then <m>\Span\{v_1,v_2,\ldots,v_p\}</m> is a plane.</li>
-          <li>If <m>d=3</m> then <m>\Span\{v_1,v_2,\ldots,v_p\}</m> is a 3-space.</li>
+          <li>If <m>d=1</m> then <m>\Span\{v_1,v_2,\ldots,v_k\}</m> is a line.</li>
+          <li>If <m>d=2</m> then <m>\Span\{v_1,v_2,\ldots,v_k\}</m> is a plane.</li>
+          <li>If <m>d=3</m> then <m>\Span\{v_1,v_2,\ldots,v_k\}</m> is a 3-space.</li>
           <li>Et cetera.</li>
         </ul>
       </p>
