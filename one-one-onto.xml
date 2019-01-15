@@ -371,7 +371,7 @@ the license is included in gfdl.xml.
     <solution>
       <p>
         The matrix <m>A</m> is already in reduced row echelon form.  It does not have a pivot in every column, so <m>T</m> is not one-to-one.  Therefore, we know from the <xref ref="matrix-trans-one-to-one"/> that <m>Ax=0</m> has nontrivial solutions.  If <m>v</m> is a nontrivial (i.e., nonzero) solution of <m>Av = 0</m>, then <m>T(v) = Av = 0 = A0 = T(0)</m>, so <m>0</m> and <m>v</m> are different vectors with the same output.  For instance,
-        <me>T\vec{0 0 1} = \mat{1 0 0; 0 1 0; 0 0 1}\vec{0 0 1} = 0 = T\vec{0 0 0}.</me>
+        <me>T\vec{0 0 1} = \mat{1 0 0; 0 1 0; 0 0 0}\vec{0 0 1} = 0 = T\vec{0 0 0}.</me>
       </p>
       <p>
         Geometrically, <m>T</m> is projection onto the <m>xy</m>-plane.  Any two vectors that lie on the same vertical line will have the same projection.  For <m>b</m> on the <m>xy</m>-plane, the solution set of <m>T(x) = b</m> is the entire vertical line containing <m>b</m>.  In particular, <m>T(x) = b</m> has <em>infinitely many</em> solutions.
