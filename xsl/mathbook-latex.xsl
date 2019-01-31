@@ -74,7 +74,7 @@
 \pdfverstrue
 </xsl:param>
 
-<xsl:param name="latex.online" select="'http://people.math.gatech.edu/~jrabinoff/gt-linalg/'" />
+<xsl:param name="latex.online" select="'https://textbooks.math.gatech.edu/ila/'" />
 
 <!-- This is almost the same as <me>, except it doesn't wrap the result in an
      equation* environtment.  Also, in "bare" mode, commands can be executed in
