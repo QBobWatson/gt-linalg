@@ -1091,7 +1091,7 @@ the license is included in gfdl.xml.
                 which finishes the proof of the first property in this case.
               </p>
               <p>
-                Now suppose that <m>w</m> is not in <m>\Span\{v,v_2,\ldots,v_n\}</m>.  This implies that <m>\{v,v_2,\ldots,v_n\}</m> is linearly <em>dependent</em> (otherwise it would form a basis for <m>\R^n</m>), so <m>T(v)</m> = 0.  If <m>v</m> is not in <m>\Span\{v_2,\ldots,v_n\}</m>, then <m>\{v_2,\ldots,v_n\}</m> is linearly dependent by the <xref ref="linindep-increasing-span"/>, so <m>T(x) = 0</m> for all <m>x</m>, as the matrix with rows <m>x,v_2,\ldots,v_n</m> is not invertible.  Hence we may assume <m>v</m> is in <m>\Span\{v_2,\ldots,v_n\}</m>.   By the above argument with the roles of <m>v</m> and <m>w</m> reversed, we have <m>T(v+w) = T(v)+T(w).</m>
+                Now suppose that <m>w</m> is not in <m>\Span\{v,v_2,\ldots,v_n\}</m>.  This implies that <m>\{v,v_2,\ldots,v_n\}</m> is linearly <em>dependent</em> (otherwise it would form a basis for <m>\R^n</m>), so <m>T(v)</m> = 0.  If <m>v</m> is not in <m>\Span\{v_2,\ldots,v_n\}</m>, then <m>\{v_2,\ldots,v_n\}</m> is linearly dependent by the <xref ref="linindep-increasing-span">increasing span criterion</xref>, so <m>T(x) = 0</m> for all <m>x</m>, as the matrix with rows <m>x,v_2,\ldots,v_n</m> is not invertible.  Hence we may assume <m>v</m> is in <m>\Span\{v_2,\ldots,v_n\}</m>.   By the above argument with the roles of <m>v</m> and <m>w</m> reversed, we have <m>T(v+w) = T(v)+T(w).</m>
               </p>
             </li>
           </ul>
