@@ -1013,7 +1013,7 @@ the license is included in gfdl.xml.
           <li>
             We evaluate <m>T(u)</m> using the defining formula:
             <me>
-              T\vec{1 \pi} = \vec{\ln(1) \cos(\pi) \ln(1)} = \vec{0 0 0}.
+              T\vec{1 \pi} = \vec{\ln(1) \cos(\pi) \ln(1)} = \vec{0 -1 0}.
             </me>
           </li>
 
