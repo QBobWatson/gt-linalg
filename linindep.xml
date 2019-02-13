@@ -351,6 +351,10 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       </proof>
     </theorem>
 
+    <p>
+      We can rephrase this as follows:
+    </p>
+
     <bluebox>
       <p>If you make a set of vectors by adding one vector at a time, and if the span got bigger every time you added a vector, then your set is linearly independent.</p>
     </bluebox>
