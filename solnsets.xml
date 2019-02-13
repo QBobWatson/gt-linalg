@@ -127,7 +127,7 @@ the license is included in gfdl.xml.
 
     <bluebox>
       <idx><h>System of linear equations</h><h>nontrivial solution</h><h>finding</h></idx>
-      <p>In order to actually <em>find</em> a nontrivial solution to <m>Ax=0</m> in the above <xref ref="solnsets-eg-line"/>, it suffices to substitute any nonzero value for the free variable <m>x_2</m>.  For instance, taking <m>x_2=1</m> gives the nontrivial solution <m>x = 1\cdot{3\choose 1} = {3\choose 1}.</m></p>
+      <p>In order to actually <em>find</em> a nontrivial solution to <m>Ax=0</m> in the above <xref ref="solnsets-eg-line"/>, it suffices to substitute any nonzero value for the free variable <m>x_2</m>.  For instance, taking <m>x_2=1</m> gives the nontrivial solution <m>x = 1\cdot{3\choose 1} = {3\choose 1}.</m>  Compare to this <xref ref="finding-actual-soln"/>.</p>
     </bluebox>
 
     <example xml:id="solnsets-eg-plane">
