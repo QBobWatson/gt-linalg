@@ -494,7 +494,7 @@ the license is included in gfdl.xml.
       <idx><h>Determinant</h><h>existence and uniqueness of</h></idx>
       <statement>
 	<p>
-	  There exists one and only function from the set of square matrices to the real numbers, that satisfies the four <xref ref="det-defn-the-defn">defining properties</xref>.
+	  There exists one and only one function from the set of square matrices to the real numbers, that satisfies the four <xref ref="det-defn-the-defn">defining properties</xref>.
 	</p>
       </statement>
     </theorem>
