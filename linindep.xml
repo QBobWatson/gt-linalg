@@ -768,7 +768,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
           Then we can delete the columns of <m>A</m> <em>without</em> pivots (the columns corresponding to the free variables), without changing <m>\Span\{v_1,v_2,\ldots,v_k\}</m>.
         </p>
 
-        <p>The pivot columns are linearly independent, so we cannot delete any more columns.</p>
+        <p>The pivot columns are linearly independent, so we cannot delete any more columns without changing the span.</p>
       </statement>
 
       <proof>
