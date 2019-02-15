@@ -275,7 +275,7 @@ the license is included in gfdl.xml.
           0 1 2 4 ;
           0 -7 -4 2
           } \\
-          {}\quad\xrightarrow{R_2\longleftrightarrow R_3}\quad&amp;
+          {}\quad\xrightarrow{R_3 = R_3+7R_2}\quad&amp;
           \amat{
           1  2  3  6 ;
           0 1 2 4 ;
