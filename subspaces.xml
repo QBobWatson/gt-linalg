@@ -120,6 +120,7 @@ the license is included in gfdl.xml.
     \node[seq4] at (0,.5) {$L$};
   \end{tikzpicture}
       </latex-code>
+      Indeed, <m>L</m> contains zero, and is easily seen to be closed under addition and scalar multiplication.
       </p>
     </example>
 
@@ -146,6 +147,7 @@ the license is included in gfdl.xml.
     \node[x=(X),y=(Y),seq4] at (.2,-1.4) {$P$};
   \end{tikzpicture}
       </latex-code>
+      Indeed, <m>P</m> contains zero; the sum of two vectors in <m>P</m> is also in <m>P</m>; and any scalar multiple of a vector in <m>P</m> is also in <m>P</m>.
       </p>
     </example>
 
