@@ -595,7 +595,7 @@ the license is included in gfdl.xml.
           Now we claim that <m>\{u_1,u_2,\ldots,u_m\}</m> is an orthogonal set.  Let <m>1\leq i \lt j \leq m</m>.  Then <m>u_j = (v_j)_{\Span\{u_1,u_2,\ldots,u_{j-1}\}^\perp}</m>, so by definition <m>u_j</m> is orthogonal to every vector in <m>\Span\{u_1,u_2,\ldots,u_{j-1}\}</m>.  In particular, <m>u_j</m> is orthogonal to <m>u_i</m>.
         </p>
         <p>
-          We still have to prove that each <m>u_i</m> is nonzero.  Clearly <m>u_1=v_1\neq 0</m>.  Suppose that <m>u_i=0</m>.  Then <m>(v_i)_{\Span\{u_1,u_2,\ldots,u_{i-1}\}^\perp}=0</m>, which means that <m>v_i</m> is in <m>\Span\{u_1,u_2,\ldots,u_{i-1}\}.</m>  But each <m>u_1,u_2,\ldots,u_{i-1}</m> is in <m>\Span\{v_1,v_2,\ldots,v_{i-1}\}</m> by the first paragraph, so <m>v_i</m> is in <m>\Span\{v_1,v_2,\ldots,v_{i-1}\}.</m>  This contradicts the <xref ref="linindep-increasing-span"/>; therefore, <m>u_i</m> must be nonzero.
+          We still have to prove that each <m>u_i</m> is nonzero.  Clearly <m>u_1=v_1\neq 0</m>.  Suppose that <m>u_i=0</m>.  Then <m>(v_i)_{\Span\{u_1,u_2,\ldots,u_{i-1}\}^\perp}=0</m>, which means that <m>v_i</m> is in <m>\Span\{u_1,u_2,\ldots,u_{i-1}\}.</m>  But each <m>u_1,u_2,\ldots,u_{i-1}</m> is in <m>\Span\{v_1,v_2,\ldots,v_{i-1}\}</m> by the first paragraph, so <m>v_i</m> is in <m>\Span\{v_1,v_2,\ldots,v_{i-1}\}.</m>  This contradicts the <xref ref="linindep-increasing-span">increasing span criterion</xref>; therefore, <m>u_i</m> must be nonzero.
         </p>
         <p>
           The previous two paragraphs justify the use of the <xref ref="projection-formula"/> in the equalities
@@ -768,7 +768,7 @@ the license is included in gfdl.xml.
       We saw in the proof of the Gram<ndash/>Schmidt Process that for every <m>i</m> between <m>1</m> and <m>m</m>, the set <m>\{u_1,u_2,\ldots,u_i\}</m> is a an orthogonal basis for <m>\Span\{v_1,v_2,\ldots,v_i\}</m>.
     </p>
     <p>
-      If we had started with a spanning set <m>\{v_1,v_2,\ldots,v_m\}</m> which is linearly dependent, then for some <m>i</m>, the vector <m>v_i</m> is in <m>\Span\{v_1,v_2,\ldots,v_{i-1}\}</m> by the <xref ref="linindep-increasing-span"/>.  Hence
+      If we had started with a spanning set <m>\{v_1,v_2,\ldots,v_m\}</m> which is linearly dependent, then for some <m>i</m>, the vector <m>v_i</m> is in <m>\Span\{v_1,v_2,\ldots,v_{i-1}\}</m> by the <xref ref="linindep-increasing-span">increasing span criterion</xref>.  Hence
       <me>
         0 = (v_i)_{\Span\{v_1,v_2,\ldots,v_{i-1}\}^\perp}
         = (v_i)_{\Span\{u_1,u_2,\ldots,u_{i-1}\}^\perp}

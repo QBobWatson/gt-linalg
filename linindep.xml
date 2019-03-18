@@ -330,7 +330,8 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       The previous <xref ref="linindep-criterion-redundant"/> makes precise in what sense a set of linearly dependent vectors is redundant.
     </p>
 
-    <theorem xml:id="linindep-increasing-span" type-name="Increasing Span Criterion">
+    <theorem xml:id="linindep-increasing-span">
+      <title>Increasing Span Criterion</title>
       <idx><h>Linear Independence</h><h>increasing span criterion</h></idx>
       <idx><h>Increasing span criterion</h><see>Linear independence</see></idx>
       <statement>
@@ -350,6 +351,10 @@ number of vectors, as in the picture below.  This means that (at least) one of t
         </p>
       </proof>
     </theorem>
+
+    <p>
+      We can rephrase this as follows:
+    </p>
 
     <bluebox>
       <p>If you make a set of vectors by adding one vector at a time, and if the span got bigger every time you added a vector, then your set is linearly independent.</p>
@@ -381,7 +386,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     A set of two noncollinear vectors <m>\{v,w\}</m> is linearly independent:
     <ul>
       <li>Neither is in the span of the other, so we can apply the first <xref ref="linindep-criterion-inspan">criterion</xref>.</li>
-      <li>The span got bigger when we added <m>w</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</li>
+      <li>The span got bigger when we added <m>w</m>, so we can apply the <xref ref="linindep-increasing-span">increasing span criterion</xref>.</li>
     </ul>
     <latex-code>
           <![CDATA[
@@ -405,7 +410,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     The set of three vectors <m>\{v,w,u\}</m> below is linearly dependent:
     <ul>
       <li><m>u</m> is in <m>\Span\{v,w\}</m>, so we can apply the first <xref ref="linindep-criterion-inspan">criterion</xref>.</li>
-      <li>The span did not increase when we added <m>u</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</li>
+      <li>The span did not increase when we added <m>u</m>, so we can apply the <xref ref="linindep-increasing-span">increasing span criterion</xref>.</li>
     </ul>
     In the picture below, note that <m>v</m> is in <m>\Span\{u,w\}</m>, and <m>w</m> is in <m>\Span\{u,v\}</m>, so we can remove any of the three vectors without shrinking the span.
     <latex-code>
@@ -435,7 +440,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       <ul>
         <li><m>w</m> is in <m>\Span\{v\}</m>, so we can apply the first <xref ref="linindep-criterion-inspan">criterion</xref>.</li>
         <li>We can remove <m>w</m> without shrinking the span, so we can apply the second <xref ref="linindep-criterion-redundant">criterion</xref>.</li>
-        <li>The span did not increase when we added <m>w</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</li>
+        <li>The span did not increase when we added <m>w</m>, so we can apply the <xref ref="linindep-increasing-span">increasing span criterion</xref>.</li>
       </ul>
       <latex-code>
           <![CDATA[
@@ -534,7 +539,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
 \end{tikzpicture}
           ]]>
         </latex-code>
-    The three vectors <m>\{v,w,u\}</m> below are linearly independent: the span got bigger when we added <m>w</m>, then again when we added <m>u</m>, so we can apply the <xref ref="linindep-increasing-span"/>.
+    The three vectors <m>\{v,w,u\}</m> below are linearly independent: the span got bigger when we added <m>w</m>, then again when we added <m>u</m>, so we can apply the <xref ref="linindep-increasing-span">increasing span criterion</xref>.
     <latex-code>
           <![CDATA[
 \begin{tikzpicture}[myxyz, scale=1.25, thin border nodes]
@@ -597,7 +602,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     <ul>
       <li><m>u</m> is in <m>\Span\{v,w\}</m>, so we can apply the first <xref ref="linindep-criterion-inspan">criterion</xref>.</li>
       <li>We can remove <m>u</m> without shrinking the span, so we can apply the second <xref ref="linindep-criterion-redundant">criterion</xref>.</li>
-      <li>The span did not increase when we added <m>u</m>, so we can apply the <xref ref="linindep-increasing-span"/>.</li>
+      <li>The span did not increase when we added <m>u</m>, so we can apply the <xref ref="linindep-increasing-span">increasing span criterion</xref>.</li>
     </ul>
     <latex-code>
           <![CDATA[
@@ -752,7 +757,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     <title>Linear Dependence and Free Variables</title>
 
     <p>
-      In light of this <xref ref="linindep-matrix-cols"/> and this <xref ref="linindep-criterion-redundant">criterion</xref>, it is natural to ask which columns of a matrix are <q>redundant</q>, i.e., which we can remove without affecting the column span.
+      In light of this <xref ref="linindep-matrix-cols"/> and this <xref ref="linindep-criterion-redundant">criterion</xref>, it is natural to ask which columns of a matrix are redundant, i.e., which we can remove without affecting the column span.
     </p>
 
     <theorem xml:id="linindep-pivot-cols">
@@ -763,7 +768,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
           Then we can delete the columns of <m>A</m> <em>without</em> pivots (the columns corresponding to the free variables), without changing <m>\Span\{v_1,v_2,\ldots,v_k\}</m>.
         </p>
 
-        <p>The pivot columns are linearly independent, so we cannot delete any more columns.</p>
+        <p>The pivot columns are linearly independent, so we cannot delete any more columns without changing the span.</p>
       </statement>
 
       <proof>

@@ -253,7 +253,7 @@ the license is included in gfdl.xml.
         Define <m>T\colon\R^3\to\R^2</m> and <m>U\colon\R^2\to\R^3</m> by
         <me>T(x) = \mat{1 1 0; 0 1 1}x \sptxt{and}
         U(x) = \mat{1 0; 0 1; 1 0}x.</me>
-        Their composition is a transformation <m>T\circ U\colon\R^2\to\R^2</m>; it turns out to be the matrix transformation associated to the matrix <m>\bigl(\begin{smallmatrix}1\amp1\\1\amp0\end{smallmatrix}\bigr)</m>.
+        Their composition is a transformation <m>T\circ U\colon\R^2\to\R^2</m>; it turns out to be the matrix transformation associated to the matrix <m>\bigl(\begin{smallmatrix}1\amp1\\1\amp1\end{smallmatrix}\bigr)</m>.
       </p>
       <figure>
         <caption>A composition of two matrix transformations, i.e., a transformation performed in two steps.  On the left is the domain of <m>U</m>/the domain of <m>T\circ U</m>; in the middle is the codomain of <m>U</m>/the domain of <m>T</m>, and on the right is the codomain of <m>T</m>/the codomain of <m>T\circ U</m>.  The vector <m>x</m> is the input of <m>U</m> and of <m>T\circ U</m>; the vector in the middle is the output of <m>U</m>/the input of <m>T</m>, and the vector on the right is the output of <m>T</m>/of <m>T\circ U</m>.  Click and drag <m>x</m>.</caption>
@@ -666,7 +666,7 @@ the license is included in gfdl.xml.
       <idx><h>Linear transformation</h><h>composition of</h><h>linearity of</h></idx>
       <idx><h>Linear transformation</h><h>composition of</h><h>and matrix multiplication</h></idx>
       <statement>
-        <p>Let <m>T\colon\R^n\to\R^m</m> and <m>U\colon\R^p\to\R^n</m> be linear transformations, and let <m>A</m> and <m>B</m> be their standard matrices, respectively, so <m>A</m> is an <m>m\times n</m> matrix and <m>B</m> is an <m>n\times p</m> matrix.  Then <m>T\circ U\colon\R^p\to\R^n</m> is a linear transformation, and its standard matrix is the product <m>AB</m>.</p>
+        <p>Let <m>T\colon\R^n\to\R^m</m> and <m>U\colon\R^p\to\R^n</m> be linear transformations, and let <m>A</m> and <m>B</m> be their standard matrices, respectively, so <m>A</m> is an <m>m\times n</m> matrix and <m>B</m> is an <m>n\times p</m> matrix.  Then <m>T\circ U\colon\R^p\to\R^m</m> is a linear transformation, and its standard matrix is the product <m>AB</m>.</p>
       </statement>
       <proof>
         <p>

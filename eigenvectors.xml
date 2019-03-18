@@ -525,7 +525,7 @@ the license is included in gfdl.xml.
       </statement>
       <proof>
         <p>
-          Suppose that <m>\{v_1,v_2,\ldots,v_k\}</m> were linearly <em>de</em>pendent.  According to the <xref ref="linindep-increasing-span"/>, this means that for some <m>j</m>, the vector <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}.</m>  If we choose the <em>first</em> such <m>j</m>, then <m>\{v_1,v_2,\ldots,v_{j-1}\}</m> is linearly independent.  Note that <m>j > 1</m> since <m>v_1\neq 0</m>.
+          Suppose that <m>\{v_1,v_2,\ldots,v_k\}</m> were linearly <em>de</em>pendent.  According to the <xref ref="linindep-increasing-span">increasing span criterion</xref>, this means that for some <m>j</m>, the vector <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}.</m>  If we choose the <em>first</em> such <m>j</m>, then <m>\{v_1,v_2,\ldots,v_{j-1}\}</m> is linearly independent.  Note that <m>j > 1</m> since <m>v_1\neq 0</m>.
         </p>
         <p>
           Since <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\},</m>, we can write
@@ -774,7 +774,7 @@ the license is included in gfdl.xml.
             A-I_2 = \mat{0 -1; -1 0} - \mat{1 0; 0 1} = \mat{-1 -1; -1 -1}
             \quad\xrightarrow{\text{RREF}}\quad\mat{1 1; 0 0}.
           </me>
-          The parametric form of the solution set is <m>x = -y</m>, or equivalently, <m>y = -x</m>, which is exactly the equation for <m>L</m>. Computing the <m>-1</m>-eigenspace menas solving the matrix equation <m>(A+I_2)v=0</m>; we have
+          The parametric form of the solution set is <m>x = -y</m>, or equivalently, <m>y = -x</m>, which is exactly the equation for <m>L</m>. Computing the <m>-1</m>-eigenspace means solving the matrix equation <m>(A+I_2)v=0</m>; we have
           <me>
             A+I_2 = \mat{0 -1; -1 0} + \mat{1 0; 0 1} = \mat{1 -1; -1 1}
             \quad\xrightarrow{\text{RREF}}\quad\mat{1 -1; 0 0}.
