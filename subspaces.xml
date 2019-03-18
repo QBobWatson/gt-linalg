@@ -25,7 +25,7 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      In this section we discuss <em>subspaces</em> of <m>\R^n</m>.  A subspace turns out to be exactly the same thing as a span, except we don<rsq/>t have a particular set of spanning vectors in mind.  This change in perspective is quite useful, as it is easy to produce subspaces which are not obviously spans.  For example, the solution set of the equation <m>x + 3y + z = 0</m> is a span because the equation is homogeneous, but we would have to compute the parametric vector form to find a spanning set of vectors.
+      In this section we discuss <em>subspaces</em> of <m>\R^n</m>.  A subspace turns out to be exactly the same thing as a span, except we don<rsq/>t have a particular set of spanning vectors in mind.  This change in perspective is quite useful, as it is easy to produce subspaces that are not obviously spans.  For example, the solution set of the equation <m>x + 3y + z = 0</m> is a span because the equation is homogeneous, but we would have to compute the parametric vector form to find a spanning set of vectors.
       <latex-code>
           <![CDATA[
 \begin{tikzpicture}[myxyz, z={(0cm,0.8cm)}, scale=.75]
