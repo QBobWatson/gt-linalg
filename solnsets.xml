@@ -244,13 +244,13 @@ the license is included in gfdl.xml.
       <title>Recipe: Parametric vector form (homogeneous case)</title>
       <idx><h>Parametric vector form</h><h>of a homogeneous equation</h></idx>
       <idx><h>System of linear equations</h><h>parametric vector form of</h><see>Parametric vector form</see></idx>
-        <p>Let <m>A</m> be an <m>m\times n</m> matrix.  Suppose that the free variables in the homogeneous equation <m>Ax=0</m> are <m>x_i,x_j,x_k,\ldots</m>.  Then the solutions to <m>Ax=0</m> can be written in the form
-        <me> x = x_iv_i + x_jv_j + x_kv_k + \cdots</me>
-        for some vectors <m>v_i,v_j,v_k,\ldots</m> in <m>\R^n</m>, and any scalars <m>x_i,x_j,x_k,\ldots</m>.  This is called the <term>parametric vector form</term> of the solution.  It is obtained by finding the parametric form of the solution, including the redundant equations <m>x_i=x_i</m>, <m>x_j=x_j</m>, <m>x_k=x_k,\ldots</m>, putting these equations in order, and making a vector equation.
+        <p>Let <m>A</m> be an <m>m\times n</m> matrix.  Suppose that the free variables in the homogeneous equation <m>Ax=0</m> are, for example, <m>x_3</m>, <m>x_6</m>, and <m>x_8</m>.  Then the solutions to <m>Ax=0</m> can be written in the form
+        <me> x = x_3v_3 + x_6v_6 + x_8v_8</me>
+        for some vectors <m>v_3,v_6,v_8</m> in <m>\R^n</m>, and any scalars <m>x_3,x_6,x_8</m>.  This is called the <term>parametric vector form</term> of the solution.  It is obtained by finding the parametric form of the solution, including the redundant equations <m>x_3=x_3</m>, <m>x_6=x_6</m>, <m>x_8=x_8</m>, putting these equations in order, and making a vector equation.
         </p>
 
-        <p>In this case, the solution set can be written
-        <m>\Span\bigl\{v_i,\,v_j,\,v_k,\ldots\bigl\}.</m>
+        <p>In this case, the solution set can be written as 
+        <m>\Span\bigl\{v_3,\,v_6,\,v_8\bigl\}.</m>
         </p>
     </bluebox>
 
