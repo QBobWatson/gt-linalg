@@ -808,7 +808,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     </theorem>
 
     <p>
-      Note that it is necessary to row reduce <m>A</m> to find which are its <xref ref="defn-pivot-pos" text="title">pivot columns</xref>.  However, the span of the columns of the row reduced matrix is generally <em>not</em> equal to the span of the columns of <m>A</m>.  See <xref ref="dimension-basis-colspace"/> for a restatement of the above theorem.
+      Note that it is necessary to row reduce <m>A</m> to find which are its <xref ref="defn-pivot-pos" text="title">pivot columns</xref>.  However, the span of the columns of the row reduced matrix is generally <em>not</em> equal to the span of the columns of <m>A</m>: one must use the pivot columns of the <em>original</em> matrix.  See <xref ref="dimension-basis-colspace"/> for a restatement of the above theorem.
     </p>
 
     <example>
