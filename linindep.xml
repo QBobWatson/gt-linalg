@@ -15,7 +15,7 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Understand the concept of linear independence.</li>
-      <li>Learn several criteria for linear independence.</li>
+      <li>Learn two criteria for linear independence.</li>
       <li>Understand the relationship between linear independence and pivot columns / free variables.</li>
       <li><em>Recipe:</em> test if a set of vectors is linearly independent / find an equation of linear dependence.</li>
       <li><em>Picture:</em> whether a set of vectors in <m>\R^2</m> or <m>\R^3</m> is linearly independent or not.</li>
@@ -258,12 +258,13 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     <title>Criteria for Linear Independence</title>
 
     <p>
-      In this subsection we give several criteria for a set of vectors to be linearly independent.  Keep in mind, however, that the actual <xref ref="linindep-defn-linindep"/> is above.
+      In this subsection we give two criteria for a set of vectors to be linearly independent.  Keep in mind, however, that the actual <xref ref="linindep-defn-linindep"/> is above.
     </p>
 
     <theorem xml:id="linindep-criterion-inspan">
       <statement>
         <p>A set of vectors <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly dependent if and only if one of the vectors is in the span of the other ones.</p>
+        <p>Any such vector may be removed without affecting the span.</p>
       </statement>
       <proof>
         <p>
@@ -272,6 +273,19 @@ number of vectors, as in the picture below.  This means that (at least) one of t
           We can subract <m>v_3</m> from both sides of the equation to get
           <me>0 = 2v_1 - \frac 12v_2 - v_3 + 6v_4.</me>
           This is a linear dependence relation.
+        </p>
+        <p>
+          In this case, any linear combination of <m>v_1,v_2,v_3,v_4</m> is already a linear combination of <m>v_1,v_2,v_4</m>:
+          <md>
+            <mrow>
+              x_1v_1 + x_2v_2 + x_3v_3 + x_4v_4 &amp;=
+              x_1v_1 + x_2v_2 + x_3\left(2v_1-\frac 12v_2 + 6v_4\right) + x_4v_4
+            </mrow>
+            <mrow>
+              &amp;= (x_1+2x_3)v_1 + \left(x_2-\frac 12x_3\right)v_2 + (x_4+6)v_4.
+            </mrow>
+          </md>
+          Therefore, <m>\Span\{v_1,v_2,v_3,v_4\}</m> is contained in <m>\Span\{v_1,v_2,v_4\}</m>.  Any linear combination of <m>v_1,v_2,v_4</m> is also a linear combination of <m>v_1,v_2,v_3,v_4</m> (with the <m>v_3</m>-coefficient equal to zero), so <m>\Span\{v_1,v_2,v_4\}</m> is also contained in <m>\Span\{v_1,v_2,v_3,v_4\}</m>, and thus they are equal.
         </p>
         <p>
           In the other direction, if we have a linear dependence relation like
@@ -294,40 +308,8 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       For example, the set <m>\bigl\{{1\choose 0},\,{2\choose 0},\,{0\choose 1}\bigr\}</m> is linearly dependent, but <m>{0\choose 1}</m> is not in the span of the other two vectors.  Also see this <xref ref="linindep-3d-4vecs"/> below.
     </p>
 
-    <theorem xml:id="linindep-criterion-redundant">
-      <idx><h>Linear Independence</h><h>redundancy criterion</h></idx>
-      <statement>
-        <p>A set of vectors <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly dependent if and only if we can remove one of the vectors without changing the span.</p>
-      </statement>
-      <proof>
-        <p>
-          If <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly dependent, then we know from the above <xref ref="linindep-criterion-inspan"/> that one vector is in the span of the others; for instance,
-          <me>v_3 = 2v_1 - \frac 12v_2 + 6v_4.</me>
-          In this case, any linear combination of <m>v_1,v_2,v_3,v_4</m> is already a linear combination of <m>v_1,v_2,v_4</m>:
-          <md>
-            <mrow>
-              x_1v_1 + x_2v_2 + x_3v_3 + x_4v_4 &amp;=
-              x_1v_1 + x_2v_2 + x_3\left(2v_1-\frac 12v_2 + 6v_4\right) + x_4v_4
-            </mrow>
-            <mrow>
-              &amp;= (x_1+2x_3)v_1 + \left(x_2-\frac 12x_3\right)v_2 + (x_4+6)v_4.
-            </mrow>
-          </md>
-          Therefore, <m>\Span\{v_1,v_2,v_3,v_4\}</m> is contained in <m>\Span\{v_1,v_2,v_4\}</m>.  Any linear combination of <m>v_1,v_2,v_4</m> is also a linear combination of <m>v_1,v_2,v_3,v_4</m> (with the <m>v_3</m>-coefficient equal to zero), so <m>\Span\{v_1,v_2,v_4\}</m> is also contained in <m>\Span\{v_1,v_2,v_3,v_4\}</m>, and thus they are equal.
-        </p>
-
-        <p>
-          In the other direction, suppose that we can remove <m>v_3</m> without shrinking the span of <m>\{v_1,v_2,v_3,v_4\}</m>: in other words, <m>\Span\{v_1,v_2,v_3,v_4\} = \Span\{v_1,v_2,v_4\}</m>.  Since <m>v_3</m> is in <m>\Span\{v_1,v_2,v_3,v_4\}</m> (the <m>v_3</m>-coefficient is 1 and the rest are 0), this means that <m>v_3</m> is in <m>\Span\{v_1,v_2,v_4\}</m>, so the vectors are linearly dependent by the previous <xref ref="linindep-criterion-inspan"/>.
-        </p>
-
-        <p>
-          We leave it to the reader to generalize this proof for any set of vectors.
-        </p>
-      </proof>
-    </theorem>
-
     <p>
-      The previous <xref ref="linindep-criterion-redundant"/> makes precise in what sense a set of linearly dependent vectors is redundant.
+      The previous <xref ref="linindep-criterion-inspan"/> makes precise in what sense a set of linearly dependent vectors is redundant.
     </p>
 
     <theorem xml:id="linindep-increasing-span">
@@ -339,7 +321,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       </statement>
       <proof>
         <p>
-          It is equivalent to show that <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly dependent if and only if <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m> for some <m>j</m>.  The <q>if</q> implication is an immediate consequence of the previous <xref ref="linindep-criterion-redundant"/>.  Suppose then that <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly dependent.  This means that some <m>v_j</m> is in the span of the others.  Choose the largest such <m>j</m>.  We claim that this <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m>.  If not, then
+          It is equivalent to show that <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly dependent if and only if <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m> for some <m>j</m>.  The <q>if</q> implication is an immediate consequence of the previous <xref ref="linindep-criterion-inspan"/>.  Suppose then that <m>\{v_1,v_2,\ldots,v_k\}</m> is linearly dependent.  This means that some <m>v_j</m> is in the span of the others.  Choose the largest such <m>j</m>.  We claim that this <m>v_j</m> is in <m>\Span\{v_1,v_2,\ldots,v_{j-1}\}</m>.  If not, then
           <me>v_j = x_1v_1 + x_2v_2 + \cdots + x_{j-1}v_{j-1} + x_{j+1}v_{j+1} + \cdots + x_kv_k</me>
           with not all of <m>x_{j+1},\ldots,x_k</m> equal to zero.  Suppose for simplicity that <m>x_k\neq 0</m>.  Then we can rearrange:
           <me>
@@ -439,7 +421,6 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     Two collinear vectors are always linearly dependent:
       <ul>
         <li><m>w</m> is in <m>\Span\{v\}</m>, so we can apply the first <xref ref="linindep-criterion-inspan">criterion</xref>.</li>
-        <li>We can remove <m>w</m> without shrinking the span, so we can apply the second <xref ref="linindep-criterion-redundant">criterion</xref>.</li>
         <li>The span did not increase when we added <m>w</m>, so we can apply the <xref ref="linindep-increasing-span">increasing span criterion</xref>.</li>
       </ul>
       <latex-code>
@@ -601,7 +582,6 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     The three coplanar vectors <m>\{v,w,u\}</m> below are linearly dependent:
     <ul>
       <li><m>u</m> is in <m>\Span\{v,w\}</m>, so we can apply the first <xref ref="linindep-criterion-inspan">criterion</xref>.</li>
-      <li>We can remove <m>u</m> without shrinking the span, so we can apply the second <xref ref="linindep-criterion-redundant">criterion</xref>.</li>
       <li>The span did not increase when we added <m>u</m>, so we can apply the <xref ref="linindep-increasing-span">increasing span criterion</xref>.</li>
     </ul>
     <latex-code>
@@ -757,7 +737,7 @@ number of vectors, as in the picture below.  This means that (at least) one of t
     <title>Linear Dependence and Free Variables</title>
 
     <p>
-      In light of this <xref ref="linindep-matrix-cols"/> and this <xref ref="linindep-criterion-redundant">criterion</xref>, it is natural to ask which columns of a matrix are redundant, i.e., which we can remove without affecting the column span.
+      In light of this <xref ref="linindep-matrix-cols"/> and this <xref ref="linindep-criterion-inspan">criterion</xref>, it is natural to ask which columns of a matrix are redundant, i.e., which we can remove without affecting the column span.
     </p>
 
     <theorem xml:id="linindep-pivot-cols">

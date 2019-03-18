@@ -178,7 +178,7 @@ the license is included in gfdl.xml.
         </p>
 
         <p>
-          Now suppose that <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> spans <m>V</m>.  If <m>\cB</m> is not linearly independent, then by this <xref ref="linindep-criterion-redundant"/>, we can remove some number of vectors from <m>\cB</m> without shrinking its span.  After reordering, we can assume that we removed the last <m>k</m> vectors without shrinking the span, and that we cannot remove any more. Now <m>V = \Span\{v_1,v_2,\ldots,v_{m-k}\}</m>, and <m>\{v_1,v_2,\ldots,v_{m-k}\}</m> is a basis for <m>V</m> because it is linearly independent.  This implies that <m>\dim V=m-k &lt; m</m>.  But we were assuming that <m>\dim V = m</m>, so <m>\cB</m> must have already been a basis.
+          Now suppose that <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> spans <m>V</m>.  If <m>\cB</m> is not linearly independent, then by this <xref ref="linindep-criterion-inspan"/>, we can remove some number of vectors from <m>\cB</m> without shrinking its span.  After reordering, we can assume that we removed the last <m>k</m> vectors without shrinking the span, and that we cannot remove any more. Now <m>V = \Span\{v_1,v_2,\ldots,v_{m-k}\}</m>, and <m>\{v_1,v_2,\ldots,v_{m-k}\}</m> is a basis for <m>V</m> because it is linearly independent.  This implies that <m>\dim V=m-k &lt; m</m>.  But we were assuming that <m>\dim V = m</m>, so <m>\cB</m> must have already been a basis.
         </p>
       </proof>
     </theorem>
