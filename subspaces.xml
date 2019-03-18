@@ -229,7 +229,7 @@ the license is included in gfdl.xml.
       <idx><h>Subspace</h><h>versus subset</h></idx>
       <idx><h>Subset</h><h>versus subspace</h></idx>
       <p>
-        A <term>subset</term> of <m>\R^n</m> is any collection of vectors whatsoever.  For instance, the unit circle
+        A sub<em>set</em> of <m>\R^n</m> is any collection of vectors whatsoever.  For instance, the unit circle
         <me>C = \bigl\{ (x,y)\text{ in }\R^2 \bigm| x^2 + y^2 = 1 \bigr\}</me>
         is a subset of <m>\R^2</m>, but it is not a subspace.  In fact, all of the non-examples above are still subsets of <m>\R^n</m>.  A subspace is a subset that happens to satisfy the three additional defining properties.
       </p>
