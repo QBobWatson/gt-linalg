@@ -87,7 +87,7 @@ the license is included in gfdl.xml.
     <p>As a consequence of these properties, we see:
     <ul>
       <li>If <m>v</m> is a vector in <m>V</m>, then all scalar multiples of <m>v</m> are in <m>V</m> by the third property.  In other words, the line through <m>v</m> is also contained in <m>V</m>.</li>
-      <li>If <m>u,v</m> are vectors in <m>V</m> and <m>x,y</m> are scalars, then <m>xu,yv</m> are also in <m>V</m> by the third property, so <m>xu+yv</m> is in <m>V</m> by the second property.  Therefore, all of <m>\Span\{u,v\}</m> is contained in <m>V</m></li>
+      <li>If <m>u,v</m> are vectors in <m>V</m> and <m>c,d</m> are scalars, then <m>cu,dv</m> are also in <m>V</m> by the third property, so <m>cu+dv</m> is in <m>V</m> by the second property.  Therefore, all of <m>\Span\{u,v\}</m> is contained in <m>V</m></li>
       <li>Similarly, if <m>v_1,v_2,\ldots,v_n</m> are all in <m>V</m>, then <m>\Span\{v_1,v_2,\ldots,v_n\}</m> is contained in <m>V</m>.  In other words, <em>a subspace contains the span of any vectors in it.</em></li>
     </ul>
     If you choose enough vectors, then eventually their span will fill up <m>V</m>, so we already see that a <em>subspace is a span</em>.
