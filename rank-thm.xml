@@ -125,7 +125,7 @@ the license is included in gfdl.xml.
         so <m>\rank(A) = \dim\Col(A) = 2</m>.
       </p>
       <p>
-        Since there are two free variables <m>x_3,x_4</m>, the null space of <m>A</m> has two vectors (see this <xref ref="dimension-eg-basis-nul"/>):
+        Since there are two free variables <m>x_3,x_4</m>, the null space of <m>A</m> has two vectors (see this <xref ref="dimension-basis-nulspace"/>):
         <me>\left\{\vec{8 -4 1 0},\;\vec{7 -3 0 1}\right\},</me>
         so <m>\nullity(A) = 2</m>.
       </p>

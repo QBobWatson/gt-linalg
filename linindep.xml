@@ -180,6 +180,18 @@ number of vectors, as in the picture below.  This means that (at least) one of t
       </solution>
     </example>
 
+    <example xml:id="param-vect-form-lin-ind">
+      <title>Vector parametric form</title>
+      <p>An important observation is that the vectors coming from the parametric vector form of the solution of a matrix equation <m>Ax=0</m> are linearly independent.  In this <xref ref="solnsets-eg-plane"/> we saw that the solution set of <m>Ax=0</m> for 
+        <me>A = \mat{1 -1 2; -2 2 -4}?</me>
+is
+        <me>x = \vec{x_1 x_2 x_3} = x_2\vec{1 1 0} + x_3\vec{-2 0 1}.</me>
+Let's explain why the vectors <m>(1,1,0)</m> and <m>(-2,0,1)</m> are linearly independent.  Suppose that
+<me>\vec{0 0 0} = x_2\vec{1 1 0} + x_3\vec{-2 0 1} = \vec{x_2-2x_3 x_2 x_3}.</me>
+          Comparing the second and third coordinates, we see that <m>x_2=x_3=0</m>.  This reasoning will work in any example, since the entries corresponding to the free variables are all equal to 1 or 0, and are only equal to 1 in one of the vectors.  This observation forms part of this <xref ref="dimension-basis-nulspace"/>.
+	</p>
+    </example>
+
     <p>
       The above examples lead to the following recipe.
     </p>

@@ -259,6 +259,10 @@ the license is included in gfdl.xml.
       <idx><h>Solution set</h><h>of a homogeneous system is a span</h></idx>
     </p>
 
+    <p>
+      There is a natural question to ask here: is it possible to write the solution to a homogeneous matrix equation using fewer vectors than the one given in the above recipe?  We will see in <xref ref="param-vect-form-lin-ind"/> that the answer is <em>no</em>: the vectors from the recipe are always linearly independent, which means that there is no way to write the solution with fewer vectors.
+    </p>
+
   </subsection>
 
 
@@ -486,7 +490,7 @@ the license is included in gfdl.xml.
     <p>As in the first <xref ref="solnsets-homog"/>, when there is one free variable in a consistent matrix equation, the solution set is a line<mdash/>this line does not pass through the origin when the system is inhomogeneous<mdash/>when there are two free variables, the solution set is a plane, etc.
     </p>
     <p>We will develop a rigorous definition of dimension in <xref ref="dimension"/>, but for now it is important to note that the <q>dimension</q> of the solution set of a consistent system is equal to the number of free variables.
-    </p>
+     </p>
     </bluebox>
 
   </subsection>

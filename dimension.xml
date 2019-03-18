@@ -360,37 +360,7 @@ the license is included in gfdl.xml.
       </statement>
     </theorem>
 
-    <p>In lieu of a proof, we illustrate the theorem with an example, and we leave it to the reader to generalize the argument.</p>
-
-    <example xml:id="dimension-eg-basis-nul">
-      <title>A basis of a null space</title>
-      <statement>
-        <p>
-          Find a basis of the null space of the matrix
-          <me>A = \mat[r]{0 -1 1 2; 4 5 -2 -3; 0 -2 2 4}.</me>
-        </p>
-      </statement>
-      <solution>
-        <p>
-          The reduced row echelon form of <m>A</m> is
-          <me>\mat[r]{1 0 -8 -7; 0 1 4 3; 0 0 0 0}.</me>
-          Hence the parametric form and parametric vector form of the solutions of <m>Ax=0</m> are
-          <me>
-            \syseq{x_1 = 8x_3 + 7x_4; x_2 = -4x_3 - 3x_4; x_3 = x_3; x_4 = \. \+ x_4}
-            \quad\implies\quad
-            x = x_3\vec{8 -4 1 0} + x_4\vec{7 -3 0 1}.
-          </me>
-          Every solution of <m>Ax=0</m> has the above form for some values of <m>x_3,x_4</m>: this is the point of the parametric vector form.  It follows that
-          <me>\Nul(A) = \Span\left\{\vec{8 -4 1 0},\;\vec{7 -3 0 1}\right\}.</me>
-          Next we check linear independence.  Suppose that
-          <me>\vec{0 0 0 0} = x_3\vec{8 -4 1 0} + x_4\vec{7 -3 0 1} = \vec{8x_3+4x_4 -4x_3-3x_4 x_3 x_4}.</me>
-          Comparing the third and fourth coordinates, we see that <m>x_3=x_4=0</m>.
-          It follows that
-          <me>\left\{\vec{8 -4 1 0},\;\vec{7 -3 0 1}\right\}</me>
-          is indeed a basis for <m>\Nul(A)</m>.
-        </p>
-      </solution>
-    </example>
+    <p>The proof of the theorem has two parts.  The first part is that every solution lies in the span of the given vectors.  This is automatic: the vectors are exactly chosen so that every solution is a linear combination of those vectors.  The second part is that the vectors are linearly independent.  This part was discussed in this <xref ref="param-vect-form-lin-ind"/>.</p>
 
     </paragraphs>
 
