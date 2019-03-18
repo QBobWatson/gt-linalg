@@ -76,7 +76,7 @@ the license is included in gfdl.xml.
         <p>
           A <term>subspace</term> of <m>\R^n</m> is a subset <m>V</m> of <m>\R^n</m> satisfying:
           <ol>
-            <li><alert>Nonemptiness:</alert> The zero vector is in <m>V</m>.</li>
+            <li><alert>Non-emptiness:</alert> The zero vector is in <m>V</m>.</li>
             <li><alert>Closure under addition:</alert> If <m>u</m> and <m>v</m> are in <m>V</m>, then <m>u+v</m> is also in <m>V</m>.</li>
             <li><alert>Closure under scalar multiplication:</alert> If <m>v</m> is in <m>V</m> and <m>c</m> is in <m>\R</m>, then <m>cv</m> is also in <m>V</m>.</li>
           </ol>
@@ -94,7 +94,7 @@ the license is included in gfdl.xml.
     </p>
 
     <remark>
-      <p>Suppose that <m>V</m> is a nonempty subset of <m>\R^n</m> that satisfies properties 2 and 3.  Let <m>v</m> be any vector in <m>V</m>.  Then <m>0v = 0</m> is in <m>V</m> by the third property, so <m>V</m> automatically satisfies property 1.  It follows that the only subset of <m>\R^n</m> that satisfies properties 2 and 3 but <em>not</em> property 1 is the empty subset <m>\{\}</m>.  This is why we call the first property <q>nonemptiness</q>.
+      <p>Suppose that <m>V</m> is a non-empty subset of <m>\R^n</m> that satisfies properties 2 and 3.  Let <m>v</m> be any vector in <m>V</m>.  Then <m>0v = 0</m> is in <m>V</m> by the third property, so <m>V</m> automatically satisfies property 1.  It follows that the only subset of <m>\R^n</m> that satisfies properties 2 and 3 but <em>not</em> property 1 is the empty subset <m>\{\}</m>.  This is why we call the first property <q>non-emptiness</q>.
       </p>
     </remark>
 

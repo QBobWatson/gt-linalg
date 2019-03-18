@@ -959,7 +959,7 @@ the license is included in gfdl.xml.
           </li>
 
           <li>
-            <em>Translation:</em> is there any vector <m>w</m> in <m>\R^3</m> such that the solution set of <m>Av=w</m> has more than one vector in it?  The solution set of <m>Ax=w</m>, if nonempty, is a translate of the solution set of <m>Av=b</m> above, which has one vector in it.  See this <xref ref="solnsets-translate-span"/>.  It follows that the solution set of <m>Av=w</m> can have at most one vector.
+            <em>Translation:</em> is there any vector <m>w</m> in <m>\R^3</m> such that the solution set of <m>Av=w</m> has more than one vector in it?  The solution set of <m>Ax=w</m>, if non-empty, is a translate of the solution set of <m>Av=b</m> above, which has one vector in it.  See this <xref ref="solnsets-translate-span"/>.  It follows that the solution set of <m>Av=w</m> can have at most one vector.
           </li>
 
           <li>
