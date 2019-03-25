@@ -484,7 +484,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      The column space and the null space of a matrix are both subspaces, so they are both spans.  The column space of a matrix <m>A</m> is defined to be the span of the columns of <m>A</m>.  The null space is defined to be the solution set of <m>Ax=0</m>, so this is a good example of a kind of subspace that we can define <em>without any spanning set in mind.</em>  In order to do computations, however, it is usually necessary to find a spanning set.
+      The column space and the null space of a matrix are both subspaces, so they are both spans.  The column space of a matrix <m>A</m> is defined to be the span of the columns of <m>A</m>.  The null space is defined to be the solution set of <m>Ax=0</m>, so this is a good example of a kind of subspace that we can define <em>without any spanning set in mind.</em>  In other words, it is easier to show that the null space is a subspace than to show it is a span<mdash/>see the proof above.  In order to do computations, however, it is usually necessary to find a spanning set.
     </p>
 
     <specialcase hide-type="true">
