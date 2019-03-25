@@ -556,6 +556,7 @@ the license is included in gfdl.xml.
           <me>\mat{1 0; 0 1}.</me>
           There are no free variables; hence the only solution of <m>Ax=0</m> is the trivial solution.  In other words,
           <me>\Nul(A) = \{0\} = \Span\{0\}.</me>
+          It is natural to define <m>\Span\{\} = \{0\}</m>, so that we can take our spanning set to be empty.  This is consistent with the <xref ref="dimension-defn-dimension">definition of dimension</xref>.
         </p>
       </solution>
     </example>
