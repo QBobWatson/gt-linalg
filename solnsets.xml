@@ -288,7 +288,7 @@ the license is included in gfdl.xml.
       <statement>
         <p>What is the solution set of <m>Ax=b</m>, where
         <me>A = \mat{1 -3; 2 -6} \sptxt{and} b = \vec{-3 -6}?</me>
-        (Compare this <xref ref="solnsets-eg-line"/>.)
+        (Compare to this <xref ref="solnsets-eg-line”/>, where we solved the corresponding homogeneous equation.)
         </p>
       </statement>
       <solution>
