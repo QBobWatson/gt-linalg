@@ -41,7 +41,7 @@ the license is included in gfdl.xml.
     </essential>
 
     <p>
-      Recall that a set of vectors is <em>linearly independent</em> if and only if, when you remove any vector from the set, the span shrinks (<xref ref="linindep-criterion-redundant" text="type-global"/>).  In other words, if <m>\{v_1,v_2,\ldots,v_m\}</m> is a basis of a subspace <m>V</m>, then no proper subset of <m>\{v_1,v_2,\ldots,v_m\}</m> will span <m>V</m>: it is a <em>minimal</em> spanning set.
+      Recall that a set of vectors is <em>linearly independent</em> if and only if, when you remove any vector from the set, the span shrinks (<xref ref="linindep-criterion-inspan" text="type-global"/>).  In other words, if <m>\{v_1,v_2,\ldots,v_m\}</m> is a basis of a subspace <m>V</m>, then no proper subset of <m>\{v_1,v_2,\ldots,v_m\}</m> will span <m>V</m>: it is a <em>minimal</em> spanning set.  Any subspace admits a basis by this <xref ref="subspaces-spans-are-subspaces"/>.
     </p>
 
     <bluebox>

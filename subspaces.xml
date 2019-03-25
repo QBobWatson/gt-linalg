@@ -25,7 +25,7 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      In this section we discuss <em>subspaces</em> of <m>\R^n</m>.  A subspace turns out to be exactly the same thing as a span, except we don<rsq/>t have a particular set of spanning vectors in mind.  This change in perspective is quite useful, as it is easy to produce subspaces which are not obviously spans.  For example, the solution set of the equation <m>x + 3y + z = 0</m> is a span because the equation is homogeneous, but we would have to compute the parametric vector form to find a spanning set of vectors.
+      In this section we discuss <em>subspaces</em> of <m>\R^n</m>.  A subspace turns out to be exactly the same thing as a span, except we don<rsq/>t have a particular set of spanning vectors in mind.  This change in perspective is quite useful, as it is easy to produce subspaces that are not obviously spans.  For example, the solution set of the equation <m>x + 3y + z = 0</m> is a span because the equation is homogeneous, but we would have to compute the parametric vector form to find a spanning set of vectors.
       <latex-code>
           <![CDATA[
 \begin{tikzpicture}[myxyz, z={(0cm,0.8cm)}, scale=.75]
@@ -45,7 +45,8 @@ the license is included in gfdl.xml.
   \point at (0,0,0);
 \end{tikzpicture}
           ]]>
-        </latex-code>
+      </latex-code>
+      (A subspace also turns out to be the same thing as the solution set of a homogeneous system of equations.)
     </p>
   </introduction>
 
@@ -66,7 +67,7 @@ the license is included in gfdl.xml.
     </p>
 
     <p>
-      Above we expressed <m>C</m> in <xref ref="set-builder-notation" text="title">set builder notation</xref>.
+      Above we expressed <m>C</m> in <xref ref="set-builder-notation" text="title">set builder notation</xref>: in English, it reads <q><m>C</m> is the set of all ordered pairs <m>(x,y)</m> in <m>\R^2</m> such that <m>x^2+y^2=1</m>.</q>
     </p>
 
     <definition xml:id="subspaces-defn-of">
@@ -75,7 +76,7 @@ the license is included in gfdl.xml.
         <p>
           A <term>subspace</term> of <m>\R^n</m> is a subset <m>V</m> of <m>\R^n</m> satisfying:
           <ol>
-            <li><alert>Nonemptiness:</alert> The zero vector is in <m>V</m>.</li>
+            <li><alert>Non-emptiness:</alert> The zero vector is in <m>V</m>.</li>
             <li><alert>Closure under addition:</alert> If <m>u</m> and <m>v</m> are in <m>V</m>, then <m>u+v</m> is also in <m>V</m>.</li>
             <li><alert>Closure under scalar multiplication:</alert> If <m>v</m> is in <m>V</m> and <m>c</m> is in <m>\R</m>, then <m>cv</m> is also in <m>V</m>.</li>
           </ol>
@@ -85,15 +86,15 @@ the license is included in gfdl.xml.
 
     <p>As a consequence of these properties, we see:
     <ul>
-      <li>If <m>v</m> is a vector in <m>V</m>, then all scalar multiples of <m>v</m> are in <m>V</m> by the third property.  In other words, the line through <m>v</m> is also contained in <m>V</m>.</li>
-      <li>If <m>u,v</m> are vectors in <m>V</m> and <m>x,y</m> are scalars, then <m>xu,yv</m> are also in <m>V</m> by the third property, so <m>xu+yv</m> is in <m>V</m> by the second property.  Therefore, all of <m>\Span\{u,v\}</m> is contained in <m>V</m></li>
+      <li>If <m>v</m> is a vector in <m>V</m>, then all scalar multiples of <m>v</m> are in <m>V</m> by the third property.  In other words the line through any nonzero vector in <m>V</m> is also contained in <m>V</m>.</li>
+      <li>If <m>u,v</m> are vectors in <m>V</m> and <m>c,d</m> are scalars, then <m>cu,dv</m> are also in <m>V</m> by the third property, so <m>cu+dv</m> is in <m>V</m> by the second property.  Therefore, all of <m>\Span\{u,v\}</m> is contained in <m>V</m></li>
       <li>Similarly, if <m>v_1,v_2,\ldots,v_n</m> are all in <m>V</m>, then <m>\Span\{v_1,v_2,\ldots,v_n\}</m> is contained in <m>V</m>.  In other words, <em>a subspace contains the span of any vectors in it.</em></li>
     </ul>
-    If you choose enough vectors, then eventually their span will fill up <m>V</m>, so we already see that a <em>subspace is a span</em>.
+    If you choose enough vectors, then eventually their span will fill up <m>V</m>, so we already see that a <em>subspace is a span</em>.  See this <xref ref="subspaces-spans-are-subspaces"/> below for a precise statement.
     </p>
 
     <remark>
-      <p>Suppose that <m>V</m> is a nonempty subset of <m>\R^n</m> that satisfies properties 2 and 3.  Let <m>v</m> be any vector in <m>V</m>.  Then <m>0v = 0</m> is in <m>V</m> by the third property, so <m>V</m> automatically satisfies property 1.  It follows that the only subset of <m>\R^n</m> that satisfies properties 2 and 3 but <em>not</em> property 1 is the empty subset <m>\{\}</m>.  This is why we call the first property <q>nonemptiness</q>.
+      <p>Suppose that <m>V</m> is a non-empty subset of <m>\R^n</m> that satisfies properties 2 and 3.  Let <m>v</m> be any vector in <m>V</m>.  Then <m>0v = 0</m> is in <m>V</m> by the third property, so <m>V</m> automatically satisfies property 1.  It follows that the only subset of <m>\R^n</m> that satisfies properties 2 and 3 but <em>not</em> property 1 is the empty subset <m>\{\}</m>.  This is why we call the first property <q>non-emptiness</q>.
       </p>
     </remark>
 
@@ -119,6 +120,7 @@ the license is included in gfdl.xml.
     \node[seq4] at (0,.5) {$L$};
   \end{tikzpicture}
       </latex-code>
+      Indeed, <m>L</m> contains zero, and is easily seen to be closed under addition and scalar multiplication.
       </p>
     </example>
 
@@ -145,6 +147,7 @@ the license is included in gfdl.xml.
     \node[x=(X),y=(Y),seq4] at (.2,-1.4) {$P$};
   \end{tikzpicture}
       </latex-code>
+      Indeed, <m>P</m> contains zero; the sum of two vectors in <m>P</m> is also in <m>P</m>; and any scalar multiple of a vector in <m>P</m> is also in <m>P</m>.
       </p>
     </example>
 
@@ -226,7 +229,7 @@ the license is included in gfdl.xml.
       <idx><h>Subspace</h><h>versus subset</h></idx>
       <idx><h>Subset</h><h>versus subspace</h></idx>
       <p>
-        A <term>subset</term> of <m>\R^n</m> is any collection of vectors whatsoever.  For instance, the unit circle
+        A sub<em>set</em> of <m>\R^n</m> is any collection of vectors whatsoever.  For instance, the unit circle
         <me>C = \bigl\{ (x,y)\text{ in }\R^2 \bigm| x^2 + y^2 = 1 \bigr\}</me>
         is a subset of <m>\R^2</m>, but it is not a subspace.  In fact, all of the non-examples above are still subsets of <m>\R^n</m>.  A subspace is a subset that happens to satisfy the three additional defining properties.
       </p>
@@ -338,17 +341,18 @@ the license is included in gfdl.xml.
     <title>Common Types of Subspaces</title>
 
     <theorem xml:id="subspaces-spans-are-subspaces">
-      <title>Spans are subspaces</title>
+      <title>Spans are Subspaces and Subspaces are Spans</title>
       <idx><h>Subspace</h><h>and spans</h></idx>
       <idx><h>Span</h><h>is a subspace</h></idx>
+      <idx><h>Subspace</h><h>is a span</h></idx>
       <statement>
         <p>
-          If <m>v_1,v_2,\ldots,v_p</m> are any vectors in <m>\R^n</m>, then <m>\Span\{v_1,v_2,\ldots,v_p\}</m> is a subspace of <m>\R^n</m>.
+          If <m>v_1,v_2,\ldots,v_p</m> are any vectors in <m>\R^n</m>, then <m>\Span\{v_1,v_2,\ldots,v_p\}</m> is a subspace of <m>\R^n</m>.  Moreover, any subspace of <m>\R^n</m> can be written as a span of a set of <m>p</m> linearly independent vectors in <m>\R^n</m> for <m>p\leq n</m>.
         </p>
       </statement>
 
       <proof>
-        <p>We have to verify the three defining properties.
+        <p>To show that <m>\Span\{v_1,v_2,\ldots,v_p\}</m> is a subspace, we have to verify the three defining properties.
         <ol>
           <li>The zero vector <m>0 = 0v_1 + 0v_2 + \cdots + 0v_p</m> is in the span.</li>
           <li>
@@ -365,17 +369,15 @@ the license is included in gfdl.xml.
         </ol>
         Since <m>\Span\{v_1,v_2,\ldots,v_p\}</m> satisfies the three defining properties of a subspace, it is a subspace.
         </p>
+        <p>
+          Now let <m>V</m> be a subspace of <m>\R^n</m>.  If <m>V</m> is the zero subspace, then it is the span of the empty set, so we may assume <m>V</m> is nonzero. Choose a nonzero vector <m>v_1</m> in <m>V</m>.  If <m>V = \Span\{v_1\}</m>, then we are done.  Otherwise, there exists a vector <m>v_2</m> that is in <m>V</m> but not in <m>\Span\{v_1\}</m>.  Then <m>\Span\{v_1,v_2\}</m> is contained in <m>V</m>, and by the <xref ref="linindep-increasing-span">increasing span criterion</xref>, the set <m>\{v_1,v_2\}</m> is linearly independent.  If <m>V = \Span\{v_1,v_2\}</m> then we are done.  Otherwise, we continue in this fashion until we have written <m>V = \Span\{v_1,v_2,\ldots,v_p\}</m> for some linearly independent set <m>\{v_1,v_2,\ldots,v_p\}</m>.  This process terminates after at most <m>n</m> steps by this <xref ref="linindep-wide-matrix"/>.
+        </p>
       </proof>
     </theorem>
 
     <p>If <m>V = \Span\{v_1,v_2,\ldots,v_p\}</m>, we say that <m>V</m> is the subspace <term>spanned by</term> or <term>generated by</term> the vectors <m>v_1,v_2,\ldots,v_p</m>.</p>
 
-    <bluebox>
-      <idx><h>Subspace</h><h>and spans</h></idx>
-      <p>Every subspace is a span, and every span is a subspace.</p>
-    </bluebox>
-
-    <p>A matrix naturally gives rise to <em>two</em> subspaces.</p>
+    <p>Any matrix naturally gives rise to <em>two</em> subspaces.</p>
 
     <definition>
       <idx><h>Column space</h><h>definition of</h></idx>
@@ -485,10 +487,12 @@ the license is included in gfdl.xml.
       The column space and the null space of a matrix are both subspaces, so they are both spans.  The column space of a matrix <m>A</m> is defined to be the span of the columns of <m>A</m>.  The null space is defined to be the solution set of <m>Ax=0</m>, so this is a good example of a kind of subspace that we can define <em>without any spanning set in mind.</em>  In order to do computations, however, it is usually necessary to find a spanning set.
     </p>
 
+    <specialcase hide-type="true">
+      <title>Null Spaces are Solution Sets</title>
     <p>
       <idx><h>Null space</h><h>is a solution set</h></idx>
       <idx><h>Solution set</h><h>of a homogeneous system is a null space</h></idx>
-      To be clear: the null space is the solution set of a (homogeneous) system of equations.  For example, the null space of the matrix
+      The null space of a matrix is the solution set of a homogeneous system of equations.  For example, the null space of the matrix
       <me>
         A = \mat{1 7 2; -2 1 3; 4 -2 -3}
       </me>
@@ -500,7 +504,12 @@ the license is included in gfdl.xml.
         4x - 2y - 3z = 0\rlap.
         }
       </me>
-      To find a spanning set for the null space, one has to solve this system of equations.
+      Conversely, the solution set of any homogeneous system of equations is precisely the null space of the corresponding coefficient matrix.
+    </p>
+    </specialcase>
+
+    <p>
+      To find a spanning set for the null space, one has to solve a system of homogeneous equations.
     </p>
 
     <bluebox>
