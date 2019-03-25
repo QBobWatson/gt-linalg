@@ -288,7 +288,7 @@ the license is included in gfdl.xml.
       <statement>
         <p>What is the solution set of <m>Ax=b</m>, where
         <me>A = \mat{1 -3; 2 -6} \sptxt{and} b = \vec{-3 -6}?</me>
-        (Compare to this <xref ref="solnsets-eg-line”/>, where we solved the corresponding homogeneous equation.)
+        (Compare to this <xref ref="solnsets-eg-line"/>, where we solved the corresponding homogeneous equation.)
         </p>
       </statement>
       <solution>
@@ -534,7 +534,7 @@ the license is included in gfdl.xml.
     </ul>
     </p>
 
-    <bluebox><p>Do not confuse these two geometric constructions!</p></bluebox>
+    <bluebox><p>Do not confuse these two geometric constructions!  In the first the question is which <m>x</m>’s work for a given <m>b</m> and in the second the question is which <m>b</m>’s work for some <m>x</m>.</p></bluebox>
 
     <example hide-type="true">
       <title>Interactive: Solution set and span of the columns (1)</title>
