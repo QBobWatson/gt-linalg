@@ -443,7 +443,7 @@ the license is included in gfdl.xml.
     </p>
 
     <remark>
-      <p>Row reducing to find the parametric vector form will give you one particular solution <m>p</m> of <m>Ax=b</m>.  But the <xref ref="solnsets-translate-span"/> is true for any solution <m>p</m>.</p>
+      <p>Row reducing to find the parametric vector form will give you one particular solution <m>p</m> of <m>Ax=b</m>.  But the <xref ref="solnsets-translate-span"/> is true for any solution <m>p</m>.  In other words, if we row reduce in a different way and find a different solution <m>p'</m> to <m>Ax=b</m> then the solutions to <m>Ax=b</m> can be obtained from the solutions to <m>Ax=0</m> by either adding <m>p</m> or by adding <m>p'</m>.</p>
     </remark>
 
     <example xml:id="solnsets-eg-point">
