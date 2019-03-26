@@ -531,7 +531,7 @@ the license is included in gfdl.xml.
         Now consider the system of two linear equations
         <me>\def\r{\color{seq-violet}}\def\b{\color{seq-green}}
         \syseq{\r x \r+ \r y \r+ \r z \r= \r1; \b x \+ \. \b- \b z \b= \b0}</me>
-        of this <xref ref="systems-eqns-two-planes"/>.  These collectively form the <term>implicit equations</term> for a line in <m>\R^3</m>.  (At least two equations are need to define a line in space.)  This line also has a <term>parametric form</term> with one <term>parameter</term> <m>t</m>:
+        of this <xref ref="systems-eqns-two-planes"/>.  These collectively form the <term>implicit equations</term> for a line in <m>\R^3</m>.  (At least two equations are needed to define a line in space.)  This line also has a <term>parametric form</term> with one <term>parameter</term> <m>t</m>:
         <me>
           (x,\, y,\, z) = (t,\, 1-2t,\, t).
         </me>
@@ -543,7 +543,7 @@ the license is included in gfdl.xml.
       </figure>
 
       <p>
-        Note that in each case, the parameter <m>t</m> allows us to use <m>\R</m> to <em>label</em> the points on the line.  However, neither line is the same as the number line <m>\R</m>: indeed, every point on the first line line has two coordinates, like the point <m>(0,1)</m>, and every point on the second line has three coordinates, like <m>(0,1,0)</m>.
+        Note that in each case, the parameter <m>t</m> allows us to use <m>\R</m> to <em>label</em> the points on the line.  However, neither line is the same as the number line <m>\R</m>: indeed, every point on the first line has two coordinates, like the point <m>(0,1)</m>, and every point on the second line has three coordinates, like <m>(0,1,0)</m>.
       </p>
     </specialcase>
 
