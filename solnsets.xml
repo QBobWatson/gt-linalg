@@ -446,10 +446,10 @@ the license is included in gfdl.xml.
       <idx><h>System of linear equations</h><h>particular solution of</h><see>Parametric vector form</see></idx>
       <idx><h>Solution set</h><h>translate of a span</h></idx>
       <p>
-        The set of solutions to <m>Ax=b</m>, if it is non-empty, is obtained by taking one <term>particular solution</term> <m>p</m> of <m>Ax=b</m>, and adding all solutions of <m>Ax=0</m>.
+        If <m>Ax=b</m> is consistent,  the set of solutions to is obtained by taking one <term>particular solution</term> <m>p</m> of <m>Ax=b</m>, and adding all solutions of <m>Ax=0</m>.
       </p>
 
-      <p>In particular, the solution set of <m>Ax=b</m> is either empty, or it is a <em>translate of a span</em>.</p>
+      <p>In particular, if <m>Ax=b</m> is consistent, the solution set is a <em>translate of a span</em>.</p>
     </bluebox>
 
     <p>
@@ -533,7 +533,7 @@ the license is included in gfdl.xml.
       <li>
         <p>The <term>solution set</term>: for fixed <m>b</m>, this is the set of all <m>x</m> such that <m>Ax=b</m>.
         <ul>
-          <li>This is a span if <m>b=0</m>, and it is a translate of a span (or it is empty) if <m>b\neq 0</m>.</li>
+          <li>This is a span if <m>b=0</m>, and it is a translate of a span if <m>b\neq 0</m> (and <m>Ax=b</m> is consistent).</li>
           <li>It is a subset of <m>\R^n</m>.</li>
           <li>It is computed by solving a system of equations: usually by row reducing and finding the parametric vector form.</li>
         </ul>
