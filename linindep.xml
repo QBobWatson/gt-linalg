@@ -818,7 +818,7 @@ Let's explain why the vectors <m>(1,1,0)</m> and <m>(-2,0,1)</m> are linearly in
       </p>
     </example>
 
-    <bluebox>
+    <bluebox xml:id="pivot-cols-dim">
       <title>Pivot Columns and Dimension</title>
       <p>
         Let <m>d</m> be the number of pivot columns in the matrix
@@ -829,6 +829,7 @@ Let's explain why the vectors <m>(1,1,0)</m> and <m>(-2,0,1)</m> are linearly in
           <li>If <m>d=3</m> then <m>\Span\{v_1,v_2,\ldots,v_k\}</m> is a 3-space.</li>
           <li>Et cetera.</li>
         </ul>
+	The number <m>d</m> is called the dimension.  We discussed this notion in this <xref ref="soln-sets-dim-hom"/> and this <xref ref="soln-sets-dim-inhom"/>.  We will define this concept rigorously in <xref ref="dimension"/>.
       </p>
     </bluebox>
 
