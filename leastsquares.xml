@@ -371,13 +371,13 @@ the license is included in gfdl.xml.
           </me>
           The free variable is <m>x_3</m>, so the solution set is
           <me>
-            \syseq{x_1 = -x_3 - 5; x_2 = 2x_3 + 3; x_3 = x_3}
+            \syseq{x_1 = -x_3 + 5; x_2 = 2x_3 - 3; x_3 = x_3}
             \quad\xrightarrow[\text{vector form}]{\text{parametric}}\quad
-            \hat x = \vec{x_1 x_2 x_3} = x_3\vec{-1 2 1} + \vec{-5 3 0}.
+            \hat x = \vec{x_1 x_2 x_3} = x_3\vec{-1 2 1} + \vec{5 -3 0}.
           </me>
           For example, taking <m>x_3 = 0</m> and <m>x_3=1</m> gives the least-squares solutions
           <me>
-            \hat x = \vec{-5 3 0} \sptxt{and} \hat x = \vec{-6 5 1}.
+            \hat x = \vec{5 -3 0} \sptxt{and} \hat x = \vec{4 -1 1}.
           </me>
         </p>
         <p>
