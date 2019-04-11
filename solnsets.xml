@@ -81,11 +81,73 @@ the license is included in gfdl.xml.
       So it is not really necessary to write augmented matrices when solving homogeneous systems.</p>
     </observation>
 
+    <p>
+      When the homogeneous equation <m>Ax=0</m> does have nontrivial solutions, it turns out that the solution set can be conveniently expressed as a span.
+    </p>
+
+    <specialcase hide-type="true">
+      <title>Parametric Vector Form (homogeneous case)</title>
+      <idx><h>Parametric vector form</h><h>of a homogeneous equation</h></idx>
+      <p>
+        Consider the following matrix in reduced row echelon form:
+        <me>A = \mat{1 0 -8 -7; 0 1 4 3; 0 0 0 0}.</me>
+        The matrix equation <m>Ax=0</m> corresponds to the system of equations
+        <me>
+          \syseq{x_1 \+ \. - 8x_3 - 7x_4 = 0;
+          \. \+ x_2 + 4x_3 + 3x_4 = 0\rlap.}
+        </me>
+        We can write the parametric form as follows:
+        <me>\syseq{
+        x_1 = 8x_3 + 7x_4;
+        x_2 = -4x_3 - 3x_4;
+        x_3 = x_3;
+        x_4 = \. \+ x_4\rlap.}
+        </me>
+        We wrote the redundant equations <m>x_3=x_3</m> and <m>x_4=x_4</m> in order to turn the above system into a <em>vector equation</em>:
+        <me>x = \vec{x_1 x_2 x_3 x_4} = x_3\vec{8 -4 1 0} + x_4\vec{7 -3 0 1}.</me>
+        This vector equation is called the <term>parametric vector form</term> of the solution set.
+        Since <m>x_3</m> and <m>x_4</m> are allowed to be anything, this says that the solution set is the set of all linear combinations of <m>\vec{8 -4 1 0}</m> and <m>\vec{7 -3 0 1}</m>.  In other words, the solution set is
+        <me>\Span\left\{\vec{8 -4 1 0},\;\vec{7 -3 0 1}\right\}.</me>
+      </p>
+    </specialcase>
+
+    <p>Here is the general procedure.</p>
+
+    <bluebox>
+      <title>Recipe: Parametric vector form (homogeneous case)</title>
+      <idx><h>Parametric vector form</h><h>of a homogeneous equation</h></idx>
+      <idx><h>System of linear equations</h><h>parametric vector form of</h><see>Parametric vector form</see></idx>
+      <p>Let <m>A</m> be an <m>m\times n</m> matrix.  Suppose that the free variables in the homogeneous equation <m>Ax=0</m> are, for example, <m>x_3</m>, <m>x_6</m>, and <m>x_8</m>.
+      <ol>
+        <li>Find the reduced row echelon form of <m>A</m>.</li>
+        <li>Write the parametric form of the solution set, including the redundant equations <m>x_3=x_3</m>, <m>x_6=x_6</m>, <m>x_8=x_8</m>.  Put equations for all of the <m>x_i</m> in order.</li>
+        <li>Make a single vector equation from these equations by making the coefficients of <m>x_3,x_6,</m> and <m>x_8</m> into vectors <m>v_3,v_6,</m> and <m>v_8</m>, respectively.</li>
+      </ol>
+      The solutions to <m>Ax=0</m> will then be expressed in the form
+      <me> x = x_3v_3 + x_6v_6 + x_8v_8</me>
+      for some vectors <m>v_3,v_6,v_8</m> in <m>\R^n</m>, and any scalars <m>x_3,x_6,x_8</m>.  This is called the <term>parametric vector form</term> of the solution.
+        </p>
+        <p>In this case, the solution set can be written as
+        <m>\Span\{v_3,\,v_6,\,v_8\}.</m>
+        </p>
+    </bluebox>
+
+    <p>
+      We emphasize the following fact in particular.
+    </p>
+
+    <bluebox xml:id="solnsets-are-spans">
+      <idx><h>Solution set</h><h>of a homogeneous system is a span</h></idx>
+      <p>
+	The set of solutions to a homogeneous equation <m>Ax=0</m> is a span.
+      </p>
+      </bluebox>
+
     <example xml:id="solnsets-eg-line">
       <title>The solution set is a line</title>
       <statement>
-        <p>What is the solution set of <m>Ax=0</m>, where
-        <me>A = \mat{1 -3; 2 -6}?</me>
+        <p>Compute the parametric vector form of the solution set of <m>Ax=0</m>, where
+        <me>A = \mat{1 -3; 2 -6}.</me>
         </p>
       </statement>
       <solution>
@@ -93,11 +155,11 @@ the license is included in gfdl.xml.
         <me>\mat{1 -3; 2 -6} \quad\xrightarrow{\text{RREF}}\quad
         \mat{1 -3; 0 0}.
         </me>
-        This corresponds to the single equation <m>x_1 - 3x_2=0</m>.  We can write the parametric form as follows:
+        This corresponds to the single equation <m>x_1 - 3x_2=0</m>.  We write the parametric form including the redundant equation <m>x_2=x_2</m>:
         <me>\syseq{x_1 = 3x_2; x_2 = x_2\rlap.}</me>
-        We wrote the redundant equation <m>x_2=x_2</m> in order to turn the above system into a <em>vector equation</em>:
+        We turn these into a single vector equation:
         <me>x = \vec{x_1 x_2} = x_2\vec{3 1}.</me>
-        This vector equation is called the <term>parametric vector form</term> of the solution set.
+        This is the parametric vector form of the solution set.
         Since <m>x_2</m> is allowed to be anything, this says that the solution set is the set of all scalar multiples of <m>{3\choose 1}</m>, otherwise known as
         <me>\Span\left\{\vec{3 1}\right\}.</me>
         We know how to draw the picture of a span of a vector: it is a line.  Therefore, this is a picture of the the solution set:
@@ -133,8 +195,8 @@ the license is included in gfdl.xml.
     <example xml:id="solnsets-eg-plane">
       <title>The solution set is a plane</title>
       <statement>
-        <p>What is the solution set of <m>Ax=0</m>, where
-        <me>A = \mat{1 -1 2; -2 2 -4}?</me>
+        <p>Compute the parametric vector form of the solution set of <m>Ax=0</m>, where
+        <me>A = \mat{1 -1 2; -2 2 -4}.</me>
         </p>
       </statement>
       <solution>
@@ -142,11 +204,11 @@ the license is included in gfdl.xml.
         <me>\mat{1 -1 2; -2 2 -4} \quad\xrightarrow{\text{RREF}}\quad
         \mat{1 -1 2; 0 0 0}.
         </me>
-        This corresponds to the single equation <m>x_1 - x_2 + 2x_3 = 0</m>.  We can write the parametric form as follows:
+        This corresponds to the single equation <m>x_1 - x_2 + 2x_3 = 0</m>.  We  write the parametric form including the redundant equations <m>x_2=x_2</m> and <m>x_3=x_3</m>:
         <me>\syseq{x_1 = x_2 - 2x_3; x_2 = x_2; x_3 = \. \+ x_3\rlap.}</me>
-        We wrote the redundant equations <m>x_2=x_2</m> and <m>x_3=x_3</m> in order to turn the above system into a <em>vector equation</em>:
+        We turn these into a single vector equation:
         <me>x = \vec{x_1 x_2 x_3} = x_2\vec{1 1 0} + x_3\vec{-2 0 1}.</me>
-        This vector equation is called the <term>parametric vector form</term> of the solution set.
+        This is the parametric vector form of the solution set.
         Since <m>x_2</m> and <m>x_3</m> are allowed to be anything, this says that the solution set is the set of all linear combinations of <m>\vec{1 1 0}</m> and <m>\vec{-2 0 1}</m>.  In other words, the solution set is
         <me>\Span\left\{\vec{1 1 0},\;\vec{-2 0 1}\right\}.</me>
         We know how to draw the span of two noncollinear vectors in <m>\R^3</m>: it is a plane.  Therefore, this is a picture of the solution set:
@@ -204,66 +266,6 @@ the license is included in gfdl.xml.
     </example>
 
     <p>Since there were <em>three</em> variables in the above <xref ref="solnsets-eg-plane"/>, the solution set is a subset of <m>\R^3</m>.  Since <em>two</em> of the variables were free, the solution set is a <em>plane</em>.</p>
-
-    <example xml:id="solnsets-eg-R4">
-      <title>Four variables</title>
-      <statement>
-        <p>What is the solution set of <m>Ax=0</m>, where
-        <me>A = \mat[r]{1 2 0 -1; -2 -3 4 5; 2 4 0 -2}?</me>
-        </p>
-      </statement>
-      <solution>
-        <p>We row reduce (without augmenting, as suggested in the above <xref ref="solnsets-no-augment"/>):
-        <me>\mat[r]{1 2 0 -1; -2 -3 4 5; 2 4 0 -2} \quad\xrightarrow{\text{RREF}}\quad
-        \mat[r]{1 0 -8 -7; 0 1 4 3; 0 0 0 0}.
-        </me>
-        This corresponds to the system of equations
-        <me>
-          \syseq{x_1 \+ \. - 8x_3 - 7x_4 = 0;
-          \. \+ x_2 + 4x_3 + 3x_4 = 0}
-        </me>
-        We can write the parametric form as follows:
-        <me>\syseq{
-        x_1 = 8x_3 + 7x_4;
-        x_2 = -4x_3 - 3x_4;
-        x_3 = x_3;
-        x_4 = \. \+ x_4\rlap.}
-        </me>
-        We wrote the redundant equations <m>x_3=x_3</m> and <m>x_4=x_4</m> in order to turn the above system into a <em>vector equation</em>:
-        <me>x = \vec{x_1 x_2 x_3 x_4} = x_3\vec{8 -4 1 0} + x_4\vec{7 -3 0 1}.</me>
-        This vector equation is called the <term>parametric vector form</term> of the solution set.
-        Since <m>x_3</m> and <m>x_4</m> are allowed to be anything, this says that the solution set is the set of all linear combinations of <m>\vec{8 -4 1 0}</m> and <m>\vec{7 -3 0 1}</m>.  In other words, the solution set is
-        <me>\Span\left\{\vec{8 -4 1 0},\;\vec{7 -3 0 1}\right\}.</me>
-        </p>
-      </solution>
-    </example>
-
-    <p>Since there were <em>four</em> variables in the above <xref ref="solnsets-eg-R4"/>, the solution set is a subset of <m>\R^4</m>.  Since <em>two</em> of the variables were free, the solution set is a <em>plane</em>.</p>
-
-    <bluebox>
-      <title>Recipe: Parametric vector form (homogeneous case)</title>
-      <idx><h>Parametric vector form</h><h>of a homogeneous equation</h></idx>
-      <idx><h>System of linear equations</h><h>parametric vector form of</h><see>Parametric vector form</see></idx>
-        <p>Let <m>A</m> be an <m>m\times n</m> matrix.  Suppose that the free variables in the homogeneous equation <m>Ax=0</m> are, for example, <m>x_3</m>, <m>x_6</m>, and <m>x_8</m>.  Then the solutions to <m>Ax=0</m> can be written in the form
-        <me> x = x_3v_3 + x_6v_6 + x_8v_8</me>
-        for some vectors <m>v_3,v_6,v_8</m> in <m>\R^n</m>, and any scalars <m>x_3,x_6,x_8</m>.  This is called the <term>parametric vector form</term> of the solution.  It is obtained by finding the parametric form of the solution, including the redundant equations <m>x_3=x_3</m>, <m>x_6=x_6</m>, <m>x_8=x_8</m>, putting these equations in order, and making a vector equation.
-        </p>
-
-        <p>In this case, the solution set can be written as 
-        <m>\Span\bigl\{v_3,\,v_6,\,v_8\bigl\}.</m>
-        </p>
-    </bluebox>
-
-    <p>
-      We emphasize the following fact in particular.
-    </p>
-
-    <bluebox xml:id="solnsets-are-spans">
-      <idx><h>Solution set</h><h>of a homogeneous system is a span</h></idx>
-      <p>
-	The set of solutions to a homogeneous equation <m>Ax=0</m> is a span.
-      </p>
-      </bluebox>
 
     <p>
       There is a natural question to ask here: is it possible to write the solution to a homogeneous matrix equation using fewer vectors than the one given in the above recipe?  We will see in <xref ref="param-vect-form-lin-ind"/> that the answer is <em>no</em>: the vectors from the recipe are always linearly independent, which means that there is no way to write the solution with fewer vectors.
