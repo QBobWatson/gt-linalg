@@ -301,15 +301,13 @@ the license is included in gfdl.xml.
     <idx><h>Plane</h><h>dimension-2 solution set</h></idx>
     <idx><h>Space</h><h>dimension-3 solution set</h></idx>
     <idx><h>Dimension</h><h>of a solution set</h></idx>
-    <p>The above examples show us the following pattern: when there is one free variable in a consistent matrix equation, the solution set is a line, and when there are two free variables, the solution set is a plane, etc.
+    <p>The above examples show us the following pattern: when there is one free variable in a consistent matrix equation, the solution set is a line, and when there are two free variables, the solution set is a plane, etc.  The number of free variables is called the <em>dimension</em> of the solution set.
     </p>
-    <p>We will develop a rigorous definition of dimension in <xref ref="dimension"/>, but here is how you can think of dimension: the dimension is the number of parameters you need to describe a point in the solution set.  For a line only one parameter is needed, and for a plane two parameters are needed.  This is similar to how the location of a building on Peachtree Street<mdash/>which is like a line<mdash/>is determined by one number and how a street corner in Manhattan<mdash/>which is like a plane<mdash/>is specified by two numbers.</p>
-
-	<p>
-  	For now it is important to note that the <q>dimension</q> of the solution set of a consistent system is equal to the number of free variables.  Compare with this <xref ref="pivot-cols-dim"/>.
-     </p>
     </bluebox>
 
+<p>We will develop a rigorous definition of dimension in <xref ref="dimension"/>, but for now the dimension will simply mean the number of free variables.  Compare with this <xref ref="pivot-cols-dim"/>.</p>
+
+    <p>Intuitively, the dimension of a solution set is the number of parameters you need to describe a point in the solution set.  For a line only one parameter is needed, and for a plane two parameters are needed.  This is similar to how the location of a building on Peachtree Street<mdash/>which is like a line<mdash/>is determined by one number and how a street corner in Manhattan<mdash/>which is like a plane<mdash/>is specified by two numbers.</p>
 
 
   </subsection>
@@ -557,9 +555,13 @@ the license is included in gfdl.xml.
     <idx><h>Plane</h><h>dimension-2 solution set</h></idx>
     <idx><h>Space</h><h>dimension-3 solution set</h></idx>
     <idx><h>Dimension</h><h>of a solution set</h></idx>
-    <p>As in this <xref ref="soln-sets-dim-inhom"/>, when there is one free variable in a consistent matrix equation, the solution set is a line<mdash/>this line does not pass through the origin when the system is inhomogeneous<mdash/>when there are two free variables, the solution set is a plane (again not through the origin when the system is inhomogeneous), etc.  Again compare with this <xref ref="pivot-cols-dim"/>.
+    <p>As in this <xref ref="soln-sets-dim-inhom"/>, when there is one free variable in a consistent matrix equation, the solution set is a line<mdash/>this line does not pass through the origin when the system is inhomogeneous<mdash/>when there are two free variables, the solution set is a plane (again not through the origin when the system is inhomogeneous), etc.
     </p>
     </bluebox>
+
+	<p>
+	Again compare with this <xref ref="pivot-cols-dim"/>.
+	</p>
 
   </subsection>
 
