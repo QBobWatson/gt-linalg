@@ -358,7 +358,7 @@ the license is included in gfdl.xml.
     <p>For example, if <m>V</m> is a plane, then any two noncollinear vectors in <m>V</m> form a basis.</p>
 
     <example>
-      <title>Yet another basis for a span</title>
+      <title>Two noncollinear vectors form a basis of a plane</title>
       <statement>
         <p>
           Find a basis of the subspace
@@ -381,6 +381,27 @@ the license is included in gfdl.xml.
         </figure>
       </solution>
     </example>
+
+    <example>
+      <title>Finding a basis by inspection</title>
+      <statement>
+        <p>
+          Find a basis for the plane
+          <me>V = \left\{\vec{x_1 x_2 x_3}\bigm| x_1 + x_2 = x_3\right\}</me>
+          by inspection.  (This plane is expressed in <xref ref="set-builder-notation" text="title">set builder notation</xref>.)
+        </p>
+      </statement>
+      <solution>
+        <p>
+          First note that <m>V</m> is the null space of the matrix <m>\mat{1 1 -1}</m>; this matrix is in reduced row echelon form and has two free variables, so <m>V</m> is indeed a plane.  We write down two vectors satisfying <m>x_1 + x_2 = x_3</m>:
+          <me>
+            v_1 = \vec{1 0 1} \qquad v_2 = \vec{0 1 1}.
+          </me>
+          Since <m>v_1</m> and <m>v_2</m> are not collinear, they are linearly independent; since <m>\dim(V) = 2</m>, the basis theorem implies that <m>\{v_1,v_2\}</m> is a basis for <m>V</m>.
+        </p>
+      </solution>
+    </example>
+
   </subsection>
 
 </section>
