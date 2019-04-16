@@ -391,9 +391,8 @@ the license is included in gfdl.xml.
             The <term>column space</term> of <m>A</m> is the subspace of <m>\R^m</m> spanned by the columns of <m>A</m>.  It is written <m>\Col(A)</m>.
           </li>
           <li>
-            The <term>null space</term> of <m>A</m> is the set of all solutions of the homogeneous equation <m>Ax=0</m>:
+            The <term>null space</term> of <m>A</m> is the subspace of <m>\R^n</m> consisting of all solutions of the homogeneous equation <m>Ax=0</m>:
             <me>\Nul(A) = \bigl\{ x \text{ in } \R^n\bigm| Ax=0 \bigr\}.</me>
-            This is a subspace of <m>\R^n</m>.
           </li>
         </ul>
         </p>
@@ -402,7 +401,7 @@ the license is included in gfdl.xml.
 
     <p>
       <idx><h>Column space</h><h>is a subspace</h></idx>
-      The column space is defined to be a span, so it is a subspace by the above <xref ref="subspaces-spans-are-subspaces"/>.  We need to verify that the null space is a span.
+      The column space is defined to be a span, so it is a subspace by the above <xref ref="subspaces-spans-are-subspaces"/>.  We need to verify that the null space is really a subspace.  In <xref ref="solution-sets"/> we already saw that the set of solutions of <m>Ax=0</m> is always a span, so the fact that the null spaces is a subspace should not come as a surprise.
     </p>
 
     <proof>
