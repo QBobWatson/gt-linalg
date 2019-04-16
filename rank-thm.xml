@@ -212,7 +212,7 @@ the license is included in gfdl.xml.
   </definition>
 
     <p>
-      According to this <xref ref="dimension-basis-colspace"/>, the rank of <m>A</m> is equal to the number of <xref ref="defn-pivot-pos" text="title">pivot columns</xref>.  On the other hand, this <xref ref="dimension-basis-nulspace"/> implies that <m>\nullity(A)</m> equals the number of free variables, which is the number of columns without pivots.  To summarize:
+      We know that the rank of <m>A</m> is equal to the number of <xref ref="defn-pivot-pos" text="title">pivot columns</xref> (see this <xref ref="dimension-basis-colspace"/>), and the nullity of <m>A</m> is equal to the number of free variables (see this <xref ref="dimension-basis-nulspace"/>), which is the number of columns without pivots.  To summarize:
       <md>
         <mrow>\rank(A) = \dim\Col(A) &amp;= \text{the number of columns with pivots}</mrow>
         <mrow>\nullity(A) = \dim\Nul(A) &amp;= \text{the number of free variables}</mrow>
@@ -226,7 +226,7 @@ the license is included in gfdl.xml.
       <idx><h>Nullity</h><h>rank theorem</h></idx>
       <statement>
         <p>
-          If <m>A</m> is an <m>m\times n</m> matrix, then
+          If <m>A</m> is a matrix with <m>n</m> columns, then
           <me>\rank(A) + \nullity(A) = n.</me>
         </p>
       </statement>
