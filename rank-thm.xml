@@ -320,7 +320,7 @@ the license is included in gfdl.xml.
     <title>The Basis Theorem</title>
 
     <p>
-      Recall from this <xref ref="dimension-eg-Rn-any"/> that <m>\{v_1,v_2,\ldots,v_n\}</m> forms a basis for <m>\R^n</m> if and only if the matrix <m>A</m> with columns <m>v_1,v_2,\ldots,v_n</m> has a pivot in every row and column.  Since <m>A</m> is an <m>n\times n</m> matrix, these two conditions are equivalent: the vectors span if and only if they are linearly independent.
+      Recall that <m>\{v_1,v_2,\ldots,v_n\}</m> forms a basis for <m>\R^n</m> if and only if the matrix <m>A</m> with columns <m>v_1,v_2,\ldots,v_n</m> has a pivot in every row and column (see this <xref ref="dimension-eg-Rn-any"/>).  Since <m>A</m> is an <m>n\times n</m> matrix, these two conditions are equivalent: the vectors span if and only if they are linearly independent.
       The basis theorem is an abstract version of the preceding statement, that applies to any subspace.
     </p>
 
