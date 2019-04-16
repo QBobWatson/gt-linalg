@@ -429,7 +429,7 @@ the license is included in gfdl.xml.
       </p>
     </proof>
 
-    <example>
+    <example xml:id="subspaces-col-nul-1">
       <statement>
         <p>Describe the column space and the null space of<me>A = \mat{1 1; 1 1; 1 1}</me>.</p>
       </statement>
