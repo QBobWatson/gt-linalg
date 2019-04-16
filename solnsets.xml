@@ -497,7 +497,7 @@ the license is included in gfdl.xml.
 
     <p>It is not hard to see why the <xref ref="solnsets-translate-span"/> is true.  If <m>p</m> is a particular solution, then <m>Ap=b</m>, and if <m>x</m> is a solution to the homogeneous equation <m>Ax=0</m>, then
     <me>A(x+p) = Ax + Ap = 0 + b = b,</me>
-    so <m>x+p</m> is another solution of <m>Ax=b</m>.
+    so <m>x+p</m> is another solution of <m>Ax=b</m>.  On the other hand, if we start with any solution <m>x</m> to <m>Ax=b</m> then <m>x-p</m> is a solution to <m>Ax=0</m> since <me>A(x-p)=Ax-Ap=b-b=0</me>.
     </p>
 
     <remark>
