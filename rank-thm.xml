@@ -218,7 +218,12 @@ the license is included in gfdl.xml.
         <mrow>\nullity(A) = \dim\Nul(A) &amp;= \text{the number of free variables}</mrow>
         <mrow>&amp;= \text{the number of columns without pivots}</mrow>
       </md>
-      Clearly (the number of columns with pivots) plus (the number of columns without pivots) equals (the number of columns of <m>A</m>), so we have proved the following theorem.
+      Clearly
+      <me>
+        \text{\#(columns with pivots)} + \text{\#(columns without pivots)}
+        = \text{\#(columns)},
+      </me>
+      so we have proved the following theorem.
     </p>
 
     <theorem type-name="Rank Theorem" xml:id="rank-theorem">
