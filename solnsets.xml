@@ -123,7 +123,24 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
-    <p>Since there were <em>two</em> variables in the above <xref ref="solnsets-eg-line"/>, the solution set is a subset of <m>\R^2</m>.  Since <em>one</em> of the variables was free, the solution set is a <em>line</em>.</p>
+    <p>Since there were <em>two</em> variables in the above <xref ref="solnsets-eg-line"/>, the solution set is a subset of <m>\R^2</m>.  Since <em>one</em> of the variables was free, the solution set is a <em>line</em>:
+        <latex-code>
+              <![CDATA[
+\begin{tikzpicture}
+  \path[clip] (-6,-2) rectangle (6,2);
+  \draw[grid lines] (-6,-2) grid (6,2);
+  \draw[thick] (-6,0) -- (6,0);
+  \draw[thick] (0,-2) -- (0,2);
+  \draw[seq4] (-6,-2) -- node[pos=.4, above left=1pt, whitebg, thin border]
+   {$Ax=0$} (6,2);
+  \draw[vector, seq-green] (0,0) -- (3,1);
+\end{tikzpicture}
+              ]]>
+        </latex-code>
+</p>
+
+
+
 
     <bluebox>
       <idx><h>System of linear equations</h><h>nontrivial solution</h><h>finding</h></idx>
@@ -321,7 +338,7 @@ the license is included in gfdl.xml.
         We turn the above system into a <em>vector equation</em>:
         <me>x = \vec{x_1 x_2} = x_2\vec{3 1} + \vec{-3 0}.</me>
         This vector equation is called the <term>parametric vector form</term> of the solution set.
-        Since <m>x_2</m> is allowed to be anything, this says that the solution set is the set of all scalar multiples of <m>{3\choose 1}</m>, <em>translated</em> by the vector <m>p = {-3\choose 0}</m>.  This is a line which contains <m>p</m> and is parallel to <m>\Span\{{3\choose 1}\}</m>: it is a <em>translate of a line</em>.  We write the solution set as
+        We write the solution set as
         <me>\Span\left\{\vec{3 1}\right\} + \vec{-3 0}.</me>
         Here is a picture of the the solution set:
         <latex-code>
@@ -352,6 +369,27 @@ the license is included in gfdl.xml.
     <me>x = \vec{x_1 x_2} = x_2\vec{3 1} + \vec{-3 0}</me>
     where <m>x_2</m> is any scalar.  The vector <m>p = {-3\choose 0}</m> is also a solution of <m>Ax=b</m>: take <m>x_2=0</m>.  We call <m>p</m> a <term>particular solution</term>.
     </p>
+
+	<p>In the solution set, <m>x_2</m> is allowed to be anything, and so the solution set is obtained as follows: we take all scalar multiples of <m>{3\choose 1}</m> and then add the particular solution <m>p = {-3\choose 0}</m> to each of these scalar multiples.  Geometrically, this is accomplished by first drawing the span of <m>{3\choose 1}</m>, which is a line through the origin (and, not coincidentally, the solution to <m>Ax=0</m>), and we <em>translate</em>, or push, this line along <m>p = {-3\choose 0}</m>.  The translated line contains <m>p</m> and is parallel to <m>\Span\{{3\choose 1}\}</m>: it is a <em>translate of a line</em>. 
+        <latex-code>
+              <![CDATA[
+\begin{tikzpicture}[thin border nodes]
+  \draw[grid lines] (-6,-2) grid (6,3);
+  \path[clip] (-6,-2) rectangle (6,3);
+  \draw (-6,0) -- (6,0);
+  \draw (0,-2) -- (0,3);
+  \draw[seq2] (-6,-2) -- node[pos=.6,below right=1pt,whitebg] {$Ax=0$} (6,2);
+  \draw[seq4] (-6,-1) -- node[pos=.7,above left=1pt,whitebg] {$Ax=b$} (6,3);
+  \point (a) at (-3,0);
+  \draw[vector, seq1] (a) -- (0,1);
+  \draw[->, vector, seq3] (0,0) -- node[pos=.3,above] {$p$} (a);
+  \point at (0,0);
+\end{tikzpicture}
+              ]]>
+        </latex-code>
+
+	</p>
+
 
     <example xml:id="solnsets-eg-plane2">
       <title>The solution set is a plane</title>
