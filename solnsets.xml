@@ -556,7 +556,7 @@ the license is included in gfdl.xml.
       </figure>
     </example>
 
-    <example hide-type="true">
+    <example hide-type="true" xml:id="solnsets-line-plane">
       <title>Interactive: Solution set and span of the columns (3)</title>
       <figure>
         <caption>Left: the solution set of <m>Ax=b</m> is in violet.  Right: the span of the columns of <m>A</m> is in violet.  As you move <m>x</m>, you change <m>b</m>, so the solution set changes<mdash/>but all solution sets are parallel planes.  If you move <m>b</m> within the span of the columns, the solution set also changes, and the demo solves the equation to find a particular solution <m>x</m>.  If you move <m>b</m> outside of the span of the columns, the system becomes inconsistent, and the solution set disappears.

@@ -30,9 +30,166 @@ the license is included in gfdl.xml.
   <subsection>
     <title>The Rank Theorem</title>
 
-  <p>
-    With the rank theorem, we can finally relate the dimension of the solution set of a matrix equation with the dimension of the column space.
-  </p>
+    <p>
+      The reader may have observed a relationship between the column space and the null space of a matrix.  In this <xref ref="subspaces-col-nul-1"/>, the column space and the null space of a <m>3\times 2</m> matrix are both lines, in <m>\R^2</m> and <m>\R^3</m>, respectively:
+          <latex-code>
+\begin{tikzpicture}[myxyz, scale=.8]
+\begin{scope}[resetxy]
+  \draw[grid lines] (-3,-3) grid (3,3);
+  \draw[seq4] (-3,3) -- (3,-3);
+  \point at (0,0);
+  \node[seq4,fill=white, inner sep=1pt] at (-.7,2) {$\Nul(A)$};
+\end{scope}
+
+\begin{scope}[xshift=9cm]
+  \path[clip, resetxy] (-6,-4) rectangle (6,4);
+
+  \def\v{(1, 1, 1)}
+  \node[coordinate] (X) at \v {};
+
+  \draw[seq4] (0,0,0) -- ($-6*(X)$);
+  \draw (0,0,-3) -- (0,0,0);
+
+  \begin{scope}[transformxy]
+    \fill[white, nearly opaque] (-3, -3) rectangle (3, 3);
+    \draw[grid lines] (-3, -3) grid (3, 3);
+    \draw[->] (-3,0) -- (3,0);
+    \draw[->] (0,-3) -- (0,3);
+  \end{scope}
+
+  \draw[seq4] (0,0,0) -- node[right, pos=.7] {$\Col(A)$} ($6*(X)$);
+  \draw[->] (0,0,0) -- (0,0,3);
+
+  \point at (0,0,0);
+\end{scope}
+
+  \node[fill=white, resetxy] at (5, 2) {$A = \mat{1 1; 1 1; 1 1}$};
+
+\end{tikzpicture}
+          </latex-code>
+          In this <xref ref="solnsets-eg-plane2"/>, the null space of the <m>2\times 3</m> matrix <m>\bigl(\begin{smallmatrix}1&amp;-1&amp;2\\-2&amp;2&amp;-4\end{smallmatrix}\bigr)</m> is a plane in <m>\R^3</m>, and the column space the line in <m>\R^2</m> spanned by <m>{1\choose-2}</m>:
+        <latex-code>
+              <![CDATA[
+\begin{tikzpicture}[myxyz, scale=.8]
+\begin{scope}[xshift=9cm, resetxy]
+  \draw[grid lines] (-3,-3) grid (3,3);
+  \draw[seq4] (-1.5,3) -- (1.5,-3);
+  \point at (0,0);
+  \node[seq4,fill=white, inner sep=1pt] at (-.7,2) {$\Col(A)$};
+\end{scope}
+
+\begin{scope}
+  \path[clip, resetxy] (-6,-4) rectangle (6,4);
+
+  \def\v{(1, 1, 0)}
+  \def\w{(-2, 0, 1)}
+
+  \node[coordinate] (X) at \v {};
+  \node[coordinate] (Y) at \w {};
+
+  \draw (0,0,-3) -- (0,0,0);
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-5, 0) -- (-5, -5) -- (5, -5) -- (5, 0) -- cycle;
+    \fill[seq4!30, nearly opaque] (-3,-2) rectangle (3,2);
+    \draw[step=1cm, seq4, very thin] (-3,-2) grid (3,2);
+  \end{scope}
+
+  \begin{scope}[transformxy]
+    \fill[white, nearly opaque] (-3, -3) rectangle (3, 3);
+    \draw[grid lines] (-3, -3) grid (3, 3);
+    \draw[->] (-3,0) -- (3,0);
+    \draw[->] (0,-3) -- (0,3);
+  \end{scope}
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-5, 0) -- (-5, 5) -- (5, 5) -- (5, 0) -- cycle;
+    \fill[seq4!30, nearly opaque] (-3,-2) rectangle (3,2);
+    \draw[step=1cm, seq4, very thin] (-3,-2) grid (3,2);
+  \end{scope}
+
+  \draw[->] (0,0,0) -- (0,0,3);
+
+  \node[seq4, anchor=south east] at (-3,-2.5,.5) {$\Nul(A)$};
+
+  \point at (0,0,0);
+\end{scope}
+
+  \node[fill=white, resetxy] at (5, -2) {$A = \mat{1 -1 2; -2 2 -4}$};
+
+\end{tikzpicture}
+              ]]>
+        </latex-code>
+        In this <xref ref="solnsets-line-plane"/>, the null space of a <m>3\times 3</m> matrix is a line in <m>\R^3</m>, and the column space is a plane in <m>\R^3</m>:
+        <latex-code>
+              <![CDATA[
+\begin{tikzpicture}[myxyz, scale=.8]
+\begin{scope}[xshift=9cm]
+  \path[clip, resetxy] (-6,-4) rectangle (6,4);
+
+  \draw (0,0,-3) -- (0,0,0);
+
+  \def\v{(1, 0, 1)}
+  \def\w{(-1/2, 1, 1/2)}
+
+  \node[coordinate] (X) at \v {};
+  \node[coordinate] (Y) at \w {};
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-5/2, 5) -- (-5, 5) -- (-5, -5) -- (5/2, -5) -- cycle;
+    \fill[seq4!30, nearly opaque] (-2,-2) rectangle (2,2);
+    \draw[step=1cm, seq4, very thin] (-2,-2) grid (2,2);
+  \end{scope}
+
+  \begin{scope}[transformxy]
+    \fill[white, nearly opaque] (-3, -3) rectangle (3, 3);
+    \draw[grid lines] (-3, -3) grid (3, 3);
+    \draw[->] (-3,0) -- (3,0);
+    \draw[->] (0,-3) -- (0,3);
+  \end{scope}
+
+  \begin{scope}[x=(X), y=(Y), transformxy]
+    \path[clip] (-5/2, 5) -- (5, 5) -- (5, -5) -- (5/2, -5) -- cycle;
+    \fill[seq4!30, nearly opaque] (-2,-2) rectangle (2,2);
+    \draw[step=1cm, seq4, very thin] (-2,-2) grid (2,2);
+  \end{scope}
+
+  \draw[->] (0,0,0) -- (0,0,3);
+
+  \node[seq4, anchor=south east] at (-3,-2.5,0) {$\Col(A)$};
+
+  \point at (0,0,0);
+\end{scope}
+
+\begin{scope}
+  \path[clip, resetxy] (-6,-4) rectangle (6,4);
+
+  \def\v{(1, -1, 1)}
+  \node[coordinate] (X) at \v {};
+
+  \draw[seq4] (0,0,0) -- ($-3*(X)$);
+  \draw (0,0,-3) -- (0,0,0);
+
+  \begin{scope}[transformxy]
+    \fill[white, nearly opaque] (-3, -3) rectangle (3, 3);
+    \draw[grid lines] (-3, -3) grid (3, 3);
+    \draw[->] (-3,0) -- (3,0);
+    \draw[->] (0,-3) -- (0,3);
+  \end{scope}
+
+  \draw[seq4] (0,0,0) -- node[above] {$\Nul(A)$} ($3*(X)$);
+  \draw[->] (0,0,0) -- (0,0,3);
+
+  \point at (0,0,0);
+\end{scope}
+
+  \node[fill=white, resetxy] at (3, -2) {$A = \mat{1 0 -1; 0 1 1; 1 1 0}$};
+
+\end{tikzpicture}
+              ]]>
+        </latex-code>
+        In all examples, the dimension of the column space plus the dimension of the null space is equal to the number of <em>columns</em> of the matrix.  This is the content of the rank theorem.
+    </p>
 
   <definition>
     <idx><h>Matrix</h><h>rank of</h><see>Rank</see></idx>
@@ -79,6 +236,7 @@ the license is included in gfdl.xml.
       In other words, for any consistent system of linear equations,
       <me>\text{(dim of column span)} + \text{(dim of solution set)} =
       \text{(number of variables)}.</me>
+      The rank theorem theorem is really the culmination of this chapter, as it gives a strong relationship between the null space of a matrix (the solution set of <m>Ax=0</m>) with the column space (the set of vectors <m>b</m> making <m>Ax=b</m> consistent), our two primary objects of interest.
     </p>
 
     <example>
