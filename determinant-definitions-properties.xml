@@ -528,7 +528,7 @@ the license is included in gfdl.xml.
       </statement>
       <proof>
         <p>
-          If <m>A</m> is invertible, then its reduced row echelon form is the identity matrix by the <xref ref="imt-1"/>.  Since row operations do not change whether the determinant is zero, and since <m>\det(I_n) = 1</m>, this implies <m>\det(A)\neq 0.</m>  Conversely, if <m>A</m> is not invertible, then it is row equivalent to a matrix with a zero row.  Again, row operations do not change whether the determinant is nonzero, so in this case <m>\det(A) = 0.</m>
+          If <m>A</m> is invertible, then it has a pivot in every row and column by the <xref ref="imt-1"/>, so its reduced row echelon form is the identity matrix.  Since row operations do not change whether the determinant is zero, and since <m>\det(I_n) = 1</m>, this implies <m>\det(A)\neq 0.</m>  Conversely, if <m>A</m> is not invertible, then it is row equivalent to a matrix with a zero row.  Again, row operations do not change whether the determinant is nonzero, so in this case <m>\det(A) = 0.</m>
         </p>
       </proof>
     </proposition>
@@ -546,7 +546,7 @@ the license is included in gfdl.xml.
       </statement>
       <proof>
         <p>
-          If the columns of <m>A</m> are linearly dependent, then <m>A</m> is not invertible by statement 8 of the <xref ref="imt-1"/>.  Suppose now that the rows of <m>A</m> are linearly dependent.  If <m>r_1,r_2,\ldots,r_n</m> are the rows of <m>A</m>, then one of the rows is in the span of the others, so we have an equation like
+          If the columns of <m>A</m> are linearly dependent, then <m>A</m> is not invertible by condition 4 of the <xref ref="imt-1"/>.  Suppose now that the rows of <m>A</m> are linearly dependent.  If <m>r_1,r_2,\ldots,r_n</m> are the rows of <m>A</m>, then one of the rows is in the span of the others, so we have an equation like
           <me>r_2 = 3r_1 - r_3 + 2r_4.</me>
           If we perform the following row operations on <m>A</m>:
           <me>
@@ -557,7 +557,7 @@ the license is included in gfdl.xml.
           then the second row of the resulting matrix is zero.  Hence <m>A</m> is not invertible in this case either.
         </p>
         <p>
-          Alternatively, if the rows of <m>A</m> are linearly dependent, then one can combine statement 8 of the <xref ref="imt-1"/> and the <xref ref="det-defn-trans-prop">transpose property</xref> below to conclude that <m>\det(A)=0</m>.
+          Alternatively, if the rows of <m>A</m> are linearly dependent, then one can combine condition 4 of the <xref ref="imt-1"/> and the <xref ref="det-defn-trans-prop">transpose property</xref> below to conclude that <m>\det(A)=0</m>.
         </p>
       </proof>
     </corollary>

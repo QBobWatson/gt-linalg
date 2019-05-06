@@ -21,11 +21,9 @@ the license is included in gfdl.xml.
     </ol>
   </objectives>
 
-  <introduction>
   <p>
     In this section we present the rank theorem, which is the culmination of all of the work we have done so far.
   </p>
-  </introduction>
 
     <p>
       The reader may have observed a relationship between the column space and the null space of a matrix.  In this <xref ref="subspaces-col-nul-1"/>, the column space and the null space of a <m>3\times 2</m> matrix are both lines, in <m>\R^2</m> and <m>\R^3</m>, respectively:

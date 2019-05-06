@@ -860,14 +860,11 @@ the license is included in gfdl.xml.
      <idx><h>System of linear equations</h><h>trivial solution</h><h>and invertibility</h></idx>
      <idx><h>System of linear equations</h><h>nontrivial solution</h><h>and invertibility</h></idx>
      <idx><h>Null space</h><h>and invertibility</h></idx>
-     <idx><h>Nullity</h><h>and invertibility</h></idx>
      <idx><h>Linear independence</h><h>and invertibility</h></idx>
-     <idx><h>Basis</h><h>and invertibility</h></idx>
      <idx><h>One-to-one</h><h>and invertibility</h></idx>
      <idx><h>Onto</h><h>and invertibility</h></idx>
      <idx><h>Matrix equation</h><h>always consistent</h><h>and invertibility</h></idx>
      <idx><h>Column space</h><h>and invertibility</h></idx>
-     <idx><h>Rank</h><h>and invertibility</h></idx>
      <idx><h>Invertible matrix</h><h>determinant of</h></idx>
      <idx><h>Determinant</h><h>invertibility property</h></idx>
      <idx><h>Eigenvalue</h><h>and invertibility</h></idx>
@@ -876,24 +873,16 @@ the license is included in gfdl.xml.
          Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>T\colon\R^n\to\R^n</m> be the matrix transformation <m>T(x) = Ax</m>.  The following statements are equivalent:
          <ol>
            <li><m>A</m> is invertible.</li>
-           <li><m>T</m> is invertible.</li>
-           <li>The reduced row echelon form of <m>A</m> is the identity matrix <m>I_n</m>.</li>
            <li><m>A</m> has <m>n</m> pivots.</li>
-           <li><m>Ax=0</m> has no solutions other than the trivial one.</li>
            <li><m>\Nul(A) = \{0\}</m>.</li>
-           <li><m>\nullity(A) = 0</m>.</li>
            <li>The columns of <m>A</m> are linearly independent.</li>
-           <li>The columns of <m>A</m> form a basis for <m>\R^n</m>.</li>
-           <li><m>T</m> is one-to-one.</li>
-           <li><m>Ax=b</m> is consistent for all <m>b</m> in <m>\R^n</m>.</li>
-           <li><m>Ax=b</m> has a unique solution for each <m>b</m> in <m>\R^n</m>.</li>
+
            <li>The columns of <m>A</m> span <m>\R^n</m>.</li>
-           <li><m>\Col(A) = \R^n.</m></li>
-           <li><m>\dim\Col(A) = n.</m></li>
-           <li><m>\rank(A) = n.</m></li>
+           <li><m>Ax=b</m> has a unique solution for each <m>b</m> in <m>\R^n</m>.</li>
+
+           <li><m>T</m> is invertible.</li>
+           <li><m>T</m> is one-to-one.</li>
            <li><m>T</m> is onto.</li>
-           <li>There is a matrix <m>B</m> such that <m>AB = I_n</m>.</li>
-           <li>There is a matrix <m>B</m> such that <m>BA = I_n</m>.</li>
            <li><m>\det(A) \neq 0</m>.</li>
            <li><m>0</m> is not an eigenvalue of <m>A</m>.</li>
          </ol>

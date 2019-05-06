@@ -238,7 +238,7 @@ the license is included in gfdl.xml.
     </p>
 
     <p>
-      By the <xref ref="imt-2"/>, an <m>n\times n</m> matrix <m>C</m> is invertible if and only if its columns <m>v_1,v_2,\ldots,v_n</m> form a basis for <m>\R^n</m>.  This means we can speak of the <m>\cB</m>-coordinates of a vector in <m>\R^n</m>, where <m>\cB</m> is the basis of columns of <m>C</m>.  Recall that
+      By conditions 4 and 5 of the <xref ref="imt-2"/>, an <m>n\times n</m> matrix <m>C</m> is invertible if and only if its columns <m>v_1,v_2,\ldots,v_n</m> form a basis for <m>\R^n</m>.  This means we can speak of the <m>\cB</m>-coordinates of a vector in <m>\R^n</m>, where <m>\cB</m> is the basis of columns of <m>C</m>.  Recall that
       <me>
         [x]_\cB = \vec{c_1 c_2 \vdots, c_n} \sptxt{means}
         x = c_1v_1 + c_2v_2 + \cdots + c_nv_n

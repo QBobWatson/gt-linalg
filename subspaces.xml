@@ -511,7 +511,7 @@ the license is included in gfdl.xml.
       To find a spanning set for the null space, one has to solve a system of homogeneous equations.
     </p>
 
-    <bluebox>
+    <bluebox xml:id="subspaces-span-nullspace">
       <title>Recipe: Compute a spanning set for a null space</title>
       <idx><h>Null space</h><h>computing</h></idx>
       <p>

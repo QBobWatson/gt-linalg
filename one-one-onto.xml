@@ -586,7 +586,7 @@ the license is included in gfdl.xml.
     </p>
   </example>
 
-  <theorem>
+  <theorem xml:id="matrix-trans-onto">
     <title>Onto matrix transformations</title>
     <idx><h>Onto</h><h>criteria for matrix transformations</h></idx>
     <idx><h>Matrix transformation</h><h>onto criteria</h></idx>
