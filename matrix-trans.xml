@@ -866,6 +866,10 @@ the license is included in gfdl.xml.
     </solution>
   </example>
 
+  <p>
+    In the case of an <m>n\times n</m> square matrix, the domain and codomain of <m>T(x) = Ax</m> are both <m>\R^n</m>.  In this situation, one can regard <m>T</m> as <em>operating on</em> <m>\R^n</m>: it moves the vectors around in the same space.
+  </p>
+
   <example>
     <title>Matrix transformations of <m>\R^2</m></title>
     <idx><h>Matrix transformation</h><h>of <m>\R^2</m></h></idx>
