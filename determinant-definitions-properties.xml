@@ -35,7 +35,7 @@ the license is included in gfdl.xml.
     <title>The Definition of the Determinant</title>
 
     <p>
-      The determinant of a square matrix <m>A</m> is a real number <m>\det(A)</m>.  It is defined via its behavior with respect to row operations; this means we can use row reduction to compute it.  We will give a recursive formula for the determinant in <xref ref="determinants-cofactors"/>.  We will also show in <xref ref="det-defn-magic-props"/> that the determinant is related to invertibility, and in <xref ref="determinants-volumes"/> that it is related to volumes.
+      The determinant of a square matrix <m>A</m> is a real number <m>\det(A)</m>.  It is defined via its behavior with respect to row operations; this means we can use row reduction to compute it.  We will give a recursive formula for the determinant in <xref ref="determinants-cofactors"/>.  We will also show in this <xref ref="det-defn-magic-props"/> that the determinant is related to invertibility, and in <xref ref="determinants-volumes"/> that it is related to volumes.
     </p>
 
     <essential xml:id="det-defn-the-defn">
