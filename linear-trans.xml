@@ -78,7 +78,7 @@ the license is included in gfdl.xml.
     </p>
 
     <p>
-      We will see in the next <xref ref="linear-trans-is-matrix-trans"/> that a linear transformation is a matrix transformation; we just haven<rsq/>t computed its matrix yet.
+      We will see in the next <xref ref="linear-trans-is-matrix-trans"/> that the opposite is true: every linear transformation is a matrix transformation; we just haven't computed its matrix yet.
     </p>
 
     <fact hide-type="true">
