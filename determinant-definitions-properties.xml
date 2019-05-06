@@ -158,7 +158,118 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      Next we will compute some determinants of matrices with special properties, but before doing so, we need some terminology involving matrices.
+      Here is the general method for computing determinants using row reduction.
+    </p>
+
+    <bluebox xml:id="det-defn-ref-compute" type-name="Recipe">
+      <title>Recipe: Computing determinants by row reducing</title>
+      <idx><h>Determinant</h><h>computation of</h><h>row reduction</h></idx>
+      <idx><h>Row reduction</h><h>computing determinants</h></idx>
+	<p>
+          Let <m>A</m> be a square matrix.  Suppose that you do some number of row operations on <m>A</m> to obtain a matrix <m>B</m> in row echelon form.  Then
+	  <me>
+	    \det(A) = (-1)^r\cdot
+            \frac{\text{(product of the diagonal entries of $B$)}}
+            {\text{(product of scaling factors used)}},
+	  </me>
+          where <m>r</m> is the number of row swaps performed.
+	</p>
+    </bluebox>
+
+    <p>
+      In other words, the determinant of <m>A</m> is the product of diagonal entries of the row echelon form <m>B</m>, times a factor of <m>\pm1</m> coming from the number of row swaps you made, divided by the product of the scaling factors used in the row reduction.
+    </p>
+
+    <remark>
+      <p>
+        This is an efficient way of computing the determinant of a large matrix, either by hand or by computer.  The computational complexity of row reduction is <m>O(n^3)</m>; by contrast, the cofactor expansion algorithm we will learn in <xref ref="determinants-cofactors"/> has complexity <m>O(n!)\approx O(n^n\sqrt n)</m>, which is much larger.  (Cofactor expansion has other uses.)
+      </p>
+    </remark>
+
+    <example>
+      <statement>
+        <p>Compute <m>\det\mat{0 -7 -4; 2 4 6; 3 7 -1}.</m></p>
+      </statement>
+      <solution>
+        <p>
+          We row reduce the matrix, keeping track of the number of row swaps and of the scaling factors used.
+          <latex-code>
+\begin{minipage}{10cm}  % needed for pdf version
+\def\rowop#1#2#3{%
+  \hbox to 4.2cm{\hss$\xrightarrow{#1}$\;}%
+  \hbox to 3cm{#2\hss}%
+  \hbox to 3cm{\hskip3mm\begin{minipage}{3.3cm}#3\end{minipage}\hss}%
+  }
+\leavevmode\rlap{\hbox{$\mat{0 -7 -4; 2 4 6; 3 7 -1}$}}%
+\rowop{R_1\longleftrightarrow R_2}{$\mat{2 4 6; 0 -7 -4; 3 7 -1}$}{$r=1$}\\
+\rowop{R_1 = R_1 \div 2}{$\mat{1 2 3; 0 -7 -4; 3 7 -1}$}{scaling factors${}=\frac 12$}\\
+\rowop{R_3 = R_3 - 3R_1}{$\mat{1 2 3; 0 -7 -4; 0 1 -10}$}{}\\
+\rowop{R_2\longleftrightarrow R_3}{$\mat{1 2 3; 0 1 -10; 0 -7 -4}$}{$r=2$}\\
+\rowop{R_3 = R_3 + 7R_2}{$\mat{1 2 3; 0 1 -10; 0 0 -74}$}{}
+\end{minipage}
+          </latex-code>
+          We made two row swaps and scaled once by a factor of <m>1/2</m>, so the <xref ref="det-defn-ref-compute"/> says that
+          <me>\det\mat{0 -7 -4; 2 4 6; 3 7 -1} = (-1)^2\cdot\frac{1\cdot 1\cdot -74}{1/2} = -148.</me>
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <statement>
+        <p>Compute <m>\det\mat{1 2 3;2 -1 1;3 0 1}.</m></p>
+      </statement>
+      <solution>
+        <p>
+          We row reduce the matrix, keeping track of the number of row swaps and of the scaling factors used.
+          <latex-code>
+\begin{minipage}{10cm}  % needed for pdf version
+\def\rowop#1#2#3#4{%
+  \hbox to 4.5cm{\hss$\xrightarrow[#2]{#1}$\;}%
+  \hbox to 2.7cm{#3\hss}%
+  \hbox to 3cm{\hskip3mm\begin{minipage}{10cm}#4\end{minipage}\hss}%
+  }
+\leavevmode\rlap{\hbox{$\mat{1 2 3; 2 -1 1; 3 0 1}$}}%
+\rowop{R_2=R_2-2R_1}{R_3=R_3-3R_1}{$\mat{1 2 3; 0 -5 -5; 0 -6 -8}$}{}\\
+\rowop{R_2=R_2\div-5}{}{$\mat{1 2 3; 0 1 1; 0 -6 -8}$}{scaling factors${}=-\frac 15$}\\
+\rowop{R_3=R_3+6R_2}{}{$\mat{1 2 3; 0 1 1; 0 0 -2}$}{}
+\end{minipage}
+          </latex-code>
+          We did not make any row swaps, and we scaled once by a factor of <m>-1/5</m>, so the <xref ref="det-defn-ref-compute"/> says that
+          <me>\det\mat{1 2 3; 2 -1 1; 3 0 1} = \frac{1\cdot 1\cdot -2}{-1/5} = 10.</me>
+        </p>
+      </solution>
+    </example>
+
+    <specialcase xml:id="det-defn-22-again">
+      <title>The determinant of a <m>2\times 2</m> matrix</title>
+      <idx><h>Determinant</h><h>of a <m>2\times 2</m> matrix</h></idx>
+      <p>
+        Let us use the <xref ref="det-defn-ref-compute"/> to compute the determinant of a general <m>2\times 2</m> matrix <m>A = \smallmat abcd</m>.
+        <ul>
+          <li>
+            If <m>a = 0</m>, then
+            <me>
+              \det\mat{a b; c d} = \det\mat{0 b; c d} = -\det\mat{c d; 0 b} = -bc.
+            </me>
+          </li>
+          <li>
+            If <m>a\neq 0</m>, then
+            <me>
+              \begin{split}
+                \det\mat{a b; c d} \amp= a\cdot\det\mat{1 b/a; c d}
+                = a\cdot\det\mat{1 b/a; 0 d-c\cdot b/a} \\
+                \amp= a\cdot 1\cdot(d-bc/a) = ad-bc.
+              \end{split}
+            </me>
+          </li>
+        </ul>
+        In either case, we recover the <xref ref="matrix-inv-def-det">formula</xref>:
+        <me>\det\mat{a b; c d} = ad-bc.</me>
+      </p>
+    </specialcase>
+
+    <p>
+      If a matrix is already in row echelon form, then you can simply read off the determinant as the product of the diagonal entries.  It turns out this is true for a slightly larger class of matrices called <em>triangular</em>.
     </p>
 
     <definition>
@@ -381,115 +492,8 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      A matrix can always be transformed into row echelon form by a series of  row operations, and a matrix in row echelon form is upper-triangular.  Therefore, we have a systematic way of computing the determinant:
+      A matrix can always be transformed into row echelon form by a series of  row operations, and a matrix in row echelon form is upper-triangular.  Therefore, we have completely justified the <xref ref="det-defn-ref-compute"/> for computing the determinant.
     </p>
-
-    <bluebox xml:id="det-defn-ref-compute" type-name="Recipe">
-      <title>Recipe: Computing determinants by row reducing</title>
-      <idx><h>Determinant</h><h>computation of</h><h>row reduction</h></idx>
-      <idx><h>Row reduction</h><h>computing determinants</h></idx>
-	<p>
-          Let <m>A</m> be a square matrix.  Suppose that you do some number of row operations on <m>A</m> to obtain a matrix <m>B</m> in row echelon form.  Then
-	  <me>
-	    \det(A) = (-1)^r\cdot
-            \frac{\text{(product of the diagonal entries of $B$)}}
-            {\text{(product of scaling factors used)}},
-	  </me>
-          where <m>r</m> is the number of row swaps performed.
-	</p>
-    </bluebox>
-
-    <p>
-      In other words, the determinant of <m>A</m> is the product of diagonal entries of the row echelon form <m>B</m>, times a factor of <m>\pm1</m> coming from the number of row swaps you made, divided by the product of the scaling factors used in the row reduction.
-    </p>
-
-    <remark>
-      <p>
-        This is an efficient way of computing the determinant of a large matrix, either by hand or by computer.  The computational complexity of row reduction is <m>O(n^3)</m>; by contrast, the cofactor expansion algorithm we will learn in <xref ref="determinants-cofactors"/> has complexity <m>O(n!)\approx O(n^n\sqrt n)</m>, which is much larger.  (Cofactor expansion has other uses.)
-      </p>
-    </remark>
-
-    <example>
-      <statement>
-        <p>Compute <m>\det\mat{0 -7 -4; 2 4 6; 3 7 -1}.</m></p>
-      </statement>
-      <solution>
-        <p>
-          We row reduce the matrix, keeping track of the number of row swaps and of the scaling factors used.
-          <latex-code>
-\begin{minipage}{10cm}  % needed for pdf version
-\def\rowop#1#2#3{%
-  \hbox to 4.2cm{\hss$\xrightarrow{#1}$\;}%
-  \hbox to 3cm{#2\hss}%
-  \hbox to 3cm{\hskip3mm\begin{minipage}{3.3cm}#3\end{minipage}\hss}%
-  }
-\leavevmode\rlap{\hbox{$\mat{0 -7 -4; 2 4 6; 3 7 -1}$}}%
-\rowop{R_1\longleftrightarrow R_2}{$\mat{2 4 6; 0 -7 -4; 3 7 -1}$}{$r=1$}\\
-\rowop{R_1 = R_1 \div 2}{$\mat{1 2 3; 0 -7 -4; 3 7 -1}$}{scaling factors${}=\frac 12$}\\
-\rowop{R_3 = R_3 - 3R_1}{$\mat{1 2 3; 0 -7 -4; 0 1 -10}$}{}\\
-\rowop{R_2\longleftrightarrow R_3}{$\mat{1 2 3; 0 1 -10; 0 -7 -4}$}{$r=2$}\\
-\rowop{R_3 = R_3 + 7R_2}{$\mat{1 2 3; 0 1 -10; 0 0 -74}$}{}
-\end{minipage}
-          </latex-code>
-          We made two row swaps and scaled once by a factor of <m>1/2</m>, so the <xref ref="det-defn-ref-compute"/> says that
-          <me>\det\mat{0 -7 -4; 2 4 6; 3 7 -1} = (-1)^2\cdot\frac{1\cdot 1\cdot -74}{1/2} = -148.</me>
-        </p>
-      </solution>
-    </example>
-
-    <example>
-      <statement>
-        <p>Compute <m>\det\mat{1 2 3;2 -1 1;3 0 1}.</m></p>
-      </statement>
-      <solution>
-        <p>
-          We row reduce the matrix, keeping track of the number of row swaps and of the scaling factors used.
-          <latex-code>
-\begin{minipage}{10cm}  % needed for pdf version
-\def\rowop#1#2#3#4{%
-  \hbox to 4.5cm{\hss$\xrightarrow[#2]{#1}$\;}%
-  \hbox to 2.7cm{#3\hss}%
-  \hbox to 3cm{\hskip3mm\begin{minipage}{10cm}#4\end{minipage}\hss}%
-  }
-\leavevmode\rlap{\hbox{$\mat{1 2 3; 2 -1 1; 3 0 1}$}}%
-\rowop{R_2=R_2-2R_1}{R_3=R_3-3R_1}{$\mat{1 2 3; 0 -5 -5; 0 -6 -8}$}{}\\
-\rowop{R_2=R_2\div-5}{}{$\mat{1 2 3; 0 1 1; 0 -6 -8}$}{scaling factors${}=-\frac 15$}\\
-\rowop{R_3=R_3+6R_2}{}{$\mat{1 2 3; 0 1 1; 0 0 -2}$}{}
-\end{minipage}
-          </latex-code>
-          We did not make any row swaps, and we scaled once by a factor of <m>-1/5</m>, so the <xref ref="det-defn-ref-compute"/> says that
-          <me>\det\mat{1 2 3; 2 -1 1; 3 0 1} = \frac{1\cdot 1\cdot -2}{-1/5} = 10.</me>
-        </p>
-      </solution>
-    </example>
-
-    <specialcase xml:id="det-defn-22-again">
-      <title>The determinant of a <m>2\times 2</m> matrix</title>
-      <idx><h>Determinant</h><h>of a <m>2\times 2</m> matrix</h></idx>
-      <p>
-        Let us use the <xref ref="det-defn-ref-compute"/> to compute the determinant of a general <m>2\times 2</m> matrix <m>A = \mat{a b; c d}</m>.
-        <ul>
-          <li>
-            If <m>a = 0</m>, then
-            <me>
-              \det\mat{a b; c d} = \det\mat{0 b; c d} = -\det\mat{c d; 0 b} = -bc.
-            </me>
-          </li>
-          <li>
-            If <m>a\neq 0</m>, then
-            <me>
-              \begin{split}
-                \det\mat{a b; c d} \amp= a\cdot\det\mat{1 b/a; c d}
-                = a\cdot\det\mat{1 b/a; 0 d-c\cdot b/a} \\
-                \amp= a\cdot 1\cdot(d-bc/a) = ad-bc.
-              \end{split}
-            </me>
-          </li>
-        </ul>
-        In either case, we recover the <xref ref="matrix-inv-def-det">formula</xref>:
-        <me>\det\mat{a b; c d} = ad-bc.</me>
-      </p>
-    </specialcase>
 
     <p>
       The determinant is characterized by its <xref ref="det-defn-the-defn">defining properties</xref>, since we can compute the determinant of any matrix using row reduction, as in the above <xref ref="det-defn-ref-compute"/>.  However, we have not yet proved the existence of a function satisfying the defining properties!  Row reducing will compute the determinant <em>if it exists</em>, but we cannot use row reduction to prove existence, because we do not yet know that you compute the same number by row reducing in two different ways.
