@@ -472,7 +472,7 @@ the license is included in gfdl.xml.
     </definition>
 
     <p>
-      We will see in this <xref ref="linear-trans-matrix-of-id"/> below that the identity matrix is the matrix of the identity transformation.
+      We will see in this <xref ref="linear-trans-matrix-of-id"/> below that the identity matrix is the matrix of the <xref ref="matrix-trans-identity" text="title">identity transformation</xref>.
     </p>
 
   </subsection>
