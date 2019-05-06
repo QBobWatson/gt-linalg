@@ -766,14 +766,14 @@ the license is included in gfdl.xml.
     <corollary>
       <statement>
         <p>
-          Let <m>A_1,A_2,\ldots,A_p</m> be <m>n\times n</m> matrices.  Then the product <m>A_1A_2\cdots A_p</m> is invertible if and only if each <m>A_i</m> is invertible.
+          Let <m>A_1,A_2,\ldots,A_k</m> be <m>n\times n</m> matrices.  Then the product <m>A_1A_2\cdots A_k</m> is invertible if and only if each <m>A_i</m> is invertible.
         </p>
       </statement>
       <proof visible="true">
         <p>
           The determinant of the product is the product of the determinants by the <xref ref="det-defn-mult-prop">multiplicativity property</xref>:
-          <me>\det(A_1A_2\cdots A_p) = \det(A_1)\det(A_2)\cdots\det(A_p).</me>
-          By the <xref ref="det-defn-invert-prop">invertibility property</xref>, this is nonzero if and only if <m>A_1A_2\cdots A_p</m> is invertible.  On the other hand, <m>\det(A_1)\det(A_2)\cdots\det(A_p)</m> is nonzero if and only if each <m>\det(A_i)\neq0</m>, which means each <m>A_i</m> is invertible.
+          <me>\det(A_1A_2\cdots A_k) = \det(A_1)\det(A_2)\cdots\det(A_k).</me>
+          By the <xref ref="det-defn-invert-prop">invertibility property</xref>, this is nonzero if and only if <m>A_1A_2\cdots A_k</m> is invertible.  On the other hand, <m>\det(A_1)\det(A_2)\cdots\det(A_k)</m> is nonzero if and only if each <m>\det(A_i)\neq0</m>, which means each <m>A_i</m> is invertible.
         </p>
       </proof>
     </corollary>
