@@ -10,25 +10,22 @@ the license is included in gfdl.xml.
 *********************************************************************-->
 
 <section xml:id="rank-thm" number="9">
-  <title>The Rank Theorem and the Basis Theorem</title>
+  <title>The Rank Theorem</title>
 
   <objectives>
     <ol>
-      <li>Learn to use the rank theorem and the basis theorem.</li>
+      <li>Learn to use the rank theorem.</li>
       <li><em>Picture:</em> the rank theorem.</li>
-      <li><em>Theorems:</em> rank theorem, basis theorem.</li>
+      <li><em>Theorem:</em> rank theorem.</li>
       <li><em>Vocabulary words:</em> <term>rank</term>, <term>nullity</term>.</li>
     </ol>
   </objectives>
 
   <introduction>
   <p>
-    In this section we present two important general facts about dimensions and bases.
+    In this section we present the rank theorem, which is the culmination of all of the work we have done so far.
   </p>
   </introduction>
-
-  <subsection>
-    <title>The Rank Theorem</title>
 
     <p>
       The reader may have observed a relationship between the column space and the null space of a matrix.  In this <xref ref="subspaces-col-nul-1"/>, the column space and the null space of a <m>3\times 2</m> matrix are both lines, in <m>\R^2</m> and <m>\R^3</m>, respectively:
@@ -212,13 +209,18 @@ the license is included in gfdl.xml.
   </definition>
 
     <p>
-      According to this <xref ref="dimension-basis-colspace"/>, the rank of <m>A</m> is equal to the number of <xref ref="defn-pivot-pos" text="title">pivot columns</xref>.  On the other hand, this <xref ref="dimension-basis-nulspace"/> implies that <m>\nullity(A)</m> equals the number of free variables, which is the number of columns without pivots.  To summarize:
+      We know that the rank of <m>A</m> is equal to the number of <xref ref="defn-pivot-pos" text="title">pivot columns</xref> (see this <xref ref="dimension-basis-colspace"/>), and the nullity of <m>A</m> is equal to the number of free variables (see this <xref ref="dimension-basis-nulspace"/>), which is the number of columns without pivots.  To summarize:
       <md>
         <mrow>\rank(A) = \dim\Col(A) &amp;= \text{the number of columns with pivots}</mrow>
         <mrow>\nullity(A) = \dim\Nul(A) &amp;= \text{the number of free variables}</mrow>
         <mrow>&amp;= \text{the number of columns without pivots}</mrow>
       </md>
-      Clearly (the number of columns with pivots) plus (the number of columns without pivots) equals (the number of columns of <m>A</m>), so we have proved the following theorem.
+      Clearly
+      <me>
+        \text{\#(columns with pivots)} + \text{\#(columns without pivots)}
+        = \text{\#(columns)},
+      </me>
+      so we have proved the following theorem.
     </p>
 
     <theorem type-name="Rank Theorem" xml:id="rank-theorem">
@@ -226,7 +228,7 @@ the license is included in gfdl.xml.
       <idx><h>Nullity</h><h>rank theorem</h></idx>
       <statement>
         <p>
-          If <m>A</m> is an <m>m\times n</m> matrix, then
+          If <m>A</m> is a matrix with <m>n</m> columns, then
           <me>\rank(A) + \nullity(A) = n.</me>
         </p>
       </statement>
@@ -236,7 +238,7 @@ the license is included in gfdl.xml.
       In other words, for any consistent system of linear equations,
       <me>\text{(dim of column span)} + \text{(dim of solution set)} =
       \text{(number of variables)}.</me>
-      The rank theorem theorem is really the culmination of this chapter, as it gives a strong relationship between the null space of a matrix (the solution set of <m>Ax=0</m>) with the column space (the set of vectors <m>b</m> making <m>Ax=b</m> consistent), our two primary objects of interest.
+      The rank theorem theorem is really the culmination of this chapter, as it gives a strong relationship between the null space of a matrix (the solution set of <m>Ax=0</m>) with the column space (the set of vectors <m>b</m> making <m>Ax=b</m> consistent), our two primary objects of interest.  The more freedom we have in choosing <m>x</m> the less freedom we have in choosing <m>b</m> and vice versa.  This is a prime example of how we use the theory of linear algebra to say something qualitative about a system of equations without ever solving it.  This is, in essence, the power of the subject.
     </p>
 
     <example>
@@ -309,73 +311,5 @@ the license is included in gfdl.xml.
       </figure>
     </example>
 
-  </subsection>
-
-  <subsection>
-    <title>The Basis Theorem</title>
-
-    <p>
-      Recall from this <xref ref="dimension-eg-Rn-any"/> that <m>\{v_1,v_2,\ldots,v_n\}</m> forms a basis for <m>\R^n</m> if and only if the matrix <m>A</m> with columns <m>v_1,v_2,\ldots,v_n</m> has a pivot in every row and column.  Since <m>A</m> is an <m>n\times n</m> matrix, these two conditions are equivalent: the vectors span if and only if they are linearly independent.
-      The basis theorem is an abstract version of the preceding statement, that applies to any subspace.
-    </p>
-
-    <theorem type-name="Basis Theorem" xml:id="basis-theorem">
-      <idx><h>Basis</h><h>basis theorem</h></idx>
-      <statement>
-        <p>
-          Let <m>V</m> be a subspace of dimension <m>m</m>.  Then:
-          <ul>
-            <li>Any <m>m</m> linearly independent vectors in <m>V</m> form a basis for <m>V</m>.</li>
-            <li>Any <m>m</m> vectors that span <m>V</m> form a basis for <m>V</m>.</li>
-          </ul>
-        </p>
-      </statement>
-      <proof>
-        <p>
-          Suppose that <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> is a set of linearly independent vectors in <m>V</m>.  In order to show that <m>\cB</m> is a basis for <m>V</m>, we must prove that <m>V = \Span\{v_1,v_2,\ldots,v_m\}.</m>  If not, then there exists some vector <m>v_{m+1}</m> in <m>V</m> that is not contained in <m>\Span\{v_1,v_2,\ldots,v_m\}.</m>  By the <xref ref="linindep-increasing-span">increasing span criterion</xref>, the set <m>\{v_1,v_2,\ldots,v_m,v_{m+1}\}</m> is also linearly independent.  Continuing in this way, we keep choosing vectors until we eventually do have a linearly independent spanning set: say <m>V = \Span\{v_1,v_2,\ldots,v_m,\ldots,v_{m+k}\}</m>.  Then <m>\{v_1,v_2,\ldots,v_{m+k}\}</m> is a basis for <m>V</m>, which implies that <m>\dim(V) = m+k > m</m>.  But we were assuming that <m>V</m> has dimension <m>m</m>, so <m>\cB</m> must have already been a basis.
-        </p>
-
-        <p>
-          Now suppose that <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> spans <m>V</m>.  If <m>\cB</m> is not linearly independent, then by this <xref ref="linindep-criterion-inspan"/>, we can remove some number of vectors from <m>\cB</m> without shrinking its span.  After reordering, we can assume that we removed the last <m>k</m> vectors without shrinking the span, and that we cannot remove any more. Now <m>V = \Span\{v_1,v_2,\ldots,v_{m-k}\}</m>, and <m>\{v_1,v_2,\ldots,v_{m-k}\}</m> is a basis for <m>V</m> because it is linearly independent.  This implies that <m>\dim V=m-k &lt; m</m>.  But we were assuming that <m>\dim V = m</m>, so <m>\cB</m> must have already been a basis.
-        </p>
-      </proof>
-    </theorem>
-
-    <p>
-      In other words, if you <em>already</em> know that <m>\dim V = m</m>, and if you have a set of <m>m</m> vectors <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> in <m>V</m>, then you only have to check <em>one</em> of:
-      <ol>
-        <li><m>\cB</m> is linearly independent, <em>or</em></li>
-        <li><m>\cB</m> spans <m>V</m>,</li>
-      </ol>
-      in order for <m>\cB</m> to be a basis of <m>V</m>.  If you did not already know that <m>\dim V = m</m>, then you would have to check <em>both</em> properties.
-    </p>
-
-    <p>For example, if <m>V</m> is a plane, then any two noncollinear vectors in <m>V</m> form a basis.</p>
-
-    <example>
-      <title>Yet another basis for a span</title>
-      <statement>
-        <p>
-          Find a basis of the subspace
-          <me>V = \Span\left\{\vec{1 -2 2},\;\vec{2 -3 4},\;\vec{0 4 0},\;\vec{-1 5 -2}\right\}</me>
-          which is different from the bases in this <xref ref="dimension-eg-basis-span"/> and this <xref ref="dimension-eg-basis-span2"/>.
-        </p>
-      </statement>
-      <solution>
-        <p>
-          We know from the previous examples that <m>\dim V = 2</m>.  By the <xref ref="basis-theorem"/>, it suffices to find any two noncollinear vectors in <m>V</m>.  We write two linear combinations of the four given spanning vectors, chosen at random:
-          <me>
-            w_1 = \vec{1 -2 2} + \vec{2 -3 4} = \vec{3 -5 6} \qquad
-            w_2 = -\vec{2 -3 4} + \frac 12\vec{0 4 0} = \vec{-2 5 -4}.
-          </me>
-          Since <m>w_1,w_2</m> are not collinear, <m>\cB = \{w_1,w_2\}</m> is a basis for <m>V</m>.
-        </p>
-        <figure xml:id="dimension-figure-basis-4">
-          <caption>A picture of the plane <m>V</m> and its basis <m>\cB = \{w_1,w_2\}</m>.</caption>
-          <mathbox source="demos/spans.html?v1=3,-5,6&amp;v2=-2,5,-4&amp;range=6&amp;captions=indep&amp;labels=w1,w2" height="500px"/>
-        </figure>
-      </solution>
-    </example>
-  </subsection>
 
 </section>

@@ -15,8 +15,10 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Understand the definition of a basis of a subspace.</li>
+      <li>Understand the basis theorem.</li>
       <li><em>Recipes:</em> basis for a column space, basis for a null space, basis of a span.</li>
       <li><em>Picture:</em> basis of a subspace of <m>\R^2</m> or <m>\R^3</m>.</li>
+      <li><em>Theorem:</em> basis theorem.</li>
       <li><em>Essential vocabulary words:</em> <term>basis</term>, <term>dimension</term>.</li>
     </ol>
   </objectives>
@@ -365,5 +367,105 @@ the license is included in gfdl.xml.
     </paragraphs>
 
   </subsection>
+
+  <subsection>
+    <title>The Basis Theorem</title>
+
+    <p>
+      Recall that <m>\{v_1,v_2,\ldots,v_n\}</m> forms a basis for <m>\R^n</m> if and only if the matrix <m>A</m> with columns <m>v_1,v_2,\ldots,v_n</m> has a pivot in every row and column (see this <xref ref="dimension-eg-Rn-any"/>).  Since <m>A</m> is an <m>n\times n</m> matrix, these two conditions are equivalent: the vectors span if and only if they are linearly independent.
+      The basis theorem is an abstract version of the preceding statement, that applies to any subspace.
+    </p>
+
+    <theorem type-name="Basis Theorem" xml:id="basis-theorem">
+      <idx><h>Basis</h><h>basis theorem</h></idx>
+      <statement>
+        <p>
+          Let <m>V</m> be a subspace of dimension <m>m</m>.  Then:
+          <ul>
+            <li>Any <m>m</m> linearly independent vectors in <m>V</m> form a basis for <m>V</m>.</li>
+            <li>Any <m>m</m> vectors that span <m>V</m> form a basis for <m>V</m>.</li>
+          </ul>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Suppose that <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> is a set of linearly independent vectors in <m>V</m>.  In order to show that <m>\cB</m> is a basis for <m>V</m>, we must prove that <m>V = \Span\{v_1,v_2,\ldots,v_m\}.</m>  If not, then there exists some vector <m>v_{m+1}</m> in <m>V</m> that is not contained in <m>\Span\{v_1,v_2,\ldots,v_m\}.</m>  By the <xref ref="linindep-increasing-span">increasing span criterion</xref>, the set <m>\{v_1,v_2,\ldots,v_m,v_{m+1}\}</m> is also linearly independent.  Continuing in this way, we keep choosing vectors until we eventually do have a linearly independent spanning set: say <m>V = \Span\{v_1,v_2,\ldots,v_m,\ldots,v_{m+k}\}</m>.  Then <m>\{v_1,v_2,\ldots,v_{m+k}\}</m> is a basis for <m>V</m>, which implies that <m>\dim(V) = m+k > m</m>.  But we were assuming that <m>V</m> has dimension <m>m</m>, so <m>\cB</m> must have already been a basis.
+        </p>
+
+        <p>
+          Now suppose that <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> spans <m>V</m>.  If <m>\cB</m> is not linearly independent, then by this <xref ref="linindep-criterion-inspan"/>, we can remove some number of vectors from <m>\cB</m> without shrinking its span.  After reordering, we can assume that we removed the last <m>k</m> vectors without shrinking the span, and that we cannot remove any more. Now <m>V = \Span\{v_1,v_2,\ldots,v_{m-k}\}</m>, and <m>\{v_1,v_2,\ldots,v_{m-k}\}</m> is a basis for <m>V</m> because it is linearly independent.  This implies that <m>\dim V=m-k &lt; m</m>.  But we were assuming that <m>\dim V = m</m>, so <m>\cB</m> must have already been a basis.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      In other words, if you <em>already</em> know that <m>\dim V = m</m>, and if you have a set of <m>m</m> vectors <m>\cB = \{v_1,v_2,\ldots,v_m\}</m> in <m>V</m>, then you only have to check <em>one</em> of:
+      <ol>
+        <li><m>\cB</m> is linearly independent, <em>or</em></li>
+        <li><m>\cB</m> spans <m>V</m>,</li>
+      </ol>
+      in order for <m>\cB</m> to be a basis of <m>V</m>.  If you did not already know that <m>\dim V = m</m>, then you would have to check <em>both</em> properties.
+    </p>
+
+	<p>
+	To put it yet another way, suppose we have a set of vectors <m>\cB  = \{v_1,v_2,\ldots,v_m\}</m> in a subspace <m>V</m>.  Then if any two of the following statements is true, the third must also be true:
+       <ol>
+        <li><m>\cB</m> is linearly independent,</li>
+        <li><m>\cB</m> spans <m>V</m>, and</li>
+	<li><m>\dim V = m.</m></li>
+      </ol>
+	</p>
+
+
+
+    <p>For example, if <m>V</m> is a plane, then any two noncollinear vectors in <m>V</m> form a basis.</p>
+
+    <example>
+      <title>Two noncollinear vectors form a basis of a plane</title>
+      <statement>
+        <p>
+          Find a basis of the subspace
+          <me>V = \Span\left\{\vec{1 -2 2},\;\vec{2 -3 4},\;\vec{0 4 0},\;\vec{-1 5 -2}\right\}</me>
+          which is different from the bases in this <xref ref="dimension-eg-basis-span"/> and this <xref ref="dimension-eg-basis-span2"/>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We know from the previous examples that <m>\dim V = 2</m>.  By the <xref ref="basis-theorem"/>, it suffices to find any two noncollinear vectors in <m>V</m>.  We write two linear combinations of the four given spanning vectors, chosen at random:
+          <me>
+            w_1 = \vec{1 -2 2} + \vec{2 -3 4} = \vec{3 -5 6} \qquad
+            w_2 = -\vec{2 -3 4} + \frac 12\vec{0 4 0} = \vec{-2 5 -4}.
+          </me>
+          Since <m>w_1,w_2</m> are not collinear, <m>\cB = \{w_1,w_2\}</m> is a basis for <m>V</m>.
+        </p>
+        <figure xml:id="dimension-figure-basis-4">
+          <caption>A picture of the plane <m>V</m> and its basis <m>\cB = \{w_1,w_2\}</m>.</caption>
+          <mathbox source="demos/spans.html?v1=3,-5,6&amp;v2=-2,5,-4&amp;range=6&amp;captions=indep&amp;labels=w1,w2" height="500px"/>
+        </figure>
+      </solution>
+    </example>
+
+    <example>
+      <title>Finding a basis by inspection</title>
+      <statement>
+        <p>
+          Find a basis for the plane
+          <me>V = \left\{\vec{x_1 x_2 x_3}\bigm| x_1 + x_2 = x_3\right\}</me>
+          by inspection.  (This plane is expressed in <xref ref="set-builder-notation" text="title">set builder notation</xref>.)
+        </p>
+      </statement>
+      <solution>
+        <p>
+          First note that <m>V</m> is the null space of the matrix <m>\mat{1 1 -1}</m>; this matrix is in reduced row echelon form and has two free variables, so <m>V</m> is indeed a plane.  We write down two vectors satisfying <m>x_1 + x_2 = x_3</m>:
+          <me>
+            v_1 = \vec{1 0 1} \qquad v_2 = \vec{0 1 1}.
+          </me>
+          Since <m>v_1</m> and <m>v_2</m> are not collinear, they are linearly independent; since <m>\dim(V) = 2</m>, the basis theorem implies that <m>\{v_1,v_2\}</m> is a basis for <m>V</m>.
+        </p>
+      </solution>
+    </example>
+
+  </subsection>
+
 
 </section>
