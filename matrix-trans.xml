@@ -391,7 +391,7 @@ the license is included in gfdl.xml.
   <title>Transformations</title>
 
   <p>
-    At this point it is convenient to fix our ideas and terminology regarding functions, or transformations.  This allows us to systematize our discussion of matrices as functions.
+    At this point it is convenient to fix our ideas and terminology regarding functions, which we will call <em>transformations</em> in this book.  This allows us to systematize our discussion of matrices as functions.
   </p>
 
   <definition>
@@ -407,7 +407,7 @@ the license is included in gfdl.xml.
     <notation><usage>T\colon\R^n\to\R^m</usage><description>transformation with domain <m>\R^n</m> and codomain <m>\R^m</m></description></notation>
     <statement>
       <p>
-        A <term>transformation</term> (or <term>function</term> or <term>map</term>) from <m>\R^n</m> to <m>\R^m</m> is a rule <m>T</m> that assigns to each vector <m>x</m> in <m>\R^n</m> a vector <m>T(x)</m> in <m>\R^m</m>.
+        A <term>transformation</term> from <m>\R^n</m> to <m>\R^m</m> is a rule <m>T</m> that assigns to each vector <m>x</m> in <m>\R^n</m> a vector <m>T(x)</m> in <m>\R^m</m>.
         <ul>
           <li>
             <m>\R^n</m> is called the <term>domain</term> of <m>T</m>.
