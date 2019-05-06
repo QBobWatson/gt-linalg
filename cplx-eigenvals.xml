@@ -54,7 +54,7 @@ the license is included in gfdl.xml.
       <idx><h>Eigenvalue</h><h>complex</h><see>Complex eigenvalue</see></idx>
       <idx><h>Complex eigenvalue</h><h>existence of</h></idx>
       <p>
-        Every matrix has a (possibly real) complex eigenvalue.
+        Every <m>n \times n</m> matrix has exactly <m>n</m> complex eigenvalues, counted with multiplicity.
       </p>
     </bluebox>
 
