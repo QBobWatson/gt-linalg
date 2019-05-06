@@ -29,7 +29,7 @@ the license is included in gfdl.xml.
   <introduction>
 <restrict-version versions="1554 default">
     <p>
-      In <xref ref="diagonalization"/>, we saw that a matrix whose characteristic polynomial has distinct real roots is <em>diagonalizable</em>: it is similar to a diagonal matrix, which is much simpler to analyze.  In this section, we study matrices whose characteristic polynomial has <em>complex</em> roots.  It turns out that such a matrix is similar (in the <m>2\times 2</m> case) to a <em>rotation-scaling matrix</em>, which is also relatively easy to understand.
+      In <xref ref="diagonalization"/>, we saw that a matrix whose characteristic polynomial has distinct real roots is <em>diagonalizable</em>: it is similar to a diagonal matrix, which is much simpler to analyze.  The other possibility is that a matrix has <em>complex</em> roots, and that is the focus of this section.  It turns out that such a matrix is similar (in the <m>2\times 2</m> case) to a <em>rotation-scaling matrix</em>, which is also relatively easy to understand.
     </p>
     <p>
       In a certain sense, this entire section is analogous to <xref ref="diagonalization"/>, with rotation-scaling matrices playing the role of diagonal matrices.
