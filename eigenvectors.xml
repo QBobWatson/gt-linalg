@@ -561,7 +561,7 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
     </p>
 
     <p>
-      As a consequence of the above <xref ref="evecs-linindep"/>, we see that:
+      As a consequence of the above <xref ref="evecs-linindep"/>, we have the following.
     </p>
 
     <bluebox>
