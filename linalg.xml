@@ -80,7 +80,7 @@ Free Documentation License"
           In order to answer the two questions listed above, we will use geometry.  This will be analogous to how you used parabolas in order to understand the solutions to a quadratic equation in one variable.  Specifically, this chapter is devoted to the geometric study of two objects:
           <ol>
             <li>the solution set of a matrix equation <m>Ax=b</m>, and</li>
-            <li>the set of all <b>b</m> that makes a particular system consistent.</li>
+            <li>the set of all <m>b</m> that makes a particular system consistent.</li>
           </ol>
           The second object will be called the column space of <m>A</m>.  The two objects are related in a beautiful way by the rank theorem in <xref ref="rank-thm"/>.
         </p>

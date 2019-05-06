@@ -521,7 +521,7 @@ the license is included in gfdl.xml.
     <p>
       <idx><h>Matrix multiplication</h><h>and the matrix-vector product</h></idx>
       <idx><h>Matrix-vector product</h><h>and matrix multiplication</h></idx>
-      If <m>B</m> has only one column, then <m>AB</m> also has one column.  A matrix with one column is the same as a vector, so the definition of the matrix product generalizes the definition of the matrix-vector product.
+      If <m>B</m> has only one column, then <m>AB</m> also has one column.  A matrix with one column is the same as a vector, so the definition of the matrix product generalizes the definition of the matrix-vector product from this <xref ref="matrixeq-defn-Ax1"/>.
     </p>
 
     <p>
