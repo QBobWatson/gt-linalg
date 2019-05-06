@@ -637,7 +637,7 @@ A-\frac{4+3i}5I_3 =
     <idx><h>Complex eigenvalue</h><h><m>2\times 2</m> matrices</h><h>geometry of</h></idx>
 
     <p>
-      Let <m>A</m> be a <m>2\times 2</m> matrix with a complex, non-real eigenvalue <m>\lambda</m>.  Then <m>A</m> also has the eigenvalue <m>\bar\lambda\neq\lambda</m>.  In particular, <m>A</m> has distinct eigenvalues, so it is diagonalizable using the complex numbers.  However, the following construction is generally more useful, as all matrices involved have <em>real</em> entries.
+      Let <m>A</m> be a <m>2\times 2</m> matrix with a complex, non-real eigenvalue <m>\lambda</m>.  Then <m>A</m> also has the eigenvalue <m>\bar\lambda\neq\lambda</m>.  In particular, <m>A</m> has distinct eigenvalues, so it is diagonalizable using the complex numbers.  We often like to think of our matrices as describing transformations of <m>\R^n</m> (as opposed to <m>\C^n</m>).  Because of this, the following construction is useful. It gives something like a diagonalization, except that all matrices involved have <em>real</em> entries.
     </p>
 
     <theorem type-name="Rotation-Scaling Theorem" xml:id="cplx-diagonalization-thm">
