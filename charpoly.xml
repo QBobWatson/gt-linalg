@@ -15,8 +15,9 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Learn that the eigenvalues of a triangular matrix are the diagonal entries.</li>
+      <li>Find all eigenvalues of a matrix using the characteristic polynomial.</li>
       <li>Learn some strategies for finding the zeros of a polynomial.</li>
-      <li><em>Recipes:</em> compute eigenvalues using the characteristic polynomial, the characteristic polynomial of a <m>2\times 2</m> matrix.</li>
+      <li><em>Recipe:</em> the characteristic polynomial of a <m>2\times 2</m> matrix.</li>
       <li><em>Vocabulary words:</em> <term>characteristic polynomial</term>, <term>trace</term>.</li>
     </ol>
   </objectives>
