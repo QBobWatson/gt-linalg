@@ -744,22 +744,21 @@ the license is included in gfdl.xml.
     </statement>
   </definition>
 
-  <example>
-    <p>
-      The definition of a matrix transformation <m>T</m> tells us how to evaluate <m>T</m> on any given vector: we multiply the input vector by a matrix.  For instance, let
-      <me>
-        A = \mat{1 2 3; 4 5 6}
-      </me>
-      and let <m>T(x)=Ax</m> be the associated matrix transformation.  Then
-      <me>T\vec{-1 -2 -3} = A\vec{-1 -2 -3} = \mat{1 2 3; 4 5 6}\vec{-1 -2 -3}
-      = \vec{-14 -32}.
-      </me>
-    </p>
-  </example>
-
   <p>
     If <m>A</m> has <m>n</m> columns, then it only makes sense to multiply <m>A</m> by vectors with <m>n</m> entries.  This is why the domain of <m>T(x)=Ax</m> is <m>\R^n</m>.  If <m>A</m> has <m>n</m> rows, then <m>Ax</m> has <m>m</m> entries for any vector <m>x</m> in <m>\R^n</m>; this is why the codomain of <m>T(x)=Ax</m> is <m>\R^m</m>.
   </p>
+
+  <p>
+    The definition of a matrix transformation <m>T</m> tells us how to evaluate <m>T</m> on any given vector: we multiply the input vector by a matrix.  For instance, let
+    <me>
+      A = \mat{1 2 3; 4 5 6}
+    </me>
+    and let <m>T(x)=Ax</m> be the associated matrix transformation.  Then
+    <me>T\vec{-1 -2 -3} = A\vec{-1 -2 -3} = \mat{1 2 3; 4 5 6}\vec{-1 -2 -3}
+    = \vec{-14 -32}.
+    </me>
+  </p>
+
 
   <p>
     Suppose that <m>A</m> has columns <m>v_1,v_2,\ldots,v_n</m>.  If we multiply <m>A</m> by a general vector <m>x</m>, we get
