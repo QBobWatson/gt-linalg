@@ -306,14 +306,14 @@ the license is included in gfdl.xml.
             \operatorname{Id}_{\R^m}\circ T \amp= T
           </mrow>
           <mrow>
-            S\circ(T\circ U) \amp= (S\circ T)\circ U \amp
+            \amp S\circ(T\circ U) \amp= (S\circ T)\circ U
           </mrow>
         </md>
       </p>
     </note>
 
     <p>
-      The final property is called <term>associativity</term>; it simply says that
+      The final property is called <term>associativity</term>.  Unwrapping both sides, it says:
       <me>S\circ(T\circ U)(x) = S(T\circ U(x)) = S(T(U(x))) = S\circ T(U(x)) = (S\circ T)\circ U(x).</me>
       In other words, both <m>S\circ (T\circ U)</m> and <m>(S\circ T)\circ U</m> are the transformation defined by first applying <m>U</m>, then <m>T</m>, then <m>S</m>.
     </p>
