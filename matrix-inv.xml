@@ -122,7 +122,7 @@ the license is included in gfdl.xml.
    <p>
      Why is the inverse of <m>AB</m> not equal to <m>A\inv B\inv</m>?  If it were, then we would have
      <me>I_n = (AB)(A\inv B\inv) = ABA\inv B\inv.</me>
-     But there is no reason for <m>ABA\inv B\inv</m> to equal the identity matrix: one cannot switch the order of <m>A\inv</m> and <m>B</m>, so there is nothing to cancel in this expression.
+     But there is no reason for <m>ABA\inv B\inv</m> to equal the identity matrix: one cannot switch the order of <m>A\inv</m> and <m>B</m>, so there is nothing to cancel in this expression.  In fact, if <m>I_n = (AB)(A\inv B\inv)</m>, then we can multiply both sides on the right by <m>BA</m> to conclude that <m>AB = BA</m>.  In other words, <m>(AB)\inv = A\inv B\inv</m> if and only if <m>AB=BA</m>.
    </p>
 
    <p>
