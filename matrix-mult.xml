@@ -659,7 +659,7 @@ the license is included in gfdl.xml.
     <title>Composition and Matrix Multiplication</title>
 
     <p>
-      The point of this subsection is to show that matrix multiplication corresponds to composition of transformations.
+      The point of this subsection is to show that matrix multiplication corresponds to composition of transformations.  It is not too hard to believe that the standard matrix for <m>T+U</m> is the sum of the standard matrices for <m>T</m> and for <m>U</m>. In this subsection we will show that matrix multiplication corresponds to composition of transformations, that is, the standard matrix for <m>T \circ U</m> is the product of the standard matrices for <m>T</m> and for <m>U</m>. It should be hard to believe our complicated formula for matrix multiplication actually means something intuitive such as <q>chaining two transformations together</q>!
     </p>
 
     <theorem xml:id="matrix-mult-comp-is-prod">
