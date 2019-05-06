@@ -31,7 +31,7 @@ the license is included in gfdl.xml.
     <idx><h>Polynomial</h><h>characteristic</h><see>Characteristic polynomial</see></idx>
     <statement>
       <p>
-        Let <m>A</m> be an <m>n\times n</m> matrix.  The <term>characteristic polynomial</term> of <m>A</m> is the function
+        Let <m>A</m> be an <m>n\times n</m> matrix.  The <term>characteristic polynomial</term> of <m>A</m> is the function <m>f(\lambda)</m> given by
         <me>f(\lambda) = \det(A-\lambda I_n).</me>
       </p>
     </statement>
