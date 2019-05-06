@@ -49,7 +49,7 @@ the license is included in gfdl.xml.
 
   <p>
     <idx><h>One-to-one</h><h>equivalent formulations</h></idx>
-    Here are some equivalent ways of saying <q><m>T</m> is one-to-one:</q>
+    Here are some equivalent ways of saying that <m>T</m> is one-to-one:
     <ul>
       <li>
         The transformation <m>T</m> takes different vectors in <m>\R^n</m> to different vectors in <m>\R^m</m>.
@@ -121,7 +121,7 @@ the license is included in gfdl.xml.
 
   <p>
     <idx><h>One-to-one</h><h>negation of</h></idx>
-    Here are some equivalent ways of saying <q><m>T</m> is <em>not</em> one-to-one:</q>
+    Here are some equivalent ways of saying that <m>T</m> is <em>not</em> one-to-one:
     <ul>
       <li>
         There exists some vector <m>b</m> in <m>\R^m</m> such that the equation <m>T(x)=b</m> has <em>more than one</em> solution <m>x</m> in <m>\R^n</m>.
@@ -486,7 +486,7 @@ the license is included in gfdl.xml.
 
   <p>
     <idx><h>Onto</h><h>equivalent formulations</h></idx>
-    Here are some equivalent ways of saying <q><m>T</m> is onto:</q>
+    Here are some equivalent ways of saying that <m>T</m> is onto:
     <ul>
       <li>The range of <m>T</m> is equal to the codomain of <m>T</m>.</li>
       <li>Every vector in the codomain is the output of some input vector.</li>
@@ -523,7 +523,7 @@ the license is included in gfdl.xml.
 
   <p>
     <idx><h>Onto</h><h>negation of</h></idx>
-    Here are some equivalent ways of saying <q><m>T</m> is <em>not</em> onto:</q>
+    Here are some equivalent ways of saying that <m>T</m> is <em>not</em> onto:
     <ul>
       <li>The range of <m>T</m> is smaller than the codomain of <m>T</m>.</li>
       <li>There exists a vector <m>b</m> in <m>\R^m</m> such that the equation <m>T(x)=b</m> does not have a solution.</li>
