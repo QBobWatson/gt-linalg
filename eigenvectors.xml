@@ -60,7 +60,7 @@ the license is included in gfdl.xml.
     </essential>
 
     <p>
-      The German prefix <q>eigen</q> roughly translates to <q>self</q> or <q>own</q>.  An eigenvector of <m>A</m> is a vector that is taken to a multiple of itself, which partially explains the terminology.
+      The German prefix <q>eigen</q> roughly translates to <q>self</q> or <q>own</q>.  An eigenvector of <m>A</m> is a vector that is taken to a multiple of itself, which perhaps explains the terminology.  On the other hand, <q>eigen</q> is often translated as <q>characteristic</q>; we may think of an eigenvector as describing an intrinsic, or characteristic, property of <m>A</m>.  
     </p>
 
     <note>
