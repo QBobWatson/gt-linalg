@@ -403,7 +403,6 @@ the license is included in gfdl.xml.
     <idx><h>Domain</h><see>Transformation</see></idx>
     <idx><h>Codomain</h><see>Transformation</see></idx>
     <idx><h>Range</h><see>Transformation</see></idx>
-    <notation><usage>x\mapsto y</usage><description>image of a point under a transformation</description></notation>
     <notation><usage>T\colon\R^n\to\R^m</usage><description>transformation with domain <m>\R^n</m> and codomain <m>\R^m</m></description></notation>
     <statement>
       <p>
@@ -416,7 +415,7 @@ the license is included in gfdl.xml.
             <m>\R^m</m> is called the <term>codomain</term> of <m>T</m>.
           </li>
           <li>
-            For <m>x</m> in <m>\R^n</m>, the vector <m>T(x)</m> in <m>\R^m</m> is the <term>image</term> of <m>x</m> under <m>T</m>.  The notation <m>x\mapsto y</m> means <q><m>y</m> is the image of <m>x</m> under <m>T</m>,</q> i.e., that <m>y = T(x)</m>.
+            For <m>x</m> in <m>\R^n</m>, the vector <m>T(x)</m> in <m>\R^m</m> is the <term>image</term> of <m>x</m> under <m>T</m>.
           </li>
           <li>
             The set of all images <m>\{T(x)\mid x\text{ in }\R^n\}</m> is the <term>range</term> of <m>T</m>.
