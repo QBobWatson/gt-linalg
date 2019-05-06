@@ -990,7 +990,7 @@ $\quad\xrightarrow{\phantom{MMMM}}\quad$
     </example>
 
     <remark>
-      <title>Multiplicativity of <m>|\det|</m></title>
+      <title>Multiplicativity of <m>|\det|\,</m></title>
       <idx><h>Determinant</h><h>multiplicativity property</h><h>and volumes</h></idx>
     <p>
       The above <xref ref="det-vol-regions"/> also gives a geometric reason for multiplicativity of the (absolute value of the) determinant.  Indeed, let <m>A</m> and <m>B</m> be <m>n\times n</m> matrices, and let <m>T,U\colon\R^n\to\R^n</m> be the corresponding matrix transformations.  If <m>C</m> is the unit cube, then
