@@ -1273,7 +1273,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
               The sum of the geometric multiplicities of the eigenvalues of <m>A</m> is equal to <m>n</m>.
             </li>
             <li>
-              The sum of the algebraic multiplicities of the eigenvalues of <m>A</m> is equal to <m>n</m>, and the geometric multiplicity equals the algebraic multiplicity of each eigenvalue.
+              The sum of the algebraic multiplicities of the eigenvalues of <m>A</m> is equal to <m>n</m>, and for each eigenvalue, the geometric multiplicity equals the algebraic multiplicity.
             </li>
           </ol>
         </p>
