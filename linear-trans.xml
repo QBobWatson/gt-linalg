@@ -142,7 +142,7 @@ the license is included in gfdl.xml.
       </statement>
       <solution>
         <p>
-          We have <m>T(0) = 0 + 1 = 1</m>.  Since any linear transformation necessarily takes zero to zero by the above <xref ref="linear-trans-T0-0"/>, we conclude that <m>T</m> is <em>not</em> linear.
+          We have <m>T(0) = 0 + 1 = 1</m>.  Since any linear transformation necessarily takes zero to zero by the above <xref ref="linear-trans-T0-0"/>, we conclude that <m>T</m> is <em>not</em> linear (even though its graph is a line).
         </p>
         <p>
           <em>Note:</em> in this case, it was not necessary to check explicitly that <m>T</m> does not satisfy both <xref ref="linear-trans-defn">defining properties</xref>: since <m>T(0)=0</m> is a consequence of these properties, at least one of them must not be satisfied.  (In fact, this <m>T</m> satisfies neither.)
