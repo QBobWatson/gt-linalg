@@ -81,7 +81,7 @@ the license is included in gfdl.xml.
        then <m>AB = I_2.</m>  However, <m>BA\neq I_3</m>, so <m>B</m> does not deserve to be called the inverse of <m>A</m>.
      </p>
      <p>
-       One can show using the ideas in this <xref ref="matrix-inv-linear-transforms"/> that if <m>A</m> is an <m>n\times m</m> matrix for <m>n\neq m</m>, then there is no <m>m\times n</m> matrix <m>B</m> such that <m>AB = I_m</m> and <m>BA = I_n</m>.  For this reason, we restrict ourselves to <em>square</em> matrices when we discuss matrix invertibility.
+       One can show using the ideas later in this section that if <m>A</m> is an <m>n\times m</m> matrix for <m>n\neq m</m>, then there is no <m>m\times n</m> matrix <m>B</m> such that <m>AB = I_m</m> and <m>BA = I_n</m>.  For this reason, we restrict ourselves to <em>square</em> matrices when we discuss matrix invertibility.
      </p>
    </remark>
 
