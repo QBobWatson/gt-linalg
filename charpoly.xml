@@ -349,6 +349,7 @@ the license is included in gfdl.xml.
         <p>
           Find the eigenvalues of the matrix
           <me>A = \mat{7 0 3; -3 2 -3; -3 0 -1}.</me>
+          Hint: one eigenvalue is an integer.
         </p>
       </statement>
       <solution>
@@ -380,6 +381,9 @@ the license is included in gfdl.xml.
             f(\lambda) = -(\lambda-2)\bigl(\lambda-(3+\sqrt7)\bigr)\bigl(\lambda-(3-\sqrt7)\bigr).
           </me>
           Therefore, the eigenvalues of <m>A</m> are <m>2,\,3+\sqrt7,\,3-\sqrt7.</m>
+        </p>
+        <p>
+          Note that if we had expanded cofactors along the second column instead, then we would have immediately seen that <m>2-\lambda</m> is a factor of <m>f(\lambda)</m>.
         </p>
       </solution>
     </example>
