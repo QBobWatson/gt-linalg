@@ -287,7 +287,7 @@ the license is included in gfdl.xml.
     <title>Recipe: The characteristic polynomial of a <m>2\times 2</m> matrix</title>
     <idx><h>Characteristic polynomial</h><h>of a <m>2\times 2</m> matrix</h></idx>
     <p>
-      When <m>n=2</m>, the <xref ref="charpoly-is-poly"/> tells us all of the coefficients of the characteristic polynomial:
+      When <m>n=2</m>, the previous <xref ref="charpoly-is-poly"/> tells us all of the coefficients of the characteristic polynomial:
       <me>
         f(\lambda) = \lambda^2 - \Tr(A)\lambda + \det(A).
       </me>
