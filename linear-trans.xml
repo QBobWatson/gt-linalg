@@ -41,7 +41,7 @@ the license is included in gfdl.xml.
       <me>T\colon\R^2\To\R^2 \qquad T(x) = \mat{0 -1; 1 0}x</me>
       is a counterclockwise rotation of the plane by <m>90^\circ</m>.  However, we could have <em>defined</em> <m>T</m> in this way:
       <me>T\colon\R^2\To\R^2 \qquad T(x) = \text{the counterclockwise rotation of $x$ by $90^\circ$}.</me>
-      Given this definition, it is not at all obvious a priori that <m>T</m> is a matrix transformation, or what matrix it is associated to.
+      Given this definition, it is not at all obvious that <m>T</m> is a matrix transformation, or what matrix it is associated to.
     </p>
   </introduction>
 
