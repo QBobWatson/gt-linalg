@@ -97,20 +97,20 @@ the license is included in gfdl.xml.
     <idx><h>Eigenvalue</h><h>and the characteristic polynomial</h><see>Characteristic polynomial</see></idx>
     <statement>
       <p>
-        Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>f(\lambda) = \det(A-\lambda I_n)</m> be its characteristic polynomial.  Then <m>\lambda</m> is an eigenvalue of <m>A</m> if and only if <m>f(\lambda) = 0</m>.
+        Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>f(\lambda) = \det(A-\lambda I_n)</m> be its characteristic polynomial.  Then a number <m>\lambda_0</m> is an eigenvalue of <m>A</m> if and only if <m>f(\lambda_0) = 0</m>.
       </p>
     </statement>
     <proof visible="true">
       <p>
-        By the <xref ref="imt-2"/>, the matrix equation <m>(A-\lambda I_n)x=0</m> has a nontrivial solution if and only if <m>\det(A-\lambda I_n) = 0</m>.  Therefore,
+        By the <xref ref="imt-2"/>, the matrix equation <m>(A-\lambda_0 I_n)x=0</m> has a nontrivial solution if and only if <m>\det(A-\lambda_0 I_n) = 0</m>.  Therefore,
         <me>
           \begin{split}
-          \lambda \text{ is an eigenvalue of } A
-          \amp\iff Ax = \lambda x \text{ has a nontrivial solution} \\
-          \amp\iff (A-\lambda I_n)x = 0 \text{ has a nontrivial solution} \\
-          \amp\iff A - \lambda I_n \text{ is not invertible} \\
-          \amp\iff \det(A - \lambda I_n) = 0 \\
-          \amp\iff f(\lambda) = 0.
+          \lambda_0 \text{ is an eigenvalue of } A
+          \amp\iff Ax = \lambda_0 x \text{ has a nontrivial solution} \\
+          \amp\iff (A-\lambda_0 I_n)x = 0 \text{ has a nontrivial solution} \\
+          \amp\iff A - \lambda_0 I_n \text{ is not invertible} \\
+          \amp\iff \det(A - \lambda_0 I_n) = 0 \\
+          \amp\iff f(\lambda_0) = 0.
           \end{split}
         </me>
       </p>
