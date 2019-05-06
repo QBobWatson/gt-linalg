@@ -25,7 +25,7 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      In this section, we study compositions of transformations: that is, chaining transformations together.  The composition of matrix transformations corresponds to a notion of <em>multiplying</em> two matrices together.  We also discuss addition and scalar multiplication of transformations and of matrices.
+      In this section, we study compositions of transformations.  As we will see, composition is a way of chaining transformations together.  The composition of matrix transformations corresponds to a notion of <em>multiplying</em> two matrices together.  We also discuss addition and scalar multiplication of transformations and of matrices.
     </p>
   </introduction>
 
