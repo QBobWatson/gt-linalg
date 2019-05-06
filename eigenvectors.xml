@@ -576,6 +576,10 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
   <subsection>
     <title>Eigenspaces</title>
 
+	<p>
+	Suppose that <m>A</m> is a square matrix.  We already know how to check if a given vector is an eigenvector of <m>A</m> and in that case to find the eigenvalue.  Our next goal is to check if a given real number is an eigenvalue of <m>A</m> and in that case to find all of the corresponding eigenvectors.  Again this will be straightforward, but more involved.  The only missing piece, then, will be to find the eigenvalues of <m>A</m>; this is the main content of <xref ref="characteristic-polynomial"/>.
+	</p>
+
     <p>
       Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>\lambda</m> be a scalar.  The eigenvectors with eigenvalue <m>\lambda</m>, if any, are the nonzero solutions of the equation <m>Av=\lambda v</m>.  We can rewrite this equation as follows:
       <me>
