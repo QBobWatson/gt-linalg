@@ -33,6 +33,7 @@
   <uri resource="matrixalg.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="matrixeq.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="matrix-inv.xml" uri="../mathbook/schema/pretext.rnc"/>
+  <uri resource="invertible-matrix-thm.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="matrix-mult.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="matrix-trans.xml" uri="../mathbook/schema/pretext.rnc"/>
   <uri resource="orthosets.xml" uri="../mathbook/schema/pretext.rnc"/>

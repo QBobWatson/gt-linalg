@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********************************************************************
+Copyright 2017 Georgia Institute of Technology
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation.  A copy of
+the license is included in gfdl.xml.
+*********************************************************************-->
+
+<section xml:id="invertible-matrix-thm">
+  <title>The Invertible Matrix Theorem</title>
+
+  <objectives>
+    <ol>
+      <li><em>Theorem:</em> the invertible matrix theorem.</li>
+    </ol>
+  </objectives>
+
+
+   <p>This section consists of a single important theorem containing many equivalent conditions for a matrix to be invertible.  This is one of the most important theorems in this textbook.  We will append two more criteria in <xref ref="eigenvectors"/>.</p>
+
+   <theorem type-name="Invertible Matrix Theorem" xml:id="imt-1">
+     <idx><h>Invertible matrix theorem</h></idx>
+     <statement>
+       <p>
+         Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>T\colon\R^n\to\R^n</m> be the matrix transformation <m>T(x) = Ax</m>.  The following statements are equivalent:
+         <ol>
+           <li><m>A</m> is invertible.</li>
+           <li><m>A</m> has <m>n</m> pivots.</li>
+           <li><m>\Nul(A) = \{0\}</m>.</li>
+           <li>The columns of <m>A</m> are linearly independent.</li>
+
+           <li>The columns of <m>A</m> span <m>\R^n</m>.</li>
+           <li><m>Ax=b</m> has a unique solution for each <m>b</m> in <m>\R^n</m>.</li>
+
+           <li><m>T</m> is invertible.</li>
+           <li><m>T</m> is one-to-one.</li>
+           <li><m>T</m> is onto.</li>
+         </ol>
+       </p>
+     </statement>
+     <proof>
+       <p>
+         <m>(1\iff 2)</m>: The matrix <m>A</m> has <m>n</m> pivots if and only if its reduced row echelon form is the identity matrix <m>I_n</m>.  This happens exactly when the <xref ref="matrix-inv-how-to-compute">procedure</xref> to compute the inverse succeeds.
+       </p>
+
+       <p>
+         <m>(2\iff 3)</m>:
+         The null space of a matrix is <m>\{0\}</m> if and only if the matrix has no free variables, which means that every column is a pivot column, which means <m>A</m> has <m>n</m> pivots.  See this <xref ref="subspaces-span-nullspace">recipe</xref>.
+       </p>
+
+       <p>
+         <m>(2\iff 4,\,2\iff 5)</m>:
+         These follow from this <xref ref="linindep-matrix-cols">recipe</xref> and this <xref ref="matrixeq-thm-full-span"/>, respectively, since <m>A</m> has <m>n</m> pivots if and only if has a pivot in every row/column.
+       </p>
+
+       <p>
+         <m>(4+5\iff 6)</m>:
+         We know <m>Ax=b</m> has at least one solution for every <m>b</m> if and only if the columns of <m>A</m> span <m>\R^n</m> by this <xref ref="matrix-trans-onto"/>, and <m>Ax=b</m> has at most one solution for every <m>b</m> if and only if the columns of <m>A</m> are linearly independent by this <xref ref="matrix-trans-one-to-one"/>.  Hence <m>Ax=b</m> has exactly one solution for every <m>b</m> if and only if its columns are linearly independent and span <m>\R^n</m>.
+       </p>
+
+       <p>
+         <m>(1\iff 7)</m>:
+         This is the content of this <xref ref="matrix-inv-matrix-inv-comp"/>.
+       </p>
+
+       <p>
+         <m>(7\implies 8+9)</m>:
+         See this <xref ref="matrix-inv-11-onto"/>.
+       </p>
+
+       <p>
+         <m>(8\iff 4,\,9\iff 5)</m>:
+         See this this <xref ref="matrix-trans-one-to-one"/> and this <xref ref="matrix-trans-onto"/>.
+       </p>
+     </proof>
+   </theorem>
+
+   <p>
+     To reiterate, the invertible matrix theorem means:
+   </p>
+
+   <bluebox>
+     <p>
+       There are two kinds of <em>square</em> matrices:
+       <ol>
+         <li>invertible matrices, and</li>
+         <li>non-invertible matrices.</li>
+       </ol>
+     </p>
+     <p>
+       For invertible matrices, all of the statements of the invertible matrix theorem are true.
+     </p>
+     <p>
+       For non-invertible matrices, all of the statements of the invertible matrix theorem are false.
+     </p>
+   </bluebox>
+
+   <p>
+     The reader should be comfortable translating any of the statements in the invertible matrix theorem into a statement about the pivots of a matrix.
+   </p>
+
+   <remark hide-type="true">
+     <title>Other Conditions for Invertibility</title>
+     <p>
+       The following conditions are also equivalent to the invertibility of a square matrix <m>A</m>.  They are all simple restatements of conditions in the invertible matrix theorem.
+     </p>
+     <p>
+         <ol>
+           <li>The reduced row echelon form of <m>A</m> is the identity matrix <m>I_n</m>.</li>
+           <li><m>Ax=0</m> has no solutions other than the trivial one.</li>
+           <li><m>\nullity(A) = 0</m>.</li>
+           <li>The columns of <m>A</m> form a basis for <m>\R^n</m>.</li>
+           <li><m>Ax=b</m> is consistent for all <m>b</m> in <m>\R^n</m>.</li>
+           <li><m>\Col(A) = \R^n.</m></li>
+           <li><m>\dim\Col(A) = n.</m></li>
+           <li><m>\rank(A) = n.</m></li>
+         </ol>
+     </p>
+   </remark>
+
+   <p>
+     Now we can show that to check <m>B = A\inv</m>, it's enough to show <m>AB=I_n</m> <em>or</em> <m>BA=I_n</m>.
+   </p>
+
+   <corollary xml:id="matrix-inv-left-right">
+     <title>A Left or Right Inverse Suffices</title>
+     <statement>
+       <p>
+         Let <m>A</m> be an <m>n\times n</m> matrix, and suppose that there exists an <m>n\times n</m> matrix <m>B</m> such that <m>AB=I_n</m> <em>or</em> <m>BA=I_n</m>.  Then <m>A</m> is invertible and <m>B = A\inv</m>.
+       </p>
+     </statement>
+     <proof>
+       <p>
+         Suppose that <m>AB = I_n</m>.  We claim that <m>T(x)=Ax</m> is onto.  Indeed, for any <m>b</m> in <m>\R^n</m>, we have
+         <me>
+           b = I_nb = (AB)b = A(Bb),
+         </me>
+         so <m>T(Bb) = b</m>, and hence <m>b</m> is in the range of <m>T</m>.  Therefore, <m>A</m> is invertible by the <xref ref="imt-1"/>.  Since <m>A</m> is invertible, we have
+         <me>
+           A\inv = A\inv I_n = A\inv (AB) = (A\inv A)B = I_n B = B,
+         </me>
+         so <m>B = A\inv.</m>
+       </p>
+       <p>
+         Now suppose that <m>BA = I_n</m>.  We claim that <m>T(x) = Ax</m> is one-to-one.  Indeed, suppose that <m>T(x) = T(y)</m>.  Then <m>Ax = Ay</m>, so <m>BAx = BAy</m>.  But <m>BA = I_n</m>, so <m>I_nx = I_ny</m>, and hence <m>x=y</m>.  Therefore, <m>A</m> is invertible by the <xref ref="imt-1"/>.  One shows that <m>B = A\inv</m> as above.
+       </p>
+     </proof>
+   </corollary>
+
+   <p>
+     We conclude with some common situations in which the invertible matrix theorem is useful.
+   </p>
+
+   <example>
+     <statement>
+       <p>
+         Is this matrix invertible?
+         <me>A = \mat{1 2 -1; 2 4 7; -2 -4 1}</me>
+       </p>
+     </statement>
+     <solution>
+       <p>
+         The second column is a multiple of the first.  The columns are linearly dependent, so <m>A</m> does not satisfy condition 4 of the <xref ref="imt-1"/>.  Therefore, <m>A</m> is not invertible.
+       </p>
+     </solution>
+   </example>
+
+   <example>
+     <statement>
+       <p>
+         Let <m>A</m> be an <m>n\times n</m> matrix and let <m>T(x) = Ax</m>.  Suppose that the range of <m>T</m> is <m>\R^n</m>.  Show that the columns of <m>A</m> are linearly independent.
+       </p>
+     </statement>
+     <solution>
+       <p>
+         The range of <m>T</m> is the column space of <m>A</m>, so <m>A</m> satisfies condition 5 of the <xref ref="imt-1"/>.  Therefore, <m>A</m> also satisfies condition 4, which says that the columns of <m>A</m> are linearly independent.
+       </p>
+     </solution>
+   </example>
+
+   <example>
+     <statement>
+       <p>
+         Let <m>A</m> be a <m>3\times 3</m> matrix such that
+         <me>A\vec{1 7 0} = A\vec{2 0 -1}.</me>
+         Show that the rank of <m>A</m> is at most <m>2</m>.
+       </p>
+     </statement>
+     <solution>
+       <p>
+         If we set
+         <me>b = A\vec{1 7 0} = A\vec{2 0 -1},</me>
+         then <m>Ax=b</m> has multiple solutions, so it does not satisfy condition 6 of the <xref ref="imt-1"/>.  Therefore, it does not satisfy condition 5, so the columns of <m>A</m> do not span <m>\R^3</m>.  Therefore, the column space has dimension strictly less than 3, the rank is at most <m>2</m>.
+       </p>
+     </solution>
+   </example>
+
+   <example>
+     <statement>
+       <p>
+         Suppose that <m>A</m> is an <m>n\times n</m> matrix such that <m>Ax=b</m> is inconsistent some vector <m>b</m>.  Show that <m>Ax=b</m> has infinitely many solutions for some (other) vector <m>b</m>.
+       </p>
+     </statement>
+     <solution>
+       <p>
+         By hypothesis, <m>A</m> does not satisfy condition 6 of the <xref ref="imt-1"/>.  Therefore, it does not satisfy condition <m>3</m>, so <m>\Nul(A)</m> is an infinite set.   If we take <m>b=0</m>, then the equation <m>Ax=b</m> has infinitely many solutions.
+       </p>
+     </solution>
+   </example>
+
+</section>

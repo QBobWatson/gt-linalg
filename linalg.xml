@@ -232,6 +232,7 @@ Free Documentation License"
       <xi:include href="./linear-trans.xml" />
       <xi:include href="./matrix-mult.xml" />
       <xi:include href="./matrix-inv.xml" />
+      <xi:include href="./invertible-matrix-thm.xml" />
     </chapter>
 
     <chapter xml:id="chap-determinant">
