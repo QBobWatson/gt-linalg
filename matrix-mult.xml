@@ -707,7 +707,7 @@ the license is included in gfdl.xml.
       <idx><h>Rotation</h><h>composition of</h></idx>
       <p>
         In this <xref ref="linear-trans-rotation-matrix"/>, we showed that the standard matrix for the counterclockwise rotation of the plane by an angle of <m>\theta</m> is
-        <me>A = \mat{\cos(\theta) -\sin(\theta); \sin(\theta) \cos(\theta)}.</me>
+        <me>A = \mat{\cos\theta, -\sin\theta; \sin\theta, \cos\theta}.</me>
         Let <m>T\colon\R^2\to\R^2</m> be counterclockwise rotation by <m>45^\circ</m>, and let <m>U\colon\R^2\to\R^2</m> be counterclockwise rotation by <m>90^\circ</m>.  The matrices <m>A</m> and <m>B</m> for <m>T</m> and <m>U</m> are, respectively,
         <md>
           <mrow>

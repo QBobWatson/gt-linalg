@@ -604,8 +604,8 @@ the license is included in gfdl.xml.
     node[pos=.7, above left] {$T(e_1)$};
   \draw (.3,0) arc[start angle=0, delta angle=37, radius=.3cm]
     node[midway, right=.2mm, yshift=.5mm] {$\theta$};
-  \draw[seq1,thick] (Te) -- (\cx,0) node[midway,right] {$\sin(\theta)$};
-  \draw[seq2,thick] (0,0) -- (\cx,0) node[midway,below=1mm] {$\cos(\theta)$};
+  \draw[seq1,thick] (Te) -- (\cx,0) node[midway,right] {$\sin\theta$};
+  \draw[seq2,thick] (0,0) -- (\cx,0) node[midway,below=1mm] {$\cos\theta$};
 
   \begin{scope}[xshift=3cm]
     \draw[help lines] (0,0) circle[radius=1];
@@ -629,8 +629,8 @@ the license is included in gfdl.xml.
       node[pos=1.15, inner sep=1pt] {$T(e_2)$};
     \draw (0,.3) arc[start angle=90, delta angle=37, radius=.3cm]
       node[midway, above=.21mm] {$\theta$};
-    \draw[seq2,thick] (Te) -- (\cx,0) node[midway,left] {$\cos(\theta)$};
-    \draw[seq1,thick] (0,0) -- (\cx,0) node[midway,below=1mm] {$\sin(\theta)$};
+    \draw[seq2,thick] (Te) -- (\cx,0) node[midway,left] {$\cos\theta$};
+    \draw[seq1,thick] (0,0) -- (\cx,0) node[midway,below=1mm] {$\sin\theta$};
 
   \end{scope}
 
@@ -639,12 +639,12 @@ the license is included in gfdl.xml.
           We see from the picture that
           <me>
 \left.\begin{aligned}
-    T(e_1) \amp= \vec{\color{seq2}\cos(\theta) \color{seq1}\sin(\theta)} \\
-    T(e_2) \amp= \vec{-\color{seq1}\sin(\theta) \color{seq2}\cos(\theta)}
+    T(e_1) \amp= \vec{\color{seq2}\cos\theta, \color{seq1}\sin\theta} \\
+    T(e_2) \amp= \vec{-\color{seq1}\sin\theta, \color{seq2}\cos\theta}
 \end{aligned}\right\}
 \implies A =
-\mat{\color{seq2}\cos(\theta) -\color{seq1}\sin(\theta);
-     \color{seq1}\sin(\theta) \color{seq2}\cos(\theta)}
+\mat{\color{seq2}\cos\theta, -\color{seq1}\sin\theta;
+     \color{seq1}\sin\theta, \color{seq2}\cos\theta}
           </me>
         </p>
       </solution>
@@ -652,7 +652,7 @@ the license is included in gfdl.xml.
 
     <p>
       We saw in the above example that the matrix for counterclockwise rotation of the plane by an angle of <m>\theta</m> is
-      <me>A = \mat{\cos(\theta) -\sin(\theta); \sin(\theta) \cos(\theta)}.</me>
+      <me>A = \mat{\cos\theta, -\sin\theta; \sin\theta, \cos\theta}.</me>
     </p>
 
     <example xml:id="linear-trans-matrix-formula">

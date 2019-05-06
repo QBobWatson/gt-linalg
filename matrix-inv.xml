@@ -830,7 +830,7 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
      <solution>
        <p>
          In this <xref ref="linear-trans-rotation-matrix"/>, we showed that the standard matrix for the counterclockwise rotation of the plane by an angle of <m>\theta</m> is
-         <me>\mat{\cos(\theta) -\sin(\theta); \sin(\theta) \cos(\theta)}.</me>
+         <me>\mat{\cos\theta, -\sin\theta; \sin\theta, \cos\theta}.</me>
          Therefore, the standard matrix <m>A</m> for <m>T</m> is
          <me>A = \frac 1{\sqrt 2}\mat{1 -1; 1 1},</me>
          where we have used the trigonometric identities
