@@ -79,6 +79,10 @@ the license is included in gfdl.xml.
       We cannot consider the zero vector to be an eigenvector: since <m>A0 = 0 = \lambda 0</m> for <em>every</em> scalar <m>\lambda</m>, the associated eigenvalue would be undefined.
     </p>
 
+	<p>
+If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to check if <m>v</m> is an eigenvector of <m>A</m>: simply multiply <m>v</m> by <m>A</m> and see if <m>Av</m> is a scalar multiple of <m>v</m>. On the other hand, given just the matrix <m>A</m>, it is not obvious at all how to find the eigenvectors.  We will learn how to do this in <xref ref="characteristic-polynomial"/>.
+	</p>
+
     <example>
       <title>Verifying eigenvectors</title>
       <statement>
