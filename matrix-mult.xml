@@ -537,7 +537,7 @@ the license is included in gfdl.xml.
         Recall from this <xref ref="matrixeq-row-column-prod"/> that the product of a row vector and a column vector is the scalar
         <me>\mat{a_1 a_2 \cdots, a_n} \vec{x_1 x_2 \vdots, x_n}
         = a_1x_1 + a_2x_2 + \cdots + a_nx_n.</me>
-        The following procedure for finding the matrix product is much better adapted to computations by hand; the previous <xref ref="matrix-mult-defn-of"/> is more suitable for proving the <xref ref="matrix-mult-comp-is-prod"/> below.
+        The following procedure for finding the matrix product is much better adapted to computations by hand; the previous <xref ref="matrix-mult-defn-of"/> is more suitable for proving theorems, such as this <xref ref="matrix-mult-comp-is-prod"/> below.
       </p>
 
       <bluebox xml:id="matrix-mult-row-column">
