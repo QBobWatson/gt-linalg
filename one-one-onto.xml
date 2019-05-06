@@ -52,7 +52,7 @@ the license is included in gfdl.xml.
     Here are some equivalent ways of saying that <m>T</m> is one-to-one:
     <ul>
       <li>
-        The transformation <m>T</m> takes different vectors in <m>\R^n</m> to different vectors in <m>\R^m</m>.
+        For every vector <m>b</m> in <m>\R^m</m>, the equation <m>T(x) = b</m> has <em>zero or one</em> solution <m>x</m> in <m>\R^n</m>.
       </li>
       <li>
         Different inputs of <m>T</m> have different outputs.
