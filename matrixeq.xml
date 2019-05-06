@@ -94,6 +94,15 @@ the license is included in gfdl.xml.
       </statement>
     </definition>
 
+	<p>
+	In this book we will study two complementary questions about a matrix equation <m>Ax=b</m>:
+	<ol>
+	<li>Given a specific choice of <m>b</m>, what are all of the solutions to <m>Ax=b</m>?</li>
+	<li>What are all of the choices of <m>b</m> so that <m>Ax=b</m> is consistent?</li>
+	</ol>
+	The first question is more like the questions you might be used to from your earlier courses in algebra; you have a lot of practice solving equations like <m>x^2-1=0</m> for <m>x</m>.  The second question is perhaps a new concept for you.  The <xref ref="rank-theorem"/>, which is the culmination of this chapter, tells us that the two questions are intimately related.  
+	</p>
+
     <note hide-type="true">
       <title>Matrix Equations and Vector Equations</title>
       <idx><h>Matrix equation</h><h>equivalence with vector equation</h></idx>
