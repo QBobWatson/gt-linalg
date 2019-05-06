@@ -126,7 +126,7 @@ the license is included in gfdl.xml.
         In the equation <m>Ax=b</m>, the input vector <m>x</m> and the output vector <m>b</m> are both in <m>\R^3</m>.
         First we multiply <m>A</m> by a vector to see what it does:
         <me>A\vec{x y z} = \mat{1 0 0; 0 1 0; 0 0 0}\vec{x y z} = \vec{x y 0}.</me>
-        Multiplication by <m>A</m> simply sets the <m>z</m>-coordinate equal to zero: it <em>projects onto the <m>xy</m>-plane</em>.
+        Multiplication by <m>A</m> simply sets the <m>z</m>-coordinate equal to zero: it <em>projects vertically onto the <m>xy</m>-plane</em>.
         <latex-code>
 \begin{tikzpicture}[myxyz]
   \begin{scope}[arrows={|[width=4pt]->[width=4pt]}, shorten=4pt]
