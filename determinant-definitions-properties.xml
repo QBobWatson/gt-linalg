@@ -78,9 +78,38 @@ the license is included in gfdl.xml.
     </p>
 
     <p>
-      The reason behind using these particular defining properties is geometric.
-      See <xref ref="determinants-volumes"/>.
+      The main motivation behind using these particular defining properties is geometric:
+      see <xref ref="determinants-volumes"/>.  Another motivation for this definition is that it tells us how to compute the determinant: we row reduce and keep track of the changes.
     </p>
+
+    <specialcase>
+      <p>
+        Let us compute <m>\det\smallmat2114.</m>
+        First we row reduce, then we compute the determinant in the opposite order:
+          <md>
+            <mrow>
+              \amp\mat{2 1; 1 4} \amp\strut\det\amp=7
+            </mrow>
+            <mrow>
+  \;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_1\longleftrightarrow R_2$\hss}}\;\amp
+    \mat{1 4; 2 1} \amp \strut\det \amp= -7
+            </mrow>
+            <mrow>
+  \;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_2 = R_2 - 2R_1$\hss}}\;\amp
+    \mat{1 4; 0 -7} \amp \strut\det \amp= -7
+            </mrow>
+            <mrow>
+  \;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_2 = R_2 \div -7$\hss}}\;\amp
+    \mat{1 4; 0 1} \amp \strut\det \amp= 1
+            </mrow>
+            <mrow>
+  \;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_1 = R_1 - 4R_2$\hss}}\;\amp
+    \mat{1 0; 0 1} \amp \strut\det \amp= 1
+            </mrow>
+          </md>
+          The reduced row echelon form of the matrix is the identity matrix <m>I_2</m>, so its determinant is <m>1</m>.  The second-last step in the row reduction was a row replacement, so the second-final matrix also has determinant <m>1</m>.  The previous step in the row reduction was a row scaling by <m>-1/7</m>; since (the determinant of the second matrix times <m>-1/7</m>) is <m>1</m>, the determinant of the second matrix must be <m>-7</m>.  The first step in the row reduction was a row swap, so the determinant of the first matrix is negative the determinant of the second.  Thus, the determinant of the original matrix is <m>7</m>.
+      </p>
+    </specialcase>
 
     <example>
       <statement>
@@ -118,39 +147,6 @@ the license is included in gfdl.xml.
           </md>
           The reduced row echelon form is <m>I_3</m>, which has determinant <m>1</m>.
           Working backwards from <m>I_3</m> and using the four <xref ref="det-defn-the-defn">defining properties</xref>, we see that the second matrix also has determinant <m>1</m> (it differs from <m>I_3</m> by a row replacement), and the first matrix has determinant <m>-1</m> (it differs from the second by a row swap).
-        </p>
-      </solution>
-    </example>
-
-    <example>
-      <statement>
-        <p>Compute <m>\det\mat{2 1; 1 4}.</m></p>
-      </statement>
-      <solution>
-        <p>
-          First we row reduce, then we compute the determinant in the opposite order:
-          <md>
-            <mrow>
-              \amp\mat{2 1; 1 4} \amp\strut\det\amp=7
-            </mrow>
-            <mrow>
-  \;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_1\longleftrightarrow R_2$\hss}}\;\amp
-    \mat{1 4; 2 1} \amp \strut\det \amp= -7
-            </mrow>
-            <mrow>
-  \;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_2 = R_2 - 2R_1$\hss}}\;\amp
-    \mat{1 4; 0 -7} \amp \strut\det \amp= -7
-            </mrow>
-            <mrow>
-  \;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_2 = R_2 \div -7$\hss}}\;\amp
-    \mat{1 4; 0 1} \amp \strut\det \amp= 1
-            </mrow>
-            <mrow>
-  \;\xrightarrow{\hbox to 1.7cm{\hss\tiny$R_1 = R_1 - 4R_2$\hss}}\;\amp
-    \mat{1 0; 0 1} \amp \strut\det \amp= 1
-            </mrow>
-          </md>
-          The reduced row echelon form of the matrix is the identity matrix <m>I_2</m>, so its determinant is <m>1</m>.  The second-last step in the row reduction was a row replacement, so the second-final matrix also has determinant <m>1</m>.  The previous step in the row reduction was a row scaling by <m>-1/7</m>; since (the determinant of the second matrix times <m>-1/7</m>) is <m>1</m>, the determinant of the second matrix must be <m>-7</m>.  The first step in the row reduction was a row swap, so the determinant of the first matrix is negative the determinant of the second.  Thus, the determinant of the original matrix is <m>7</m>.
         </p>
       </solution>
     </example>
