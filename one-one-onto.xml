@@ -323,12 +323,13 @@ the license is included in gfdl.xml.
           <li><m>Ax=0</m> has <em>only</em> the trivial solution.</li>
           <li>The columns of <m>A</m> are linearly independent.</li>
           <li><m>A</m> has a pivot in every column.</li>
+          <li>The range of <m>T</m> has dimension <m>n</m>.</li>
         </ol>
       </p>
     </statement>
     <proof>
       <p>
-        Statements 1, 2, and 3 are translations of each other.  The equivalence of 3 and 4 follows from this <xref ref="solnsets-translate-span"/>: if <m>Ax=0</m> has only one solution, then <m>Ax=b</m> has only one solution as well, or it is inconsistent.  The equivalence of 4, 5, and 6 is a consequence of this <xref ref="linindep-matrix-cols"/>.
+        Statements 1, 2, and 3 are translations of each other.  The equivalence of 3 and 4 follows from this <xref ref="solnsets-translate-span"/>: if <m>Ax=0</m> has only one solution, then <m>Ax=b</m> has only one solution as well, or it is inconsistent.  The equivalence of 4, 5, and 6 is a consequence of this <xref ref="linindep-matrix-cols"/>, and the equivalence of 6 and 7 follows from the fact that the rank of a matrix is equal to the number of columns with pivots.
       </p>
     </proof>
   </theorem>
@@ -598,12 +599,13 @@ the license is included in gfdl.xml.
           <li><m>Ax=b</m> is consistent for every <m>b</m> in <m>\R^m</m>.</li>
           <li>The columns of <m>A</m> span <m>\R^m</m>.</li>
           <li><m>A</m> has a pivot in every row.</li>
+          <li>The range of <m>T</m> has dimension <m>m</m>.</li>
         </ol>
       </p>
     </statement>
     <proof>
       <p>
-        Statements 1, 2, and 3 are translations of each other.  The equivalence of 3, 4, and 5 follows from this <xref ref="matrixeq-thm-full-span"/>.
+        Statements 1, 2, and 3 are translations of each other.  The equivalence of 3, 4, 5, and 6 follows from this <xref ref="matrixeq-thm-full-span"/>.
       </p>
     </proof>
   </theorem>
@@ -721,12 +723,14 @@ the license is included in gfdl.xml.
   \textbf{$T$ is one-to-one}\\[3mm]
   $T(x)=b$ has \emph{at most one solution} for every $b$.\\[3mm]
   The columns of $A$ are linearly independent.\\[3mm]
-  $A$ has a pivot in every column.
+  $A$ has a pivot in every column.\\[3mm]
+  The range of $T$ has dimension $n$.
 }\qquad\parbox{2.5in}{\centering%
   \textbf{$T$ is onto}\\[3mm]
   $T(x)=b$ has \emph{at least one solution} for every $b$.\\[3mm]
   The columns of $A$ span $\R^m$.\\~\\[3mm]
-  $A$ has a pivot in every row.
+  $A$ has a pivot in every row.\\[3mm]
+  The range of $T$ has dimension $m$.
 }
     </latex-code>
   </p>
