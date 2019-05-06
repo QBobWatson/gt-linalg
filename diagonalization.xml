@@ -180,7 +180,7 @@ the license is included in gfdl.xml.
       <p>
         If a matrix <m>A</m> is diagonalizable, and if <m>B</m> is similar to <m>A</m>, then <m>B</m> is diagonalizable
         <restrict-version versions="1554 default">
-          as well by <xref ref="similarity-eq-reln"/>.
+          as well by this <xref ref="similarity-eq-reln"/>.
         </restrict-version>
         <restrict-version versions="1553">
           as well.  Indeed, if <m>A = CDC\inv</m> for <m>D</m> diagonal, and <m>B = EAE\inv</m>, then
