@@ -748,7 +748,7 @@ the license is included in gfdl.xml.
         <me>\sin(\alpha\pm\beta) = \sin(\alpha)\cos(\beta) \pm \cos(\alpha)\sin(\beta)</me>
         and
         <me>\cos(\alpha\pm\beta) = \cos(\alpha)\cos(\beta) \mp \sin(\alpha)\sin(\beta)</me>
-        using the <xref ref="matrix-mult-comp-is-prod"/> as applied to rotation transformations, as in the previous example.
+        using the above <xref ref="matrix-mult-comp-is-prod"/> as applied to rotation transformations, as in the previous example.
       </p>
     </remark>
 
