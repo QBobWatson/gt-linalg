@@ -118,7 +118,7 @@ the license is included in gfdl.xml.
     </definition>
 
     <p>
-      Composing two transformations means chaining them together: <m>T\circ U</m> is the transformation that first applies <m>U</m>, then applies <m>T</m> (note the order of operations).  More precisely, to evaluate <m>T\circ U</m> on an input vector <m>x</m>, first you evaluate <m>U(x)</m>, then you take this output vector of <m>U</m> and use it as an input vector of <m>T</m>: that is, <m>(T\circ U)(x) = T(U(x))</m>.  Of course, this only makes sense when the outputs of <m>U</m> are valid inputs of <m>T</m>.
+      Composing two transformations means chaining them together: <m>T\circ U</m> is the transformation that first applies <m>U</m>, then applies <m>T</m> (note the order of operations).  More precisely, to evaluate <m>T\circ U</m> on an input vector <m>x</m>, first you evaluate <m>U(x)</m>, then you take this output vector of <m>U</m> and use it as an input vector of <m>T</m>: that is, <m>(T\circ U)(x) = T(U(x))</m>.  Of course, this only makes sense when the outputs of <m>U</m> are valid inputs of <m>T</m>, that is, when the range of <m>U</m> is contained in the domain of <m>T</m>.
       <latex-code>
 \begin{tikzpicture}[every label/.append style={text=black, thin border}, scale=.65]
   \draw[grid lines] (-3,-3) grid (3,3)
