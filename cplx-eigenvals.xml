@@ -220,7 +220,7 @@ A-\frac{4+3i}5I_3 =
         \amp v_2 = \vec{-12+9i -9-12i 25}
         \end{split}
       </me>
-      In these cases, an eigenvector for the conjugate eigenvalue is simply the <em>conjugate eigenvector</em> (the eigenvector obtained by conjugating each entry of the first eigenvector).  This is always true; we leave the verification to the reader.
+      In these cases, an eigenvector for the conjugate eigenvalue is simply the <em>conjugate eigenvector</em> (the eigenvector obtained by conjugating each entry of the first eigenvector).  This is always true.  Indeed, if <m>Av=\lambda v</m> then <me>A \bar v = \bar{Av} = \bar{\lambda v} = \bar \lambda \bar v,</me> which exactly says that <m>\bar v</m> is an eigenvector of <m>A</m> with eigenvalue <m>\bar \lambda</m>.
     </p>
 
     <bluebox>
