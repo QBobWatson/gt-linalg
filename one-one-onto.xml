@@ -193,11 +193,11 @@ the license is included in gfdl.xml.
     </p>
 
     <p>
-      The function <m>\exp\colon\R\to\R</m> defined by <m>\exp(x) = e^x</m> is one-to-one.  Indeed, if <m>T(x) = T(y)</m>, then <m>e^x = e^y</m>, so <m>\ln(e^x) = \ln(e^y)</m>, and hence <m>x = y</m>.  The equation <m>T(x) = A</m> has one solution <m>x = \ln(A)</m> if <m>A > 0</m>, and it has zero solutions if <m>A\leq 0</m>.
+      The function <m>\exp\colon\R\to\R</m> defined by <m>\exp(x) = e^x</m> is one-to-one.  Indeed, if <m>T(x) = T(y)</m>, then <m>e^x = e^y</m>, so <m>\ln(e^x) = \ln(e^y)</m>, and hence <m>x = y</m>.  The equation <m>T(x) = C</m> has one solution <m>x = \ln(C)</m> if <m>C > 0</m>, and it has zero solutions if <m>C\leq 0</m>.
     </p>
 
     <p>
-      The function <m>f\colon\R\to\R</m> defined by <m>f(x)=x^3</m> is one-to-one.  Indeed, if <m>f(x) = f(y)</m> then <m>x^3 = y^3</m>; taking cube roots gives <m>x = y</m>.  In other words, the only solution of <m>f(x) = A</m> is <m>x=\sqrt[3]A</m>.
+      The function <m>f\colon\R\to\R</m> defined by <m>f(x)=x^3</m> is one-to-one.  Indeed, if <m>f(x) = f(y)</m> then <m>x^3 = y^3</m>; taking cube roots gives <m>x = y</m>.  In other words, the only solution of <m>f(x) = C</m> is <m>x=\sqrt[3]C</m>.
     </p>
 
     <p>
