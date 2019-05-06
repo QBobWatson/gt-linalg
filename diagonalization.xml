@@ -1143,7 +1143,7 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
     </p>
 
     <p>
-      Recall that the <em>multiplicity</em> of a root <m>\lambda_0</m> of a polynomial <m>f(\lambda)</m> is equal to the number of factors of <m>\lambda-\lambda_0</m> that divide <m>f(\lambda).</m>  For instance, in the polynomial
+      In algebra, we define the <em>multiplicity</em> of a root <m>\lambda_0</m> of a polynomial <m>f(\lambda)</m> to be the number of factors of <m>\lambda-\lambda_0</m> that divide <m>f(\lambda).</m>  For instance, in the polynomial
       <me>f(\lambda) = -\lambda^3 + 4\lambda^2 - 5\lambda + 2 = -(\lambda-1)^2(\lambda-2),</me>
       the root <m>\lambda_0=2</m> has multiplicity <m>1</m>, and the root <m>\lambda_0=1</m> has multiplicity <m>2</m>.
     </p>
