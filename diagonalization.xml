@@ -255,7 +255,7 @@ This is often very important in applications.
     </paragraphs>
 
     <p>
-      Now we come to the primary criterion for diagonalizability.  It shows that diagonalizability is an eigenvalue problem.
+      A fundamental question about a matrix is whether or not it is diagonalizable.  The following is the primary criterion for diagonalizability.  It shows that diagonalizability is an eigenvalue problem.
     </p>
 
     <theorem type-name="Diagonalization Theorem" xml:id="diagonalization-thm">
