@@ -25,84 +25,14 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      In this section, we study compositions of transformations: that is, chaining transformations together.  The composition of matrix transformations corresponds to a notion of <em>multiplying</em> two matrices together.  We also discuss addition and scalar multiplication of transformations and of matrices.
+      In this section, we study compositions of transformations.  As we will see, composition is a way of chaining transformations together.  The composition of matrix transformations corresponds to a notion of <em>multiplying</em> two matrices together.  We also discuss addition and scalar multiplication of transformations and of matrices.
     </p>
   </introduction>
 
-  <subsection>
-    <title>Transformation algebra</title>
+	<subsection>
+	<title>Composition of linear transformations</title>
 
-    <p>
-      In this subsection we describe three operations that one can perform on  transformations: addition, scalar multiplication, and composition.  In the next subsection, we will translate these operations into the language of matrices, for matrix transformations.
-    </p>
-
-    <definition>
-      <idx><h>Transformation</h><h>addition of</h></idx>
-      <idx><h>Linear transformation</h><h>addition of</h><see>Transformation</see></idx>
-      <idx><h>Matrix transformation</h><h>addition of</h><see>Transformation</see></idx>
-      <idx><h>Transformation</h><h>scalar multiplication of</h></idx>
-      <idx><h>Linear transformation</h><h>scalar multiplication of</h><see>Transformation</see></idx>
-      <idx><h>Matrix transformation</h><h>scalar multiplication of</h><see>Transformation</see></idx>
-      <statement>
-        <p>
-          <ul>
-            <li>
-              Let <m>T,U\colon\R^n\to\R^m</m> be two transformations.  Their <term>sum</term> is the transformation <m>T+U\colon\R^n\to\R^m</m> defined by
-              <me>(T+U)(x) = T(x) + U(x).</me>
-              Note that addition of transformations is only defined when both transformations have the same domain and codomain. <em></em><!-- workaround css bug -->
-            </li>
-            <li>
-              Let <m>T\colon\R^n\to\R^m</m> be a transformation, and let <m>c</m> be a scalar.  The <term>scalar product</term> of <m>c</m> with <m>T</m> is the transformation <m>cT\colon\R^n\to\R^m</m> defined by
-              <me>(cT)(x) = c\cdot T(x).</me>
-            </li>
-          </ul>
-        </p>
-      </statement>
-    </definition>
-
-    <p>
-      The sum of two transformations <m>T,U\colon\R^n\to\R^m</m> is another transformation called <m>T+U</m>; its value on an input vector <m>x</m> is the sum of the outputs of <m>T</m> and <m>U</m>.  Similarly, the product of <m>T</m> with a scalar <m>c</m> is another transformation called <m>cT</m>; its value on an input vector <m>x</m> is the vector <m>c\cdot T(x)</m>.
-    </p>
-
-    <example>
-      <title>Functions of one variable</title>
-      <p>
-        Define <m>f\colon\R\to\R</m> by <m>f(x) = x^2</m> and <m>g\colon\R\to\R</m> by <m>g(x) = x^3</m>.  The sum <m>f+g\colon\R\to\R</m> is the transformation defined by the rule
-        <me>(f+g)(x) = f(x) + g(x) = x^2 + x^3.</me>
-        For instance, <m>(f+g)(-2) = (-2)^2 + (-2)^3 = -4</m>.
-      </p>
-      <p>
-        Define <m>\exp\colon\R\to\R</m> by <m>\exp(x) = e^x</m>.  The product <m>2\exp\colon\R\to\R</m> is the transformation defined by the rule
-        <me>(2\exp)(x) = 2\cdot\exp(x) = 2e^x.</me>
-        For instance, <m>(2\exp)(1) = 2\cdot\exp(1) = 2e</m>.
-      </p>
-    </example>
-
-    <note hide-type="true" xml:id="matrix-mult-add-mult-trans">
-      <title>Properties of addition and scalar multiplication</title>
-      <p>
-        Let <m>S,T,U\colon\R^n\to\R^m</m> be transformations and let <m>c,d</m> be scalars.  The following properties are easily verified:
-        <md>
-          <mrow>
-          T + U \amp= U + T \amp
-          S + (T + U) \amp= (S + T) + U
-          </mrow>
-          <mrow>
-          c(T + U) \amp= cT + cU \amp
-          (c + d)T \amp= cT + dT
-          </mrow>
-          <mrow>
-            c(dT) \amp= (cd)T \amp
-            T + 0 \amp= T
-          </mrow>
-        </md>
-      </p>
-    </note>
-
-    <p>
-      <notation><usage>0</usage><description>The zero transformation</description></notation>
-      In one of the above properties, we used <m>0</m> to denote the transformation <m>\R^n\to\R^m</m> that is zero on every input vector: <m>0(x) = 0</m> for all <m>x</m>.  This is called the <term>zero transformation</term>.
-    </p>
+<p>Composition means the same thing in linear algebra as it does in Calculus.  Here is the definition.</p>
 
     <definition>
       <idx><h>Transformation</h><h>composition of</h></idx>
@@ -118,7 +48,7 @@ the license is included in gfdl.xml.
     </definition>
 
     <p>
-      Composing two transformations means chaining them together: <m>T\circ U</m> is the transformation that first applies <m>U</m>, then applies <m>T</m> (note the order of operations).  More precisely, to evaluate <m>T\circ U</m> on an input vector <m>x</m>, first you evaluate <m>U(x)</m>, then you take this output vector of <m>U</m> and use it as an input vector of <m>T</m>: that is, <m>(T\circ U)(x) = T(U(x))</m>.  Of course, this only makes sense when the outputs of <m>U</m> are valid inputs of <m>T</m>.
+      Composing two transformations means chaining them together: <m>T\circ U</m> is the transformation that first applies <m>U</m>, then applies <m>T</m> (note the order of operations).  More precisely, to evaluate <m>T\circ U</m> on an input vector <m>x</m>, first you evaluate <m>U(x)</m>, then you take this output vector of <m>U</m> and use it as an input vector of <m>T</m>: that is, <m>(T\circ U)(x) = T(U(x))</m>.  Of course, this only makes sense when the outputs of <m>U</m> are valid inputs of <m>T</m>, that is, when the range of <m>U</m> is contained in the domain of <m>T</m>.
       <latex-code>
 \begin{tikzpicture}[every label/.append style={text=black, thin border}, scale=.65]
   \draw[grid lines] (-3,-3) grid (3,3)
@@ -306,14 +236,14 @@ the license is included in gfdl.xml.
             \operatorname{Id}_{\R^m}\circ T \amp= T
           </mrow>
           <mrow>
-            S\circ(T\circ U) \amp= (S\circ T)\circ U \amp
+            \amp \amp S\circ(T\circ U) \amp= (S\circ T)\circ U \amp
           </mrow>
         </md>
       </p>
     </note>
 
     <p>
-      The final property is called <term>associativity</term>; it simply says that
+      The final property is called <term>associativity</term>.  Unwrapping both sides, it says:
       <me>S\circ(T\circ U)(x) = S(T\circ U(x)) = S(T(U(x))) = S\circ T(U(x)) = (S\circ T)\circ U(x).</me>
       In other words, both <m>S\circ (T\circ U)</m> and <m>(S\circ T)\circ U</m> are the transformation defined by first applying <m>U</m>, then <m>T</m>, then <m>S</m>.
     </p>
@@ -332,7 +262,7 @@ the license is included in gfdl.xml.
         <me>f\circ g(x) = f(g(x)) = f(e^x) = (e^x)^2 = e^{2x}.</me>
         The composition <m>g\circ f\colon\R\to\R</m> is the transformation defined by the rule
         <me>g\circ f(x) = g(f(x)) = g(x^2) = e^{x^2}.</me>
-        Note that <m>e^{x^2}\neq e^{2x}</m> in general; for instance, if <m>x=1</m> then <m>e^{x^2} = e</m> and <m>e^{2x} = e^2</m>.
+        Note that <m>e^{x^2}\neq e^{2x}</m> in general; for instance, if <m>x=1</m> then <m>e^{x^2} = e</m> and <m>e^{2x} = e^2</m>.  Thus <m>f \circ g</m> is not equal to <m>g \circ f</m>, and we can already see with functions of one variable that composition of functions is not commutative.
       </p>
     </example>
 
@@ -358,13 +288,13 @@ the license is included in gfdl.xml.
       </figure>
     </example>
 
-  </subsection>
+	</subsection>
 
 
-  <subsection>
-    <title>Matrix algebra</title>
+	<subsection>
+	<title>Matrix multiplication</title>
 
-    <p>In this subsection, we translate the algebra of linear transformations from the previous subsection into the language of matrices.  First we need some terminology.</p>
+    <p>In this subsection, we introduce a seemingly unrelated operation on matrices, namely, matrix multiplication.  As we will see in the next subsection, matrix multiplication exactly corresponds to the composition of the corresponding linear transformations.  First we need some terminology.</p>
 
     <definition type-name="Notation">
       <notation><usage>a_{ij}</usage><description>The <m>i,j</m> entry of a matrix</description></notation>
@@ -397,75 +327,6 @@ the license is included in gfdl.xml.
       </statement>
     </definition>
 
-    <definition>
-      <idx><h>Matrix</h><h>addition of</h></idx>
-      <idx><h>Matrix</h><h>scalar multiplication of</h></idx>
-      <statement>
-        <p>
-          <ul>
-            <li>
-              The <term>sum</term> of two <m>m\times n</m> matrices is the matrix obtained by summing the entries of <m>A</m> and <m>B</m> individually:
-              <me>
-                \mat{a_{11} a_{12} a_{13}; a_{21} a_{22} a_{23}} +
-                \mat{b_{11} b_{12} b_{13}; b_{21} b_{22} b_{23}} =
-                \mat{a_{11}+b_{11} a_{12}+b_{12} a_{13}+b_{13};
-                     a_{21}+b_{21} a_{22}+b_{22} a_{23}+b_{23}}
-              </me>
-              In other words, the <m>i,j</m> entry of <m>A+B</m> is the sum of the <m>i,j</m> entries of <m>A</m> and <m>B</m>.  Note that addition of matrices is only defined when both matrices have the same dimensions.<em></em> <!-- workaround css bug -->
-            </li>
-            <li>
-              The <term>scalar product</term> of a scalar <m>c</m> with a matrix <m>A</m> is obtained by scaling all entries of <m>A</m> by <m>c</m>:
-              <me>
-                \def\r{\textcolor{red}}
-                \r c\mat{a_{11} a_{12} a_{13}; a_{21} a_{22} a_{23}} =
-                \mat{\r ca_{11} \r ca_{12} \r ca_{13}; \r ca_{21} \r ca_{22} \r ca_{23}}
-              </me>
-              In other words, the <m>i,j</m> entry of <m>cA</m> is <m>c</m> times the <m>i,j</m> entry of <m>A</m>.
-            </li>
-          </ul>
-        </p>
-      </statement>
-    </definition>
-
-    <fact>
-      <p>
-        Let <m>T,U\colon\R^n\to\R^m</m> be linear transformations with standard matrices <m>A,B</m>, respectively, and let <m>c</m> be a scalar.
-        <ul>
-          <li>The standard matrix for <m>T+U</m> is <m>A+B</m>.</li>
-          <li>The standard matrix for <m>cT</m> is <m>cA</m>.</li>
-        </ul>
-      </p>
-    </fact>
-
-    <p>
-      In view of the above fact, the following properties are consequences of the corresponding <xref ref="matrix-mult-add-mult-trans">properties</xref> of transformations.  They are easily verified directly from the definitions as well.
-    </p>
-
-    <note hide-type="true">
-      <title>Properties of addition and scalar multiplication</title>
-      <p>
-        Let <m>A,B,C</m> be <m>m\times n</m> matrices and let <m>c,d</m> be scalars.  Then:
-        <md>
-          <mrow>
-          A + B \amp= B + A \amp
-          C + (A + B) \amp= (C + A) + B
-          </mrow>
-          <mrow>
-          c(A + B) \amp= cA + cB \amp
-          (c + d)A \amp= cA + dA
-          </mrow>
-          <mrow>
-            c(dA) \amp= (cd)A \amp
-            A + 0 \amp= A
-          </mrow>
-        </md>
-      </p>
-    </note>
-
-    <p>
-      <notation><usage>0</usage><description>The zero matrix</description></notation>
-      In one of the above properties, we used <m>0</m> to denote the <m>m\times n</m> matrix whose entries are all zero.  This is the standard matrix of the zero transformation, and is called the <term>zero matrix</term>.
-    </p>
 
     <definition xml:id="matrix-mult-defn-of">
       <title>Matrix multiplication</title>
@@ -502,8 +363,8 @@ the license is included in gfdl.xml.
     </p>
 
     <bluebox>
-      <title>Dimensions of the matrix product</title>
-      <idx><h>Matrix multiplication</h><h>dimensions of</h></idx>
+      <title>The sizes of the matrices in the matrix product</title>
+      <idx><h>Matrix multiplication</h><h>size of matrices</h></idx>
       <p>
         <ul>
           <li>
@@ -521,7 +382,7 @@ the license is included in gfdl.xml.
     <p>
       <idx><h>Matrix multiplication</h><h>and the matrix-vector product</h></idx>
       <idx><h>Matrix-vector product</h><h>and matrix multiplication</h></idx>
-      If <m>B</m> has only one column, then <m>AB</m> also has one column.  A matrix with one column is the same as a vector, so the definition of the matrix product generalizes the definition of the matrix-vector product.
+      If <m>B</m> has only one column, then <m>AB</m> also has one column.  A matrix with one column is the same as a vector, so the definition of the matrix product generalizes the definition of the matrix-vector product from this <xref ref="matrixeq-defn-Ax1"/>.
     </p>
 
     <p>
@@ -537,7 +398,7 @@ the license is included in gfdl.xml.
         Recall from this <xref ref="matrixeq-row-column-prod"/> that the product of a row vector and a column vector is the scalar
         <me>\mat{a_1 a_2 \cdots, a_n} \vec{x_1 x_2 \vdots, x_n}
         = a_1x_1 + a_2x_2 + \cdots + a_nx_n.</me>
-        The following procedure for finding the matrix product is much better adapted to computations by hand; the previous <xref ref="matrix-mult-defn-of"/> is more suitable for proving the <xref ref="matrix-mult-comp-is-prod"/> below.
+        The following procedure for finding the matrix product is much better adapted to computations by hand; the previous <xref ref="matrix-mult-defn-of"/> is more suitable for proving theorems, such as this <xref ref="matrix-mult-comp-is-prod"/> below.
       </p>
 
       <bluebox xml:id="matrix-mult-row-column">
@@ -641,24 +502,96 @@ the license is included in gfdl.xml.
             \mat{\b1 -3; \b2 -2; \b3 -1}
             \amp= \mat{\g1\cdot\b1+\g2\cdot\b2+\g3\cdot\b3 \fbox{\phantom 8};
             \fbox{\phantom 8} \fbox{\phantom 8}}
-            = \mat{14 \fbox{\phantom 8}; \fbox{\phantom 8} \fbox{\phantom 8}} \\
+            = \mat{\textcolor{purple}{14} \fbox{\phantom 8}; \fbox{\phantom 8} \fbox{\phantom 8}} \\
             \mat{1 2 3; \g4 \g5 \g6}
             \mat{\b1 -3; \b2 -2; \b3 -1}
             \amp= \mat{\fbox{\phantom 8} \fbox{\phantom 8};
             \g4\cdot\b1+\g5\cdot\b2+\g6\cdot\b3 \fbox{\phantom 8}}
-            = \mat{\fbox{\phantom 8} \fbox{\phantom 8}; 32 \fbox{\phantom 8}}
+            = \mat{14 \fbox{\phantom 8}; \textcolor{purple}{32} \fbox{\phantom 8}}
             \end{aligned}
           </me>
+	You should try to fill in the other two boxes!
         </p>
       </example>
 
-  </subsection>
+    <p>
+      Although matrix multiplication satisfies many of the properties one would expect (see the end of the section), one must be careful when doing matrix arithmetic, as there are several properties that are not satisfied in general.  
+    </p>
+
+    <bluebox>
+      <title>Matrix multiplication caveats</title>
+      <idx><h>Matrix multiplication</h><h>caveats</h></idx>
+      <p>
+        <ul>
+          <li>
+            Matrix multiplication is not commutative: <m>AB</m> is not usually equal to <m>BA</m>, even when both products are defined and have the same size.  See this <xref ref="matrix-mult-compose-noncom2"/>.
+          </li>
+          <li>
+            Matrix multiplication does not satisfy the cancellation law: <m>AB=AC</m> does not imply <m>B=C</m>, even when <m>A\neq 0</m>.  For example,
+            <me>\mat{1 0; 0 0}\mat{1 2; 3 4} = \mat{1 2; 0 0}
+            = \mat{1 0; 0 0}\mat{1 2; 5 6}.</me>
+          </li>
+          <li>
+            It is possible for <m>AB=0</m>, even when <m>A\neq 0</m> and <m>B\neq 0</m>.  For example,
+            <me>\mat{1 0; 1 0}\mat{0 0; 1 1} = \mat{0 0; 0 0}.</me>
+          </li>
+        </ul>
+      </p>
+    </bluebox>
+
+	<p>
+	While matrix multiplication is not commutative in general there are examples of matrices <m>A</m> and <m>B</m> with <m>AB=BA</m>.  For example, this always works when <m>A</m> is the zero matrix, or when <m>A=B</m>.  The reader is encouraged to find other examples.
+	</p>
+
+    <example xml:id="matrix-mult-compose-noncom2">
+      <title>Non-commutative multiplication of matrices</title>
+      <idx><h>Matrix multiplication</h><h>noncommutativity of</h></idx>
+      <p>
+        Consider the matrices
+        <me>A = \mat{1 1; 0 1} \sptxt{and}
+        B = \mat{1 0; 1 1},</me>
+        as in this <xref ref="matrix-mult-compose-noncom"/>.
+        The matrix <m>AB</m> is
+        <me>\mat{1 1; 0 1}\mat{1 0; 1 1} = \mat{2 1; 1 1},</me>
+        whereas the matrix <m>BA</m> is
+        <me>\mat{1 0; 1 1}\mat{1 1; 0 1} = \mat{1 1; 1 2}.</me>
+        In particular, we have
+        <me>AB \neq BA.</me>
+	And so matrix multiplication is not always commutative.  It is not a coincidence that this example agrees with the previous <xref ref="matrix-mult-compose-noncom"/>; we are about to see that multiplication of matrices corresponds to composition of transformations.
+      </p>
+    </example>
+
+    <example hide-type="true" xml:id="matrix-mult-order-ops">
+      <title>Order of Operations</title>
+      <idx><h>Matrix multiplication</h><h>order of operations</h></idx>
+      <idx><h>Transformation</h><h>composition of</h><h>order of operations</h></idx>
+      <p>
+        Let <m>T\colon\R^n\to\R^m</m> and <m>U\colon\R^p\to\R^n</m> be linear transformations, and let <m>A</m> and <m>B</m> be their standard matrices, respectively.  Recall that <m>T\circ U(x)</m> is the vector obtained by first applying <m>U</m> to <m>x</m>, and then <m>T</m>.
+      </p>
+      <p>
+        On the matrix side, the standard matrix of <m>T\circ U</m> is the product <m>AB</m>, so <m>T\circ U(x) = (AB)x</m>.  By associativity of matrix multiplication, we have <m>(AB)x = A(Bx)</m>, so the product <m>(AB)x</m> can be computed by first multiplying <m>x</m> by <m>B</m>, <em>then</em> multipyling the product by <m>A</m>.
+      </p>
+      <p>
+        Therefore, matrix multiplication happens in the same order as composition of transformations.  In other words, <em>both matrices and transformations are written in the order opposite from the order in which they act.</em>  But matrix multiplication and composition of transformations are written in the same order as each other: the matrix for <m>T\circ U</m> is <m>AB</m>.
+      </p>
+    </example>
+
+
+
+
+
+
+
+	</subsection>
+
+
+
 
   <subsection>
     <title>Composition and Matrix Multiplication</title>
 
     <p>
-      The point of this subsection is to show that matrix multiplication corresponds to composition of transformations.
+      The point of this subsection is to show that matrix multiplication corresponds to composition of transformations, that is, the standard matrix for <m>T \circ U</m> is the product of the standard matrices for <m>T</m> and for <m>U</m>. It should be hard to believe that our complicated formula for matrix multiplication actually means something intuitive such as <q>chaining two transformations together</q>!
     </p>
 
     <theorem xml:id="matrix-mult-comp-is-prod">
@@ -747,7 +680,7 @@ the license is included in gfdl.xml.
         <me>\sin(\alpha\pm\beta) = \sin(\alpha)\cos(\beta) \pm \cos(\alpha)\sin(\beta)</me>
         and
         <me>\cos(\alpha\pm\beta) = \cos(\alpha)\cos(\beta) \mp \sin(\alpha)\sin(\beta)</me>
-        using the <xref ref="matrix-mult-comp-is-prod"/> as applied to rotation transformations, as in the previous example.
+        using the above <xref ref="matrix-mult-comp-is-prod"/> as applied to rotation transformations, as in the previous example.
       </p>
     </remark>
 
@@ -844,30 +777,177 @@ $\xrightarrow{\text{reflect $xy$}}$
       </figure>
     </example>
 
-    <example xml:id="matrix-mult-compose-noncom2">
-      <title>Non-commutative multiplication of matrices</title>
-      <idx><h>Matrix multiplication</h><h>noncommutativity of</h></idx>
+   
+
+
+    <p>
+      Recall from this <xref ref="linear-trans-identity-mat"/> that the <em>identity matrix</em> is the <m>n\times n</m> matrix <m>I_n</m> whose columns are the standard coordinate vectors in <m>\R^n</m>.  The identity matrix is the standard matrix of the identity transformation: that is, <m>x = \operatorname{Id}_{\R^n}(x) = I_nx</m> for all vectors <m>x</m> in <m>\R^n</m>.   For any linear transformation <m>T : \R^n \to \R^m</m> we have <me>I_{\R^m} \circ T = T</me>
+and by the same token we have for any <m>m \times n</m> matrix <m>A</m> we have <me>I_mA=A</me>.  Similarly, we have <m>T \circ I_{\R^n} = T</m> and <m>AI_n=A</m>.
+</p>
+
+
+
+  </subsection>
+
+
+
+
+
+
+
+
+  <subsection>
+    <title>The algebra of transformations and matrices</title>
+
+    <p>
+      In this subsection we describe two more operations that one can perform on  transformations: addition and scalar multiplication.  We then translate these operations into the language of matrices.  This is analogous to what we did for the composition of linear transformations, but much less subtle.  
+    </p>
+
+    <definition>
+      <idx><h>Transformation</h><h>addition of</h></idx>
+      <idx><h>Linear transformation</h><h>addition of</h><see>Transformation</see></idx>
+      <idx><h>Matrix transformation</h><h>addition of</h><see>Transformation</see></idx>
+      <idx><h>Transformation</h><h>scalar multiplication of</h></idx>
+      <idx><h>Linear transformation</h><h>scalar multiplication of</h><see>Transformation</see></idx>
+      <idx><h>Matrix transformation</h><h>scalar multiplication of</h><see>Transformation</see></idx>
+      <statement>
+        <p>
+          <ul>
+            <li>
+              Let <m>T,U\colon\R^n\to\R^m</m> be two transformations.  Their <term>sum</term> is the transformation <m>T+U\colon\R^n\to\R^m</m> defined by
+              <me>(T+U)(x) = T(x) + U(x).</me>
+              Note that addition of transformations is only defined when both transformations have the same domain and codomain. <em></em><!-- workaround css bug -->
+            </li>
+            <li>
+              Let <m>T\colon\R^n\to\R^m</m> be a transformation, and let <m>c</m> be a scalar.  The <term>scalar product</term> of <m>c</m> with <m>T</m> is the transformation <m>cT\colon\R^n\to\R^m</m> defined by
+              <me>(cT)(x) = c\cdot T(x).</me>
+            </li>
+          </ul>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      To emphasize, the sum of two transformations <m>T,U\colon\R^n\to\R^m</m> is another transformation called <m>T+U</m>; its value on an input vector <m>x</m> is the sum of the outputs of <m>T</m> and <m>U</m>.  Similarly, the product of <m>T</m> with a scalar <m>c</m> is another transformation called <m>cT</m>; its value on an input vector <m>x</m> is the vector <m>c\cdot T(x)</m>.
+    </p>
+
+    <example>
+      <title>Functions of one variable</title>
       <p>
-        Define matrix transformations <m>T,U\colon\R^2\to\R^2</m> by
-        <me>T(x) = \mat{1 1; 0 1}x \sptxt{and}
-        U(x) = \mat{1 0; 1 1}x,</me>
-        as in this <xref ref="matrix-mult-compose-noncom"/>.
-        The matrix for <m>T\circ U</m> is
-        <me>\mat{1 1; 0 1}\mat{1 0; 1 1} = \mat{2 1; 1 1},</me>
-        whereas the matrix for <m>U\circ T</m> is
-        <me>\mat{1 0; 1 1}\mat{1 1; 0 1} = \mat{1 1; 1 2}.</me>
-        In particular, we have
-        <me>\mat{1 1; 0 1}\mat{1 0; 1 1} \neq \mat{1 0; 1 1}\mat{1 1; 0 1},</me>
-        as must be the case as <m>T\circ U\neq U\circ T</m>.
+        Define <m>f\colon\R\to\R</m> by <m>f(x) = x^2</m> and <m>g\colon\R\to\R</m> by <m>g(x) = x^3</m>.  The sum <m>f+g\colon\R\to\R</m> is the transformation defined by the rule
+        <me>(f+g)(x) = f(x) + g(x) = x^2 + x^3.</me>
+        For instance, <m>(f+g)(-2) = (-2)^2 + (-2)^3 = -4</m>.
+      </p>
+      <p>
+        Define <m>\exp\colon\R\to\R</m> by <m>\exp(x) = e^x</m>.  The product <m>2\exp\colon\R\to\R</m> is the transformation defined by the rule
+        <me>(2\exp)(x) = 2\cdot\exp(x) = 2e^x.</me>
+        For instance, <m>(2\exp)(1) = 2\cdot\exp(1) = 2e</m>.
       </p>
     </example>
 
-    <p>
-      Recall from this <xref ref="linear-trans-identity-mat"/> that the <em>identity transformation</em> is the <m>n\times n</m> matrix <m>I_n</m> whose columns are the standard coordinate vectors in <m>\R^n</m>.  The identity matrix is the standard matrix of the identity transformation: that is, <m>x = \operatorname{Id}_{\R^n}(x) = I_nx</m> for all vectors <m>x</m> in <m>\R^n</m>.
-    </p>
+    <note hide-type="true" xml:id="matrix-mult-add-mult-trans">
+      <title>Properties of addition and scalar multiplication for transformations</title>
+      <p>
+        Let <m>S,T,U\colon\R^n\to\R^m</m> be transformations and let <m>c,d</m> be scalars.  The following properties are easily verified:
+        <md>
+          <mrow>
+          T + U \amp= U + T \amp
+          S + (T + U) \amp= (S + T) + U
+          </mrow>
+          <mrow>
+          c(T + U) \amp= cT + cU \amp
+          (c + d)T \amp= cT + dT
+          </mrow>
+          <mrow>
+            c(dT) \amp= (cd)T \amp
+            T + 0 \amp= T
+          </mrow>
+        </md>
+      </p>
+    </note>
 
     <p>
-      In view of the above <xref ref="matrix-mult-comp-is-prod"/>, the following properties are consequences of the corresponding <xref ref="matrix-mult-compose-trans">properties</xref> of transformations.
+      <notation><usage>0</usage><description>The zero transformation</description></notation>
+      In one of the above properties, we used <m>0</m> to denote the transformation <m>\R^n\to\R^m</m> that is zero on every input vector: <m>0(x) = 0</m> for all <m>x</m>.  This is called the <term>zero transformation</term>.
+    </p>
+
+
+<p>We now give the analogous operations for matrices.</p>
+
+
+    <definition>
+      <idx><h>Matrix</h><h>addition of</h></idx>
+      <idx><h>Matrix</h><h>scalar multiplication of</h></idx>
+      <statement>
+        <p>
+          <ul>
+            <li>
+              The <term>sum</term> of two <m>m\times n</m> matrices is the matrix obtained by summing the entries of <m>A</m> and <m>B</m> individually:
+              <me>
+                \mat{a_{11} a_{12} a_{13}; a_{21} a_{22} a_{23}} +
+                \mat{b_{11} b_{12} b_{13}; b_{21} b_{22} b_{23}} =
+                \mat{a_{11}+b_{11} a_{12}+b_{12} a_{13}+b_{13};
+                     a_{21}+b_{21} a_{22}+b_{22} a_{23}+b_{23}}
+              </me>
+              In other words, the <m>i,j</m> entry of <m>A+B</m> is the sum of the <m>i,j</m> entries of <m>A</m> and <m>B</m>.  Note that addition of matrices is only defined when both matrices have the same size.<em></em> <!-- workaround css bug -->
+            </li>
+            <li>
+              The <term>scalar product</term> of a scalar <m>c</m> with a matrix <m>A</m> is obtained by scaling all entries of <m>A</m> by <m>c</m>:
+              <me>
+                \def\r{\textcolor{red}}
+                \r c\mat{a_{11} a_{12} a_{13}; a_{21} a_{22} a_{23}} =
+                \mat{\r ca_{11} \r ca_{12} \r ca_{13}; \r ca_{21} \r ca_{22} \r ca_{23}}
+              </me>
+              In other words, the <m>i,j</m> entry of <m>cA</m> is <m>c</m> times the <m>i,j</m> entry of <m>A</m>.
+            </li>
+          </ul>
+        </p>
+      </statement>
+    </definition>
+
+    <fact>
+      <p>
+        Let <m>T,U\colon\R^n\to\R^m</m> be linear transformations with standard matrices <m>A,B</m>, respectively, and let <m>c</m> be a scalar.
+        <ul>
+          <li>The standard matrix for <m>T+U</m> is <m>A+B</m>.</li>
+          <li>The standard matrix for <m>cT</m> is <m>cA</m>.</li>
+        </ul>
+      </p>
+    </fact>
+
+    <p>
+      In view of the above fact, the following properties are consequences of the corresponding <xref ref="matrix-mult-add-mult-trans">properties</xref> of transformations.  They are easily verified directly from the definitions as well.
+    </p>
+
+    <note hide-type="true">
+      <title>Properties of addition and scalar multiplication for matrices</title>
+      <p>
+        Let <m>A,B,C</m> be <m>m\times n</m> matrices and let <m>c,d</m> be scalars.  Then:
+        <md>
+          <mrow>
+          A + B \amp= B + A \amp
+          C + (A + B) \amp= (C + A) + B
+          </mrow>
+          <mrow>
+          c(A + B) \amp= cA + cB \amp
+          (c + d)A \amp= cA + dA
+          </mrow>
+          <mrow>
+            c(dA) \amp= (cd)A \amp
+            A + 0 \amp= A
+          </mrow>
+        </md>
+      </p>
+    </note>
+
+    <p>
+      <notation><usage>0</usage><description>The zero matrix</description></notation>
+      In one of the above properties, we used <m>0</m> to denote the <m>m\times n</m> matrix whose entries are all zero.  This is the standard matrix of the zero transformation, and is called the <term>zero matrix</term>.
+    </p>
+
+
+    <p>
+      We can also combine addition and scalar multiplication of matrices with multiplication of matrices.  Since matrix multiplication corresponds to composition of transformations (<xref ref="matrix-mult-comp-is-prod"/>), the following properties are consequences of the corresponding <xref ref="matrix-mult-compose-trans">properties</xref> of transformations.
     </p>
 
     <note hide-type="true">
@@ -876,7 +956,7 @@ $\xrightarrow{\text{reflect $xy$}}$
       <idx><h>Matrix multiplication</h><h>properties of</h></idx>
       <idx><h>Matrix multiplication</h><h>associativity of</h></idx>
       <p>
-        Let <m>A,B,C</m> be matrices and let <m>c</m> be a scalar.  Suppose that <m>A</m> has dimensions <m>m\times n</m>, and that in each of the following identities, the dimensions of <m>B</m> and <m>C</m> are compatible when necessary for the product to be defined.  Then:
+        Let <m>A,B,C</m> be matrices and let <m>c</m> be a scalar.  Suppose that <m>A</m> is an <m>m\times n</m> matrix, and that in each of the following identities, the sizes of <m>B</m> and <m>C</m> are compatible when necessary for the product to be defined.  Then:
         <md>
           <mrow>
             C(A+B) \amp= C A+C B \amp
@@ -901,46 +981,10 @@ $\xrightarrow{\text{reflect $xy$}}$
       Most of the above properties are easily verified directly from the definitions.  The <em>associativity</em> property <m>(AB)C=A(BC)</m>, however, is not (try it!).  It is much easier to prove by relating matrix multiplication to composition of transformations, and using the obvious fact that composition of transformations is associative.
     </p>
 
-    <p>
-      Although matrix multiplication satisfies many of the properties one would expect, one must be careful when doing matrix arithmetic, as there are several properties that are not satisfied in general.
-    </p>
 
-    <bluebox>
-      <title>Matrix multiplication caveats</title>
-      <idx><h>Matrix multiplication</h><h>caveats</h></idx>
-      <p>
-        <ul>
-          <li>
-            Matrix multiplication is not commutative: <m>AB</m> is not usually equal to <m>BA</m>, even when both products are defined and have the same size.  See this <xref ref="matrix-mult-compose-noncom2"/>.
-          </li>
-          <li>
-            Matrix multiplication does not satisfy the cancellation law: <m>AB=AC</m> does not imply <m>B=C</m>, even when <m>A\neq 0</m>.  For example,
-            <me>\mat{1 0; 0 0}\mat{1 2; 3 4} = \mat{1 2; 0 0}
-            = \mat{1 0; 0 0}\mat{1 2; 5 6}.</me>
-          </li>
-          <li>
-            It is possible for <m>AB=0</m>, even when <m>A\neq 0</m> and <m>B\neq 0</m>.  For example,
-            <me>\mat{1 0; 1 0}\mat{0 0; 1 1} = \mat{0 0; 0 0}.</me>
-          </li>
-        </ul>
-      </p>
-    </bluebox>
 
-    <example hide-type="true" xml:id="matrix-mult-order-ops">
-      <title>Order of Operations</title>
-      <idx><h>Matrix multiplication</h><h>order of operations</h></idx>
-      <idx><h>Transformation</h><h>composition of</h><h>order of operations</h></idx>
-      <p>
-        Let <m>T\colon\R^n\to\R^m</m> and <m>U\colon\R^p\to\R^n</m> be linear transformations, and let <m>A</m> and <m>B</m> be their standard matrices, respectively.  Recall that <m>T\circ U(x)</m> is the vector obtained by first applying <m>U</m> to <m>x</m>, and then <m>T</m>.
-      </p>
-      <p>
-        On the matrix side, the standard matrix of <m>T\circ U</m> is the product <m>AB</m>, so <m>T\circ U(x) = (AB)x</m>.  By associativity of matrix multiplication, we have <m>(AB)x = A(Bx)</m>, so the product <m>(AB)x</m> can be computed by first multiplying <m>x</m> by <m>B</m>, <em>then</em> multipyling the product by <m>A</m>.
-      </p>
-      <p>
-        Therefore, matrix multiplication happens in the same order as composition of transformations.  In other words, <em>both matrices and transformations are written in the order opposite from the order in which they act.</em>  But matrix multiplication and composition of transformations are written in the same order as each other: the matrix for <m>T\circ U</m> is <m>AB</m>.
-      </p>
-    </example>
 
   </subsection>
+
 
 </section>

@@ -14,7 +14,7 @@ the license is included in gfdl.xml.
 
   <objectives>
     <ol>
-      <li>Learn to use the rank theorem.</li>
+      <li>Learn to understand and use the rank theorem.</li>
       <li><em>Picture:</em> the rank theorem.</li>
       <li><em>Theorem:</em> rank theorem.</li>
       <li><em>Vocabulary words:</em> <term>rank</term>, <term>nullity</term>.</li>
@@ -206,6 +206,10 @@ the license is included in gfdl.xml.
     </statement>
   </definition>
 
+	<p>
+	The rank of a matrix <m>A</m> gives us important information about the solutions to <m>Ax=b</m>.  Recall from this <xref ref="matrixeq-spans-consistency"/> that <m>Ax=b</m> is consistent exactly when <m>b</m> is in the span of the columns of <m>A</m>, in other words when <m>b</m> is in the column space of <m>A</m>.  Thus, <m>\rank(A)</m> is the dimension of the set of <m>b</m> with the property that <m>Ax=b</m> is consistent.
+	</p>
+
     <p>
       We know that the rank of <m>A</m> is equal to the number of <xref ref="defn-pivot-pos" text="title">pivot columns</xref> (see this <xref ref="dimension-basis-colspace"/>), and the nullity of <m>A</m> is equal to the number of free variables (see this <xref ref="dimension-basis-nulspace"/>), which is the number of columns without pivots.  To summarize:
       <md>
@@ -236,8 +240,24 @@ the license is included in gfdl.xml.
       In other words, for any consistent system of linear equations,
       <me>\text{(dim of column span)} + \text{(dim of solution set)} =
       \text{(number of variables)}.</me>
-      The rank theorem theorem is really the culmination of this chapter, as it gives a strong relationship between the null space of a matrix (the solution set of <m>Ax=0</m>) with the column space (the set of vectors <m>b</m> making <m>Ax=b</m> consistent), our two primary objects of interest.  The more freedom we have in choosing <m>x</m> the less freedom we have in choosing <m>b</m> and vice versa.  This is a prime example of how we use the theory of linear algebra to say something qualitative about a system of equations without ever solving it.  This is, in essence, the power of the subject.
+	</p>
+
+	<p>
+	 The rank theorem theorem is really the culmination of this chapter, as it gives a strong relationship between the null space of a matrix (the solution set of <m>Ax=0</m>) with the column space (the set of vectors <m>b</m> making <m>Ax=b</m> consistent), our two primary objects of interest.  The more freedom we have in choosing <m>x</m> the less freedom we have in choosing <m>b</m> and vice versa.  
     </p>
+
+    <example>
+      <title>Rank and nullity</title>
+	<p>
+	Here is a concrete example of the rank theorem and the interplay between the degrees of freedom we have in choosing <m>x</m> and <m>b</m> in a matrix equation <m>Ax=b</m>.</p><p>Consider the matrices <me>A = \mat{1 0 0; 0 1 0; 0 0 0} \quad \text{and} \quad B = \mat{0 0 0; 0 0 0; 0 0 1}.</me> If we multiply a vector <m>(x,y,z)</m> in <m>\R^3</m> by <m>A</m> and <m>B</m> we obtain the vectors <m>Ax = (x,y,0)</m> and <m>Bx = (0,0,z)</m>.  So we can think of multiplication by <m>A</m> as giving the latitude and longitude of a point in <m>\R^3</m> and we can think of multiplication by <m>B</m> as giving the height of a point in <m>\R^3</m>.  The rank of <m>A</m> is 2 and the nullity is 1.  Similarly, the rank of <m>B</m> is 1 and the nullity is 2.  
+	</p>
+	<p>These facts have natural interpretations.  For the matrix <m>A</m>: the set of all latitudes and longitudes in <m>\R^3</m> is a plane, and the set of points with the same latitude and longitude in <m>\R^3</m> is a line; and for the matrix <m>B</m>: the set of all heights in <m>\R^3</m> is a line, and the set of points at a given height in <m>\R^3</m> is a plane.  As the rank theorem tells us, we <q>trade off</q> having more choices for <m>x</m> for having more choices for <m>b</m>, and vice versa.
+	</p>
+	</example>
+
+	<p>
+	The rank theorem is a prime example of how we use the theory of linear algebra to say something qualitative about a system of equations without ever solving it.  This is, in essence, the power of the subject.
+	</p>
 
     <example>
       <title>The rank is 2 and the nullity is 2</title>

@@ -67,22 +67,27 @@ Free Documentation License"
 
       <introduction>
         <note type-name="Primary Goals">
-          <p>
+          <p>We have already discussed systems of linear equations and how this is related to matrices.  In this chapter we will learn how to write a system of linear equations succinctly as a matrix equation, which looks like <m>Ax=b</m>, where <m>A</m> is an <m>m \times n</m> matrix, <m>b</m> is a vector in <m>\R^m</m> and <m>x</m> is a variable vector in <m>\R^n</m>.  As we will see, this is a powerful perspective.  We will study two related questions:
             <ol>
-              <li>Understand what the solution set of <m>Ax=b</m> looks like.</li>
-              <li>Understand the set of <m>b</m> such that <m>Ax=b</m> is consistent.</li>
+              <li>What is the set of solutions to <m>Ax=b</m>?</li>
+              <li>What is the set of <m>b</m> so that <m>Ax=b</m> is consistent?</li>
             </ol>
+	The first question is the kind you are used to from your first algebra class: what is the set of solutions to <m>x^2-1=0</m>.  The second is also something you could have studied in your previous algebra classes: for which <m>b</m> does <m>x^2=b</m> have a solution?  This question is more subtle at first glance, but you can solve it in the same way as the first question, with the quadratic formula.
           </p>
         </note>
 
         <p>
-          This chapter is devoted to the geometric study of two objects:
+          In order to answer the two questions listed above, we will use geometry.  This will be analogous to how you used parabolas in order to understand the solutions to a quadratic equation in one variable.  Specifically, this chapter is devoted to the geometric study of two objects:
           <ol>
-            <li>the solution set of a system of linear equations, and</li>
-            <li>the set of all constants that makes a particular system consistent.</li>
+            <li>the solution set of a matrix equation <m>Ax=b</m>, and</li>
+            <li>the set of all <m>b</m> that makes a particular system consistent.</li>
           </ol>
-          These objects are related in a beautiful way by the rank theorem in <xref ref="rank-thm"/>.
+          The second object will be called the column space of <m>A</m>.  The two objects are related in a beautiful way by the rank theorem in <xref ref="rank-thm"/>.
         </p>
+
+	<p>
+	Instead of parabolas and hyperbolas, our geometric objects are subspaces, such as lines and planes.  Our geometric objects will be something like 13-dimensional planes in <m>\R^{27}</m>, etc.  It is amazing that we can say anything substantive about objects that we cannot directly visualize.  
+	</p>
 
         <p>
           We will develop a large amount of vocabulary that we will use to describe the above objects: vectors (<xref ref="vectors"/>), spans (<xref ref="spans"/>), linear independence (<xref ref="linear-independence"/>), subspaces (<xref ref="subspaces"/>), dimension (<xref ref="dimension"/>),
