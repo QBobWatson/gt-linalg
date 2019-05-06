@@ -332,7 +332,7 @@ the license is included in gfdl.xml.
         <me>f\circ g(x) = f(g(x)) = f(e^x) = (e^x)^2 = e^{2x}.</me>
         The composition <m>g\circ f\colon\R\to\R</m> is the transformation defined by the rule
         <me>g\circ f(x) = g(f(x)) = g(x^2) = e^{x^2}.</me>
-        Note that <m>e^{x^2}\neq e^{2x}</m> in general; for instance, if <m>x=1</m> then <m>e^{x^2} = e</m> and <m>e^{2x} = e^2</m>.
+        Note that <m>e^{x^2}\neq e^{2x}</m> in general; for instance, if <m>x=1</m> then <m>e^{x^2} = e</m> and <m>e^{2x} = e^2</m>.  Thus <m>f \circ g</m> is not equal to <m>g \circ f</m>, and we can already see with functions of one variable that composition of functions is not commutative.
       </p>
     </example>
 
