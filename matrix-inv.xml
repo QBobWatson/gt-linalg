@@ -768,6 +768,10 @@ $\hmat{\r1 0 3 0 1 0; 2 3 2 1 0 0; 2 2 3 0 0 1}$} \\[2mm]
       </p>
     </remark>
 
+    <p>
+      As you might expect, the matrix for the inverse of a linear transformation is the inverse of the matrix for the transformation, as the following theorem asserts.
+    </p>
+
    <theorem xml:id="matrix-inv-matrix-inv-comp">
      <idx><h>Invertible transformation</h><h>and invertible matrices</h></idx>
      <idx><h>Invertible matrix</h><h>and invertible transformation</h></idx>
