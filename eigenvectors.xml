@@ -76,7 +76,7 @@ the license is included in gfdl.xml.
     </bluebox>
 
     <p>
-      We cannot consider the zero vector to be an eigenvector: since <m>A0 = 0 = \lambda 0</m> for <em>every</em> scalar <m>\lambda</m>, the associated eigenvalue would be undefined.
+      We do not consider the zero vector to be an eigenvector: since <m>A0 = 0 = \lambda 0</m> for <em>every</em> scalar <m>\lambda</m>, the associated eigenvalue would be undefined.
     </p>
 
 	<p>
