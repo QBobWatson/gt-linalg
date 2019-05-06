@@ -134,7 +134,7 @@ the license is included in gfdl.xml.
         Therefore, the eigenvalues are <m>3+2\sqrt 2</m> and <m>3-2\sqrt 2</m>.
       </p>
       <p>
-        To compute the eigenvectors, we solve the homogeneous system of equationts <m>(A-\lambda I_2)x=0</m> for each eigenvalue <m>\lambda</m>.  When <m>\lambda=3+2\sqrt 2</m>, we have
+        To compute the eigenvectors, we solve the homogeneous system of equations <m>(A-\lambda I_2)x=0</m> for each eigenvalue <m>\lambda</m>.  When <m>\lambda=3+2\sqrt 2</m>, we have
         <me>
           \begin{split}
           A-(3+\sqrt 2)I_2 = \amp\mat{2-2\sqrt2 2; 2 -2-2\sqrt2} \\
