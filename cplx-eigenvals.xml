@@ -262,7 +262,7 @@ A-\frac{4+3i}5I_3 =
       <me>
         \mat{z w; \star, \star} = \mat{z w; cz cw}.
       </me>
-      It is obvious that <m>{-w\choose z}</m> is in the null space of this matrix, as is <m>{w\choose -z}</m>, for that matter.  Note that we never had to compute the second row of <m>A-\lambda I_2</m>!
+      It is obvious that <m>{-w\choose z}</m> is in the null space of this matrix, as is <m>{w\choose -z}</m>, for that matter.  Note that we never had to compute the second row of <m>A-\lambda I_2</m>, let alone row reduce!
     </p>
 
     <example xml:id="cplx-evals-eg22-b">
