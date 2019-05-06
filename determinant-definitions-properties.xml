@@ -109,6 +109,9 @@ the license is included in gfdl.xml.
           </md>
           The reduced row echelon form of the matrix is the identity matrix <m>I_2</m>, so its determinant is <m>1</m>.  The second-last step in the row reduction was a row replacement, so the second-final matrix also has determinant <m>1</m>.  The previous step in the row reduction was a row scaling by <m>-1/7</m>; since (the determinant of the second matrix times <m>-1/7</m>) is <m>1</m>, the determinant of the second matrix must be <m>-7</m>.  The first step in the row reduction was a row swap, so the determinant of the first matrix is negative the determinant of the second.  Thus, the determinant of the original matrix is <m>7</m>.
       </p>
+      <p>
+        Note that our answer agrees with this <xref ref="matrix-inv-def-det" text="title">definition</xref> of the determinant.
+      </p>
     </specialcase>
 
     <example>
@@ -120,6 +123,9 @@ the license is included in gfdl.xml.
 	  Let <m>A=\mat{1 0; 0 3}</m>. Since <m>A</m> is obtained from <m>I_2</m> by multiplying the second row by the constant <m>3</m>, we have
           <me>\det(A)=3\det(I_2)=3\cdot 1=3.</me>
 	</p>
+        <p>
+          Note that our answer agrees with this <xref ref="matrix-inv-def-det" text="title">definition</xref> of the determinant.
+        </p>
       </solution>
     </example>
 
