@@ -125,7 +125,7 @@ the license is included in gfdl.xml.
 
     <p>
       <idx><h>Superposition principle</h></idx>
-      In engineering, the second fact is called the <em>superposition principle</em>.
+      In engineering, the second fact is called the <em>superposition principle</em>; it should remind you of the distributive property.
       For example, <m>T(cu + dv) = cT(u) + dT(v)</m> for any vectors <m>u,v</m> and any scalars <m>c,d</m>.  To restate the first fact:
     </p>
 
