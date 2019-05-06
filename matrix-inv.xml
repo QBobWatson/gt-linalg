@@ -136,7 +136,7 @@ the license is included in gfdl.xml.
    <title>Computing the Inverse Matrix</title>
 
    <p>
-     So far we have defined the inverse matrix without giving any strategy for computing it.  We do so now, beginning with the special case of <m>2\times 2</m> matrices.
+     So far we have defined the inverse matrix without giving any strategy for computing it.  We do so now, beginning with the special case of <m>2\times 2</m> matrices.  Then we will give a recipe for the <m>n\times n</m> case.
    </p>
 
    <definition xml:id="matrix-inv-def-det">
