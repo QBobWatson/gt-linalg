@@ -641,14 +641,15 @@ the license is included in gfdl.xml.
             \mat{\b1 -3; \b2 -2; \b3 -1}
             \amp= \mat{\g1\cdot\b1+\g2\cdot\b2+\g3\cdot\b3 \fbox{\phantom 8};
             \fbox{\phantom 8} \fbox{\phantom 8}}
-            = \mat{14 \fbox{\phantom 8}; \fbox{\phantom 8} \fbox{\phantom 8}} \\
+            = \mat{\textcolor{purple}{14} \fbox{\phantom 8}; \fbox{\phantom 8} \fbox{\phantom 8}} \\
             \mat{1 2 3; \g4 \g5 \g6}
             \mat{\b1 -3; \b2 -2; \b3 -1}
             \amp= \mat{\fbox{\phantom 8} \fbox{\phantom 8};
             \g4\cdot\b1+\g5\cdot\b2+\g6\cdot\b3 \fbox{\phantom 8}}
-            = \mat{\fbox{\phantom 8} \fbox{\phantom 8}; 32 \fbox{\phantom 8}}
+            = \mat{14 \fbox{\phantom 8}; \textcolor{purple}{32} \fbox{\phantom 8}}
             \end{aligned}
           </me>
+	You should try to fill in the other two boxes!
         </p>
       </example>
 
