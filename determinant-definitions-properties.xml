@@ -49,7 +49,7 @@ the license is included in gfdl.xml.
       <statement>
 	<p>
 	  The <term>determinant</term> is a function
-          <me>\det\colon \bigl\{n\times n\text{ matrices}\bigr\}\To\R</me>
+          <me>\det\colon \bigl\{\text{square matrices}\bigr\}\To\R</me>
           satisfying the following properties:
 	  <ol>
 	    <li>
@@ -68,6 +68,10 @@ the license is included in gfdl.xml.
 	</p>
       </statement>
     </essential>
+
+    <p>
+      In other words, to every square matrix <m>A</m> we assign a number <m>\det(A)</m> in a way that satisfies the above properties.
+    </p>
 
     <p>
       In each of the first three cases, doing a row operation on a matrix scales the determinant by a <em>nonzero</em> number.  (Multiplying a row by zero is not a row operation.)  Therefore, doing row operations on a square matrix <m>A</m> does not change whether or not the determinant is zero.
