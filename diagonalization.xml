@@ -234,7 +234,7 @@ This is often very important in applications.
             A = \mat{1/2 3/2; 3/2 1/2} =
             \mat{1 1; 1 -1} \mat{2 0; 0 -1} \mat{1 1; 1 -1}\inv.
           </me>
-          Find a closed formula for <m>A^n</m>, where <m>n</m> is any positive whole number.
+          Find a formula for <m>A^n</m> in which the entries are functions of <m>n</m>, where <m>n</m> is any positive whole number.
         </p>
       </statement>
       <solution>
