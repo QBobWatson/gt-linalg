@@ -48,7 +48,7 @@ the license is included in gfdl.xml.
 
     <bluebox>
       <idx><h>Basis</h><h>infinitely many</h></idx>
-      <p>A subspace generally has <em>infinitely many</em> different bases, but they all contain the same number of vectors.</p>
+      <p>A nonzero subspace has <em>infinitely many</em> different bases, but they all contain the same number of vectors.</p>
     </bluebox>
 
     <p>We leave it as an exercise to prove that any two bases have the same number of vectors; one might want to wait until after learning the invertible matrix theorem in <xref ref="matrix-inverses"/>.</p>
