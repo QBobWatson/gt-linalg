@@ -202,15 +202,12 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
     For matrices that arise as the standard matrix of a linear transformation, it is often best to draw a picture, then find the eigenvectors and eigenvalues geometrically by studying which vectors are not moved off of their line.  For a transformation that is defined geometrically, it is not necessary even to compute its matrix to find the eigenvectors and eigenvalues.
     </p>
 
-    <example xml:id="evec-eg-reflection">
+    <specialcase xml:id="evec-eg-reflection">
       <title>Reflection</title>
       <idx><h>Reflection</h><h>eigenvectors of</h></idx>
-      <statement>
         <p>
-          Let <m>T\colon\R^2\to\R^2</m> be the linear transformation that reflects over the line <m>L</m> defined by <m>y=-x</m>, and let <m>A</m> be the matrix for <m>T</m>.  Find the eigenvalues and eigenvectors of <m>A</m> without doing any computations.
+          Here is an example of this.  Let <m>T\colon\R^2\to\R^2</m> be the linear transformation that reflects over the line <m>L</m> defined by <m>y=-x</m>, and let <m>A</m> be the matrix for <m>T</m>.  We will find the eigenvalues and eigenvectors of <m>A</m> without doing any computations.
         </p>
-      </statement>
-      <solution>
         <p>
           This transformation is defined geometrically, so we draw a picture.
           <latex-code><![CDATA[
@@ -289,8 +286,11 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
           <caption>An eigenvector of <m>A</m> is a vector <m>x</m> such that <m>Ax</m> is collinear with <m>x</m> and the origin.  Click and drag the head of <m>x</m> to convince yourself that all such vectors lie either on <m>L</m>, or on the line perpendicular to <m>L</m>.</caption>
           <mathbox source="demos/eigenspace.html?mat=0,-1:-1,0&amp;nospace" height="500px"/>
         </figure>
-      </solution>
-    </example>
+    </specialcase>
+
+	<p>
+	We will now give five more examples of this nature
+	</p>
 
     <example xml:id="evec-eg-projection">
       <title>Projection</title>
