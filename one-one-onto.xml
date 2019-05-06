@@ -318,8 +318,8 @@ the license is included in gfdl.xml.
         Let <m>A</m> be an <m>m\times n</m> matrix, and let <m>T(x)=Ax</m> be the associated matrix transformation.  The following statements are equivalent:
         <ol>
           <li><m>T</m> is one-to-one.</li>
-          <li><m>T(x)=b</m> has at most one solution for every <m>b</m> in <m>\R^m</m>.</li>
-          <li><m>Ax=b</m> has a unique solution or is inconsistent for every <m>b</m> in <m>\R^m</m>.</li>
+          <li>For every <m>b</m> in <m>\R^m</m>, the equation <m>T(x)=b</m> has at most one solution.</li>
+          <li>For every <m>b</m> in <m>\R^m</m>, the equation <m>Ax=b</m> has a unique solution or is inconsistent.</li>
           <li><m>Ax=0</m> has <em>only</em> the trivial solution.</li>
           <li>The columns of <m>A</m> are linearly independent.</li>
           <li><m>A</m> has a pivot in every column.</li>
