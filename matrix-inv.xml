@@ -51,7 +51,7 @@ the license is included in gfdl.xml.
    </definition>
 
    <p>
-     We have to require <m>AB = I_n</m> <em>and</em> <m>BA = I_n</m> because in general, matrix multiplication is not commutative.  However, we will show in the <xref ref="imt-1"/> that if <m>A</m> and <m>B</m> are <m>n\times n</m> matrices such that <m>AB = I_n</m>, then automatically <m>BA = I_n</m>.
+     We have to require <m>AB = I_n</m> <em>and</em> <m>BA = I_n</m> because in general matrix multiplication is not commutative.  However, we will show in the <xref ref="imt-1"/> that if <m>A</m> and <m>B</m> are <m>n\times n</m> matrices such that <m>AB = I_n</m>, then automatically <m>BA = I_n</m>.
    </p>
 
    <example>
