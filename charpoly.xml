@@ -320,6 +320,63 @@ the license is included in gfdl.xml.
   </paragraphs>
 
   <paragraphs>
+    <title>Eigenvalues of a triangular matrix</title>
+
+    <p>
+      It is easy to compute the determinant of an upper- or lower-triangular matrix; this makes it easy to find its eigenvalues as well.
+    </p>
+
+    <corollary>
+      <idx><h>Eigenvalue</h><h>of a triangular matrix</h></idx>
+      <idx><h>Matrix</h><h>upper-triangular</h><h>eigenvalues of</h></idx>
+      <idx><h>Matrix</h><h>lower-triangular</h><h>eigenvalues of</h></idx>
+      <statement>
+        <p>
+          If <m>A</m> is an upper- or lower-triangular matrix, then the eigenvalues of <m>A</m> are its diagonal entries.
+        </p>
+      </statement>
+      <proof visible="true">
+        <p>
+          Suppose for simplicity that <m>A</m> is a <m>3\times 3</m> upper-triangular matrix:
+          <me>
+            A = \mat{a_{11} a_{12} a_{13}; 0 a_{22} a_{23}; 0 0 a_{33}}.
+          </me>
+          Its characteristic polynomial is
+          <me>
+            f(\lambda) = \det(A-\lambda I_3)
+            = \det\mat{a_{11}-\lambda, a_{12} a_{13};
+            0 a_{22}-\lambda, a_{23};
+            0 0 a_{33}-\lambda}.
+          </me>
+          This is also an upper-triangular matrix, so the determinant is the product of the diagonal entries:
+          <me>
+            f(\lambda) = (a_{11}-\lambda)(a_{22}-\lambda)(a_{33}-\lambda).
+          </me>
+          The zeros of this polynomial are exactly <m>a_{11},\,a_{22},\,a_{33}.</m>
+        </p>
+      </proof>
+    </corollary>
+
+    <example>
+      <statement>
+        <p>
+          Find the eigenvalues of the matrix
+          <me>
+            A = \mat{1 7 2 4; 0 1 3 11; 0 0 \pi, 101; 0 0 0 0}.
+          </me>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The eigenvalues are the diagonal entries <m>1,\pi,0</m>.  (The eigenvalue <m>1</m> occurs twice, but it counts as one eigenvalue; in <xref ref="diagonalization"/> we will define the notion of <em>algebraic multiplicity</em> of an eigenvalue.)
+        </p>
+      </solution>
+    </example>
+
+  </paragraphs>
+
+
+  <paragraphs>
     <title>Factoring the characteristic polynomial</title>
     <idx><h>Characteristic polynomial</h><h>factoring by hand</h></idx>
     <idx><h>Polynomial</h><h>factoring by hand</h></idx>
@@ -382,9 +439,6 @@ the license is included in gfdl.xml.
           </me>
           Therefore, the eigenvalues of <m>A</m> are <m>2,\,3+\sqrt7,\,3-\sqrt7.</m>
         </p>
-        <p>
-          Note that if we had expanded cofactors along the second column instead, then we would have immediately seen that <m>2-\lambda</m> is a factor of <m>f(\lambda)</m>.
-        </p>
       </solution>
     </example>
 
@@ -428,9 +482,9 @@ the license is included in gfdl.xml.
     </example>
 
     <bluebox>
-      <title>Finding Eigenvalues of a <m>3\times 3</m> Matrix</title>
+      <title>Finding Eigenvalues of a Matrix Larger than <m>2\times 2</m></title>
       <p>
-        Let <m>A</m> be a <m>3\times 3</m> matrix.  Here are some strategies for factoring its characteristic polynomial <m>f(\lambda)</m>.  First, you must find one eigenvalue:
+        Let <m>A</m> be an <m>n\times n</m> matrix.  Here are some strategies for factoring its characteristic polynomial <m>f(\lambda)</m>.  First, you must find one eigenvalue:
         <ol>
           <li>
             Do not multiply out the characteristic polynomial if it is already partially factored!  This happens if you expand cofactors along the second column in this <xref ref="charpoly-eg-rat-root"/>.
@@ -439,7 +493,7 @@ the license is included in gfdl.xml.
             If there is no constant term, you can factor out <m>\lambda</m>, as in this <xref ref="charpoly-eg-0-eval"/>.
           </li>
           <li>
-            If the matrix is triangular, the roots are the diagonal entries (see below).
+            If the matrix is triangular, the roots are the diagonal entries.
           </li>
           <li>
             Guess one eigenvalue using the <xref ref="rational-root-thm"/>: if <m>\det(A)</m> is an integer, substitute all (positive and negative) divisors of <m>\det(A)</m> into <m>f(\lambda)</m>.
@@ -448,67 +502,11 @@ the license is included in gfdl.xml.
             Find an eigenvalue using the geometry of the matrix.  For instance, a <xref ref="evec-eg-reflection" text="title">reflection</xref> has eigenvalues <m>\pm 1</m>.
           </li>
         </ol>
-        After obtaining an eigenvalue <m>\lambda_1</m>, use <url href="https://en.wikipedia.org/wiki/Polynomial_long_division">polynomial long division</url> to compute <m>f(\lambda)/(\lambda-\lambda_1)</m>.  This is a quadratic polynomial, to which you can apply the quadratic formula to find the remaining roots.
+        After obtaining an eigenvalue <m>\lambda_1</m>, use <url href="https://en.wikipedia.org/wiki/Polynomial_long_division">polynomial long division</url> to compute <m>f(\lambda)/(\lambda-\lambda_1)</m>.  This polynomial has lower degree.  If <m>n=3</m> then this is a quadratic polynomial, to which you can apply the quadratic formula to find the remaining roots.
       </p>
     </bluebox>
 
   </paragraphs>
 
-
-  <paragraphs>
-    <title>Eigenvalues of a triangular matrix</title>
-
-    <p>
-      It is easy to compute the determinant of an upper- or lower-triangular matrix; this makes it easy to find its eigenvalues as well.
-    </p>
-
-    <corollary>
-      <idx><h>Eigenvalue</h><h>of a triangular matrix</h></idx>
-      <idx><h>Matrix</h><h>upper-triangular</h><h>eigenvalues of</h></idx>
-      <idx><h>Matrix</h><h>lower-triangular</h><h>eigenvalues of</h></idx>
-      <statement>
-        <p>
-          If <m>A</m> is an upper- or lower-triangular matrix, then the eigenvalues of <m>A</m> are its diagonal entries.
-        </p>
-      </statement>
-      <proof visible="true">
-        <p>
-          Suppose for simplicity that <m>A</m> is a <m>3\times 3</m> upper-triangular matrix:
-          <me>
-            A = \mat{a_{11} a_{12} a_{13}; 0 a_{22} a_{23}; 0 0 a_{33}}.
-          </me>
-          Its characteristic polynomial is
-          <me>
-            f(\lambda) = \det(A-\lambda I_3)
-            = \det\mat{a_{11}-\lambda, a_{12} a_{13};
-            0 a_{22}-\lambda, a_{23};
-            0 0 a_{33}-\lambda}.
-          </me>
-          This is also an upper-triangular matrix, so the determinant is the product of the diagonal entries:
-          <me>
-            f(\lambda) = (a_{11}-\lambda)(a_{22}-\lambda)(a_{33}-\lambda).
-          </me>
-          The zeros of this polynomial are exactly <m>a_{11},\,a_{22},\,a_{33}.</m>
-        </p>
-      </proof>
-    </corollary>
-
-    <example>
-      <statement>
-        <p>
-          Find the eigenvalues of the matrix
-          <me>
-            A = \mat{1 7 2 4; 0 1 3 11; 0 0 \pi, 101; 0 0 0 0}.
-          </me>
-        </p>
-      </statement>
-      <solution>
-        <p>
-          The eigenvalues are the diagonal entries <m>1,\pi,0</m>.  (The eigenvalue <m>1</m> occurs twice, but it counts as one eigenvalue; in <xref ref="diagonalization"/> we will define the notion of <em>algebraic multiplicity</em> of an eigenvalue.)
-        </p>
-      </solution>
-    </example>
-
-  </paragraphs>
 
 </section>
