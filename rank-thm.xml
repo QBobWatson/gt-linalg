@@ -239,6 +239,8 @@ the license is included in gfdl.xml.
       The rank theorem theorem is really the culmination of this chapter, as it gives a strong relationship between the null space of a matrix (the solution set of <m>Ax=0</m>) with the column space (the set of vectors <m>b</m> making <m>Ax=b</m> consistent), our two primary objects of interest.  The more freedom we have in choosing <m>x</m> the less freedom we have in choosing <m>b</m> and vice versa.  This is a prime example of how we use the theory of linear algebra to say something qualitative about a system of equations without ever solving it.  This is, in essence, the power of the subject.
     </p>
 
+<!—- Is there a good example of this? -->
+
     <example>
       <title>The rank is 2 and the nullity is 2</title>
       <p>
