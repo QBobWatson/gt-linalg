@@ -61,7 +61,7 @@ the license is included in gfdl.xml.
     </definition>
 
     <p>
-      The sum of two transformations <m>T,U\colon\R^n\to\R^m</m> is another transformation called <m>T+U</m>; its value on an input vector <m>x</m> is the sum of the outputs of <m>T</m> and <m>U</m>.  Similarly, the product of <m>T</m> with a scalar <m>c</m> is another transformation called <m>cT</m>; its value on an input vector <m>x</m> is the vector <m>c\cdot T(x)</m>.
+      To emphasize, the sum of two transformations <m>T,U\colon\R^n\to\R^m</m> is another transformation called <m>T+U</m>; its value on an input vector <m>x</m> is the sum of the outputs of <m>T</m> and <m>U</m>.  Similarly, the product of <m>T</m> with a scalar <m>c</m> is another transformation called <m>cT</m>; its value on an input vector <m>x</m> is the vector <m>c\cdot T(x)</m>.
     </p>
 
     <example>
