@@ -30,7 +30,7 @@ the license is included in gfdl.xml.
   </introduction>
 
   <subsection>
-    <title>Transformation algebra</title>
+    <title>The algebra of transformations</title>
 
     <p>
       In this subsection we describe three operations that one can perform on  transformations: addition, scalar multiplication, and composition.  In the next subsection, we will translate these operations into the language of matrices, for matrix transformations.
