@@ -271,7 +271,9 @@ the license is included in gfdl.xml.
         <me>\left\{\vec{1 -2 2},\;\vec{2 -3 4}\right\}.</me>
         The first two columns of the reduced row echelon form certainly span a different subspace, as
         <me>\Span\left\{\vec{1 0 0},\;\vec{0 1 0}\right\}
-        = \left\{\vec{a b 0}\Bigm|a, b \text{ in } \R\right\},</me>
+        = \left\{\vec{a b 0}\Bigm|a, b \text{ in } \R\right\}
+        = \text{($xy$-plane)},
+        </me>
         but <m>\Col(A)</m> contains vectors whose last coordinate is nonzero.
       </p>
     </bluebox>
