@@ -18,7 +18,7 @@ the license is included in gfdl.xml.
 <restrict-version versions="1554 default">
       <li>Learn to recognize a rotation-scaling matrix, and compute by how much the matrix rotates and scales.</li>
       <li>Understand the geometry of <m>2\times 2</m> and <m>3\times 3</m> matrices with a complex eigenvalue.</li>
-      <li><em>Recipe:</em> a <m>2\times 2</m> matrix with a complex eigenvalue is similar to a rotation-scaling matrix.</li>
+      <li><em>Recipes:</em> a <m>2\times 2</m> matrix with a complex eigenvalue is similar to a rotation-scaling matrix, the eigenvector trick for <m>2\times 2</m> matrices.</li>
       <li><em>Pictures:</em> the geometry of matrices with a complex eigenvalue.</li>
       <li><em>Theorems:</em> the rotation-scaling theorem, the block diagonalization theorem.</li>
       <li><em>Vocabulary word:</em> <term>rotation-scaling matrix</term>.</li>
@@ -239,7 +239,7 @@ A-\frac{4+3i}5I_3 =
     </bluebox>
 
     <p>
-      Since it can be tedious to divide by complex numbers while row reducing, it is useful to learn the following trick.
+      Since it can be tedious to divide by complex numbers while row reducing, it is useful to learn the following trick, which works equally well for matrices with real entries.
     </p>
 
     <note hide-type="true" xml:id="cplx-evals-22-trick">
