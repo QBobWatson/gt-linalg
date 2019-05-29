@@ -561,7 +561,7 @@ the license is included in gfdl.xml.
     </example>
 
     <bluebox xml:id="subspaces-types-of">
-      <title>How do you know if a subset is a subspace?</title>
+      <title>Verifying that a subset is a subspace in practice</title>
       <idx><h>Subspace</h><h>verifying</h></idx>
       <p>
         It is rarely necessary to verify the three properties of a subspace directly: most of the verifications were already done in this section.
