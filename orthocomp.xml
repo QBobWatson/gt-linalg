@@ -319,7 +319,7 @@ the license is included in gfdl.xml.
   </example>
 
   <p>
-    In order to find shortcuts for computing orthogonal complements, we need the following basic facts.
+    In order to find shortcuts for computing orthogonal complements, we need the following basic facts.  Looking back the the above examples, all of these facts should be believable.
   </p>
 
   <fact hide-type="true" xml:id="orthocomp-facts-basic">
