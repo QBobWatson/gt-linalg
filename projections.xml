@@ -26,7 +26,7 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  In this section, we will learn to compute the <em>closest vector</em> <m>x_W</m> to <m>x</m> in <m>W</m>.  The vector <m>x_W</m> is called the <em>orthogonal projection</em> of <m>x</m> onto <m>W</m>.
+      Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  In this section, we will learn to compute the <em>closest vector</em> <m>x_W</m> to <m>x</m> in <m>W</m>.  The vector <m>x_W</m> is called the <em>orthogonal projection</em> of <m>x</m> onto <m>W</m>.  This is exactly what we will use to almost solve matrix equations, as discussed in the introduction to <xref ref="chap-orthogonality"/>.
     </p>
   </introduction>
 
