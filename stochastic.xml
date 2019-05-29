@@ -147,7 +147,7 @@ the license is included in gfdl.xml.
       <idx><h>Matrix</h><h>stochastic</h><see>Stochastic matrix</see></idx>
       <statement>
         <p>
-          A square matrix <m>A</m> is <term>stochastic</term> if all of its entries are nonnegative, and the entries of each column sum to one.
+          A square matrix <m>A</m> is <term>stochastic</term> if all of its entries are nonnegative, and the entries of each column sum to <m>1</m>.
         </p>
         <p>
           A matrix is <em>positive</em> if all of its entries are positive numbers.
@@ -162,7 +162,7 @@ the license is included in gfdl.xml.
         <me>
           A = \mat{.3 .4 .5; .3 .4 .3; .4 .2 .2}
         </me>
-        is a positive stochastic matrix.  The fact that the columns sum to one says that all of the movies rented from a particular kiosk must be returned to <em>some</em> other kiosk (remember that every customer returns their movie the next day).  For instance, the first column says:
+        is a positive stochastic matrix.  The fact that the columns sum to <m>1</m> says that all of the movies rented from a particular kiosk must be returned to <em>some</em> other kiosk (remember that every customer returns their movie the next day).  For instance, the first column says:
       </p>
       <blockquote>
         <p>
@@ -195,7 +195,7 @@ the license is included in gfdl.xml.
     </specialcase>
 
     <p>
-      The fact that the entries of the vectors <m>v_t</m> and <m>v_{t+1}</m> sum to the same number is a consequence of the fact that the columns of a stochastic matrix sum to one.
+      The fact that the entries of the vectors <m>v_t</m> and <m>v_{t+1}</m> sum to the same number is a consequence of the fact that the columns of a stochastic matrix sum to <m>1</m>.
     </p>
 
     <bluebox>
@@ -223,7 +223,7 @@ the license is included in gfdl.xml.
       </statement>
       <proof>
         <p>
-          If <m>A</m> is stochastic, then the <em>rows</em> of <m>A^T</m> sum to one.  But multiplying a matrix by the vector <m>(1,1,\ldots,1)</m> sums the rows:
+          If <m>A</m> is stochastic, then the <em>rows</em> of <m>A^T</m> sum to <m>1</m>.  But multiplying a matrix by the vector <m>(1,1,\ldots,1)</m> sums the rows:
           <me>
             \mat{.3 .3 .4; .4 .4 .2; .5 .3 .2}\vec{1 1 1}
             = \vec{.3+.3+.4 .4+.4+.2 .5+.3+.2}
@@ -381,7 +381,7 @@ the license is included in gfdl.xml.
         <me>
           a_1u_1 = \vec{a_1 a_1}.
         </me>
-        Note that the sum of the entries of <m>a_1u_1</m> is equal to the sum of the entries of <m>a_1u_1+a_2u_2</m>, since the entries of <m>u_2</m> sum to zero.
+        Note that the sum of the entries of <m>a_1u_1</m> is equal to the sum of the entries of <m>a_1u_1+a_2u_2</m>, since the entries of <m>u_2</m> sum to <m>0</m>.
       </p>
       <p>
         To illustrate the theorem with numbers, let us choose a particular value for <m>u_0</m>, say <m>u_0={1\choose 0}</m>.  We compute the values for <m>u_t = {x_t\choose y_t}</m> in this table:
@@ -627,7 +627,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
       <title>Key Observation</title>
       <idx><h>Google PageRank</h><h>Importance Matrix</h><h>eigenvector of</h></idx>
       <p>
-        The rank vector is an eigenvector of the importance matrix with eigenvalue one.
+        The rank vector is an eigenvector of the importance matrix with eigenvalue <m>1</m>.
       </p>
     </bluebox>
 
@@ -758,7 +758,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
     </fact>
 
     <p>
-      If we declare that the ranks of all of the pages must sum to one, then we find:
+      If we declare that the ranks of all of the pages must sum to <m>1</m>, then we find:
     </p>
 
     <bluebox>
