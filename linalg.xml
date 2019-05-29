@@ -349,7 +349,7 @@ Finally, we spend <xref ref="stochastic-matrices"/> presenting a common kind of 
         </note>
 
         <p>
-          Finding approximate solutions of equations generally requires computing the closest vector on a subspace from a given vector.  This becomes an <em>orthogonality</em> problem: one needs to know which vectors are perpendicular to the subspace.
+          Finding approximate solutions of equations generally requires computing the closest vector on a subspace to a given vector.  This becomes an <em>orthogonality</em> problem: one needs to know which vectors are perpendicular to the subspace.
           <latex-code>
 \begin{tikzpicture}[myxyz, thin border nodes]
   \coordinate (u) at (0,1,0);
