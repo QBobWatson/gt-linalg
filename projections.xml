@@ -565,7 +565,7 @@ and so
             \qquad
             x = \vec{x_1 x_2 x_3}.
           </me>
-          Compute <m>x_W</m>.
+          Compute <m>x_W</m> using the formula <m>x_W = A(A^TA)\inv A^Tx</m>.
         </p>
       </statement>
       <solution>
