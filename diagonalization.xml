@@ -180,7 +180,7 @@ the license is included in gfdl.xml.
       <p>
         If a matrix <m>A</m> is diagonalizable, and if <m>B</m> is similar to <m>A</m>, then <m>B</m> is diagonalizable
         <restrict-version versions="1554 default">
-          as well by <xref ref="similarity-eq-reln"/>.
+          as well by this <xref ref="similarity-eq-reln"/>.
         </restrict-version>
         <restrict-version versions="1553">
           as well.  Indeed, if <m>A = CDC\inv</m> for <m>D</m> diagonal, and <m>B = EAE\inv</m>, then
@@ -234,7 +234,7 @@ This is often very important in applications.
             A = \mat{1/2 3/2; 3/2 1/2} =
             \mat{1 1; 1 -1} \mat{2 0; 0 -1} \mat{1 1; 1 -1}\inv.
           </me>
-          Find a closed formula for <m>A^n</m>, where <m>n</m> is any positive whole number.
+          Find a formula for <m>A^n</m> in which the entries are functions of <m>n</m>, where <m>n</m> is any positive whole number.
         </p>
       </statement>
       <solution>
@@ -255,7 +255,7 @@ This is often very important in applications.
     </paragraphs>
 
     <p>
-      Now we come to the primary criterion for diagonalizability.  It shows that diagonalizability is an eigenvalue problem.
+      A fundamental question about a matrix is whether or not it is diagonalizable.  The following is the primary criterion for diagonalizability.  It shows that diagonalizability is an eigenvalue problem.
     </p>
 
     <theorem type-name="Diagonalization Theorem" xml:id="diagonalization-thm">
@@ -748,390 +748,6 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
 
   </subsection>
 
-  <subsection>
-    <title>Algebraic and Geometric Multiplicity</title>
-
-    <p>
-      In this subsection, we give a variant of the <xref ref="diagonalization-thm"/> that provides another criterion for diagonalizability.  It is stated in the language of <em>multiplicities</em> of eigenvalues.
-    </p>
-
-    <p>
-      Recall that the <em>multiplicity</em> of a root <m>\lambda_0</m> of a polynomial <m>f(\lambda)</m> is equal to the number of factors of <m>\lambda-\lambda_0</m> that divide <m>f(\lambda).</m>  For instance, in the polynomial
-      <me>f(\lambda) = -\lambda^3 + 4\lambda^2 - 5\lambda + 2 = -(\lambda-1)^2(\lambda-2),</me>
-      the root <m>\lambda_0=2</m> has multiplicity <m>1</m>, and the root <m>\lambda_0=1</m> has multiplicity <m>2</m>.
-    </p>
-
-    <definition>
-      <idx><h>Algebraic multiplicity</h><h>definition of</h></idx>
-      <idx><h>Geometric multiplicity</h><h>definition of</h></idx>
-      <idx><h>Multiplicity</h><h>algebraic</h><see>Algebraic multiplicity</see></idx>
-      <idx><h>Multiplicity</h><h>geometric</h><see>Geometric multiplicity</see></idx>
-      <idx><h>Eigenvalue</h><h>algebraic multiplicity of</h><see>Algebraic multiplicity</see></idx>
-      <idx><h>Eigenvalue</h><h>geometric multiplicity of</h><see>Geometric multiplicity</see></idx>
-      <statement>
-        <p>
-          Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>\lambda</m> be an eigenvalue of <m>A</m>.
-          <ol>
-            <li>
-              The <term>algebraic multiplicity</term> of <m>\lambda</m> is its multiplicity as a root of the characteristic polynomial of <m>A</m>.
-            </li>
-            <li>
-              The <term>geometric multiplicity</term> of <m>\lambda</m> is the dimension of the <m>\lambda</m>-eigenspace.
-            </li>
-          </ol>
-        </p>
-      </statement>
-    </definition>
-
-    <p>
-      Since the <m>\lambda</m>-eigenspace of <m>A</m> is <m>\Nul(A-\lambda I_n)</m>, its dimension is the number of free variables in the system of equations <m>(A - \lambda I_n)x=0</m>, i.e., the number of columns without pivots in the matrix <m>A-\lambda I_n</m>.
-    </p>
-
-    <example>
-      <idx><h>Shear</h><h>multiplicities</h></idx>
-      <p>
-        The shear matrix
-        <me>
-          A = \mat{1 1; 0 1}
-        </me>
-        has only one eigenvalue <m>\lambda=1</m>.  The characteristic polynomial of <m>A</m> is <m>f(\lambda) = (\lambda-1)^2</m>, so <m>1</m> has algebraic multiplicity <m>2</m>, as it is a double root of <m>f</m>.  On the other hand, we showed in this <xref ref="diag-eg-shear"/> that the <m>1</m>-eigenspace of <m>A</m> is the <m>x</m>-axis, so the geometric multiplicity of <m>1</m> is equal to <m>1</m>.  This matrix is not diagonalizable.
-      </p>
-        <figure>
-          <caption>Eigenspace of the shear matrix, with multiplicities.</caption>
-          <mathbox source="demos/eigenspace.html?mat=1,1:0,1" height="500px"/>
-        </figure>
-      <p>
-        The identity matrix
-        <me>
-          I_2 = \mat{1 0; 0 1}
-        </me>
-        also has characteristic polynomial <m>(\lambda-1)^2</m>, so the eigenvalue <m>1</m> has algebraic multiplicity <m>2</m>.  Since every nonzero vector in <m>\R^2</m> is an eigenvector of <m>I_2</m> with eigenvalue <m>1</m>, the <m>1</m>-eigenspace is all of <m>\R^2</m>, so the geometric multiplicity is <m>2</m> as well.  This matrix is diagonal.
-      </p>
-        <figure>
-          <caption>Eigenspace of the identity matrix, with multiplicities.</caption>
-          <mathbox source="demos/eigenspace.html?mat=1,0:0,1" height="500px"/>
-        </figure>
-    </example>
-
-    <example>
-      <p>
-        Continuing with this <xref ref="diagonal-eg-33"/>, let
-        <me>
-          A = \mat{4 -3 0; 2 -1 0; 1 -1 1}.
-        </me>
-        The characteristic polynomial is <m>f(\lambda) = -(\lambda-1)^2(\lambda-2)</m>, so that <m>1</m> and <m>2</m> are the eigenvalues, with algebraic multiplicities <m>2</m> and <m>1</m>, respectively.  We computed that the <m>1</m>-eigenspace is a plane and the <m>2</m>-eigenspace is a line, so that <m>1</m> and <m>2</m> also have geometric multiplicities <m>2</m> and <m>1</m>, respectively.  This matrix is diagonalizable.
-      </p>
-      <figure>
-        <caption>The green plane is the <m>1</m>-eigenspace of <m>A</m>, and the violet line is the <m>2</m>-eigenspace.  Hence the geometric multiplicity of the <m>1</m>-eigenspace is <m>2</m>, and the geometric multiplicity of the <m>2</m>-eigenspace is <m>1</m>.</caption>
-        <mathbox source="demos/eigenspace.html?mat=4,-3,0:2,-1,0:1,-1,1" height="500px"/>
-      </figure>
-      <p>
-        In this <xref ref="diag-eg-33-nondiag"/>, we saw that the matrix
-        <me>A = \mat{1 1 0; 0 1 0; 0 0 2}</me>
-        also has characteristic polynomial <m>f(\lambda) = -(\lambda-1)^2(\lambda-2)</m>, so that <m>1</m> and <m>2</m> are the eigenvalues, with algebraic multiplicities <m>2</m> and <m>1</m>, respectively.  In this case, however, both eigenspaces are <em>lines,</em> so that both eigenvalues have geometric multiplicity <m>1</m>.  This matrix is not diagonalizable.
-      </p>
-      <figure>
-        <caption>Both eigenspaces of <m>A</m> are lines, so they both have geometric multiplicity <m>1</m>.</caption>
-        <mathbox source="demos/eigenspace.html?mat=1,1,0:0,1,0:0,0,2" height="500px"/>
-      </figure>
-    </example>
-
-    <p>
-      We saw in the above examples that the algebraic and geometric multiplicities need not coincide.  However, they do satisfy the following fundamental inequality, the proof of which is beyond the scope of this text.
-    </p>
-
-    <theorem xml:id="diag-amgm">
-      <title>Algebraic and Geometric Multiplicity</title>
-      <idx><h>Algebraic multiplicity</h><h>and geometric multiplicity</h></idx>
-      <idx><h>Geometric multiplicity</h><h>and algebraic multiplicity</h></idx>
-      <statement>
-        <p>
-          Let <m>A</m> be a square matrix and let <m>\lambda</m> be an eigenvalue of <m>A</m>.  Then
-          <me>
-            1 \leq \text{(the geometric multiplicity of $\lambda$)}
-  \leq \text{(the algebraic multiplicity of $\lambda$)}.
-          </me>
-        </p>
-      </statement>
-    </theorem>
-
-    <p>
-      In particular, if the algebraic multiplicity of <m>\lambda</m> is equal to <m>1</m>, then so is the geometric multiplicity.
-    </p>
-
-    <bluebox>
-      <idx><h>Algebraic multiplicity</h><h>equals one</h></idx>
-      <p>
-        If <m>A</m> has an eigenvalue <m>\lambda</m> with algebraic multiplicity <m>1</m>, then the <m>\lambda</m>-eigenspace is a <em>line.</em>
-      </p>
-    </bluebox>
-
-    <p>
-      We can use the <xref ref="diag-amgm"/> to give another criterion for diagonalizability (in addition to the <xref ref="diagonalization-thm"/>).
-    </p>
-
-    <theorem xml:id="diag-thm-variant" hide-type="true">
-      <title>Diagonalization Theorem, Variant</title>
-      <idx><h>Algebraic multiplicity</h><h>and diagonalizability</h></idx>
-      <idx><h>Geometric multiplicity</h><h>and diagonalizability</h></idx>
-      <idx><h>Diagonalizability</h><h>algebraic-geometric multiplicity criterion</h></idx>
-      <statement>
-        <p>
-          Let <m>A</m> be an <m>n\times n</m> matrix.  The following are equivalent:
-          <ol>
-            <li>
-              <m>A</m> is diagonalizable.
-            </li>
-            <li>
-              The sum of the geometric multiplicities of the eigenvalues of <m>A</m> is equal to <m>n</m>.
-            </li>
-            <li>
-              The sum of the algebraic multiplicities of the eigenvalues of <m>A</m> is equal to <m>n</m>, and the geometric multiplicity equals the algebraic multiplicity of each eigenvalue.
-            </li>
-          </ol>
-        </p>
-      </statement>
-      <proof>
-        <p>
-          We will show <m>1\implies 2\implies 3\implies 1</m>.  First suppose that <m>A</m> is diagonalizable.  Then <m>A</m> has <m>n</m> linearly independent eigenvectors <m>v_1,v_2,\ldots,v_n</m>.  This implies that the sum of the geometric multiplicities is <em>at least</em> <m>n</m>: for instance, if <m>v_1,v_2,v_3</m> have the same eigenvalue <m>\lambda</m>, then the geometric multiplicity of <m>\lambda</m> is at least <m>3</m> (as the <m>\lambda</m>-eigenspace contains three linearly independent vectors), and so on.  But the sum of the algebraic multiplicities is greater than or equal to the sum of the geometric multiplicities by the <xref ref="diag-amgm"/>, and the sum of the algebraic multiplicities is at most <m>n</m> because the characteristic polynomial has degree <m>n</m>.  Therefore, the sum of the geometric multiplicities equals <m>n</m>.
-        </p>
-        <p>
-          Now suppose that the sum of the geometric multiplicities equals <m>n</m>.  As above, this forces the sum of the algebraic multiplicities to equal <m>n</m> as well.  As the algebraic multiplicities are all greater than or equal to the geometric multiplicities in any case, this implies that they are in fact equal.
-        </p>
-        <p>
-          Finally, suppose that the third condition is satisfied.  Then the sum of the geometric multiplicities equals <m>n</m>.  Suppose that the distinct eigenvectors are <m>\lambda_1,\lambda_2,\ldots,\lambda_k</m>, and that <m>\cB_i</m> is a basis for the <m>\lambda_i</m>-eigenspace, which we call <m>V_i</m>.  We claim that the collection <m>\cB = \{v_1,v_2,\ldots,v_n\}</m> of all vectors in all of the eigenspace bases <m>\cB_i</m> is linearly independent.  Consider the vector equation
-          <me>
-            0 = c_1v_1 + c_2v_2 + \cdots + c_nv_n.
-          </me>
-          Grouping the eigenvectors with the same eigenvalues, this sum has the form
-          <me>
-            0 = \text{(something in $V_1$)} + \text{(something in $V_2$)} + \cdots + \text{(something in $V_k$)}.
-          </me>
-          Since <xref ref="evecs-linindep" text="title">eigenvectors with distinct eigenvalues are linearly independent</xref>, each <q>something in <m>V_i</m></q> is equal to zero.  But this implies that all coefficients <m>c_1,c_2,\ldots,c_n</m> are equal to zero, since the vectors in each <m>\cB_i</m> are linearly independent.  Therefore, <m>A</m> has <m>n</m> linearly independent eigenvectors, so it is diagonalizable.
-        </p>
-      </proof>
-    </theorem>
-
-    <p>
-      The first part of the third statement simply says that the characteristic polynomial of <m>A</m> factors completely into linear polynomials over the real numbers: in other words, there are no complex (non-real) roots.  The second part of the third statement says in particular that for any diagonalizable matrix, the algebraic and geometric multiplicities coincide.
-    </p>
-
-    <bluebox>
-      <p>
-        Let <m>A</m> be a square matrix and let <m>\lambda</m> be an eigenvalue of <m>A</m>.  If the algebraic multiplicity of <m>\lambda</m> does not equal the geometric multiplicity, then <m>A</m> is not diagonalizable.
-      </p>
-    </bluebox>
-
-    <p>
-      The examples at the beginning of this subsection illustrate the theorem.  Here we give some general consequences for diagonalizability of <m>2\times 2</m> and <m>3\times 3</m> matrices.
-    </p>
-
-    <specialcase hide-type="true" xml:id="diag-cases-22">
-      <title>Diagonalizability of <m>2\times 2</m> Matrices</title>
-      <idx><h>Diagonalizability</h><h>of <m>2\times 2</m> matrices</h></idx>
-      <p>
-        Let <m>A</m> be a <m>2\times 2</m> matrix.  There are four cases:
-        <ol>
-          <li>
-            <m>A</m> has two different eigenvalues.  In this case, each eigenvalue has algebraic and geometric multiplicity equal to one.  This implies <m>A</m> is diagonalizable.  For example:
-            <me>A = \mat{1 7; 0 2}.</me>
-          </li>
-          <li>
-            <m>A</m> has one eigenvalue <m>\lambda</m> of algebraic and geometric multiplicity <m>2</m>.  To say that the geometric multiplicity is <m>2</m> means that <m>\Nul(A-\lambda I_2) = \R^2</m>, i.e., that every vector in <m>\R^2</m> is in the null space of <m>A-\lambda I_2</m>.  This implies that <m>A-\lambda I_2</m> is the zero matrix, so that <m>A</m> is the diagonal matrix <m>\lambda I_2</m>.  In particular, <m>A</m> is diagonalizable.  For example:
-            <me>A = \mat{1 0; 0 1}.</me>
-          </li>
-          <li>
-            <m>A</m> has one eigenvalue <m>\lambda</m> of algebraic multiplicity <m>2</m> and geometric multiplicity <m>1</m>.  In this case, <m>A</m> is not diagonalizable, by part 3 of the <xref ref="diag-thm-variant"/>.  For example, a <xref ref="diag-eg-shear" text="title">shear</xref>:
-            <me>A = \mat{1 1; 0 1}.</me>
-          </li>
-          <li>
-            <m>A</m> has no eigenvalues.  This happens when the characteristic polynomial has no real roots.  In particular, <m>A</m> is not diagonalizable.  For example, a <xref ref="diag-eg-rotation" text="title">rotation</xref>:
-            <me>A = \mat{1 -1; 1 1}.</me>
-          </li>
-        </ol>
-      </p>
-    </specialcase>
-
-    <example hide-type="true" xml:id="diag-cases-33">
-      <title>Diagonalizability of <m>3\times 3</m> Matrices</title>
-      <idx><h>Diagonalizability</h><h>of <m>3\times 3</m> matrices</h></idx>
-      <p>
-        Let <m>A</m> be a <m>3\times 3</m> matrix.  We can analyze the diagonalizability of <m>A</m> on a case-by-case basis, as in the previous <xref ref="diag-cases-22"/>.
-        <ol>
-          <li>
-            <m>A</m> has three different eigenvalues.  In this case, each eigenvalue has algebraic and geometric multiplicity equal to one.  This implies <m>A</m> is diagonalizable.  For example:
-            <me>A = \mat{1 7 4; 0 2 3; 0 0 -1}.</me>
-          </li>
-          <li>
-            <m>A</m> has two distinct eigenvalues <m>\lambda_1,\lambda_2</m>.  In this case, one has algebraic multiplicity one and the other has algebraic multiplicity two; after reordering, we can assume <m>\lambda_1</m> has multiplicity <m>1</m> and <m>\lambda_2</m> has multiplicity <m>2</m>.  This implies that <m>\lambda_1</m> has geometric multiplicity <m>1</m>, so <em><m>A</m> is diagonalizable if and only if the <m>\lambda_2</m>-eigenspace is a plane.</em>  For example:
-            <me>A = \mat{1 7 4; 0 2 0; 0 0 2}.</me>
-            On the other hand, if the geometric multiplicity of <m>\lambda_2</m> is <m>1</m>, then <m>A</m> is not diagonalizable.  For example:
-            <me>A = \mat{1 7 4; 0 2 1; 0 0 2}.</me>
-          </li>
-          <li>
-            <m>A</m> has only one eigenvalue <m>\lambda</m>.  If the algebraic multiplicity of <m>\lambda</m> is <m>1</m>, then <m>A</m> is not diagonalizable.  This happens when the characteristic polynomial has two complex (non-real) roots.  For example:
-            <me>A = \mat{1 -1 0; 1 1 0; 0 0 2}.</me>
-            Otherwise, the algebraic multiplicity of <m>\lambda</m> is equal to <m>3</m>.  In this case, if the geometric multiplicity is <m>1</m>:
-            <me>A = \mat{1 1 1; 0 1 1; 0 0 1}</me>
-            or <m>2</m>:
-            <me>A = \mat{1 0 1; 0 1 1; 0 0 1}</me>
-            then <m>A</m> is not diagonalizable.  If the geometric multiplicity is <m>3</m>, then <m>\Nul(A-\lambda I_3) = \R^3</m>, so that <m>A-\lambda I_3</m> is the zero matrix, and hence <m>A = \lambda I_3</m>.  Therefore, in this case <m>A</m> is necessarily diagonal, as in:
-            <me>A = \mat{1 0 0 ; 0 1 0; 0 0 1}.</me>
-          </li>
-        </ol>
-      </p>
-    </example>
-
-<restrict-version versions="1554 default">
-    <paragraphs>
-      <title>Similarity and multiplicity</title>
-    <p>
-      Recall from this <xref ref="similarity-charpoly"/> that similar matrices have the same eigenvalues.  It turns out that <em>both</em> notions of multiplicity of an eigenvalue are preserved under similarity.
-    </p>
-
-    <theorem xml:id="diag-similar-amgm">
-      <idx><h>Similarity</h><h>and multiplicities</h></idx>
-      <idx><h>Algebraic multiplicity</h><h>of similar matrices</h></idx>
-      <idx><h>Geometric multiplicity</h><h>of similar matrices</h></idx>
-      <statement>
-        <p>
-          Let <m>A</m> and <m>B</m> be similar <m>n\times n</m> matrices, and let <m>\lambda</m> be an eigenvalue of <m>A</m> and <m>B</m>.  Then:
-          <ol>
-            <li>
-              The algebraic multiplicity of <m>\lambda</m> is the same for <m>A</m> and <m>B</m>.
-            </li>
-            <li>
-              The geometric multiplicity of <m>\lambda</m> is the same for <m>A</m> and <m>B</m>.
-            </li>
-          </ol>
-        </p>
-      </statement>
-      <proof>
-        <p>
-          Since <m>A</m> and <m>B</m> have the same characteristic polynomial, the multiplicity of <m>\lambda</m> as a root of the characteristic polynomial is the same for both matrices, which proves the first statement.  For the second, suppose that <m>A = CBC\inv</m> for an invertible matrix <m>C</m>.  By this <xref ref="similarity-evecs"/>, the matrix <m>C</m> takes eigenvectors of <m>B</m> to eigenvectors of <m>A</m>, both with eigenvalue <m>\lambda</m>.
-        </p>
-        <p>
-          Let <m>\{v_1,v_2,\ldots,v_k\}</m> be a basis of the <m>\lambda</m>-eigenspace of <m>B</m>.  We claim that <m>\{Cv_1,Cv_2,\ldots,Cv_k\}</m> is linearly independent.  Suppose that
-          <me>c_1Cv_1 + c_2Cv_2 + \cdots + c_kCv_k = 0.</me>
-          Regrouping, this means
-          <me>C\bigl(c_1v_1 + c_2v_2 + \cdots + c_kv_k\bigr) = 0.</me>
-          By the <xref ref="imt-2"/>, the null space of <m>C</m> is trivial, so this implies
-          <me>c_1v_1 + c_2v_2 + \cdots + c_kv_k = 0.</me>
-          Since <m>v_1,v_2,\ldots,v_k</m> are linearly independent, we get <m>c_1=c_2=\cdots=c_k=0</m>, as desired.
-        </p>
-        <p>
-          By the previous paragraph, the dimension of the <m>\lambda</m>-eigenspace of <m>A</m> is greater than or equal to the dimension of the <m>\lambda</m>-eigenspace of <m>B</m>.  By symmetry (<m>B</m> is similar to <m>A</m> as well), the dimensions are equal, so the geometric multiplicities coincide.
-        </p>
-      </proof>
-    </theorem>
-
-    <p>
-      For instance, the four matrices in this <xref ref="diag-cases-22"/> are not similar to each other, because the algebraic and/or geometric multiplicities of the eigenvalues do not match up.  Or, combined with the above <xref ref="diag-thm-variant"/>, we see that a diagonalizable matrix cannot be similar to a non-diagonalizable one, because the algebraic and geometric multiplicities of such matrices cannot both coincide.
-    </p>
-
-    <example>
-      <p>
-        Continuing with this <xref ref="diagonal-eg-33"/>, let
-        <me>
-          A = \mat{4 -3 0; 2 -1 0; 1 -1 1}.
-        </me>
-        This is a diagonalizable matrix that is similar to
-        <me>
-          D = \mat{1 0 0; 0 1 0; 0 0 2}
-        \sptxt{using the matrix}
-          C = \mat{1 0 3; 1 0 2; 0 1 1}.
-        </me>
-        The <m>1</m>-eigenspace of <m>D</m> is the <m>xy</m>-plane, and the <m>2</m>-eigenspace is the <m>z</m>-axis.  The matrix <m>C</m> takes the <m>xy</m>-plane to the <m>1</m>-eigenspace of <m>A</m>, which is again a plane, and the <m>z</m>-axis to the <m>2</m>-eigenspace of <m>A</m>, which is again a line.  This shows that the geometric multiplicities of <m>A</m> and <m>D</m> coincide.
-      </p>
-      <figure>
-        <caption>The matrix <m>C</m> takes the <m>xy</m>-plane to the <m>1</m>-eigenspace of <m>A</m> (the grid) and the <m>z</m>-axis to the <m>2</m>-eigenspace (the green line).</caption>
-        <mathbox source="demos/similarity.html?C=1,0,3:1,0,2:0,1,1&amp;B=1,0,0:0,1,0:0,0,2" height="500px"/>
-      </figure>
-    </example>
-
-    <p>
-      The converse of the <xref ref="diag-similar-amgm"/> is false: there exist matrices  whose eigenvectors have the same algebraic and geometric multiplicities, but which are not similar.  See the <xref ref="diag-eg-nonsimilar"/> below.
-      However, for <m>2\times 2</m> and <m>3\times 3</m> matrices whose characteristic polynomial has no complex (non-real) roots, the converse of the <xref ref="diag-similar-amgm"/> is true.  (We will handle the case of complex roots in <xref ref="complex-eigenvalues"/>.)
-    </p>
-
-    <example xml:id="diag-eg-nonsimilar">
-      <title>Matrices that look similar but are not</title>
-      <statement>
-        <p>
-          Show that the matrices
-          <me>
-            A = \mat{0 0 0 0; 0 0 1 0; 0 0 0 1; 0 0 0 0} \sptxt{and}
-            B = \mat{0 1 0 0; 0 0 0 0; 0 0 0 1; 0 0 0 0}
-          </me>
-          have the same eigenvalues with the same algebraic and geometric multiplicities, but are not similar.
-        </p>
-      </statement>
-      <solution>
-        <p>
-          These matrices are upper-triangular.  They both have characteristic polynomial <m>f(\lambda) = \lambda^4</m>, so they both have one eigenvalue <m>0</m> with algebraic multiplicity <m>4</m>.  The <m>0</m>-eigenspace <xref ref="evecs-eval0" text="title">is the null space</xref>, which has dimension <m>2</m> in each case because <m>A</m> and <m>B</m> have two columns without pivots.  Hence <m>0</m> has geometric multiplicity <m>2</m> in each case.
-        </p>
-        <p>
-          To show that <m>A</m> and <m>B</m> are not similar, we note that
-          <me>A^2 = \mat{0 0 0 0; 0 0 0 1; 0 0 0 0; 0 0 0 0}
-          \sptxt{and} B^2 = \mat{0 0 0 0; 0 0 0 0; 0 0 0 0; 0 0 0 0},</me>
-          as the reader can verify.  If <m>A = CBC\inv</m> then by this <xref ref="diag-powers"/>, we have
-          <me>A^2 = CB^2C\inv = C0C\inv = 0,</me>
-          which is not the case.
-        </p>
-      </solution>
-    </example>
-
-    <p>
-      On the other hand, suppose that <m>A</m> and <m>B</m> are <em>diagonalizable</em> matrices with the same characteristic polynomial.  Since the geometric multiplicities of the eigenvalues coincide with the algebraic multiplicities, which are the same for <m>A</m> and <m>B</m>, we conclude that there exist <m>n</m> linearly independent eigenvectors of each matrix, all of which have the same eigenvalues.  This shows that <m>A</m> and <m>B</m> are both similar to the same diagonal matrix.  Using  the <xref ref="similarity-eq-reln" text="title">transitivity property</xref> of similar matrices, this shows:
-    </p>
-
-    <bluebox>
-      <idx><h>Similarity</h><h>of diagonalizable matrices</h></idx>
-      <idx><h>Diagonalizability</h><h>criterion for similarity</h></idx>
-      <p>
-        <em>Diagonalizable</em> matrices are similar if and only if they have the same characteristic polynomial, or equivalently, the same eigenvalues with the same algebraic multiplicities.
-      </p>
-    </bluebox>
-
-    <example xml:id="diag-similarity">
-      <statement>
-        <p>
-          Show that the matrices
-          <me>
-            A = \mat{1 7 2; 0 -1 3; 0 0 4} \sptxt{and}
-            B = \mat{1 0 0; -2 4 0; -5 -4 -1}
-          </me>
-          are similar.
-        </p>
-      </statement>
-      <solution>
-        <p>
-          Both matrices have the three distinct eigenvalues <m>1,-1,4</m>.  Hence they are both diagonalizable, and are similar to the diagonal matrix
-          <me>\mat{1 0 0; 0 -1 0; 0 0 4}.</me>
-          By the <xref ref="similarity-eq-reln" text="title">transitivity property</xref> of similar matrices, this implies that <m>A</m> and <m>B</m> are similar to each other.
-        </p>
-      </solution>
-    </example>
-
-    <example>
-      <title>Diagonal matrices with the same entries are similar</title>
-      <idx><h>Similarity</h><h>of diagonal matrices</h></idx>
-      <p>
-        Any two diagonal matrices with the same diagonal entries (possibly in a different order) are similar to each other.  Indeed, such matrices have the same characteristic polynomial.  We saw this phenomenon in this <xref ref="diag-easy-eg"/>, where we noted that
-          <me>
-            \mat{1 0 0; 0 2 0; 0 0 3} =
-            \mat{0 0 1; 0 1 0; 1 0 0} \mat{3 0 0; 0 2 0; 0 0 1}
-            \mat{0 0 1; 0 1 0; 1 0 0}\inv.
-          </me>
-      </p>
-    </example>
-
-  </paragraphs>
-</restrict-version>
-
-
-  </subsection>
-
   <subsection xml:id="diag-ss-geometry">
     <title>The Geometry of Diagonalizable Matrices</title>
     <idx><h>Diagonalizability</h><h>geometry of</h></idx>
@@ -1515,6 +1131,391 @@ The eigenvectors <m>v_1,v_2,v_3</m> are linearly independent: <m>v_1,v_2</m> for
           <mathbox source="demos/dynamics2.html?mat=1/2,0:0,2&amp;eigenz=3/2&amp;v1=-7/6,2/6,5/6&amp;v2=-1/6,-9/6,0&amp;v3=2/6,-1/6,3/6&amp;y=8,1,1" height="600px"/>
         </figure>
     </example>
+
+  </subsection>
+
+
+  <subsection>
+    <title>Algebraic and Geometric Multiplicity</title>
+
+    <p>
+      In this subsection, we give a variant of the <xref ref="diagonalization-thm"/> that provides another criterion for diagonalizability.  It is stated in the language of <em>multiplicities</em> of eigenvalues.
+    </p>
+
+    <p>
+      In algebra, we define the <em>multiplicity</em> of a root <m>\lambda_0</m> of a polynomial <m>f(\lambda)</m> to be the number of factors of <m>\lambda-\lambda_0</m> that divide <m>f(\lambda).</m>  For instance, in the polynomial
+      <me>f(\lambda) = -\lambda^3 + 4\lambda^2 - 5\lambda + 2 = -(\lambda-1)^2(\lambda-2),</me>
+      the root <m>\lambda_0=2</m> has multiplicity <m>1</m>, and the root <m>\lambda_0=1</m> has multiplicity <m>2</m>.
+    </p>
+
+    <definition>
+      <idx><h>Algebraic multiplicity</h><h>definition of</h></idx>
+      <idx><h>Geometric multiplicity</h><h>definition of</h></idx>
+      <idx><h>Multiplicity</h><h>algebraic</h><see>Algebraic multiplicity</see></idx>
+      <idx><h>Multiplicity</h><h>geometric</h><see>Geometric multiplicity</see></idx>
+      <idx><h>Eigenvalue</h><h>algebraic multiplicity of</h><see>Algebraic multiplicity</see></idx>
+      <idx><h>Eigenvalue</h><h>geometric multiplicity of</h><see>Geometric multiplicity</see></idx>
+      <statement>
+        <p>
+          Let <m>A</m> be an <m>n\times n</m> matrix, and let <m>\lambda</m> be an eigenvalue of <m>A</m>.
+          <ol>
+            <li>
+              The <term>algebraic multiplicity</term> of <m>\lambda</m> is its multiplicity as a root of the characteristic polynomial of <m>A</m>.
+            </li>
+            <li>
+              The <term>geometric multiplicity</term> of <m>\lambda</m> is the dimension of the <m>\lambda</m>-eigenspace.
+            </li>
+          </ol>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      Since the <m>\lambda</m>-eigenspace of <m>A</m> is <m>\Nul(A-\lambda I_n)</m>, its dimension is the number of free variables in the system of equations <m>(A - \lambda I_n)x=0</m>, i.e., the number of columns without pivots in the matrix <m>A-\lambda I_n</m>.
+    </p>
+
+    <example>
+      <idx><h>Shear</h><h>multiplicities</h></idx>
+      <p>
+        The shear matrix
+        <me>
+          A = \mat{1 1; 0 1}
+        </me>
+        has only one eigenvalue <m>\lambda=1</m>.  The characteristic polynomial of <m>A</m> is <m>f(\lambda) = (\lambda-1)^2</m>, so <m>1</m> has algebraic multiplicity <m>2</m>, as it is a double root of <m>f</m>.  On the other hand, we showed in this <xref ref="diag-eg-shear"/> that the <m>1</m>-eigenspace of <m>A</m> is the <m>x</m>-axis, so the geometric multiplicity of <m>1</m> is equal to <m>1</m>.  This matrix is not diagonalizable.
+      </p>
+        <figure>
+          <caption>Eigenspace of the shear matrix, with multiplicities.</caption>
+          <mathbox source="demos/eigenspace.html?mat=1,1:0,1" height="500px"/>
+        </figure>
+      <p>
+        The identity matrix
+        <me>
+          I_2 = \mat{1 0; 0 1}
+        </me>
+        also has characteristic polynomial <m>(\lambda-1)^2</m>, so the eigenvalue <m>1</m> has algebraic multiplicity <m>2</m>.  Since every nonzero vector in <m>\R^2</m> is an eigenvector of <m>I_2</m> with eigenvalue <m>1</m>, the <m>1</m>-eigenspace is all of <m>\R^2</m>, so the geometric multiplicity is <m>2</m> as well.  This matrix is diagonal.
+      </p>
+        <figure>
+          <caption>Eigenspace of the identity matrix, with multiplicities.</caption>
+          <mathbox source="demos/eigenspace.html?mat=1,0:0,1" height="500px"/>
+        </figure>
+    </example>
+
+    <example>
+      <p>
+        Continuing with this <xref ref="diagonal-eg-33"/>, let
+        <me>
+          A = \mat{4 -3 0; 2 -1 0; 1 -1 1}.
+        </me>
+        The characteristic polynomial is <m>f(\lambda) = -(\lambda-1)^2(\lambda-2)</m>, so that <m>1</m> and <m>2</m> are the eigenvalues, with algebraic multiplicities <m>2</m> and <m>1</m>, respectively.  We computed that the <m>1</m>-eigenspace is a plane and the <m>2</m>-eigenspace is a line, so that <m>1</m> and <m>2</m> also have geometric multiplicities <m>2</m> and <m>1</m>, respectively.  This matrix is diagonalizable.
+      </p>
+      <figure>
+        <caption>The green plane is the <m>1</m>-eigenspace of <m>A</m>, and the violet line is the <m>2</m>-eigenspace.  Hence the geometric multiplicity of the <m>1</m>-eigenspace is <m>2</m>, and the geometric multiplicity of the <m>2</m>-eigenspace is <m>1</m>.</caption>
+        <mathbox source="demos/eigenspace.html?mat=4,-3,0:2,-1,0:1,-1,1" height="500px"/>
+      </figure>
+      <p>
+        In this <xref ref="diag-eg-33-nondiag"/>, we saw that the matrix
+        <me>A = \mat{1 1 0; 0 1 0; 0 0 2}</me>
+        also has characteristic polynomial <m>f(\lambda) = -(\lambda-1)^2(\lambda-2)</m>, so that <m>1</m> and <m>2</m> are the eigenvalues, with algebraic multiplicities <m>2</m> and <m>1</m>, respectively.  In this case, however, both eigenspaces are <em>lines,</em> so that both eigenvalues have geometric multiplicity <m>1</m>.  This matrix is not diagonalizable.
+      </p>
+      <figure>
+        <caption>Both eigenspaces of <m>A</m> are lines, so they both have geometric multiplicity <m>1</m>.</caption>
+        <mathbox source="demos/eigenspace.html?mat=1,1,0:0,1,0:0,0,2" height="500px"/>
+      </figure>
+    </example>
+
+    <p>
+      We saw in the above examples that the algebraic and geometric multiplicities need not coincide.  However, they do satisfy the following fundamental inequality, the proof of which is beyond the scope of this text.
+    </p>
+
+    <theorem xml:id="diag-amgm">
+      <title>Algebraic and Geometric Multiplicity</title>
+      <idx><h>Algebraic multiplicity</h><h>and geometric multiplicity</h></idx>
+      <idx><h>Geometric multiplicity</h><h>and algebraic multiplicity</h></idx>
+      <statement>
+        <p>
+          Let <m>A</m> be a square matrix and let <m>\lambda</m> be an eigenvalue of <m>A</m>.  Then
+          <me>
+            1 \leq \text{(the geometric multiplicity of $\lambda$)}
+  \leq \text{(the algebraic multiplicity of $\lambda$)}.
+          </me>
+        </p>
+      </statement>
+    </theorem>
+
+    <p>
+      In particular, if the algebraic multiplicity of <m>\lambda</m> is equal to <m>1</m>, then so is the geometric multiplicity.
+    </p>
+
+    <bluebox>
+      <idx><h>Algebraic multiplicity</h><h>equals one</h></idx>
+      <p>
+        If <m>A</m> has an eigenvalue <m>\lambda</m> with algebraic multiplicity <m>1</m>, then the <m>\lambda</m>-eigenspace is a <em>line.</em>
+      </p>
+    </bluebox>
+
+    <p>
+      We can use the <xref ref="diag-amgm"/> to give another criterion for diagonalizability (in addition to the <xref ref="diagonalization-thm"/>).
+    </p>
+
+    <theorem xml:id="diag-thm-variant" hide-type="true">
+      <title>Diagonalization Theorem, Variant</title>
+      <idx><h>Algebraic multiplicity</h><h>and diagonalizability</h></idx>
+      <idx><h>Geometric multiplicity</h><h>and diagonalizability</h></idx>
+      <idx><h>Diagonalizability</h><h>algebraic-geometric multiplicity criterion</h></idx>
+      <statement>
+        <p>
+          Let <m>A</m> be an <m>n\times n</m> matrix.  The following are equivalent:
+          <ol>
+            <li>
+              <m>A</m> is diagonalizable.
+            </li>
+            <li>
+              The sum of the geometric multiplicities of the eigenvalues of <m>A</m> is equal to <m>n</m>.
+            </li>
+            <li>
+              The sum of the algebraic multiplicities of the eigenvalues of <m>A</m> is equal to <m>n</m>, and for each eigenvalue, the geometric multiplicity equals the algebraic multiplicity.
+            </li>
+          </ol>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          We will show <m>1\implies 2\implies 3\implies 1</m>.  First suppose that <m>A</m> is diagonalizable.  Then <m>A</m> has <m>n</m> linearly independent eigenvectors <m>v_1,v_2,\ldots,v_n</m>.  This implies that the sum of the geometric multiplicities is <em>at least</em> <m>n</m>: for instance, if <m>v_1,v_2,v_3</m> have the same eigenvalue <m>\lambda</m>, then the geometric multiplicity of <m>\lambda</m> is at least <m>3</m> (as the <m>\lambda</m>-eigenspace contains three linearly independent vectors), and so on.  But the sum of the algebraic multiplicities is greater than or equal to the sum of the geometric multiplicities by the <xref ref="diag-amgm"/>, and the sum of the algebraic multiplicities is at most <m>n</m> because the characteristic polynomial has degree <m>n</m>.  Therefore, the sum of the geometric multiplicities equals <m>n</m>.
+        </p>
+        <p>
+          Now suppose that the sum of the geometric multiplicities equals <m>n</m>.  As above, this forces the sum of the algebraic multiplicities to equal <m>n</m> as well.  As the algebraic multiplicities are all greater than or equal to the geometric multiplicities in any case, this implies that they are in fact equal.
+        </p>
+        <p>
+          Finally, suppose that the third condition is satisfied.  Then the sum of the geometric multiplicities equals <m>n</m>.  Suppose that the distinct eigenvectors are <m>\lambda_1,\lambda_2,\ldots,\lambda_k</m>, and that <m>\cB_i</m> is a basis for the <m>\lambda_i</m>-eigenspace, which we call <m>V_i</m>.  We claim that the collection <m>\cB = \{v_1,v_2,\ldots,v_n\}</m> of all vectors in all of the eigenspace bases <m>\cB_i</m> is linearly independent.  Consider the vector equation
+          <me>
+            0 = c_1v_1 + c_2v_2 + \cdots + c_nv_n.
+          </me>
+          Grouping the eigenvectors with the same eigenvalues, this sum has the form
+          <me>
+            0 = \text{(something in $V_1$)} + \text{(something in $V_2$)} + \cdots + \text{(something in $V_k$)}.
+          </me>
+          Since <xref ref="evecs-linindep" text="title">eigenvectors with distinct eigenvalues are linearly independent</xref>, each <q>something in <m>V_i</m></q> is equal to zero.  But this implies that all coefficients <m>c_1,c_2,\ldots,c_n</m> are equal to zero, since the vectors in each <m>\cB_i</m> are linearly independent.  Therefore, <m>A</m> has <m>n</m> linearly independent eigenvectors, so it is diagonalizable.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The first part of the third statement simply says that the characteristic polynomial of <m>A</m> factors completely into linear polynomials over the real numbers: in other words, there are no complex (non-real) roots.  The second part of the third statement says in particular that for any diagonalizable matrix, the algebraic and geometric multiplicities coincide.
+    </p>
+
+    <bluebox>
+      <p>
+        Let <m>A</m> be a square matrix and let <m>\lambda</m> be an eigenvalue of <m>A</m>.  If the algebraic multiplicity of <m>\lambda</m> does not equal the geometric multiplicity, then <m>A</m> is not diagonalizable.
+      </p>
+    </bluebox>
+
+    <p>
+      The examples at the beginning of this subsection illustrate the theorem.  Here we give some general consequences for diagonalizability of <m>2\times 2</m> and <m>3\times 3</m> matrices.
+    </p>
+
+    <specialcase hide-type="true" xml:id="diag-cases-22">
+      <title>Diagonalizability of <m>2\times 2</m> Matrices</title>
+      <idx><h>Diagonalizability</h><h>of <m>2\times 2</m> matrices</h></idx>
+      <p>
+        Let <m>A</m> be a <m>2\times 2</m> matrix.  There are four cases:
+        <ol>
+          <li>
+            <m>A</m> has two different eigenvalues.  In this case, each eigenvalue has algebraic and geometric multiplicity equal to one.  This implies <m>A</m> is diagonalizable.  For example:
+            <me>A = \mat{1 7; 0 2}.</me>
+          </li>
+          <li>
+            <m>A</m> has one eigenvalue <m>\lambda</m> of algebraic and geometric multiplicity <m>2</m>.  To say that the geometric multiplicity is <m>2</m> means that <m>\Nul(A-\lambda I_2) = \R^2</m>, i.e., that every vector in <m>\R^2</m> is in the null space of <m>A-\lambda I_2</m>.  This implies that <m>A-\lambda I_2</m> is the zero matrix, so that <m>A</m> is the diagonal matrix <m>\lambda I_2</m>.  In particular, <m>A</m> is diagonalizable.  For example:
+            <me>A = \mat{1 0; 0 1}.</me>
+          </li>
+          <li>
+            <m>A</m> has one eigenvalue <m>\lambda</m> of algebraic multiplicity <m>2</m> and geometric multiplicity <m>1</m>.  In this case, <m>A</m> is not diagonalizable, by part 3 of the <xref ref="diag-thm-variant"/>.  For example, a <xref ref="diag-eg-shear" text="title">shear</xref>:
+            <me>A = \mat{1 1; 0 1}.</me>
+          </li>
+          <li>
+            <m>A</m> has no eigenvalues.  This happens when the characteristic polynomial has no real roots.  In particular, <m>A</m> is not diagonalizable.  For example, a <xref ref="diag-eg-rotation" text="title">rotation</xref>:
+            <me>A = \mat{1 -1; 1 1}.</me>
+          </li>
+        </ol>
+      </p>
+    </specialcase>
+
+    <example hide-type="true" xml:id="diag-cases-33">
+      <title>Diagonalizability of <m>3\times 3</m> Matrices</title>
+      <idx><h>Diagonalizability</h><h>of <m>3\times 3</m> matrices</h></idx>
+      <p>
+        Let <m>A</m> be a <m>3\times 3</m> matrix.  We can analyze the diagonalizability of <m>A</m> on a case-by-case basis, as in the previous <xref ref="diag-cases-22"/>.
+        <ol>
+          <li>
+            <m>A</m> has three different eigenvalues.  In this case, each eigenvalue has algebraic and geometric multiplicity equal to one.  This implies <m>A</m> is diagonalizable.  For example:
+            <me>A = \mat{1 7 4; 0 2 3; 0 0 -1}.</me>
+          </li>
+          <li>
+            <m>A</m> has two distinct eigenvalues <m>\lambda_1,\lambda_2</m>.  In this case, one has algebraic multiplicity one and the other has algebraic multiplicity two; after reordering, we can assume <m>\lambda_1</m> has multiplicity <m>1</m> and <m>\lambda_2</m> has multiplicity <m>2</m>.  This implies that <m>\lambda_1</m> has geometric multiplicity <m>1</m>, so <em><m>A</m> is diagonalizable if and only if the <m>\lambda_2</m>-eigenspace is a plane.</em>  For example:
+            <me>A = \mat{1 7 4; 0 2 0; 0 0 2}.</me>
+            On the other hand, if the geometric multiplicity of <m>\lambda_2</m> is <m>1</m>, then <m>A</m> is not diagonalizable.  For example:
+            <me>A = \mat{1 7 4; 0 2 1; 0 0 2}.</me>
+          </li>
+          <li>
+            <m>A</m> has only one eigenvalue <m>\lambda</m>.  If the algebraic multiplicity of <m>\lambda</m> is <m>1</m>, then <m>A</m> is not diagonalizable.  This happens when the characteristic polynomial has two complex (non-real) roots.  For example:
+            <me>A = \mat{1 -1 0; 1 1 0; 0 0 2}.</me>
+            Otherwise, the algebraic multiplicity of <m>\lambda</m> is equal to <m>3</m>.  In this case, if the geometric multiplicity is <m>1</m>:
+            <me>A = \mat{1 1 1; 0 1 1; 0 0 1}</me>
+            or <m>2</m>:
+            <me>A = \mat{1 0 1; 0 1 1; 0 0 1}</me>
+            then <m>A</m> is not diagonalizable.  If the geometric multiplicity is <m>3</m>, then <m>\Nul(A-\lambda I_3) = \R^3</m>, so that <m>A-\lambda I_3</m> is the zero matrix, and hence <m>A = \lambda I_3</m>.  Therefore, in this case <m>A</m> is necessarily diagonal, as in:
+            <me>A = \mat{1 0 0 ; 0 1 0; 0 0 1}.</me>
+          </li>
+        </ol>
+      </p>
+    </example>
+
+<restrict-version versions="1554 default">
+    <paragraphs>
+      <title>Similarity and multiplicity</title>
+    <p>
+      Recall from this <xref ref="similarity-charpoly"/> that similar matrices have the same eigenvalues.  It turns out that <em>both</em> notions of multiplicity of an eigenvalue are preserved under similarity.
+    </p>
+
+    <theorem xml:id="diag-similar-amgm">
+      <idx><h>Similarity</h><h>and multiplicities</h></idx>
+      <idx><h>Algebraic multiplicity</h><h>of similar matrices</h></idx>
+      <idx><h>Geometric multiplicity</h><h>of similar matrices</h></idx>
+      <statement>
+        <p>
+          Let <m>A</m> and <m>B</m> be similar <m>n\times n</m> matrices, and let <m>\lambda</m> be an eigenvalue of <m>A</m> and <m>B</m>.  Then:
+          <ol>
+            <li>
+              The algebraic multiplicity of <m>\lambda</m> is the same for <m>A</m> and <m>B</m>.
+            </li>
+            <li>
+              The geometric multiplicity of <m>\lambda</m> is the same for <m>A</m> and <m>B</m>.
+            </li>
+          </ol>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Since <m>A</m> and <m>B</m> have the same characteristic polynomial, the multiplicity of <m>\lambda</m> as a root of the characteristic polynomial is the same for both matrices, which proves the first statement.  For the second, suppose that <m>A = CBC\inv</m> for an invertible matrix <m>C</m>.  By this <xref ref="similarity-evecs"/>, the matrix <m>C</m> takes eigenvectors of <m>B</m> to eigenvectors of <m>A</m>, both with eigenvalue <m>\lambda</m>.
+        </p>
+        <p>
+          Let <m>\{v_1,v_2,\ldots,v_k\}</m> be a basis of the <m>\lambda</m>-eigenspace of <m>B</m>.  We claim that <m>\{Cv_1,Cv_2,\ldots,Cv_k\}</m> is linearly independent.  Suppose that
+          <me>c_1Cv_1 + c_2Cv_2 + \cdots + c_kCv_k = 0.</me>
+          Regrouping, this means
+          <me>C\bigl(c_1v_1 + c_2v_2 + \cdots + c_kv_k\bigr) = 0.</me>
+          By the <xref ref="imt-2"/>, the null space of <m>C</m> is trivial, so this implies
+          <me>c_1v_1 + c_2v_2 + \cdots + c_kv_k = 0.</me>
+          Since <m>v_1,v_2,\ldots,v_k</m> are linearly independent, we get <m>c_1=c_2=\cdots=c_k=0</m>, as desired.
+        </p>
+        <p>
+          By the previous paragraph, the dimension of the <m>\lambda</m>-eigenspace of <m>A</m> is greater than or equal to the dimension of the <m>\lambda</m>-eigenspace of <m>B</m>.  By symmetry (<m>B</m> is similar to <m>A</m> as well), the dimensions are equal, so the geometric multiplicities coincide.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      For instance, the four matrices in this <xref ref="diag-cases-22"/> are not similar to each other, because the algebraic and/or geometric multiplicities of the eigenvalues do not match up.  Or, combined with the above <xref ref="diag-thm-variant"/>, we see that a diagonalizable matrix cannot be similar to a non-diagonalizable one, because the algebraic and geometric multiplicities of such matrices cannot both coincide.
+    </p>
+
+    <example>
+      <p>
+        Continuing with this <xref ref="diagonal-eg-33"/>, let
+        <me>
+          A = \mat{4 -3 0; 2 -1 0; 1 -1 1}.
+        </me>
+        This is a diagonalizable matrix that is similar to
+        <me>
+          D = \mat{1 0 0; 0 1 0; 0 0 2}
+        \sptxt{using the matrix}
+          C = \mat{1 0 3; 1 0 2; 0 1 1}.
+        </me>
+        The <m>1</m>-eigenspace of <m>D</m> is the <m>xy</m>-plane, and the <m>2</m>-eigenspace is the <m>z</m>-axis.  The matrix <m>C</m> takes the <m>xy</m>-plane to the <m>1</m>-eigenspace of <m>A</m>, which is again a plane, and the <m>z</m>-axis to the <m>2</m>-eigenspace of <m>A</m>, which is again a line.  This shows that the geometric multiplicities of <m>A</m> and <m>D</m> coincide.
+      </p>
+      <figure>
+        <caption>The matrix <m>C</m> takes the <m>xy</m>-plane to the <m>1</m>-eigenspace of <m>A</m> (the grid) and the <m>z</m>-axis to the <m>2</m>-eigenspace (the green line).</caption>
+        <mathbox source="demos/similarity.html?C=1,0,3:1,0,2:0,1,1&amp;B=1,0,0:0,1,0:0,0,2" height="500px"/>
+      </figure>
+    </example>
+
+    <p>
+      The converse of the <xref ref="diag-similar-amgm"/> is false: there exist matrices  whose eigenvectors have the same algebraic and geometric multiplicities, but which are not similar.  See the <xref ref="diag-eg-nonsimilar"/> below.
+      However, for <m>2\times 2</m> and <m>3\times 3</m> matrices whose characteristic polynomial has no complex (non-real) roots, the converse of the <xref ref="diag-similar-amgm"/> is true.  (We will handle the case of complex roots in <xref ref="complex-eigenvalues"/>.)
+    </p>
+
+    <example xml:id="diag-eg-nonsimilar">
+      <title>Matrices that look similar but are not</title>
+      <statement>
+        <p>
+          Show that the matrices
+          <me>
+            A = \mat{0 0 0 0; 0 0 1 0; 0 0 0 1; 0 0 0 0} \sptxt{and}
+            B = \mat{0 1 0 0; 0 0 0 0; 0 0 0 1; 0 0 0 0}
+          </me>
+          have the same eigenvalues with the same algebraic and geometric multiplicities, but are not similar.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          These matrices are upper-triangular.  They both have characteristic polynomial <m>f(\lambda) = \lambda^4</m>, so they both have one eigenvalue <m>0</m> with algebraic multiplicity <m>4</m>.  The <m>0</m>-eigenspace <xref ref="evecs-eval0" text="title">is the null space</xref>, which has dimension <m>2</m> in each case because <m>A</m> and <m>B</m> have two columns without pivots.  Hence <m>0</m> has geometric multiplicity <m>2</m> in each case.
+        </p>
+        <p>
+          To show that <m>A</m> and <m>B</m> are not similar, we note that
+          <me>A^2 = \mat{0 0 0 0; 0 0 0 1; 0 0 0 0; 0 0 0 0}
+          \sptxt{and} B^2 = \mat{0 0 0 0; 0 0 0 0; 0 0 0 0; 0 0 0 0},</me>
+          as the reader can verify.  If <m>A = CBC\inv</m> then by this <xref ref="diag-powers"/>, we have
+          <me>A^2 = CB^2C\inv = C0C\inv = 0,</me>
+          which is not the case.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      On the other hand, suppose that <m>A</m> and <m>B</m> are <em>diagonalizable</em> matrices with the same characteristic polynomial.  Since the geometric multiplicities of the eigenvalues coincide with the algebraic multiplicities, which are the same for <m>A</m> and <m>B</m>, we conclude that there exist <m>n</m> linearly independent eigenvectors of each matrix, all of which have the same eigenvalues.  This shows that <m>A</m> and <m>B</m> are both similar to the same diagonal matrix.  Using  the <xref ref="similarity-eq-reln" text="title">transitivity property</xref> of similar matrices, this shows:
+    </p>
+
+    <bluebox>
+      <idx><h>Similarity</h><h>of diagonalizable matrices</h></idx>
+      <idx><h>Diagonalizability</h><h>criterion for similarity</h></idx>
+      <p>
+        <em>Diagonalizable</em> matrices are similar if and only if they have the same characteristic polynomial, or equivalently, the same eigenvalues with the same algebraic multiplicities.
+      </p>
+    </bluebox>
+
+    <example xml:id="diag-similarity">
+      <statement>
+        <p>
+          Show that the matrices
+          <me>
+            A = \mat{1 7 2; 0 -1 3; 0 0 4} \sptxt{and}
+            B = \mat{1 0 0; -2 4 0; -5 -4 -1}
+          </me>
+          are similar.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Both matrices have the three distinct eigenvalues <m>1,-1,4</m>.  Hence they are both diagonalizable, and are similar to the diagonal matrix
+          <me>\mat{1 0 0; 0 -1 0; 0 0 4}.</me>
+          By the <xref ref="similarity-eq-reln" text="title">transitivity property</xref> of similar matrices, this implies that <m>A</m> and <m>B</m> are similar to each other.
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <title>Diagonal matrices with the same entries are similar</title>
+      <idx><h>Similarity</h><h>of diagonal matrices</h></idx>
+      <p>
+        Any two diagonal matrices with the same diagonal entries (possibly in a different order) are similar to each other.  Indeed, such matrices have the same characteristic polynomial.  We saw this phenomenon in this <xref ref="diag-easy-eg"/>, where we noted that
+          <me>
+            \mat{1 0 0; 0 2 0; 0 0 3} =
+            \mat{0 0 1; 0 1 0; 1 0 0} \mat{3 0 0; 0 2 0; 0 0 1}
+            \mat{0 0 1; 0 1 0; 1 0 0}\inv.
+          </me>
+      </p>
+    </example>
+
+  </paragraphs>
+</restrict-version>
+
 
   </subsection>
 

@@ -564,7 +564,7 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
       As a consequence of the above <xref ref="evecs-linindep"/>, we have the following.
     </p>
 
-    <bluebox>
+    <bluebox xml:id="evecs-max-nr">
       <idx><h>Eigenvalue</h><h>maximum number of</h></idx>
       <p>
         An <m>n\times n</m> matrix <m>A</m> has at most <m>n</m> eigenvalues.

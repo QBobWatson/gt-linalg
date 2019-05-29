@@ -317,6 +317,12 @@ the license is included in gfdl.xml.
     </solution>
   </example>
 
+  <remark>
+    <p>
+      By the above <xref ref="charpoly-is-poly"/>, the characteristic polynomial of an <m>n\times n</m> matrix is a polynomial of degree <m>n</m>.  Since a polynomial of degree <m>n</m> has at most <m>n</m> roots, this gives another proof of the fact that an <m>n\times n</m> matrix has at most <m>n</m> eigenvalues.  See this <xref ref="evecs-max-nr"/>.
+    </p>
+  </remark>
+
   </paragraphs>
 
   <paragraphs>
