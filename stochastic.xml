@@ -32,7 +32,7 @@ the license is included in gfdl.xml.
     <title>Difference Equations</title>
 
     <p>
-      Suppose that we are studying a system whose state can be described by a list of numbers: for instance, the numbers of rabbits aged <m>0,1,</m> and <m>2</m> years, respectively, or the number of copies of Prognosis Negative in each of the Red Box kiosks in Atlanta.  In each case, we can represent the state at time <m>t</m> by a vector <m>v_t</m>.  Suppose in addition that the state at time <m>t+1</m> is related to the state at time <m>t</m> in a linear way: <m>v_{t+1}=Av_t</m> for some matrix <m>A</m>.  This is the situation we will consider in this subsection.
+      Suppose that we are studying a system whose state can be described by a list of numbers: for instance, the numbers of rabbits aged <m>0,1,</m> and <m>2</m> years, respectively, or the number of copies of <url href="https://en.wikipedia.org/wiki/The_Dog_(Seinfeld)">Prognosis Negative</url> in each of the <url href="https://www.redbox.com/">Red Box</url> kiosks in Atlanta.  In each case, we can represent the state at time <m>t</m> by a vector <m>v_t</m>.  Suppose in addition that the state at time <m>t+1</m> is related to the state at time <m>t</m> in a linear way: <m>v_{t+1}=Av_t</m> for some matrix <m>A</m>.  This is the situation we will consider in this subsection.
     </p>
 
     <definition>
