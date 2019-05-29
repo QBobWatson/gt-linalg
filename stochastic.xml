@@ -155,6 +155,23 @@ the license is included in gfdl.xml.
       </statement>
     </definition>
 
+    <bluebox>
+      <p>
+        A positive stochastic matrix is a stochastic matrix whose entries are all positive numbers.  In particular, no entry is equal to zero.  For instance, the first matrix below is a positive stochastic matrix, and the second is not:
+        <me>
+          \mat{.3 .4 .5; .3 .4 .3; .4 .2 .2}
+          \qquad
+          \mat{1 0 0; 0 1 0; 0 0 1}.
+        </me>
+      </p>
+    </bluebox>
+
+    <remark>
+      <p>
+        More generally, a <term>regular</term> stochastic matrix is a stochastic matrix <m>A</m> such that <m>A^n</m> is positive for some <m>n \geq 1</m>.  The Perron<ndash/>Frobenius theorem below also applies to regular stochastic matrices.
+      </p>
+    </remark>
+
     <specialcase xml:id="stochastic-redbox-eg2">
       <idx><h>Red Box</h></idx>
       <p>
