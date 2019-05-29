@@ -153,6 +153,26 @@ the license is included in gfdl.xml.
       Note that the length of a vector is the length of the <em>arrow</em>; if we think in terms of points, then the length is its distance from the origin.
     </p>
 
+    <example>
+      <statement>
+        <p>Suppose that <m>\|x\| = 2,\;\|y\|=3,</m> and <m>x\cdot y = -4</m>.  What is <m>\|2x + 3y\|</m>?</p>
+      </statement>
+      <solution>
+        <p>
+          We compute
+          <me>
+            \begin{split}
+            \|2x+3y\|^2 &amp;= (2x+3y)\cdot(2x+3y) \\
+            &amp;= 4x\cdot x + 6x\cdot y + 6x\cdot y + 9y\cdot y \\
+            &amp;= 4\|x\|^2 + 9\|y\|^2 + 12x\cdot y \\
+            &amp;= 4\cdot 4 + 9\cdot 9 - 12\cdot 4 = 49.
+            \end{split}
+          </me>
+          Hence <m>\|2x+3y\| = \sqrt{49} = 7.</m>
+        </p>
+      </solution>
+    </example>
+
     <fact>
       <p>
         If <m>x</m> is a vector and <m>c</m> is a scalar, then <m>\|cx\|=|c|\cdot\|x\|.</m>
