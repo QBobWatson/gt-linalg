@@ -15,10 +15,11 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Learn examples of stochastic matrices and applications to difference equations.</li>
+      <li>Understand Google's PageRank algorithm.</li>
       <li><em>Recipe:</em> find the steady state of a positive stochastic matrix.</li>
       <li><em>Picture:</em> dynamics of a positive stochastic matrix.</li>
       <li><em>Theorem:</em> the Perron<ndash/>Frobenius theorem.</li>
-      <li><em>Vocabulary words:</em> <term>difference equation</term>, <term>(positive) stochastic matrix</term>, <term>steady state</term>.</li>
+      <li><em>Vocabulary words:</em> <term>difference equation</term>, <term>(positive) stochastic matrix</term>, <term>steady state</term>, <term>importance matrix</term>, <term>Google matrix</term>.</li>
     </ol>
   </objectives>
 
@@ -535,7 +536,7 @@ the license is included in gfdl.xml.
 
     <definition hide-type="true">
       <title>The Importance Rule</title>
-      <idx><h>Google PageRank</h><h>Importance Rule</h></idx>
+      <idx><h>Google PageRank</h><h>importance rule</h></idx>
       <statement>
         <p>
           If a page <m>P</m> links to <m>n</m> other pages <m>Q_1,Q_2,\ldots,Q_n</m>, then each page <m>Q_i</m> inherits <m>\frac 1n</m> of <m>P</m><rsq/>s importance.
@@ -561,10 +562,10 @@ the license is included in gfdl.xml.
 
     <definition hide-type="true">
       <title>The Importance Matrix</title>
-      <idx><h>Google PageRank</h><h>Importance Matrix</h></idx>
+      <idx><h>Google PageRank</h><h>importance matrix</h></idx>
       <statement>
         <p>
-          Consider an Internet with <m>n</m> pages.  The <term>importance matrix</term> is the <m>n\times n</m> matrix <m>A</m> whose <m>i,j</m>-entry is the importance that page <m>j</m> passes to page <m>i.</m>
+          Consider an internet with <m>n</m> pages.  The <term>importance matrix</term> is the <m>n\times n</m> matrix <m>A</m> whose <m>i,j</m>-entry is the importance that page <m>j</m> passes to page <m>i.</m>
         </p>
       </statement>
     </definition>
@@ -575,7 +576,7 @@ the license is included in gfdl.xml.
 
     <specialcase>
       <p>
-        Consider the following Internet with only four pages.  Links are indicated by arrows.
+        Consider the following internet with only four pages.  Links are indicated by arrows.
         <latex-code><![CDATA[
 \begin{tikzpicture}
   \matrix[matrix of nodes,
@@ -600,7 +601,7 @@ the license is included in gfdl.xml.
   \end{scope}
 \end{tikzpicture}
         ]]></latex-code>
-        The Importance Rule says:
+        The importance rule says:
         <ul>
           <li>
             Page <m>\color{seq1}A</m> has <m>3</m> links, so it passes <m>\frac 13</m> of its importance to pages
@@ -632,7 +633,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
 \frac 13a + \frac 12b}
 = \vec{a b c d}.
         </me>
-        The matrix on the left is the <term>Importance Matrix</term>, and the final equality expresses the Importance Rule.
+        The matrix on the left is the <term>importance matrix</term>, and the final equality expresses the importance rule.
       </p>
     </specialcase>
 
@@ -642,20 +643,20 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
 
     <bluebox>
       <title>Key Observation</title>
-      <idx><h>Google PageRank</h><h>Importance Matrix</h><h>eigenvector of</h></idx>
+      <idx><h>Google PageRank</h><h>importance matrix</h><h>eigenvector of</h></idx>
       <p>
         The rank vector is an eigenvector of the importance matrix with eigenvalue <m>1</m>.
       </p>
     </bluebox>
 
     <p>
-      In light of the key observation, we would like to use the Perron<ndash/>Frobenius theorem to find the rank vector.  Unfortunately, the Importance Matrix is not always a <em>positive</em> stochastic matrix.
+      In light of the key observation, we would like to use the Perron<ndash/>Frobenius theorem to find the rank vector.  Unfortunately, the importance matrix is not always a <em>positive</em> stochastic matrix.
     </p>
 
     <example>
       <title>A page with no links</title>
       <p>
-        Consider the following Internet with three pages:
+        Consider the following internet with three pages:
         <latex-code><![CDATA[
 \begin{tikzpicture}
   \matrix[matrix of nodes,
@@ -680,14 +681,14 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
         This has characteristic polynomial
         <me>f(\lambda) = \det\mat{-\lambda, 0 0; 0 -\lambda, 0; 1 1 -\lambda}
         = -\lambda^3.</me>
-        So <m>1</m> is not an eigenvalue at all: there is no rank vector!  The Importance Matrix is not stochastic because the page <m>C</m> has no links.
+        So <m>1</m> is not an eigenvalue at all: there is no rank vector!  The importance matrix is not stochastic because the page <m>C</m> has no links.
       </p>
     </example>
 
     <example>
       <title>Disconnected Internet</title>
       <p>
-        Consider the following Internet:
+        Consider the following internet:
         <latex-code><![CDATA[
 \begin{tikzpicture}
   \matrix[matrix of nodes,
@@ -712,7 +713,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
   \end{scope}
 \end{tikzpicture}
 ]]></latex-code>
-        The Importance Matrix is
+        The importance matrix is
         <me>
 \def\r{\color{seq1}}\def\b{\color{seq2}}\def\g{\color{seq3}}
 \def\p{\color{seq4}}\def\o{\color{seq5}}
@@ -726,7 +727,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
           \vec{1 1 0 0 0} \sptxt{and}
           \vec{0 0 1 1 1},
         </me>
-        both with eigenvalue <m>1</m>.  So there is more than one rank vector in this case.  Here the Importance Matrix is stochastic, but not positive.
+        both with eigenvalue <m>1</m>.  So there is more than one rank vector in this case.  Here the importance matrix is stochastic, but not positive.
       </p>
     </example>
 
@@ -737,7 +738,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
         \sptxt{becomes}
         A' = \mat{0 0 1/3; 0 0 1/3; 1 1 1/3}.
       </me>
-      The <term>modified Importance Matrix</term> <m>A'</m> is always stochastic.
+      The <term>modified importance matrix</term> <m>A'</m> is always stochastic.
     </p>
 
     <p>
@@ -749,7 +750,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
       <idx><h>Google PageRank</h><h>Google Matrix</h></idx>
       <statement>
         <p>
-          Let <m>A</m> be the Importance Matrix for an Internet with <m>n</m> pages, and let <m>A'</m> be the modified Importance Matrix.  The <term>Google Matrix</term> is the matrix
+          Let <m>A</m> be the importance matrix for an internet with <m>n</m> pages, and let <m>A'</m> be the modified importance matrix.  The <term>Google Matrix</term> is the matrix
           <me>
             M = (1-p)\cdot A' + p\cdot B
             \sptxt{where}
@@ -793,7 +794,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
     <example>
       <statement>
         <p>
-          What is the PageRank vector for the following Internet?  (Use the damping factor <m>p = 0.15</m>.)
+          What is the PageRank vector for the following internet?  (Use the damping factor <m>p = 0.15</m>.)
         <latex-code><![CDATA[
 \begin{tikzpicture}
   \matrix[matrix of nodes,
@@ -822,7 +823,7 @@ Page <m>\color{seq4}D</m> has <m>2</m> links, so it passes <m>\frac 12</m> of it
       </statement>
       <solution>
         <p>
-          First we compute the modified Importance Matrix:
+          First we compute the modified importance matrix:
           <me>
 \def\r{\color{seq1}}\def\b{\color{seq2}}\def\g{\color{seq3}}\def\p{\color{seq4}}
  A = \mat{
