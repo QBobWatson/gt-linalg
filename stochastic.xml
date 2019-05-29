@@ -301,7 +301,7 @@ the license is included in gfdl.xml.
           All vectors approach the <m>1</m>-eigenspace upon repeated multiplication by <m>A</m>.
         </li>
       </ul>
-      One should think of a steady state vector <m>w</m> as a vector of <em>percentages.</em>  For example, if the movies are distributed according to these percentages today, then they will be have the same distribution tomorrow, since <m>Aw=w</m>.  And nomatter the starting distribution of movies, the long-term distribution will always be the steady state vector.
+      One should think of a steady state vector <m>w</m> as a vector of <em>percentages.</em>  For example, if the movies are distributed according to these percentages today, then they will be have the same distribution tomorrow, since <m>Aw=w</m>.  And no matter the starting distribution of movies, the long-term distribution will always be the steady state vector.
     </p>
     <p>
       The sum <m>c</m> of the entries of <m>v_0</m> is the <em>total number</em> of things in the system being modeled.  The total number does not change, so the long-term state of the system must approach <m>cw</m>: it is a multiple of <m>w</m> because it is contained in the <m>1</m>-eigenspace, and the entries of <m>cw</m> sum to <m>c</m>.
