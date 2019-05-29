@@ -95,7 +95,7 @@ the license is included in gfdl.xml.
     </specialcase>
 
     <p>
-      An important question to ask about a difference equation is: what is its long-term behavior?  Where will the movies be after 100 days?  In the next subsection, we will answer this question for a particular type of difference equation.
+      An important question to ask about a difference equation is: what is its long-term behavior?  How many movies will be in each kiosk after 100 days?  In the next subsection, we will answer this question for a particular type of difference equation.
     </p>
 
     <example>
