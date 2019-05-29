@@ -114,7 +114,7 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
   \point[seq-red, "$Av$" below right] at (4, 4);
   \point[seq-blue, "$w$" above left] at (1, 2);
   \point[seq-blue, "$Aw$"] at (6, 0);
-  \point at  (0,0);
+  \point["0" above left] at  (0,0);
 \end{tikzpicture}\qquad
 \begin{minipage}[c]{.3\linewidth}
   $\color{seq-red}v$ is an eigenvector\\[5mm]
@@ -155,7 +155,7 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
     </example>
 
     <example>
-      <title>An eigenvector with eigenvalue zero</title>
+      <title>An eigenvector with eigenvalue <m>0</m></title>
       <statement>
         <p>
           Let
@@ -192,7 +192,7 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
   \draw[seq-blue!70] ($-5*(w)$) -- ($5*(w)$);
   \point[seq-blue, "$w$" above right] (w) at (w);
   \point[seq-blue, "$Aw$"] at (-1.2, 1);
-  \point at  (0,0);
+  \point["0" {anchor=350, inner sep=3pt}] at  (0,0);
 \end{tikzpicture}\qquad
 \begin{minipage}[c]{.3\linewidth}
   $\color{seq-red}v$ is an eigenvector\\[5mm]
@@ -221,6 +221,7 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
   \point[seq1, "$u$" {left,text=seq1}] (a) at (0,-1);
   \point[seq1, "$Au$" {above right, text=seq1}] (Ta) at (1,0);
   \draw (a) -- (Ta);
+  \point["0" below left] at (0, 0);
   \end{scope}
 
 \end{tikzpicture}
@@ -238,6 +239,7 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
   \point[seq6, "$z$" {right, text=seq6}] (a) at (.5,1.5);
   \point[seq6, "$Az$" {below right, text=seq6}] (Ta) at (-1.5,-.5);
   \draw (a) -- (Ta);
+  \point["0" left] at (0, 0);
   \end{scope}
 
 \end{tikzpicture}
@@ -255,6 +257,7 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
   \point[seq2, "$v$" {above left, text=seq2}] (b) at (1,1);
   \point[seq2, "$Av$" {text=seq2, below right}] (Tb) at (-1,-1);
   \draw (b) -- (Tb);
+  \point["0" left] at (0, 0);
   \end{scope}
 
 \end{tikzpicture}
@@ -272,6 +275,7 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
   \point[seq3, "$w$" {text=seq3,inner sep=3pt, anchor=270}] (c) at (-1,1);
   \point[seq3, "$Aw$" {text=seq3,inner sep=3pt, anchor=180}] (c) at (-1,1);
   \draw (c) to[out=190, in=260, looseness=40] (c);
+  \point["0" below left] at (0, 0);
   \end{scope}
 
 \end{tikzpicture}
@@ -313,6 +317,7 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
   \point[seq1, "$u$" {left,text=seq1}] (a) at (1,-1);
   \point[seq1, "$Au$" {above right, text=seq1}] (Ta) at (1,0);
   \draw (a) -- (Ta);
+  \point["0" below left] at (0, 0);
   \end{scope}
 
 \end{tikzpicture}
@@ -329,6 +334,7 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
   \point[seq6, "$z$" {right, text=seq6}] (a) at (-.5,-1.5);
   \point[seq6, "$Az$" {above, text=seq6}] (Ta) at (-.5,0);
   \draw (a) -- (Ta);
+  \point["0" below right] at (0, 0);
   \end{scope}
 
 \end{tikzpicture}
@@ -345,6 +351,7 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
   \point[seq2, "$v$" {above left, text=seq2}] (b) at (0,1);
   \point[seq2, "$Av$" {text=seq2, below right}] (Tb) at (0,0);
   \draw (b) -- (Tb);
+  \point["0" below left] at (0, 0);
   \end{scope}
 
 \end{tikzpicture}
@@ -360,6 +367,7 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
   \point[seq3, "$w$" {text=seq3,inner sep=3pt, anchor=-35}] (c) at (1,0);
   \point[seq3, "$Aw$" {text=seq3,inner sep=3pt, anchor=-145}] (c) at (1,0);
   \draw (c) to[out=-125, in=-55, looseness=40] (c);
+  \point["0" below left] at (0, 0);
   \end{scope}
 
 \end{tikzpicture}
@@ -421,7 +429,7 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
   \draw[seq2] (-1,-2) -- (1,2);
   \point[seq2, "$v$" {left, text=seq2}] (b) at (.5,1);
   \point[seq2, "$Av$" {text=seq2, right}] (Tb) at (.75,1.5);
-  \point at (0,0);
+  \point["0" above left] at (0,0);
 \end{tikzpicture}
           </latex-code>
         </p>
@@ -457,7 +465,7 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
   \point[seq2, "$v$" {above left, text=seq2}] (b) at (.5,1);
   \point[seq2, "$Av$" {text=seq2, below}] (Tb) at (1.5,1);
   \draw[|->, shorten=2pt] (b) -- (Tb);
-  \point at (0,0);
+  \point["0" above left] at (0,0);
 \end{tikzpicture}
           </latex-code>
           On the other hand, any vector <m>v</m> on the <m>x</m>-axis has zero <m>y</m>-coordinate, so it is not moved by <m>A</m>.  Hence <m>v</m> is an eigenvector with eigenvalue <m>1</m>.
@@ -470,7 +478,7 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
   \point[seq3, "$w$" {text=seq3,inner sep=3pt, anchor=-35}] (c) at (1,0);
   \point[seq3, "$Aw$" {text=seq3,inner sep=3pt, anchor=-145}] (c) at (1,0);
   \draw (c) to[out=-125, in=-55, looseness=40] (c);
-  \point at (0,0);
+  \point["0" above] at (0,0);
   \end{scope}
 
 \end{tikzpicture}
@@ -503,7 +511,7 @@ If someone hands you a matrix <m>A</m> and a vector <m>v</m>, it is easy to chec
   \point[seq2, "$v$" {below right, text=seq2}] (b) at (.5,1);
   \point[seq2, "$Av$" {text=seq2, below}] (Tb) at (-1, .5);
   \draw[|->, shorten=3pt] (b) arc[radius={sqrt(5/4)}, start angle={atan2(2,1)}, delta angle=90] (Tb);
-  \point at (0,0);
+  \point["0" below right] at (0,0);
 \end{tikzpicture}
           </latex-code>
           Therefore, this matrix <em>has no eigenvectors and eigenvalues.</em>
