@@ -210,7 +210,7 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      Vectors with length one are very common in applications, so we give them a name.
+      Vectors with length <m>1</m> are very common in applications, so we give them a name.
     </p>
 
     <definition xml:id="innerprod-unit-vec">
