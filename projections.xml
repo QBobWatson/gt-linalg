@@ -232,11 +232,15 @@ in the unknown vector <m>c</m> is consistent, and <m>x_W</m> is equal to <m>Ac</
       </statement>
       <proof visible="true">
         <p>
-          Let <m>x = x_W + x_{W^\perp}</m> be the orthogonal decomposition with respect to <m>W</m>.  We have <m>A^Tx_{W^\perp}=0</m> by this <xref ref="orthocomp-comp-of-span"/>, so
-          <me>A^Tx = A^T(x_W + x_{W^\perp}) = A^Tx_W + A^Tx_{W^\perp} = A^Tx_W.</me>
-          Since <m>x_W</m> is in <m>W</m>, we can write <m>x_W = c_1v_1 + c_2v_2 + \cdots + c_mv_m</m> for some scalars <m>c_1,c_2,\ldots,c_m</m>.  Let <m>c</m> be the vector with entries <m>c_1,c_2,\ldots,c_m</m>.  Then <m>Ac = x_W</m>, so
-          <me>A^Tx = A^Tx_W = A^TAc.</me>
-          This proves that the matrix equation <m>A^TAc = A^Tx</m> is consistent, and that <m>x_W = Ac</m> for a solution <m>c</m>.
+          Let <m>x = x_W + x_{W^\perp}</m> be the orthogonal decomposition with respect to <m>W</m>.  By definition <m>x_W</m> lies in <m>W=\Col(A)</m> and so there is a vector <m>c</m> in <m>\R^n</m> with <m>Ac = x_W</m>.  Choose any such vector <m>c</m>.  We know that <m>x-x_W=x-Ac</m> lies in <m>W^\perp</m>, which is equal to <m>\Nul(A^T)</m> by this <xref ref="shortcuts-for-orthog-comp"/>.  We thus have
+	<me>
+	0=A^T(x-Ac) = A^Tx-A^TAc
+	</me>
+and so
+	<me>
+	A^TAc = A^Tx.
+	</me>
+This exactly means that <m>A^TAc = A^Tx</m> is consistent.  If <m>c</m> is any solution to <m>A^TAc=A^Tx</m> then by reversing the above logic, we conclude that <m>x_W = Ac</m>.
         </p>
       </proof>
     </theorem>

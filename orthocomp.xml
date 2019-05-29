@@ -409,7 +409,7 @@ the license is included in gfdl.xml.
     To summarize:
   </p>
 
-  <bluebox>
+  <bluebox xml:id="shortcuts-for-orthog-comp">
     <title>Recipes: Shortcuts for computing orthogonal complements</title>
     <idx><h>Orthogonal complement</h><h>of a span</h></idx>
     <idx><h>Span</h><h>orthogonal complement of</h></idx>
