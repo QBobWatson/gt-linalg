@@ -170,18 +170,13 @@ the license is included in gfdl.xml.
     <idx><h>Span</h><h>orthogonal complement of</h></idx>
     <statement>
       <p>
-        Let <m>v_1,v_2,\ldots,v_m</m> be vectors in <m>\R^n</m>, and let <m>W = \Span\{v_1,v_2,\ldots,v_m\}</m>.  Then
-        <me>
-          W^\perp =
-          \bigl\{\text{all vectors orthogonal to each $v_1,v_2,\ldots,v_m$}\bigr\}
-          = \Nul\mat{
-          \matrow{v_1^T};
-          \matrow{v_2^T};
-          \vdots;
-          \matrow{v_m^T}}.
-        </me>
+        Let <m>A</m> be a matrix and let <m>W=\Col(A)</m>.  Then
+	<me>
+	W^\perp = \Nul(A^T).
+	</me>
       </p>
     </statement>
+
     <proof>
       <p>
         To justify the first equality, we need to show that a vector <m>x</m> is perpendicular to the all of the vectors in <m>W</m> if and only if it is perpendicular only to <m>v_1,v_2,\ldots,v_m</m>.  Since the <m>v_i</m> are contained in <m>W</m>, we really only have to show that if <m>x\cdot v_1 = x\cdot v_2 = \cdots = x\cdot v_m = 0</m>, then <m>x</m> is perpendicular to every vector <m>v</m> in <m>W</m>.  Indeed, any vector in <m>W</m> has the form <m>v = c_1v_1 + c_2v_2 + \cdots + c_mv_m</m> for suitable scalars <m>c_1,c_2,\ldots,c_m</m>, so
@@ -212,6 +207,22 @@ the license is included in gfdl.xml.
       </p>
     </proof>
   </proposition>
+
+<p>
+        Since column spaces are the same as spans, we can rephrase the proposition as follows.  Let <m>v_1,v_2,\ldots,v_m</m> be vectors in <m>\R^n</m>, and let <m>W = \Span\{v_1,v_2,\ldots,v_m\}</m>.  Then
+        <me>
+          W^\perp =
+          \bigl\{\text{all vectors orthogonal to each $v_1,v_2,\ldots,v_m$}\bigr\}
+          = \Nul\mat{
+          \matrow{v_1^T};
+          \matrow{v_2^T};
+          \vdots;
+          \matrow{v_m^T}}.
+        </me>
+    Again, it is important to be able to go easily back and forth between spans and column spaces.  If you are handed a span, you can apply the proposition once you have rephrased your span as a column space.
+      </p>
+
+
 
   <p>
     <idx><h>Orthogonal complement</h><h>system of linear equations</h></idx>    
