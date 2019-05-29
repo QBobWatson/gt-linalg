@@ -223,11 +223,11 @@ the license is included in gfdl.xml.
       <idx><h>Orthogonal projection</h><h>computation of</h><h>row reduction</h></idx>
       <statement>
         <p>
-          Let <m>W</m> be a subspace of <m>\R^n</m>, let <m>v_1,v_2,\ldots,v_m</m> be a spanning set for <m>W</m> (e.g., a basis), and let <m>A</m> be the <m>n\times m</m> matrix with columns <m>v_1,v_2,\ldots,v_m</m>:
-          <me>
-            A = \mat{| | ,, |; v_1 v_2 \cdots, v_m; | | ,, |}.
-          </me>
-          Let <m>x</m> be a vector in <m>\R^n</m>.  Then the matrix equation <m>A^TAc=A^Tx</m> in the unknown vector <m>c</m> is consistent, and <m>x_W = Ac</m> for any solution <m>c</m>.
+          Let <m>A</m> be an <m>m \times n</m> matrix, let <m>W = \Col(A)</m>, and let <m>x</m> be a vector in <m>\R^m</m>.  Then the matrix equation 
+	<me>
+	A^TAc=A^Tx
+	</me>
+in the unknown vector <m>c</m> is consistent, and <m>x_W</m> is equal to <m>Ac</m> for any solution <m>c</m>.
         </p>
       </statement>
       <proof visible="true">
@@ -244,7 +244,7 @@ the license is included in gfdl.xml.
     <specialcase xml:id="projections-onto-line">
       <title>Orthogonal projection onto a line</title>
       <p>
-        Let <m>L = \Span\{u\}</m> be a line in <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  By the <xref ref="projections-ATA-formula"/>, to find <m>x_L</m> we must solve the matrix equation <m>u^Tuc = u^Tx</m>, where we regard <m>u</m> as an <m>n\times 1</m> matrix.  But <m>u^Tu = u\cdot u</m> and <m>u^Tx = u\cdot x</m>, so <m>c = (u\cdot x)/(u\cdot u)</m> is a solution of <m>u^Tuc = u^Tx</m>, and hence
+        Let <m>L = \Span\{u\}</m> be a line in <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  By the <xref ref="projections-ATA-formula"/>, to find <m>x_L</m> we must solve the matrix equation <m>u^Tuc = u^Tx</m>, where we regard <m>u</m> as an <m>n\times 1</m> matrix (the column space of this matrix is exactly <m>L</m>!).  But <m>u^Tu = u\cdot u</m> and <m>u^Tx = u\cdot x</m>, so <m>c = (u\cdot x)/(u\cdot u)</m> is a solution of <m>u^Tuc = u^Tx</m>, and hence
         <m>x_L = uc = (u\cdot x)/(u\cdot u)\,u.</m>
         <latex-code>
 \begin{tikzpicture}[thin border nodes]
