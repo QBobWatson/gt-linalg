@@ -44,7 +44,7 @@ the license is included in gfdl.xml.
   \point at (0,0,0);
 \end{tikzpicture}
       </latex-code>
-      The closest point has the property that the difference between the two points is <em>orthogonal</em>, or <em>perpendicular</em>, to the subspace.  For this reason, we need to develop robust notions of orthogonality, length, and distance.
+      The closest point has the property that the difference between the two points is <em>orthogonal</em>, or <em>perpendicular</em>, to the subspace.  For this reason, we need to develop notions of orthogonality, length, and distance.
     </p>
   </introduction>
 
@@ -280,7 +280,7 @@ the license is included in gfdl.xml.
     <title>Orthogonal Vectors</title>
 
     <p>
-      In this section, we show how the dot product can be used to provide a robust notion of <em>orthogonality</em>, i.e., when two vectors are perpendicular to each other.
+      In this section, we show how the dot product can be used to define <em>orthogonality</em>, i.e., when two vectors are perpendicular to each other.
     </p>
 
     <fact type-name="Important Fact">
