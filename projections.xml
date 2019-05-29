@@ -534,15 +534,11 @@ and so
       <idx><h>Basis</h><h>and orthogonal projection</h></idx>
       <statement>
         <p>
-          Let <m>W</m> be a subspace of <m>\R^n</m>, let <m>v_1,v_2,\ldots,v_m</m> be a basis for <m>W</m>, and let <m>A</m> be the <m>n\times m</m> matrix with columns <m>v_1,v_2,\ldots,v_m</m>:
-          <me>
-            A = \mat{| | ,, |; v_1 v_2 \cdots, v_m; | | ,, |}.
-          </me>
-          Then the <m>m\times m</m> matrix <m>A^TA</m> is invertible, and for all vectors <m>x</m> in <m>\R^n</m>, we have
+          Let <m>A</m> be an <m>m \times n</m> matrix with linearly independent columns and let <m>W = \Col(A)</m>.  Then the <m>n\times n</m> matrix <m>A^TA</m> is invertible, and for all vectors <m>x</m> in <m>\R^m</m>, we have
           <me>
             x_W = A(A^TA)\inv A^Tx.
           </me>
-        </p>
+</p>
       </statement>
       <proof visible="true">
         <p>
@@ -553,6 +549,11 @@ and so
         </p>
       </proof>
     </corollary>
+
+    <p>  
+          The corollary applies in particular to the case where we have a subspace <m>W</m> of <m>\R^m</m>, and a basis <m>v_1,v_2,\ldots,v_n</m> for <m>W</m>.  To apply the corollary, we take <m>A</m> to be the <m>m\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_n</m>.
+        </p>
+
 
     <example xml:id="projections-onto-plane2">
       <title>Matrix for a projection</title>
