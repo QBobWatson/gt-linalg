@@ -279,6 +279,40 @@ in the unknown vector <m>c</m> is consistent, and <m>x_W</m> is equal to <m>Ac</
       </p>
     </bluebox>
 
+    <remark xml:id="simple-proof-for-projection-to-line">
+	<title>Simple proof for the formula for projection onto a line</title>
+	<p>
+In the special case where we are projecting a vector <m>x</m> in <m>\R^n</m> onto a line <m>L = \Span\{u\}</m>, our formula for the projection can be derived very directly and simply.  The vector <m>x_L</m> is a multiple of <m>u</m>, say <m>x_L=cu</m>.  This multiple is chosen so that <m>x-x_L=x-cu</m> is perpendicular to <m>u</m>, as in the following picture.  
+
+        <latex-code>
+\begin{tikzpicture}[thin border nodes]
+  \draw[seq-violet] (-3,-2) -- node[below right, very near start] {$L$} (3,2);
+  \draw[vector] (0,0) --  node[below right] {$u$} (1.5,1);
+  \draw[vector] (0,0) --  node[below right] {$cu$} (-15/13,-10/13);
+  \point[seq-red] (x) at (-3,2);
+  \point (o) at (0,0);
+  \draw[vector,seq-red] (o) -- node[auto,swap] {$x$} (x);
+  \point[seq-blue, "$c = \dfrac{u\cdot x}{u\cdot u}$" {below right,seq-blue}]
+    (p) at (${-2.5/(1.5*1.5+1)}*(1.5,1)$);
+  \draw[vector, seq-green] (p) -- node[below left] {$x-cu$} (x);
+  \pic[draw] {right angle=(x)--(p)--(o)};
+\end{tikzpicture}
+        </latex-code>
+
+
+In other words,
+	<me>
+	(x-cu) \cdot u = 0.
+	</me>
+Using the distributive property for the dot product and isolating the variable <m>c</m> gives us that 
+<me>
+c = (u\cdot x)/(u\cdot u)
+</me>
+and so
+        <me>x_L = cu = (u\cdot x)/(u\cdot u)\,u.</me>
+	</p>
+    </remark>
+
     <example xml:id="projections-onto-line2">
       <title>Projection onto a line in <m>\R^2</m></title>
       <statement>
