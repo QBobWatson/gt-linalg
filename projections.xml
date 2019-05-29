@@ -556,7 +556,7 @@ and so
 
 
     <example xml:id="projections-onto-plane2">
-      <title>Matrix for a projection</title>
+      <title>Computing a projection</title>
       <statement>
         <p>
           Continuing with the above <xref ref="projections-onto-plane"/>, let
@@ -586,6 +586,7 @@ and so
             = \frac 13\syseq{2x_1 + x_2 - x_3; x_1 + 2x_2 + x_3; -x_1 + x_2 + 2x_3}.
             \end{split}
           </me>
+So, for example, if <m>x=(1,0,0)</m>, this formula tells us that <m>x_W = (2,1,-1)</m>.
         </p>
       </solution>
     </example>
