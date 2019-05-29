@@ -31,8 +31,8 @@ the license is included in gfdl.xml.
 
     <bluebox>
       <p>When we say <q><m>A</m> is an <m>m\times n</m> matrix,</q> we mean that <m>A</m> has <m>m</m> rows and <m>n</m> columns.
-      <idx><h>Matrix</h><h>dimensions of</h></idx>
-      <notation><usage>m\times n\text{ matrix}</usage><description>Dimensions of a matrix</description></notation>
+      <idx><h>Matrix</h><h>size of</h></idx>
+      <notation><usage>m\times n\text{ matrix}</usage><description>Size of a matrix</description></notation>
       </p>
     </bluebox>
 
