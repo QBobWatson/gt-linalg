@@ -331,10 +331,10 @@ the license is included in gfdl.xml.
     </p>
 
     <bluebox>
-      <title>Recipe 2: Compute the steady state vector by computer</title>
+      <title>Recipe 2: Approximate the steady state vector by computer</title>
       <idx><h>Stochastic matrix</h><h>steady state of</h><h>computing</h></idx>
       <p>
-        Let <m>A</m> be a positive stochastic matrix.  Here is how to compute the steady-state vector of <m>A</m> with a computer.
+        Let <m>A</m> be a positive stochastic matrix.  Here is how to approximate the steady-state vector of <m>A</m> with a computer.
         <ol>
           <li>
             Choose any vector <m>v_0</m> whose entries sum to <m>1</m> (e.g., a standard coordinate vector).
