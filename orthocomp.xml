@@ -36,7 +36,7 @@ the license is included in gfdl.xml.
           W^\perp = \bigl\{ \text{$v$ in $\R^n$}\mid
           v\cdot w=0 \text{ for all $w$ in $W$} \bigr\}.
         </me>
-        The symbol <m>W^\perp</m> is read <q><m>W</m> perp</q>.
+        The symbol <m>W^\perp</m> is sometimes read <q><m>W</m> perp.</q>
       </p>
     </statement>
   </definition>
