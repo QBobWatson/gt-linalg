@@ -792,7 +792,7 @@ So, for example, if <m>x=(1,0,0)</m>, this formula tells us that <m>x_W = (2,1,-
       We can translate the above <xref ref="projections-properties-of">properties of orthogonal projections</xref> into properties of the associated standard matrix.
     </p>
 
-    <proposition hide-type="true">
+    <proposition hide-type="true" xml:id="projections-matrices-properties-of">
       <title>Properties of Projection Matrices</title>
       <idx><h>Projection matrix</h><see>Orthogonal projection, standard matrix of</see></idx>
       <idx><h>Matrix</h><h>projection</h><see>Orthogonal projection, standard matrix of</see></idx>
@@ -839,6 +839,8 @@ So, for example, if <m>x=(1,0,0)</m>, this formula tells us that <m>x_W = (2,1,-
         </p>
       </proof>
     </proposition>
+
+<p>We emphasize that the <xref ref="projections-matrices-properties-of">properties of projection matrices</xref> would be very hard to prove in terms of matrices.  By translating all of the statements into statements about linear transformations, they become much more transparent.  For example, consider the projection matrix we found in this <xref ref="projections-onto-plane3"/>.  Just by looking at the matrix it is not at all obvious that when you square the matrix you get the same matrix back.</p>
 
     <example xml:id="projections-onto-plane4">
       <p>
