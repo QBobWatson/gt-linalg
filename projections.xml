@@ -26,7 +26,7 @@ the license is included in gfdl.xml.
 
   <introduction>
     <p>
-      Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  In this section, we will learn to compute the <em>closest vector</em> <m>x_W</m> to <m>x</m> in <m>W</m>.  The vector <m>x_W</m> is called the <em>orthogonal projection</em> of <m>x</m> onto <m>W</m>.
+      Let <m>W</m> be a subspace of <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  In this section, we will learn to compute the <em>closest vector</em> <m>x_W</m> to <m>x</m> in <m>W</m>.  The vector <m>x_W</m> is called the <em>orthogonal projection</em> of <m>x</m> onto <m>W</m>.  This is exactly what we will use to almost solve matrix equations, as discussed in the introduction to <xref ref="chap-orthogonality"/>.
     </p>
   </introduction>
 
@@ -223,20 +223,24 @@ the license is included in gfdl.xml.
       <idx><h>Orthogonal projection</h><h>computation of</h><h>row reduction</h></idx>
       <statement>
         <p>
-          Let <m>W</m> be a subspace of <m>\R^n</m>, let <m>v_1,v_2,\ldots,v_m</m> be a spanning set for <m>W</m> (e.g., a basis), and let <m>A</m> be the <m>n\times m</m> matrix with columns <m>v_1,v_2,\ldots,v_m</m>:
-          <me>
-            A = \mat{| | ,, |; v_1 v_2 \cdots, v_m; | | ,, |}.
-          </me>
-          Let <m>x</m> be a vector in <m>\R^n</m>.  Then the matrix equation <m>A^TAc=A^Tx</m> in the unknown vector <m>c</m> is consistent, and <m>x_W = Ac</m> for any solution <m>c</m>.
+          Let <m>A</m> be an <m>m \times n</m> matrix, let <m>W = \Col(A)</m>, and let <m>x</m> be a vector in <m>\R^m</m>.  Then the matrix equation 
+	<me>
+	A^TAc=A^Tx
+	</me>
+in the unknown vector <m>c</m> is consistent, and <m>x_W</m> is equal to <m>Ac</m> for any solution <m>c</m>.
         </p>
       </statement>
       <proof visible="true">
         <p>
-          Let <m>x = x_W + x_{W^\perp}</m> be the orthogonal decomposition with respect to <m>W</m>.  We have <m>A^Tx_{W^\perp}=0</m> by this <xref ref="orthocomp-comp-of-span"/>, so
-          <me>A^Tx = A^T(x_W + x_{W^\perp}) = A^Tx_W + A^Tx_{W^\perp} = A^Tx_W.</me>
-          Since <m>x_W</m> is in <m>W</m>, we can write <m>x_W = c_1v_1 + c_2v_2 + \cdots + c_mv_m</m> for some scalars <m>c_1,c_2,\ldots,c_m</m>.  Let <m>c</m> be the vector with entries <m>c_1,c_2,\ldots,c_m</m>.  Then <m>Ac = x_W</m>, so
-          <me>A^Tx = A^Tx_W = A^TAc.</me>
-          This proves that the matrix equation <m>A^TAc = A^Tx</m> is consistent, and that <m>x_W = Ac</m> for a solution <m>c</m>.
+          Let <m>x = x_W + x_{W^\perp}</m> be the orthogonal decomposition with respect to <m>W</m>.  By definition <m>x_W</m> lies in <m>W=\Col(A)</m> and so there is a vector <m>c</m> in <m>\R^n</m> with <m>Ac = x_W</m>.  Choose any such vector <m>c</m>.  We know that <m>x-x_W=x-Ac</m> lies in <m>W^\perp</m>, which is equal to <m>\Nul(A^T)</m> by this <xref ref="shortcuts-for-orthog-comp"/>.  We thus have
+	<me>
+	0=A^T(x-Ac) = A^Tx-A^TAc
+	</me>
+and so
+	<me>
+	A^TAc = A^Tx.
+	</me>
+This exactly means that <m>A^TAc = A^Tx</m> is consistent.  If <m>c</m> is any solution to <m>A^TAc=A^Tx</m> then by reversing the above logic, we conclude that <m>x_W = Ac</m>.
         </p>
       </proof>
     </theorem>
@@ -244,7 +248,7 @@ the license is included in gfdl.xml.
     <specialcase xml:id="projections-onto-line">
       <title>Orthogonal projection onto a line</title>
       <p>
-        Let <m>L = \Span\{u\}</m> be a line in <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  By the <xref ref="projections-ATA-formula"/>, to find <m>x_L</m> we must solve the matrix equation <m>u^Tuc = u^Tx</m>, where we regard <m>u</m> as an <m>n\times 1</m> matrix.  But <m>u^Tu = u\cdot u</m> and <m>u^Tx = u\cdot x</m>, so <m>c = (u\cdot x)/(u\cdot u)</m> is a solution of <m>u^Tuc = u^Tx</m>, and hence
+        Let <m>L = \Span\{u\}</m> be a line in <m>\R^n</m> and let <m>x</m> be a vector in <m>\R^n</m>.  By the <xref ref="projections-ATA-formula"/>, to find <m>x_L</m> we must solve the matrix equation <m>u^Tuc = u^Tx</m>, where we regard <m>u</m> as an <m>n\times 1</m> matrix (the column space of this matrix is exactly <m>L</m>!).  But <m>u^Tu = u\cdot u</m> and <m>u^Tx = u\cdot x</m>, so <m>c = (u\cdot x)/(u\cdot u)</m> is a solution of <m>u^Tuc = u^Tx</m>, and hence
         <m>x_L = uc = (u\cdot x)/(u\cdot u)\,u.</m>
         <latex-code>
 \begin{tikzpicture}[thin border nodes]
@@ -278,6 +282,40 @@ the license is included in gfdl.xml.
         for any vector <m>x</m>.
       </p>
     </bluebox>
+
+    <remark xml:id="simple-proof-for-projection-to-line">
+	<title>Simple proof for the formula for projection onto a line</title>
+	<p>
+In the special case where we are projecting a vector <m>x</m> in <m>\R^n</m> onto a line <m>L = \Span\{u\}</m>, our formula for the projection can be derived very directly and simply.  The vector <m>x_L</m> is a multiple of <m>u</m>, say <m>x_L=cu</m>.  This multiple is chosen so that <m>x-x_L=x-cu</m> is perpendicular to <m>u</m>, as in the following picture.  
+
+        <latex-code>
+\begin{tikzpicture}[thin border nodes]
+  \draw[seq-violet] (-3,-2) -- node[below right, very near start] {$L$} (3,2);
+  \draw[vector] (0,0) --  node[below right] {$u$} (1.5,1);
+  \draw[vector] (0,0) --  node[below right] {$cu$} (-15/13,-10/13);
+  \point[seq-red] (x) at (-3,2);
+  \point (o) at (0,0);
+  \draw[vector,seq-red] (o) -- node[auto,swap] {$x$} (x);
+  \point[seq-blue, "$c = \dfrac{u\cdot x}{u\cdot u}$" {below right,seq-blue}]
+    (p) at (${-2.5/(1.5*1.5+1)}*(1.5,1)$);
+  \draw[vector, seq-green] (p) -- node[below left] {$x-cu$} (x);
+  \pic[draw] {right angle=(x)--(p)--(o)};
+\end{tikzpicture}
+        </latex-code>
+
+
+In other words,
+	<me>
+	(x-cu) \cdot u = 0.
+	</me>
+Using the distributive property for the dot product and isolating the variable <m>c</m> gives us that 
+<me>
+c = (u\cdot x)/(u\cdot u)
+</me>
+and so
+        <me>x_L = cu = (u\cdot x)/(u\cdot u)\,u.</me>
+	</p>
+    </remark>
 
     <example xml:id="projections-onto-line2">
       <title>Projection onto a line in <m>\R^2</m></title>
@@ -500,15 +538,11 @@ the license is included in gfdl.xml.
       <idx><h>Basis</h><h>and orthogonal projection</h></idx>
       <statement>
         <p>
-          Let <m>W</m> be a subspace of <m>\R^n</m>, let <m>v_1,v_2,\ldots,v_m</m> be a basis for <m>W</m>, and let <m>A</m> be the <m>n\times m</m> matrix with columns <m>v_1,v_2,\ldots,v_m</m>:
-          <me>
-            A = \mat{| | ,, |; v_1 v_2 \cdots, v_m; | | ,, |}.
-          </me>
-          Then the <m>m\times m</m> matrix <m>A^TA</m> is invertible, and for all vectors <m>x</m> in <m>\R^n</m>, we have
+          Let <m>A</m> be an <m>m \times n</m> matrix with linearly independent columns and let <m>W = \Col(A)</m>.  Then the <m>n\times n</m> matrix <m>A^TA</m> is invertible, and for all vectors <m>x</m> in <m>\R^m</m>, we have
           <me>
             x_W = A(A^TA)\inv A^Tx.
           </me>
-        </p>
+</p>
       </statement>
       <proof visible="true">
         <p>
@@ -520,8 +554,13 @@ the license is included in gfdl.xml.
       </proof>
     </corollary>
 
+    <p>  
+          The corollary applies in particular to the case where we have a subspace <m>W</m> of <m>\R^m</m>, and a basis <m>v_1,v_2,\ldots,v_n</m> for <m>W</m>.  To apply the corollary, we take <m>A</m> to be the <m>m\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_n</m>.
+        </p>
+
+
     <example xml:id="projections-onto-plane2">
-      <title>Matrix for a projection</title>
+      <title>Computing a projection</title>
       <statement>
         <p>
           Continuing with the above <xref ref="projections-onto-plane"/>, let
@@ -530,7 +569,7 @@ the license is included in gfdl.xml.
             \qquad
             x = \vec{x_1 x_2 x_3}.
           </me>
-          Compute <m>x_W</m>.
+          Compute <m>x_W</m> using the formula <m>x_W = A(A^TA)\inv A^Tx</m>.
         </p>
       </statement>
       <solution>
@@ -551,6 +590,7 @@ the license is included in gfdl.xml.
             = \frac 13\syseq{2x_1 + x_2 - x_3; x_1 + 2x_2 + x_3; -x_1 + x_2 + 2x_3}.
             \end{split}
           </me>
+So, for example, if <m>x=(1,0,0)</m>, this formula tells us that <m>x_W = (2,1,-1)</m>.
         </p>
       </solution>
     </example>
@@ -756,7 +796,7 @@ the license is included in gfdl.xml.
       We can translate the above <xref ref="projections-properties-of">properties of orthogonal projections</xref> into properties of the associated standard matrix.
     </p>
 
-    <proposition hide-type="true">
+    <proposition hide-type="true" xml:id="projections-matrices-properties-of">
       <title>Properties of Projection Matrices</title>
       <idx><h>Projection matrix</h><see>Orthogonal projection, standard matrix of</see></idx>
       <idx><h>Matrix</h><h>projection</h><see>Orthogonal projection, standard matrix of</see></idx>
@@ -781,14 +821,15 @@ the license is included in gfdl.xml.
             <li><m>\Col(B) = W.</m></li>
             <li><m>\Nul(B) = W^\perp.</m></li>
             <li><m>B^2 = B.</m></li>
+	    <li>If <m>W \neq \{0\}</m>, then 1 is an eigenvalue of <m>B</m> and the 1-eigenspace for <m>B</m> is <m>W</m>.</li>
+	    <li>If <m>W \neq \R^n</m>, then 0 is an eigenvalue of <m>B</m> and the 0-eigenspace for <m>B</m> is <m>W^\perp</m>.</li>
             <li><m>B</m> is similar to the diagonal matrix with <m>m</m> ones and <m>n-m</m> zeros on the diagonal, where <m>m = \dim(W).</m></li>
           </ol>
-          In particular, <m>B</m> has eigenvalues <m>0</m> (unless <m>W=\R^n</m>) and <m>1</m> (unless <m>W=\{0\}</m>).
         </p>
       </statement>
       <proof>
         <p>
-          The first three assertions are translations of <xref ref="projections-properties-of">properties 5, 3, and 4</xref>, respectively, using this <xref ref="matrix-trans-dictionary"/> and this <xref ref="matrix-mult-comp-is-prod"/>.
+          The first four assertions are translations of <xref ref="projections-properties-of">properties 5, 3, 4, and 2</xref>, respectively, using this <xref ref="matrix-trans-dictionary"/> and this <xref ref="matrix-mult-comp-is-prod"/>.  The fifth assertion is equivalent to the second, by this <xref ref="evecs-eval0"/>.
         </p>
         <p>
           For the final assertion, we showed in the proof of this <xref ref="projections-decomp-exists"/> that there is a basis of <m>\R^n</m> of the form <m>\{v_1,\ldots,v_m,v_{m+1},\ldots,v_n\}</m>, where <m>\{v_1,\ldots,v_m\}</m> is a basis for <m>W</m> and <m>\{v_{m+1},\ldots,v_n\}</m> is a basis for <m>W^\perp</m>.  Each <m>v_i</m> is an eigenvector of <m>B</m>: indeed, for <m>i\leq m</m> we have
@@ -803,6 +844,8 @@ the license is included in gfdl.xml.
         </p>
       </proof>
     </proposition>
+
+<p>We emphasize that the <xref ref="projections-matrices-properties-of">properties of projection matrices</xref> would be very hard to prove in terms of matrices.  By translating all of the statements into statements about linear transformations, they become much more transparent.  For example, consider the projection matrix we found in this <xref ref="projections-onto-plane3"/>.  Just by looking at the matrix it is not at all obvious that when you square the matrix you get the same matrix back.</p>
 
     <example xml:id="projections-onto-plane4">
       <p>
