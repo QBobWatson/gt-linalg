@@ -161,7 +161,7 @@ the license is included in gfdl.xml.
       </statement>
       <solution>
         <p>
-          First we observe that <m>V</m> is the solution set of the homogeneous equation <m>x + 3y + z = 0</m>, so it is a subspace: see this <xref ref="subspaces-types-of"/>.  To show that <m>\cB</m> is a basis, we really need to verify three things:
+          First we observe that <m>V</m> is the solution set of the homogeneous equation <m>x + 3y + z = 0</m>, so it is a subspace: see this <xref ref="subspace-is-col-or-nul"/>.  To show that <m>\cB</m> is a basis, we really need to verify three things:
           <ol start="0">
             <li>Both vectors are in <m>V</m> because
             <me>\spalignsysdelims..
@@ -201,10 +201,10 @@ the license is included in gfdl.xml.
   </subsection>
 
   <subsection>
-    <title>Bases for Common Types of Subspaces</title>
+    <title>Computing a Basis for a Subspace</title>
 
     <p>
-      Now we show how to find bases for the types of subspaces we encountered in <xref ref="subspaces"/>, namely: a span, the column space of a matrix, and the null space of a matrix.
+      Now we show how to find bases for the column space of a matrix and the null space of a matrix.  In order to find a basis for a given subspace, it is usually best to rewrite the subspace as a column space or a null space first: see this <xref ref="subspace-is-col-or-nul"/>.
     </p>
 
     <paragraphs>
@@ -365,6 +365,37 @@ the license is included in gfdl.xml.
     </theorem>
 
     <p>The proof of the theorem has two parts.  The first part is that every solution lies in the span of the given vectors.  This is automatic: the vectors are exactly chosen so that every solution is a linear combination of those vectors.  The second part is that the vectors are linearly independent.  This part was discussed in this <xref ref="param-vect-form-lin-ind"/>.</p>
+
+    </paragraphs>
+
+    <paragraphs>
+      <title>A basis for a general subspace</title>
+
+      <p>
+        As mentioned at the beginning of this subsection, when given a subspace written in a different form, in order to compute a basis it is usually best to rewrite it as a column space or null space of a matrix.
+      </p>
+
+      <example>
+        <title>A basis of a subspace</title>
+        <statement>
+          <p>
+            Let <m>V</m> be the subspace defined by
+            <me>
+              V = \left\{\vec{x y z}\bigm| x + 2y = z\right\}.
+            </me>
+            Find a basis for <m>V</m>.  What is <m>\dim(V)</m>?
+          </p>
+        </statement>
+        <solution>
+          <p>
+            First we notice that <m>V</m> is exactly the solution set of the homogeneous linear equation <m>x + 2y - z = 0</m>.  Hence <m>V = \Nul\mat{1 2 -1}.</m>  This matrix is in reduced row echelon form; the parametric form of the general solution is <m>x = -2y + z</m>, so the parametric vector form is
+            <me>\vec{x y z} = y\vec{-2 1 0} + z\vec{1 0 1}.</me>
+            It follows that a basis is
+            <me>\left\{\vec{-2 1 0},\;\vec{1 0 1}\right\}.</me>
+            Since <m>V</m> has a basis with two vectors, its dimension is <m>2</m>: it is a plane.
+          </p>
+        </solution>
+      </example>
 
     </paragraphs>
 

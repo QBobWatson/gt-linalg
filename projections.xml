@@ -216,14 +216,14 @@ the license is included in gfdl.xml.
     </example>
 
     <p>
-      Now we turn to the problem of computing <m>x_W</m> and <m>x_{W^\perp}</m>.  Of course, since <m>x_{W^\perp} = x - x_W</m>, really all we need is to compute <m>x_W</m>.  The following theorem gives a method for computing the orthogonal projection in terms of a spanning set.
+      Now we turn to the problem of computing <m>x_W</m> and <m>x_{W^\perp}</m>.  Of course, since <m>x_{W^\perp} = x - x_W</m>, really all we need is to compute <m>x_W</m>.  The following theorem gives a method for computing the orthogonal projection onto a column space.  To compute the orthogonal projection onto a general subspace, usually it is best to rewrite the subspace as the column space of a matrix, as in this <xref ref="subspace-is-col-or-nul"/>.
     </p>
 
     <theorem xml:id="projections-ATA-formula">
       <idx><h>Orthogonal projection</h><h>computation of</h><h>row reduction</h></idx>
       <statement>
         <p>
-          Let <m>A</m> be an <m>m \times n</m> matrix, let <m>W = \Col(A)</m>, and let <m>x</m> be a vector in <m>\R^m</m>.  Then the matrix equation 
+          Let <m>A</m> be an <m>m \times n</m> matrix, let <m>W = \Col(A)</m>, and let <m>x</m> be a vector in <m>\R^m</m>.  Then the matrix equation
 	<me>
 	A^TAc=A^Tx
 	</me>
@@ -286,7 +286,7 @@ This exactly means that <m>A^TAc = A^Tx</m> is consistent.  If <m>c</m> is any s
     <remark xml:id="simple-proof-for-projection-to-line">
 	<title>Simple proof for the formula for projection onto a line</title>
 	<p>
-In the special case where we are projecting a vector <m>x</m> in <m>\R^n</m> onto a line <m>L = \Span\{u\}</m>, our formula for the projection can be derived very directly and simply.  The vector <m>x_L</m> is a multiple of <m>u</m>, say <m>x_L=cu</m>.  This multiple is chosen so that <m>x-x_L=x-cu</m> is perpendicular to <m>u</m>, as in the following picture.  
+In the special case where we are projecting a vector <m>x</m> in <m>\R^n</m> onto a line <m>L = \Span\{u\}</m>, our formula for the projection can be derived very directly and simply.  The vector <m>x_L</m> is a multiple of <m>u</m>, say <m>x_L=cu</m>.  This multiple is chosen so that <m>x-x_L=x-cu</m> is perpendicular to <m>u</m>, as in the following picture.
 
         <latex-code>
 \begin{tikzpicture}[thin border nodes]
@@ -308,12 +308,12 @@ In other words,
 	<me>
 	(x-cu) \cdot u = 0.
 	</me>
-Using the distributive property for the dot product and isolating the variable <m>c</m> gives us that 
+Using the distributive property for the dot product and isolating the variable <m>c</m> gives us that
 <me>
-c = (u\cdot x)/(u\cdot u)
+c = \frac{u\cdot x}{u\cdot u}
 </me>
 and so
-        <me>x_L = cu = (u\cdot x)/(u\cdot u)\,u.</me>
+        <me>x_L = cu = \frac{u\cdot x}{u\cdot u}\,u.</me>
 	</p>
     </remark>
 
@@ -384,15 +384,18 @@ and so
     </example>
 
     <p>
-      When <m>W = \Span\{v_1,v_2,\ldots,v_m\}</m> has dimension greater than one, computing the orthogonal projection of <m>x</m> onto <m>W</m> means solving the matrix equation <m>A^TAc = A^Tx</m>, where <m>A</m> has columns <m>v_1,v_2,\ldots,v_m</m>.  In other words, we can compute the closest vector by <em>solving a system of linear equations</em>.  To be explicit, we state the <xref ref="projections-ATA-formula"/> as a recipe:
+      When <m>A</m> is a matrix with more than one column, computing the orthogonal projection of <m>x</m> onto <m>W = \Col(A)</m> means solving the matrix equation <m>A^TAc = A^Tx</m>.  In other words, we can compute the closest vector by <em>solving a system of linear equations</em>.  To be explicit, we state the <xref ref="projections-ATA-formula"/> as a recipe:
     </p>
 
     <bluebox>
       <title>Recipe: Compute an orthogonal decomposition</title>
       <idx><h>Orthogonal projection</h><h>computation of</h><h>row reduction</h></idx>
       <p>
-        Let <m>W = \Span\{v_1,v_2,\ldots,v_m\}</m> and let <m>A</m> be the matrix with columns <m>v_1,v_2,\ldots,v_m</m>.  Here is a method to compute the orthogonal decomposition of a vector <m>x</m> with respect to <m>W</m>:
-        <ol>
+        Let <m>W</m> be a subspace of <m>\R^m</m>.  Here is a method to compute the orthogonal decomposition of a vector <m>x</m> with respect to <m>W</m>:
+        <ol start="0">
+          <li>
+            Rewrite <m>W</m> as the column space of a matrix <m>A</m>.  In other words, find a a spanning set for <m>W</m>, and let <m>A</m> be the matrix with those columns.
+          </li>
           <li>
             Compute the matrix <m>A^TA</m> and the vector <m>A^Tx</m>.
           </li>
@@ -488,6 +491,65 @@ and so
       </solution>
     </example>
 
+    <example xml:id="projections-onto-plane-2">
+      <title>Projection onto another plane in <m>\R^3</m></title>
+      <statement>
+        <p>
+          Let
+          <me>
+            W = \left\{\vec{x_1 x_2 x_3}\bigm|x_1 - 2x_2 = x_3\right\}
+            \sptxt{and}
+            x = \vec{1 1 1}.
+          </me>
+          Compute <m>x_W</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          <em>Method 1:</em> First we need to find a spanning set for <m>W</m>.  We notice that <m>W</m> is the solution set of the homogeneous equation <m>x_1 - 2x_2 - x_3 = 0</m>, so <m>W = \Nul\mat{1 -2 -1}</m>.  We know how to compute a basis for a null space: we row reduce and find the parametric vector form.  The matrix <m>\mat{1 -2 -1}</m> is already in reduced row echelon form.  The parametric form is <m>x_1 = 2x_2 + x_3</m>, so the parametric vector form is
+          <me>\vec{x_1 x_2 x_3} = x_2\vec{2 1 0} + x_3\vec{1 0 1},</me>
+          and hence a basis for <m>V</m> is given by
+          <me>\left\{\vec{2 1 0},\;\vec{1 0 1}\right\}.</me>
+          We let <m>A</m> be the matrix whose columns are our basis vectors:
+          <me>A = \mat{2 1; 1 0; 0 1}.</me>
+          Hence <m>\Col(A) = \Nul\mat{1 -2 -1} = W</m>.
+        </p>
+        <p>
+          Now we can continue with step 1 of the recipe.  We compute
+          <me>
+            A^TA = \mat{5 2; 2 2} \qquad A^Tx = \vec{3 2}.
+          </me>
+          We write the linear system <m>A^TAc = A^Tx</m> as an augmented matrix and row reduce:
+          <me>
+            \amat{5 2 3; 2 2 2} \rref \amat{1 0 1/3; 0 1 2/3}.
+          </me>
+          Hence we can take <m>c = {1/3\choose 2/3}</m>, so
+          <me>
+            x_W = Ac = \mat{2 1; 1 0; 0 1}\vec{1/3 2/3} = \frac 13\vec{4 1 2}.
+          </me>
+        </p>
+      <figure>
+        <caption>Orthogonal projection onto the plane <m>W</m>.</caption>
+        <mathbox source="demos/projection.html?u1=1,1,-1&amp;u2=1,0,1&amp;vec=1,1,1&amp;labels=v1,v2&amp;range=3.5&amp;closed&amp;mode=decomp" height="500px"/>
+      </figure>
+
+        <p>
+          <em>Method 2:</em> In this case, it is easier to compute <m>x_{W^\perp}</m>.  Indeed, since <m>W = \Nul\mat{1 -2 -1},</m> the orthogonal complement is the line
+          <me>V = W^\perp = \Col\vec{1 -2 -1}.</me>
+          Using the formula for <xref ref="projections-onto-line">projection onto a line</xref> gives
+          <me>
+            x_{W^\perp} = x_V = \frac{\vec{1 1 1}\cdot\vec{1 -2 -1}}{\vec{1 -2 -1}\cdot\vec{1 -2 -1}}\vec{1 -2 -1} = \frac 13\vec{-1 2 1}.
+          </me>
+          Hence we have
+          <me>
+            x_W = x - x_{W^\perp} = \vec{1 1 1} - \frac 13\vec{-1 2 1}.
+            = \frac 13\vec{4 1 2},
+          </me>
+          as above.
+        </p>
+      </solution>
+    </example>
+
     <example>
       <title>Projection onto a <m>3</m>-space in <m>\R^4</m></title>
       <statement>
@@ -530,7 +592,7 @@ and so
     </example>
 
     <p>
-      In the context of the above <xref ref="projections-ATA-formula"/>, if we start with a <em>basis</em> of <m>W</m>, then it turns out that the square matrix <m>A^TA</m> is automatically invertible!  (It is always the case that <m>A^TA</m> is square and the equation <m>A^TAc = A^Tx</m> is consistent, but <m>A^TA</m> need not be invertible in general.)
+      In the context of the above recipe, if we start with a <em>basis</em> of <m>W</m>, then it turns out that the square matrix <m>A^TA</m> is automatically invertible!  (It is always the case that <m>A^TA</m> is square and the equation <m>A^TAc = A^Tx</m> is consistent, but <m>A^TA</m> need not be invertible in general.)
     </p>
 
     <corollary xml:id="projections-ATA-formula2">
@@ -554,7 +616,7 @@ and so
       </proof>
     </corollary>
 
-    <p>  
+    <p>
           The corollary applies in particular to the case where we have a subspace <m>W</m> of <m>\R^m</m>, and a basis <m>v_1,v_2,\ldots,v_n</m> for <m>W</m>.  To apply the corollary, we take <m>A</m> to be the <m>m\times n</m> matrix with columns <m>v_1,v_2,\ldots,v_n</m>.
         </p>
 

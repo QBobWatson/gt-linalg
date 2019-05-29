@@ -17,6 +17,7 @@ the license is included in gfdl.xml.
       <li>Learn the definition of a subspace.</li>
       <li>Learn to determine whether or not a subset is a subspace.</li>
       <li>Learn the most important examples of subspaces.</li>
+      <li>Learn to write a given subspace as a column space or null space.</li>
       <li><em>Recipe:</em> compute a spanning set for a null space.</li>
       <li><em>Picture:</em> whether a subset of <m>\R^2</m> or <m>\R^3</m> is a subspace or not.</li>
       <li><em>Vocabulary words:</em> <term>subspace</term>, <term>column space</term>, <term>null space</term>.</li>
@@ -236,7 +237,7 @@ the license is included in gfdl.xml.
     </bluebox>
 
     <p>
-      In order to verify that a subset of <m>\R^n</m> is in fact a subspace, one has to check the three defining properties.  That is, unless the subset has already been verified to be a subspace: see this <xref ref="subspaces-types-of"/> below.
+      In order to verify that a subset of <m>\R^n</m> is in fact a subspace, one has to check the three defining properties.  That is, unless the subset has already been verified to be a subspace: see this <xref ref="subspace-is-col-or-nul"/> below.
     </p>
 
     <example xml:id="subspaces-eg-byhand">
@@ -560,41 +561,58 @@ the license is included in gfdl.xml.
       </solution>
     </example>
 
-    <bluebox xml:id="subspaces-types-of">
-      <title>Verifying that a subset is a subspace in practice</title>
-      <idx><h>Subspace</h><h>verifying</h></idx>
-      <p>
-        It is rarely necessary to verify the three properties of a subspace directly: most of the verifications were already done in this section.
-        <ul>
-          <li>Is your subset a span?  Can it be written as a span?</li>
-          <li>Can it be written as the column space of a matrix?</li>
-          <li>Can it be written as the null space of a matrix?  In other words, is it the solution set of a homogeneous system of equations?</li>
-          <li>Is it all of <m>\R^n</m> or the zero subspace <m>\{0\}</m>?</li>
-          <li>Can it be written as a type of subspace that we will see later (eigenspace, orthogonal complement, ...)?</li>
-        </ul>
-        If so, then it is automatically a subspace.
-        If all else fails:
-        <ul>
-          <li>Can you verify directly that it satisfies the three defining properties of a subspace?</li>
-        </ul>
-      </p>
-    </bluebox>
+    <paragraphs>
+      <title>Writing a subspace as a column space or a null space</title>
+      <idx><h>Subspace</h><h>writing as column or null space</h></idx>
 
-    <example>
-      <title>Verifying that a subset is a subspace, reprise</title>
-      <statement>
+      <p>
+        A subspace can be given to you in many different forms.  In practice, computations involving subspaces are much easier if your subspace is the column space or null space of a matrix.  The simplest example of such a computation is finding a spanning set: a column space is by definition the span of the columns of a matrix, and we showed above how to compute a spanning set for a null space using parametric vector form.  For this reason, it is useful to rewrite a subspace as a column space or a null space before trying to answer questions about it.
+      </p>
+
+      <bluebox xml:id="subspace-is-col-or-nul">
+        <p>
+          When asking questions about a subspace, it is usually best to rewrite the subspace as a column space or a null space.
+        </p>
+      </bluebox>
+
+      <p>
+        This also applies to the question <q>is my subset a subspace?</q>  If your subset is a column space or null space of a matrix, then the answer is yes.
+      </p>
+
+      <specialcase>
         <p>
           Let
           <me> V = \left\{ \vec{a b} \text{ in } \R^2 \bigm| 2a = 3b\right\}</me>
-          be the subset of a previous <xref ref="subspaces-eg-byhand"/>. Verify that <m>V</m> is a subspace.
+          be the subset of a previous <xref ref="subspaces-eg-byhand"/>.  The subset <m>V</m> is exactly the solution set of the homogeneous equation <m>2x - 3y = 0</m>.
+          Therefore,
+          <me>V = \Nul\mat{2 -3}.</me>
+          In particular, it is a subspace.  The reduced row echelon form of <m>\mat{2 -3}</m> is <m>\mat{1 -3/2}</m>, so the parametric form of <m>V</m> is <m>x = 3/2y</m>, so the parametric vector form is <m>{x\choose y} = y{3/2\choose 1},</m> and hence <m>\bigl\{{3/2\choose 1}\bigr\}</m> spans <m>V</m>.
         </p>
-      </statement>
-      <solution>
-        <p>
-          The subset <m>V</m> is exactly the solution set of the homogeneous equation <m>2x - 3y = 0</m>.  Hence it is the null space of the matrix <m>\mat{2 -3}</m>, so it is a subspace.
-        </p>
-      </solution>
-    </example>
+      </specialcase>
+
+      <example>
+        <statement>
+          <p>
+            Let <m>V</m> be the plane in <m>\R^3</m> defined by
+            <me>
+              V = \left\{\vec{2x+y x-y 3x-2y}\bigm| x,y \text{ are in } \R \right\}.
+            </me>
+            Write <m>V</m> as the column space of a matrix.
+          </p>
+        </statement>
+        <solution>
+          <p>
+            Since
+            <me>\vec{2x+y x-y 3x-2y} = x\vec{2 1 3} + y\vec{1 -1 -2},</me>
+            we notice that <m>V</m> is exactly the span of the vectors
+            <me>\vec{2 1 3} \sptxt{and} \vec{1 -1 -2}.</me>
+            Hence
+            <me>V = \Col\mat{2 1; 1 -1; 3 -2}.</me>
+          </p>
+        </solution>
+      </example>
+
+    </paragraphs>
 
   </subsection>
 

@@ -15,15 +15,26 @@ the license is included in gfdl.xml.
   <objectives>
     <ol>
       <li>Understand the basic properties of orthogonal complements.</li>
+      <li>Learn to compute the orthogonal complement of a subspace.</li>
       <li><em>Recipes:</em> shortcuts for computing the orthogonal complements of common subspaces.</li>
       <li><em>Picture:</em> orthogonal complements in <m>\R^2</m> and <m>\R^3</m>.</li>
+      <li><em>Theorem:</em> row rank equals column rank.</li>
       <li><em>Vocabulary words:</em> <term>orthogonal complement</term>, <term>row space</term>.</li>
     </ol>
   </objectives>
 
-  <p>
-    It will be important to compute the set of <em>all</em> vectors that are orthogonal to a given set of vectors.  It turns out that a vector is orthogonal to a set of vectors if and only if it is orthogonal to the span of those vectors, which is a subspace, so we restrict ourselves to the case of subspaces.
-  </p>
+  <introduction>
+    <p>
+      It will be important to compute the set of <em>all</em> vectors that are orthogonal to a given set of vectors.  It turns out that a vector is orthogonal to a set of vectors if and only if it is orthogonal to the span of those vectors, which is a subspace, so we restrict ourselves to the case of subspaces.
+    </p>
+  </introduction>
+
+  <subsection>
+    <title>Definition of the Orthogonal Complement</title>
+
+    <p>
+      Taking the orthogonal complement is an operation that is performed on <em>subspaces</em>.
+    </p>
 
   <definition>
     <idx><h>Orthogonal complement</h><h>definition of</h></idx>
@@ -159,15 +170,19 @@ the license is included in gfdl.xml.
 
   </paragraphs>
 
+</subsection>
+<subsection>
+  <title>Computing Orthogonal Complements</title>
+  <idx><h>Orthogonal complement</h><h>computation of</h></idx>
 
   <p>
-    Since any subspace is a span, the following proposition gives a recipe for computing the orthogonal complement of any subspace.  However, below we will give several shortcuts for computing the orthogonal complements of other common kinds of subspaces.
+    Since any subspace is a span, the following proposition gives a recipe for computing the orthogonal complement of any subspace.  However, below we will give several shortcuts for computing the orthogonal complements of other common kinds of subspaces<ndash/>in particular, null spaces.  To compute the orthogonal complement of a general subspace, usually it is best to rewrite the subspace as the column space or null space of a matrix, as in this <xref ref="subspace-is-col-or-nul"/>.
   </p>
 
   <proposition xml:id="orthocomp-comp-of-span">
-    <title>The orthogonal complement of a span</title>
-    <idx><h>Orthogonal complement</h><h>of a span</h></idx>
-    <idx><h>Span</h><h>orthogonal complement of</h></idx>
+    <title>The orthogonal complement of a column space</title>
+    <idx><h>Orthogonal complement</h><h>of a column space</h></idx>
+    <idx><h>Column Space</h><h>orthogonal complement of</h></idx>
     <statement>
       <p>
         Let <m>A</m> be a matrix and let <m>W=\Col(A)</m>.  Then
@@ -208,7 +223,9 @@ the license is included in gfdl.xml.
     </proof>
   </proposition>
 
-<p>
+  <p>
+    <idx><h>Orthogonal complement</h><h>of a span</h></idx>
+    <idx><h>Span</h><h>orthogonal complement of</h></idx>
         Since column spaces are the same as spans, we can rephrase the proposition as follows.  Let <m>v_1,v_2,\ldots,v_m</m> be vectors in <m>\R^n</m>, and let <m>W = \Span\{v_1,v_2,\ldots,v_m\}</m>.  Then
         <me>
           W^\perp =
@@ -219,7 +236,7 @@ the license is included in gfdl.xml.
           \vdots;
           \matrow{v_m^T}}.
         </me>
-    Again, it is important to be able to go easily back and forth between spans and column spaces.  If you are handed a span, you can apply the proposition once you have rephrased your span as a column space.
+    Again, it is important to be able to go easily back and forth between spans and column spaces.  If you are handed a span, you can apply the proposition once you have rewritten your span as a column space.
       </p>
 
 
@@ -449,7 +466,12 @@ the license is included in gfdl.xml.
     </p>
   </bluebox>
 
+  <p>
+    As mentioned in the beginning of this subsection, in order to compute the orthogonal complement of a general subspace, usually it is best to rewrite the subspace as the column space or null space of a matrix.
+  </p>
+
   <example>
+    <title>Orthogonal complement of a subspace</title>
     <statement>
       <p>
         Compute the orthogonal complement of the subspace
@@ -495,14 +517,16 @@ the license is included in gfdl.xml.
     </solution>
   </example>
 
-<paragraphs>
+</subsection>
+
+<subsection>
 <title>Row rank and column rank</title>
     <idx><h>Rank</h><h>row and column</h></idx>
     <idx><h>Row rank</h><see>Rank</see></idx>
     <idx><h>Column rank</h><see>Rank</see></idx>
 
 <p>
-Suppose that <m>A</m> is an <m>m \times n</m> matrix.  Let us refer to the dimensions of <m>\Col(A)</m> and <m>\Row(A)</m> as the <term>row rank</term> and the <term>column rank</term> of <m>A</m> (note that the column rank of <m>A</m> is the same as the rank of <m>A</m>).  The next theorem says that the row and column ranks are the same.  This is surprising for a couple of reasons.  First, <m>\Row(A)</m> lies in <m>\R^n</m> and <m>\Col(A)</m> lies in <m>\R^m</m>.  Also, the row reductions of <m>A</m> and <m>A^T</m> have nothing to do with each other.    
+Suppose that <m>A</m> is an <m>m \times n</m> matrix.  Let us refer to the dimensions of <m>\Col(A)</m> and <m>\Row(A)</m> as the <term>row rank</term> and the <term>column rank</term> of <m>A</m> (note that the column rank of <m>A</m> is the same as the rank of <m>A</m>).  The next theorem says that the row and column ranks are the same.  This is surprising for a couple of reasons.  First, <m>\Row(A)</m> lies in <m>\R^n</m> and <m>\Col(A)</m> lies in <m>\R^m</m>.  Also, the theorem implies that <m>A</m> and <m>A^T</m> have the same number of pivots, even though the reduced row echelon forms of <m>A</m> and <m>A^T</m> have nothing to do with each other otherwise.
 </p>
 
 <theorem xml:id="row-rank-equals-column-rank">
@@ -527,7 +551,6 @@ as desired.
 </theorem>
 <p>In particular, by this <xref ref="dimension-basis-colspace-dim"/> both the row rank and the column rank are equal to the number of pivots of <m>A</m>.</p>
 
-</paragraphs>
-
+</subsection>
 
 </section>
