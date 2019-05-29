@@ -283,7 +283,7 @@ the license is included in gfdl.xml.
       In this section, we show how the dot product can be used to define <em>orthogonality</em>, i.e., when two vectors are perpendicular to each other.
     </p>
 
-    <fact type-name="Important Fact">
+    <definition>
       <idx><h>Orthogonality</h><h>definition of</h></idx>
       <idx><h>Vector</h><h>orthogonal</h><see>Orthogonality</see></idx>
       <statement>
@@ -291,7 +291,7 @@ the license is included in gfdl.xml.
           Two vectors <m>x,y</m> in <m>\R^n</m> are <term>orthogonal</term> or <term>perpendicular</term> if <m>x\cdot y = 0</m>.
         </p>
       </statement>
-    </fact>
+    </definition>
 
     <p>
       <notation><usage>x\perp y</usage><description><m>x</m> is orthogonal to <m>y</m></description></notation>
@@ -306,7 +306,7 @@ the license is included in gfdl.xml.
     </bluebox>
 
     <p>
-      We can see why the important fact is true using the <em>law of cosines</em>.  In our language, the law of cosines asserts that if <m>x,y</m> are two nonzero vectors, and if <m>\alpha</m> is the angle between them, then
+      We motivate the above definition using the <em>law of cosines</em> in <m>\R^2</m>.  In our language, the law of cosines asserts that if <m>x,y</m> are two nonzero vectors, and if <m>\alpha>0</m> is the angle between them, then
       <me>\|y-x\|^2 = \|x\|^2 + \|y\|^2 - 2\|x\|\,\|y\|\cos\alpha.</me>
       <latex-code mode="bare">
         \usetikzlibrary{angles}
@@ -405,6 +405,7 @@ the license is included in gfdl.xml.
           \amp\quad\implies \alpha = \cos\inv\left(\frac{x\cdot y}{\|x\|\|y\|}\right).
           \end{split}
         </me>
+        In higher dimensions, we take this to be the <em>definition</em> of the angle between <m>x</m> and <m>y</m>.
       </p>
     </remark>
 
