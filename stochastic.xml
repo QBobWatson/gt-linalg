@@ -360,7 +360,7 @@ the license is included in gfdl.xml.
           = \lambda^2 - \frac32\lambda + \frac12 \\
           = (\lambda - 1)(\lambda-1/2).
         </me>
-        Notice that <m>1</m> is strictly greater than the other eigenvalue, and that it has algebraic (hence, geometric) multiplicity <m>1</m>.  One computes eigenvectors for the eigenvalues <m>1,1/2</m> to be, respectively,
+        Notice that <m>1</m> is strictly greater than the other eigenvalue, and that it has algebraic (hence, geometric) multiplicity <m>1</m>.  We compute eigenvectors for the eigenvalues <m>1,1/2</m> to be, respectively,
         <me>u_1 = \vec{1 1} \qquad u_2 = \vec{1 -1}.</me>
         The eigenvector <m>u_1</m> necessarily has positive entries; the steady-state vector is
         <me>
@@ -432,7 +432,7 @@ the license is included in gfdl.xml.
            f(\lambda) = -\lambda^3 + 0.12\lambda - 0.02 =
            -(\lambda-1)(\lambda+0.2)(\lambda-0.1).
         </me>
-        Notice that <m>1</m> is strictly greater in absolute value than the other eigenvalues, and that it has algebraic (hence, geometric) multiplicity <m>1</m>.  One computes eigenvectors for the eigenvalues <m>1,-0.2,0.1</m> to be, respectively,
+        Notice that <m>1</m> is strictly greater in absolute value than the other eigenvalues, and that it has algebraic (hence, geometric) multiplicity <m>1</m>.  We compute eigenvectors for the eigenvalues <m>1,-0.2,0.1</m> to be, respectively,
         <me>
           u_1 = \vec{7 6 5} \qquad u_2 = \vec{-1 0 1} \qquad u_3 = \vec{1 -3 2}.
         </me>
