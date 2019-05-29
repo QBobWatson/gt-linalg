@@ -817,14 +817,15 @@ So, for example, if <m>x=(1,0,0)</m>, this formula tells us that <m>x_W = (2,1,-
             <li><m>\Col(B) = W.</m></li>
             <li><m>\Nul(B) = W^\perp.</m></li>
             <li><m>B^2 = B.</m></li>
+	    <li>If <m>W \neq \{0\}</m>, then 1 is an eigenvalue of <m>B</m> and the 1-eigenspace for <m>B</m> is <m>W</m>.</li>
+	    <li>If <m>W \neq \R^n</m>, then 0 is an eigenvalue of <m>B</m> and the 0-eigenspace for <m>B</m> is <m>W^\perp</m>.</li>
             <li><m>B</m> is similar to the diagonal matrix with <m>m</m> ones and <m>n-m</m> zeros on the diagonal, where <m>m = \dim(W).</m></li>
           </ol>
-          In particular, <m>B</m> has eigenvalues <m>0</m> (unless <m>W=\R^n</m>) and <m>1</m> (unless <m>W=\{0\}</m>).
         </p>
       </statement>
       <proof>
         <p>
-          The first three assertions are translations of <xref ref="projections-properties-of">properties 5, 3, and 4</xref>, respectively, using this <xref ref="matrix-trans-dictionary"/> and this <xref ref="matrix-mult-comp-is-prod"/>.
+          The first four assertions are translations of <xref ref="projections-properties-of">properties 5, 3, 4, and 2</xref>, respectively, using this <xref ref="matrix-trans-dictionary"/> and this <xref ref="matrix-mult-comp-is-prod"/>.  The fifth assertion is equivalent to the second, by this <xref ref="evecs-eval0"/>.
         </p>
         <p>
           For the final assertion, we showed in the proof of this <xref ref="projections-decomp-exists"/> that there is a basis of <m>\R^n</m> of the form <m>\{v_1,\ldots,v_m,v_{m+1},\ldots,v_n\}</m>, where <m>\{v_1,\ldots,v_m\}</m> is a basis for <m>W</m> and <m>\{v_{m+1},\ldots,v_n\}</m> is a basis for <m>W^\perp</m>.  Each <m>v_i</m> is an eigenvector of <m>B</m>: indeed, for <m>i\leq m</m> we have
