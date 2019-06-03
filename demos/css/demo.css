@@ -30,4 +30,6 @@
 
 body {
   width: 100%;
+  /* Don't take scrollbars into account when resizing */
+  overflow: hidden;
 }

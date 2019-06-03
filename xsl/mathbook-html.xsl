@@ -230,8 +230,22 @@
           </xsl:attribute>
           <xsl:attribute name="title">Interactive Figure</xsl:attribute>
         </xsl:element>
+
+        <xsl:element name="div">
+          <xsl:attribute name="class">
+            <xsl:text>maximizer</xsl:text>
+          </xsl:attribute>
+          <xsl:text>&#xf25e;</xsl:text>
+        </xsl:element>
+        <xsl:element name="div">
+          <xsl:attribute name="class">
+            <xsl:text>minimizer</xsl:text>
+          </xsl:attribute>
+          <xsl:text>&#xf267;</xsl:text>
+        </xsl:element>
     </xsl:element>
 
+    <!--
     <xsl:element name="div">
       <xsl:attribute name="class">
         <xsl:text>mathbox-link</xsl:text>
@@ -245,6 +259,7 @@
         <xsl:text>Click to view in a new window</xsl:text>
       </xsl:element>
     </xsl:element>
+    -->
 </xsl:template>
 
 <xsl:template match="*" mode="get-hide-type">
