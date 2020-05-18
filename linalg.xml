@@ -52,7 +52,7 @@ Free Documentation License"
         </p>
 
         <p>
-          In <xref ref="systems-of-eqns"/>, we will introduce <em>systems of linear equations</em>, the class of equations whose study forms the subject of linear algebra.  In <xref ref="row-reduction"/>, will present a procedure, called <em>row reduction</em>, for finding all solutions of a system of linear equations.  In <xref ref="parametric-form"/>, you will see hnow to express all solutions of a system of linear equations in a unique way using the <em>parametric form</em> of the general solution.
+          In <xref ref="systems-of-eqns"/>, we will introduce <em>systems of linear equations</em>, the class of equations whose study forms the subject of linear algebra.  In <xref ref="row-reduction"/>, will present a procedure, called <em>row reduction</em>, for finding all solutions of a system of linear equations.  In <xref ref="parametric-form"/>, you will see how to express all solutions of a system of linear equations in a unique way using the <em>parametric form</em> of the general solution.
         </p>
       </introduction>
 
