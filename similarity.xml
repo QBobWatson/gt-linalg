@@ -15,7 +15,7 @@ the license is included in gfdl.xml.
 
   <objectives>
     <ol>
-      <li>Learn to interpret similar matrices geoemetrically.</li>
+      <li>Learn to interpret similar matrices geometrically.</li>
       <li>Understand the relationship between the eigenvalues, eigenvectors, and characteristic polynomials of similar matrices.</li>
       <li><em>Recipe:</em> compute <m>Ax</m> in terms of <m>B,C</m> for <m>A=CBC\inv</m>.</li>
       <li><em>Picture:</em> the geometry of similar matrices.</li>
